@@ -10,7 +10,6 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
-
   <!-- Use spring servlet for all requests, including static resources -->
   <mvc:default-servlet-handler />
 
@@ -19,11 +18,11 @@
 
   <!-- Handles HTTP GET requests for /resources/** by efficiently serving 
     up static resources in the ${webappRoot}/resources directory -->
+  <context:component-scan
+    base-package="kr.or.bit" />
   <mvc:resources mapping="/resources/**"
     location="/resources/" />
 
-  <context:component-scan
-    base-package="kr.or.bit" />
 
   <!-- Thymeleaf View Resolver - implementation of Spring's ViewResolver 
     interface -->
@@ -36,11 +35,7 @@
   <!-- Thymeleaf Template Engine (Spring4-specific version) -->
   <bean id="templateEngine"
     class="org.thymeleaf.spring4.SpringTemplateEngine">
-    <property name="templateResolvers">
-      <set>
-        <ref bean="templateResolver" />
-      </set>
-    </property>
+    <property name="templateResolver" ref="templateResolver" />
   </bean>
 
   <!-- Thymeleaf Template Resolver -->
@@ -50,5 +45,6 @@
     <property name="suffix" value=".html" />
     <property name="templateMode" value="HTML" />
     <property name="characterEncoding" value="UTF-8" />
+    <property name="cacheable" value="false" />
   </bean>
 </beans>
