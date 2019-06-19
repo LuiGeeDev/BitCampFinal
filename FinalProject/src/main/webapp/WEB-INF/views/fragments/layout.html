@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout (content, pageName)">
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout (main, script)">
   <head th:replace="fragments/head :: head(${pageName})"></head>
   <body>
     <div class="sidebar"></div>
-    <div class="main" th:insert="${content}"></div>
+    <div th:replace="${main}"></div>
     <script th:src="@{/js/socket.js}"></script>
-    <script th:src="@{/js/{pageName}.js(pageName=${pageName})}"></script>
+    <script th:replace="${script}"></script>
   </body>
 </html>

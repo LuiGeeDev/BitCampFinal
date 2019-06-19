@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layout(~{:: body}, login)">
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script})">
 <body>
-  <form action="loginOk" method="post">
-    ID : <input type="text" id="id" name="id"> <br> 
-    PW : <input type="password" id="password" name="password"> <br>
-    <input type="submit" value="로그인">
-  </form>
+  <div class="main" th:fragment="main">
+    <form action="loginOk" method="post">
+      ID : <input type="text" id="id" name="id"> <br> 
+      PW : <input type="password" id="password" name="password"> <br>
+      <input type="submit" value="로그인">
+    </form>
+  </div>
 </body>
 </html>

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layout(~{:: body}, home)">
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script})">
   <body>
+  <div class="main" th:fragment="main">
     <div th:unless="${session.user}">
       <a href="reg.html" th:href="@{/reg}">회원가입</a>
       <a href="login.html" th:href="@{/login}">로그인</a>
@@ -26,5 +28,8 @@
         <td th:text="${board.writer}"></td>
       </tr>
     </table>
+    </div>
+    <script th:fragment="script">
+    </script>
   </body>
 </html>
