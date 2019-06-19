@@ -1,35 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script})">
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <link rel="stylesheet" th:href="@{/css/home.css}" />
+  </head>
   <body>
-  <div class="main" th:fragment="main">
-    <div th:unless="${session.user}">
-      <a href="reg.html" th:href="@{/reg}">회원가입</a>
-      <a href="login.html" th:href="@{/login}">로그인</a>
-    </div>
-    <div th:if="${session.user}">
-      <p><span th:text="${session.user.id}" id="userid"></span>&nbsp;환영합니다.</p>
-      <a href="#" th:href="@{/logout}">로그아웃</a>
-    </div>
-    <div id="noti"></div>
-    <table>
-      <tr>
-        <th>제목</th>
-        <th>내용</th>
-        <th>글쓴이</th>
-      </tr>
-      <tr th:each="board : ${boardList}">
-        <td th:text="${board.title}"></td>
-        <td>
-          <a href="board.html" th:href="@{'/board/' + ${board.id}}"
-            ><span th:text="${board.content}"></span
-          ></a>
-        </td>
-        <td th:text="${board.writer}"></td>
-      </tr>
-    </table>
+    <div class="main" th:fragment="main">
+      <p th:text="'Hello, ' + ${message}"></p>
     </div>
     <script th:fragment="script">
+      console.log("Hello, world!");
     </script>
   </body>
 </html>

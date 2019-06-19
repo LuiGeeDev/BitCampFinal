@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head th:fragment="head (pageName)">
+  <head th:fragment="head (links)">
     <meta charset="utf-8" />
     <title>Teaming</title>
-    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/{pageName}.css(pageName=${pageName})}">
+    <th:block th:replace="${links}"></th:block>
+    
     <script
       src="https://code.jquery.com/jquery-3.4.1.min.js"
       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
