@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.bit.dao.BoardDao">
+  <insert id="write">
+    INSERT INTO BOARD (title, content, writer)
+    VALUES (#{title}, #{content}, #{writer})
+  </insert>
+  <select id="getList" resultType="kr.or.bit.model.Board">
+    SELECT id, title, content, writer
+    FROM BOARD
+  </select>
+  <select id="getBoard" resultType="kr.or.bit.model.Board">
+    SELECT id, title, content, writer
+    FROM BOARD
+    WHERE id = #{id}
+  </select>
+</mapper>
+
+
+
+
+
+
+
+  

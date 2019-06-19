@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layout(~{:: body}, login)">
+<body>
+  <form action="loginOk" method="post">
+    ID : <input type="text" id="id" name="id"> <br> 
+    PW : <input type="password" id="password" name="password"> <br>
+    <input type="submit" value="로그인">
+  </form>
+</body>
+</html>
