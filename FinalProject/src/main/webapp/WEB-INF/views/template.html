@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <link rel="stylesheet" th:href="@{/css/home.css}" />
+  </head>
+  <body>
+    <div class="main" th:fragment="main">
+      <p th:text="'Hello, ' + ${message}"></p>
+    </div>
+    <script th:fragment="script">
+      console.log("Hello, world!");
+    </script>
+  </body>
+</html>
