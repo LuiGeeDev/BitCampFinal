@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.bit.dao.MemberDao">
+  <select id="selectAllMembers" resultType="kr.or.bit.model.Member">
+    SELECT *
+    FROM MEMBER
+  </select>
+  <select id="selectMember" resultType="kr.or.bit.model.Member">
+    SELECT id, password, name
+    FROM MEMBER
+    WHERE id = #{id}
+  </select>
+  <insert id="join">
+    INSERT INTO MEMBER (ID , PASSWORD , NAME)
+    VALUES (#{id} , #{password}, #{name})
+  </insert>
+</mapper>
+
+
+
+
+
+
+
+	

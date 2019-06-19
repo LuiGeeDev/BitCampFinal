@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layout(~{:: form}, reg)">
+  <body>
+    <form method="post">
+      ID : <input type="Text" id="id" name="id" /><br />
+      PW : <input type="password" id="password" name="password" /><br />
+      이름 : <input type="text" id="name" name="name" /><br />
+      <input type="submit" value="가입하기" />
+    </form>
+  </body>
+</html>
