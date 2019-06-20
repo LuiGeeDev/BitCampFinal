@@ -10,9 +10,56 @@
     <div class="main" th:fragment="main">
       <p th:text="'Hello, ' + ${message}"></p>
       <a href="menu.html" th:href="@{/menu}">Check Menu</a>
+      <div id="demo" class="carousel slide" data-ride="carousel">
+
+        <!-- Indicators -->
+        <ul class="carousel-indicators">
+          <li data-target="#demo" data-slide-to="0" class="active"></li>
+          <li data-target="#demo" data-slide-to="1"></li>
+          <li data-target="#demo" data-slide-to="2"></li>
+        </ul>
+        
+        <!-- The slideshow -->
+        <div class="carousel-inner">
+          <div class="news carousel-item active">
+          </div>
+          <div class="carousel-item">
+            <p>Hello2</p>
+          </div>
+          <div class="carousel-item">
+            <p>Hello3</p>
+          </div>
+        </div>
+        
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+          <span class="carousel-control-prev-icon">
+            <i class="fas fa-chevron-left fa-lg"></i>
+          </span>
+        </a>
+        <a class="carousel-control-next" href="#demo" data-slide="next">
+          <span class="carousel-control-next-icon">
+            <i class="fas fa-chevron-right fa-lg"></i>
+          </span>
+        </a>
+      </div>
     </div>
     <script th:fragment="script">
-      console.log("Hello, world!");
+      $.ajax({
+        method: "post",
+        url: "/ajax/news",
+        success: function(data) {
+          const news = JSON.parse(data);
+          news.items.forEach(function(item) {
+            const newsLink = $('<a>').attr("href", item.link).attr("target", "_blank").append(`<h6>${item.title}</h6>`).append(`<p>${item.description}</p>`);
+            $(".news").append(newsLink);
+          });
+        }
+      });
+
+      $(".carousel").carousel({
+        interval: 10000
+      });
     </script>
   </body>
 </html>
