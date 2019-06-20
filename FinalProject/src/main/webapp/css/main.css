@@ -5,7 +5,7 @@
     border-radius: 7px;
     padding: 25px 50px;
     margin: auto;
-    width: 85%;
+    width: 50%;
     height: 366px;
 }
 
@@ -47,4 +47,14 @@ a[class^="carousel-control"] {
 
 .news p:hover {
   border-bottom: 2px solid #F39B10;
+}
+
+#calendar {
+  width: 75%;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.fc-day-header {
+  padding: 10px 5px !important;
 }

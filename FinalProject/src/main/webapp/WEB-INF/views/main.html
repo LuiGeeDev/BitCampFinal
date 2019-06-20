@@ -8,21 +8,18 @@
   </head>
   <body>
     <div class="main" th:fragment="main">
-      <p th:text="'Hello, ' + ${message}"></p>
-      <a href="menu.html" th:href="@{/menu}">Check Menu</a>
-      <div id="demo" class="carousel slide" data-ride="carousel">
-
+      <div id="calendar"></div>
+      <div id="carousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         <ul class="carousel-indicators">
-          <li data-target="#demo" data-slide-to="0" class="active"></li>
-          <li data-target="#demo" data-slide-to="1"></li>
-          <li data-target="#demo" data-slide-to="2"></li>
+          <li data-target="#carousel" data-slide-to="0" class="active"></li>
+          <li data-target="#carousel" data-slide-to="1"></li>
+          <li data-target="#carousel" data-slide-to="2"></li>
         </ul>
-        
+
         <!-- The slideshow -->
         <div class="carousel-inner">
-          <div class="news carousel-item active">
-          </div>
+          <div class="news carousel-item active"></div>
           <div class="carousel-item">
             <p>Hello2</p>
           </div>
@@ -30,14 +27,14 @@
             <p>Hello3</p>
           </div>
         </div>
-        
+
         <!-- Left and right controls -->
-        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+        <a class="carousel-control-prev" href="#carousel" data-slide="prev">
           <span class="carousel-control-prev-icon">
             <i class="fas fa-chevron-left fa-lg"></i>
           </span>
         </a>
-        <a class="carousel-control-next" href="#demo" data-slide="next">
+        <a class="carousel-control-next" href="#carousel" data-slide="next">
           <span class="carousel-control-next-icon">
             <i class="fas fa-chevron-right fa-lg"></i>
           </span>
@@ -51,7 +48,11 @@
         success: function(data) {
           const news = JSON.parse(data);
           news.items.forEach(function(item) {
-            const newsLink = $('<a>').attr("href", item.link).attr("target", "_blank").append(`<h6>${item.title}</h6>`).append(`<p>${item.description}</p>`);
+            const newsLink = $("<a>")
+              .attr("href", item.link)
+              .attr("target", "_blank")
+              .append(`<h6>${item.title}</h6>`)
+              .append(`<p>${item.description}</p>`);
             $(".news").append(newsLink);
           });
         }
@@ -60,6 +61,48 @@
       $(".carousel").carousel({
         interval: 10000
       });
+
+      var calendarEl = document.getElementById("calendar");
+
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        plugins: [ 'dayGrid', 'bootstrap' ],
+        defaultView: 'dayGrid',
+        duration: { days: 7 },
+        locale: 'ko',
+        height: 160,
+        columnHeaderFormat: {
+          day: '2-digit',
+          weekday: 'short'
+        },
+        header: {
+          left: '', center: '', right: ''
+        },
+        
+        events: [{
+          title: '프로젝트 시작',
+          start: '2019-06-21',
+          end: '2019-06-21',
+          color: 'red',
+          textColor: 'white'
+        }, {
+          title: '프로젝트 종료',
+          start: '2019-06-26',
+          end: '2019-06-26',
+          textColor: 'white'
+        }, {
+          title: '프로젝트 진행',
+          start: '2019-06-22',
+          end: '2019-06-25',
+          textColor: 'white'
+        }, {
+          title: '회식',
+          start: '2019-06-24',
+          end: '2019-06-24',
+          textColor: 'white'
+        }]
+      });
+
+      calendar.render();
     </script>
   </body>
 </html>
