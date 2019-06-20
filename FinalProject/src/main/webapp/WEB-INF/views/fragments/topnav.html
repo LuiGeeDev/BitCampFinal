@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>      
+    <div class="row sticky-top" th:fragment="topnav">
+      <div class="top-nav align-items-center justify-content-end">
+        <a href="../message.html" th:href="@{/message}"><i class="fas fa-envelope fa-lg"></i></a>
+        <a href="../mypage.html" th:href="@{/mypage}"><i class="fas fa-user fa-lg"></i></a>
+        <a href="#"><i class="fas fa-bell fa-lg"></i></a>
+        <a href="../main.html" th:href="@{/logout}"><i class="fas fa-sign-out-alt fa-lg"></i></a>
+      </div>
+    </div>
+  </body>
+</html>  

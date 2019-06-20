@@ -30,6 +30,12 @@ public class HomeController {
   @GetMapping("/")
   public String home(Model model) {
     model.addAttribute("message", "world");
-    return "home";
+    return "main";
+  }
+  
+  @GetMapping("/menu")
+  public String menu(Model model) {
+    model.addAttribute("message", "world");
+    return "menu";
   }
 }
