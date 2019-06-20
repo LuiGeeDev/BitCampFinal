@@ -31,7 +31,7 @@ a[class^="carousel-control"] {
 }
 
 .news h6 {
-  font-weight: bold;
+  font-weight: 700;
   font-size: 18px;
   margin-bottom: 10px;
 }
@@ -39,7 +39,7 @@ a[class^="carousel-control"] {
 .news p {
   border-bottom: 2px solid transparent;
   font-size: 14px;
-  font-weight: lighter;
+  font-weight: 100;
   height: 42px;
   overflow: hidden;
   margin-bottom: 30px;
