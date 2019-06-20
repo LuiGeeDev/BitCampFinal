@@ -8,6 +8,65 @@
   </head>
   <body>
     <div class="main" th:fragment="main">
+      <div class="row">
+        <div class="recent-messages">
+          <h5>최근 쪽지</h5>
+          <div class="recent-message">
+            <div class="message-sender-photo">
+              <img src="https://via.placeholder.com/40" alt="" />
+            </div>
+            <div class="message-main">
+              <p class="message-content">
+                ㅇㅋ 내일 점심은 서브웨이다 알았지 성윤아? ㅇㅋ 간다 바이
+              </p>
+              <p class="message-info">
+                <span class="message-sender">강기훈</span>
+                <span class="message-time">05/12 10:50pm</span>
+              </p>
+            </div>
+          </div>
+          <div class="recent-message">
+            <div class="message-sender-photo">
+              <img src="https://via.placeholder.com/40" alt="" />
+            </div>
+            <div class="message-main">
+              <p class="message-content">내일은 DTO 작업을 하겠습니다.</p>
+              <p class="message-info">
+                <span class="message-sender">권순조</span>
+                <span class="message-time">05/12 10:50pm</span>
+              </p>
+            </div>
+          </div>
+          <div class="recent-message">
+            <div class="message-sender-photo">
+              <img src="https://via.placeholder.com/40" alt="" />
+            </div>
+            <div class="message-main">
+              <p class="message-content">코드 설명 좀 다시 해줘</p>
+              <p class="message-info">
+                <span class="message-sender">정성윤</span>
+                <span class="message-time">05/12 10:50pm</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="my-project">
+          <div class="d-day">D-3</div>
+          <h4>내 프로젝트</h4>
+          <div class="project-new">
+            <p class="project-new-content">메인 페이지 CSS 이 부분 어떻게?</p>
+            <p class="project-new-from">트러블 슈팅</p>
+          </div>
+          <div class="project-new">
+            <p class="project-new-content">pom.xml 완성하기</p>
+            <p class="project-new-from">체크리스트</p>
+          </div>
+          <div class="project-new">
+            <p class="project-new-content">스프링 버전 맞추기</p>
+            <p class="project-new-from">트러블 슈팅</p>
+          </div>
+        </div>
+      </div>
       <div id="calendar"></div>
       <div id="carousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
@@ -65,43 +124,50 @@
       var calendarEl = document.getElementById("calendar");
 
       var calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins: [ 'dayGrid', 'bootstrap' ],
-        defaultView: 'dayGrid',
+        plugins: ["dayGrid", "bootstrap"],
+        defaultView: "dayGrid",
         duration: { days: 7 },
-        locale: 'ko',
+        locale: "ko",
         height: 160,
         columnHeaderFormat: {
-          day: '2-digit',
-          weekday: 'short'
+          day: "2-digit",
+          weekday: "short"
         },
         header: {
-          left: '', center: '', right: ''
+          left: "",
+          center: "",
+          right: ""
         },
-        
-        events: [{
-          title: '프로젝트 시작',
-          start: '2019-06-21',
-          end: '2019-06-21',
-          color: 'tomato',
-          textColor: 'white'
-        }, {
-          title: '프로젝트 종료',
-          start: '2019-06-26',
-          end: '2019-06-26',
-          color: 'coral',
-          textColor: 'white'
-        }, {
-          title: '프로젝트 진행',
-          start: '2019-06-22',
-          end: '2019-06-25',
-          color: 'purple',
-          textColor: 'white'
-        }, {
-          title: '회식',
-          start: '2019-06-24',
-          end: '2019-06-24',
-          textColor: 'white'
-        }]
+
+        events: [
+          {
+            title: "프로젝트 시작",
+            start: "2019-06-21",
+            end: "2019-06-21",
+            color: "tomato",
+            textColor: "white"
+          },
+          {
+            title: "프로젝트 종료",
+            start: "2019-06-26",
+            end: "2019-06-26",
+            color: "coral",
+            textColor: "white"
+          },
+          {
+            title: "프로젝트 진행",
+            start: "2019-06-22",
+            end: "2019-06-25",
+            color: "purple",
+            textColor: "white"
+          },
+          {
+            title: "회식",
+            start: "2019-06-24",
+            end: "2019-06-24",
+            textColor: "white"
+          }
+        ]
       });
 
       calendar.render();

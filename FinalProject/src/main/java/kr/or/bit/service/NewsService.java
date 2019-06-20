@@ -33,9 +33,9 @@ public class NewsService {
     StringBuffer resp = new StringBuffer();
     try {
       // 뉴스 검색어를 UTF-8 인코딩으로 전환, 검색어에 제공
-      String text = URLEncoder.encode("프로그래머", "UTF-8");
+      String text = URLEncoder.encode("소프트웨어", "UTF-8");
       // API에 요청
-      String apiURL = "https://openapi.naver.com/v1/search/news.json?query=" + text + "&display=" + DISPLAY;
+      String apiURL = "https://openapi.naver.com/v1/search/news.json?sort=date&query=" + text + "&display=" + DISPLAY;
       URL url = new URL(apiURL);
       HttpURLConnection con = (HttpURLConnection) url.openConnection();
       con.setRequestMethod("GET");

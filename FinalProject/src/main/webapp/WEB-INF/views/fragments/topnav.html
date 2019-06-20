@@ -3,9 +3,15 @@
   <body>      
     <div class="row sticky-top" th:fragment="topnav">
       <div class="top-nav align-items-center justify-content-end">
-        <a href="../message.html" th:href="@{/message}"><i class="fas fa-envelope fa-lg"></i></a>
+        <div class="message">
+          <a href="../message.html" th:href="@{/message}"><i class="fas fa-envelope fa-lg"></i></a>
+          <span class="count message-count">24</span>
+        </div>
         <a href="../mypage.html" th:href="@{/mypage}"><i class="fas fa-user fa-lg"></i></a>
-        <a href="#"><i class="fas fa-bell fa-lg"></i></a>
+        <div class="notification">
+          <a href="#"><i class="fas fa-bell fa-lg"></i></a>
+          <span class="count noti-count">5</span>
+        </div>
         <a href="../main.html" th:href="@{/logout}"><i class="fas fa-sign-out-alt fa-lg"></i></a>
       </div>
     </div>

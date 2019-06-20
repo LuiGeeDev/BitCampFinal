@@ -1,9 +1,5 @@
 @charset "UTF-8";
 
-* {
-  font-family: 'Nanum Gothic', sans-serif; 
-}
-
 .sidebar {
   height: 100vh;
   width: 210px;
@@ -30,45 +26,5 @@
 
 .col-main {
   flex: 1;
-  padding-left: 15px;
-  padding-right: 15px;
 }
 
-.top-nav {
-  box-sizing: border-box;
-  flex: 1;
-  background-color: #EEEEEE;
-  height: 38px;
-  display: flex;
-  padding-right: 10px;  
-  border-bottom: 1px solid #9E9E9E;
-}
-
-.top-nav a {
-  margin: 0 8px;
-}
-
-.top-nav a svg {
-  color: #2D3E50;
-}
-
-.fa-sign-out-alt:hover {
-  color: #e74c3c;
-}
-
-.fa-bell:hover {
-  color: #f39c12;
-}
-
-.fa-user:hover {
-  color: #4CAF50;
-  height: 21px;
-}
-
-.fa-envelope:hover {
-  color:#3F51B5;
-}
-
-a:active {
-  transform: scale(0.92);
-}

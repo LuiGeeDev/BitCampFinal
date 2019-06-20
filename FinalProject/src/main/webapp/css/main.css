@@ -58,3 +58,95 @@ a[class^="carousel-control"] {
 .fc-day-header {
   padding: 10px 5px !important;
 }
+
+.recent-messages {
+  margin: auto;
+}
+
+.message-sender-photo img {
+  border-radius: 20px;
+  margin-top: 7px;
+  margin-right: 5px;
+}
+
+.recent-message {
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  position: relative;
+  background-color: #eaf1f7;
+  border-radius: 7px;
+  display: flex;
+}
+
+.recent-message:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid #eaf1f7;
+  border-top: 10px solid #eaf1f7;
+  border-bottom: 10px solid transparent;
+  left: -20px;
+  top: 20px;
+}
+
+.recent-message p {
+  margin: 7px;
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recent-messages h5 {
+  font-weight: 700;
+}
+
+.message-content {
+  font-size: 15px;
+}
+
+.message-info {
+  text-align: right;
+  font-size: 12px;
+  line-height: 13px;
+  color: #a6a6a6;
+}
+
+.my-project {
+  margin: auto;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 30px 50px 20px 25px;
+  position: relative;
+}
+
+.d-day {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  font-size: 50px;
+  color: #F39B10;
+}
+
+.my-project h4 {
+  margin-bottom: 20px;
+}
+
+.project-new {
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.project-new-content {
+  margin: 0;
+  font-size: 15px;
+}
+
+.project-new-from {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 100;
+  color: #a6a6a6;
+}
