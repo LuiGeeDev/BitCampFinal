@@ -1,0 +1,50 @@
+.logo {  
+  margin: auto;
+  margin-top: 10px;
+  text-align: center;
+  width: 85%;
+  padding: 10px 0 20px 0;
+  border-bottom: 1px solid white;
+}
+
+.user-info-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.user-info-btn .btn {
+  width: 75px;
+}
+
+.user-info-btn button {
+  margin: auto;
+  margin-left: 5px;
+}
+
+.user-info-btn a {
+  margin: autp;
+  margin-right: 5px;
+}
+
+.user-info {
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0 20px 0;
+  border-bottom: 1px solid white;
+  width: 85%;
+}
+
+.user-profile {
+  text-align: center;
+}
+
+.user-photo {
+  border-radius: 32px;
+}
+
+.user-name {
+  font-size: 18px;
+  font-weight: 100;
+  line-height: 28px;
+}
