@@ -10,14 +10,20 @@
 */ -->
 <mapper namespace="kr.or.bit.dao.ArticleDao">
   <select id="selectAllArticle" resultType="kr.or.bit.dao.Article">     
-		SELECT A.ID, A.TITLE, A.CONTENT, A.TIME, A.VIEW_COUNT, A.ORIGINAL_ID, A.LEVEL,
-		A.UPDATED_TIME, A.ENABLE, A.USERNAME, B.BOARD_ID, B.BOARD_NAME, B.COURSE, B.BOARDTYPE
+<!-- 		SELECT A.ID, A.TITLE, A.CONTENT, A.TIME, A.VIEW_COUNT, A.ORIGINAL_ID, A.LEVEL,
+		A.UPDATED_TIME, A.ENABLE, A.USERNAME, B.BOARD_ID
 		FROM ARTICLE AS A
 		JOIN BOARD AS B
 		ON A.BOARD_ID = B.ID
-		WHERE BOARD_ID=#{board_id};
-  </select>
- 
+		WHERE BOARD_ID=#{board_id}; -->
+		SELECT * FROM ARTICLE WHERE BOARD_ID=#{board_id};
+  </select> 
+     <!-- void insertArticle(Article article); -->
+  	<insert id="insert">
+<!-- 		INSERT INTO ARTICLE(TITLE, CONTENT, USERNAME, TIME,) 
+		VALUES(#{seq} , #{title}, #{content}, 'bituser', SYSDATE, 0, #{fileSrc,jdbcType=VARCHAR},#{fileSrc2,jdbcType=VARCHAR})
+ -->	
+ 	</insert>
   
 </mapper>
 
