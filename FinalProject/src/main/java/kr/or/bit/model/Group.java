@@ -12,6 +12,7 @@ public class Group {
   private String leader_name;
   private int project_id;
   private List<Member> group_member;
+  
   public int getId() {
     return id;
   }

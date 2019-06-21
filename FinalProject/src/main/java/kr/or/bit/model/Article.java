@@ -9,16 +9,15 @@ public class Article {
   private String title;
   private String content;
   private Timestamp time;
-  private Date update_time;
+  private Date updated_time;
   private int view_count;
   private int original_id;
   private int level;
   private String username;
   private int board_id;
-  private Member write;
+  private Member writer;
   private List<String> tags;
   private ArticleOption option;
-  
   public int getId() {
     return id;
   }
@@ -43,11 +42,11 @@ public class Article {
   public void setTime(Timestamp time) {
     this.time = time;
   }
-  public Date getUpdate_time() {
-    return update_time;
+  public Date getUpdated_time() {
+    return updated_time;
   }
-  public void setUpdate_time(Date update_time) {
-    this.update_time = update_time;
+  public void setUpdated_time(Date updated_time) {
+    this.updated_time = updated_time;
   }
   public int getView_count() {
     return view_count;
@@ -79,11 +78,11 @@ public class Article {
   public void setBoard_id(int board_id) {
     this.board_id = board_id;
   }
-  public Member getWrite() {
-    return write;
+  public Member getWriter() {
+    return writer;
   }
-  public void setWrite(Member write) {
-    this.write = write;
+  public void setWriter(Member writer) {
+    this.writer = writer;
   }
   public List<String> getTags() {
     return tags;
@@ -97,5 +96,6 @@ public class Article {
   public void setOption(ArticleOption option) {
     this.option = option;
   }
+
   
 }
