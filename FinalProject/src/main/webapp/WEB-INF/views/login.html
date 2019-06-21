@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+  </head>
+  <body>
+    <div class="main">
+      <p th:if="${error}" class="fail">올바른 아이디나 비밀번호가 아닙니다.</p>
+      <form th:action="@{/login}" method="post">
+        <input type="text" name="username">
+        <input type="password" name="password">
+        <input type="submit" value="로그인">
+      </form>
+    </div>
+  </body>
+</html>

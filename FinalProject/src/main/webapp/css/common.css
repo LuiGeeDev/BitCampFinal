@@ -28,3 +28,6 @@
   flex: 1;
 }
 
+a:hover {
+  text-decoration: none;
+}
