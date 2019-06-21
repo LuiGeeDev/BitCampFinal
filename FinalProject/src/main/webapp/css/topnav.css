@@ -65,16 +65,14 @@ a:active {
 }
 
 button {
-  background: none;
   border: none;
+  background: none;
+}
+
+button:active, button:focus {
   outline: none;
 }
 
 button:active {
   transform: scale(0.92);
-  outline: none;
-}
-
-button:focus {
-  outline: none;
 }

@@ -116,7 +116,7 @@
         method: "post",
         url: "/ajax/news",
         success: function(data) {
-          const news = JSON.parse(data);
+          const news = JSON.parse(data.news);
           news.items.forEach(function(item) {
             const newsLink = $("<a>")
               .attr("href", item.link)
