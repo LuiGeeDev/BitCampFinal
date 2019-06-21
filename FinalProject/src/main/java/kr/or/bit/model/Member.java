@@ -8,7 +8,7 @@ public class Member {
   private String name;
   private String email;
   private int enabled;
-  private int class_id;
+  private int course_id;
   private String profile_photo;
   private String role;
   private List<String> scrap;
@@ -43,11 +43,11 @@ public class Member {
   public void setEnabled(int enabled) {
     this.enabled = enabled;
   }
-  public int getClass_id() {
-    return class_id;
+  public int getCourse_id() {
+    return course_id;
   }
-  public void setClass_id(int class_id) {
-    this.class_id = class_id;
+  public void setCourse_id(int course_id) {
+    this.course_id = course_id;
   }
   public String getProfile_photo() {
     return profile_photo;
