@@ -2,11 +2,12 @@ package kr.or.bit.model;
 
 import java.sql.Date;
 
-public class Comment {
+public class Timeline {
   private int id;
+  private String title;
   private String content;
-  private Date time;
-  private int article_id;
+  private Date event_date;
+  private int group_id;
   private String username;
   
   public int getId() {
@@ -15,23 +16,29 @@ public class Comment {
   public void setId(int id) {
     this.id = id;
   }
+  public String getTitle() {
+    return title;
+  }
+  public void setTitle(String title) {
+    this.title = title;
+  }
   public String getContent() {
     return content;
   }
   public void setContent(String content) {
     this.content = content;
   }
-  public Date getTime() {
-    return time;
+  public Date getEvent_date() {
+    return event_date;
   }
-  public void setTime(Date time) {
-    this.time = time;
+  public void setEvent_date(Date event_date) {
+    this.event_date = event_date;
   }
-  public int getArticle_id() {
-    return article_id;
+  public int getGroup_id() {
+    return group_id;
   }
-  public void setArticle_id(int article_id) {
-    this.article_id = article_id;
+  public void setGroup_id(int group_id) {
+    this.group_id = group_id;
   }
   public String getUsername() {
     return username;
