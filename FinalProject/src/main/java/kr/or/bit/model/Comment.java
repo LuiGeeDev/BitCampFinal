@@ -1,17 +1,15 @@
 package kr.or.bit.model;
 
-import java.sql.Date;
-import java.time.LocalDate;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Comment {
   private int id;
   private String content;
+  private Timestamp time;
   private int article_id;
   private String username;
-  private Date time;
-  private Date updatedTime;
-  private LocalDate timeLocal;
-  private LocalDate updatedTimeLocal;
+  private LocalDateTime localTime;
 
   public int getId() {
     return id;
@@ -27,6 +25,14 @@ public class Comment {
 
   public void setContent(String content) {
     this.content = content;
+  }
+
+  public Timestamp getTime() {
+    return time;
+  }
+
+  public void setTime(Timestamp time) {
+    this.time = time;
   }
 
   public int getArticle_id() {
@@ -45,35 +51,17 @@ public class Comment {
     this.username = username;
   }
 
-  public Date getTime() {
-    return time;
+  public LocalDateTime getLocalTime() {
+    return localTime;
   }
 
-  public void setTime(Date time) {
-    this.time = time;
+  public void setLocalTime(LocalDateTime localTime) {
+    this.localTime = localTime;
   }
 
-  public Date getUpdatedTime() {
-    return updatedTime;
-  }
-
-  public void setUpdatedTime(Date updatedTime) {
-    this.updatedTime = updatedTime;
-  }
-
-  public LocalDate getTimeLocal() {
-    return timeLocal;
-  }
-
-  public void setTimeLocal(LocalDate timeLocal) {
-    this.timeLocal = timeLocal;
-  }
-
-  public LocalDate getUpdatedTimeLocal() {
-    return updatedTimeLocal;
-  }
-
-  public void setUpdatedTimeLocal(LocalDate updatedTimeLocal) {
-    this.updatedTimeLocal = updatedTimeLocal;
+  @Override
+  public String toString() {
+    return "Comment [id=" + id + ", content=" + content + ", time=" + time + ", article_id=" + article_id
+        + ", username=" + username + ", localTime=" + localTime + "]";
   }
 }
