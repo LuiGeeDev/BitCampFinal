@@ -26,8 +26,6 @@ a[class^="carousel-control"] {
 }
 
 .news a:hover {
-  color: black;
-  text-decoration: none;
 }
 
 .news h6 {
@@ -61,6 +59,7 @@ a[class^="carousel-control"] {
 
 .recent-messages {
   margin: auto;
+  margin-right: 50px;
 }
 
 .message-sender-photo img {
@@ -116,10 +115,12 @@ a[class^="carousel-control"] {
 
 .my-project {
   margin: auto;
+  margin-left: 50px;
   border: 1px solid black;
   border-radius: 5px;
-  padding: 30px 50px 20px 25px;
+  padding: 30px 20px 20px 25px;
   position: relative;
+  width: 350px;
 }
 
 .d-day {
@@ -134,18 +135,23 @@ a[class^="carousel-control"] {
   margin-bottom: 20px;
 }
 
-.project-new {
-  margin: 0;
-  margin-bottom: 10px;
-}
-
 .project-new-content {
   margin: 0;
+  margin-top: 25px;
   font-size: 15px;
+  position: relative;
+  width: 100%;
+  color: #292929;
+  border-bottom: 2px solid transparent;
+}
+
+.project-new-content:hover {
+  border-bottom: 2px solid #F39B10;
 }
 
 .project-new-from {
-  margin: 0;
+  position: absolute;
+  right: 0;
   font-size: 13px;
   font-weight: 100;
   color: #a6a6a6;
