@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/security
 		https://www.springframework.org/schema/security/spring-security.xsd">
 
-  <beans:bean name="bcryptEncoder"
+  <beans:bean name="bCryptPasswordEncoder"
     class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
   <beans:bean id="userDetailsService"
@@ -50,6 +50,7 @@
         role-prefix=""
         users-by-username-query="select username, password, enabled from member where username = ?"
         authorities-by-username-query="select username, role from authorities where username = ?" />
+      <password-encoder ref="bCryptPasswordEncoder" />
     </authentication-provider>
   </authentication-manager>
 </beans:beans>
