@@ -10,6 +10,7 @@ public class Message {
   private int read;
   private String sender_name;
   private String receiver_name;
+  
   private LocalDateTime timeLocal;
 
   public int getId() {

@@ -1,8 +1,6 @@
 package kr.or.bit.model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,19 +9,20 @@ public class Article {
   private String title;
   private String content;
   private Timestamp time;
-  private LocalDateTime timeLocal;
   private Timestamp updated_time;
-  private LocalDateTime updatedTimeLocal;
   private int view_count;
   private int original_id;
   private int level;
   private int enable;
   private String username;
   private int board_id;
+  
+  private LocalDateTime timeLocal;
+  private LocalDateTime updatedTimeLocal;
   private Member writer;
   private List<String> tags;
   private ArticleOption option;
-
+  
   public int getId() {
     return id;
   }

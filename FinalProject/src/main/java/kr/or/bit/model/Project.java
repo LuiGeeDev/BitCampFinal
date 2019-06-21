@@ -10,6 +10,7 @@ public class Project {
   private Date end_date;
   private int season;
   private int class_id;
+  
   private LocalDate startDateLocal;
   private LocalDate endDateLocal;
 

@@ -10,6 +10,7 @@ public class Group {
   private String link3;
   private String leader_name;
   private int project_id;
+  
   private List<Member> groupMember;
 
   public int getId() {

@@ -10,6 +10,7 @@ public class Timeline {
   private Date event_date;
   private int group_id;
   private String username;
+
   private LocalDate eventDateLocal;
 
   public int getId() {

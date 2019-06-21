@@ -10,6 +10,7 @@ public class Member {
   private int enabled;
   private int course_id;
   private String profile_photo;
+  
   private String role;
   private List<String> scrap;
   

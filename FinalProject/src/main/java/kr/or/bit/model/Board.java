@@ -5,6 +5,7 @@ public class Board {
   private String board_name;
   private int boardtype;
   private int course_id;
+  
   private String typeName;
 
   public int getId() {

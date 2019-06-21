@@ -10,6 +10,7 @@ public class Comment {
   private Timestamp updated_time;
   private int article_id;
   private String username;
+  
   private LocalDateTime timeLocal;
   private LocalDateTime updatedTimeLocal;
 

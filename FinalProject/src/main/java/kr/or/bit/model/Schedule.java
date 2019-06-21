@@ -7,12 +7,13 @@ public class Schedule {
   private int id;
   private Date start_date;
   private Date end_date;
-  private LocalDate startDateLocal;
-  private LocalDate endDateLocal;
   private String content;
   private String color;
   private int group_id;
   private int course_id;
+  
+  private LocalDate startDateLocal;
+  private LocalDate endDateLocal;
 
   public int getId() {
     return id;
