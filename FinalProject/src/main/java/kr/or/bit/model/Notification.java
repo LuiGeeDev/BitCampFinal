@@ -1,6 +1,6 @@
 package kr.or.bit.model;
 
-public class Alram {
+public class Notification {
   private int id;
   private String content;
   private int checked;
