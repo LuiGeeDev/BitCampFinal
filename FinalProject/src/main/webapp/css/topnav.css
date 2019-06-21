@@ -13,7 +13,7 @@
   margin: 0 8px;
 }
 
-.top-nav a svg {
+.top-nav svg {
   color: #2D3E50;
 }
 
@@ -62,4 +62,19 @@ a:active {
 
 .notification {
   border-right: 1px solid #d6d6d6;
+}
+
+button {
+  background: none;
+  border: none;
+  outline: none;
+}
+
+button:active {
+  transform: scale(0.92);
+  outline: none;
+}
+
+button:focus {
+  outline: none;
 }

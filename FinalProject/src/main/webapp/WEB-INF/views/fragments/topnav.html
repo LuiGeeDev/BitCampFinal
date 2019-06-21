@@ -12,7 +12,9 @@
           <a href="#"><i class="fas fa-bell fa-lg"></i></a>
           <span class="count noti-count">5</span>
         </div>
-        <a href="../main.html" th:href="@{/logout}"><i class="fas fa-sign-out-alt fa-lg"></i></a>
+        <form th:action="@{/logout}" method="post">
+          <button type="submit"><i class="fas fa-sign-out-alt fa-lg"></i></button>
+        </form>
       </div>
     </div>
   </body>
