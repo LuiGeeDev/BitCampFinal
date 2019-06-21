@@ -9,8 +9,8 @@ public class Course {
   private Date end_date;
   private int subject;
   private int classroom_id;
-  private String classroom_name;
-  private String subject_name;
+  private String classroomName;
+  private String subjectName;
 
   public int getId() {
     return id;
@@ -60,26 +60,26 @@ public class Course {
     this.classroom_id = classroom_id;
   }
 
-  public String getClassroom_name() {
-    return classroom_name;
+  public String getClassroomName() {
+    return classroomName;
   }
 
-  public void setClassroom_name(String classroom_name) {
-    this.classroom_name = classroom_name;
+  public void setClassroomName(String classroomName) {
+    this.classroomName = classroomName;
   }
 
-  public String getSubject_name() {
-    return subject_name;
+  public String getSubjectName() {
+    return subjectName;
   }
 
-  public void setSubject_name(String subject_name) {
-    this.subject_name = subject_name;
+  public void setSubjectName(String subjectName) {
+    this.subjectName = subjectName;
   }
 
   @Override
   public String toString() {
     return "Course [id=" + id + ", course_name=" + course_name + ", start_date=" + start_date + ", end_date=" + end_date
-        + ", subject=" + subject + ", classroom_id=" + classroom_id + ", classroom_name=" + classroom_name
-        + ", subject_name=" + subject_name + "]";
+        + ", subject=" + subject + ", classroom_id=" + classroom_id + ", classroomName=" + classroomName
+        + ", subjectName=" + subjectName + "]";
   }
 }
