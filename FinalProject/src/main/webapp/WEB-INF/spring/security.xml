@@ -36,6 +36,11 @@
       remember-me-cookie="remember_cookie" 
       user-service-ref="userDetailsService"/>
     <csrf disabled="true" />
+    <session-management
+      invalid-session-url="/login"
+      >
+      <concurrency-control max-sessions="1" expired-url="/login" />
+    </session-management>
   </http>
 
   <authentication-manager>
