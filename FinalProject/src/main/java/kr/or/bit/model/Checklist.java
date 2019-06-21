@@ -1,15 +1,18 @@
 package kr.or.bit.model;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
+
+import com.google.protobuf.Timestamp;
 
 public class Checklist {
   private int id;
   private String content;
   private int checked;
-  private Date time;
+  private Timestamp time;
   private String writer_username;
   private String checker_username;
   private int group_id;
+  private LocalDateTime timeLocal;
 
   public int getId() {
     return id;
@@ -35,11 +38,11 @@ public class Checklist {
     this.checked = checked;
   }
 
-  public Date getTime() {
+  public Timestamp getTime() {
     return time;
   }
 
-  public void setTime(Date time) {
+  public void setTime(Timestamp time) {
     this.time = time;
   }
 
@@ -67,10 +70,18 @@ public class Checklist {
     this.group_id = group_id;
   }
 
+  public LocalDateTime getTimeLocal() {
+    return timeLocal;
+  }
+
+  public void setTimeLocal(LocalDateTime timeLocal) {
+    this.timeLocal = timeLocal;
+  }
+
   @Override
   public String toString() {
     return "Checklist [id=" + id + ", content=" + content + ", checked=" + checked + ", time=" + time
         + ", writer_username=" + writer_username + ", checker_username=" + checker_username + ", group_id=" + group_id
-        + "]";
+        + ", timeLocal=" + timeLocal + "]";
   }
 }

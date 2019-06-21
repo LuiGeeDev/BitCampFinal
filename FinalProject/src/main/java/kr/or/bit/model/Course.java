@@ -1,6 +1,7 @@
 package kr.or.bit.model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class Course {
   private int id;
@@ -11,6 +12,8 @@ public class Course {
   private int classroom_id;
   private String classroomName;
   private String subjectName;
+  private LocalDate startDate;
+  private LocalDate endDate;
 
   public int getId() {
     return id;
@@ -76,10 +79,26 @@ public class Course {
     this.subjectName = subjectName;
   }
 
+  public LocalDate getStartDate() {
+    return startDate;
+  }
+
+  public void setStartDate(LocalDate startDate) {
+    this.startDate = startDate;
+  }
+
+  public LocalDate getEndDate() {
+    return endDate;
+  }
+
+  public void setEndDate(LocalDate endDate) {
+    this.endDate = endDate;
+  }
+
   @Override
   public String toString() {
     return "Course [id=" + id + ", course_name=" + course_name + ", start_date=" + start_date + ", end_date=" + end_date
         + ", subject=" + subject + ", classroom_id=" + classroom_id + ", classroomName=" + classroomName
-        + ", subjectName=" + subjectName + "]";
+        + ", subjectName=" + subjectName + ", startDate=" + startDate + ", endDate=" + endDate + "]";
   }
 }

@@ -10,8 +10,8 @@ public class Project {
   private Date end_date;
   private int season;
   private int class_id;
-  private LocalDate startLocaldate;
-  private LocalDate endLocaldate;
+  private LocalDate startLocalDate;
+  private LocalDate endLocalDate;
 
   public int getId() {
     return id;
@@ -61,26 +61,26 @@ public class Project {
     this.class_id = class_id;
   }
 
-  public LocalDate getStartLocaldate() {
-    return startLocaldate;
+  public LocalDate getStartLocalDate() {
+    return startLocalDate;
   }
 
-  public void setStartLocaldate(LocalDate startLocaldate) {
-    this.startLocaldate = startLocaldate;
+  public void setStartLocalDate(LocalDate startLocalDate) {
+    this.startLocalDate = startLocalDate;
   }
 
-  public LocalDate getEndLocaldate() {
-    return endLocaldate;
+  public LocalDate getEndLocalDate() {
+    return endLocalDate;
   }
 
-  public void setEndLocaldate(LocalDate endLocaldate) {
-    this.endLocaldate = endLocaldate;
+  public void setEndLocalDate(LocalDate endLocalDate) {
+    this.endLocalDate = endLocalDate;
   }
 
   @Override
   public String toString() {
     return "Project [id=" + id + ", project_name=" + project_name + ", start_date=" + start_date + ", end_date="
-        + end_date + ", season=" + season + ", class_id=" + class_id + ", startLocaldate=" + startLocaldate
-        + ", endLocaldate=" + endLocaldate + "]";
+        + end_date + ", season=" + season + ", class_id=" + class_id + ", startLocalDate=" + startLocalDate
+        + ", endLocalDate=" + endLocalDate + "]";
   }
 }
