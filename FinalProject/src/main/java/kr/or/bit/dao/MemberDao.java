@@ -14,10 +14,6 @@ import kr.or.bit.model.Member;
 * 
 */
 public interface MemberDao {
-  List<Member> selectAllMembers();
-
-  Member selectMember(String id);
-
   void join(Member member);
 
   void insertMember(Member member);
@@ -28,5 +24,5 @@ public interface MemberDao {
 
   List<Member> selectAllMember();
 
-  Member selectIdMember(String id);
+  Member selectMemberById(String id);
 }

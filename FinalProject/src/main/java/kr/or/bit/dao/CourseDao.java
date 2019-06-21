@@ -12,13 +12,11 @@ import kr.or.bit.model.Course;
 * 
 */
 public interface CourseDao {
-  
-  public void insertCourse(Course course);
-  
-  public void updateCourse(int id); // CourseDTO의 id
-  
-  public void deleteCourse(int id);
-  
-  public void selectAllCourse();
-  
+  void insertCourse(Course course);
+
+  void updateCourse(int id); // CourseDTO의 id
+
+  void deleteCourse(int id);
+
+  void selectAllCourse(int page);
 }

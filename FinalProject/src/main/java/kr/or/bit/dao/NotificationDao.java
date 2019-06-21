@@ -1,5 +1,7 @@
 package kr.or.bit.dao;
 
+import java.util.List;
+
 import kr.or.bit.model.Notification;
 
 /*
@@ -18,9 +20,9 @@ public interface NotificationDao {
 
   void deleteNotification(int id);
 
-  void selectAllNotification(int id);
+  List<Notification> selectAllNotification(int id);
 
-  void selectAllNewNotification(int id);
+  List<Notification> selectAllNewNotification(int id);
 
-  void selectAllOldNotification(int id);
+  List<Notification> selectAllOldNotification(int id);
 }

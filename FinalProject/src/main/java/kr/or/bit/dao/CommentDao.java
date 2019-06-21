@@ -17,18 +17,18 @@ import kr.or.bit.model.Member;
 */
 public interface CommentDao {
   List<Comment> getComments(int boardId);
+
   void writeComment(Comment comment);
 
-  public void insertComment(Comment comment, int id); // ArticleDTO의 id[글번호]
-  
-  public void updateComment(Comment comment, int articleId);
-  
-  public void deleteComment(int id);
-  
-  public void selectAllComment();
-  
-  public void insertVote(Member member, ArticleOption article);
-  
-  public void deleteVote(Member member, ArticleOption article);
-  
+  void insertComment(Comment comment, int id); // ArticleDTO의 id[글번호]
+
+  void updateComment(Comment comment, int articleId);
+
+  void deleteComment(int id);
+
+  void selectAllComment();
+
+  void insertVote(Member member, ArticleOption article);
+
+  void deleteVote(Member member, ArticleOption article);
 }

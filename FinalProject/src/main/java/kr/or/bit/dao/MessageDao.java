@@ -1,5 +1,7 @@
 package kr.or.bit.dao;
 
+import java.util.List;
+
 import kr.or.bit.model.Message;
 
 /*
@@ -16,11 +18,11 @@ public interface MessageDao {
 
   void deleteMessage(int id);
 
-  void selectAllMessage(String receiver_username);
+  List<Message> selectAllMessage(String receiver_username);
 
-  void selectIdMessage(String sender_username);
+  void selectMessageById(String sender_username);
 
-  void selectOldMessage(String receiver_username);
+  void selectReadMessage(String receiver_username);
 
-  void selectNewMessage(String receiver_username);
+  void selectUnreadMessage(String receiver_username);
 }
