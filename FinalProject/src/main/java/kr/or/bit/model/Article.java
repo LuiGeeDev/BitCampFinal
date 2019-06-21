@@ -13,11 +13,13 @@ public class Article {
   private int view_count;
   private int original_id;
   private int level;
+  private int enable;
   private String username;
   private int board_id;
   private Member writer;
   private List<String> tags;
   private ArticleOption option;
+  
   public int getId() {
     return id;
   }
@@ -96,6 +98,13 @@ public class Article {
   public void setOption(ArticleOption option) {
     this.option = option;
   }
+  public int getEnable() {
+    return enable;
+  }
+  public void setEnable(int enable) {
+    this.enable = enable;
+  }
+  
 
   
 }
