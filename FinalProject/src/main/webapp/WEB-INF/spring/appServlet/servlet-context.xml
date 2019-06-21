@@ -59,4 +59,6 @@
     <property name="characterEncoding" value="UTF-8" />
     <property name="cacheable" value="false" />
   </bean>
+
+  <bean name="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
 </beans>
