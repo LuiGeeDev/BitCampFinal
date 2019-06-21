@@ -7,9 +7,11 @@ public class Comment {
   private int id;
   private String content;
   private Timestamp time;
+  private Timestamp updated_time;
   private int article_id;
   private String username;
-  private LocalDateTime localTime;
+  private LocalDateTime timeLocal;
+  private LocalDateTime updatedTimeLocal;
 
   public int getId() {
     return id;
@@ -35,6 +37,14 @@ public class Comment {
     this.time = time;
   }
 
+  public Timestamp getUpdated_time() {
+    return updated_time;
+  }
+
+  public void setUpdated_time(Timestamp updated_time) {
+    this.updated_time = updated_time;
+  }
+
   public int getArticle_id() {
     return article_id;
   }
@@ -51,17 +61,19 @@ public class Comment {
     this.username = username;
   }
 
-  public LocalDateTime getLocalTime() {
-    return localTime;
+  public LocalDateTime getTimeLocal() {
+    return timeLocal;
   }
 
-  public void setLocalTime(LocalDateTime localTime) {
-    this.localTime = localTime;
+  public void setTimeLocal(LocalDateTime timeLocal) {
+    this.timeLocal = timeLocal;
   }
 
-  @Override
-  public String toString() {
-    return "Comment [id=" + id + ", content=" + content + ", time=" + time + ", article_id=" + article_id
-        + ", username=" + username + ", localTime=" + localTime + "]";
+  public LocalDateTime getUpdatedTimeLocal() {
+    return updatedTimeLocal;
+  }
+
+  public void setUpdatedTimeLocal(LocalDateTime updatedTimeLocal) {
+    this.updatedTimeLocal = updatedTimeLocal;
   }
 }

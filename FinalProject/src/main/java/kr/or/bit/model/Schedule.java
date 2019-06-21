@@ -7,8 +7,8 @@ public class Schedule {
   private int id;
   private Date start_date;
   private Date end_date;
-  private LocalDate startDate;
-  private LocalDate endDate;
+  private LocalDate startDateLocal;
+  private LocalDate endDateLocal;
   private String content;
   private String color;
   private int group_id;
@@ -38,20 +38,20 @@ public class Schedule {
     this.end_date = end_date;
   }
 
-  public LocalDate getStartDate() {
-    return startDate;
+  public LocalDate getStartDateLocal() {
+    return startDateLocal;
   }
 
-  public void setStartDate(LocalDate startDate) {
-    this.startDate = startDate;
+  public void setStartDateLocal(LocalDate startDateLocal) {
+    this.startDateLocal = startDateLocal;
   }
 
-  public LocalDate getEndDate() {
-    return endDate;
+  public LocalDate getEndDateLocal() {
+    return endDateLocal;
   }
 
-  public void setEndDate(LocalDate endDate) {
-    this.endDate = endDate;
+  public void setEndDateLocal(LocalDate endDateLocal) {
+    this.endDateLocal = endDateLocal;
   }
 
   public String getContent() {
@@ -84,12 +84,5 @@ public class Schedule {
 
   public void setCourse_id(int course_id) {
     this.course_id = course_id;
-  }
-
-  @Override
-  public String toString() {
-    return "Schedule [id=" + id + ", start_date=" + start_date + ", end_date=" + end_date + ", startDate=" + startDate
-        + ", endDate=" + endDate + ", content=" + content + ", color=" + color + ", group_id=" + group_id
-        + ", course_id=" + course_id + "]";
   }
 }

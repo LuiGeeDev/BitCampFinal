@@ -12,8 +12,8 @@ public class Article {
   private String content;
   private Timestamp time;
   private LocalDateTime timeLocal;
-  private Date updated_time;
-  private LocalDate updatedTime;
+  private Timestamp updated_time;
+  private LocalDateTime updatedTimeLocal;
   private int view_count;
   private int original_id;
   private int level;
@@ -64,20 +64,20 @@ public class Article {
     this.timeLocal = timeLocal;
   }
 
-  public Date getUpdated_time() {
+  public Timestamp getUpdated_time() {
     return updated_time;
   }
 
-  public void setUpdated_time(Date updated_time) {
+  public void setUpdated_time(Timestamp updated_time) {
     this.updated_time = updated_time;
   }
 
-  public LocalDate getUpdatedTime() {
-    return updatedTime;
+  public LocalDateTime getUpdatedTimeLocal() {
+    return updatedTimeLocal;
   }
 
-  public void setUpdatedTime(LocalDate updatedTime) {
-    this.updatedTime = updatedTime;
+  public void setUpdatedTimeLocal(LocalDateTime updatedTimeLocal) {
+    this.updatedTimeLocal = updatedTimeLocal;
   }
 
   public int getView_count() {
@@ -150,13 +150,5 @@ public class Article {
 
   public void setOption(ArticleOption option) {
     this.option = option;
-  }
-
-  @Override
-  public String toString() {
-    return "Article [id=" + id + ", title=" + title + ", content=" + content + ", time=" + time + ", timeLocal="
-        + timeLocal + ", updated_time=" + updated_time + ", updatedTime=" + updatedTime + ", view_count=" + view_count
-        + ", original_id=" + original_id + ", level=" + level + ", enable=" + enable + ", username=" + username
-        + ", board_id=" + board_id + ", writer=" + writer + ", tags=" + tags + ", option=" + option + "]";
   }
 }
