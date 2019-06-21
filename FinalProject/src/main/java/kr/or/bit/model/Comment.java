@@ -1,11 +1,11 @@
 package kr.or.bit.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Comment {
   private int id;
   private String content;
-  private Date time;
+  private Timestamp time;
   private int article_id;
   private String username;
   
@@ -21,10 +21,10 @@ public class Comment {
   public void setContent(String content) {
     this.content = content;
   }
-  public Date getTime() {
+  public Timestamp getTime() {
     return time;
   }
-  public void setTime(Date time) {
+  public void setTime(Timestamp time) {
     this.time = time;
   }
   public int getArticle_id() {
@@ -39,4 +39,7 @@ public class Comment {
   public void setUsername(String username) {
     this.username = username;
   }
+  
+  
+  
 }
