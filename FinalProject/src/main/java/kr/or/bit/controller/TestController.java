@@ -15,24 +15,21 @@ import kr.or.bit.model.Checklist;
 
 @Controller
 public class TestController {
-  
   @Autowired
   private SqlSession sqlSession;
-  
-  
+
   @GetMapping("/checklist")
   public String showChecklist(Model model) {
     ChecklistDao checklistdao = sqlSession.getMapper(ChecklistDao.class);
-    
-    List<Checklist> checklist =checklistdao.selectAllChecklist();
+    List<Checklist> checklist = checklistdao.selectAllChecklist();
     System.out.println(checklist);
     model.addAttribute("checklist", checklist);
     return "checklist";
   }
-  
-<<<<<<< HEAD
+
   @PostMapping("/checklistinput")
-  public String insertChecklist(Model model, @RequestParam("content") String content, @RequestParam("writer_username") String writer_username) {
+  public String insertChecklist(Model model, @RequestParam("content") String content,
+      @RequestParam("writer_username") String writer_username) {
     System.out.println(content);
     ChecklistDao checklistdao = sqlSession.getMapper(ChecklistDao.class);
     Checklist checklist = new Checklist();
@@ -41,13 +38,7 @@ public class TestController {
     checklist.setGroup_id(1);
     checklist.setWriter_username(writer_username);
     checklistdao.insertChecklist(checklist);
-    
     System.out.println(checklist.toString());
-    
-    
     return "checklist";
   }
-=======
-  
->>>>>>> 7972cf5d6cc70e8e976e8fe7514c3b211229337a
 }
