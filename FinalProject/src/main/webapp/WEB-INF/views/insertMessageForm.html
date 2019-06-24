@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+    <link rel="stylesheet" th:href="@{/css/home.css}" />
+  </head>
+  <body>
+    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+    <div class="main" th:fragment="main">
+       <div>
+      	<form th:action="@{/insertMessageForm}" method="get">
+      	
+      	
+      	<input type="text" id="mes" name="content">
+      	<input type="text" id="mes2" name="sender_username">
+      	<input type="text" id="mes3" name="receiver_username">
+      	<input type="submit" value="전송하기">
+      	</form>
+      </div>
+    </div>
+    <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
+    <script th:fragment="script">
+      console.log("Hello, world!");
+    </script>
+  </body>
+</html>

@@ -17,6 +17,7 @@
         <p th:text="*{sender_username}"></p>
       </div>
       <hr>
+      
       <h1>selectAllMessage</h1>
       <div class="iteration" th:each="message : ${list}">
         아이디 : <p th:text="${message.id}"></p>
@@ -55,6 +56,8 @@
         보낸 사람 : <p th:text="${un.sender_username}"></p>
         받는 사람 : <p th:text="${un.receiver_username}"></p>
       </div>
+    	
+    	
     	
     	</div>
       
