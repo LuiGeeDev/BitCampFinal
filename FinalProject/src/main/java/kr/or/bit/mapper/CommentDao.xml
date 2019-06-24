@@ -3,18 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!--   public void insertComment(Comment comment, int id); // ArticleDTO의 id[글번호]
-  
-  public void updateComment(Comment comment, int articleId);
-  
-  public void deleteComment(int id);
-  
-  public void selectAllComment();
-  
-  public void insertVote(Member member, ArticleOption article);
-  
-  public void deleteVote(Member member, ArticleOption article); -->
-  
+
 
 <mapper namespace="dao.CommentDao">
 
