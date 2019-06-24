@@ -12,3 +12,9 @@
   margin-right: 0;
   margin-left: 0;
 }
+.modal-content{
+  width: 30%;
+}
+#modal.modal.modal-center.fade.show{
+  margin : 50px 0px 0px 600px;
+}
