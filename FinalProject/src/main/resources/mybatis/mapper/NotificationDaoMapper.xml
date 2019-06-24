@@ -3,48 +3,39 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
-
 <mapper namespace="kr.or.bit.dao.NotificationDao">
-
-	<select id="insertNotification">
-		INSERT INTO notification (content, checked, username)
-		VALUES(#{content}, #{checked}, #{username})
-	</select>
-
-	<update id="updateNotification">
-		UPDATE notification
-		SET checked = 1
-		WHERE id = #{id}
-	</update>
-
-
-	<delete id="deleteNotification">
-		DELETE
-		FROM notification
-		WHERE id = #{id}
-	</delete>
-
-	<select id="selectAllNotification" resultType="kr.or.bit.model.Notification">
-		SELECT id, content, checked, username
-		FROM notification
-		WHERE username = #{username}
-	</select>
-
-	<select id="selectAllNewNotification" resultType="kr.or.bit.model.Notification">
-		SELECT id, content, checked, username
-		FROM notification
-		WHERE username = #{username} AND checked = 0
-	</select>
-
-	<select id="selectAllOldNotification" resultType="kr.or.bit.model.Notification">
-		SELECT id, content, checked, username
-		FROM notification
-		WHERE username = #{username} AND checked = 1
-	</select>
-
-
-
-
+  <select id="insertNotification">
+    INSERT INTO notification (content, checked,
+    username)
+    VALUES(#{content}, #{checked}, #{username})
+  </select>
+  <update id="updateNotification">
+    UPDATE notification
+    SET checked = 1
+    WHERE id = #{id}
+  </update>
+  <delete id="deleteNotification">
+    DELETE
+    FROM notification
+    WHERE id = #{id}
+  </delete>
+  <select id="selectAllNotification"
+    resultType="kr.or.bit.model.Notification">
+    SELECT id, content, checked, username
+    FROM notification
+    WHERE username = #{username}
+  </select>
+  <select id="selectAllNewNotification"
+    resultType="kr.or.bit.model.Notification">
+    SELECT id, content, checked, username
+    FROM notification
+    WHERE username = #{username} AND checked = 0
+  </select>
+  <select id="selectAllOldNotification"
+    resultType="kr.or.bit.model.Notification">
+    SELECT id, content, checked, username
+    FROM notification
+    WHERE username = #{username} AND checked = 1
+  </select>
 </mapper>
   
