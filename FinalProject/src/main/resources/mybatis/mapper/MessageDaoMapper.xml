@@ -5,21 +5,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 
-<mapper namespace="dao.MessageDao">
+<mapper namespace="kr.or.bit.dao.MessageDao">
 
-	<select id="insertMessage">
+	<insert id="insertMessage">
 	INSERT INTO message (content, time, checked, sender_username, receiver_username)
 	VALUES(#{content}, NOW(), #{checked}, #{sender_username}, #{receiver_username})
 	
 	
-	</select>
+	</insert>
 
 
 	<delete id="deleteMessage">
 	DELETE FROM MESSAGE WHERE id = #{id}
 	</delete>
 	
-	<select id="selectAllMessage">
+	<select id="selectAllMessage" resultType="kr.or.bit.model.Message">
 	SELECT id, content, time, checked, sender_username, receiver_username
 	FROM message WHERE receiver_username = #{receiver_username}
 	</select>

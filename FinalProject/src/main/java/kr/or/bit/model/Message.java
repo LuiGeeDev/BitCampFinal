@@ -1,6 +1,6 @@
 package kr.or.bit.model;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Message {
@@ -8,9 +8,8 @@ public class Message {
   private String content;
   private Timestamp time;
   private int read;
-  private String sender_name;
-  private String receiver_name;
-  
+  private String sender_username;
+  private String receiver_username;
   private LocalDateTime timeLocal;
 
   public int getId() {
@@ -45,20 +44,20 @@ public class Message {
     this.read = read;
   }
 
-  public String getSender_name() {
-    return sender_name;
+  public String getSender_username() {
+    return sender_username;
   }
 
-  public void setSender_name(String sender_name) {
-    this.sender_name = sender_name;
+  public void setSender_username(String sender_username) {
+    this.sender_username = sender_username;
   }
 
-  public String getReceiver_name() {
-    return receiver_name;
+  public String getReceiver_username() {
+    return receiver_username;
   }
 
-  public void setReceiver_name(String receiver_name) {
-    this.receiver_name = receiver_name;
+  public void setReceiver_username(String receiver_username) {
+    this.receiver_username = receiver_username;
   }
 
   public LocalDateTime getTimeLocal() {

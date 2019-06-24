@@ -11,7 +11,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 */ -->
 <mapper namespace="kr.or.bit.dao.CommentDao">
   <select id="selectAllComment" resultType="kr.or.bit.model.Comment">     
-	select * from comment where article_id=#{article_id}
+	select * 
+	from comment where article_id=#{article_id}
   </select> 
   <insert id="insertComment">
  	insert into comment(content, time, updated_time, article_id, username)
@@ -26,6 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     content=#{content}
     where id=#{id}
   </update>
+  
   <insert id="insertVote">
     insert into vote(username, comment_id)
     values (#{username}, #{comment_id})

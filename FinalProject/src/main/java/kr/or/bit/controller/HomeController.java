@@ -24,7 +24,7 @@ public class HomeController {
     String username = userDetails.getUsername();
     
     Member user = memberDao.selectMemberByUsername(username);
-	  model.addAttribute("user", user);
+	model.addAttribute("user", user);
     return "main";
   }
 
