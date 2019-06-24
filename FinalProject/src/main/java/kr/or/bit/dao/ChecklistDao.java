@@ -1,5 +1,7 @@
 package kr.or.bit.dao;
 
+import java.util.List;
+
 import kr.or.bit.model.Checklist;
 
 public interface ChecklistDao {
@@ -9,5 +11,5 @@ public interface ChecklistDao {
 
   void deleteChecklist(int id);
 
-  Checklist selectAllChecklist(int group_id);
+  List<Checklist> selectAllChecklist();
 }
