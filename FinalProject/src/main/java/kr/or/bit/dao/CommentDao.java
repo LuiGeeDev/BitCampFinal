@@ -2,7 +2,7 @@ package kr.or.bit.dao;
 
 import java.util.List;
 
-import kr.or.bit.model.ArticleOption;
+import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Member;
 
@@ -15,14 +15,17 @@ import kr.or.bit.model.Member;
 * @description: CommentDao를 통해서 Comment CRUD를 이용한다
 * 
 */
-public interface CommentDao {
-  void insertComment(Comment comment, int id); // ArticleDTO의 id[글번호]
+public interface CommentDao { 
+  
+  List<Comment> selectAllComment(int article_id);
+  
+  void insertComment(Comment comment); // ArticleDTO의 id[글번호]
 
-  void updateComment(Comment comment, int articleId);
+  void updateComment(Comment comment);
 
   void deleteComment(int id);
 
-  void insertVote(Member member, ArticleOption article);
+  void insertVote(String username, int id);
 
-  void deleteVote(Member member, ArticleOption article);
+  void deleteVote(String username, int id);
 }

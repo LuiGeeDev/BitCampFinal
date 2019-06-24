@@ -38,7 +38,7 @@
   color:#3F51B5;
 }
 
-a:active {
+svg:active {
   transform: scale(0.92);
 }
 
@@ -75,4 +75,17 @@ button:active, button:focus {
 
 button:active {
   transform: scale(0.92);
+}
+
+.notice {
+  padding: 3px 10px;
+  border-bottom: 1px solid gray;
+}
+
+.notice p {
+  margin-bottom: 5px;
+}
+
+#notices {
+  display: none;
 }

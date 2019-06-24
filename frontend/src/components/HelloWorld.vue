@@ -40,6 +40,7 @@ export default {
         axios.get('/axios/addTodo')
         .then((response)=>{
           if(this.todo !=""){
+              console.log(response.data.vote.username);
               this.todolist.push({todo:this.todo, done:false});
               this.todo="";
           }

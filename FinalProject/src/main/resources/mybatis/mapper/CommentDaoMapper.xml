@@ -10,14 +10,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 * 
 */ -->
 <mapper namespace="kr.or.bit.dao.CommentDao">
-  <insert id="writeComment">
-    INSERT INTO COMMENT
-    VALUES (#{writer}, #{content}, #{boardId})
+  <select id="selectAllComment" resultType="kr.or.bit.model.Comment">     
+	select * from comment where article_id=#{article_id}
+  </select> 
+  <insert id="insertComment">
+ 	insert into comment(content, time, updated_time, article_id, username)
+ 	values (#{content}, now(), now(), #{article_id}, #{username})
   </insert>
-  <select id="getComments" resultType="kr.or.bit.model.Comment">
-    SELECT writer, content, board_id
-    FROM COMMENT
-    WHERE board_id = #{boardId}
-  </select>
+  <delete id="deleteComment">
+    delete comment where id=#{id}
+  </delete>
+  <update id="updateComment" parameterType="kr.or.bit.model.Comment">
+    update comment
+    set updated_time=now(),
+    content=#{content}
+    where id=#{id}
+  </update>
+  <insert id="insertVote">
+    insert into vote(username, comment_id)
+    values (#{username}, #{comment_id})
+  </insert>
+   <delete id="deleteVote">
+    delete vote where id=#{id}
+  </delete>
 </mapper>
-  
