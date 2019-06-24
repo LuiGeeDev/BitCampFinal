@@ -32,12 +32,8 @@ public class HomeController {
     String username = userDetails.getUsername();
     
     Member user = memberDao.selectMemberByUsername(username);
-    int unreadMessage = messageDao.selectUnreadMessage(username).size();
-    int unreadNotice = notificationDao.selectAllNewNotification(username).size();
         
 	  model.addAttribute("user", user);
-	  model.addAttribute("unreadMessage", unreadMessage);
-	  model.addAttribute("unreadNotice", unreadNotice);
 	  
     return "main";
   }
