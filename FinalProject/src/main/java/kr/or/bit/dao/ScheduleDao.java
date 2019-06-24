@@ -18,7 +18,7 @@ import kr.or.bit.model.Schedule;
 public interface ScheduleDao {
   void insertSchedule(Schedule schedule);
 
-  void updateSchedule(Schedule Schedule, int id);
+  void updateSchedule(Schedule schedule, int id);
 
   void deleteSchedule(int id);
 

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="dao.MessageDao">
+
+	<select id="insertMessage">
+	INSERT INTO message (content, time, checked, sender_username, receiver_username)
+	VALUES(#{content}, NOW(), #{checked}, #{sender_username}, #{receiver_username})
+	
+	
+	</select>
+
+
+	<delete id="deleteMessage">
+	DELETE FROM MESSAGE WHERE id = #{id}
+	</delete>
+	
+	<select id="selectAllMessage">
+	SELECT id, content, time, checked, sender_username, receiver_username
+	FROM message WHERE receiver_username = #{receiver_username}
+	</select>
+	
+	<select id="selectMessageById">
+	SELECT id, content, time, checked, sender_username, receiver_username
+	FROM message WHERE sender_username = #{sender_username}
+	</select>
+	
+	<select id="selectReadMessage">
+	SELECT id, content, time, checked, sender_username, receiver_username
+	FROM message WHERE receiver_username = #{receiver_username} and checked = 1
+	</select>
+	
+	<select id="selectUnreadMessage">
+	SELECT id, content, time, checked, sender_username, receiver_username
+	FROM message WHERE receiver_username = #{receiver_username} and checked = 0
+	</select>
+	
+	
+
+
+
+
+
+
+</mapper>
+  

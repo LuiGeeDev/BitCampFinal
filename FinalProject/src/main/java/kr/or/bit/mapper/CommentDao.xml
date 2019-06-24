@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="dao.CommentDao">
+
+  <insert id="insert">
+  <selectKey order="BEFORE" keyProperty="seq" resultType="String">
+    SELECT MAX(TO_NUMBER(SEQ))+1 FROM NOTICES
+  </selectKey>
+	INSERT INTO COMMENT() 
+	VALUES(#{seq}, #{title}, #{content}, 'bituser', SYSDATE, 0, #{fileSrc,jdbcType=VARCHAR}, #{fileSrc2,jdbcType=VARCHAR})
+  </insert>
+
+
+</mapper>
+  

@@ -4,15 +4,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.or.bit.dao.MemberDao">
-  <select id="selectAllMembers" resultType="kr.or.bit.model.Member">
-    SELECT *
-    FROM MEMBER
-  </select>
-  <select id="selectMemberByUsername" resultType="kr.or.bit.model.Member">
-    SELECT username, password, name, email, profile_photo  
-    FROM MEMBER
-    WHERE username = #{username}
-  </select>
+	<insert id="insertMember" parameterType="kr.or.bit.model.Member">
+		INSERT INTO member(username, password, name, email, enabled, profile_photo,course_id)
+		VALUES(#{username}, #{password}, #{name}, #{email}, #{enabled},#{profile_photo}, #{course_id})
+	</insert>
+	<update id="updateMember" parameterType="kr.or.bit.model.Member">
+		UPDATE member
+		SET password=#{password}, name=#{name}, email=#{email}, profile_photo=#{profile_photo}
+		WHERE username=#{username}
+	</update>
+	<delete id="deleteMember">
+		DELETE FROM member
+		WHERE username=#{username}
+	</delete>
+	<select id="selectAllMembers" resultType="kr.or.bit.model.Member">
+		SELECT username, password, name, email, profile_photo
+		FROM MEMBER
+	</select>
+	<select id="selectMemberByUsername" resultType="kr.or.bit.model.Member">
+		SELECT username, password, name, email, profile_photo
+		FROM MEMBER
+		WHERE username = #{username}
+	</select>
 </mapper>
 
 

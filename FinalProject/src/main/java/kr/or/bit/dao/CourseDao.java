@@ -1,5 +1,7 @@
 package kr.or.bit.dao;
 
+import java.util.List;
+
 import kr.or.bit.model.Course;
 
 /*
@@ -14,9 +16,9 @@ import kr.or.bit.model.Course;
 public interface CourseDao {
   void insertCourse(Course course);
 
-  void updateCourse(int id); // CourseDTO의 id
+  void updateCourse(Course course); // CourseDTO의 id
 
   void deleteCourse(int id);
 
-  void selectAllCourse(int page);
+  List<Course> selectAllCourse();
 }
