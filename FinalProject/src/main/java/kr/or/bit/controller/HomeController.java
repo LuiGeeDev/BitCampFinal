@@ -1,5 +1,7 @@
 package kr.or.bit.controller;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +16,7 @@ import kr.or.bit.dao.MessageDao;
 import kr.or.bit.dao.NotificationDao;
 import kr.or.bit.dao.ScheduleDao;
 import kr.or.bit.model.Member;
+import kr.or.bit.model.Message;
 
 @Controller
 public class HomeController {
@@ -28,16 +31,22 @@ public class HomeController {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
     
+    MessageDao messageDao2 = sqlSession.getMapper(MessageDao.class);
+    
     UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     String username = userDetails.getUsername();
     
     Member user = memberDao.selectMemberByUsername(username);
     int unreadMessage = messageDao.selectUnreadMessage(username).size();
     int unreadNotice = notificationDao.selectAllNewNotification(username).size();
-        
+    
+    System.out.println(messageDao2.selectMainMessage(username));
+    List<Message> selectMainMessage = messageDao2.selectMainMessage(username);
+    
 	  model.addAttribute("user", user);
 	  model.addAttribute("unreadMessage", unreadMessage);
 	  model.addAttribute("unreadNotice", unreadNotice);
+	  model.addAttribute("selectMainMessage", selectMainMessage);
 	  
     return "main";
   }
