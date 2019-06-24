@@ -156,3 +156,12 @@ a[class^="carousel-control"] {
   font-weight: 100;
   color: #a6a6a6;
 }
+
+.videos {
+  margin: auto;
+}
+
+.video {
+  display: flex;
+  width: 300px;
+}

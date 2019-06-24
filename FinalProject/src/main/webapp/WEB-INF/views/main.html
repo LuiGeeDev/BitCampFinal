@@ -5,7 +5,11 @@
 >
   <head>
     <link rel="stylesheet" th:href="@{/css/main.css}" />
-    <link rel="stylesheet" href="/css/common.css" th:href="@{/css/sidebar-main.css}">
+    <link
+      rel="stylesheet"
+      href="/css/common.css"
+      th:href="@{/css/sidebar-main.css}"
+    />
   </head>
   <body>
     <div class="main" th:fragment="main">
@@ -79,7 +83,61 @@
           </a>
         </div>
       </div>
+
+      <!-- 캘린더 -->
       <div id="calendar"></div>
+
+      <!-- 동영상 게시판과 스택 게시판 -->
+      <div class="row">
+        <div class="videos">
+          <a class="video">
+            <div class="thumbnail">
+              <img src="https://via.placeholder.com/200x150" alt="썸네일" />
+            </div>
+            <div class="video-info">
+              <h5 class="video-title">비디오 제목</h5>
+              <p class="video-description">
+                옛날 어린이들은 호환, 마마, 전쟁 등이 가장 무서운 재앙이었으나,
+                현대의 어린이들은 무분별한 불량/불법 비디오를 시청함으로써, 비행
+                청소년이 되는 무서운 결과를 초래하게 됩니다.
+              </p>
+            </div>
+          </a>
+          <a class="video">
+            <div class="thumbnail">
+              <img src="https://via.placeholder.com/200x150" alt="썸네일" />
+            </div>
+            <div class="video-info">
+              <h5 class="video-title">비디오 제목</h5>
+              <p class="video-description">
+                옛날 어린이들은 호환, 마마, 전쟁 등이 가장 무서운 재앙이었으나,
+                현대의 어린이들은 무분별한 불량/불법 비디오를 시청함으로써, 비행
+                청소년이 되는 무서운 결과를 초래하게 됩니다.
+              </p>
+            </div>
+          </a>
+          <a class="video">
+            <div class="thumbnail">
+              <img src="https://via.placeholder.com/200x150" alt="썸네일" />
+            </div>
+            <div class="video-info">
+              <h5 class="video-title">비디오 제목</h5>
+              <p class="video-description">
+                옛날 어린이들은 호환, 마마, 전쟁 등이 가장 무서운 재앙이었으나,
+                현대의 어린이들은 무분별한 불량/불법 비디오를 시청함으로써, 비행
+                청소년이 되는 무서운 결과를 초래하게 됩니다.
+              </p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- 스택 -->
+      <div class="stack">
+        <div class="stack-recent"></div>
+        <div class="stack-popular"></div>
+      </div>
+      <!-- 하단 carousel -->
       <div id="carousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         <ul class="carousel-indicators">
@@ -112,6 +170,7 @@
         </a>
       </div>
     </div>
+
     <script th:fragment="script">
       $.ajax({
         method: "post",

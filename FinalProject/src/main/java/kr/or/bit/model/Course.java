@@ -11,10 +11,27 @@ public class Course {
   private int subject;
   private int classroom_id;
   
-  private String classroomName;
-  private String subjectName;
+  private String classroom_name;
+  private String subject_name;
+  
   private LocalDate startDate;
   private LocalDate endDate;
+  
+  public String getClassroom_name() {
+    return classroom_name;
+  }
+
+  public void setClassroom_name(String classroom_name) {
+    this.classroom_name = classroom_name;
+  }
+
+  public String getSubject_name() {
+    return subject_name;
+  }
+
+  public void setSubject_name(String subject_name) {
+    this.subject_name = subject_name;
+  }
 
   public int getId() {
     return id;
@@ -64,22 +81,6 @@ public class Course {
     this.classroom_id = classroom_id;
   }
 
-  public String getClassroomName() {
-    return classroomName;
-  }
-
-  public void setClassroomName(String classroomName) {
-    this.classroomName = classroomName;
-  }
-
-  public String getSubjectName() {
-    return subjectName;
-  }
-
-  public void setSubjectName(String subjectName) {
-    this.subjectName = subjectName;
-  }
-
   public LocalDate getStartDate() {
     return startDate;
   }
@@ -94,12 +95,5 @@ public class Course {
 
   public void setEndDate(LocalDate endDate) {
     this.endDate = endDate;
-  }
-
-  @Override
-  public String toString() {
-    return "Course [id=" + id + ", course_name=" + course_name + ", start_date=" + start_date + ", end_date=" + end_date
-        + ", subject=" + subject + ", classroom_id=" + classroom_id + ", classroomName=" + classroomName
-        + ", subjectName=" + subjectName + ", startDate=" + startDate + ", endDate=" + endDate + "]";
   }
 }
