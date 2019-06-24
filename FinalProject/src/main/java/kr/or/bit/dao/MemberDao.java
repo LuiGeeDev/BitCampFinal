@@ -20,7 +20,7 @@ public interface MemberDao {
 
   void deleteMember(String username);
 
-  List<Member> selectAllMember();
+  List<Member> selectAllMembers();
 
   Member selectMemberByUsername(String username);
 }
