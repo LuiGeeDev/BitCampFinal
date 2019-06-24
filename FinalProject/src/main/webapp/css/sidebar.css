@@ -1,0 +1,60 @@
+.sidebar {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  text-align: center;
+  width: 90%;
+  border-bottom: 1px solid white;
+  margin: 0 3px 0 3px;
+}
+
+.logo img {
+  width: 80%;
+  margin-top: 10px;
+}
+
+.user-photo {
+  height: 50px;
+  border-radius: 32px;
+  margin: 10px 0 10px 0;
+}
+
+.user-profile {
+  border-bottom: 1px solid white;
+  margin: 0 3px 3px 3px;
+}
+
+.side-nav {
+  width: 100%;
+}
+
+.nav-icon {
+  padding: 13px 0;
+  font-size: 16px;
+}
+
+.active {
+  background: white;
+  color: #2D3E50;
+  box-sizing: border-box;
+  border-left: 5px solid #F39C12;
+}
+
+.side-nav-menu a{
+  text-decoration: none;
+  color: #2D3E50;
+  display: block;
+  padding: 10px 10px;
+}
+
+.side-nav-menu {
+  padding-top: 60px;
+}
+
+.side-nav-menu a:hover {
+  background: #F39C12;
+  color: white;
+}

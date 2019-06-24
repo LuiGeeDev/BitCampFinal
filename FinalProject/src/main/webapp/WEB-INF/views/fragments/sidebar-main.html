@@ -58,12 +58,14 @@
           </div>
           <span class="menu-name">강의 자료</span>
         </div>
-        <div class="nav-menu" sec:authrorize="hasRole('MANAGER')">
-          <div class="nav-icon">
-            <i class="fas fa-tasks fa-2x"></i>
-          </div>
+<a href="/manage/home">
+        <div class="nav-menu" sec:authorize="hasRole('MANAGER')">
+          <i class="fas fa-tasks fa-2x"></i>
+          
           <span class="menu-name">학원 관리</span>
+          
         </div>
+     </a>   
       </div>
     </div>
   </body>
