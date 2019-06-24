@@ -25,7 +25,7 @@ public class HomeController {
     
     Member user = memberDao.selectMemberByUsername(username);
 	model.addAttribute("user", user);
-    return "home";
+    return "main";
   }
 
   @GetMapping("/menu")
