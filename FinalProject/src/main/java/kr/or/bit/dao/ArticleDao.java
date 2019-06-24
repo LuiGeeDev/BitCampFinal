@@ -20,5 +20,5 @@ public interface ArticleDao {
 
   void deleteArticle(int id);
 
-  List<Article> selectAllArticle();
+  List<Article> selectAllArticle(int board_id);
 }

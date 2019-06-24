@@ -22,5 +22,5 @@ public interface MemberDao {
 
   List<Member> selectAllMember();
 
-  Member selectMemberById(String id);
+  Member selectMemberByUsername(String username);
 }

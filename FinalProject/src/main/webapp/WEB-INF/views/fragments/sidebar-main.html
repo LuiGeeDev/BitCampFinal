@@ -1,8 +1,60 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-  <body>      
-    <div class="sidebar col-side sticky-top" th:fragment="sidebar">
-      TEST
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <body>
+    <div class="sidebar-main col-side sticky-top" th:fragment="sidebar">
+      <div class="logo">
+        <a href="/">
+          <img
+            th:src="@{/resources/images/blog.png}"
+            src="blog.png"
+            alt="로고"
+          />
+        </a>
+      </div>
+      <div class="user-info" th:object="${user}">
+        <div class="user-profile">
+          <a href="/myinfo/profile">
+            <img
+              class="user-photo"
+              src="https://via.placeholder.com/64"
+              alt="프로필 사진"
+            /><!-- th:src="*{profile_photo}"-->
+          </a>
+          <p class="user-name" th:text="*{name}">정성윤</p>
+        </div>
+        <div class="user-info-btn">
+          <a class="btn btn-warning btn-sm" th:href="@{/myinfo}" role="button">
+            내 정보
+          </a>
+          <form method="post" th:action="@{/logout}">
+            <button type="submit" class="btn btn-warning btn-sm">
+              로그아웃
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="side-nav">
+        <div class="nav-menu">
+          <i class="fas fa-book fa-2x"></i>
+          <span class="menu-name">우리 반</span>
+        </div>
+        <div class="nav-menu">
+          <i class="far fa-question-circle fa-2x"></i>
+          <span class="menu-name">스택</span>
+        </div>
+        <div class="nav-menu">
+          <i class="fas fa-video fa-2x"></i>
+          <span class="menu-name">동영상</span>
+        </div>
+        <div class="nav-menu" sec:authorize="hasRole('TEACHER')">
+          <i class="fas fa-database fa-2x"></i>
+          <span class="menu-name">강의 자료</span>
+        </div>
+        <div class="nav-menu" sec:authorize="hasRole('MANAGER')">
+          <i class="fas fa-tasks fa-2x"></i>
+          <span class="menu-name">학원 관리</span>
+        </div>
+      </div>
     </div>
   </body>
-</html>  
+</html>
