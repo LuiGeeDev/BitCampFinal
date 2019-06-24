@@ -8,7 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.MemberDao;
+import kr.or.bit.dao.MessageDao;
+import kr.or.bit.dao.NotificationDao;
+import kr.or.bit.dao.ScheduleDao;
 import kr.or.bit.model.Member;
 
 @Controller
@@ -19,12 +23,22 @@ public class HomeController {
   @GetMapping("/")
   public String home(Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
+    NotificationDao notificationDao = sqlSession.getMapper(NotificationDao.class);
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
     
     UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     String username = userDetails.getUsername();
     
     Member user = memberDao.selectMemberByUsername(username);
-	model.addAttribute("user", user);
+    int unreadMessage = messageDao.selectUnreadMessage(username).size();
+    int unreadNotice = notificationDao.selectAllNewNotification(username).size();
+        
+	  model.addAttribute("user", user);
+	  model.addAttribute("unreadMessage", unreadMessage);
+	  model.addAttribute("unreadNotice", unreadNotice);
+	  
     return "main";
   }
 
