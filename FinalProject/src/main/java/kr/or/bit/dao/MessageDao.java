@@ -20,9 +20,9 @@ public interface MessageDao {
 
   List<Message> selectAllMessage(String receiver_username);
 
-  void selectMessageById(String sender_username);
+  List<Message> selectMessageById(String sender_username);
 
-  void selectReadMessage(String receiver_username);
+  List<Message> selectReadMessage(String receiver_username);
 
-  void selectUnreadMessage(String receiver_username);
+  List<Message> selectUnreadMessage(String receiver_username);
 }
