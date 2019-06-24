@@ -19,8 +19,7 @@
   <http use-expressions="true">
     <!-- intercept-url은 위에서부터 검색하기 때문에 특정 페이지에 권한을 걸고 싶으면 가장 아래 /** 보다 위에 
       작성할 것 -->
-    <intercept-url pattern="/login*"
-      access="permitAll" />
+    <intercept-url pattern="/login*" access="permitAll" />
     <intercept-url pattern="/menu"
       access="hasRole('MANAGER')" />
     <intercept-url pattern="/**"
@@ -33,20 +32,18 @@
     <remember-me key="autoLoginKey"
       token-validity-seconds="604800"
       remember-me-parameter="remember-me"
-      remember-me-cookie="remember_cookie" 
-      user-service-ref="userDetailsService"/>
+      remember-me-cookie="remember_cookie"
+      user-service-ref="userDetailsService" />
     <csrf disabled="true" />
-    <session-management
-      invalid-session-url="/login"
-      >
-      <concurrency-control max-sessions="1" expired-url="/login" />
+    <session-management invalid-session-url="/login">
+      <concurrency-control max-sessions="1"
+        expired-url="/login" />
     </session-management>
   </http>
 
   <authentication-manager>
     <authentication-provider>
-      <jdbc-user-service 
-        data-source-ref="dataSource"
+      <jdbc-user-service data-source-ref="dataSource"
         role-prefix=""
         users-by-username-query="select username, password, enabled from member where username = ?"
         authorities-by-username-query="select username, role from authorities where username = ?" />
