@@ -25,19 +25,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE id = #{id}
 	</delete>
 
-	<select id="selectAllNotification">
+	<select id="selectAllNotification" resultType="kr.or.bit.model.Notification">
 		SELECT id, content, checked, username
 		FROM notification
 		WHERE username = #{username}
 	</select>
 
-	<select id="selectAllNewNotification">
+	<select id="selectAllNewNotification" resultType="kr.or.bit.model.Notification">
 		SELECT id, content, checked, username
 		FROM notification
 		WHERE username = #{username} AND checked = 0
 	</select>
 
-	<select id="selectAllOldNotification">
+	<select id="selectAllOldNotification" resultType="kr.or.bit.model.Notification">
 		SELECT id, content, checked, username
 		FROM notification
 		WHERE username = #{username} AND checked = 1

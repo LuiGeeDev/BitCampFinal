@@ -30,7 +30,7 @@ FROM schedule
 WHERE id = #{id}
 </delete>
 
-<select id="selectAllSchedule">
+<select id="selectAllSchedule" resultType="kr.or.bit.model.Schedule">
 SELECT id, start_date, end_date, content, color, group_id, course_id
 FROM schedule
 WHERE course_id = ${param1} AND group_id = ${param2}

@@ -18,18 +18,31 @@ public class MessageController {
   private SqlSession sqlsession;
   
   @RequestMapping("/message")
-  public String selectAllMessage(Model model) {
+  public String selectTest(Model model) {
     String teacher = "teacher";
+    String student = "student";
+    
     MessageDao messagedao = sqlsession.getMapper(MessageDao.class);
-    // Message message = new Message();
+    MessageDao messagedao2 = sqlsession.getMapper(MessageDao.class);
+    MessageDao messagedao3 = sqlsession.getMapper(MessageDao.class);
+    MessageDao messagedao4 = sqlsession.getMapper(MessageDao.class);
+    
     List<Message> list = messagedao.selectAllMessage(teacher);
-    
-    System.out.println(list);
+    List<Message> sender = messagedao2.selectMessageById(student);
+    List<Message> read = messagedao3.selectReadMessage(teacher);
+    List<Message> unread = messagedao4.selectReadMessage(teacher);
     model.addAttribute("list", list);
-       
-    
+    model.addAttribute("sender", sender);
+    model.addAttribute("read", read);
+    model.addAttribute("unread", unread);
     return "message";
-    
   }
+  
+
+  
+  
+  
+  
+  
   
 }

@@ -16,15 +16,58 @@
         <p th:text="*{id}"></p>
         <p th:text="*{sender_username}"></p>
       </div>
-      
+      <hr>
+      <h1>selectAllMessage</h1>
       <div class="iteration" th:each="message : ${list}">
-        <p th:text="${message.id}"></p>
-        <p th:text="${message.content}"></p>
+        아이디 : <p th:text="${message.id}"></p>
+        내용 : <p th:text="${message.content}"></p>
+        시간 : <p th:text="${message.time}"></p>
+        체크유무 : <p th:text="${message.checked}"></p>
+        보낸 사람 : <p th:text="${message.sender_username}"></p>
+        받는 사람 : <p th:text="${message.receiver_username}"></p>
       </div>
-    </div>
+    <h1>selectMessageById</h1>
+    	<div th:each="senderM : ${sender}">
+        아이디 : <p th:text="${senderM.id}"></p>
+        내용 : <p th:text="${senderM.content}"></p>
+        시간 : <p th:text="${senderM.time}"></p>
+        체크유무 : <p th:text="${senderM.checked}"></p>
+        보낸 사람 : <p th:text="${senderM.sender_username}"></p>
+        받는 사람 : <p th:text="${senderM.receiver_username}"></p>
+      </div>
+      
+      <h1>selectReadMessage</h1>
+    	<div th:each="rm : ${read}">
+        아이디 : <p th:text="${rm.id}"></p>
+        내용 : <p th:text="${rm.content}"></p>
+        시간 : <p th:text="${rm.time}"></p>
+        체크유무 : <p th:text="${rm.checked}"></p>
+        보낸 사람 : <p th:text="${rm.sender_username}"></p>
+        받는 사람 : <p th:text="${rm.receiver_username}"></p>
+      </div>
+      
+         <h1>selectUnReadMessage</h1>
+    	<div th:each="un : ${read}">
+        아이디 : <p th:text="${un.id}"></p>
+        내용 : <p th:text="${un.content}"></p>
+        시간 : <p th:text="${un.time}"></p>
+        체크유무 : <p th:text="${un.checked}"></p>
+        보낸 사람 : <p th:text="${un.sender_username}"></p>
+        받는 사람 : <p th:text="${un.receiver_username}"></p>
+      </div>
+    	
+    	</div>
+      
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script th:fragment="script">
       console.log("Hello, world!");
     </script>
   </body>
 </html>
+
+
+
+
+
+
+
