@@ -1,9 +1,63 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <body>      
+  <body>
     <div class="sidebar col-side sticky-top" th:fragment="sidebar">
-      <div class="side-nav"></div>
-      <div class="side-nav-menu"></div>
+      <div class="side-navbar">
+        <div class="logo">
+          <a href="/">
+            <img
+              th:src="@{/resources/images/blog.png}"
+              src="blog.png"
+              alt="로고"
+            />
+          </a>
+        </div>
+        <div class="user-info" th:object="${user}">
+          <div class="user-profile">
+            <a href="/myinfo/profile">
+              <img
+                class="user-photo"
+                src="https://via.placeholder.com/64"
+                alt="프로필 사진"
+              /><!-- th:src="*{profile_photo}"-->
+            </a>
+          </div>
+        </div>
+        <div class="side-nav">
+          <div class="nav-menu">
+            <div class="nav-icon active-menu">
+              <i class="fas fa-book fa-2x"></i>
+            </div>
+          </div>
+          <div class="nav-menu">
+            <div class="nav-icon">
+              <i class="far fa-question-circle fa-2x"></i>
+            </div>
+          </div>
+          <div class="nav-menu">
+            <div class="nav-icon">
+              <i class="fas fa-video fa-2x"></i>
+            </div>
+          </div>
+          <div class="nav-menu" sec:authorize="hasRole('TEACHER')">
+            <div class="nav-icon">
+              <i class="fas fa-database fa-2x"></i>
+            </div>
+          </div>
+          <div class="nav-menu" sec:authrorize="hasRole('MANAGER')">
+            <div class="nav-icon">
+              <i class="fas fa-tasks fa-2x"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="side-nav-menu">
+        <a href="#">프로젝트 게시판</a>
+        <a href="#">과제제출 게시판</a>
+        <a href="#">질문 게시판</a>
+        <a href="#">임시 게시판</a>
+      </div>
     </div>
   </body>
-</html>  
+</html>

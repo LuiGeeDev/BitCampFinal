@@ -3,10 +3,13 @@
   flex: 1;
   background-color: #EEEEEE;
   height: 38px;
+  width: 100%;
   display: flex;
   padding-right: 10px;  
   border-bottom: 1px solid #9E9E9E;
   margin-bottom: 10px;
+  position: fixed;
+  z-index: 1000;
 }
 
 .top-nav a {

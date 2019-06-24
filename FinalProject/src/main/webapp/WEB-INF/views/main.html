@@ -5,7 +5,11 @@
 >
   <head>
     <link rel="stylesheet" th:href="@{/css/main.css}" />
-    <link rel="stylesheet" href="/css/common.css" th:href="@{/css/sidebar-main.css}">
+    <link
+      rel="stylesheet"
+      href="/css/common.css"
+      th:href="@{/css/sidebar-main.css}"
+    />
   </head>
   <body>
     <div class="main" th:fragment="main">
@@ -79,39 +83,157 @@
           </a>
         </div>
       </div>
-      <div id="calendar"></div>
-      <div id="carousel" class="carousel slide" data-ride="carousel">
-        <!-- Indicators -->
-        <ul class="carousel-indicators">
-          <li data-target="#carousel" data-slide-to="0" class="active"></li>
-          <li data-target="#carousel" data-slide-to="1"></li>
-          <li data-target="#carousel" data-slide-to="2"></li>
-        </ul>
 
-        <!-- The slideshow -->
-        <div class="carousel-inner">
-          <div class="news carousel-item active"></div>
-          <div class="carousel-item">
-            <p>Hello2</p>
+      <!-- 캘린더 -->
+      <div class="row">
+        <div id="calendar"></div>
+      </div>
+
+      <!-- 동영상 게시판과 스택 게시판 -->
+      <div class="row">
+        <div class="videos">
+          <a class="video">
+            <div class="thumbnail">
+              <img src="https://via.placeholder.com/200x150" alt="썸네일" />
+            </div>
+            <div class="video-info">
+              <h5 class="video-title">비디오 제목</h5>
+              <p class="video-description">
+                옛날 어린이들은 호환, 마마, 전쟁 등이 가장 무서운 재앙이었으나,
+                현대의 어린이들은 무분별한 불량/불법 비디오를 시청함으로써, 비행
+                청소년이 되는 무서운 결과를 초래하게 됩니다.
+              </p>
+            </div>
+          </a>
+          <a class="video">
+            <div class="thumbnail">
+              <img src="https://via.placeholder.com/200x150" alt="썸네일" />
+            </div>
+            <div class="video-info">
+              <h5 class="video-title">비디오 제목</h5>
+              <p class="video-description">
+                옛날 어린이들은 호환, 마마, 전쟁 등이 가장 무서운 재앙이었으나,
+                현대의 어린이들은 무분별한 불량/불법 비디오를 시청함으로써, 비행
+                청소년이 되는 무서운 결과를 초래하게 됩니다.
+              </p>
+            </div>
+          </a>
+          <a class="video">
+            <div class="thumbnail">
+              <img src="https://via.placeholder.com/200x150" alt="썸네일" />
+            </div>
+            <div class="video-info">
+              <h5 class="video-title">비디오 제목</h5>
+              <p class="video-description">
+                옛날 어린이들은 호환, 마마, 전쟁 등이 가장 무서운 재앙이었으나,
+                현대의 어린이들은 무분별한 불량/불법 비디오를 시청함으로써, 비행
+                청소년이 되는 무서운 결과를 초래하게 됩니다.
+              </p>
+            </div>
+          </a>
+        </div>
+        <!-- 스택 -->
+        <div class="stack">
+          <div class="stack-recent">
+            <div class="stack-header">
+              <p>방금 올라온 질문</p>
+            </div>
+            <div class="stack-article">
+              <div class="stack-article-title">
+                질문 제목입니다. 답변 부탁해요.
+              </div>
+              <div class="stack-article-info">
+                <div class="stack-article-writer">권예지</div>
+                <div class="stack-article-time">5분 전</div>
+              </div>
+            </div>
+            <div class="stack-article">
+              <div class="stack-article-title">
+                질문 제목입니다. 답변 부탁해요.
+              </div>
+              <div class="stack-article-info">
+                <div class="stack-article-writer">권예지</div>
+                <div class="stack-article-time">5분 전</div>
+              </div>
+            </div>
+            <div class="stack-article">
+              <div class="stack-article-title">
+                질문 제목입니다. 답변 부탁해요.
+              </div>
+              <div class="stack-article-info">
+                <div class="stack-article-writer">권예지</div>
+                <div class="stack-article-time">5분 전</div>
+              </div>
+            </div>
           </div>
-          <div class="carousel-item">
-            <p>Hello3</p>
+          <div class="stack-popular">
+            <div class="stack-header">
+              <p>최근 답변된 질문</p>
+            </div>
+            <div class="stack-article">
+              <div class="stack-article-title">
+                질문 제목입니다. 답변이 되었습니다.
+              </div>
+              <div class="stack-article-info">
+                <div class="stack-article-writer">이힘찬</div>
+                <div class="stack-article-time">1분 전</div>
+              </div>
+            </div>
+            <div class="stack-article">
+              <div class="stack-article-title">
+                질문 제목입니다. 답변이 되었습니다.
+              </div>
+              <div class="stack-article-info">
+                <div class="stack-article-writer">이힘찬</div>
+                <div class="stack-article-time">1분 전</div>
+              </div>
+            </div>
+            <div class="stack-article">
+              <div class="stack-article-title">
+                질문 제목입니다. 답변이 되었습니다.
+              </div>
+              <div class="stack-article-info">
+                <div class="stack-article-writer">이힘찬</div>
+                <div class="stack-article-time">1분 전</div>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
 
-        <!-- Left and right controls -->
-        <a class="carousel-control-prev" href="#carousel" data-slide="prev">
-          <span class="carousel-control-prev-icon">
-            <i class="fas fa-chevron-left fa-lg"></i>
-          </span>
-        </a>
-        <a class="carousel-control-next" href="#carousel" data-slide="next">
-          <span class="carousel-control-next-icon">
-            <i class="fas fa-chevron-right fa-lg"></i>
-          </span>
-        </a>
+      <!-- 하단 carousel -->
+      <div class="row">
+        <div id="carousel" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ul class="carousel-indicators">
+            <li data-target="#carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel" data-slide-to="1"></li>
+            <li data-target="#carousel" data-slide-to="2"></li>
+          </ul>
+
+          <!-- The slideshow -->
+          <div class="carousel-inner">
+            <div class="news carousel-item active"></div>
+            <div class="news carousel-item"></div>
+            <div class="news carousel-item">
+            </div>
+          </div>
+
+          <!-- Left and right controls -->
+          <a class="carousel-control-prev" href="#carousel" data-slide="prev">
+            <span class="carousel-control-prev-icon">
+              <i class="fas fa-chevron-left fa-lg"></i>
+            </span>
+          </a>
+          <a class="carousel-control-next" href="#carousel" data-slide="next">
+            <span class="carousel-control-next-icon">
+              <i class="fas fa-chevron-right fa-lg"></i>
+            </span>
+          </a>
+        </div>
       </div>
     </div>
+
     <script th:fragment="script">
       $.ajax({
         method: "post",

@@ -11,25 +11,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 */ -->
 <mapper namespace="kr.or.bit.dao.CourseDao">
   <select id="selectAllCourse" resultType="kr.or.bit.model.Course">     
-	select * from course
+    SELECT c.id as id, course_name, start_date, end_date, c.subject as subject, c.classroom_id as classroom_id, r.classroom_name as classroom_name, s.subject as subject
+    FROM Course as c 
+    LEFT JOIN Classroom as r 
+    ON c.classroom_id = r.classroom_name
+    LEFT JOIN Subject as s 
+    ON c.subject = s.subject;
   </select> 
   <insert id="insertCourse">
- 	insert into course(course_name, start_date, end_date, subject, classroom_id, classroomName, subjectName)
- 	values (#{course_name}, #{start_date}, #{end_date}, #{subject}, #{classroom_id}, #{classroomName}, #{subjectName})
+ 	INSERT INTO course(course_name, start_date, end_date, subject, classroom_id)
+ 	VALUES (#{course_name}, #{start_date}, #{end_date}, #{subject}, #{classroom_id})
   </insert>
   <delete id="deleteCourse">
-    delete course where id=#{id}
+    DELETE FROM course 
+    WHERE id=#{id}
   </delete>
   <update id="updateCourse" parameterType="kr.or.bit.model.Course">
-    update course
-    set course_name=#{course_name},
+    UPDATE course
+    SET course_name=#{course_name},
     start_date=#{start_date},
     end_date=#{end_date},
     subject=#{subject},
-    classroom_id=#{classroom_id},
-    classroomName=#{classroomName},
-    subjectName=#{subjectName}
-    where id=#{id}
+    classroom_id=#{classroom_id}
+    WHERE id=#{id}
   </update>
 </mapper>
   

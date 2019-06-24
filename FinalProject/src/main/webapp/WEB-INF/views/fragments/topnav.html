@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
   <body>
-    <div class="row sticky-top" th:fragment="topnav">
-      <div class="top-nav align-items-center justify-content-end">
-        <div class="message">
-          <a href="../message.html" th:href="@{/message}">
-            <i class="fas fa-envelope fa-lg"></i>
-          </a>
-          <span class="count message-count">24</span>
-        </div>
-        <a href="../mypage.html" th:href="@{/mypage}">
-          <i class="fas fa-user fa-lg"></i>
+    <div
+      class="top-nav align-items-center justify-content-end sticky-top"
+      th:fragment="topnav"
+    >
+      <div class="message">
+        <a href="../message.html" th:href="@{/message}">
+          <i class="fas fa-envelope fa-lg"></i>
         </a>
-        <div class="notification">
-          <a href="#" data-toggle="popover" data-placement="bottom"><i class="fas fa-bell fa-lg"></i></a>          
-          <span class="count noti-count">5</span>
-        </div>
-        <form th:action="@{/logout}" method="post">
-          <button type="submit">
-            <i class="fas fa-sign-out-alt fa-lg"></i>
-          </button>
-        </form>
+        <span class="count message-count">24</span>
       </div>
+      <a href="../mypage.html" th:href="@{/mypage}">
+        <i class="fas fa-user fa-lg"></i>
+      </a>
+      <div class="notification">
+        <a data-toggle="popover" data-placement="bottom"
+          ><i class="fas fa-bell fa-lg"></i
+        ></a>
+        <span class="count noti-count">5</span>
+      </div>
+      <form th:action="@{/logout}" method="post">
+        <button type="submit">
+          <i class="fas fa-sign-out-alt fa-lg"></i>
+        </button>
+      </form>
       <div id="notices">
         <div class="notice">
           <h6>체크리스트</h6>
