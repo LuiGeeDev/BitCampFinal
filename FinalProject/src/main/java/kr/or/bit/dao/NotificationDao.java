@@ -16,13 +16,13 @@ import kr.or.bit.model.Notification;
 public interface NotificationDao {
   void insertNotification(Notification Notification);
 
-  void updateNotification(int checked);
+  void updateNotification(int id);
 
   void deleteNotification(int id);
 
-  List<Notification> selectAllNotification(int id);
+  List<Notification> selectAllNotification(String username);
 
-  List<Notification> selectAllNewNotification(int id);
+  List<Notification> selectAllNewNotification(String username);
 
-  List<Notification> selectAllOldNotification(int id);
+  List<Notification> selectAllOldNotification(String username);
 }

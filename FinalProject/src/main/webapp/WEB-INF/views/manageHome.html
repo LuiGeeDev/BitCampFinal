@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <link rel="stylesheet" th:href="@{/css/home.css}" />
+    <link rel="stylesheet" th:href="@{/css/manageHome.css}" />
+
+  </head>
+  <body>
+    <div class="main" th:fragment="main">
+     	<div>
+         <div>
+          새로운 클래스 만들기
+         </div>
+         <form action="">
+        <span id="teacherNameSelectWrapper">
+          
+         <select id="teacherNameSelect">
+           <option value="" selected>강사이름 선택</option>
+         </select>
+        </span>
+
+          <span id = "classNameWrapper">
+           <input type="text" placeholder="강의이름 입력" id="className">
+          </span>
+
+          <span id="dateWrapper">
+              <input type="date"> ~ <input type="date">
+ 
+             <span id="studentAmountWrapper">
+             <input type="text" id="studentAmount" placeholder="학생 수 입력">
+           </span> 
+
+           <span id="classRoomSelectWrapper">
+            <select id="classRoomSelect">
+              <option value="">강의실 번호 선택</option>
+            </select>
+           </span>
+         </form>
+
+      </div>
+    </div>
+    <script th:fragment="script">
+      console.log("Hello, world!");
+    </script>
+  </body>
+</html>

@@ -10,7 +10,17 @@
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
-      <p th:text="'Hello, ' + ${message}"></p>
+      <p th:text="'Hello, ' + ${list[0].content}"></p>
+      <p th:text="${list[0].time}"></p>
+      <div th:object="${list[0]}">
+        <p th:text="*{id}"></p>
+        <p th:text="*{sender_username}"></p>
+      </div>
+      
+      <div class="iteration" th:each="message : ${list}">
+        <p th:text="${message.id}"></p>
+        <p th:text="${message.content}"></p>
+      </div>
     </div>
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script th:fragment="script">
