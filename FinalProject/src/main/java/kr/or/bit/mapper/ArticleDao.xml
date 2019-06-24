@@ -1,23 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- /*
-*
-* @date: 2019. 06. 21.
-*
-* @author: 권예지
-*
-* @description: ArticleDao를 통해서 쿼리문을 날린다....
-* 
-*/ -->
 <mapper namespace="kr.or.bit.dao.ArticleDao">
-  <select id="selectAllArticle" resultType="kr.or.bit.dao.Article">     
-		SELECT A.ID, A.TITLE, A.CONTENT, A.TIME, A.VIEW_COUNT, A.ORIGINAL_ID, A.LEVEL,
-		A.UPDATED_TIME, A.ENABLE, A.USERNAME, B.BOARD_ID, B.BOARD_NAME, B.COURSE, B.BOARDTYPE
-		FROM ARTICLE AS A
-		JOIN BOARD AS B
-		ON A.BOARD_ID = B.ID
-		WHERE BOARD_ID=#{board_id};
-  </select>
- 
-  
+  <select id="selectAllArticle" resultType="kr.or.bit.model.Article">
+		SELECT * FROM ARTICLE WHERE BOARD_ID=#{board_id};
+  </select> 
+  <insert id="insert" >
+ 	INSERT INT ARTICLE(id, original_id, time, updated_time, title, content, username, board_id)
+ 	value (#{id}, #{original_id}, #{timeLocal}, 'null', #{title}, #{content}, #{username}, #{board_id})
+  </insert>
 </mapper>
-

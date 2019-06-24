@@ -14,6 +14,6 @@ public class SocketController {
   
   @MessageMapping("/noti")
   public void sendNotice(Message message) {
-    template.convertAndSend("/topic/noti/" + message.getBoardWriter(), message);
+    template.convertAndSend("/topic/noti/" + message.getId(), message);
   }
 }
