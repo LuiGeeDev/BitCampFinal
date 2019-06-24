@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>frontend</title>
-  </head>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
   <body>
+    <div class="main" th:fragment="main">
     <div id="app"></div>
+  </div>
     <!-- built files will be auto injected -->
   </body>
 </html>
