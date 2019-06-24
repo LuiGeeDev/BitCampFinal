@@ -18,12 +18,15 @@
 		WHERE BOARD_ID=#{board_id}; -->
 		SELECT * FROM ARTICLE WHERE BOARD_ID=#{board_id};
   </select> 
-     <!-- void insertArticle(Article article); -->
-  	<insert id="insert">
+  
+  <insert id="insert">
 <!-- 		INSERT INTO ARTICLE(TITLE, CONTENT, USERNAME, TIME,) 
 		VALUES(#{seq} , #{title}, #{content}, 'bituser', SYSDATE, 0, #{fileSrc,jdbcType=VARCHAR},#{fileSrc2,jdbcType=VARCHAR})
  -->	
- 	</insert>
+ 	insert into article(id, original_id, time, updated_time, title, content, username, level, board_id)
+ 	value (#{id}, 
+  </insert>
+  
   
 </mapper>
 
