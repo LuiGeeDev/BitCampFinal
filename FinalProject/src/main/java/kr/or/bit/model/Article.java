@@ -10,10 +10,10 @@ public class Article {
   private String content;
   private Timestamp time;
   private Timestamp updated_time;
-  private int view_count;
+  private int view_count; // default 0
   private int original_id;
-  private int level;
-  private int enable;
+  private int level; // default 1
+  private int enable; //default 1
   private String username;
   private int board_id;
   
