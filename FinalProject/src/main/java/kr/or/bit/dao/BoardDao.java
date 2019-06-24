@@ -14,11 +14,6 @@ import kr.or.bit.model.Board;
 * 
 */
 public interface BoardDao {
-  void write();
-
-  List<Board> getList();
-
-  Board getBoard(int id);
 
   void updateBoard(int id);
 }

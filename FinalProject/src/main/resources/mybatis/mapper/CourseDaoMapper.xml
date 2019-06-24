@@ -1,10 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- /*
 *
 * @date: 2019. 06. 24.
 *
 * @author: 권예지
-*
-* @description: CourseDaoMapper를 통해서 쿼리문을 날린다....
 * 
 */ -->
+<mapper namespace="kr.or.bit.dao.CourseDao">
+  <select id="selectAllCourse" resultType="kr.or.bit.model.Course">     
+	select * from course
+  </select> 
+  <insert id="insertCourse">
+ 	insert into course(course_name, start_date, end_date, subject, classroom_id, classroomName, subjectName)
+ 	values (#{course_name}, #{start_date}, #{end_date}, #{subject}, #{classroom_id}, #{classroomName}, #{subjectName})
+  </insert>
+  <delete id="deleteCourse">
+    delete course where id=#{id}
+  </delete>
+  <update id="updateCourse" parameterType="kr.or.bit.model.Course">
+    update course
+    set course_name=#{course_name},
+    start_date=#{start_date},
+    end_date=#{end_date},
+    subject=#{subject},
+    classroom_id=#{classroom_id},
+    classroomName=#{classroomName},
+    subjectName=#{subjectName}
+    where id=#{id}
+  </update>
+</mapper>
+  
