@@ -14,8 +14,6 @@ import kr.or.bit.model.Member;
 * 
 */
 public interface MemberDao {
-  void join(Member member);
-
   void insertMember(Member member);
 
   void updateMember(Member member);
