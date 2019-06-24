@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 
+    username, password, enabled, course_id-->
+    <link rel="stylesheet" th:href="@{/css/home.css}" />
+  </head>
+  <body>
+    <div class="main" th:fragment="main">
+    	<form th:action="@{/memberJoinForm}" method="get">
+       id : <input type="text" name="username">
+       pwd : <input type="password" name="password">
+       enabled :<input type="text" name="enabled">
+       course_id :<input type="text" name="course_id">
+        <input type="submit" value="가입완료">
+    </form>
+    </div>
+  </body>
+</html>
