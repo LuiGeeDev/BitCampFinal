@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.or.bit.dao.MessageDao;
@@ -31,13 +32,27 @@ public class MessageController {
     List<Message> sender = messagedao2.selectMessageById(student);
     List<Message> read = messagedao3.selectReadMessage(teacher);
     List<Message> unread = messagedao4.selectReadMessage(teacher);
+
     model.addAttribute("list", list);
     model.addAttribute("sender", sender);
     model.addAttribute("read", read);
     model.addAttribute("unread", unread);
     return "message";
   }
+
   
+  @GetMapping("/insertmessage")
+  public String insertMessage() {
+    
+    return "insertMessageForm";
+  }
+  
+  @GetMapping("/insertMessageForm")
+  public void insertMessageForm(Message message, Model model) {
+    MessageDao messagedao = sqlsession.getMapper(MessageDao.class);
+    messagedao.insertMessage(message);
+    
+  }
 
   
   

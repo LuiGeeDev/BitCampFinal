@@ -8,8 +8,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="kr.or.bit.dao.MessageDao">
 
 	<insert id="insertMessage">
-	INSERT INTO message (content, time, checked, sender_username, receiver_username)
-	VALUES(#{content}, NOW(), #{checked}, #{sender_username}, #{receiver_username})
+	INSERT INTO message (content, time,sender_username, receiver_username)
+	VALUES(#{content}, NOW(), #{sender_username}, #{receiver_username})
 	
 	
 	</insert>
