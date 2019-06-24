@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <delete id="deleteChecklist">
     delete checklist where id=#{id};
   </delete>
-  <select id="selectAllChecklist" resultType="kr.or.bit.model.Ckecklist">
+  <select id="selectAllChecklist" resultType="kr.or.bit.model.Checklist">
     select id, content, checked, time, checker_username, writer_username, group_id from checklist where gropu_id=#{group_id};
   </select>
 </mapper>
