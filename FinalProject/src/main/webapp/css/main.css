@@ -25,9 +25,6 @@ a[class^="carousel-control"] {
   color: black;
 }
 
-.news a:hover {
-}
-
 .news h6 {
   font-weight: 700;
   font-size: 18px;

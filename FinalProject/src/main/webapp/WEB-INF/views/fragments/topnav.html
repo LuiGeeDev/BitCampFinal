@@ -1,21 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <body>      
+  <body>
     <div class="row sticky-top" th:fragment="topnav">
       <div class="top-nav align-items-center justify-content-end">
         <div class="message">
-          <a href="../message.html" th:href="@{/message}"><i class="fas fa-envelope fa-lg"></i></a>
+          <a href="../message.html" th:href="@{/message}">
+            <i class="fas fa-envelope fa-lg"></i>
+          </a>
           <span class="count message-count">24</span>
         </div>
-        <a href="../mypage.html" th:href="@{/mypage}"><i class="fas fa-user fa-lg"></i></a>
+        <a href="../mypage.html" th:href="@{/mypage}">
+          <i class="fas fa-user fa-lg"></i>
+        </a>
         <div class="notification">
-          <a href="#"><i class="fas fa-bell fa-lg"></i></a>
+          <a href="#" data-toggle="popover" data-placement="bottom"><i class="fas fa-bell fa-lg"></i></a>          
           <span class="count noti-count">5</span>
         </div>
         <form th:action="@{/logout}" method="post">
-          <button type="submit"><i class="fas fa-sign-out-alt fa-lg"></i></button>
+          <button type="submit">
+            <i class="fas fa-sign-out-alt fa-lg"></i>
+          </button>
         </form>
+      </div>
+      <div id="notices">
+        <div class="notice">
+          <h6>체크리스트</h6>
+          <p>DAO 완성하기</p>
+        </div>
+        <div class="notice">
+          <h6>댓글 달림</h6>
+          <p>"아니 그걸 그렇게 말하시나"</p>
+        </div>
       </div>
     </div>
   </body>
-</html>  
+</html>

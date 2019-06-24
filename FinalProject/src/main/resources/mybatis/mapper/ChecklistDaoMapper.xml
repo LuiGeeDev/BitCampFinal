@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- /*
+*
+* @date: 2019. 06. 24.
+*
+* @author: 권순조
+*
+* @description: 체크리스트 기본적인 CRUD
+* 
+*/ -->
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+  void insertChecklist(Checklist checklist);
+
+  void updateChecklist();
+
+  void deleteChecklist(int id);
+
+  Checklist selectAllChecklist(int group_id);
+
+ -->
+
+<mapper namespace="kr.or.bit.dao.ChecklistDao">
+  <insert id="insertChecklist">     
+	insert into checked(id, content, checked, time, checker_username, writer_username, group_id)
+	values(#{id}, #{content}, 0, #{time}, #{checker_username}, #{writer_username}, #{group_id});
+  </insert> 
+  <update id="updateChecklist" parameterType="kr.or.bit.model.Checklist">
+ 	update checklist set checked = 1 where checked = 0;
+ 	update checklist set checked = 0 where checked = 1; 
+  </update>
+  <delete id="deleteChecklist">
+    delete checklist where id=#{id};
+  </delete>
+  <select id="selectAllChecklist" resultType="kr.or.bit.model.Checklist">
+    select id, content, checked, time, checker_username, writer_username, group_id from checklist where gropu_id=#{group_id};
+  </select>
+</mapper>
