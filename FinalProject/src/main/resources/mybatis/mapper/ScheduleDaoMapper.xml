@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 
-<mapper namespace="dao.ScheduleDao">
+<mapper namespace="kr.or.bit.dao.ScheduleDao">
 
 <insert id="insertSchedule">
 INSERT INTO schedule (start_date, end_date, content, color, group_id, course_id) 

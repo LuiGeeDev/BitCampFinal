@@ -27,4 +27,6 @@ public class TestController {
     model.addAttribute("checklist", checklist);
     return "checklist";
   }
+  
+  
 }

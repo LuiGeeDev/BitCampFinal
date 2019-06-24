@@ -17,17 +17,18 @@ public class MessageController {
   @Autowired
   private SqlSession sqlsession;
   
-  @RequestMapping("/message.htm")
-  public String insertMessage(String teacher, Model model) {
+  @RequestMapping("/message")
+  public String selectAllMessage(Model model) {
+    String teacher = "teacher";
     MessageDao messagedao = sqlsession.getMapper(MessageDao.class);
     // Message message = new Message();
     List<Message> list = messagedao.selectAllMessage(teacher);
     
     System.out.println(list);
-    model.addAttribute(list);
+    model.addAttribute("list", list);
        
     
-    return "message.htm";
+    return "message";
     
   }
   
