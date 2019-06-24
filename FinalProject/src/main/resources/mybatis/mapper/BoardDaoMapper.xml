@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- /*
+*
+* @date: 2019. 06. 21.
+*
+* @author: 권예지
+*
+* @description: 게시판 글쓰기,수정하기는 ArticleDaoMapper가 수행하므로 BoardDaoMapper는 게시판기능만 넣는다..
+* 
+*/ -->
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="kr.or.bit.dao.BoardDao">
-  <insert id="write">
+<!--   <insert id="write">
     INSERT INTO BOARD (title, content, writer)
     VALUES (#{title}, #{content}, #{writer})
   </insert>
@@ -16,7 +24,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT id, title, content, writer
     FROM BOARD
     WHERE id = #{id}
-  </select>
+  </select> -->
+  
+  
 </mapper>
 
 

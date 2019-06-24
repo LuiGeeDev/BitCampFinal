@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="kr.or.bit.dao.ArticleDao">
+  <select id="selectAllArticle" resultType="kr.or.bit.model.Article">
+		SELECT * FROM ARTICLE WHERE BOARD_ID=#{board_id};
+  </select> 
+  <insert id="insert" >
+ 	INSERT INT ARTICLE(id, original_id, time, updated_time, title, content, username, board_id)
+ 	value (#{id}, #{original_id}, #{timeLocal}, 'null', #{title}, #{content}, #{username}, #{board_id})
+  </insert>
+</mapper>
