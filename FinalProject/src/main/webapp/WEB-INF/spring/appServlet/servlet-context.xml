@@ -32,9 +32,7 @@
     up static resources in the ${webappRoot}/resources directory -->
   <context:component-scan
     base-package="kr.or.bit" />
-  <mvc:resources mapping="/resources/**"
-    location="/resources/" />
-
+  <mvc:resources mapping="/resources/**" location="/resources/" />
 
   <!-- Thymeleaf View Resolver - implementation of Spring's ViewResolver 
     interface -->
