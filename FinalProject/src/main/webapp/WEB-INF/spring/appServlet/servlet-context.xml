@@ -12,15 +12,16 @@
 
   <!-- Use spring servlet for all requests, including static resources -->
   <mvc:default-servlet-handler />
-  
+   
   <mvc:interceptors>
     <mvc:interceptor>
       <mvc:mapping path="/**"/>
+      <mvc:exclude-mapping path="/sample/**"/>
       <mvc:exclude-mapping path="/login"/>
       <bean id="commonPageInterceptor" class="kr.or.bit.interceptor.CommonPageInterceptor"></bean>
     </mvc:interceptor>
   </mvc:interceptors>
-
+  
   <!-- Enables the Spring MVC @Controller programming model -->
   <mvc:annotation-driven>
     <mvc:message-converters>
