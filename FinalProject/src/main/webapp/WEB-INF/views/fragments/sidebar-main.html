@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
   <body>
     <div class="sidebar-main col-side sticky-top" th:fragment="sidebar">
       <div class="logo">
@@ -50,7 +50,7 @@
           <i class="fas fa-database fa-2x"></i>
           <span class="menu-name">강의 자료</span>
         </div>
-        <div class="nav-menu" sec:authorize="hasRole('MANAGER')">
+        <div class="nav-menu" sec:authrorize="hasRole('MANAGER')">
           <i class="fas fa-tasks fa-2x"></i>
           <span class="menu-name">학원 관리</span>
         </div>
