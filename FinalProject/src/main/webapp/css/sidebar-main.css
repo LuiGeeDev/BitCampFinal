@@ -1,10 +1,19 @@
+@import "sidebar.css";
+
 .logo {  
   margin: auto;
   margin-top: 10px;
   text-align: center;
-  width: 85%;
   padding: 10px 0 20px 0;
   border-bottom: 1px solid white;
+}
+
+.logo img {
+  width: 64px;
+}
+
+.user-profile {
+  border-bottom: none;
 }
 
 .user-info-btn {
@@ -59,6 +68,11 @@
   display: flex;
 }
 
+.nav-menu a {
+  color: white;
+  display: flex;
+}
+
 .nav-icon {
   margin-left: 30px;
   width: 30px;
@@ -66,4 +80,5 @@
 
 .menu-name {
   margin-left: 35px;
+  line-height: 55px;
 }

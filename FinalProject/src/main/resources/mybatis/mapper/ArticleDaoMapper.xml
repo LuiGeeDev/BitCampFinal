@@ -13,21 +13,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.bit.dao.ArticleDao">
   <select id="selectAllArticle" resultType="kr.or.bit.model.Article">     
-	SELECT * FROM ARTICLE WHERE BOARD_ID=#{board_id}
+	SELECT * 
+	FROM ARTICLE 
+	WHERE BOARD_ID=#{board_id}
   </select> 
   <insert id="insertArticle">
- 	insert into article(original_id, time, updated_time, title, content, username, board_id)
- 	values (#{id}, now(), now(), #{title}, #{content}, #{username}, #{board_id})
+ 	INSERT INTO article(original_id, time, updated_time, title, content, username, board_id)
+ 	VALUES (#{id}, now(), now(), #{title}, #{content}, #{username}, #{board_id})
   </insert>
   <delete id="deleteArticle">
-    delete article where id=#{id}
+    DELETE FROM article 
+    WHERE id=#{id}
   </delete>
   <update id="updateArticle" parameterType="kr.or.bit.model.Article">
-    update article
+    UPDATE article
     set updated_time=now(),
     title=#{title},
     content=#{content}
-    where id=#{id}
+    WHERE id=#{id}
   </update>
 </mapper>
 <!--  

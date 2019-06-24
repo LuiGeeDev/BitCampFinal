@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+    <link rel="stylesheet" th:href="@{/css/home.css}" />
+  </head>
+  <body>
+    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+    <div class="main" th:fragment="main">
+    <h1>selectAllNotification</h1>
+      <div th:each="all : ${allnoti}">
+      아이디 : <p th:text="${all.id}"></p>
+      내용 : <p th:text="${all.content}"></p>
+      체크유무 : <p th:text="${all.checked}"></p>
+      유저아이디 : <p th:text="${all.username}"></p>
+      
+      </div>
+      
+      <div class="main" th:fragment="main">
+    <h1>selectAllNotification</h1>
+      <div th:each="all : ${allnoti}">
+      아이디 : <p th:text="${all.id}"></p>
+      내용 : <p th:text="${all.content}"></p>
+      체크유무 : <p th:text="${all.checked}"></p>
+      유저아이디 : <p th:text="${all.username}"></p>
+      
+      </div>
+      
+       <h1>selectAllNewNotification</h1>
+      <div th:each="newall : ${newnoti}">
+      아이디 : <p th:text="${newall.id}"></p>
+      내용 : <p th:text="${newall.content}"></p>
+      체크유무 : <p th:text="${newall.checked}"></p>
+      유저아이디 : <p th:text="${newall.username}"></p>
+      
+      </div>
+      
+       <h1>selectAllOldNotification</h1>
+      <div th:each="oldall : ${oldnoti}">
+      아이디 : <p th:text="${oldall.id}"></p>
+      내용 : <p th:text="${oldall.content}"></p>
+      체크유무 : <p th:text="${oldall.checked}"></p>
+      유저아이디 : <p th:text="${oldall.username}"></p>
+      
+      </div>
+      
+      
+    </div>
+    <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
+    <script th:fragment="script">
+      console.log("Hello, world!");
+    </script>
+  </body>
+</html>

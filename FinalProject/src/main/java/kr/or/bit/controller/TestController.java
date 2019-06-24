@@ -30,6 +30,7 @@ public class TestController {
     return "checklist";
   }
   
+<<<<<<< HEAD
   @PostMapping("/checklistinput")
   public String insertChecklist(Model model, @RequestParam("content") String content, @RequestParam("writer_username") String writer_username) {
     System.out.println(content);
@@ -46,4 +47,7 @@ public class TestController {
     
     return "checklist";
   }
+=======
+  
+>>>>>>> 7972cf5d6cc70e8e976e8fe7514c3b211229337a
 }

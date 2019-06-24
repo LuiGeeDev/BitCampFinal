@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+    <link rel="stylesheet" th:href="@{/css/home.css}" />
+  </head>
+  <body>
+    <!-- username, password, name, email, profile_photo -->
+    <div class="main" th:fragment="main">
+    
+      <p th:text="${list[0].username}"></p>
+      <p th:text="${list[0].password}"></p>
+      <p th:text="${list[0].name}"></p>
+      <p th:text="${list[0].email}"></p>
+      <p th:text="${list[0].profile_photo}"></p>
+      
+      <div th:object="${list[0]}">
+      	<p th:text="*{username}"></p>
+      	<p th:text="*{password}"></p>
+      	<p th:text="*{name}"></p>
+      	<p th:text="*{email}"></p>
+      	<p th:text="*{profile_photo}"></p>
+      </div>
+      
+      <div th:each="message : ${list}">
+      	<p th:text="${message.username}"></p>
+      	<p th:text="${message.password}"></p>
+      	<p th:text="${message.name}"></p>
+      	<p th:text="${message.email}"></p>
+      	<p th:text="${message.profile_photo}"></p>
+      </div>
+    </div>
+    <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
+    <script th:fragment="script">
+      console.log("Hello, world!");
+    </script>
+  </body>
+</html>
