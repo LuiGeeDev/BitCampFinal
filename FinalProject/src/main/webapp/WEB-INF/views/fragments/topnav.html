@@ -9,7 +9,7 @@
         <a href="../message.html" th:href="@{/message}">
           <i class="fas fa-envelope fa-lg"></i>
         </a>
-        <span class="count message-count">24</span>
+        <span class="count message-count" th:text="${unreadMessage}" th:if="${unreadMessage} > 0">24</span>
       </div>
       <a href="../mypage.html" th:href="@{/mypage}">
         <i class="fas fa-user fa-lg"></i>
@@ -18,7 +18,7 @@
         <a data-toggle="popover" data-placement="bottom"
           ><i class="fas fa-bell fa-lg"></i
         ></a>
-        <span class="count noti-count">5</span>
+        <span class="count noti-count" th:text="${unreadNotice}" th:if="${unreadNotice} > 0">5</span>
       </div>
       <form th:action="@{/logout}" method="post">
         <button type="submit">
