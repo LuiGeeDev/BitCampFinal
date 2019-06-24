@@ -85,7 +85,9 @@
       </div>
 
       <!-- 캘린더 -->
-      <div id="calendar"></div>
+      <div class="row">
+        <div id="calendar"></div>
+      </div>
 
       <!-- 동영상 게시판과 스택 게시판 -->
       <div class="row">
@@ -130,44 +132,105 @@
             </div>
           </a>
         </div>
-      </div>
-
-      <!-- 스택 -->
-      <div class="stack">
-        <div class="stack-recent"></div>
-        <div class="stack-popular"></div>
-      </div>
-      <!-- 하단 carousel -->
-      <div id="carousel" class="carousel slide" data-ride="carousel">
-        <!-- Indicators -->
-        <ul class="carousel-indicators">
-          <li data-target="#carousel" data-slide-to="0" class="active"></li>
-          <li data-target="#carousel" data-slide-to="1"></li>
-          <li data-target="#carousel" data-slide-to="2"></li>
-        </ul>
-
-        <!-- The slideshow -->
-        <div class="carousel-inner">
-          <div class="news carousel-item active"></div>
-          <div class="carousel-item">
-            <p>Hello2</p>
+        <!-- 스택 -->
+        <div class="stack">
+          <div class="stack-recent">
+            <div class="stack-header">
+              <p>방금 올라온 질문</p>
+            </div>
+            <div class="stack-article">
+              <div class="stack-article-title">
+                질문 제목입니다. 답변 부탁해요.
+              </div>
+              <div class="stack-article-info">
+                <div class="stack-article-writer">권예지</div>
+                <div class="stack-article-time">5분 전</div>
+              </div>
+            </div>
+            <div class="stack-article">
+              <div class="stack-article-title">
+                질문 제목입니다. 답변 부탁해요.
+              </div>
+              <div class="stack-article-info">
+                <div class="stack-article-writer">권예지</div>
+                <div class="stack-article-time">5분 전</div>
+              </div>
+            </div>
+            <div class="stack-article">
+              <div class="stack-article-title">
+                질문 제목입니다. 답변 부탁해요.
+              </div>
+              <div class="stack-article-info">
+                <div class="stack-article-writer">권예지</div>
+                <div class="stack-article-time">5분 전</div>
+              </div>
+            </div>
           </div>
-          <div class="carousel-item">
-            <p>Hello3</p>
+          <div class="stack-popular">
+            <div class="stack-header">
+              <p>최근 답변된 질문</p>
+            </div>
+            <div class="stack-article">
+              <div class="stack-article-title">
+                질문 제목입니다. 답변이 되었습니다.
+              </div>
+              <div class="stack-article-info">
+                <div class="stack-article-writer">이힘찬</div>
+                <div class="stack-article-time">1분 전</div>
+              </div>
+            </div>
+            <div class="stack-article">
+              <div class="stack-article-title">
+                질문 제목입니다. 답변이 되었습니다.
+              </div>
+              <div class="stack-article-info">
+                <div class="stack-article-writer">이힘찬</div>
+                <div class="stack-article-time">1분 전</div>
+              </div>
+            </div>
+            <div class="stack-article">
+              <div class="stack-article-title">
+                질문 제목입니다. 답변이 되었습니다.
+              </div>
+              <div class="stack-article-info">
+                <div class="stack-article-writer">이힘찬</div>
+                <div class="stack-article-time">1분 전</div>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
 
-        <!-- Left and right controls -->
-        <a class="carousel-control-prev" href="#carousel" data-slide="prev">
-          <span class="carousel-control-prev-icon">
-            <i class="fas fa-chevron-left fa-lg"></i>
-          </span>
-        </a>
-        <a class="carousel-control-next" href="#carousel" data-slide="next">
-          <span class="carousel-control-next-icon">
-            <i class="fas fa-chevron-right fa-lg"></i>
-          </span>
-        </a>
+      <!-- 하단 carousel -->
+      <div class="row">
+        <div id="carousel" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ul class="carousel-indicators">
+            <li data-target="#carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel" data-slide-to="1"></li>
+            <li data-target="#carousel" data-slide-to="2"></li>
+          </ul>
+
+          <!-- The slideshow -->
+          <div class="carousel-inner">
+            <div class="news carousel-item active"></div>
+            <div class="news carousel-item"></div>
+            <div class="news carousel-item">
+            </div>
+          </div>
+
+          <!-- Left and right controls -->
+          <a class="carousel-control-prev" href="#carousel" data-slide="prev">
+            <span class="carousel-control-prev-icon">
+              <i class="fas fa-chevron-left fa-lg"></i>
+            </span>
+          </a>
+          <a class="carousel-control-next" href="#carousel" data-slide="next">
+            <span class="carousel-control-next-icon">
+              <i class="fas fa-chevron-right fa-lg"></i>
+            </span>
+          </a>
+        </div>
       </div>
     </div>
 
