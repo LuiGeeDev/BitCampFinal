@@ -15,8 +15,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 -->
 <mapper namespace="kr.or.bit.dao.MemberDao">
 	<insert id="insertMember" parameterType="kr.or.bit.model.Member">
-		INSERT INTO member(username, password, name, email, enabled, profile_photo,course_id)
-		VALUES(#{username}, #{password}, #{name}, #{email}, #{enabled},#{profile_photo}, #{course_id})
+		INSERT INTO member(username, password, enabled, course_id)
+		VALUES(#{username}, #{password}, #{enabled}, #{course_id})
 	</insert>
 	<update id="updateMember" parameterType="kr.or.bit.model.Member">
 		UPDATE member
