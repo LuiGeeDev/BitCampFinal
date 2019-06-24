@@ -55,6 +55,7 @@ a[class^="carousel-control"] {
 
 .fc-day-header {
   padding: 10px 5px !important;
+  color: #2D3E50;
 }
 
 .recent-messages {
@@ -100,10 +101,12 @@ a[class^="carousel-control"] {
 
 .recent-messages h5 {
   font-weight: 700;
+  color: #2D3E50;
 }
 
 .message-content {
   font-size: 15px;
+  color: #2D3E50;
 }
 
 .message-info {
@@ -116,11 +119,12 @@ a[class^="carousel-control"] {
 .my-project {
   margin: auto;
   margin-left: 50px;
-  border: 1px solid black;
+  border: 1px solid #2D3E50;
   border-radius: 5px;
   padding: 30px 20px 20px 25px;
   position: relative;
   width: 350px;
+
 }
 
 .d-day {
@@ -133,6 +137,7 @@ a[class^="carousel-control"] {
 
 .my-project h4 {
   margin-bottom: 20px;
+  color: #2D3E50;
 }
 
 .project-new-content {
@@ -141,7 +146,7 @@ a[class^="carousel-control"] {
   font-size: 15px;
   position: relative;
   width: 100%;
-  color: #292929;
+  color: #2D3E50;
   border-bottom: 2px solid transparent;
 }
 
@@ -159,9 +164,61 @@ a[class^="carousel-control"] {
 
 .videos {
   margin: auto;
+  margin-right: 50px;
 }
 
 .video {
   display: flex;
-  width: 300px;
+  width: 450px;
+  margin-bottom: 20px;
+}
+
+.thumbnail {
+  margin-right: 20px;
+}
+
+.video-title {
+  font-weight: 700;
+  color: #2D3E50;
+  line-height: 40px;
+}
+
+.video-description {
+  height: 75px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.stack {
+  margin: auto;
+  margin-left: 50px;
+}
+
+.stack-recent, .stack-popular {
+  border: 1px solid #2D3E50;
+  border-radius: 7px;
+  padding: 10px 30px;
+  margin-bottom: 40px;
+}
+
+.stack-header {
+  font-weight: 700;
+}
+
+.stack-article {
+  margin: 10px 0;
+}
+
+.stack-article-title {
+  font-size: 16px;
+}
+
+.stack-article-time {
+  margin-left: auto;
+}
+
+.stack-article-info {
+  display: flex;
+  font-size: 12px;
+  color: #a6a6a6;
 }

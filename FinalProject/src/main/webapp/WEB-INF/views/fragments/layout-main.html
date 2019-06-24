@@ -3,15 +3,13 @@
   <head th:replace="fragments/head :: head(${links})"></head>
   <body>
     <div class="container-fluid">
-    <div class="row">
-      <div th:replace="fragments/sidebar-main :: sidebar"></div>
+    <div th:replace="fragments/sidebar-main :: sidebar"></div>
+    <div th:replace="fragments/topnav :: topnav"></div>
       <div class="col-main">
-      <div th:replace="fragments/topnav :: topnav"></div>
       <div class="row">
         <div th:replace="${main}"></div>
       </div>
       </div>
-    </div>
     </div>
     <script th:src="@{/js/socket.js}"></script>
     <script th:replace="${script}"></script>
