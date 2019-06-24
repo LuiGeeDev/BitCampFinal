@@ -25,4 +25,6 @@ public interface MessageDao {
   List<Message> selectReadMessage(String receiver_username);
 
   List<Message> selectUnreadMessage(String receiver_username);
+  
+  List<Message> selectMainMessage(String receiver_username);
 }
