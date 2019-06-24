@@ -8,15 +8,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT *
     FROM MEMBER
   </select>
-  <select id="selectMember" resultType="kr.or.bit.model.Member">
-    SELECT id, password, name
+  <select id="selectMemberByUsername" resultType="kr.or.bit.model.Member">
+    SELECT username, password, name, email, profile_photo  
     FROM MEMBER
-    WHERE id = #{id}
+    WHERE username = #{username}
   </select>
-  <insert id="join">
-    INSERT INTO MEMBER (ID , PASSWORD , NAME)
-    VALUES (#{id} , #{password}, #{name})
-  </insert>
 </mapper>
 
 

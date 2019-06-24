@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout (main, script, links)">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="layout (main, script, links)">
   <head th:replace="fragments/head :: head(${links})"></head>
   <body>
     <div class="container-fluid">
