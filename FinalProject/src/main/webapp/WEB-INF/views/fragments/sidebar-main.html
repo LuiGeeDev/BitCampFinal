@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
   <body>
     <div class="sidebar-main col-side sticky-top" th:fragment="sidebar">
       <div class="logo">
@@ -35,23 +35,33 @@
       </div>
       <div class="side-nav">
         <div class="nav-menu">
-          <i class="fas fa-book fa-2x"></i>
+          <div class="nav-icon">
+            <i class="fas fa-book fa-2x"></i>
+          </div>
           <span class="menu-name">우리 반</span>
         </div>
         <div class="nav-menu">
-          <i class="far fa-question-circle fa-2x"></i>
+          <div class="nav-icon">
+            <i class="far fa-question-circle fa-2x"></i>
+          </div>
           <span class="menu-name">스택</span>
         </div>
         <div class="nav-menu">
-          <i class="fas fa-video fa-2x"></i>
+          <div class="nav-icon">
+            <i class="fas fa-video fa-2x"></i>
+          </div>
           <span class="menu-name">동영상</span>
         </div>
         <div class="nav-menu" sec:authorize="hasRole('TEACHER')">
-          <i class="fas fa-database fa-2x"></i>
+          <div class="nav-icon">
+            <i class="fas fa-database fa-2x"></i>
+          </div>
           <span class="menu-name">강의 자료</span>
         </div>
-        <div class="nav-menu" sec:authorize="hasRole('MANAGER')">
-          <i class="fas fa-tasks fa-2x"></i>
+        <div class="nav-menu" sec:authrorize="hasRole('MANAGER')">
+          <div class="nav-icon">
+            <i class="fas fa-tasks fa-2x"></i>
+          </div>
           <span class="menu-name">학원 관리</span>
         </div>
       </div>

@@ -14,15 +14,13 @@ import kr.or.bit.model.Member;
 * 
 */
 public interface MemberDao {
-  void join(Member member);
-
   void insertMember(Member member);
 
   void updateMember(Member member);
 
   void deleteMember(String username);
 
-  List<Member> selectAllMember();
+  List<Member> selectAllMembers();
 
   Member selectMemberByUsername(String username);
 }

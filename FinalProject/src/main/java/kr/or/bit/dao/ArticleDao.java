@@ -16,7 +16,7 @@ import kr.or.bit.model.Article;
 public interface ArticleDao {
   void insertArticle(Article article);
  
-  void updateArticle(Article article, int id);
+  void updateArticle(Article article);
 
   void deleteArticle(int id);
 

@@ -23,7 +23,7 @@
     <intercept-url pattern="/menu"
       access="hasRole('MANAGER')" />
     <intercept-url pattern="/**"
-      access="hasRole('STUDENT')" />
+      access="isAuthenticated()" />
     <form-login login-page="/login"
       login-processing-url="/login" default-target-url="/"
       authentication-failure-url="/login-error" />
@@ -44,7 +44,7 @@
   <authentication-manager>
     <authentication-provider>
       <jdbc-user-service data-source-ref="dataSource"
-        role-prefix=""
+        role-prefix="ROLE_"
         users-by-username-query="select username, password, enabled from member where username = ?"
         authorities-by-username-query="select username, role from authorities where username = ?" />
       <password-encoder ref="bCryptPasswordEncoder" />

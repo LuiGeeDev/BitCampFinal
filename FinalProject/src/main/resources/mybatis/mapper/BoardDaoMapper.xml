@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- /*
+*
+* @date: 2019. 06. 21.
+*
+* @author: 권예지
+* 
+*/ -->
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="kr.or.bit.dao.BoardDao">
-  <insert id="write">
+<!--   <insert id="write">
     INSERT INTO BOARD (title, content, writer)
     VALUES (#{title}, #{content}, #{writer})
   </insert>
@@ -16,8 +22,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT id, title, content, writer
     FROM BOARD
     WHERE id = #{id}
-  </select>
-</mapper>
+  </select> -->
+  <update id="updateBoard" parameterType="kr.or.bit.model.Board">
+    update board
+    board_name=#{board_name},
+    boardtype=#{boardtype},
+    course_id=#{course_id}
+    where id=#{id}
+  </update>
+</mapper>  
 
 
 

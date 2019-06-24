@@ -5,7 +5,7 @@ import kr.or.bit.model.Checklist;
 public interface ChecklistDao {
   void insertChecklist(Checklist checklist);
 
-  void updateChecklist(Checklist checklist, int id);
+  void updateChecklist();
 
   void deleteChecklist(int id);
 
