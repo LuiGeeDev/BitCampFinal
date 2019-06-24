@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	values (#{id}, now(), now(), #{title}, #{content}, #{username}, #{board_id})
   </insert>
   <delete id="deleteArticle">
-    delete article where id=#{id}
+    delete from article where id=#{id}
   </delete>
   <update id="updateArticle" parameterType="kr.or.bit.model.Article">
     update article
