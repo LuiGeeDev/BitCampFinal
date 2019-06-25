@@ -15,19 +15,25 @@
         <p th:text="*{id}"></p>
         <p th:text="*{sender_username}"></p>
       </div>
-      <hr> -->    
-      <h1>selectAllCourse</h1>
+      <hr> -->  
+      <h3>insertCourse</h3>
+      <a th:href="@{/courseinsert}" >이동</a>
+      <hr>
+      <h3>selectAllCourse</h3>
       <div class="iteration" th:each="course : ${list}" 
       th:unless="${course.id}==0">
-        아이디 : <p th:text="${course.id}"></p>
-        강의명 : <p th:text="${course.course_name}"></p>
-        시작날짜 : <p th:text="${course.start_date}"></p>
-        종료날짜 : <p th:text="${course.end_sdate}"></p>
-        과목코드 : <p th:text="${course.subject}"></p>
-        과목이름 : <p th:text="${course.subject_name}"></p>
-        강의실번호 : <p th:text="${course.classroom_id}"></p>
-        강의실이름 : <p th:text="${course.classroom_name}"></p>
+        아이디 : <span th:text="${course.id}"></span>
+        강의명 : <span th:text="${course.course_name}"></span>
+        시작날짜 : <span th:text="${course.start_date}"></span>
+        종료날짜 : <span th:text="${course.end_date}"></span><br>
+        과목코드 : <span th:text="${course.subject}"></span>
+        과목이름 : <span th:text="${course.subject_name}"></span>
+        강의실번호 : <span th:text="${course.classroom_id}"></span>
+        강의실이름 : <span th:text="${course.classroom_name}"></span><br><br>
+    <a th:href="@{/courseupdate(id=${course.id})}" >수정</a>
+    <hr>
       </div>
+    </div>
 <!--     <h1>selectMessageById</h1>
     	<div th:each="senderM : ${sender}">
         아이디 : <p th:text="${senderM.id}"></p>
@@ -37,27 +43,6 @@
         보낸 사람 : <p th:text="${senderM.sender_username}"></p>
         받는 사람 : <p th:text="${senderM.receiver_username}"></p>
       </div>
-      
-      <h1>selectReadMessage</h1>
-    	<div th:each="rm : ${read}">
-        아이디 : <p th:text="${rm.id}"></p>
-        내용 : <p th:text="${rm.content}"></p>
-        시간 : <p th:text="${rm.time}"></p>
-        체크유무 : <p th:text="${rm.checked}"></p>
-        보낸 사람 : <p th:text="${rm.sender_username}"></p>
-        받는 사람 : <p th:text="${rm.receiver_username}"></p>
-      </div>
-      
-         <h1>selectUnReadMessage</h1>
-    	<div th:each="un : ${read}">
-        아이디 : <p th:text="${un.id}"></p>
-        내용 : <p th:text="${un.content}"></p>
-        시간 : <p th:text="${un.time}"></p>
-        체크유무 : <p th:text="${un.checked}"></p>
-        보낸 사람 : <p th:text="${un.sender_username}"></p>
-        받는 사람 : <p th:text="${un.receiver_username}"></p>
-      </div> -->
-    	
     	</div>
       
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->

@@ -18,6 +18,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO member(username, password, enabled, course_id)
 		VALUES(#{username}, #{password}, #{enabled}, #{course_id})
 	</insert>
+    <insert id="insertNewCourseMembers" parameterType="map">
+      { call MakeCourseMembers(#{people}, #{teacher_id}, #{course_id}, #{start_date}, #{password}) }
+    </insert>
 	<update id="updateMember" parameterType="kr.or.bit.model.Member">
 		UPDATE member
 		SET password=#{password}, name=#{name}, email=#{email}, profile_photo=#{profile_photo}
