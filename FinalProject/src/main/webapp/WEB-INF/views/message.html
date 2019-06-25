@@ -75,7 +75,7 @@
         },
         success: function(data) {
           console.log(data);
-          $(".message-sender-name, .message-sender-content, .message-sender-time, sender-message").empty()
+          $(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message").empty()
          $(".message-sender-name").append(`${data.sender_username}`);
          $(".message-sender-time").append(`${data.time}`);
          $(".message-sender-content").append(`${data.content}`);
