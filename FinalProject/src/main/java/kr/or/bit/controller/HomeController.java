@@ -32,7 +32,7 @@ public class HomeController {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
     
-    String username = Helper.username();
+    String username = Helper.userName();
     
     Member user = memberDao.selectMemberByUsername(username);
     List<Message> mainMessage = messageDao.selectMainMessage(username);
