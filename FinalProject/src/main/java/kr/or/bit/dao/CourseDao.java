@@ -25,8 +25,10 @@ public interface CourseDao {
   void deleteCourse(int id);
 
   List<Course> selectAllCourse();
-  
+
+  Course selectCourse(int id);
+
   Course selectRecentCourse();
-  
+
   List<Classroom> selectAvailableClassroom(@Param("start_date") Date start_date, @Param("end_date") Date end_date);
 }

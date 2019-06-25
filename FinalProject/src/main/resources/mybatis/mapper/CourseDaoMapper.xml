@@ -29,6 +29,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     LEFT JOIN Subject as s 
     ON c.subject = s.subject;
   </select> 
+  <select id="selectCourse" resultType="kr.or.bit.model.Course">     
+	SELECT c.id as id, course_name, start_date, end_date, c.subject as subject, c.classroom_id as classroom_id, r.classroom_name as classroom_name, s.subject as subject
+	FROM Course as c 
+	LEFT JOIN Classroom as r 
+	ON c.classroom_id = r.classroom_name
+	LEFT JOIN Subject as s 
+	ON c.subject = s.subject 
+	WHERE c.id = #{id}
+  </select> 
   <select id="selectRecentCourse" resultType="kr.or.bit.model.Course">
     SELECT c.id, course_name, start_date, end_date, c.subject, classroom_id, classroom_name, s.subject as subject_name
     FROM course c
