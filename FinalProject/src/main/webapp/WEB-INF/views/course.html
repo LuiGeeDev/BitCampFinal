@@ -30,16 +30,9 @@
         과목이름 : <span th:text="${course.subject_name}"></span>
         강의실번호 : <span th:text="${course.classroom_id}"></span>
         강의실이름 : <span th:text="${course.classroom_name}"></span><br><br>
-        
-	<a th:href="@{/courseupdate?id=<span th:text="${course.id}"></span>}">수정</a>
-	
-<!--<a href="videoedit.vb?id=${requestScope.result.id}">
-	<button type="button" class="btn btn-primary" id="enter-btn">수정</button>
-	</a>
-	<a th:href="@{/courseinsert}" >이동</a>
-	  -->
+    <a th:href="@{/courseupdate(id=${course.id})}" >수정</a>
+    <hr>
       </div>
-    
     </div>
 <!--     <h1>selectMessageById</h1>
     	<div th:each="senderM : ${sender}">
@@ -50,7 +43,6 @@
         보낸 사람 : <p th:text="${senderM.sender_username}"></p>
         받는 사람 : <p th:text="${senderM.receiver_username}"></p>
       </div>
-    	
     	</div>
       
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
