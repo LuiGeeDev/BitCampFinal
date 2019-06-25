@@ -10,7 +10,6 @@ public class ManageController {
 	
 	@GetMapping("/home")
 	public String manageHome() {
-		
-		return "manageHome";
+		return "manage/home";
 	}
 }

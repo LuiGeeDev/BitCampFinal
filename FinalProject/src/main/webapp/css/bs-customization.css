@@ -15,6 +15,9 @@
 .modal-content{
   width: 30%;
 }
-#modal.modal.modal-center.fade.show{
-  margin : 50px 0px 0px 600px;
+#modal.fade{
+  margin : 10px 0px 0px 500px;
+}
+.modal.fade{
+  margin : 10px 0px 0px 500px;
 }

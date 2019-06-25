@@ -9,19 +9,14 @@ import kr.or.bit.dao.ScheduleDao;
 
 @Controller
 public class ScheduleController {
-  
+
   @Autowired
   private SqlSession sqlSession;
-  
-  
+
   @RequestMapping("/schedule")
   public String selectTest() {
     ScheduleDao scheduledao = sqlSession.getMapper(ScheduleDao.class);
-    
-    
-    
-    
-    
+
     return "schedule";
   }
 }
