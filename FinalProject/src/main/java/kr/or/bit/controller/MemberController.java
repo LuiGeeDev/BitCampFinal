@@ -1,5 +1,6 @@
 package kr.or.bit.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -54,10 +55,9 @@ public class MemberController {
 	}
 	
 	@PostMapping("/mypage")
-	public String updateMember(Member member, Model model) {
+	public String updateMember(Member member, Principal principal) {
 		MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
 		memberDao.updateMember(member);
-		
 		
 		return "redirect:/";
 		
