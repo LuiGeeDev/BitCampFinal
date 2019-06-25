@@ -4,13 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.model.Member;
+import kr.or.bit.utils.Helper;
 
 @Service
 public class MemberService {
@@ -19,8 +17,8 @@ public class MemberService {
 
   public Member getMember() {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    String username = userDetails.getUsername();
+    String username = Helper.userName();
+    
     Member member = memberDao.selectMemberByUsername(username);
     return member;
   }
@@ -30,9 +28,13 @@ public class MemberService {
     memberDao.updateMember(member);
   }
 
-  public List<Member> getAllMembers() {
+  public List<Member> getStudentsList() {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-    List<Member> memberList = memberDao.selectAllMembers();
+    
+    String username = Helper.userName();
+    Member member = memberDao.selectMemberByUsername(username);
+ 
+    List<Member> memberList = memberDao.selectStudentsList(member.getCourse_id());
     return memberList;
   }
 }
