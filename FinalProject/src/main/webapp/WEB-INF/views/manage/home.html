@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
+<head>
+<link rel="stylesheet" th:href="@{/css/home.css}" />
+<link rel="stylesheet" th:href="@{/css/manage/home.css}" />
+
+</head>
+<body>
+	
+	 <div class="main" th:fragment="main">
+		<div id = "title">클래스 생성하기
+				<span id="buttonWrapper">
+						<button type="button" class="btn btn-warning btn-sm" 
+							data-toggle="modal" data-target="#modal" id="createButton">생성</button>
+					</span>
+		</div>
+
+		<hr>
+		<div id = "title">수업 진행중인 클래스</div>
+		<table>
+			<tr>
+				<th>강사</th>
+				<th>강의</th>
+				<th>수업기간</th>
+				<th>학생 수</th>
+				<th>강의실 번호</th>
+			</tr>
+			<tr>
+				<td>윤종석</td>
+				<td>JAVA프로그래밍</td>
+				<td>2018.02.20 ~ 2018.08.20</td>
+				<td>23</td>
+				<td>6477</td>
+			</tr>
+			<tr>
+					<td>이힘찬</td>
+					<td>C++</td>
+					<td>2018.01.07 ~ 2018.06.07</td>
+					<td>28</td>
+					<td>6478</td>
+				</tr>
+				<tr>
+						<td>윤종석</td>
+						<td>JAVA프로그래밍</td>
+						<td>2017.12.22 ~~ 2018.06.22</td>
+						<td>21</td>
+						<td>6479</td>
+					</tr>
+		</table>
+		<hr>
+
+		<div id = "title">수업 종료된 클래스 </div>
+		<table>
+				<tr>
+					<th>강사</th>
+					<th>강의</th>
+					<th>수업기간</th>
+					<th>학생 수</th>
+					<th>강의실 번호</th>
+				</tr>
+				<tr>
+					<td>윤종석</td>
+					<td>JAVA프로그래밍</td>
+					<td>2018.02.20 ~ 2018.08.20</td>
+					<td>23</td>
+					<td>6477</td>
+				</tr>
+				<tr>
+						<td>이힘찬</td>
+						<td>C++</td>
+						<td>2018.01.07 ~ 2018.06.07</td>
+						<td>28</td>
+						<td>6478</td>
+					</tr>
+					<tr>
+							<td>윤종석</td>
+							<td>JAVA프로그래밍</td>
+							<td>2017.12.22 ~~ 2018.06.22</td>
+							<td>21</td>
+							<td>6479</td>
+						</tr>
+			</table>
+		<hr>
+		<div class="modal fade" id="modal" aria-labelledby="myModalLabel"
+			tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			</div>
+			<div class="modal-content">
+
+				<div class="modal-header" id="createClassTitle">
+					<div class="modal-title">
+						<img src="/resources/images/teacher-pointing-blackboard.png"
+							id="img"> 클래스 생성
+					</div>
+
+				</div>
+				<div class="modal-body">
+					<form action="">
+
+						<div id="th">강사</div>
+						<div>
+							<span id="teacherNameSelectWrapper"> <select
+								id="teacherNameSelect">
+									<option value="" selected>강사이름 선택</option></span> </select>
+						</div>
+
+
+						<div id="th">강의명</div>
+						<div>
+							<span id="classNameWrapper"> <input type="text"
+								placeholder="강의이름 입력" id="className">
+							</span>
+						</div>
+						<div id="th">시작일</div>
+						<div>
+							<span id="dateWrapper"> <input type="date">
+							</span>
+						</div>
+
+
+						<div id="th">종료일</div>
+						<div>
+							<input type="date">
+						</div>
+
+						<div id="th">학생수</div>
+						<div>
+							<span id="studentAmountWrapper"> <input type="text"
+								id="studentAmount" placeholder="학생 수 입력">
+							</span>
+						</div>
+						<div id="th">강의실</div>
+						<div>
+							<span id="classRoomSelectWrapper"> <select
+								id="classRoomSelect">
+									<option value="">강의실 번호 선택</option>
+							</select>
+							</span>
+						</div>
+						<div class="modal-footer">
+								<button type="submit" class="btn btn-default">생성</button>
+								<button type="button" class="btn btn-default close_link"
+									data-dismiss="modal" id="closeButton">닫기</button>
+							</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div> 
+</div>
+	<script th:fragment="script">
+		console.log("Hello, world!");
+	</script>
+</body>
+</html>

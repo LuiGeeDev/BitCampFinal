@@ -20,7 +20,6 @@ public class ScheduleController {
   @RequestMapping("/schedule")
   public String selectTest() {
     ScheduleDao scheduledao = sqlSession.getMapper(ScheduleDao.class);
-    List<Schedule> list = scheduledao.selectAllSchedule(course, group);
     
     
     
