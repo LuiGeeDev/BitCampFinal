@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,18 +24,22 @@ public class HomeController {
   @Autowired
   private SqlSession sqlSession;
   
+  @Autowired
+  private BCryptPasswordEncoder bCryptPasswordEncoder;
+  
   @GetMapping("/")
   public String home(Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
-    NotificationDao notificationDao = sqlSession.getMapper(NotificationDao.class);
-    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
-    ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
-    
     UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     String username = userDetails.getUsername();
     
     Member user = memberDao.selectMemberByUsername(username);
+    
+    if (bCryptPasswordEncoder.matches("bitcamp", user.getPassword()) {
+      System.out.println("비밀번호 변경 안함");  
+    }
+    
     List<Message> mainMessage = messageDao.selectMainMessage(username);
         
 	  model.addAttribute("user", user);
