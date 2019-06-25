@@ -2,58 +2,49 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-
-
 <mapper namespace="kr.or.bit.dao.MessageDao">
-
-	<insert id="insertMessage">
-		INSERT INTO message (content, time, checked,
-		sender_username,
-		receiver_username)
-		VALUES(#{content}, NOW(),
-		#{checked}, #{sender_username}, #{receiver_username})
-	</insert>
-	<delete id="deleteMessage">
-		DELETE FROM MESSAGE WHERE id = #{id}
-	</delete>
-	<select id="selectAllMessage"
-		resultType="kr.or.bit.model.Message">
-		SELECT id, content, time, checked, sender_username,
-		receiver_username
-		FROM message WHERE receiver_username =
-		#{receiver_username}
-	</select>
-	<select id="selectMessageById"
-		resultType="kr.or.bit.model.Message">
-		SELECT id, content, time, checked, sender_username,
-		receiver_username
-		FROM message WHERE sender_username =
-		#{sender_username}
-	</select>
-	<select id="selectReadMessage"
-		resultType="kr.or.bit.model.Message">
-		SELECT id, content, time, checked, sender_username,
-		receiver_username
-		FROM message WHERE receiver_username =
-		#{receiver_username} and checked =
-		1
-	</select>
-	<select id="selectUnreadMessage"
-		resultType="kr.or.bit.model.Message">
-		SELECT id, content, time, checked, sender_username,
-		receiver_username
-		FROM message WHERE receiver_username =
-		#{receiver_username} and checked =
-		0
-	</select>
-	<select id="selectMainMessage"
-		resultType="kr.or.bit.model.Message">
-		select *
-		from message
-		where receiver_username='#{recevier_username}'
-		order by time desc
-		limit 3;
-	</select>
+  <insert id="insertMessage">
+    INSERT INTO message (content, time, checked, sender_username, receiver_username)
+    VALUES (#{content}, NOW(), #{checked}, #{sender_username}, #{receiver_username})
+  </insert>
+  <delete id="deleteMessage">
+    DELETE FROM MESSAGE 
+    WHERE id = #{id}
+  </delete>
+  <select id="selectAllMessage"
+    resultType="kr.or.bit.model.Message">
+    SELECT id, content, time, checked, sender_username, receiver_username
+    FROM message 
+    WHERE receiver_username = #{receiver_username}
+  </select>
+  <select id="selectMessageById"
+    resultType="kr.or.bit.model.Message">
+    SELECT id, content, time, checked, sender_username, receiver_username
+    FROM message 
+    WHERE sender_username = #{sender_username}
+  </select>
+  <select id="selectReadMessage"
+    resultType="kr.or.bit.model.Message">
+    SELECT id, content, time, checked, sender_username, receiver_username
+    FROM message
+    WHERE receiver_username =
+    #{receiver_username} and checked = 1
+  </select>
+  <select id="selectUnreadMessage"
+    resultType="kr.or.bit.model.Message">
+    SELECT id, content, time, checked, sender_username,
+    receiver_username
+    FROM message
+    WHERE receiver_username = #{receiver_username}
+    and checked = 0
+  </select>
+  <select id="selectMainMessage"
+    resultType="kr.or.bit.model.Message">
+    select *
+    from message
+    where receiver_username = #{recevier_username}
+    order by time desc
+    limit 3;
+  </select>
 </mapper>
   
