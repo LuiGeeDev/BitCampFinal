@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="layout (main, script, links)">
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  th:fragment="layout (main, script, links)"
+>
   <head th:replace="fragments/head :: head(${links})"></head>
   <body>
     <div class="container-fluid">
-    <div class="row">
-      <div th:replace="fragments/sidebar :: sidebar"></div>
-      <div class="col-main">
-      <div th:replace="fragments/topnav :: topnav"></div>
       <div class="row">
-        <div th:replace="${main}"></div>
+        <div th:replace="fragments/sidebar :: sidebar"></div>
+        <div class="col-main">
+          <div th:replace="fragments/topnav :: topnav"></div>
+          <div class="row">
+            <div th:replace="${main}"></div>
+          </div>
+        </div>
       </div>
-      </div>
-    </div>
     </div>
     <script th:src="@{/js/socket.js}"></script>
-    <script th:replace="${script}"></script>
+    <th:block th:replace="${script}"></th:block>
   </body>
 </html>
