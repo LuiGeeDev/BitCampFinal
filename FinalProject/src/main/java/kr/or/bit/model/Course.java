@@ -10,13 +10,22 @@ public class Course {
   private Date end_date;
   private int subject;
   private int classroom_id;
-  
+  private int people;
+
   private String classroom_name;
   private String subject_name;
-  
+
   private LocalDate startDate;
   private LocalDate endDate;
-  
+
+  public int getPeople() {
+    return people;
+  }
+
+  public void setPeople(int people) {
+    this.people = people;
+  }
+
   public String getClassroom_name() {
     return classroom_name;
   }

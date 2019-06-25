@@ -21,6 +21,9 @@ public interface CourseDao {
   void deleteCourse(int id);
 
   List<Course> selectAllCourse();
-  
+
   Course selectCourse(int id);
+
+  Course selectRecentCourse();
+
 }
