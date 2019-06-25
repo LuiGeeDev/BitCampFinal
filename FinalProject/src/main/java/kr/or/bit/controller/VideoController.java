@@ -17,4 +17,8 @@ public class VideoController {
 	public String videoHome() {
 		return "video/home";
 	}
+	@GetMapping("/detail")
+	public String videoDetail() {
+		return "video/detail";
+	}
 }
