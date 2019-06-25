@@ -41,10 +41,9 @@ public class HomeController {
     }
     
     List<Message> mainMessage = messageDao.selectMainMessage(username);
-        
+    
 	  model.addAttribute("user", user);
 	  model.addAttribute("mainMessage", mainMessage);
-	  
     return "main";
   }
 
