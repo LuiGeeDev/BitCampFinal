@@ -26,15 +26,16 @@ public class HomeController {
   
   @GetMapping("/")
   public String home(Model model) {
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
     NotificationDao notificationDao = sqlSession.getMapper(NotificationDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
     
-    Member user = Helper.user(sqlSession);
+    String username = Helper.username();
     
-    
-    List<Message> mainMessage = messageDao.selectMainMessage(user.getName());
+    Member user = memberDao.selectMemberByUsername(username);
+    List<Message> mainMessage = messageDao.selectMainMessage(username);
 
     
 	  model.addAttribute("user", user);
