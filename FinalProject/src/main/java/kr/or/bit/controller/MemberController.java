@@ -14,23 +14,25 @@ import kr.or.bit.service.MemberService;
 
 @Controller
 public class MemberController {
-  @Autowired
-  private MemberService service;
-  @Autowired
-  private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-  @GetMapping("/mypage")
-  public String updateMember(Model model) {
-    Member user = service.getMember();
-    model.addAttribute("user", user);
-    return "mypageForm";
-  }
-
-  @PostMapping("/mypage")
-  public String updateMember(Member member, Principal principal) {
-    // password 암호화
-    member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
-    service.updateMember(member);
-    return "redirect:/";
-  }
+	
+	@Autowired
+	private MemberService service;
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@GetMapping("/mypage")
+	public String updateMember(Model model, Principal principal) {
+		Member user = service.getMember();
+		model.addAttribute("user", user);
+		return "mypageForm";
+	}
+	
+	@PostMapping("/mypage")
+	public String updateMember(Member member, Principal principal) {	  
+		member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
+		service.updateMember(member);
+		return "redirect:/";
+		
+	}
 }

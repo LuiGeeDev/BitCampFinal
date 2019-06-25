@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+body{
+    font-family: 'Nanum Gothic'
+}
+#title{
+    margin : 10px 0px 0px 80px;
+    font-size : 32px;
+    font-weight: bold
+}
+#videoBoard{
+    cursor:pointer
+}
+#videoBoard:hover{
+    background-color:#eeeeee;
+}
+#board{
+    margin : 10px 0px 0px 100px;
+    background-color:white;
+}
+#videoTitle{
+    font-size: 30px;
+    font-weight: bold;
+}
+#commentCount{
+    color: #F39B10;
+    margin-left: 7.2px
+}
+#videoContent{
+    font-size: 14px;
+    color: gray;
+}
+
+#thumnail-image{
+    margin : 20px;
+    width: 500px;
+    height: 261
+}
+#videoDetail{
+    width : 500px
+}
+#videoViewCount{
+    font-size: 12px;
+    color: gray;
+    margin-top : 50px
+}

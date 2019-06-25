@@ -1,124 +1,157 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
-<head>
-<link rel="stylesheet" th:href="@{/css/home.css}" />
-<link rel="stylesheet" th:href="@{/css/manage/home.css}" />
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <link rel="stylesheet" th:href="@{/css/home.css}" />
+    <link rel="stylesheet" th:href="@{/css/manage/home.css}" />
+  </head>
+  <body>
+    <div class="main" th:fragment="main">
+      <div id="title">
+        클래스 생성하기
+        <span id="buttonWrapper">
+          <button
+            type="button"
+            class="btn btn-warning btn-sm"
+            data-toggle="modal"
+            data-target="#modal"
+            id="createButton"
+          >
+            생성
+          </button>
+        </span>
+      </div>
 
-</head>
-<body>
+      <hr />
+      <div id="title">수업 진행중인 클래스</div>
+      <table>
+        <tr>
+          <th>강의</th>
+          <th>수업기간</th>
+          <th>학생 수</th>
+          <th>강의실 번호</th>
+        </tr>
+        <tr>
+          <td>JAVA프로그래밍</td>
+          <td>2018.02.20 ~ 2018.08.20</td>
+          <td>23</td>
+          <td>6477</td>
+        </tr>
+        <tr>
+          <td>C++</td>
+          <td>2018.01.07 ~ 2018.06.07</td>
+          <td>28</td>
+          <td>6478</td>
+        </tr>
+        <tr>
+          <td>JAVA프로그래밍</td>
+          <td>2017.12.22 ~~ 2018.06.22</td>
+          <td>21</td>
+          <td>6479</td>
+        </tr>
+      </table>
 
-	<div class="main" th:fragment="main">
-		<div id="title">
-			클래스 생성하기 <span id="buttonWrapper">
-				<button type="button" class="btn btn-warning btn-sm"
-					data-toggle="modal" data-target="#modal" id="createButton">생성</button>
-			</span>
-		</div>
+      <hr />
 
-		<hr>
-		<div id="title">수업 진행중인 클래스</div>
-		<table>
-			<tr>
-				<th>강의</th>
-				<th>수업기간</th>
-				<th>학생 수</th>
-				<th>강의실 번호</th>
-			</tr>
-			<tr>
-				<td>JAVA프로그래밍</td>
-				<td>2018.02.20 ~ 2018.08.20</td>
-				<td>23</td>
-				<td>6477</td>
-			</tr>
-			<tr>
-				<td>C++</td>
-				<td>2018.01.07 ~ 2018.06.07</td>
-				<td>28</td>
-				<td>6478</td>
-			</tr>
-			<tr>
-				<td>JAVA프로그래밍</td>
-				<td>2017.12.22 ~~ 2018.06.22</td>
-				<td>21</td>
-				<td>6479</td>
-			</tr>
-		</table>
-		<hr>
+      <div id="title">수업 종료된 클래스</div>
+      <table>
+        <tr>
+          <th>강의</th>
+          <th>수업기간</th>
+          <th>학생 수</th>
+          <th>강의실 번호</th>
+        </tr>
+        <tr>
+          <td>JAVA프로그래밍</td>
+          <td>2018.02.20 ~ 2018.08.20</td>
+          <td>23</td>
+          <td>6477</td>
+        </tr>
+        <tr>
+          <td>C++</td>
+          <td>2018.01.07 ~ 2018.06.07</td>
+          <td>28</td>
+          <td>6478</td>
+        </tr>
+        <tr>
+          <td>JAVA프로그래밍</td>
+          <td>2017.12.22 ~~ 2018.06.22</td>
+          <td>21</td>
+          <td>6479</td>
+        </tr>
+      </table>
 
-		<div id="title">수업 종료된 클래스</div>
-		<table>
-			<tr>
-				<th>강의</th>
-				<th>수업기간</th>
-				<th>학생 수</th>
-				<th>강의실 번호</th>
-			</tr>
-			<tr>
-				<td>JAVA프로그래밍</td>
-				<td>2018.02.20 ~ 2018.08.20</td>
-				<td>23</td>
-				<td>6477</td>
-			</tr>
-			<tr>
-				<td>C++</td>
-				<td>2018.01.07 ~ 2018.06.07</td>
-				<td>28</td>
-				<td>6478</td>
-			</tr>
-			<tr>
-				<td>JAVA프로그래밍</td>
-				<td>2017.12.22 ~~ 2018.06.22</td>
-				<td>21</td>
-				<td>6479</td>
-			</tr>
-		</table>
-		<hr>
-		<div class="modal fade" id="modal" aria-labelledby="myModalLabel"
-			tabindex="-1" role="dialog" aria-hidden="true">
-			<div class="modal-dialog" role="document"></div>
-			<div class="modal-content">
+      <hr />
+      <div
+        class="modal fade"
+        id="modal"
+        aria-labelledby="myModalLabel"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document"></div>
+        <div class="modal-content">
+          <div class="modal-header" id="createClassTitle">
+            <div class="modal-title">
+              <img
+                src="/resources/images/teacher-pointing-blackboard.png"
+                id="img"
+              />
+              클래스 생성
+            </div>
+          </div>
+          <div class="modal-body">
+            <form th:action="@{/manage/createClass}" method="post">
+              <div id="th">강사명</div>
+              <select id="" name = 'teacher_id'>
+                <option value="">강사를 선택하세요.</option>
+                <option value="1">임경균</option>
+              </select>
+              <div id="th">강의명</div>
+              <div>
+                <span id="classNameWrapper">
+                  <input
+                    type="text"
+                    placeholder="강의이름 입력"
+                    id="course_Name"
+                    name="course_name"
+                  />
+                </span>
+              </div>
+              <div id="th">시작일</div>
+              <div>
+                <span id="dateWrapper">
+                  <input type="date" id="start_date" name="start_date" />
+                </span>
+              </div>
 
-				<div class="modal-header" id="createClassTitle">
-					<div class="modal-title">
-						<img src="/resources/images/teacher-pointing-blackboard.png"
-							id="img"> 클래스 생성
-					</div>
+              <div id="th">종료일</div>
+              <div>
+                <input type="date" id="end_date" name="end_date" />
+              </div>
 
-				</div>
-				<div class="modal-body">
-					<form action="/home/createClass" method="post">
-
-
-						<div id="th">강의명</div>
+						<div id="th">과목</div>
 						<div>
-							<span id="classNameWrapper"> <input type="text"
-								placeholder="강의이름 입력" id="course_Name">
-							</span>
+							<select id="" name = "subject">
+								<option value="" selected>과목을 선택하세요.</option>
+								<option value="1">JAVA</option>
+							</select>
 						</div>
-						<div id="th">시작일</div>
-						<div>
-							<span id="dateWrapper"> <input type="date" id="start_date">
-							</span>
-						</div>
-
-
-						<div id="th">종료일</div>
-						<div>
-							<input type="date" id="end_date">
-						</div>
-
 						<div id="th">학생수</div>
 						<div>
 							<span id="studentAmountWrapper"> <input type="text"
-								id="studentAmount" placeholder="학생 수 입력">
+								id="studentAmount" placeholder="학생 수 입력" name = "people">
 							</span>
 						</div>
 						<div id="th">강의실</div>
 						<div>
 							<span id="classRoomSelectWrapper"> 
-								<select id="classRoomSelect">
+								<select id="classRoomSelect" name = "classroom_id">
 									<option value="">강의실 번호 선택</option>
+									<option value="1">1강의실</option>
 							</select>
 							</span>
 						</div>

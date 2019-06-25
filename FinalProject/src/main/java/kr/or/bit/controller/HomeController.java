@@ -17,6 +17,7 @@ import kr.or.bit.dao.NotificationDao;
 import kr.or.bit.dao.ScheduleDao;
 import kr.or.bit.model.Member;
 import kr.or.bit.model.Message;
+import kr.or.bit.utils.Helper;
 
 @Controller
 public class HomeController {
@@ -31,15 +32,14 @@ public class HomeController {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
     
-    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    String username = userDetails.getUsername();
+    String username = Helper.userName();
     
     Member user = memberDao.selectMemberByUsername(username);
     List<Message> mainMessage = messageDao.selectMainMessage(username);
-        
+
+    
 	  model.addAttribute("user", user);
 	  model.addAttribute("mainMessage", mainMessage);
-	  
     return "main";
   }
 
