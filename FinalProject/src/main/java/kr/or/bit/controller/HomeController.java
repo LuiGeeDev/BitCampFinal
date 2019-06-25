@@ -23,7 +23,7 @@ import kr.or.bit.utils.Helper;
 public class HomeController {
   @Autowired
   private SqlSession sqlSession;
-  
+
   @GetMapping("/")
   public String home(Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
@@ -31,15 +31,14 @@ public class HomeController {
     NotificationDao notificationDao = sqlSession.getMapper(NotificationDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
-    
-    String username = Helper.username();
-    
+
+    String username = Helper.userName();
+
     Member user = memberDao.selectMemberByUsername(username);
     List<Message> mainMessage = messageDao.selectMainMessage(username);
 
-    
-	  model.addAttribute("user", user);
-	  model.addAttribute("mainMessage", mainMessage);
+    model.addAttribute("user", user);
+    model.addAttribute("mainMessage", mainMessage);
     return "main";
   }
 

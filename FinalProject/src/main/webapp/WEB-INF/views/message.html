@@ -18,7 +18,7 @@
             <!-- 쪽지 있는 만큼 담기 -->
             <div th:each="all : ${selectall}">
             	<div class="message2">
-            		<span class="hidden"></span>
+            		<span class="hidden" th:text="${all.id}"></span>
             		<div class="message-sender2">
             			<span class="sender2" th:text="${all.sender_username}"></span>
             			<span class="time2" th:text="${all.time}"></span>
@@ -54,12 +54,17 @@
       
       
     </div><!-- main fragment 끝 -->
+    
+    
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
+    <script th:inline="javascript">
+    	const messageId= /*[[${selectall}]]*/ 'default';
+    	console.log(messageId);
+    </script>
     <script th:fragment="script">
     function getMessage(messageId) {
       $.ajax({
-        url: "message/call",
-        dataType: "html",
+        url: "message",
         data: {
           id: messageId,
         },
