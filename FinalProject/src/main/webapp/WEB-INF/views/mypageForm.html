@@ -14,6 +14,7 @@
 		WHERE username=#{username}
  	-->
     <div class="main" th:fragment="main">
+      <input type="button" value="send" id="send">
     	<div th:object="${user}">
 			<form method="post">
 				아이디 : <input type="text" name="username" th:value="*{username}" readonly><br>
@@ -26,8 +27,11 @@
 		</div>
     </div>
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-    <script>
-      console.log("Hello, world!");
+    <script th:fragment="script">
+      $("#send").click(function() {
+        console.log("Hello");
+        client.send("/app/notice", {}, "Hello");
+      })
     </script>
   </body>
 </html>
