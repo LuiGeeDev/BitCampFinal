@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+body{
+  font-family: 'Nanum Gothic';
+}
+.title {
+  font-size : 30px;
+  margin: 30px;
+}
+table {
+  margin-left: 10%;
+  margin-right: 10%;
+  width: 80%;
+  border: 1px solid white;
+  border-collapse: collapse;
+}
+th, td {
+  color: #2d3436;
+  border: 1px solid white;
+  padding: 10px;
+}
+.tdtitle {
+  color: #0984e3;
+  font-weight: bold;
+}
+.tdst {
+  font-size: 130%;
+  font-weight: bold;
+}
+.td1 {
+  text-align: center;
+  width: 5%;
+  color: #535c68;
+}
+.td2 {
+  font-size: 80%;
+}
+.td3 {
+  width: 50%
+}
+.td4 {
+  width: 30%
+}
+
+.tag-name span {
+border-radius: 5px;
+background-color: green;
+color: white;
+padding: 5px;
+}
+		
+}
+
