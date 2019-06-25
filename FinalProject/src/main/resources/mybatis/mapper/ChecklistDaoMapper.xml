@@ -26,8 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="kr.or.bit.dao.ChecklistDao">
   <insert id="insertChecklist">     
-	insert into checked(id, content, checked, time, checker_username, writer_username, group_id)
-	values(#{id}, #{content}, 0, now(), #{checker_username}, #{writer_username}, #{group_id});
+	insert into checklist(id, content, checked, time, checker_username, writer_username, group_id)
+	values(0, #{content}, 0, now(), #{checker_username}, #{writer_username}, #{group_id});
   </insert> 
   <update id="updateChecklist" parameterType="kr.or.bit.model.Checklist">
  	update checklist set checked = 1 where checked = 0;
