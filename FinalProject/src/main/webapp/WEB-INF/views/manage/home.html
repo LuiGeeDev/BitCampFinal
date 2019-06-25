@@ -152,7 +152,7 @@
 								<select id="classRoomSelect" name = "classroom_id">
 									<option value="">강의실 번호 선택</option>
 									<option value="1">1강의실</option>
-							</select>
+								</select>
 							</span>
 						</div>
 						<div class="modal-footer">
@@ -168,7 +168,42 @@
 	</div>
 	</div>
 	<script th:fragment="script">
-		console.log("Hello, world!");
+	$("#start_date, #end_date").change(function(){
+		$('#classRoomSelect').empty();
+		$.ajax({
+			method : "post",
+			url : "/ajax/classroom",
+			data: {start_date:$("#start_date").val(),
+				   end_date:$("#end_date").val()},
+			success: function(response) {
+				console.log(response);
+				const classroom = response;
+				classroom.forEach(function(item){
+					const option = `<option value="${item.id}">${item.classroom_name}</option>`;
+					$("#classRoomSelect").append($(option));
+				});
+			}
+		})
+		
+	})
+
+	
+/* 	$("#end_date").change(function(){
+		$('#classRoomSelect').empty();
+		$.ajax({
+			method : "post",
+			url : "/ajax/classroom",
+			success: function(response) {
+				console.log(response);
+				const classroom = response;
+				classroom.forEach(function(item){
+					const option = `<option value="${item.id}">${item.classroom_name}</option>`;
+					$("#classRoomSelect").append($(option));
+				});
+			}
+		})
+	})	
+	 */
 	</script>
 </body>
 </html>
