@@ -31,14 +31,14 @@ public class HomeController {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
     
-    MessageDao messageDao2 = sqlSession.getMapper(MessageDao.class);
-    
     UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     String username = userDetails.getUsername();
     
     Member user = memberDao.selectMemberByUsername(username);
+    List<Message> mainMessage = messageDao.selectMainMessage(username);
         
 	  model.addAttribute("user", user);
+	  model.addAttribute("mainMessage", mainMessage);
 	  
     return "main";
   }
