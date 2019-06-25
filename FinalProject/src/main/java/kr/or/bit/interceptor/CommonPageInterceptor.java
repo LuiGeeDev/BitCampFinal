@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,14 +29,15 @@ public class CommonPageInterceptor extends HandlerInterceptorAdapter {
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
     NotificationDao notificationDao = sqlSession.getMapper(NotificationDao.class);
     
-    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    UserDetails userDetails = (UserDetails) authentication.getPrincipal();
     String username = userDetails.getUsername();
     
     List<Message> unreadMessages = messageDao.selectUnreadMessage(username);
     List<Notification> unreadNotices = notificationDao.selectAllNewNotification(username);
     
-    int unreadMessage = unreadMessages == null ? 0 : unreadMessages.size();
-    int unreadNotice = unreadNotices == null ? 0 : unreadNotices.size();
+    int unreadMessage = unreadMessages.size();
+    int unreadNotice = unreadNotices.size();
     
     mav.addObject("unreadMessage", unreadMessage);
     mav.addObject("unreadNotice", unreadNotice);
