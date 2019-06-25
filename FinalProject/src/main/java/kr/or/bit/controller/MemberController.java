@@ -29,8 +29,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/mypage")
-	public String updateMember(Member member, Principal principal) {
-		//password 암호화
+	public String updateMember(Member member, Principal principal) {	  
 		member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
 		service.updateMember(member);
 		return "redirect:/";
