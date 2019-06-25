@@ -8,8 +8,11 @@ body{
     font-size : 32px;
     font-weight: bold
 }
+#board{
+    border : 1px solid #eeeeee;
+}
 #videoBoard{
-    cursor:pointer
+    cursor:pointer;
 }
 #videoBoard:hover{
     background-color:#eeeeee;

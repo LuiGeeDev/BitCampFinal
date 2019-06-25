@@ -1,7 +1,11 @@
 package kr.or.bit.dao;
 
+import java.sql.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
+import kr.or.bit.model.Classroom;
 import kr.or.bit.model.Course;
 
 /*
@@ -26,4 +30,5 @@ public interface CourseDao {
 
   Course selectRecentCourse();
 
+  List<Classroom> selectAvailableClassroom(@Param("start_date") Date start_date, @Param("end_date") Date end_date);
 }

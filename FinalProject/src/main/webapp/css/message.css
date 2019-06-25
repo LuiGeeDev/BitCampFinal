@@ -1,5 +1,5 @@
 @charset "UTF-8";
-.container2 {
+.row {
   height: 100%;
 }
 
@@ -124,3 +124,15 @@
 .hidden {
   display: none;
 }
+
+.message-sender-name {
+	font-size: 20px;
+	color:blakc;
+	font-weight: bold;
+}
+
+.sender_message {
+	color: orange;
+}
+
+

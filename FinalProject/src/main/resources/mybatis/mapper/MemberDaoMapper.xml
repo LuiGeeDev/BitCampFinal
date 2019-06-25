@@ -31,15 +31,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE username=#{username}
 	</delete>
 	<select id="selectAllMembers" resultType="kr.or.bit.model.Member">
-		SELECT username, password, name, email, profile_photo
+		SELECT username, password, name, email, profile_photo, course_id
 		FROM MEMBER
 	</select>
+	<select id="selectStudentsList" resultType="kr.or.bit.model.Member">
+		SELECT m.username, m.password, m.name, m.email, m.profile_photo, course_id
+		FROM member m 
+		JOIN authorities a
+		ON m.username = a.username
+		WHERE m.course_id = #{course_id} AND a.role = 'student'
+	</select>
 	<select id="selectMemberByUsername" resultType="kr.or.bit.model.Member">
-		SELECT username, password, name, email, profile_photo
+		SELECT username, password, name, email, profile_photo, course_id
 		FROM MEMBER
 		WHERE username = #{username}
 	</select>
-	
 </mapper>
 
 
