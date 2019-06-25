@@ -4,7 +4,7 @@
   th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
   <head>
     <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-    <link rel="stylesheet" th:href="@{/css/stack/home.css}" />
+    <link rel="stylesheet" th:href="@{/css/QnA/home.css}" />
   </head>
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
@@ -36,53 +36,29 @@
       
       
      <div class="title"><h3><b>스택게시판</b></h3></div>
-     <hr>   
+     <hr>
+      
      <table>
         <tr>
-          <td class="td1"><span class="tdst">3<br></span><span class="td2">vote</span><br>
-          <span class="tdst">7<br></span><span class="td2">answer</span>
-          </td>
-          <td colspan="2"><p class="tdtitle">Speechless</p>
-          <p>Here comes a wave Meant to wash me away A tide that is taking me under Swallowing in sand left with nothing to say My voice drowned out in the thunder But I won't cry And I won't start to crumble</p>
-          </td>
+          <td class="td1">0</td>
+          <td colspan="3">Ipsum</td>
         </tr>
         <tr>
-          <td class="td2">41view</td>
-          <td class="td3">
-   		<span class="tag-name">
-   		<span>Spring</span>
-   		<span>Java</span>
-   		<span>C++</span>
-    	</span>
-    	</td>
-          <td class="td4">정성윤</td>
+          <td class="td1">0</td>
+          <td colspan="3">Dolor</td>
+        </tr>
+        <tr>
+          <td>2view</td>
+          <td colspan="2">Ipsum</td>
+          <td>Ipsum</td>
         </tr>
     </table>  
-    <hr>
-     <table>
-        <tr>
-          <td class="td1"><span class="tdst">0<br></span><span class="td2">vote</span><br>
-          <span class="tdst">0<br></span><span class="td2">answer</span>
-          </td>
-          <td colspan="2"><p class="tdtitle">A Whole New World</p>
-          <p>I can open your eyes Take you wonder by wonder Over sideways and under On a magic carpet ride A whole new world A new fantastic point of view</p>
-          </td>
-        </tr>
-        <tr>
-          <td class="td2">2view</td>
-          <td class="td3">
-   		<span class="tag-name">
-   		<span>Spring</span>
-   		<span>Java</span>
-   		<span>C++</span>
-    	</span>
-		  </td>
-          <td class="td4">zayn</td>
-        </tr>
-    </table>  
-    <hr>    
-    
-
+  </div>
+      
+      
+      
+      
+    </div>
 <!--     <h1>selectMessageById</h1>
     	<div th:each="senderM : ${sender}">
         아이디 : <p th:text="${senderM.id}"></p>
