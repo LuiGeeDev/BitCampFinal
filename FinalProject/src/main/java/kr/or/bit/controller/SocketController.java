@@ -18,4 +18,10 @@ public class SocketController {
   public void sendNotice(Message message) {
     template.convertAndSend("/topic/noti/" + message.getId(), message);
   }
+  
+  @MessageMapping("/notice")
+  public void sendAlarm(String hello) {
+    System.out.println(hello);
+    template.convertAndSendToUser("manager", "/queue/notice", "new notice");
+  }
 }
