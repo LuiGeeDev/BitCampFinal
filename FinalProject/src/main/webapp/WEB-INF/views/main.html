@@ -16,43 +16,21 @@
       <div class="row">
         <div class="recent-messages">
           <h5>최근 쪽지</h5>
-          <div class="recent-message">
+          <div class="recent-message" th:each="mainmessage : ${mainMessage}" >
             <div class="message-sender-photo">
               <img src="https://via.placeholder.com/40" alt="" />
             </div>
             <div class="message-main">
-              <p class="message-content" th:text="${mainMessage[0].content}">
-                ㅇㅋ 내일 점심은 서브웨이다 알았지 성윤아? ㅇㅋ 간다 바이
+              <p class="message-content" th:text="${mainmessage.content}">
               </p>
               <p class="message-info">
-                <span class="message-sender" th:text="${mainMessage[0].sender_username}">강기훈</span>
-                <span class="message-time" th:text="${mainMessage[0].time}" >05/12 10:50pm</span>
+                <span class="message-sender" th:text="${mainmessage.sender_username}">강기훈</span>
+                <span class="message-time" th:text="${mainmessage.time}" >05/12 10:50pm</span>
               </p>
             </div>
           </div>
-          <div class="recent-message">
-            <div class="message-sender-photo">
-              <img src="https://via.placeholder.com/40" alt="" />
-            </div>
-            <div class="message-main">
-              <p class="message-content" th:text="${mainMessage[1].content}">내일은 DTO 작업을 하겠습니다.</p>
-              <p class="message-info">
-                <span class="message-sender" th:text="${mainMessage[1].sender_username}">권순조</span>
-                <span class="message-time" th:text="${mainMessage[1].time}">05/12 10:50pm</span>
-              </p>
-            </div>
-          </div>
-          <div class="recent-message">
-            <div class="message-sender-photo">
-              <img src="https://via.placeholder.com/40" alt="" />
-            </div>
-            <div class="message-main">
-              <p class="message-content" th:text="${mainMessage[2].content}">코드 설명 좀 다시 해줘</p>
-              <p class="message-info">
-                <span class="message-sender" th:text="${mainMessage[2].sender_username}" >정성윤</span>
-                <span class="message-time" th:text="${mainMessage[2].time}">05/12 10:50pm</span>
-              </p>
-            </div>
+          <div th:if="${mainMessage.isEmpty()}">
+          	쪽지가없습니다
           </div>
         </div>
         <div class="my-project">

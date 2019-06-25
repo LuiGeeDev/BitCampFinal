@@ -25,6 +25,7 @@ public class CommonPageInterceptor extends HandlerInterceptorAdapter {
   @Override
   public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
       ModelAndView mav) throws Exception {
+	  
     
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
     NotificationDao notificationDao = sqlSession.getMapper(NotificationDao.class);
@@ -39,7 +40,7 @@ public class CommonPageInterceptor extends HandlerInterceptorAdapter {
     int unreadMessage = unreadMessages.size();
     int unreadNotice = unreadNotices.size();
     
-    mav.addObject("unreadMessage", unreadMessage);
-    mav.addObject("unreadNotice", unreadNotice);
+    request.setAttribute("unreadMessage", unreadMessage);
+    request.setAttribute("unreadNotice", unreadNotice);
   }
 }
