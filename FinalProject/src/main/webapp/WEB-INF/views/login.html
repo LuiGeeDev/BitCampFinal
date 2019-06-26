@@ -1,17 +1,39 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-  <head>
-  </head>
-  <body>
-    <div class="main">
-      <p th:if="${error}" class="fail">올바른 아이디나 비밀번호가 아닙니다.</p>
-      <form th:action="@{/login}" method="post">
-        <input type="text" name="username">
-        <input type="password" name="password">
-        <input type="submit" value="로그인">
-        <input type="checkbox" id="remember_me" name="remember-me">
-        <label for="remember">자동 로그인</label>
-    </form>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+  <title>Teaming</title>
+  <link rel="stylesheet" href= "" type="text/css" th:href="@{/css/login.css}" />
+  <meta charset="UTF-8" />
+</head>
+<body>
+  <div class="main">
+    <div id = "container">
+        <div id = "half-image" style = "background-image: url('https://scontent-vie1-1.cdninstagram.com/vp/8367f6d26912268504dd1f2e75df825f/5D81A858/t51.2885-15/e35/50813752_2456454744582108_103587418101856700_n.jpg?_nc_ht=scontent-vie1-1.cdninstagram.com&se=7&ig_cache_key=MTk3NDU3NDExNDY4NjM2MTU0MA%3D%3D.2')"></div>
+        <div id = "login-wrapper">
+          
+          <p th:if="${error}" class="fail">올바른 아이디나 비밀번호가 아닙니다.</p>
+          <form th:action="@{/login}" method="post" id = "login-form">
+            <span id = "login-title">Teaming</span>
+            <div id = "username-wrapper">
+              <input type="text" name="username" id="username">
+              <span id = "input-label">ID</span>
+            </div>
+            <div id = "username-wrapper">
+              <input type="password" name="password" id="password">
+              <span id="input-label">PW</span>
+            </div>
+            <div id="button-wrapper">
+              <input class= "btn btn-warning btn-sm" type="submit" value="로그인" id="button">
+            </div>
+            <div id="checkbox-wrapper">
+              <input type="checkbox" id="remember_me" name="remember-me">
+              <label for="remember">자동 로그인</label>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </body>
 </html>

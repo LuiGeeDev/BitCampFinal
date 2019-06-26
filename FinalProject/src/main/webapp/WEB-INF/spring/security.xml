@@ -21,6 +21,9 @@
       작성할 것 -->
     <intercept-url pattern="/login*" access="permitAll" />
     <intercept-url pattern="/favicon.ico" access="permitAll" />
+    <intercept-url pattern="/css/**" access="permitAll" />
+    <intercept-url pattern="/js/**" access="permitAll" />
+    <intercept-url pattern="/resources/**" access="permitAll" />
     <intercept-url pattern="/menu"
       access="hasRole('MANAGER')" />
     <intercept-url pattern="/**"
