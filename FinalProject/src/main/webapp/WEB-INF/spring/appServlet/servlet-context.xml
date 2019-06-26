@@ -1,88 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:mvc="http://www.springframework.org/schema/mvc"
-  xmlns:context="http://www.springframework.org/schema/context"
-  xsi:schemaLocation="http://www.springframework.org/schema/mvc
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
-  <!-- Use spring servlet for all requests, including static resources -->
-  <mvc:default-servlet-handler />
+	<!-- Use spring servlet for all requests, including static resources -->
+	<mvc:default-servlet-handler />
 
-  <mvc:interceptors>
-    <mvc:interceptor>
-      <mvc:mapping path="/**" />
-      <mvc:exclude-mapping path="/socket/**" />
-      <mvc:exclude-mapping path="/login" />
-      <bean id="commonPageInterceptor"
-        class="kr.or.bit.interceptor.CommonPageInterceptor"></bean>
-    </mvc:interceptor>
-    <mvc:interceptor>
-      <mvc:mapping path="/**" />
-      <mvc:exclude-mapping path="/mypage" />
-      <mvc:exclude-mapping path="/socket/**" />
-      <mvc:exclude-mapping path="/login" />
-      <mvc:exclude-mapping path="/resources/**" />
-      <bean id="passwordChangedInterceptor"
-        class="kr.or.bit.interceptor.PasswordChangedInterceptor"></bean>
-    </mvc:interceptor>
-  </mvc:interceptors>
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/css/**" />
+			<mvc:exclude-mapping path="/js/**" />
+			<mvc:exclude-mapping path="/socket/**" />
+			<mvc:exclude-mapping path="/login*" />
+			<bean id="commonPageInterceptor"
+				class="kr.or.bit.interceptor.CommonPageInterceptor"></bean>
 
-  <!-- Enables the Spring MVC @Controller programming model -->
-  <mvc:annotation-driven>
-    <mvc:message-converters>
-      <!-- String으로 Ajax 전송 시 UTF-8로 인코딩 -->
-      <bean
-        class="org.springframework.http.converter.StringHttpMessageConverter">
-        <property name="supportedMediaTypes">
-          <list>
-            <value>text/html;charset=UTF-8</value>
-          </list>
-        </property>
-      </bean>
-    </mvc:message-converters>
-  </mvc:annotation-driven>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/css/**" />
+			<mvc:exclude-mapping path="/js/**" />
+			<mvc:exclude-mapping path="/mypage" />
+			<mvc:exclude-mapping path="/socket/**" />
+			<mvc:exclude-mapping path="/login*" />
+			<mvc:exclude-mapping path="/resources/**" />
+			<bean id="passwordChangedInterceptor"
+				class="kr.or.bit.interceptor.PasswordChangedInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
 
-  <!-- Handles HTTP GET requests for /resources/** by efficiently serving 
-    up static resources in the ${webappRoot}/resources directory -->
-  <context:component-scan
-    base-package="kr.or.bit" />
-  <mvc:resources mapping="/resources/**"
-    location="/resources/" />
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<!-- String으로 Ajax 전송 시 UTF-8로 인코딩 -->
+			<bean
+				class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 
-  <!-- Thymeleaf View Resolver - implementation of Spring's ViewResolver 
-    interface -->
-  <bean id="viewResolver"
-    class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
-    <property name="templateEngine" ref="templateEngine" />
-    <property name="characterEncoding" value="UTF-8" />
-  </bean>
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+	<context:component-scan base-package="kr.or.bit" />
+	<mvc:resources mapping="/resources/**"
+		location="/resources/" />
 
-  <!-- Thymeleaf Template Engine (Spring4-specific version) -->
-  <bean id="templateEngine"
-    class="org.thymeleaf.spring4.SpringTemplateEngine">
-    <property name="templateResolver" ref="templateResolver" />
-    <property name="additionalDialects">
-      <set>
-        <!-- Note the package would change to 'springsecurity[3|4]' if you 
-          are using that version -->
-        <bean
-          class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect" />
-      </set>
-    </property>
-  </bean>
+	<!-- Thymeleaf View Resolver - implementation of Spring's ViewResolver interface -->
+	<bean id="viewResolver"
+		class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+		<property name="templateEngine" ref="templateEngine" />
+		<property name="characterEncoding" value="UTF-8" />
+	</bean>
 
-  <!-- Thymeleaf Template Resolver -->
-  <bean id="templateResolver"
-    class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
-    <property name="prefix" value="/WEB-INF/views/" />
-    <property name="suffix" value=".html" />
-    <property name="templateMode" value="HTML" />
-    <property name="characterEncoding" value="UTF-8" />
-    <property name="cacheable" value="false" />
-  </bean>
+	<!-- Thymeleaf Template Engine (Spring4-specific version) -->
+	<bean id="templateEngine"
+		class="org.thymeleaf.spring4.SpringTemplateEngine">
+		<property name="templateResolver" ref="templateResolver" />
+		<property name="additionalDialects">
+			<set>
+				<!-- Note the package would change to 'springsecurity[3|4]' if you are 
+					using that version -->
+				<bean
+					class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect" />
+			</set>
+		</property>
+	</bean>
+
+	<!-- Thymeleaf Template Resolver -->
+	<bean id="templateResolver"
+		class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".html" />
+		<property name="templateMode" value="HTML" />
+		<property name="characterEncoding" value="UTF-8" />
+		<property name="cacheable" value="false" />
+	</bean>
 </beans>
