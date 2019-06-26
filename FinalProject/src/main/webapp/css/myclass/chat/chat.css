@@ -1,0 +1,32 @@
+.chat-message {
+  padding: 20px 0;
+}
+
+.chat-header {
+  display: flex;
+  margin-bottom: -30px;
+}
+
+.chat-header img {
+  margin: 0 20px 20px;
+}
+
+.chat-sender-info {
+    margin-bottom: -20px;
+}
+
+.chat-sender-name {
+    color: #23262a;
+    font-weight: 600;
+}
+
+.chat-sender-time {
+  font-size: 0.75em;
+  letter-spacing: 0;
+  color: #99aab5;
+}
+
+.chat-content {
+  margin-left: 80px;
+  color: #747f8d;
+}
