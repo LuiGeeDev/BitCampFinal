@@ -151,7 +151,6 @@
 							<span id="classRoomSelectWrapper"> 
 								<select id="classRoomSelect" name = "classroom_id">
 									<option value="">강의실 번호 선택</option>
-									<option value="1">1강의실</option>
 								</select>
 							</span>
 						</div>
@@ -167,7 +166,7 @@
 		</div>
 	</div>
 	</div>
-	<script th:fragment="script">
+	<script>
 	$("#start_date, #end_date").change(function(){
 		$('#classRoomSelect').empty();
 		$.ajax({
