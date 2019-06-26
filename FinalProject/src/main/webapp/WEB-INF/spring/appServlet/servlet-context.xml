@@ -12,24 +12,26 @@
 
   <!-- Use spring servlet for all requests, including static resources -->
   <mvc:default-servlet-handler />
-   
+
   <mvc:interceptors>
     <mvc:interceptor>
-      <mvc:mapping path="/**"/>
-      <mvc:exclude-mapping path="/socket/**"/>
-      <mvc:exclude-mapping path="/login"/>
-      <bean id="commonPageInterceptor" class="kr.or.bit.interceptor.CommonPageInterceptor"></bean>
+      <mvc:mapping path="/**" />
+      <mvc:exclude-mapping path="/socket/**" />
+      <mvc:exclude-mapping path="/login" />
+      <bean id="commonPageInterceptor"
+        class="kr.or.bit.interceptor.CommonPageInterceptor"></bean>
     </mvc:interceptor>
     <mvc:interceptor>
-      <mvc:mapping path="/**"/>
-      <mvc:exclude-mapping path="/mypage"/>
-      <mvc:exclude-mapping path="/socket/**"/>
-      <mvc:exclude-mapping path="/login"/>
-      <mvc:exclude-mapping path="/resources/**"/>
-      <bean id="passwordChangedInterceptor" class="kr.or.bit.interceptor.PasswordChangedInterceptor"></bean>
+      <mvc:mapping path="/**" />
+      <mvc:exclude-mapping path="/mypage" />
+      <mvc:exclude-mapping path="/socket/**" />
+      <mvc:exclude-mapping path="/login" />
+      <mvc:exclude-mapping path="/resources/**" />
+      <bean id="passwordChangedInterceptor"
+        class="kr.or.bit.interceptor.PasswordChangedInterceptor"></bean>
     </mvc:interceptor>
   </mvc:interceptors>
-  
+
   <!-- Enables the Spring MVC @Controller programming model -->
   <mvc:annotation-driven>
     <mvc:message-converters>
@@ -49,7 +51,8 @@
     up static resources in the ${webappRoot}/resources directory -->
   <context:component-scan
     base-package="kr.or.bit" />
-  <mvc:resources mapping="/resources/**" location="/resources/" />
+  <mvc:resources mapping="/resources/**"
+    location="/resources/" />
 
   <!-- Thymeleaf View Resolver - implementation of Spring's ViewResolver 
     interface -->
@@ -82,6 +85,4 @@
     <property name="characterEncoding" value="UTF-8" />
     <property name="cacheable" value="false" />
   </bean>
-
-  <bean name="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
 </beans>

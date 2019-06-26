@@ -6,13 +6,15 @@
   <head>
     <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
     <link rel="stylesheet" th:href="@{/css/myclass/project/main.css}" />
+    <link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
     <link rel="stylesheet" th:href="@{/css/myclass/project/timeline.min.css}" />
   </head>
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
+      <div th:replace="myclass/nav :: project-nav(main)"></div>
       <div class="row">
-        <div class="card links">
+                <div class="card links">
           <h3 class="card-title">링크</h3>
           <div class="project-link">
             <button class="edit-link">
@@ -64,67 +66,6 @@
             </label>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="card timeline">
-          <div class="timeline__wrap">
-            <div class="timeline__items">
-              <div class="timeline__item">
-                <div class="timeline__content">
-                  <h2>1</h2>
-                  <p>asdasdsdsdasdas</p>
-                </div>
-              </div>
-              <div class="timeline__item">
-                <div class="timeline__content">
-                  <h2>1</h2>
-                  <p>asdassdasdas</p>
-                </div>
-              </div>
-              <div class="timeline__item">
-                <div class="timeline__content">
-                  <h2>1</h2>
-                  <p>asdasdasdasdas</p>
-                </div>
-              </div>
-              <div class="timeline__item">
-                <div class="timeline__content">
-                  <h2>1</h2>
-                  <p>asdasdasdsadasdsdasdas</p>
-                </div>
-              </div>
-              <div class="timeline__item">
-                <div class="timeline__content">
-                  <h2>1</h2>
-                  <p>asdasdasdasdas</p>
-                </div>
-              </div>
-              <div class="timeline__item">
-                <div class="timeline__content">
-                  <h2>1</h2>
-                  <p>asdasdasds</p>
-                </div>
-              </div>
-              <div class="timeline__item">
-                <div class="timeline__content">
-                  <h2>1</h2>
-                  <p>asdasdasdsa</p>
-                </div>
-              </div>
-              <div class="timeline__item">
-                <div class="timeline__content">
-                  <h2>1</h2>
-                  <p>asdasdasdsad</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div id="calendar" class="card"></div>
-      </div>
-      <div class="row">
         <div class="card recent-issues">
           <div class="issue">
             <div class="closed">
@@ -207,6 +148,65 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="row">
+        <div class="card timeline">
+          <div class="timeline__wrap">
+            <div class="timeline__items">
+              <div class="timeline__item">
+                <div class="timeline__content">
+                  <h2>1</h2>
+                  <p>asdasdsdsdasdas</p>
+                </div>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__content">
+                  <h2>1</h2>
+                  <p>asdassdasdas</p>
+                </div>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__content">
+                  <h2>1</h2>
+                  <p>asdasdasdasdas</p>
+                </div>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__content">
+                  <h2>1</h2>
+                  <p>asdasdasdsadasdsdasdas</p>
+                </div>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__content">
+                  <h2>1</h2>
+                  <p>asdasdasdasdas</p>
+                </div>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__content">
+                  <h2>1</h2>
+                  <p>asdasdasds</p>
+                </div>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__content">
+                  <h2>1</h2>
+                  <p>asdasdasdsa</p>
+                </div>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__content">
+                  <h2>1</h2>
+                  <p>asdasdasdsad</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div id="calendar" class="card"></div>
       </div>
     </div>
     <script th:src="@{/js/timeline.js}"></script>

@@ -30,9 +30,29 @@
           
       	</div>
       	<div class="message-paper2">
-      		<div class="message-sender-name"></div>
+      		<!-- 메시지 보낸사람   -->
+      		<div class="send-message-icon">
+      				<div class="message-right">
+      				<i class="far fa-sticky-note fa-lg" id="reply"></i>
+      				<i class="fas fa-trash fa-lg" id="delete"></i>
+      			</div>
+      			</div>
+      		<div class="message-sender-name">
+      			
+      		</div>
+      		<!-- 받은쪽지 이름그대로 출력    -->
+      		
+      		<div class="message-timeform">
+      		
       		<div class="sender-message"></div>
+      		<!-- 메시지 보낸시간 -->
       		<div class="message-sender-time"></div>
+      		
+      		</div>
+      		
+      		
+      		<!-- 메시지 내용 -->
+      		
       		<div class="message-sender-content"></div>
       		
       	</div>
@@ -64,8 +84,7 @@
     
     
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-    
-    <script th:fragment="script">
+    <script>
     function getMessage(messageId) {
       $.ajax({
         url: "/ajax/message",
@@ -79,7 +98,9 @@
          $(".message-sender-name").append(`${data.sender_username}`);
          $(".message-sender-time").append(`${data.time}`);
          $(".message-sender-content").append(`${data.content}`);
-         $(".sender-message").append(`<h1>받은쪽지</h1>`);
+         $(".sender-message").append(`<h6>받은쪽지</h6>`);
+         $(".fa-sticky-note").css("display", "block");
+         $(".fa-trash").css("display", "block");
          
           
           

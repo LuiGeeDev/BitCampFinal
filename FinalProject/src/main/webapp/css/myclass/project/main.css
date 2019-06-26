@@ -2,41 +2,40 @@ body {
   background: #F2F4F7;
 }
 
-.links {
-  margin: auto;
-  margin-right: 50px;
+.active-list {
+  border-bottom: 1px solid #F2F4F7 !important;
 }
 
-.checklist {
-    margin:auto;
-    margin-left: 50px;
+.links {
+  margin-left: 127px;
 }
 
 .links, .checklist {
-  width: 25vw;
-  height: 35vh;
+  margin-right: 10px;
+  width: 17vw;
+  height: 38vh;
   padding: 10px 20px;
 }
 
 .edit-link, .edit-checklist {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: #F39C20;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #F39C20;
 }
 
 .project-link {
-    padding: 10px 10px 20px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: flex;
+  padding: 10px 10px 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
 }
 
 .link-address {
-    display: block;
-    margin-left: 15px;
-    line-height: 30px;
+  display: block;
+  margin-left: 15px;
+  line-height: 30px;
 }
 
 .checklist-item {
@@ -44,25 +43,25 @@ body {
 }
 
 input[type=checkbox] {
- display: none;
+  display: none;
 }
 
-input[type=checkbox] + label {
-    display: block;
+input[type=checkbox]+label {
+  display: block;
 }
 
-input[type=checkbox] + label:active {
-    display: block;
-    transform: scale(0.98);
+input[type=checkbox]+label:active {
+  display: block;
+  transform: scale(0.98);
 }
 
-input[type=checkbox] + label svg {
-   color: #a6a6a6;
-   font-size: 22px;
+input[type=checkbox]+label svg {
+  color: #a6a6a6;
+  font-size: 22px;
 }
 
-input[type=checkbox]:checked + label svg {
-   color: #F39C20;
+input[type=checkbox]:checked+label svg {
+  color: #F39C20;
 }
 
 .item-description {
@@ -72,8 +71,7 @@ input[type=checkbox]:checked + label svg {
 
 .timeline {
   width: 70vw;
-  margin: auto;
-  margin-top: 15px;
+  margin: 10px 127px 0;
 }
 
 .timeline--horizontal {
@@ -82,14 +80,13 @@ input[type=checkbox]:checked + label svg {
 
 #calendar {
   width: 70vw;
-  margin: auto;
-  margin-top: 15px;
+  margin: 10px 127px;
   padding: 20px;
 }
 
 .recent-issues {
-  width: 70vw;
-  margin: 15px auto;
+  flex: 1;
+  margin-right: 127px;
 }
 
 .issue {

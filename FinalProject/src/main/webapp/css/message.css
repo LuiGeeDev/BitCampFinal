@@ -127,12 +127,46 @@
 
 .message-sender-name {
 	font-size: 20px;
-	color:blakc;
+	color:black;
 	font-weight: bold;
+	display:flex;
+	margin-left : 20px;
 }
 
-.sender_message {
+
+
+.sender-message {
 	color: orange;
+	margin-left: 20px;
+	
 }
 
+.fa-sticky-note {
+	display: none;
+}
 
+.fa-trash {
+	display: none;
+}
+
+.send-message-icon {
+	display:flex;
+	
+	
+}
+.message-right {
+	margin-left:auto;
+}
+
+.message-sender-time {
+	margin-left:auto;
+}
+
+.message-timeform {
+	display:flex;
+}
+
+.message-sender-content {
+	margin-left: 20px;
+    margin-top: 50px;
+}
