@@ -11,4 +11,14 @@ public class MyClassController {
   public String projectPage() {
     return "myclass/project/main";
   }
+  
+  @GetMapping("/troubleshooting")
+  public String troubleshootingPage() {
+    return "myclass/project/troubleshooting";
+  }
+  
+  @GetMapping("/chat")
+  public String chatPage() {
+    return "myclass/project/chat";
+  }
 }

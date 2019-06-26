@@ -1,0 +1,25 @@
+nav {
+  margin-bottom: 15px;
+}
+
+.project-nav-list {
+  display: flex;
+  list-style-type: none;
+  margin-bottom: 0;
+  border-bottom: 1px solid black;
+  padding-left: 8vw;
+}
+
+.project-nav-list a {
+  color: black;
+}
+
+.project-nav-link {
+  padding: 10px 25px;
+  margin-bottom: -1px;
+}
+
+.active-list {
+  border: 1px solid black;
+  border-bottom: 1px solid #F2F4F7;
+}
