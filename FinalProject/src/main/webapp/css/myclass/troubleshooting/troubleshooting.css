@@ -1,10 +1,10 @@
 .new-issue {
   margin-left: auto;
-  margin-right: 127px;
+  margin-right: 250px;
 }
 
 .search-bar {
-  margin-left: 127px;
+  margin-left: 250px;
 }
 
 .search-option {
@@ -26,3 +26,113 @@ input:active, input:focus, select:active, select:focus {
   font-size: 14px;
   line-height: 24px;
 }
+
+.board {
+  border: 1px solid #a6a6a6;
+  border-radius: 5px;
+  margin: 15px 250px;
+  width: 100%;
+}
+
+.board-title {
+  background: #EEEEEE;
+  padding: 20px 10px;
+  border-radius: 5px 5px 0 0;
+  border-bottom: 1px solid #a6a6a6;
+}
+
+.board a .board-issue {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid #292929;
+  padding: 5px;
+  color: black;
+}
+
+.board a:last-child .board-issue {
+  border: 0;
+}
+
+.closed {
+  padding-top: 10px;
+  margin-left: 10px;
+}
+
+.board-issue:last-child {
+  border: none;
+}
+
+.issue-comment {
+  margin-left: auto;
+  margin-right: 10px;
+  padding-top: 13px;
+  color: #292929;
+}
+
+.issue-title h3 {
+  margin: 0;
+  margin-left: 15px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 27px;
+}
+
+.issue-writer-time {
+  margin: 0;
+  margin-left: 15px;
+  margin-top: 5px;
+  font-size: 14px;
+  color: #a6a6a6;
+}
+
+.tag {
+  background: #F39C20;
+  border-radius: 5px;
+  padding: 2px 8px;
+  font-size: 14px;
+  color: white;
+}
+
+.issue-tags {
+  margin-left: 10px;
+}
+
+.fa-exclamation-circle {
+  color: #e74c3c;
+}
+
+.fa-check-circle {
+  color: #2ecc71;
+}
+
+.open, .closed {
+  margin-left: 5px;
+  color: #a6a6a6;
+}
+
+.open {
+  margin-right: 15px;
+}
+
+.open:hover, .closed:hover {
+  color: black;
+  font-weight: 600;
+}
+
+.link-open svg, .link-closed svg {
+  color: #a6a6a6;
+}
+
+.link-open:hover svg {
+  color: #e74c3c;
+}
+
+.link-closed:hover svg {
+  color: #2ecc71;
+}
+
+.page-btns {
+  margin: auto;
+}
+
+
