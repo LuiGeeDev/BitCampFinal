@@ -36,7 +36,18 @@ public class AjaxController {
     return selectone;
   }
 
-
+  @PostMapping("/message/delete") 
+  public void deleteMessage(int id) {
+    MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
+    messageDao.deleteMessage(id);
+    
+  }
+  
+/*  @PostMapping("message/reply")
+  public void replyMessage() {
+    MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
+    
+  }*/
 
 	@PostMapping("/classroom")
 	public List<Classroom> getClassroom(Date start_date, @RequestParam(defaultValue = "1970-01-01") Date end_date) {
