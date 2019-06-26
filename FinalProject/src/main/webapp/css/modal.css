@@ -188,7 +188,7 @@ input[type=radio] {
 
 .message-title {
   font-size: 18px;
-  font-weight: normal;
+  font-weight: bold;
   margin-top: 10px;
 }
 
@@ -211,6 +211,7 @@ input[type=radio] {
   color: #fff;
   font-size: 12px;
   font-weight: bold;
-  background-color: #c62917;
+  background-color: #F39B10;
   cursor: pointer;
 }
+

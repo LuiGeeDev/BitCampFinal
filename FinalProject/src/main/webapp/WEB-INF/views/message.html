@@ -21,6 +21,8 @@
             	<div class="message2">
             		<span class="hidden" th:text="${all.id}"></span>
             		<div class="message-sender2">
+            			<span class="hidden" th:text="${all.receiver_username}"></span>
+            			<span class="hidden" th:text="${all.sender_username}"></span>
             			<span class="sender2" th:text="${all.sender_username}"></span>
             			<span class="time2" th:text="${all.time}"></span>
             		</div>
@@ -30,11 +32,13 @@
           
       	</div>
       	<div class="message-paper2">
+
       		<!-- 메시지 보낸사람   -->
       		<div class="send-message-icon">
       				<div class="message-right">
-      				<i class="far fa-sticky-note fa-lg" id="reply"></i>
-      				<i class="fas fa-trash fa-lg" id="delete"></i>
+      				                                             
+      				<i class="far fa-sticky-note fa-2x" id="reply"></i>
+      				<i class="fas fa-trash fa-2x" id="delete"></i>
       			</div>
       			</div>
       		<div class="message-sender-name">
@@ -60,7 +64,7 @@
      
       <!-- Modal  -->
       
-  <div class="modal">
+<!--   <div class="modal">
     <div class="modal-content">
       <div class="message-modal">
         <form action="<%=request.getContextPath()%>/message/send"
@@ -75,7 +79,8 @@
         <a class="close-btn">&times;</a>
       </div>
     </div>
-  </div>
+  </div> -->
+  
       
       
       
@@ -94,7 +99,8 @@
         },
         success: function(data) {
           console.log(data);
-          $(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message").empty()
+         
+         $(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message").empty()
          $(".message-sender-name").append(`${data.sender_username}`);
          $(".message-sender-time").append(`${data.time}`);
          $(".message-sender-content").append(`${data.content}`);
@@ -113,13 +119,11 @@
           
           $("#reply").click(function() {
             $(".modal").css("display", "block");
-            const receiver_id = $(this)
-              .siblings(".hidden")
-              .text();
+            console.log("$this : " + $(this));
+            const receiver_id = $(this).children(".hidden").text();
+            console.log("receiver_id : " +receiver_id);
             $(".message-form2").append(
-              "<input type='hidden' value='" +
-                receiver_id +
-                "' name='receiver' class='receiver'>"
+              "<input type='hidden' value='" + receiver_id + "' name='receiver' class='receiver'>"
             );
           });
         }
@@ -131,7 +135,21 @@
         $("#delete").click(function() {
           const answer = confirm("쪽지를 삭제하시겠습니까?");
           if (answer) {
-            location.href = "message/delete?id=" + messageId;
+            $.ajax(
+                {
+                  url: "/ajax/message/delete",
+                  type: "POST",
+                  data: {
+                    id: messageId,
+                  },
+                  success:function(data) {
+                    location.href = "message";
+                    console.log("deleteMessage : " + data);
+                  }
+              
+           		 }
+                
+            )
           }
         });
       });

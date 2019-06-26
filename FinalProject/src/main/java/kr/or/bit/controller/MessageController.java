@@ -26,13 +26,10 @@ public class MessageController {
     MessageDao messageDao = SqlSession.getMapper(MessageDao.class);
     List<Message> selectall = messageDao.selectAllMessage(username);
     model.addAttribute("selectall", selectall);
+    
     return "message";
   }
   
- /* @GetMapping()
-  public String MessageIndexForm() {
-    return null;
-    
-  }*/
+ 
   
 }
