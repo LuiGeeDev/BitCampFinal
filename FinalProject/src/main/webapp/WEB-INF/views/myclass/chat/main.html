@@ -12,7 +12,44 @@
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
       <div th:replace="myclass/nav :: project-nav(chat)"></div>
+      <div class="chat-room">
+        <div class="chat-message">
+          <div class="chat-header">
+          <img src="https://via.placeholder.com/40" alt="프로필 사진" />
+          <div class="chat-sender-info">
+            <span class="chat-sender-name">정성윤</span>
+            <span class="chat-sender-time">오늘 오후 8시 12분</span>
+          </div>
+          </div>
+          <div class="chat-content">ㅇㄱㄹㅇ</div>
+        </div>
+        <div class="chat-message">
+          <div class="chat-header">
+            <img src="https://via.placeholder.com/40" alt="프로필 사진" />
+            <div class="chat-sender-info">
+              <span class="chat-sender-name">정성윤</span>
+              <span class="chat-sender-time">오늘 오후 8시 12분</span>
+            </div>
+          </div>
+          <div class="chat-content">ㅇㄱㄹㅇ</div>
+          <div class="chat-content">ㅂㅂㅂㄱ</div>
+        </div>
+      </div>
+      <div class="chat-input">
+        <input type="text" name="" id="chat-message" />
+        <input type="submit" value="보내기" id="send" />
+      </div>
     </div>
+    <script>
+      connectStomp(function() {
+        client.subscribe("/topic/chat/group/1", function(data) {
+          console.log(data);
+        });
+
+        $("#send").click(function() {
+          client.send("/app/chat", {}, "hello");
+        });
+      });
     </script>
   </body>
 </html>
