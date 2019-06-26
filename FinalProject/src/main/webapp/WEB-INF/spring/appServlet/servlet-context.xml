@@ -31,19 +31,7 @@
   </mvc:interceptors>
   
   <!-- Enables the Spring MVC @Controller programming model -->
-  <mvc:annotation-driven>
-    <mvc:message-converters>
-      <!-- String으로 Ajax 전송 시 UTF-8로 인코딩 -->
-      <bean
-        class="org.springframework.http.converter.StringHttpMessageConverter">
-        <property name="supportedMediaTypes">
-          <list>
-            <value>text/html;charset=UTF-8</value>
-          </list>
-        </property>
-      </bean>
-    </mvc:message-converters>
-  </mvc:annotation-driven>
+  <mvc:annotation-driven />
 
   <!-- Handles HTTP GET requests for /resources/** by efficiently serving 
     up static resources in the ${webappRoot}/resources directory -->
@@ -82,6 +70,4 @@
     <property name="characterEncoding" value="UTF-8" />
     <property name="cacheable" value="false" />
   </bean>
-
-  <bean name="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
 </beans>
