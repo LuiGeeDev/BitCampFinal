@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- /*
+*
+* @date: 2019. 06. 25.
+*
+* @author: 권순조
+* 
+  void insertGroup(Group group);
+  
+  void deleteGroup();
+  
+  void updateGroup();
+  
+  void selectAllLinkByGroup();
+  
+  List<Group> selectAllGroupByProject();
+
+*/ -->
+<mapper namespace="kr.or.bit.dao.Group">
+  <insert id="insertGroup" parameterType="kr.or.bit.model.Group">     
+	insert into groups(group_no, leader_name, project_id)
+	values(#{group_no}, #{leader_name}, #{project_id})
+  </insert> 
+  <delete id="deleteGroup">
+	delete from groups 
+	where id=#{id}
+  </delete>
+  <update id="updateGrouplink">
+	update groups
+	set #{link} = #{content}
+	where id=#{id}
+  </update>
+  <select id="selectAllLinkById">
+	select link1, link2, link3
+	from groups
+	where project_id=#{project_id} and group_no=#{group_no}
+  </select>
+  <select id="selectAllGroupByProject">
+	select id, group_no, link1, link2, link3, leader_name, project_id
+	from groups
+	where project_id=#{project_id}
+  </select>
+</mapper>

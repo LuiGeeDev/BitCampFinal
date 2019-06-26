@@ -12,12 +12,46 @@
       <div id = "detailWrapper">
         <div id = "detailHead">
           <span id = "detailTitle">[생활코딩] HTML5 기초강좌</span>
-          <div id = "detailViewCount">매니저 | 22시간 전 | 조회수 <span id="point"> 43 </span>| 댓글 <span id="point">5</span></div>
+          <div id = "detailViewCount">매니저 | 22시간 전 | 조회수 <span id="point"> 43 </span>| 댓글 <span id="point">2</span></div>
+        </div>
+        <div id = "detailContent">
+          <div id = "videoWrapper">
+            <iframe src="https://youtu.be/Ok0bBJPtgJI" id = "video"></iframe>
+          </div>
+          <div id = "detailContentText">
+            이고잉님과 함께하는 HTML5 기초강좌입니다 . <br>
+            출처 : <a href="https://opentutorials.org/module/3129">https://opentutorials.org/module/3129</a>
+          </div>
+
         </div>
       </div>
-
+      <div id = "buttonWrapper">  
+        <button class="btn btn-warning btn-sm" id = "boardButton">수정</button>
+        <button class="btn btn-warning btn-sm" id = "boardButton">삭제</button>
+        <button class="btn btn-warning btn-sm" id = "boardButton">목록</button>
+      </div>
+      <div id = "commentsWrapper">
+        <div id = "commentsContent">
+            <div id = "commentsText">
+              <div id = "commentsWriter"> <span id="writerIcon"><img src="https://via.placeholder.com/32" id="icon"></span> 
+                                          <span id="writerName">권순조</span> 
+                                          <span id = "writeDate">2019.6.22 17:59</span></div>
+              <div id = "commentsDetail">사퇴하겠습니다</div>
+            </div>
+        </div>
+        <div id = "commentsContent">
+          <div id = "commentsText">
+            <div id = "commentsWriter"> <span id="writerIcon"><img src="https://via.placeholder.com/32" id="icon"></span> 
+                                        <span id="writerName">이힘찬</span> 
+                                        <span id = "writeDate">2019.6.22 17:55</span></div>
+            <div id = "commentsDetail">이고잉님 사랑해용 쀼쀼</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <script th:fragment="script">
+
+
+    <script>
       console.log("Hello, world!");
     </script>
   </body>

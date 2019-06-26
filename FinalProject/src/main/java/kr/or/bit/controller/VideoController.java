@@ -21,4 +21,8 @@ public class VideoController {
 	public String videoDetail() {
 		return "video/detail";
 	}
+	@GetMapping("/write")
+	public String videoWrite() {
+		return "video/write";
+	}
 }

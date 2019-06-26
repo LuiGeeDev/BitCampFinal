@@ -10,27 +10,31 @@
 	<div class="main" th:fragment="main">
     <div id = "title">인터넷강의 게시판</div>
     <hr>
-		<table id = "board">
+    <div id = "boardWrapper">
+      <table id = "board">
         <tr id = "videoBoard"onClick = "location.href='/video/detail'">
-            <td id = "thumnail"><img id="thumnail-image"src="/resources/images/html.PNG"></td>
-            <td id = "videoDetail"><span id="videoTitle">[생활코딩] HTML5 기초강좌</span><span
-              id="commentCount">5</span><br> <div id="videoContent">생활코딩
-                Egoing님과 함께하는 HTML5 기초강좌 ... </div> <div
+          <td id = "thumnail"><img id="thumnail-image"src="/resources/images/html.PNG"></td>
+          <td id = "videoDetail"><span id="videoTitle">[생활코딩] HTML5 기초강좌</span><span
+            id="commentCount">5</span><br> <div id="videoContent">생활코딩
+              Egoing님과 함께하는 HTML5 기초강좌 ... </div> <div
               id="videoViewCount"> 22시간 전 | 조회 43 | 매니저</div></td>
-          </tr>
-        <tr id = "videoBoard"onClick = "location.href='/video/detail'">
-            <td id = "thumnail"><img id="thumnail-image"src="/resources/images/css.PNG" ></td>
-            <td id = "videoDetail"><span id="videoTitle">[생활코딩] CSS 기초강좌</span><span
-              id="commentCount">5</span><br> <div id="videoContent">생활코딩
-                Egoing님과 함께하는 CSS 기초강좌 ... </div> <div
-              id="videoViewCount">2019.06.21 | 조회 329 | 매니저</div></td>
-          </tr>
-    </table>
-  </div>
-  
-	<!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-	<script th:fragment="script">
-      
-    </script>
+            </tr>
+            <tr id = "videoBoard" onClick = "location.href='/video/detail'">
+              <td id = "thumnail"><img id="thumnail-image"src="/resources/images/css.PNG" ></td>
+              <td id = "videoDetail"><span id="videoTitle">[생활코딩] CSS 기초강좌</span><span
+                id="commentCount">5</span><br> <div id="videoContent">생활코딩
+                  Egoing님과 함께하는 CSS 기초강좌 ... </div> <div
+                  id="videoViewCount">2019.06.21 | 조회 329 | 매니저</div></td>
+                </tr>
+              </table>
+            <div id = "buttonWrapper"> <button class = "btn btn-warning btn-sm" id = "writeButton" onClick="location.href='/video/write'">
+                                        글쓰기</button> </div>
+            </div>
+          </div>
+            
+            <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
+            <script>
+              
+            </script>
 </body>
 </html>

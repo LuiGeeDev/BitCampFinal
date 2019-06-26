@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- /*
+*
+* @date: 2019. 06. 25.
+*
+* @author: 권순조
+* 
+  void insertGroupMember();
+
+  void updateGroupMember(Member member);
+
+  void deleteGroupMember(String username);
+
+  List<Member> selectAllGroupMemberByGroup();
+  
+  
+
+*/ -->
+<mapper namespace="kr.or.bit.dao.GroupMember">
+  <insert id="insertGroup">     
+	insert into group_member(group_id, member_name)
+	values(#{group_id}, #{member_name})
+  </insert> 
+  <delete id="deleteGroupMember">
+	delete from group_member 
+	where group_id=#{group_id}
+  </delete>
+  <update id="updateGroupMember">
+	update group_member
+	set group_id = #{group_id}
+	where member_name=#{member_name}
+  </update>
+  <select id="selectAllGroupMemberByGroup">
+	select group_id, member_name
+	from group_member
+	where group_id=#{group_id}
+  </select>
+</mapper>
