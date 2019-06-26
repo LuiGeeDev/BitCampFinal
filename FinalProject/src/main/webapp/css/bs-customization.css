@@ -1,7 +1,5 @@
--- 부트스트랩의 기본 요소 수정하는 css
-
-* {
-  font-family: 'Nanum Gothic', sans-serif; 
+-- 부트스트랩의 기본 요소 수정하는 css * {
+  font-family: "Nanum Gothic", sans-serif;
 }
 
 .container-fluid {
@@ -13,18 +11,29 @@
   margin-left: 0;
 }
 
-.modal-content{
-  width: 30%;
-}
-
-#modal.fade{
-  margin : 10px 0px 0px 500px;
-}
-
-.modal.fade{
-  margin : 10px 0px 0px 500px;
-}
-
 .card {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.btn-primary {
+  background-color: #f39c20;
+  border: #f39c20;
+}
+
+.btn-outline-primary {
+  border: 1px solid #f39c20 !important;
+  color: #e89013;
+}
+
+.btn-primary:hover, .btn-outline-primary:hover {
+  background-color: #ea8a02;
+}
+
+.btn-primary:active, .btn-outline-primary:active {
+  background-color: #ea8a02 !important;
+  border-color: #c17201 !important;
+}
+
+.btn-primary:focus, .btn-outline-primary:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 145, 5,.5) !important;
 }

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
+<head>
+<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+
+<link rel="stylesheet"
+  th:href="@{/css/myclass/teacher/project/jquery-ui.css}">
+<link rel="stylesheet" th:href="@{/resources/demos/style.css}">
+<link rel="stylesheet"
+  th:href="@{/css/myclass/teacher/project/project.css}" />
+</head>
+<body>
+  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+  <div class="main" th:fragment="main">
+    <div th:object="${user}">
+      <div class="title">
+        <h2>프로젝트 생성하기</h2>
+      </div>
+      <div class="make-project">
+        <form method="post">
+          프로젝트 회차 : <input type="text" name="season"><br>
+          프로젝트 이름 : <input type="text" name="project_name"><br>
+          조 개수 : <input type="text" name="groupsNum"><br>
+          프로젝트 시작일 : <input type="date" name="start_date"><br>
+          프로젝트 종료일 : <input type="date" name="end_date"><br>
+          <input type="hidden" name="course_id" th:value="*{course_id}">
+          <input type="submit" value="완료">
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="student-list">
+        <h5>학생리스트</h5>
+        <ul>
+          <li id="draggable" class="student-block">이힘찬</li>
+          <li id="draggable1" class="student-block">고길동</li>
+          <li id="draggable2" class="student-block">김길동</li>
+          <li id="draggable3" class="student-block">학생1</li>
+          <li id="draggable4" class="student-block">학생2</li>
+          <li id="draggable5" class="student-block">학생3</li>
+        </ul>
+      </div>
+      <div class="btn-add">
+        <a href="#" id="add_btn">추가</a>
+      </div>
+      <div class="edit-group">
+        <h5>조편성</h5>
+        <div id="accordion">
+          <h3>1조</h3>
+          <div id="group1">
+          </div>
+          <h3>2조</h3>
+          <div id="group2">
+          </div>
+          <h3>3조</h3>
+          <div id="group3">
+          </div>
+          <h3>4조</h3>
+          <div id="group4">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+      $(function() {
+        $("#group1,#group2,#group3,#group4").sortable({
+          revert : true,
+        });
+        $(
+            "#draggable,#draggable1,#draggable2,#draggable3,#draggable4,#draggable5")
+            .draggable({
+              connectToSortable : "#group1,#group2,#group3,#group4",
+              revert : "invalid",
+            /* helper: "clone" */
+            });
+        $("ul, li").disableSelection();
+        $("#accordion").accordion({
+          heightStyle:"content",
+          collapsible:true
+        });
+      });
+    </script>
+</body>
+</html>

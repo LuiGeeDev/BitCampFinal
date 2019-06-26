@@ -1,0 +1,45 @@
+@charset "UTF-8";
+#write-form-wrapper{
+    background-color: #e8e8e8;
+    margin : 50px 50px 10px 50px;
+    padding: 20px 10px 20px 10px ;
+    border-radius : 10px
+}
+#write-input-head{
+    width : 100%;
+    background-color: white;
+    margin : 10px 0px 10px 0px;
+    border-radius : 10px;
+    padding: 5px
+}
+#input-url{
+    margin-top:10px
+}
+#write-input-url{
+    width : 100%;
+    background-color: white;
+    margin : 10px 0px 10px 0px;
+    border-radius : 10px;
+    padding: 10px
+}
+#input-title{
+    width:88%;
+    height: 31.6px;
+    border-radius: 5px;
+    outline: none;
+    padding: 3px;
+    margin-bottom : 10px;
+    margin-left : 5px;
+}
+#write-text{
+    font-weight: bold;
+}
+#write-url{
+    font-weight: bold;
+    padding: 10px 10px 10px 0px
+}
+#submit-button-wrapper{
+    margin-top : 10px;
+    text-align: center;
+}
+

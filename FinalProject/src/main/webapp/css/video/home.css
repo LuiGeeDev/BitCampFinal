@@ -8,8 +8,8 @@ body{
     font-size : 32px;
     font-weight: bold
 }
-#board{
-    border : 1px solid #eeeeee;
+#boardWrapper{
+    margin-left : 100px
 }
 #videoBoard{
     cursor:pointer;
@@ -18,7 +18,8 @@ body{
     background-color:#eeeeee;
 }
 #board{
-    margin : 10px 0px 0px 100px;
+    border : 1px solid #eeeeee;
+    margin : 10px 0px 0px 0px;
     background-color:white;
 }
 #videoTitle{
@@ -37,7 +38,7 @@ body{
 #thumnail-image{
     margin : 20px;
     width: 500px;
-    height: 261
+    height: 261px
 }
 #videoDetail{
     width : 500px
@@ -46,4 +47,13 @@ body{
     font-size: 12px;
     color: gray;
     margin-top : 50px
+}
+#buttonWrapper{
+    text-align: left;
+    margin-top: 10px;
+    margin-left : 985px;
+}
+#writeButton{
+    font-weight: bold;
+    padding : 8px;
 }

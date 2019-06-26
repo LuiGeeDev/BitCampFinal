@@ -172,10 +172,21 @@ select {
     height:40px;
 }
 
+.modal-content{
+  width: 30%;
+}
 
+#modal.fade{
+  margin : 0px 0px 0px 500px;
+}
+
+.modal.fade{
+  margin : 0px 0px 0px 500px;
+}
 
 #imgWrapper{
     margin:0px 20px 0px 20px;
 }
+
 
 
