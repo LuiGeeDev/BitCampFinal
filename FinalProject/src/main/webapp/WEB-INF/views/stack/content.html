@@ -10,6 +10,7 @@
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
      <div class="title"><h3><b>스택게시판</b></h3></div>
+     <!-- 게시물컨텐트 -->
      <hr>   
      <table>
      	<tr>
@@ -52,7 +53,21 @@
 		  <p class="pfont">41view</p>
 		  </td>
 		</tr>
-    </table>  
+    </table> 
+    <!-- 댓글창 -->
+    <table>
+      <tr>
+        <td class="comtitle">
+        총 [4]개의 답변
+        </td>
+      </tr>
+      <tr>
+        <td>
+        <textarea name="comment" class="comtext"></textarea>
+        </td>
+      </tr>
+    </table> 
+     
 	</div>   
     <script src="/js/stack/content.js">
     </script>
