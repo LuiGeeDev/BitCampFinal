@@ -29,9 +29,11 @@ public class ProjectController {
     Member user = memberDao.selectMemberByUsername(username);
     
     List<Member> memberList = memberService.getStudentsList();
+    System.out.println("###############################");
+    System.out.println("memberList : "+memberList.toString()+"//////////사이즈 : "+memberList.size());
     model.addAttribute("user", user);
     model.addAttribute("memberList", memberList);
-    return "project/createProject";
+    return "myclass/teacher/project/createProject";
   }
 
   @PostMapping("/createProject")
