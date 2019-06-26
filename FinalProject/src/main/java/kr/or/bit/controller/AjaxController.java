@@ -17,7 +17,7 @@ import kr.or.bit.model.Message;
 import kr.or.bit.service.NewsService;
 
 @RestController
-@RequestMapping("/ajax")
+@RequestMapping(path = "/ajax")
 public class AjaxController {
   
   @Autowired
