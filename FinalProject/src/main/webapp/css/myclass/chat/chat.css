@@ -1,18 +1,21 @@
+.chat-room {
+  width: 70%;
+  margin-left: 20px;
+}
+
 .chat-message {
   padding: 20px 0;
+  border-bottom: 1px solid #dee1e2;
 }
 
 .chat-header {
   display: flex;
-  margin-bottom: -30px;
+  margin-bottom: -35px;
 }
 
 .chat-header img {
-  margin: 0 20px 20px;
-}
-
-.chat-sender-info {
-    margin-bottom: -20px;
+  margin: 0 20px 20px 0;
+  border-radius: 50%;
 }
 
 .chat-sender-name {
@@ -27,6 +30,36 @@
 }
 
 .chat-content {
-  margin-left: 80px;
+  margin-left: 60px;
+  margin-top: 5px;
   color: #747f8d;
+}
+
+.chat-input {
+  margin: 20px 20px;
+  width: 70%;
+  position: absolute;
+}
+
+#chat-message {
+  border: 2px solid #23262a;
+  border-radius: 5px;
+  padding: 8px 20px;
+  width: 100%;
+}
+
+#file {
+  display: none;
+}
+
+#file + label {
+  position: absolute;
+  font-size: 42px;
+  line-height: 42px;
+  font-weight: 700;
+  left: 5px;
+  margin: 0;
+  vertical-align: middle;
+  padding-right: 2px;
+  border-right: 1px solid
 }
