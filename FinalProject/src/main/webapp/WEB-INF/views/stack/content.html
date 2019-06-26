@@ -38,6 +38,7 @@
 		  <div style="position:relative;top:-330px;"> 
 		<div id="sidebox">		
 		<img src="/css/stack/like.png" id="imgp2"><br>
+		0<br>
 		<img src="/css/stack/unlike.png" id="imgp2">
 		</div>
 		</div>
@@ -57,14 +58,18 @@
     <!-- 댓글창 -->
     <table>
       <tr>
-        <td class="comtitle">
+        <td class="comtitle" colspan="4">
         총 [4]개의 답변
         </td>
       </tr>
       <tr>
-        <td>
-        <textarea name="comment" class="comtext"></textarea>
+        <td class="ctd1">
+        <form th:action="@{/}" method="post" colspan="3">
+        <textarea name="comment" class="comtext" ></textarea><br>
+        <input type="submit" class="btn btn-primary btnalign" value="등록">
+        </form>
         </td>
+        <td class="ctd2"></td>
       </tr>
     </table> 
      
