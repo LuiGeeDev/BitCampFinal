@@ -14,11 +14,11 @@ public class MyClassController {
   
   @GetMapping("/troubleshooting")
   public String troubleshootingPage() {
-    return "myclass/project/troubleshooting";
+    return "myclass/troubleshooting/main";
   }
   
   @GetMapping("/chat")
   public String chatPage() {
-    return "myclass/project/chat";
+    return "myclass/chat/main";
   }
 }

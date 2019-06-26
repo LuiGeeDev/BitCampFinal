@@ -2,8 +2,12 @@ body {
   background: #F2F4F7;
 }
 
+.active-list {
+  border-bottom: 1px solid #F2F4F7 !important;
+}
+
 .links {
-  margin-left: 8vw;
+  margin-left: 127px;
 }
 
 .links, .checklist {
@@ -67,8 +71,7 @@ input[type=checkbox]:checked+label svg {
 
 .timeline {
   width: 70vw;
-  margin: auto;
-  margin-top: 10px;
+  margin: 10px 127px 0;
 }
 
 .timeline--horizontal {
@@ -77,13 +80,13 @@ input[type=checkbox]:checked+label svg {
 
 #calendar {
   width: 70vw;
-  margin: 10px auto;
+  margin: 10px 127px;
   padding: 20px;
 }
 
 .recent-issues {
   flex: 1;
-  margin-right: 8vw;
+  margin-right: 127px;
 }
 
 .issue {
