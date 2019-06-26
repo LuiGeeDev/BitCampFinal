@@ -11,4 +11,10 @@ public class Helper {
           
      return username;
    }
+   
+   public static int articleId() {//게시글 아이디를 뽑아주는 함수
+      int i = 0;
+      
+      return i;
+   }
 }

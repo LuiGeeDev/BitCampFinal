@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+body{
+  font-family: 'Nanum Gothic';
+}
+.title {
+  font-size: 190%;
+  margin: 20px;
+}
+table {
+  margin-left: 10%;
+  margin-right: 10%;
+  width: 80%;
+  border: 1px solid white;
+  border-collapse: collapse;
+  text-align: center;
+}
+th, td {
+  border: 1px solid white;
+  padding: 10px;
+}
+.tr1 {
+  background-color: #dae8f2;
+  color: white;
+}
+.qsel {
+  height: 30px;
+  border: 1.5px solid lightgray;
+  float: left;
+}
+.qspan{
+  text-align: right;
+  float: right;
+}
+.seaimg{
+  width: 3.5%;
+  height: auto;
+  margin-left: 1%;
+  text-align: right;
+}
+.td1{
+  border-bottom: 1.5px solid lightgray;
+}
