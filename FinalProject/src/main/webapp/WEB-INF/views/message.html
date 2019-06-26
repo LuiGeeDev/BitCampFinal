@@ -12,7 +12,8 @@
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
-      <div class="container2">
+      
+     <div class="row">
       	<div class="message-box2">
           <h4 class="message-title2">쪽지함</h4>
             <!-- 쪽지 있는 만큼 담기 -->
@@ -28,9 +29,15 @@
             </div>
           
       	</div>
-      	<div class="message-paper2"></div>
+      	<div class="message-paper2">
+      		<div class="message-sender-name"></div>
+      		<div class="sender-message"></div>
+      		<div class="message-sender-time"></div>
+      		<div class="message-sender-content"></div>
+      		
+      	</div>
       </div>
-      
+     
       <!-- Modal  -->
       
   <div class="modal">
@@ -57,31 +64,38 @@
     
     
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-    <script th:inline="javascript">
-    	const messageId= /*[[${selectall}]]*/ 'default';
-    	console.log(messageId);
-    </script>
+    
     <script th:fragment="script">
     function getMessage(messageId) {
       $.ajax({
-        url: "message",
+        url: "/ajax/message",
+        type: "POST",
         data: {
           id: messageId,
         },
         success: function(data) {
-          $(".message-paper2").html(data);
+          console.log(data);
+          $(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message").empty()
+         $(".message-sender-name").append(`${data.sender_username}`);
+         $(".message-sender-time").append(`${data.time}`);
+         $(".message-sender-content").append(`${data.content}`);
+         $(".sender-message").append(`<h1>받은쪽지</h1>`);
+         
+          
+          
         },
         error: function(xhr) {
           alert("쪽지를 불러오지 못했습니다.");
         },
       }).done(function() {
         if ($("#reply")) {
+          
           $("#reply").click(function() {
             $(".modal").css("display", "block");
             const receiver_id = $(this)
               .siblings(".hidden")
               .text();
-            $(".message-form").append(
+            $(".message-form2").append(
               "<input type='hidden' value='" +
                 receiver_id +
                 "' name='receiver' class='receiver'>"
@@ -109,10 +123,12 @@
     });
 
     $(".message2").click(function() {
+      
       const messageId = $(this)
         .children(".hidden")
         .text();
       getMessage(messageId);
+      console.log("messageId : " + messageId);
     });
 
     $(".close-btn").click(function() {
@@ -120,7 +136,6 @@
       $(".modal").css("display", "none");
     });
 
-      
     </script>
   </body>
 </html>

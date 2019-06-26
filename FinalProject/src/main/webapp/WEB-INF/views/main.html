@@ -16,21 +16,26 @@
       <div class="row">
         <div class="recent-messages">
           <h5>최근 쪽지</h5>
-          <div class="recent-message" th:each="mainmessage : ${mainMessage}" >
+          <div class="recent-message" th:each="mainmessage : ${mainMessage}">
             <div class="message-sender-photo">
               <img src="https://via.placeholder.com/40" alt="" />
             </div>
             <div class="message-main">
-              <p class="message-content" th:text="${mainmessage.content}">
-              </p>
+              <p class="message-content" th:text="${mainmessage.content}"></p>
               <p class="message-info">
-                <span class="message-sender" th:text="${mainmessage.sender_username}">강기훈</span>
-                <span class="message-time" th:text="${mainmessage.time}" >05/12 10:50pm</span>
+                <span
+                  class="message-sender"
+                  th:text="${mainmessage.sender_username}"
+                  >강기훈</span
+                >
+                <span class="message-time" th:text="${mainmessage.time}"
+                  >05/12 10:50pm</span
+                >
               </p>
             </div>
           </div>
           <div th:if="${mainMessage.isEmpty()}">
-          	쪽지가없습니다
+            쪽지가없습니다
           </div>
         </div>
         <div class="my-project">
@@ -193,8 +198,7 @@
           <div class="carousel-inner">
             <div class="news carousel-item active"></div>
             <div class="news carousel-item"></div>
-            <div class="news carousel-item">
-            </div>
+            <div class="news carousel-item"></div>
           </div>
 
           <!-- Left and right controls -->
@@ -212,7 +216,7 @@
       </div>
     </div>
 
-    <script th:fragment="script">
+    <script>
       $.ajax({
         method: "post",
         url: "/ajax/news",
