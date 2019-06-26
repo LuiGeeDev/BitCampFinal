@@ -7,6 +7,6 @@ public class AriticleFactoryService {
     
     ArticleOri article = new ArticleInsertService();
     
-    article
+    
   }
 }
