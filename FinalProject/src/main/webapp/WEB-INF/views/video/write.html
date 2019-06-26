@@ -6,15 +6,52 @@
   <head>
     <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
     <link rel="stylesheet" th:href="@{/css/video/write.css}" />
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
   </head>
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
-      <p th:text="'Hello, ' + ${message}"></p>
+      <form action="" method="POST">
+
+        <div id = "write-form-wrapper">
+          <span id = "write-input-head">
+            <span id = "write-text">인터넷강의 게시판</span> 
+          </span>
+          <span id = "input-title-wrapper"><input type="text" id="input-title"></span>
+          <div id = "input-content">
+            <textarea name="editordata" id="summernote"></textarea>
+          </div>
+          <span id = "write-input-url">
+              <span id = "write-url">Youtube 동영상 URL : www.youtu.be/<input type="text" id="input-url"></span> 
+          </span>
+          <div id ="submit-button-wrapper">
+            <button type="submit" class="btn btn-warning btn-sm" id="submit-button">등록</button>
+          </div>
+        </div>
+      </form>
     </div>
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script>
       console.log("Hello, world!");
+      $(document).ready(function() {
+        $('#summernote').summernote({
+          height:485,
+          disableResizeEditor : true
+        });
+        if($('#input-title').val() == ""){
+          console.log('아무것도없쪼?2');
+          $('#submit-button').attr('disabled',true);
+        }
+      $('#input-title').keyup(function(){
+        if($('#input-title').val() == ""){
+          console.log('아무것도없쪼?');
+          $('#submit-button').attr('disabled',true);
+        }else{
+          $('#submit-button').attr('disabled',false);
+        }
+      })        
+      });
     </script>
   </body>
 </html>
