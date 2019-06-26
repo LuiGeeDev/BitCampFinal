@@ -30,10 +30,6 @@ public class MessageController {
     return "message";
   }
   
- /* @GetMapping()
-  public String MessageIndexForm() {
-    return null;
-    
-  }*/
+ 
   
 }

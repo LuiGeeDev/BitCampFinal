@@ -9,54 +9,45 @@
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
-<!-- 	<!-- <p th:text="'Hello, ' + ${list[0].content}"></p>
-      <p th:text="${list[0].time}"></p>
-      <div th:object="${list[0]}">
-        <p th:text="*{id}"></p>
-        <p th:text="*{sender_username}"></p>
-      </div>
-      <hr> -->  
-<!--       <h3>insertCourse</h3>
-      <a th:href="@{/courseinsert}" >이동</a>
-      <hr>
-      <h3>selectAllCourse</h3>
-      <div class="iteration" th:each="course : ${list}" 
-      th:unless="${course.id}==0">
-        아이디 : <span th:text="${course.id}"></span>
-        강의명 : <span th:text="${course.course_name}"></span>
-        시작날짜 : <span th:text="${course.start_date}"></span>
-        종료날짜 : <span th:text="${course.end_date}"></span><br>
-        과목코드 : <span th:text="${course.subject}"></span>
-        과목이름 : <span th:text="${course.subject_name}"></span>
-        강의실번호 : <span th:text="${course.classroom_id}"></span>
-        강의실이름 : <span th:text="${course.classroom_name}"></span><br><br>
-    <a th:href="@{/cosurseupdate(id=${course.id})}" >수정</a>
-    <hr>
-      </div> -->
-      
-      
      <div class="title"><h3><b>스택게시판</b></h3></div>
      <hr>   
+    <!-- 검색창 -->
+    <table>
+    	<tr><td class="seath">
+    	<select name=말머리 size=1 style="height: 30px;">
+        <OPTION VALUE=1 SELECTED>제목</OPTION>
+        <OPTION VALUE=2>내용</OPTION>
+        <OPTION VALUE=3>태그</OPTION>
+        <OPTION VALUE=4>작성자</OPTION>
+    	</select>
+    	<input type="text" name="stacksearch" id="stacksearch" size="25" placeholder="검색내용을 적어주세요">
+    	<img src="/css/stack/search.png" class="seaimg">
+    	</td></tr>
+    </table>
+     <!-- 스택글목록 -->
      <table>
-        <tr onClick="location.href='/stack/detail'">
+     <tbody>
+        <tr onClick="location.href='/stack/content'">
           <td class="td1"><span class="tdst">3<br></span><span class="td2">추천</span><br>
           <span class="tdst">7<br></span><span class="td2">답변</span>
           </td>
-          <td colspan="2"><p class="tdtitle">Speechless</p>
-          <p>Here comes a wave Meant to wash me away A tide that is taking me under Swallowing in sand left with nothing to say My voice drowned out in the thunder But I won't cry And I won't start to crumble</p>
+          <td colspan="2"><p class="tdtitle">Lovememore.</p>
+          <p class="tdcontent">나의 밤이 또 가기 전에 내게 말을 걸어줘 이 머문 손길에 이제 나를 가득 담고서 너의 밤이 어떤 의미를  갖는지도 내게 말해줘 그 말의 무게를 내가 느낄 수가 있도록 더 나를 많이
+			또 바라 봐줘 내일이 되면 다 잊어도</p>
           </td>
         </tr>
         <tr>
           <td class="td2">41view</td>
           <td class="td3">
    		<span class="tag-name">
-   		<span>Spring</span>
-   		<span>Java</span>
-   		<span>C++</span>
+   		<span id="c1">Spring</span>
+   		<span id="c2">Java</span>
+   		<span id="c3">C++</span>
     	</span>
     	</td>
-          <td class="td4">정성윤</td>
+          <td class="td4">dosii</td>
         </tr>
+    </tbody>
     </table>  
     <hr>
      <table>
@@ -65,16 +56,16 @@
           <span class="tdst">0<br></span><span class="td2">answer</span>
           </td>
           <td colspan="2"><p class="tdtitle">A Whole New World</p>
-          <p>I can open your eyes Take you wonder by wonder Over sideways and under On a magic carpet ride A whole new world A new fantastic point of view</p>
+          <p class="tdcontent">I can open your eyes Take you wonder by wonder Over sideways and under On a magic carpet ride A whole new world A new fantastic point of view</p>
           </td>
         </tr>
         <tr>
           <td class="td2">2view</td>
           <td class="td3">
    		<span class="tag-name">
-   		<span>Spring</span>
-   		<span>Java</span>
-   		<span>C++</span>
+   		<span id="c4">Spring</span>
+   		<span id="c5">Java</span>
+   		<span id="c6">C++</span>
     	</span>
 		  </td>
           <td class="td4">zayn</td>
@@ -82,21 +73,8 @@
     </table>  
     <hr> 
 	</div>   
-    
-
-<!--     <h1>selectMessageById</h1>
-    	<div th:each="senderM : ${sender}">
-        아이디 : <p th:text="${senderM.id}"></p>
-        내용 : <p th:text="${senderM.content}"></p>
-        시간 : <p th:text="${senderM.time}"></p>
-        체크유무 : <p th:text="${senderM.checked}"></p>
-        보낸 사람 : <p th:text="${senderM.sender_username}"></p>
-        받는 사람 : <p th:text="${senderM.receiver_username}"></p>
-      </div>
-    	</div>
-      
-    <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-    <script th:fragment="script">
+<!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
+    <script>
       console.log("Hello, world!");
     </script>
   </body>

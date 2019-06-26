@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+    <link
+      rel="stylesheet"
+      th:href="@{/css/myclass/troubleshooting/troubleshooting.css}"
+    />
+    <link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
+  </head>
+  <body>
+    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+    <div class="main" th:fragment="main">
+      <div th:replace="myclass/nav :: project-nav(ts)"></div>
+      <div class="row">
+        <!-- 검색창, 글쓰기 버튼 -->
+        <div class="search-bar">
+          <form method="post">
+            <select class="search-option">
+              <option value="title">제목</option>
+              <option value="content">내용</option>
+              <option value="comment">댓글</option>
+            </select>
+            <input type="text" name="" class="search-input" />
+          </form>
+        </div>
+        <a
+          href="#"
+          th:href="@{/myclass/troubleshooting/new-issue}"
+          class="new-issue btn btn-outline-primary"
+        >
+          새로 올리기
+        </a>
+      </div>
+      <div class="row">
+        <!-- 게시판 글 -->
+        <div class="board">
+          <div class="board-title">
+            <a href="" th:href="@{/myclass/troubleshooting}" class="link-open">
+              <i class="fas fa-exclamation-circle link-icon"></i><span class="open">미해결 문제 32개</span>
+            </a>
+            <a href="" th:href="@{/myclass/troubleshooting(q='closed')}" class="link-closed">
+              <i class="fas fa-check-circle link-icon"></i><span class="closed">해결 문제 42개</span>
+            </a>
+          </div>
+          <div class="board-articles">
+            <a href="" th:href="@{/myclass/troubleshooting/read(id=1)}">
+              <div class="board-issue">
+                <div class="closed">
+                  <i class="fas fa-exclamation-circle fa-2x"></i>
+                </div>
+                <div class="issue-title">
+                  <h3>오늘 저녁은 배가 고프다</h3>
+                  <p class="issue-writer-time">윤종석 03-21 10:39</p>
+                </div>
+                <div class="issue-tags">
+                  <span class="tag">DB</span>
+                  <span class="tag">Java</span>
+                </div>
+                <div class="issue-comment">
+                  <i class="far fa-comment-alt"></i>5
+                </div>
+              </div>
+            </a>
+            <a href="" th:href="@{/myclass/troubleshooting/read(id=1)}">
+              <div class="board-issue">
+                <div class="closed">
+                  <i class="fas fa-exclamation-circle fa-2x"></i>
+                </div>
+                <div class="issue-title">
+                  <h3>오늘 저녁은 배가 고프다</h3>
+                  <p class="issue-writer-time">윤종석 03-21 10:39</p>
+                </div>
+                <div class="issue-tags">
+                  <span class="tag">DB</span>
+                  <span class="tag">Java</span>
+                </div>
+                <div class="issue-comment">
+                  <i class="far fa-comment-alt"></i>5
+                </div>
+              </div>
+            </a>
+            <a href="" th:href="@{/myclass/troubleshooting/read(id=1)}">
+              <div class="board-issue">
+                <div class="closed">
+                  <i class="fas fa-exclamation-circle fa-2x"></i>
+                </div>
+                <div class="issue-title">
+                  <h3>오늘 저녁은 배가 고프다</h3>
+                  <p class="issue-writer-time">윤종석 03-21 10:39</p>
+                </div>
+                <div class="issue-tags">
+                  <span class="tag">DB</span>
+                  <span class="tag">Java</span>
+                </div>
+                <div class="issue-comment">
+                  <i class="far fa-comment-alt"></i>5
+                </div>
+              </div>
+            </a>
+            <a href="" th:href="@{/myclass/troubleshooting/read(id=1)}">
+              <div class="board-issue">
+                <div class="closed">
+                  <i class="fas fa-exclamation-circle fa-2x"></i>
+                </div>
+                <div class="issue-title">
+                  <h3>오늘 저녁은 배가 고프다</h3>
+                  <p class="issue-writer-time">윤종석 03-21 10:39</p>
+                </div>
+                <div class="issue-tags">
+                  <span class="tag">DB</span>
+                  <span class="tag">Java</span>
+                </div>
+                <div class="issue-comment">
+                  <i class="far fa-comment-alt"></i>5
+                </div>
+              </div>
+            </a>
+            <a href="" th:href="@{/myclass/troubleshooting/read(id=1)}">
+              <div class="board-issue">
+                <div class="closed">
+                  <i class="fas fa-exclamation-circle fa-2x"></i>
+                </div>
+                <div class="issue-title">
+                  <h3>오늘 저녁은 배가 고프다</h3>
+                  <p class="issue-writer-time">윤종석 03-21 10:39</p>
+                </div>
+                <div class="issue-tags">
+                  <span class="tag">DB</span>
+                  <span class="tag">Java</span>
+                </div>
+                <div class="issue-comment">
+                  <i class="far fa-comment-alt"></i>5
+                </div>
+              </div>
+            </a>
+            <a href="" th:href="@{/myclass/troubleshooting/read(id=1)}">
+              <div class="board-issue">
+                <div class="closed">
+                  <i class="fas fa-exclamation-circle fa-2x"></i>
+                </div>
+                <div class="issue-title">
+                  <h3>오늘 저녁은 배가 고프다</h3>
+                  <p class="issue-writer-time">윤종석 03-21 10:39</p>
+                </div>
+                <div class="issue-tags">
+                  <span class="tag">DB</span>
+                  <span class="tag">Java</span>
+                </div>
+                <div class="issue-comment">
+                  <i class="far fa-comment-alt"></i>5
+                </div>
+              </div>
+            </a>
+
+            <a href="" th:href="@{/myclass/troubleshooting/read(id=1)}">
+              <div class="board-issue">
+                <div class="closed">
+                  <i class="fas fa-exclamation-circle fa-2x"></i>
+                </div>
+                <div class="issue-title">
+                  <h3>오늘 저녁은 배가 고프다</h3>
+                  <p class="issue-writer-time">윤종석 03-21 10:39</p>
+                </div>
+                <div class="issue-tags">
+                  <span class="tag">DB</span>
+                  <span class="tag">Java</span>
+                </div>
+                <div class="issue-comment">
+                  <i class="far fa-comment-alt"></i>5
+                </div>
+              </div>
+            </a>
+            <a href="" th:href="@{/myclass/troubleshooting/read(id=1)}">
+              <div class="board-issue">
+                <div class="closed">
+                  <i class="fas fa-exclamation-circle fa-2x"></i>
+                </div>
+                <div class="issue-title">
+                  <h3>오늘 저녁은 배가 고프다</h3>
+                  <p class="issue-writer-time">윤종석 03-21 10:39</p>
+                </div>
+                <div class="issue-tags">
+                  <span class="tag">DB</span>
+                  <span class="tag">Java</span>
+                </div>
+                <div class="issue-comment">
+                  <i class="far fa-comment-alt"></i>5
+                </div>
+              </div>
+            </a>
+            <a href="" th:href="@{/myclass/troubleshooting/read(id=1)}">
+              <div class="board-issue">
+                <div class="closed">
+                  <i class="fas fa-exclamation-circle fa-2x"></i>
+                </div>
+                <div class="issue-title">
+                  <h3>오늘 저녁은 배가 고프다</h3>
+                  <p class="issue-writer-time">윤종석 03-21 10:39</p>
+                </div>
+                <div class="issue-tags">
+                  <span class="tag">DB</span>
+                  <span class="tag">Java</span>
+                </div>
+                <div class="issue-comment">
+                  <i class="far fa-comment-alt"></i>5
+                </div>
+              </div>
+            </a>
+            <a href="" th:href="@{/myclass/troubleshooting/read(id=1)}">
+              <div class="board-issue">
+                <div class="closed">
+                  <i class="fas fa-exclamation-circle fa-2x"></i>
+                </div>
+                <div class="issue-title">
+                  <h3>오늘 저녁은 배가 고프다</h3>
+                  <p class="issue-writer-time">윤종석 03-21 10:39</p>
+                </div>
+                <div class="issue-tags">
+                  <span class="tag">DB</span>
+                  <span class="tag">Java</span>
+                </div>
+                <div class="issue-comment">
+                  <i class="far fa-comment-alt"></i>5
+                </div>
+              </div>
+            </a>
+            <a href="" th:href="@{/myclass/troubleshooting/read(id=1)}">
+              <div class="board-issue">
+                <div class="closed">
+                  <i class="fas fa-exclamation-circle fa-2x"></i>
+                </div>
+                <div class="issue-title">
+                  <h3>오늘 저녁은 배가 고프다</h3>
+                  <p class="issue-writer-time">윤종석 03-21 10:39</p>
+                </div>
+                <div class="issue-tags">
+                  <span class="tag">DB</span>
+                  <span class="tag">Java</span>
+                </div>
+                <div class="issue-comment">
+                  <i class="far fa-comment-alt"></i>5
+                </div>
+              </div>
+            </a>
+            <a href="" th:href="@{/myclass/troubleshooting/read(id=1)}">
+              <div class="board-issue">
+                <div class="closed">
+                  <i class="fas fa-exclamation-circle fa-2x"></i>
+                </div>
+                <div class="issue-title">
+                  <h3>오늘 저녁은 배가 고프다</h3>
+                  <p class="issue-writer-time">윤종석 03-21 10:39</p>
+                </div>
+                <div class="issue-tags">
+                  <span class="tag">DB</span>
+                  <span class="tag">Java</span>
+                </div>
+                <div class="issue-comment">
+                  <i class="far fa-comment-alt"></i>5
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <!-- 페이지 버튼 -->
+        <div class="page-btns">
+          <a href="#" class="btn btn-primary">이전</a>
+          <a href="#" class="btn btn-primary">1</a>
+          <a href="#" class="btn btn-primary">2</a>
+          <a href="#" class="btn btn-primary">3</a>
+          <a href="#" class="btn btn-primary">다음</a>
+        </div>
+      </div>
+    </div>
+    <script></script>
+  </body>
+</html>
