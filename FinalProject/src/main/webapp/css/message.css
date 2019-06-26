@@ -1,16 +1,21 @@
 @charset "UTF-8";
 .row {
   height: 100%;
+  background-color: #F2F4F7;
+  
 }
+
+
 
 .message-box2 {
   border: 1px solid #ededed;
-  width: 38%;
+  width: 34%;
   height: 100%;
   margin-right: 10px;
   border-radius: 12px;
   overflow-y: scroll;
-  max-height: 800px;
+  max-height: 700px;
+  background-color:white;
 }
 
 ::-webkit-scrollbar {
@@ -28,10 +33,11 @@
 
 .message-paper2 {
   border: 1px solid #ededed;
-  width: 58%;
-  height: 800px;
+  width: 54%;
+  height: 700px;
   border-radius: 12px;
   overflow-y: scroll;
+  background-color:white;
 }
 
 .message2 {
@@ -127,12 +133,55 @@
 
 .message-sender-name {
 	font-size: 20px;
-	color:blakc;
+	color:black;
 	font-weight: bold;
+	display:flex;
+	margin-left : 20px;
 }
 
-.sender_message {
+
+
+.sender-message {
 	color: orange;
+	margin-left: 20px;
+	
 }
 
+.fa-sticky-note {
+	display: none;
+	margin-right: 30px;
+	
+}
 
+.fa-trash {
+	display: none;
+}
+
+.send-message-icon {
+	display:flex;
+	
+	
+}
+.message-right {
+	margin-left:auto;
+	display:flex;
+	margin-top:20px;
+}
+
+.message-sender-time {
+	margin-left:auto;
+}
+
+.message-timeform {
+	display:flex;
+}
+
+.message-sender-content {
+	margin-left: 20px;
+    margin-top: 50px;
+}
+
+.main {
+	margin-left: 400px;
+	margin-top: 100px;
+}
