@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.or.bit.dao.MemberDao;
+import kr.or.bit.dao.ProjectDao;
 import kr.or.bit.model.Member;
 import kr.or.bit.model.Project;
 import kr.or.bit.service.MemberService;
@@ -27,10 +28,7 @@ public class ProjectController {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     String username = Helper.userName();
     Member user = memberDao.selectMemberByUsername(username);
-    
     List<Member> memberList = memberService.getStudentsList();
-    System.out.println("###############################");
-    System.out.println("memberList : "+memberList.toString()+"//////////사이즈 : "+memberList.size());
     model.addAttribute("user", user);
     model.addAttribute("memberList", memberList);
     return "myclass/teacher/project/createProject";
@@ -38,6 +36,8 @@ public class ProjectController {
 
   @PostMapping("/createProject")
   public String createProject(Project project) {
+    ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    projectDao.insertProject(project);
     return "redirect:/";
   }
 }

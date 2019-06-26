@@ -32,13 +32,8 @@
     <div class="row">
       <div class="student-list">
         <h5>학생리스트</h5>
-        <ul>
-          <li id="draggable" class="student-block">이힘찬</li>
-          <li id="draggable1" class="student-block">고길동</li>
-          <li id="draggable2" class="student-block">김길동</li>
-          <li id="draggable3" class="student-block">학생1</li>
-          <li id="draggable4" class="student-block">학생2</li>
-          <li id="draggable5" class="student-block">학생3</li>
+        <ul id="students" th:each="member,iterStat : ${memberList}">
+          <li th:id="'draggable' + ${iterStat.count}" class="student-block" th:text="${member.name}"></li>
         </ul>
       </div>
       <div class="btn-add">
@@ -46,20 +41,13 @@
       </div>
       <div class="edit-group">
         <h5>조편성</h5>
-        <div id="accordion">
-          <h3>1조</h3>
-          <div id="group1">
-          </div>
-          <h3>2조</h3>
-          <div id="group2">
-          </div>
-          <h3>3조</h3>
-          <div id="group3">
-          </div>
-          <h3>4조</h3>
-          <div id="group4">
-          </div>
-        </div>
+        <ul id="sortable">
+          <li class="group-block">1조</li>
+          <li class="group-block">2조</li>
+          <li class="group-block">3조</li>
+          <li class="group-block">4조</li>
+        </ul>
+
       </div>
     </div>
   </div>
@@ -68,21 +56,16 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
       $(function() {
-        $("#group1,#group2,#group3,#group4").sortable({
+        console.log($("li[id^='draggable']"));
+        $("#sortable,#students").sortable({
           revert : true,
         });
-        $(
-            "#draggable,#draggable1,#draggable2,#draggable3,#draggable4,#draggable5")
+        $("li[id^='draggable']")
             .draggable({
-              connectToSortable : "#group1,#group2,#group3,#group4",
+              connectToSortable : "#sortable",
               revert : "invalid",
-            /* helper: "clone" */
             });
         $("ul, li").disableSelection();
-        $("#accordion").accordion({
-          heightStyle:"content",
-          collapsible:true
-        });
       });
     </script>
 </body>
