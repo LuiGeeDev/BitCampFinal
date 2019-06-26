@@ -10,6 +10,7 @@
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
      <div class="title"><h3><b>스택게시판</b></h3></div>
+     <!-- 게시물컨텐트 -->
      <hr>   
      <table>
      	<tr>
@@ -37,6 +38,7 @@
 		  <div style="position:relative;top:-330px;"> 
 		<div id="sidebox">		
 		<img src="/css/stack/like.png" id="imgp2"><br>
+		0<br>
 		<img src="/css/stack/unlike.png" id="imgp2">
 		</div>
 		</div>
@@ -52,7 +54,25 @@
 		  <p class="pfont">41view</p>
 		  </td>
 		</tr>
-    </table>  
+    </table> 
+    <!-- 댓글창 -->
+    <table>
+      <tr>
+        <td class="comtitle" colspan="4">
+        총 [4]개의 답변
+        </td>
+      </tr>
+      <tr>
+        <td class="ctd1">
+        <form th:action="@{/}" method="post" colspan="3">
+        <textarea name="comment" class="comtext" ></textarea><br>
+        <input type="submit" class="btn btn-primary btnalign" value="등록">
+        </form>
+        </td>
+        <td class="ctd2"></td>
+      </tr>
+    </table> 
+     
 	</div>   
     <script src="/js/stack/content.js">
     </script>

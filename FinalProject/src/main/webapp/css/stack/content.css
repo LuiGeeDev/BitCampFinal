@@ -39,10 +39,12 @@ th, td {
   width: 10%;
 }
 .td4 {
-  width: 50%
+  width: 50%;
+  border-bottom: 1.5px solid #eaebec;
 }
 .td5 {
-  width: 5%
+  width: 5%;
+  border-bottom: 1.5px solid #eaebec;
 }
 .tag-name span {
 border-radius: 5px;
@@ -113,5 +115,24 @@ padding: 5px;
   width: 40%;
   height: auto;
 }
-
+.comtitle{
+  font-size: 140%;
+  margin: 30px;
+}
+.comtext{
+  margin-top: 0px; 
+  margin-bottom: 0px; 
+  height: 110px; 
+  width: 100%;
+}
+.btnalign{
+ text-align: right;
+ float: right;
+}
+.ctd1{
+  width: 87%;
+}
+.ctd2{
+  width: 13%;
+}
 
