@@ -28,9 +28,6 @@ public class HomeController {
   public String home(Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
-    NotificationDao notificationDao = sqlSession.getMapper(NotificationDao.class);
-    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
-    ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
 
     String username = Helper.userName();
 

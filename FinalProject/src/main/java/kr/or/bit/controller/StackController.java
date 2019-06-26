@@ -14,10 +14,18 @@ public class StackController {
   @Autowired
   private SqlSession sqlsession;
   
+  //stack 메인으로 이동
   @GetMapping("/home")
-  public String test(Model model) {
+  public String selectAllStack(Model model) {
     
     return "stack/home";
+  }
+  
+  //stack 게시물 상세보기 버튼
+  @GetMapping("/content")
+  public String selectStack(Model model) {
+    
+    return "stack/content";
   }
   
 }

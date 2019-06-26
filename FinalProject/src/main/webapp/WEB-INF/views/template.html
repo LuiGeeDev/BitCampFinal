@@ -13,8 +13,9 @@
       <p th:text="'Hello, ' + ${message}"></p>
     </div>
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-    <script th:fragment="script">
+    <script>
       console.log("Hello, world!");
     </script>
+    <!-- 필요하다면 이 아래에 외부 자바스크립트도 추가 가능 -->
   </body>
 </html>

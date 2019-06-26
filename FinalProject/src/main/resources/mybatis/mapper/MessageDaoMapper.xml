@@ -44,7 +44,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     from message
     where receiver_username = #{recevier_username}
     order by time desc
-    limit 3;
+    limit 3
+  </select>
+  
+  <select id="selectOneMessage"
+  resultType="kr.or.bit.model.Message">
+  select id, content, time, checked, sender_username, receiver_username
+  from message
+  where id = #{id}
+  	
   </select>
 </mapper>
   
