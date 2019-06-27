@@ -2,50 +2,54 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- 
-/*
-*
-* @date: 2019. 06. 24.
-*
-* @author: 이힘찬
-*
-* @description: MemberDaoMapper 
-* 
-*/ 
--->
+<!-- /* * * @date: 2019. 06. 24. * * @author: 이힘찬 * * @description: MemberDaoMapper 
+  * */ -->
 <mapper namespace="kr.or.bit.dao.MemberDao">
-	<insert id="insertMember" parameterType="kr.or.bit.model.Member">
-		INSERT INTO member(username, password, enabled, course_id)
-		VALUES(#{username}, #{password}, #{enabled}, #{course_id})
-	</insert>
-    <insert id="insertNewCourseMembers" parameterType="map">
-      { call MakeCourseMembers(#{people}, #{teacher_id}, #{course_id}, #{start_date}, #{password}) }
-    </insert>
-	<update id="updateMember" parameterType="kr.or.bit.model.Member">
-		UPDATE member
-		SET password=#{password}, name=#{name}, email=#{email}, profile_photo=#{profile_photo}
-		WHERE username=#{username}
-	</update>
-	<delete id="deleteMember">
-		DELETE FROM member
-		WHERE username=#{username}
-	</delete>
-	<select id="selectAllMembers" resultType="kr.or.bit.model.Member">
-		SELECT username, password, name, email, profile_photo, course_id
-		FROM MEMBER
-	</select>
-	<select id="selectStudentsList" resultType="kr.or.bit.model.Member">
-		SELECT m.username, m.password, m.name, m.email, m.profile_photo, course_id
-		FROM member m 
-		JOIN authorities a
-		ON m.username = a.username
-		WHERE m.course_id = #{course_id} AND a.role = 'student'
-	</select>
-	<select id="selectMemberByUsername" resultType="kr.or.bit.model.Member">
-		SELECT username, password, name, email, profile_photo, course_id
-		FROM MEMBER
-		WHERE username = #{username}
-	</select>
+  <insert id="insertMember"
+    parameterType="kr.or.bit.model.Member">
+    INSERT INTO member(username, password, enabled, course_id)
+    VALUES(#{username}, #{password}, #{enabled}, #{course_id})
+  </insert>
+  <insert id="insertNewCourseMembers" parameterType="map">
+    { call MakeCourseMembers(#{people}, #{teacher_id}, #{course_id},
+    #{start_date}, #{password}) }
+  </insert>
+  <update id="updateMember"
+    parameterType="kr.or.bit.model.Member">
+    UPDATE member
+    SET password=#{password}, name=#{name}, email=#{email},
+    profile_photo=#{profile_photo}
+    WHERE username=#{username}
+  </update>
+  <delete id="deleteMember">
+    DELETE FROM member
+    WHERE username=#{username}
+  </delete>
+  <select id="selectAllMembers"
+    resultType="kr.or.bit.model.Member">
+    SELECT username, password, name, email, profile_photo, course_id, group_id
+    FROM MEMBER m
+    LEFT JOIN GROUP_MEMBER g
+    ON m.username = g.member_name
+  </select>
+  <select id="selectStudentsList"
+    resultType="kr.or.bit.model.Member">
+    SELECT m.username, m.password, m.name, m.email, m.profile_photo, course_id, group_id
+    FROM member m
+    LEFT JOIN authorities a
+    ON m.username = a.username
+    LEFT JOIN GROUP_MEMBER g
+    ON m.username = g.member_name
+    WHERE m.course_id = #{course_id} AND a.role = 'student'
+  </select>
+  <select id="selectMemberByUsername"
+    resultType="kr.or.bit.model.Member">
+    SELECT username, password, name, email, profile_photo, course_id, group_id
+    FROM MEMBER m
+    LEFT JOIN GROUP_MEMBER g
+    ON m.username = g.member_name
+    WHERE username = #{username}
+  </select>
 </mapper>
 
 
