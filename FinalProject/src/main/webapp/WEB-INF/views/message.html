@@ -23,7 +23,7 @@
             		<div class="message-sender2">
             			<span class="hidden" th:text="${all.receiver_username}"></span>
             			<span class="hidden" th:text="${all.sender_username}"></span>
-            			<span class="sender2" th:text="${all.sender_username}"></span>
+            			<span class="sender2" th:text="${all.senderName}"></span><span>(</span><span class="senderName" th:text="${all.sender_username}"></span><span>)</span>
             			<span class="time2" th:text="${all.time}"></span>
             		</div>
             		<p class="message-preview2" th:text="${all.content}">
@@ -81,9 +81,38 @@
     </div>
   </div> -->
   
-      
-      
-      
+     
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+ 		<div th:each="all : ${selectall}">
+ 		<span class="hidden" th:text="${all.sender_username}" id="senderId" ></span>
+
+ 		</div>
+ 
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">쪽지 보내기</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">메시지 입력:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-primary" id="modal-submitbtn">전송</button>
+      </div>
+    </div>
+  </div>
+</div>
+
       
     </div><!-- main fragment 끝 -->
     
@@ -98,10 +127,8 @@
           id: messageId,
         },
         success: function(data) {
-          console.log(data);
-         
          $(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message").empty()
-         $(".message-sender-name").append(`${data.sender_username}`);
+         $(".message-sender-name").append(`${data.senderName}`).append(`(${data.sender_username})`);
          $(".message-sender-time").append(`${data.time}`);
          $(".message-sender-content").append(`${data.content}`);
          $(".sender-message").append(`<h6>받은쪽지</h6>`);
@@ -118,15 +145,36 @@
         if ($("#reply")) {
           
           $("#reply").click(function() {
-            $(".modal").css("display", "block");
-            console.log("$this : " + $(this));
-            const receiver_id = $(this).children(".hidden").text();
-            console.log("receiver_id : " +receiver_id);
-            $(".message-form2").append(
-              "<input type='hidden' value='" + receiver_id + "' name='receiver' class='receiver'>"
-            );
+            
+            $(".modal").modal('show');
+          
+            //console.log("$this : " + $(this));
+            //const receiver_id = $(this).children(".hidden").text(); */
+            //console.log("receiver_id : " +receiver_id);
+            //$(".message-form2").append("<input type='hidden' value='" + receiver_id + "' name='receiver' class='receiver'>");
           });
         }
+        
+        $("#modal-submitbtn").click(function() {
+           const messageText = $("#message-text").val();
+           console.log("messageText : " + messageText);
+
+           $.ajax(
+               {
+                 url: "/ajax/message/reply",
+                 type: "POST",
+                 data: {
+                   content: messageText,
+                 },
+                 success:function(data) {
+                 
+                 }
+             
+          		 }
+               
+           )
+           
+        });
 
         $("#refresh").click(function() {
           getMessage(messageId);
