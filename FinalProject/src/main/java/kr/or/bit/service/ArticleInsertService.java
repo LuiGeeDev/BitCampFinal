@@ -25,14 +25,17 @@ public class ArticleInsertService implements ArticleOri {
       TroubleShootingDao trobleshooting = sqlSession.getMapper(TroubleShootingDao.class);
       articledao.insertArticle(article);
       trobleshooting.insertTroubleShooting(option);
+      
     } else if (optionname.equals("homework")) {
       HomeworkDao homework = sqlSession.getMapper(HomeworkDao.class);
       articledao.insertArticle(article);
       homework.insertHomework(option);
+      
     } else if (optionname.equals("general")) {
       GeneralDao general = sqlSession.getMapper(GeneralDao.class);
       articledao.insertArticle(article);
       general.insertGeneral(option);
+      
     }
   }
   
