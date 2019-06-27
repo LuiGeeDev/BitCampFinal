@@ -32,7 +32,7 @@
           
       	</div>
       	<div class="message-paper2">
-
+		<span class="hidden" id="message-sender-id"></span>
       		<!-- 메시지 보낸사람   -->
       		<div class="send-message-icon">
       				<div class="message-right">
@@ -106,7 +106,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modal-close-btn">닫기</button>
         <button type="button" class="btn btn-primary" id="modal-submitbtn">전송</button>
       </div>
     </div>
@@ -127,14 +127,17 @@
           id: messageId,
         },
         success: function(data) {
+          console.log("data : " + data);
+         $("#message-sender-id").append(`${data.sender_username}`);
          $(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message").empty()
          $(".message-sender-name").append(`${data.senderName}`).append(`(${data.sender_username})`);
          $(".message-sender-time").append(`${data.time}`);
          $(".message-sender-content").append(`${data.content}`);
          $(".sender-message").append(`<h6>받은쪽지</h6>`);
-         $(".fa-sticky-note").css("display", "block");
+         $(".fa-sticky-note").css("display" , "block");
          $(".fa-trash").css("display", "block");
          
+       
           
           
         },
@@ -147,7 +150,7 @@
           $("#reply").click(function() {
             
             $(".modal").modal('show');
-          
+            $("#message-text").val("");
             //console.log("$this : " + $(this));
             //const receiver_id = $(this).children(".hidden").text(); */
             //console.log("receiver_id : " +receiver_id);
@@ -155,9 +158,13 @@
           });
         }
         
+        
         $("#modal-submitbtn").click(function() {
            const messageText = $("#message-text").val();
            console.log("messageText : " + messageText);
+           const messageSenderId = $("#message-sender-id").text();
+           console.log("messageSenderId : " + messageSenderId);
+           
 
            $.ajax(
                {
@@ -165,9 +172,13 @@
                  type: "POST",
                  data: {
                    content: messageText,
+                   receiver_username: messageSenderId
                  },
                  success:function(data) {
-                 
+                   console.log("답장했을떄의data : " +data);
+                   if(data !=null) {
+                     $(".modal").modal('hide');
+                     }
                  }
              
           		 }
@@ -176,9 +187,9 @@
            
         });
 
-        $("#refresh").click(function() {
+       /*  $("#refresh").click(function() {
           getMessage(messageId);
-        });
+        }); */
 
         $("#delete").click(function() {
           const answer = confirm("쪽지를 삭제하시겠습니까?");
@@ -191,8 +202,8 @@
                     id: messageId,
                   },
                   success:function(data) {
-                    location.href = "message";
-                    console.log("deleteMessage : " + data);
+                    location.href = "/message";
+                    
                   }
               
            		 }
@@ -203,11 +214,11 @@
       });
     }
 
-    $(function() {
+    /* $(function() {
       if (fromMain) {
         getMessage(messageId);
       }
-    });
+    }); */
 
     $(".message2").click(function() {
       
