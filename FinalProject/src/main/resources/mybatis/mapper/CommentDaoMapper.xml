@@ -2,48 +2,56 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- /*
-*
-* @date: 2019. 06. 24.
-*
-* @author: 권예지
-* 
-*/ -->
+<!-- /* * * @date: 2019. 06. 24. * * @author: 권예지 * */ -->
 <mapper namespace="kr.or.bit.dao.CommentDao">
-  <select id="selectAllComment" resultType="kr.or.bit.model.Comment">     
-	SELECT c.id as id, content, time, updated_time, article_id, username 
-	FROM comment as c
-	LEFT JOIN vote as v
-	ON c.id = v.comment_id
-	WHERE article_id=#{article_id};
-  </select> 
-  <select id="selectComment" resultType="kr.or.bit.model.Comment">
-   SELECT c.id as id, content, time, updated_time, article_id, username 
-	FROM comment as c
-	LEFT JOIN vote as v
-	ON c.id = v.comment_id
-	WHERE article_id=#{article_id} and id=#{id};
-  </select>
-  <insert id="insertComment">
- 	INSERT INTO comment(content, time, updated_time, article_id, username)
- 	VALUES (#{content}, now(), now(), #{article_id}, #{username})
-  </insert>
-  <delete id="deleteComment">
-    DELETE comment 
-    WHERE id=#{id}
-  </delete>
-  <update id="updateComment" parameterType="kr.or.bit.model.Comment">
-    UPDATE comment
-    SET updated_time=now(),
-    CONTENT=#{content}
-    WHERE id=#{id}
-  </update>
-  <insert id="insertVote">
-    INSERT INTO vote(username, comment_id)
-    VALUES (#{username}, #{comment_id})
-  </insert>
-   <delete id="deleteVote">
-    DELETE FROM vote 
-    WHERE id=#{id}
-  </delete>
+	<select id="selectAllComment"
+		resultType="kr.or.bit.model.Comment">
+		SELECT c.id as id, content, time, updated_time, article_id,
+		v.username as
+		username, v.comment_id as comment_id
+		FROM comment as c
+		LEFT JOIN vote as v
+		ON c.id = v.comment_id
+		WHERE
+		article_id=#{article_id};
+	</select>
+	<select id="selectComment" resultType="kr.or.bit.model.Comment">
+		SELECT c.id as id,
+		content, time, updated_time, article_id, v.username as
+		username,
+		v.comment_id as comment_id
+		FROM comment as c
+		LEFT JOIN vote as v
+		ON c.id
+		= v.comment_id
+		WHERE article_id=#{article_id} and id=#{id};
+	</select>
+	<insert id="insertComment">
+		INSERT INTO comment(content, time, updated_time,
+		article_id, username)
+		VALUES (#{content}, now(), now(), #{article_id},
+		#{username})
+	</insert>
+	<delete id="deleteComment">
+		DELETE FROM comment
+		WHERE id=#{id}
+	</delete>
+	<update id="updateComment"
+		parameterType="kr.or.bit.model.Comment">
+		UPDATE comment
+		SET updated_time=now(),
+		CONTENT=#{content}
+		WHERE id=#{id}
+	</update>
+	<insert id="insertVote">
+		INSERT INTO vote(username, comment_id)
+		VALUES (#{username}, #{id})
+	</insert>
+	<delete id="deleteVote">
+		DELETE FROM vote
+		WHERE id=#{id} and username=#{username}
+	</delete>
+	<select id="countVote" resultType="kr.or.bit.model.Vote">
+		SELECT count(comment_id) from vote where comment_id=#{id};
+	</select>
 </mapper>
