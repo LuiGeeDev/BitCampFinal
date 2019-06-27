@@ -114,3 +114,9 @@ th, td {
 #c7 {
   background-color: pink;
 }
+.btnalign{
+ text-align: right;
+}
+.btnpa{
+  padding: 20px;
+}

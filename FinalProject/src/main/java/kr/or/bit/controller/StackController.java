@@ -29,4 +29,10 @@ public class StackController {
     return "stack/content";
   }
   
+  @GetMapping("/write")
+  public String stackWrite(Model model) {
+    
+    return "stack/write";
+  }
+  
 }

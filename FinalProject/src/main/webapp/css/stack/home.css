@@ -104,3 +104,9 @@ th, td {
   float: right;
   text-align: right;
 }
+.btnalign{
+ text-align: right;
+}
+.btnpa{
+  padding: 20px;
+}

@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+body {
+  font-family: 'Nanum Gothic';
+}
+.title {
+  font-size: 190%;
+  margin: 20px;
+}
+.sumform{
+/*   margin-left: 12%;
+  margin-right: 12%; */
+}

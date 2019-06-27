@@ -13,8 +13,8 @@
         <b>Q&A게시판</b>
       </h3>
     </div>
-    <hr>
     <!-- 게시판 -->
+    <hr>
     <table>
       <tr>
         <td colspan="6" class="td1"><span class="qspan"> 
@@ -25,7 +25,7 @@
           </select> <input type="text" name="stacksearch" id="stacksearch"
             size="35" placeholder="검색내용을 적어주세요"
             style="border: 1.5px solid lightgray;"> <img
-            src="/css/stack/search.png" class="seaimg">
+            src="/css/qna/search.png" class="seaimg">
         </span></td>
       </tr>
       <tr class="tr1">
@@ -39,7 +39,7 @@
         </td>
         <td colspan="4" class="td4"></td>
       </tr>
-      <tr>
+      <tr onClick="location.href='/qna/content'">
         <td colspan="3" class="td5 tr2">작은 것들을 위한 시(Feat.Halsey)</td>
         <td class="tr2">68View</td>
         <td class="tr2">3Like</td>
@@ -77,6 +77,16 @@
         <td class="tr2">120View</td>
         <td class="tr2">17Like</td>
         <td class="td3 tr2">정성윤</td>
+      </tr>
+
+    </table>
+    <table>
+      <tr>
+        <td colspan="6" class="btnalign btnpa">
+        <a th:href="@{/qna/write}">
+        <button class="btn btn-primary">글쓰기</button>
+        </a>
+        </td>
       </tr>
     </table>
   </div>
