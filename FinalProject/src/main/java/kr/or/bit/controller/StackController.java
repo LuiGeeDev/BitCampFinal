@@ -1,5 +1,7 @@
 package kr.or.bit.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,8 +18,7 @@ public class StackController {
   
   //stack 메인으로 이동
   @GetMapping("/home")
-  public String selectAllStack(Model model) {
-    
+  public String selectAllStack(Model model,HttpServletRequest request) {
     return "stack/home";
   }
   
