@@ -5,35 +5,52 @@
 <head>
   <title>Teaming</title>
   <link rel="stylesheet" href= "" type="text/css" th:href="@{/css/login.css}" />
+  <link rel="stylesheet" href= "" type="text/css" th:href="@{/css/home.css}" />
+
   <meta charset="UTF-8" />
 </head>
 <body>
   <div class="main">
+    
     <div id = "container">
-        <div id = "half-image" style = "background-image: url('https://scontent-vie1-1.cdninstagram.com/vp/8367f6d26912268504dd1f2e75df825f/5D81A858/t51.2885-15/e35/50813752_2456454744582108_103587418101856700_n.jpg?_nc_ht=scontent-vie1-1.cdninstagram.com&se=7&ig_cache_key=MTk3NDU3NDExNDY4NjM2MTU0MA%3D%3D.2')"></div>
+        <div id = "half-image" 
+        ></div>
         <div id = "login-wrapper">
           
-          <p th:if="${error}" class="fail">올바른 아이디나 비밀번호가 아닙니다.</p>
           <form th:action="@{/login}" method="post" id = "login-form">
-            <span id = "login-title">Teaming</span>
-            <div id = "username-wrapper">
-              <input type="text" name="username" id="username">
-              <span id = "input-label">ID</span>
+            <div id ="login-title-wrapper">
+              <span id = "login-title">Teaming</span>
+            </div>
+            <div id="label-wrapper">
+              <span id = "input-label">유저아이디</span>
             </div>
             <div id = "username-wrapper">
-              <input type="password" name="password" id="password">
-              <span id="input-label">PW</span>
+              <input type="text" name="username" id="username" placeholder="유저아이디를 입력하세요.">
+            </div>
+            <div id="label-wrapper">
+              <span id="input-label">비밀번호</span>
+            </div>
+            <div id = "username-wrapper">
+              <input type="password" name="password" id="password" placeholder="비밀번호를 입력하세요.">
             </div>
             <div id="button-wrapper">
-              <input class= "btn btn-warning btn-sm" type="submit" value="로그인" id="button">
+              <button type="submit" class= "btn btn-warning btn-sm" id="submit-button">로그인</button>
             </div>
-            <div id="checkbox-wrapper">
-              <input type="checkbox" id="remember_me" name="remember-me">
-              <label for="remember">자동 로그인</label>
+            <div class="checkbox-area">
+              <label for="remember-me">자동 로그인</label>
+              <input type="checkbox" id="remember-me" name="remember-me">
+              <span class="checkmark"></span>
             </div>
+            <p th:if="${error}" class="fail">올바른 아이디나 비밀번호가 아닙니다.</p>
           </form>
         </div>
       </div>
+
     </div>
+    <script th:fragment="script">
+        console.log("Hello, world!");
+    </script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
   </body>
 </html>
