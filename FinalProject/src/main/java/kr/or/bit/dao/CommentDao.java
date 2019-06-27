@@ -19,7 +19,7 @@ public interface CommentDao {
   
   List<Comment> selectAllComment(int article_id);
   
-  Comment selectComment(int id);
+  Comment selectComment(int article_id, int id);
   
   void insertComment(Comment comment); // ArticleDTO의 id[글번호]
 
