@@ -25,7 +25,7 @@
                 <span class="hidden" th:text="${all.sender_username}"></span>
                 <!-- <span class="readbtn"><i class="fas fa-circle"></i>&nbsp;</span> -->
                 <span class="unread" th:unless="${all.checked}" ><i class="fas fa-exclamation fa-lg"></i>&nbsp;</span>
-                <span class="hidden" th:text="${all.checked}" id="unread2"></span>
+                <span class="hidden removenoti" th:text="${all.checked}"></span>
                 <span class="sender2" th:text="${all.senderName}"></span>
                 <span>(</span>
                 <span
@@ -218,7 +218,15 @@
       }
 
       $(".message2").click(function(event) {
-         
+        const removeIcon = $(event.currentTarget).children(".message-sender2");
+        const removeNotification = removeIcon.children().siblings(".removenoti");
+        
+        const count = $(".message-count");
+        if(removeNotification.text() == 0) {
+        count.text(count.text() - 1);
+        removeNotification.text(1);
+       
+        }
         const messageId = $(this)
           .children(".hidden")
           .text();
@@ -232,15 +240,9 @@
             id: messageId
           },
           success: function(data) {
-            const iconWhere = event.target;
-            console.log($(event.currentTarget).children(".message-sender2").children().siblings(".unread").remove());
-            $(event.currentTarget).children(".message-sender2").children().siblings(".unread").remove();
-            console.log("아오15");
             
-           
-            
-            
-            
+            removeIcon.children().siblings(".unread").remove();
+            console.log("아오29");
           }
         });
         
