@@ -32,15 +32,17 @@ public class AjaxController {
   
   @PostMapping("/message")
   public Message getMessage(int id) {
+    System.out.println("탓어?");
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
     Message selectone = messageDao.selectOneMessage(id);
     return selectone;
   }
 
   @PostMapping("/message/delete") 
-  public void deleteMessage(int id) {
+  public String deleteMessage(int id) {
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
     messageDao.deleteMessage(id);
+    return "redirect:/message";
     
   }
   
