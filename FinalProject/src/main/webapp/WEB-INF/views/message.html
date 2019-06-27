@@ -19,9 +19,13 @@
           <div th:each="all : ${selectall}">
             <div class="message2">
               <span class="hidden" th:text="${all.id}"></span>
+              
               <div class="message-sender2">
                 <span class="hidden" th:text="${all.receiver_username}"></span>
                 <span class="hidden" th:text="${all.sender_username}"></span>
+                <!-- <span class="readbtn"><i class="fas fa-circle"></i>&nbsp;</span> -->
+                <span class="unread" th:unless="${all.checked}" ><i class="fas fa-exclamation fa-lg"></i>&nbsp;</span>
+                <span class="hidden removenoti" th:text="${all.checked}"></span>
                 <span class="sender2" th:text="${all.senderName}"></span>
                 <span>(</span>
                 <span
@@ -40,7 +44,7 @@
           <!-- 메시지 보낸사람   -->
           <div class="send-message-icon">
             <div class="message-right">
-              <i class="far fa-sticky-note fa-2x" id="reply"></i>
+              <i class="far fa-paper-plane fa-2x" id="reply"></i>
               <i class="fas fa-trash fa-2x" id="delete"></i>
             </div>
           </div>
@@ -142,6 +146,7 @@
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script>
       function getMessage(messageId) {
+        
         $.ajax({
           url: "/ajax/message",
           type: "POST",
@@ -149,7 +154,7 @@
             id: messageId
           },
           success: function(data) {
-            console.log("data : " + data);
+            
 
             $(
               ".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id"
@@ -161,7 +166,7 @@
             $(".message-sender-time").append(`${data.time}`);
             $(".message-sender-content").append(`${data.content}`);
             $(".sender-message").append(`<h6>받은쪽지</h6>`);
-            $(".fa-sticky-note").css("display", "block");
+            $(".fa-paper-plane").css("display", "block");
             $(".fa-trash").css("display", "block");
           },
           error: function(xhr) {
@@ -212,7 +217,16 @@
         });
       }
 
-      $(".message2").click(function() {
+      $(".message2").click(function(event) {
+        const removeIcon = $(event.currentTarget).children(".message-sender2");
+        const removeNotification = removeIcon.children().siblings(".removenoti");
+        
+        const count = $(".message-count");
+        if(removeNotification.text() == 0) {
+        count.text(count.text() - 1);
+        removeNotification.text(1);
+       
+        }
         const messageId = $(this)
           .children(".hidden")
           .text();
@@ -227,6 +241,8 @@
           },
           success: function(data) {
             
+            removeIcon.children().siblings(".unread").remove();
+            console.log("아오29");
           }
         });
         
@@ -236,6 +252,9 @@
         $(".receiver").remove();
         $(".modal").css("display", "none");
       });
+      
+    
+      
     </script>
   </body>
 </html>
