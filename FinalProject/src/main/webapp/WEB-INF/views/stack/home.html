@@ -1,83 +1,85 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org"
   th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
-  <head>
-    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-    <link rel="stylesheet" th:href="@{/css/stack/home.css}" />
-  </head>
-  <body>
-    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
-    <div class="main" th:fragment="main">
-     <div class="title"><h3><b>스택게시판</b></h3></div>
-     <hr>   
+<head>
+<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+<link rel="stylesheet" th:href="@{/css/stack/home.css}" />
+</head>
+<body>
+  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+  <div class="main" th:fragment="main">
+    <div class="title">
+      <h3>
+        <b>스택게시판</b>
+      </h3>
+    </div>
+    <hr>
     <!-- 검색창 -->
     <table>
-    	<tr><td class="seath">
-    	<select name=말머리 size=1 style="height: 30px;">
-        <OPTION VALUE=1 SELECTED>제목</OPTION>
-        <OPTION VALUE=2>내용</OPTION>
-        <OPTION VALUE=3>태그</OPTION>
-        <OPTION VALUE=4>작성자</OPTION>
-    	</select>
-    	<input type="text" name="stacksearch" id="stacksearch" size="25" placeholder="검색내용을 적어주세요">
-    	<img src="/css/stack/search.png" class="seaimg">
-    	</td></tr>
+      <tr>
+        <td class="seath">
+        <select name=말머리 size=1
+          style="height: 30px;">
+            <OPTION VALUE=1 SELECTED>제목</OPTION>
+            <OPTION VALUE=2>내용</OPTION>
+            <OPTION VALUE=3>태그</OPTION>
+            <OPTION VALUE=4>작성자</OPTION>
+        </select>
+        <input type="text" name="stacksearch" id="stacksearch"
+          size="25" placeholder="검색내용을 적어주세요">
+        <img src="/css/stack/search.png" class="seaimg">
+        </td>
+      </tr>
     </table>
-     <!-- 스택글목록 -->
-     <table>
-     <tbody>
+    <!-- 스택글목록 -->
+    <table>
+      <tbody>
         <tr onClick="location.href='/stack/content'">
-          <td class="td1"><span class="tdst">3<br></span><span class="td2">추천</span><br>
-          <span class="tdst">7<br></span><span class="td2">답변</span>
-          </td>
+          <td class="td1"><span class="tdst">3<br></span><span
+            class="td2">추천</span><br> <span class="tdst">7<br></span><span
+            class="td2">답변</span></td>
           <td colspan="2"><p class="tdtitle">Lovememore.</p>
-          <p class="tdcontent">나의 밤이 또 가기 전에 내게 말을 걸어줘 이 머문 손길에 이제 나를 가득 담고서 너의 밤이 어떤 의미를  갖는지도 내게 말해줘 그 말의 무게를 내가 느낄 수가 있도록 더 나를 많이
-			또 바라 봐줘 내일이 되면 다 잊어도</p>
-          </td>
+            <p class="tdcontent">나의 밤이 또 가기 전에 내게 말을 걸어줘 이 머문 손길에 이제
+              나를 가득 담고서 너의 밤이 어떤 의미를 갖는지도 내게 말해줘 그 말의 무게를 내가 느낄 수가 있도록 더
+              나를 많이 또 바라 봐줘 내일이 되면 다 잊어도</p></td>
         </tr>
         <tr>
           <td class="td2">41view</td>
-          <td class="td3">
-   		<span class="tag-name">
-   		<span id="c1">Spring</span>
-   		<span id="c2">Java</span>
-   		<span id="c3">C++</span>
-    	</span>
-    	</td>
+          <td class="td3"><span class="tag-name"> <span
+              id="c1">Spring</span> <span id="c2">Java</span> <span
+              id="c3">C++</span>
+          </span></td>
           <td class="td4">dosii</td>
         </tr>
-    </tbody>
-    </table>  
+      </tbody>
+    </table>
     <hr>
-     <table>
-        <tr>
-          <td class="td1"><span class="tdst">0<br></span><span class="td2">vote</span><br>
-          <span class="tdst">0<br></span><span class="td2">answer</span>
-          </td>
-          <td colspan="2"><p class="tdtitle">A Whole New World</p>
-          <p class="tdcontent">I can open your eyes Take you wonder by wonder Over sideways and under On a magic carpet ride A whole new world A new fantastic point of view</p>
-          </td>
-        </tr>
-        <tr>
-          <td class="td2">2view</td>
-          <td class="td3">
-   		<span class="tag-name">
-   		<span id="c4">Spring</span>
-   		<span id="c5">Java</span>
-   		<span id="c6">C++</span>
-    	</span>
-		  </td>
-          <td class="td4">zayn</td>
-        </tr>
-    </table>  
-    <hr> 
-	</div>   
-<!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-    <script>
+    <table>
+      <tr>
+        <td class="td1"><span class="tdst">0<br></span><span
+          class="td2">vote</span><br> <span class="tdst">0<br></span><span
+          class="td2">answer</span></td>
+        <td colspan="2"><p class="tdtitle">A Whole New World</p>
+          <p class="tdcontent">I can open your eyes Take you wonder
+            by wonder Over sideways and under On a magic carpet ride A
+            whole new world A new fantastic point of view</p></td>
+      </tr>
+      <tr>
+        <td class="td2">2view</td>
+        <td class="td3"><span class="tag-name"> <span
+            id="c4">Spring</span> <span id="c5">Java</span> <span
+            id="c6">C++</span>
+        </span></td>
+        <td class="td4">zayn</td>
+      </tr>
+    </table>
+    <hr>
+  </div>
+  <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
+  <script>
       console.log("Hello, world!");
     </script>
-  </body>
+</body>
 </html>
 
 

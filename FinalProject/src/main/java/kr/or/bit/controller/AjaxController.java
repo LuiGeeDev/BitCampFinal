@@ -14,6 +14,7 @@ import kr.or.bit.dao.MessageDao;
 import kr.or.bit.model.Classroom;
 import kr.or.bit.model.Message;
 import kr.or.bit.service.NewsService;
+import kr.or.bit.utils.Helper;
 
 @RestController
 @RequestMapping(path = "/ajax")
@@ -31,23 +32,39 @@ public class AjaxController {
   
   @PostMapping("/message")
   public Message getMessage(int id) {
+    System.out.println("탓어?");
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
     Message selectone = messageDao.selectOneMessage(id);
     return selectone;
   }
 
   @PostMapping("/message/delete") 
-  public void deleteMessage(int id) {
+  public String deleteMessage(int id) {
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
     messageDao.deleteMessage(id);
+    return "redirect:/message";
     
   }
   
-/*  @PostMapping("message/reply")
-  public void replyMessage() {
+  @PostMapping("/message/reply")
+  public String replyMessage(Message message) {
+    String username = Helper.userName();
+    message.setSender_username(username);
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
+    messageDao.insertMessage(message);
+    return "redirect:/message";
     
-  }*/
+  }
+  
+  
+  @PostMapping("message/update") 
+   public String updateMessage(int id) {
+    MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
+    messageDao.updateMessageChecked(id);
+    return "redirect:/message";
+    
+  }
+  
 
 	@PostMapping("/classroom")
 	public List<Classroom> getClassroom(Date start_date, @RequestParam(defaultValue = "1970-01-01") Date end_date) {

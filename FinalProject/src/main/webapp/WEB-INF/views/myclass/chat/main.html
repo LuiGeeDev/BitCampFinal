@@ -36,19 +36,53 @@
         </div>
       </div>
       <div class="chat-input">
-        <input type="file" name="file" id="file">
+        <input type="file" name="file" id="file" />
         <label for="file">+</label>
         <input type="text" name="" id="chat-message" />
       </div>
     </div>
-    <script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-database.js"></script>
+    <script th:inline="javascript">
+      console.log([[${user}]]);
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyABM1lmIsGHcP497EfAVgT51H0ec2YcGGM",
+        authDomain: "bitcamp-final.firebaseapp.com",
+        databaseURL: "https://bitcamp-final.firebaseio.com",
+        projectId: "bitcamp-final",
+        storageBucket: "bitcamp-final.appspot.com"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      const database = firebase.database();
+
+      function writeChatMessage(groupId, username, content) {
+        const chatMessage = {
+          username: username,
+          time: Date.now(),
+          content: content
+        };
+
+        database.ref("/chat/groups/" + groupId).push(chatMessage);
+        client.send("/app/chat", {}, chatMessage);
+      }
+
       connectStomp(function() {
         client.subscribe("/topic/chat/group/1", function(data) {
           console.log(data);
         });
 
-        $("#send").click(function() {
-          client.send("/app/chat", {}, "hello");
+        $("#chat-message").keydown(function(event) {
+          if (event.keyCode === 13) {
+            const groupId = [[${user.group_id}]];
+            const username = [[${user.username}]];
+            console.log(groupId, username);
+            const content = $('#chat-message').val();
+            // writeChatMessage(groupId, username, content);
+            $('#chat-message').val('');
+          }
         });
       });
     </script>

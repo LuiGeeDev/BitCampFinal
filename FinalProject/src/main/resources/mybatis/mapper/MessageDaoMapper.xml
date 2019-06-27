@@ -13,9 +13,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </delete>
   <select id="selectAllMessage"
     resultType="kr.or.bit.model.Message">
-    SELECT id, content, time, checked, sender_username, receiver_username
-    FROM message 
-    WHERE receiver_username = #{receiver_username}
+    select m.name as senderName, s.id, s.content, s.time, s.checked, s.sender_username, s.receiver_username
+    from member m left join message s on m.username = s.sender_username 
+    where s.receiver_username = #{receiver_username}
   </select>
   <select id="selectMessageById"
     resultType="kr.or.bit.model.Message">
@@ -49,10 +49,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <select id="selectOneMessage"
   resultType="kr.or.bit.model.Message">
-  select id, content, time, checked, sender_username, receiver_username
-  from message
-  where id = #{id}
+  select m.name as senderName, s.id, s.content, s.time, s.checked, s.sender_username, s.receiver_username
+  from member m left join message s on m.username = s.sender_username 
+  where s.id = #{id}
   	
   </select>
+  
+  <update id="updateMessageChecked">
+  update message
+  set checked =1
+  where id = #{id};
+  </update>
 </mapper>
   
