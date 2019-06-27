@@ -17,4 +17,15 @@ public class QnaController {
     return "qna/home";
   }
   
+  @GetMapping("/content")
+  public String selectQna(Model model) {
+    
+    return "qna/content";
+  }
+  @GetMapping("/write")
+  public String qnaWrite(Model model) {
+    
+    return "qna/write";
+  }
+  
 }

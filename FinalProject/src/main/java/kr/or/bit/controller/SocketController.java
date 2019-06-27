@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import kr.or.bit.dao.MemberDao;
+import kr.or.bit.model.ChatMessage;
 import kr.or.bit.model.Message;
 
 @Controller
@@ -39,7 +40,7 @@ public class SocketController {
   }
   
   @MessageMapping("/chat")
-  public void sendMessage() {
+  public void sendMessage(ChatMessage chatMessage) {
     Set<SimpUser> set = registry.getUsers();
     
     for (SimpUser s : set) {
@@ -47,6 +48,6 @@ public class SocketController {
       System.out.println(memberDao.selectMemberByUsername(s.getName()).getName());
     }
     
-    template.convertAndSend("/topic/chat/group/1", set.size());
+    template.convertAndSend("/topic/chat/groups/" + chatMessage.getGroup_id(), chatMessage);
   }
 }

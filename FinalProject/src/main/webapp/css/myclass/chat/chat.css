@@ -48,6 +48,10 @@
   width: 100%;
 }
 
+#chat-message:focus {
+  outline: none;
+}
+
 #file {
   display: none;
 }
@@ -59,8 +63,60 @@
   line-height: 35px;
   font-weight: 700;
   left: 2px;
-  margin: 0;
-  padding: 0 2px 9px 3px;
+  padding: 0 2px 9px 0px;
+  margin: 0 3px;
   border-right: 1px solid #23262a;
   cursor: pointer;
+}
+
+#file+label:hover {
+  font-size: 45px;
+  padding-right: 0;
+}
+
+#file+label:active {
+  font-size: 42px;
+  padding-right: 2px;
+}
+
+.date-line {
+  border: 1px solid #23262a;
+  position: relative;
+}
+
+.date {
+  position: absolute;
+  top: -12px;
+  left: 42%;
+  padding: 0 10px;
+  background: white;
+}
+
+.chat-content-file {
+  margin-left: 60px;
+  border: 1px solid #23262a;
+  border-radius: 5px;
+  padding: 15px 10px 15px 20px;
+  color: #23262a;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 70px;
+  font-weight: 600;
+}
+
+.file-name {
+  margin-right: 10px;
+}
+
+.chat-content-file svg {
+  color: #F39C20;
+}
+
+.chat-content-file:hover svg {
+  transform: scale(1.1);
+  transition: .2s;
+}
+
+.chat-content-file:active svg {
+  transform: scale(0.9);
 }

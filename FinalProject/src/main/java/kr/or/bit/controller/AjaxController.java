@@ -1,7 +1,10 @@
 package kr.or.bit.controller;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
+
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.MessageDao;
+import kr.or.bit.model.ChatMessage;
 import kr.or.bit.model.Classroom;
 import kr.or.bit.model.Message;
 import kr.or.bit.service.NewsService;
@@ -23,6 +30,19 @@ public class AjaxController {
   @Autowired
   private SqlSession sqlSession;
   
+  @PostMapping("/chat/file")
+  public ChatMessage uploadFile(int group_id, long time, String name, MultipartFile file) {
+    ChatMessage message = new ChatMessage();
+    
+    message.setUsername("fileServer");
+    message.setName(name);
+    message.setContent(file.getOriginalFilename());
+    message.setTime(time);
+    message.setGroup_id(group_id);
+    
+    return message;
+  }
+  
   @PostMapping("/news")
   public String getNews() {
     NewsService service = new NewsService();
@@ -32,7 +52,6 @@ public class AjaxController {
   
   @PostMapping("/message")
   public Message getMessage(int id) {
-    System.out.println("탓어?");
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
     Message selectone = messageDao.selectOneMessage(id);
     return selectone;
@@ -47,17 +66,14 @@ public class AjaxController {
   }
   
   @PostMapping("/message/reply")
-  public String replyMessage(Message message) {
+  public void replyMessage(Message message, HttpServletResponse response) throws IOException {
     String username = Helper.userName();
     message.setSender_username(username);
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
     messageDao.insertMessage(message);
-    return "redirect:/message";
-    
   }
   
-  
-  @PostMapping("message/update") 
+  @PostMapping("/message/update") 
    public String updateMessage(int id) {
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
     messageDao.updateMessageChecked(id);
@@ -65,7 +81,6 @@ public class AjaxController {
     
   }
   
-
 	@PostMapping("/classroom")
 	public List<Classroom> getClassroom(Date start_date, @RequestParam(defaultValue = "1970-01-01") Date end_date) {
 		CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
