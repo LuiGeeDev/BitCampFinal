@@ -25,18 +25,26 @@
         </div>
         <div class="side-nav">
           <div class="nav-menu">
-            <div class="nav-icon active-menu">
+            <div th:classappend="${#strings.contains(#request.getRequestURI(),'myclass')} ? 'active-menu'" class="nav-icon">
+	        <a th:href="@{/myclass/project}">
               <i class="fas fa-book fa-2x"></i>
+    	    </a>
             </div>
           </div>
+          
           <div class="nav-menu">
-            <div class="nav-icon">
+            <div th:classappend="${#strings.contains(#request.getRequestURI(),'stack')} ? 'active-menu'" class="nav-icon" >
+             <a th:href="@{/stack/home}">
+            
               <i class="far fa-question-circle fa-2x"></i>
+             </a>
             </div>
           </div>
           <div class="nav-menu">
-            <div class="nav-icon">
+            <div th:classappend="${#strings.contains(#request.getRequestURI(),'video')} ? 'active-menu'" class="nav-icon">
+             <a th:href="@{/video/home}">
               <i class="fas fa-video fa-2x"></i>
+             </a>
             </div>
           </div>
           <div class="nav-menu" sec:authorize="hasRole('TEACHER')">
@@ -45,18 +53,32 @@
             </div>
           </div>
           <div class="nav-menu" sec:authrorize="hasRole('MANAGER')">
-            <div class="nav-icon">
+            <div th:classappend="${#strings.contains(#request.getRequestURI(),'manage')} ? 'active-menu'" class="nav-icon">
+             <a th:href="@{/manage/home}">
               <i class="fas fa-tasks fa-2x"></i>
+             </a>
             </div>
           </div>
         </div>
       </div>
-
-      <div class="side-nav-menu">
+	
+      <div th:if="${#strings.contains(#request.getRequestURI(),'myclass')}" class="side-nav-menu">
         <a href="#">프로젝트 게시판</a>
         <a href="#">과제제출 게시판</a>
         <a href="#">질문 게시판</a>
         <a href="#">임시 게시판</a>
+      </div>
+      <div th:if="${#strings.contains(#request.getRequestURI(),'stack')}" class="side-nav-menu">
+        <a href="#">스택!!! 게시판</a>
+        
+      </div>
+      <div th:if="${#strings.contains(#request.getRequestURI(),'video')}" class="side-nav-menu"> 
+        <a href="#">비디오!!! 게시판</a>
+        
+      </div>
+      <div th:if="${#strings.contains(#request.getRequestURI(),'manage')}" class="side-nav-menu">
+        <a href="#">매니지!!! 게시판</a>
+
       </div>
     </div>
   </body>

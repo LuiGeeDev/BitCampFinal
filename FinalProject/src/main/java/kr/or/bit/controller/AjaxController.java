@@ -1,7 +1,10 @@
 package kr.or.bit.controller;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
+
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.MessageDao;
 import kr.or.bit.model.Classroom;
@@ -32,7 +37,6 @@ public class AjaxController {
   
   @PostMapping("/message")
   public Message getMessage(int id) {
-    System.out.println("탓어?");
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
     Message selectone = messageDao.selectOneMessage(id);
     return selectone;
@@ -47,13 +51,11 @@ public class AjaxController {
   }
   
   @PostMapping("/message/reply")
-  public String replyMessage(Message message) {
+  public void replyMessage(Message message, HttpServletResponse response) throws IOException {
     String username = Helper.userName();
     message.setSender_username(username);
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
     messageDao.insertMessage(message);
-    return "redirect:/message";
-    
   }
   
   
