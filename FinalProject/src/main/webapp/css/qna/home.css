@@ -20,8 +20,8 @@ th, td {
   padding: 10px;
 }
 .tr1 {
-  background-color: #dae8f2;
-  color: white;
+  color: black;
+  margin: 20px;
 }
 .qsel {
   height: 30px;
@@ -31,6 +31,7 @@ th, td {
 .qspan{
   text-align: right;
   float: right;
+  margin: 10px;
 }
 .seaimg{
   width: 3.5%;
@@ -40,4 +41,38 @@ th, td {
 }
 .td1{
   border-bottom: 1.5px solid lightgray;
+}
+.td2{
+  width: 5%;
+  font-size: 70%;
+}
+.td3{
+  width: 15%;
+}
+.td4{
+  width: 70%;
+}
+.tag-name span {
+  border-radius: 5px;
+  color: white;
+  padding: 3px;
+  font-size: 70%;
+}
+#c1 {
+  background-color: green;
+}
+#c2 {
+  background-color: #9c88ff; /* 보라색 */
+}
+#c3 {
+  background-color: #487eb0; /* 하늘색 */
+}
+#c4 {
+  background-color: #fbc531; /* 노란색 */
+}
+#c5 {
+  background-color: #e84118; /* 빨간색 */
+}
+#c6 {
+  background-color: #353b48 /* 어두운파란 */
 }

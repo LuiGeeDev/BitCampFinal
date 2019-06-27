@@ -14,6 +14,7 @@ import kr.or.bit.dao.MessageDao;
 import kr.or.bit.model.Classroom;
 import kr.or.bit.model.Message;
 import kr.or.bit.service.NewsService;
+import kr.or.bit.utils.Helper;
 
 @RestController
 @RequestMapping(path = "/ajax")
@@ -43,11 +44,16 @@ public class AjaxController {
     
   }
   
-/*  @PostMapping("message/reply")
-  public void replyMessage() {
-    MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
+  @PostMapping("/message/reply")
+  public String replyMessage(Message message) {
+    String username = Helper.userName();
+    message.setSender_username(username);
+    MessageDao messagedao = sqlSession.getMapper(MessageDao.class);
+    messagedao.insertMessage(message);
+    return "redirect:/message";
     
-  }*/
+  }
+  
 
 	@PostMapping("/classroom")
 	public List<Classroom> getClassroom(Date start_date, @RequestParam(defaultValue = "1970-01-01") Date end_date) {

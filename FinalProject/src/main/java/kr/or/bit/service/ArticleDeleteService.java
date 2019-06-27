@@ -5,10 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.bit.dao.ArticleDao;
-import kr.or.bit.dao.GeneralDao;
-import kr.or.bit.dao.HomeworkDao;
-import kr.or.bit.dao.QnaDao;
-import kr.or.bit.dao.TroubleShootingDao;
 
 @Service
 public class ArticleDeleteService implements ArticleOri {
