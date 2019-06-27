@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	ON c.id = v.comment_id
 	WHERE article_id=#{article_id};
   </select> 
-  <select id="selectComment" resultType="kr.or.bit.medel.Comment">
+  <select id="selectComment" resultType="kr.or.bit.model.Comment">
    SELECT c.id as id, content, time, updated_time, article_id, username 
 	FROM comment as c
 	LEFT JOIN vote as v

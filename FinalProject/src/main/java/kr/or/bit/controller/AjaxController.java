@@ -50,8 +50,17 @@ public class AjaxController {
   public String replyMessage(Message message) {
     String username = Helper.userName();
     message.setSender_username(username);
-    MessageDao messagedao = sqlSession.getMapper(MessageDao.class);
-    messagedao.insertMessage(message);
+    MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
+    messageDao.insertMessage(message);
+    return "redirect:/message";
+    
+  }
+  
+  
+  @PostMapping("message/update") 
+   public String updateMessage(int id) {
+    MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
+    messageDao.updateMessageChecked(id);
     return "redirect:/message";
     
   }

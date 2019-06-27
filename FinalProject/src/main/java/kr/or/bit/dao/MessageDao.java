@@ -30,4 +30,6 @@ public interface MessageDao {
   
   Message selectOneMessage(int id);
   
+  void updateMessageChecked(int id);
+  
 }

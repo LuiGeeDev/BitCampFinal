@@ -172,17 +172,11 @@
             $("#reply").click(function() {
               $(".modal").modal("show");
               $("#message-text").val("");
-              //console.log("$this : " + $(this));
-              //const receiver_id = $(this).children(".hidden").text(); */
-              //console.log("receiver_id : " +receiver_id);
-              //$(".message-form2").append("<input type='hidden' value='" + receiver_id + "' name='receiver' class='receiver'>");
             });
           }
           $("#modal-submitbtn").click(function() {
             const messageText = $("#message-text").val();
-            console.log("messageText : " + messageText);
             const messageSenderId = $("#message-sender-id").text();
-            console.log("messageSenderId : " + messageSenderId);
             $.ajax({
               url: "/ajax/message/reply",
               type: "POST",
@@ -198,9 +192,7 @@
               }
             });
           });
-          /*  $("#refresh").click(function() {
-                 getMessage(messageId);
-               }); */
+
           $("#delete").click(function(event) {
             event.stopPropagation();
             const answer = confirm("쪽지를 삭제하시겠습니까?");
@@ -219,17 +211,26 @@
           });
         });
       }
-      /* $(function() {
-        if (fromMain) {
-          getMessage(messageId);
-        }
-      }); */
+
       $(".message2").click(function() {
         const messageId = $(this)
           .children(".hidden")
           .text();
         getMessage(messageId);
         console.log("messageId : " + messageId);
+        
+        $.ajax({
+          url: "/ajax/message/update",
+          type: "POST",
+          data: {
+            id: messageId
+          },
+          success: function(data) {
+            
+          }
+        });
+        
+        
       });
       $(".close-btn").click(function() {
         $(".receiver").remove();

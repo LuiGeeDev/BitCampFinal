@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.bit.dao.CommentDao;
-import kr.or.bit.dao.CourseDao;
 import kr.or.bit.model.Comment;
 
 @Service
