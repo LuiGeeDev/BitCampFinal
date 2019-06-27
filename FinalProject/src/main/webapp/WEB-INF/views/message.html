@@ -19,12 +19,14 @@
           <div th:each="all : ${selectall}">
             <div class="message2">
               <span class="hidden" th:text="${all.id}"></span>
-              
+
               <div class="message-sender2">
                 <span class="hidden" th:text="${all.receiver_username}"></span>
                 <span class="hidden" th:text="${all.sender_username}"></span>
                 <!-- <span class="readbtn"><i class="fas fa-circle"></i>&nbsp;</span> -->
-                <span class="unread" th:unless="${all.checked}" ><i class="fas fa-exclamation fa-lg"></i>&nbsp;</span>
+                <span class="unread" th:unless="${all.checked}"
+                  ><i class="fas fa-exclamation fa-lg"></i>&nbsp;</span
+                >
                 <span class="hidden removenoti" th:text="${all.checked}"></span>
                 <span class="sender2" th:text="${all.senderName}"></span>
                 <span>(</span>
@@ -92,13 +94,6 @@
       >
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
-            <div th:each="all : ${selectall}">
-              <span
-                class="hidden"
-                th:text="${all.sender_username}"
-                id="senderId"
-              ></span>
-            </div>
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">쪽지 보내기</h5>
               <button
@@ -111,14 +106,14 @@
               </button>
             </div>
             <div class="modal-body">
-              <form>
+            
                 <div class="form-group">
                   <label for="message-text" class="col-form-label"
                     >메시지 입력:</label
                   >
                   <textarea class="form-control" id="message-text"></textarea>
                 </div>
-              </form>
+              
             </div>
             <div class="modal-footer">
               <button
@@ -145,8 +140,22 @@
 
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script>
+    $("#modal-submitbtn").click(function() {
+      const messageText = $("#message-text").val();
+      const messageSenderId = $("#message-sender-id").text();
+      $.ajax({
+        url: "/ajax/message/reply",
+        type: "POST",
+        data: {
+          content: messageText,
+          receiver_username: messageSenderId
+        }
+      }).done(function() {
+        $(".modal").modal("hide");
+      });
+    });
+    
       function getMessage(messageId) {
-        
         $.ajax({
           url: "/ajax/message",
           type: "POST",
@@ -154,8 +163,6 @@
             id: messageId
           },
           success: function(data) {
-            
-
             $(
               ".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id"
             ).empty();
@@ -179,25 +186,8 @@
               $("#message-text").val("");
             });
           }
-          $("#modal-submitbtn").click(function() {
-            const messageText = $("#message-text").val();
-            const messageSenderId = $("#message-sender-id").text();
-            $.ajax({
-              url: "/ajax/message/reply",
-              type: "POST",
-              data: {
-                content: messageText,
-                receiver_username: messageSenderId
-              },
-              success: function(data) {
-                console.log("답장했을떄의data : " + data);
-                if (data != null) {
-                  $(".modal").modal("hide");
-                }
-              }
-            });
-          });
-
+          
+          $("#delete").unbind("click");
           $("#delete").click(function(event) {
             event.stopPropagation();
             const answer = confirm("쪽지를 삭제하시겠습니까?");
@@ -219,20 +209,21 @@
 
       $(".message2").click(function(event) {
         const removeIcon = $(event.currentTarget).children(".message-sender2");
-        const removeNotification = removeIcon.children().siblings(".removenoti");
-        
+        const removeNotification = removeIcon
+          .children()
+          .siblings(".removenoti");
+
         const count = $(".message-count");
-        if(removeNotification.text() == 0) {
-        count.text(count.text() - 1);
-        removeNotification.text(1);
-       
+        if (removeNotification.text() == 0) {
+          count.text(count.text() - 1);
+          removeNotification.text(1);
         }
         const messageId = $(this)
           .children(".hidden")
           .text();
         getMessage(messageId);
         console.log("messageId : " + messageId);
-        
+
         $.ajax({
           url: "/ajax/message/update",
           type: "POST",
@@ -240,21 +231,18 @@
             id: messageId
           },
           success: function(data) {
-            
-            removeIcon.children().siblings(".unread").remove();
+            removeIcon
+              .children()
+              .siblings(".unread")
+              .remove();
             console.log("아오29");
           }
         });
-        
-        
       });
       $(".close-btn").click(function() {
         $(".receiver").remove();
         $(".modal").css("display", "none");
       });
-      
-    
-      
     </script>
   </body>
 </html>
