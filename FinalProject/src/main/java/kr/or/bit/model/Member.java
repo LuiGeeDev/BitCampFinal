@@ -10,10 +10,19 @@ public class Member {
   private int enabled;
   private int course_id;
   private String profile_photo;
-  
+  private int group_id;
+
   private String role;
   private List<String> scrap;
-  
+
+  public int getGroup_id() {
+    return group_id;
+  }
+
+  public void setGroup_id(int group_id) {
+    this.group_id = group_id;
+  }
+
   public String getUsername() {
     return username;
   }

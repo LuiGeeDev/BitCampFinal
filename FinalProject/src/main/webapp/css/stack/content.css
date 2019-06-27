@@ -123,7 +123,16 @@ padding: 5px;
   margin-top: 0px; 
   margin-bottom: 0px; 
   height: 110px; 
-  width: 86%;
+  width: 100%;
 }
-
+.btnalign{
+ text-align: right;
+ float: right;
+}
+.ctd1{
+  width: 87%;
+}
+.ctd2{
+  width: 13%;
+}
 
