@@ -17,6 +17,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	FROM ARTICLE 
 	WHERE BOARD_ID=#{board_id}
   </select> 
+  <select id="selectOneArticle" resultType="kr.or.bit.model.Article">     
+	SELECT id, title, content, time, view_count, original_id, level, username, board_id
+	FROM ARTICLE 
+	WHERE ID=#{id}
+  </select> 
   <insert id="insertArticle">
  	INSERT INTO article(original_id, time, updated_time, title, content, username, board_id)
  	VALUES (#{id}, now(), now(), #{title}, #{content}, #{username}, #{board_id})

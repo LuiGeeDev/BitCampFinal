@@ -24,9 +24,7 @@
                 <span class="hidden" th:text="${all.receiver_username}"></span>
                 <span class="hidden" th:text="${all.sender_username}"></span>
                 <!-- <span class="readbtn"><i class="fas fa-circle"></i>&nbsp;</span> -->
-                <span class="unread" th:unless="${all.checked}"
-                  ><i class="fas fa-exclamation fa-lg"></i>&nbsp;</span
-                >
+                <span class="unread" th:unless="${all.checked}"><span class="iconnew">New</span>&nbsp;</span>
                 <span class="hidden removenoti" th:text="${all.checked}"></span>
                 <span class="sender2" th:text="${all.senderName}"></span>
                 <span>(</span>
@@ -139,7 +137,10 @@
     <!-- main fragment 끝 -->
 
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script>
+  
+    
     $("#modal-submitbtn").click(function() {
       const messageText = $("#message-text").val();
       const messageSenderId = $("#message-sender-id").text();
@@ -189,7 +190,41 @@
           
           $("#delete").unbind("click");
           $("#delete").click(function(event) {
-            event.stopPropagation();
+            
+            Swal.fire({
+              title: '정말 삭제하시겠습니까?',
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#F39B10',
+              cancelButtonColor: '#A6A6A6',
+              confirmButtonText: '네',
+              cancelButtonText: '아니요'
+            }).then((result) => {
+              if (result.value) {
+               
+                $.ajax({
+                  url: "/ajax/message/delete",
+                  type: "POST",
+                  data: {
+                    id: messageId
+                  },
+                  success: function(data) {
+                    Swal.fire({
+                      	title: '삭제되었습니다',
+                      	type: 'success',
+                      	confirmButtonText: '확인',
+                      	confirmButtonColor: '#F39B10'
+                        
+                    }).then(function() {
+                        location.href = "/message";
+                      });
+                    
+                  }
+                });
+                
+              }
+            })
+          /*   event.stopPropagation();
             const answer = confirm("쪽지를 삭제하시겠습니까?");
             if (answer) {
               $.ajax({
@@ -202,7 +237,7 @@
                   location.href = "/message";
                 }
               });
-            }
+            } */
           });
         });
       }

@@ -174,8 +174,32 @@
 	margin-top: 100px;
 }
 
-.fa-exclamation {
+.fa-check {
+	color: green;
+}
+
+.iconnew {
 	color: red;
+	font-family: sans-serif;
+	font-weight: bold;
+	color: red;
+  -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+  animation-name: example;
+  animation-duration: 3s;
+  animation-iteration-count:infinite;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes example {
+  from {color: red;}
+  to {color: yellow;}
+}
+
+/* Standard syntax */
+@keyframes example {
+  from {color: red;}
+  to {color: yellow;}
 }
 
 .fa-paper-plane {
