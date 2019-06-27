@@ -12,29 +12,7 @@
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
       <div th:replace="myclass/nav :: project-nav(chat)"></div>
-      <div class="chat-room">
-        <div class="chat-message">
-          <div class="chat-header">
-            <img src="https://via.placeholder.com/40" alt="프로필 사진" />
-            <div class="chat-sender-info">
-              <span class="chat-sender-name">정성윤</span>
-              <span class="chat-sender-time">오늘 오후 8시 12분</span>
-            </div>
-          </div>
-          <div class="chat-content">ㅇㄱㄹㅇ</div>
-        </div>
-        <div class="chat-message">
-          <div class="chat-header">
-            <img src="https://via.placeholder.com/40" alt="프로필 사진" />
-            <div class="chat-sender-info">
-              <span class="chat-sender-name">정성윤</span>
-              <span class="chat-sender-time">오늘 오후 8시 12분</span>
-            </div>
-          </div>
-          <div class="chat-content">ㅇㄱㄹㅇ</div>
-          <div class="chat-content">ㅂㅂㅂㄱ</div>
-        </div>
-      </div>
+      <div class="chat-room"></div>
       <div class="chat-input">
         <input type="file" name="file" id="file" />
         <label for="file">+</label>
@@ -44,7 +22,7 @@
     <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-database.js"></script>
     <script th:inline="javascript">
-      console.log([[${user}]]);
+      appendDate(new Date(Date.now()));
       // Your web app's Firebase configuration
       const firebaseConfig = {
         apiKey: "AIzaSyABM1lmIsGHcP497EfAVgT51H0ec2YcGGM",
@@ -58,33 +36,100 @@
 
       const database = firebase.database();
 
-      function writeChatMessage(groupId, username, content) {
+      function writeChatMessage(groupId, username, name, content) {
         const chatMessage = {
           username: username,
+          name: name,
           time: Date.now(),
-          content: content
+          content: content,
+          group_id: [[${user.group_id}]]
         };
 
-        database.ref("/chat/groups/" + groupId).push(chatMessage);
-        client.send("/app/chat", {}, chatMessage);
+        database.ref("chat/groups/" + [[${user.group_id}]]).push(chatMessage);
+        client.send("/app/chat", {}, JSON.stringify(chatMessage));
       }
 
-      connectStomp(function() {
-        client.subscribe("/topic/chat/group/1", function(data) {
-          console.log(data);
-        });
+      function getRecentMessages(group_id) {
+        return database.ref("chat/groups/" + group_id)
+               .limitToLast(2)
+               .once('value')
+               .then(function(message) {
+                 return message.val();
+               })
+      }
 
-        $("#chat-message").keydown(function(event) {
-          if (event.keyCode === 13) {
-            const groupId = [[${user.group_id}]];
-            const username = [[${user.username}]];
-            console.log(groupId, username);
-            const content = $('#chat-message').val();
-            // writeChatMessage(groupId, username, content);
-            $('#chat-message').val('');
+      function renderMessages(data) {
+        const message = JSON.parse(data.body);
+        getRecentMessages([[${user.group_id}]]).then(function(data) {
+          if (data) {
+            const previousMessage = data[Object.keys(data)[0]];
+            const currentMessage = data[Object.keys(data)[1]];
+            const previousTime = new Date(previousMessage.time);
+            const now = new Date(Date.now());
+
+            if (previousTime.getDate() !== now.getDate()) {
+              appendDate(now);
+            }
+
+            if (previousTime.getMinutes() === now.getMinutes()
+                && previousMessage.username === currentMessage.username) {
+              stickMessage(message);
+            } else {
+              makeNewMessage(message);
+            }
+          } else {
+            makeNewMessage(message);
           }
         });
+      }
+
+      function appendDate(now) {
+        const date = `${now.getFullYear()}년 ${now.getMonth() + 1}월 ${now.getDate()}일`;
+        const dateLine = $(`<div class="date-line"><span class="date">${date}</span></div>`);
+        $(".chat-room").append(dateLine);
+      }
+
+      function stickMessage(message) {
+        $(".chat-message:last-child").append($(`<div class="chat-content">${message.content}</div>`));
+      }
+
+      function makeNewMessage(message) {
+        const chatMessage = $(`<div class="chat-message">`);
+        const chatHeader = $(`<div class="chat-header">`);
+        const chatSenderInfo = $(`<div class="chat-sender-info">`);
+        chatSenderInfo.append($(`<span class="chat-sender-name">${message.name}</span>`));
+        chatSenderInfo.append($(`<span class="chat-sender-time"> ${formatTime(message.time)}</span>`));
+        chatHeader.append($(`<img src="https://via.placeholder.com/40" alt="프로필 사진" />`));
+        chatHeader.append(chatSenderInfo);
+        chatMessage.append(chatHeader).append(`<div class="chat-content">${message.content}</div>`);
+        $(".chat-room").append(chatMessage);
+      }
+
+      const interval = setInterval(function() {
+        client.subscribe("/topic/chat/groups/" + [[${user.group_id}]], renderMessages);
+
+        if (client.connected) {
+          clearInterval(interval);
+        }
+      }, 200);
+
+      $("#chat-message").keydown(function(event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          const groupId = [[${user.group_id}]];
+          const username = [[${user.username}]];
+          const name = [[${user.name}]];
+          const content = $('#chat-message').val();
+          writeChatMessage(groupId, username, name, content);
+          $('#chat-message').val('');
+        }
       });
+
+      function formatTime(ms) {
+        const time = new Date(ms);
+        const timeString = `${time.getHours() <= 12 ? time.getHours() : time.getHours() - 12}:${time.getMinutes() < 10 ? "0" + time.getMinutes() : time.getMinutes()} ${time.getHours() <= 11 ? 'AM' : 'PM'}`;
+        return timeString;
+      }
     </script>
   </body>
 </html>
