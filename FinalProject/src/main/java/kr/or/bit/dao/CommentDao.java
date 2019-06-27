@@ -2,6 +2,8 @@ package kr.or.bit.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Member;
@@ -19,7 +21,7 @@ public interface CommentDao {
   
   List<Comment> selectAllComment(int article_id);
   
-  Comment selectComment(int article_id, int id);
+  Comment selectComment(@Param("article_id") int article_id, @Param("id") int id);
   
   void insertComment(Comment comment); // ArticleDTO의 id[글번호]
 
@@ -27,7 +29,9 @@ public interface CommentDao {
 
   void deleteComment(int id);
 
-  void insertVote(String username, int id);
+  void insertVote(@Param("username") String username, @Param("id") int id);
 
-  void deleteVote(String username, int id);
+  void deleteVote(@Param("username") String username, @Param("id") int id);
+  
+  void countVote(int id);
 }

@@ -28,14 +28,33 @@ public class CommentService {
   }
   
   public void insertComment(Comment comment) {
-    
+    CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
+    commentdao.insertComment(comment);
   }
   
   public void updateComment(Comment comment) {
-    
+    CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
+    commentdao.updateComment(comment);
   }
   
   public void deleteComment(Comment comment) {
-    
+    CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
+    int id = comment.getId();
+    commentdao.deleteComment(id);
+  }
+  
+  public void insertVote(String username, int id) {
+    CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
+    commentdao.insertVote(username, id);
+  }
+  
+  public void deleteVote(String username, int id) {
+    CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
+    commentdao.deleteVote(username, id);
+  }
+  
+  public void countVote(int id) {
+    CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
+    commentdao.countVote(id);
   }
 }

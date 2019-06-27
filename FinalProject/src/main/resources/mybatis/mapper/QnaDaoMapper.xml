@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+  void insertQna(int articleid);
+  
+  void updateQnaByAnswered(int answered);
+  
+  void updateQnaByTeacherAnswered(int teacheranswered);
+  
+  void selectQnaByArticleId(int articleid);
+
+
+ -->
+
+<!-- 작업자: 권순조 -->
+
+<mapper namespace="kr.or.bit.dao.QnaDao">
+	
+  <insert id="insertQna">
+  	insert into QNA(article_id)
+	values (#{articleid})
+  </insert>
+  
+  <update id="updateQnaByAnswered">
+  	update from QNA
+  	set 
+  </update>
+	
+</mapper>
