@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- /*
 *
-* @date: 2019. 06. 21.
+* @date: 2019. 06. 28.
 *
 * @author: 권예지
 *
@@ -13,8 +13,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.bit.dao.ArticleDao">
   <select id="selectAllArticleByBoardId" resultType="kr.or.bit.model.Article">     
-	SELECT id, title, content, time, view_count, original_id, level, username, board_id
-	FROM ARTICLE 
+	SELECT id, title, content, time, view_count, original_id, level, username, board_id,
+	(SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum,
+	(SELECT count(*) FROM comment WHERE article_id=a.id) as commentnum
+	FROM ARTICLE as a
 	WHERE BOARD_ID=#{board_id}
   </select> 
   <select id="selectOneArticle" resultType="kr.or.bit.model.Article">     
@@ -46,7 +48,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	WHERE id=#{id} and username=#{username}
   </delete>
   <select id="countVote" resultType="kr.or.bit.model.ArticleVote">
-  
+  	SELECT count(username)
+  	FROM article_vote
+  	WHERE article_id=#{id}
   </select>
   <select id="getMostRecentArticleId" resultType="int">
     SELECT MAX(id)
