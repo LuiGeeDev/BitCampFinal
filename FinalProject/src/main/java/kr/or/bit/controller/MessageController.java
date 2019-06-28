@@ -1,5 +1,6 @@
 package kr.or.bit.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -20,14 +21,16 @@ public class MessageController {
   private SqlSession SqlSession;
   
   @GetMapping("message")
-  public String MessageIndex(Model model, Message message) {
+  public String messageIndex(Model model) {
     /*String receiver_username = "teacher";*/
     String username = Helper.userName();
     MessageDao messageDao = SqlSession.getMapper(MessageDao.class);
-    MessageDao messageDao2 = SqlSession.getMapper(MessageDao.class);
     List<Message> selectall = messageDao.selectAllMessage(username);
+    int countmessage = messageDao.selectCountMessage(username);
+    for (Message message: selectall) {
+      message.setTimeDate(new Date(message.getTime().getTime()));
+    }
     
-    int countmessage = messageDao2.selectCountMessage(username);
     model.addAttribute("selectall", selectall);
     model.addAttribute("countmessage", countmessage);
     return "message";

@@ -2,6 +2,7 @@ package kr.or.bit.model;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Message {
   private int id;
@@ -10,11 +11,20 @@ public class Message {
   private int checked;
   private String sender_username;
   private String receiver_username;
+  private Date timeDate;
 
   private LocalDateTime timeLocal;
   
   private String senderName;
   
+  
+  
+  public Date getTimeDate() {
+    return timeDate;
+  }
+  public void setTimeDate(Date timeDate) {
+    this.timeDate = timeDate;
+  }
   public int getId() {
     return id;
   }
