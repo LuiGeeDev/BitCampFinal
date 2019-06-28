@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="kr.or.bit.dao.CommentDao">
 	<select id="selectAllComment"
 		resultType="kr.or.bit.model.Comment">
-		SELECT id, content, time, updated_time, article_id, username, comment_id
+		SELECT id, content, time, updated_time, article_id, username
 		FROM comment
 		WHERE article_id=#{article_id}
 	</select>
