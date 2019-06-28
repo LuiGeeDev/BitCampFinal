@@ -5,7 +5,7 @@ import kr.or.bit.model.ArticleOption;
 
 public interface QnaDao extends OptionDao {
   
-  void insertQna(ArticleOption qna);
+  void insertQna(int id);
   
   void updateQnaByAnswered();
   
