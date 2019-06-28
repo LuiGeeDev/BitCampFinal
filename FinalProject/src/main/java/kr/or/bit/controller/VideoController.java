@@ -5,6 +5,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import kr.or.bit.model.Article;
+import kr.or.bit.model.ArticleOption;
+import kr.or.bit.service.ArticleInsertService;
 
 @Controller
 @RequestMapping("/video")
@@ -30,11 +35,15 @@ public class VideoController {
   }
   
   @PostMapping("/write")
-  public String writeVideoArticle() {
+  public String writeVideoArticle(Article article, ArticleOption option) {
     /*
      * 글 쓰기 데이터를 받아서
      * 해당 글의 페이지로 넘겨준다.
      */
+    ArticleInsertService articleinsert = new ArticleInsertService();
+    articleinsert.writeArticle(article, option);
+    
+    
     return "redirect:/video/detail";
   }
 }

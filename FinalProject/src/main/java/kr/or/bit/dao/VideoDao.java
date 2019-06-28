@@ -9,5 +9,5 @@ public interface VideoDao {
   
   void updateVideo(ArticleOption video);
   
-  Video selectVideoByArticleId();
+  Video selectVideoByArticleId(int id);
 }
