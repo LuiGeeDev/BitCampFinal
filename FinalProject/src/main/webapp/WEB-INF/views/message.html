@@ -14,7 +14,12 @@
     <div class="main" th:fragment="main">
       <div class="row">
         <div class="message-box2">
-          <h4 class="message-title2">쪽지함</h4>
+          <h4 class="message-title2">
+          <i class="far fa-envelope fa-2x"></i>
+          <span class="text-move">받은쪽지함</span>
+          <span class="message-title-count">
+          <span class="countM" th:text="${countmessage}"></span>개의 쪽지가 왔습니다 </span>
+          </h4>
           <!-- 쪽지 있는 만큼 담기 -->
           <div th:each="all : ${selectall}">
             <div class="message2">
@@ -173,7 +178,7 @@
               .append(`(${data.sender_username})`);
             $(".message-sender-time").append(`${data.time}`);
             $(".message-sender-content").append(`${data.content}`);
-            $(".sender-message").append(`<h6>받은쪽지</h6>`);
+            $(".sender-message").append(`<h6 class="text-font">받은쪽지</h6>`);
             $(".fa-paper-plane").css("display", "block");
             $(".fa-trash").css("display", "block");
           },
@@ -249,10 +254,14 @@
           .siblings(".removenoti");
 
         const count = $(".message-count");
+        const count2 = $(".countM");
         if (removeNotification.text() == 0) {
           count.text(count.text() - 1);
+          count2.text(count2.text() - 1);
           removeNotification.text(1);
         }
+        
+        
         const messageId = $(this)
           .children(".hidden")
           .text();
