@@ -26,6 +26,8 @@ public class Article {
   private List<Comment> commentlist;
   private ArticleOption option;
   private HashMap<String,Integer> vote;
+  private int votenum;
+  private int commentnum;
   
   public int getId() {
     return id;
