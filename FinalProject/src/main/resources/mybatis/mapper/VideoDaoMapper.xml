@@ -5,19 +5,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="kr.or.bit.dao.VideoDao">
   <insert id="insertVideo">
-  	insert into video(video_id, article_id)
-	  values (#{video_id}, #{article_id})
+    insert into video(video_id, article_id)
+    values (#{video_id}, #{article_id})
   </insert>
   <update id="updateVideo">
     update table video
-    set video= #{video_id}
+    set video_id = #{video_id}
     where article_id = #{article_id}
   </update>
   <select id="selectVideoByArticleId"
     resultType="kr.or.bit.model.Video">
-    select id, video_id article_id
+    select id, video_id, article_id
     from video
-    where article_id=#{id};
+    where article_id=#{article_id}
   </select>
 </mapper>
  
