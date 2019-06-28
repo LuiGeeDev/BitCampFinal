@@ -47,6 +47,10 @@
 
         database.ref("chat/groups/" + [[${user.group_id}]]).push(chatMessage);
         client.send("/app/chat", {}, JSON.stringify(chatMessage));
+        
+        if (!client.connected) {
+          console.log("접속 끊김");
+        }
       }
 
       function getRecentMessages(group_id) {
@@ -149,7 +153,7 @@
         return timeString;
       }
 
-      ///////////////////////////////////////////////
+      // 파일 업로드
 
       $("#file").change(function() {
         const formData = new FormData();
