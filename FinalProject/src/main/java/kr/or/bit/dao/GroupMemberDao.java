@@ -1,9 +1,6 @@
 package kr.or.bit.dao;
 
-import java.sql.Date;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
 
 import kr.or.bit.model.Member;
 
@@ -26,4 +23,6 @@ public interface GroupMemberDao {
   void deleteGroupMember(String username);
 
   List<Member> selectAllGroupMemberByGroup();
+  
+  int getGroupIdByUsername(String id);
 }

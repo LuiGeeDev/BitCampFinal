@@ -12,7 +12,7 @@ import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
 
 @Service
-class ArticleService {
+public class ArticleService {
   @Autowired
   private SqlSession sqlSession;
   
