@@ -18,53 +18,74 @@ table {
 }
 
 th, td {
-  color: #2d3436;
   border: 1px solid white;
-  padding: 10px;
 }
 
-.tdtitle {
-  color: #0984e3;
-  font-size: 120%;
-  font-weight: bold;
-  cursor: pointer;
+.tr1 {
+  color: black;
+}
+.tr2{
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 20px;
+}
+.tr3{
+  padding-top: 20px;
+}
+}
 }
 
-.tdtitle:hover {
-  color: #20cdff;
+.qsel {
+  height: 30px;
+  border: 1.5px solid lightgray;
+  float: left;
 }
 
-.tdcontent {
-  cursor: pointer;
+.qspan {
+  text-align: right;
+  float: right;
+  margin: 10px;
+  padding-bottom: 10px;
 }
 
-.tdst {
-  font-size: 130%;
-  font-weight: bold;
+.seaimg {
+  width: 3.5%;
+  height: auto;
+  margin-left: 1%;
+  text-align: right;
 }
 
 .td1 {
-  text-align: center;
-  width: 5%;
-  color: #535c68;
+  border-bottom: 1.5px solid lightgray;
 }
 
 .td2 {
-  font-size: 80%;
+  width: 5%;
+  font-size: 70%;
 }
 
 .td3 {
-  width: 50%
+  width: 15%;
 }
 
 .td4 {
-  width: 30%
+  width: 70%;
+}
+
+.td5 {
+  width: 55%;
+  color: #0b228e;
+  cursor: pointer;
+}
+
+.td5:hover {
+  color: #20cdff;
 }
 
 .tag-name span {
   border-radius: 5px;
   color: white;
-  padding: 5px;
+  padding: 3px;
+  font-size: 70%;
 }
 
 #c1 {
@@ -93,20 +114,9 @@ th, td {
 #c7 {
   background-color: pink;
 }
-
-.seaimg {
-  width: 3.5%;
-  height: auto;
-  margin-left: 1%;
-}
-
-.seath {
-  float: right;
-  text-align: right;
-}
 .btnalign{
  text-align: right;
 }
 .btnpa{
-  padding: 10px;
+  padding: 20px;
 }
