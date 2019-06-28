@@ -32,7 +32,7 @@
                 <span class="hidden" th:text="${all.receiver_username}"></span>
                 <span class="hidden" th:text="${all.sender_username}"></span>
                 <!-- <span class="readbtn"><i class="fas fa-circle"></i>&nbsp;</span> -->
-                <span class="unread" th:unless="${all.checked}"><span class="iconnew">New</span>&nbsp;</span>
+                <span class="unread" th:unless="${all.checked}"><span class="iconnew"></span>&nbsp;</span>
                 <span class="hidden removenoti" th:text="${all.checked}"></span>
                 <span class="sender2" th:text="${all.senderName}"></span>
                 <span>(</span>
@@ -41,7 +41,11 @@
                   th:text="${all.sender_username}"
                 ></span>
                 <span>)</span>
-                <span class="time2" th:text="${all.time}"></span>
+                <!-- <span class="time2" th:text="${all.time}"></span> -->
+                <!-- <span class="time2" th:text="${#dates.format(${all.time}, 'dd/MMM/yyyy HH:mm')}"></span> -->
+                <span class="time2" th:text="${#dates.format(all.timeDate, 'yyyy년 MMM dd일')}"></span>
+                <!--"${#dates.format(all.timeDate, 'yyyy년 MMM dd일 HH:mm')}" 시간과 분까지 나타내려면 이렇게 써야함  -->
+                
               </div>
               <p class="message-preview2" th:text="${all.content}"></p>
             </div>
@@ -129,7 +133,14 @@
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script>
-  	
+    var str = "New";
+    var c = 0;
+
+    setInterval(function(){
+          if(c < 3)
+             $('.iconnew').append(str[c]);
+          c++;
+    }, 300);
     
     
     
@@ -165,12 +176,19 @@
               .append(`${data.senderName}`)
               .append(`(${data.sender_username})`);
             $(".message-sender-time").append(`${data.time}`);
-            console.log($(".message-sender-time").text());
             const time = Number($(".message-sender-time").text());
             const date = new Date(time);
-            console.log(`${date.getFullYear()}년 ${date.getMonth()}월 ${date.getDate()}일 ${date.getHours()}:${date.getMinutes()}`);
-            const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일 ${date.getHours()}:${date.getMinutes()}`;
-            console.log(timedate);
+            let minutes = date.getMinutes();
+            
+            minutes = (minutes < 10) ? "0" + minutes : minutes;
+            
+            let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
+            hours = hours < 10 ? "0" +  hours : hours;
+            
+
+            
+            /* `${time.getHours() <= 12 ? time.getHours() : time.getHours() - 12}:${time.getMinutes() < 10 ? "0" + time.getMinutes() : time.getMinutes()} ${time.getHours() <= 11 ? 'AM' : 'PM'}`; */
+            const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDay()}일 ` + hours +`:` + minutes;
             $(".message-realtime").append(timedate);
             
             $(".message-sender-content").append(`${data.content}`);
