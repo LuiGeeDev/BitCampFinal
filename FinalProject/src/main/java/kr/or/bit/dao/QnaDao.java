@@ -1,14 +1,15 @@
 package kr.or.bit.dao;
 
 import kr.or.bit.model.Article;
+import kr.or.bit.model.ArticleOption;
 
 public interface QnaDao extends OptionDao {
   
-  void insertQna(Article article);
+  void insertQna(int id);
   
-  void updateQnaByAnswered(String qna, int id);
+  void updateQnaByAnswered();
   
-  void updateQnaByTeacherAnswered(String qnat, int id);
+  void updateQnaByTeacherAnswered();
   
-  void selectQnaByArticleId(Article article);
+  void selectQnaByArticleId(int id);
 }

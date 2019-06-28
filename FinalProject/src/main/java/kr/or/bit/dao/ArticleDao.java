@@ -2,6 +2,8 @@ package kr.or.bit.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.or.bit.model.Article;
 
 /*
@@ -23,5 +25,12 @@ public interface ArticleDao {
   List<Article> selectAllArticleByBoardId(int board_id);
   
   Article selectOneArticle(int id);
-
+  
+  void insertVote(@Param("id") int id, @Param("username") String username);
+  
+  void deleteVote(@Param("id") int id, @Param("username") String username);
+  
+  void countVote(int id);
+  
+  int getMostRecentArticleId();
 }

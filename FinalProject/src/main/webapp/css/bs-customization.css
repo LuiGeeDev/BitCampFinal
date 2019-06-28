@@ -21,6 +21,11 @@
   border: #f39c20;
 }
 
+.btn-primary:disabled {
+  background-color: #d99029;
+  border: #d99029;
+}
+
 .btn-outline-primary {
   border: 1px solid #f39c20 !important;
   color: #e89013;

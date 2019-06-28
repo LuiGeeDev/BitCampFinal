@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   void updateQnaByTeacherAnswered(String qnat, int id);
   
-  void selectQnaByArticleId(Article article);
+  void selectQnaByArticleId(int id);
 
 
  -->
@@ -21,21 +21,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
   <insert id="insertQna">
   	insert into QNA(article_id)
-	values (#{article.id})
+	values (#{id})
   </insert>
   
   <update id="updateQnaByAnswered">
-  	{call CHANGE("QNA", ${id})}
+  	{call CHANGE("QNA", #{id})}
   </update>
   
   <update id="updateQnaByTeacherAnswered">
-	{call CHANGE("QNAT", ${id})}
+	{call CHANGE("QNAT", #{id})}
   </update>
   
   <select id="selectQnaByArticleId">
   	select id, answered, teacher_answered, article_id 
-  	from qna 
-  	where id=${article.id};
+  	from QNA 
+  	where id=#{id};
   </select>
   
 </mapper>

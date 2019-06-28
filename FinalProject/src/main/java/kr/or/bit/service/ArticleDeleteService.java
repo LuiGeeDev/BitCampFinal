@@ -28,6 +28,9 @@ public class ArticleDeleteService implements ArticleOri {
 
     } else if (bo.equals("general")) {
       articledao.deleteArticle(artiId);
+      
+    } else if (bo.equals("vidio")){
+      articledao.deleteArticle(artiId);
     }
   }
 }
