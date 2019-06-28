@@ -15,49 +15,48 @@
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
-      <form action="" method="POST">
+      <form method="POST">
         <div id="write-form-wrapper">
-          <span id="write-input-head">
-            <span id="write-text">인터넷강의 게시판</span>
-          </span>
-          <span id="input-title-wrapper">
-            <input type="text" id="input-title"/>
-          </span>
-          <div id="input-content">
-            <textarea name="editordata" id="summernote"></textarea>
+          <input type="text" id="input-title" placeholder="제목"/>
+          <div class="url">
+            <input type="text" id="input-url" placeholder="Youtube 주소 (https://youtu.be로 시작)"/>
+            <i class="far fa-question-circle info" data-toggle="tooltip" data-placement="bottom" title data-original-title="공유 - 주소 복사"></i>
           </div>
-          <span id="write-input-url">
-            <span id="write-url">
-              Youtube 동영상 URL : www.youtu.be/
-              <input type="text" id="input-url"/>
-            </span>
-          </span>
-          <div id="submit-button-wrapper">
-            <button
-              type="submit"
-              class="btn btn-warning btn-sm"
-              id="submit-button"
-            >
-              등록
-            </button>
-          </div>
+          <textarea name="editordata" id="summernote"></textarea>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            id="submit-button"
+          >
+            올리기
+          </button>
         </div>
       </form>
     </div>
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script>
       console.log("Hello, world!");
+      
       $(document).ready(function() {
+        const title = $("#input-title");
+        const url = $("#input-url");
+        const submitBtn = $("#submit-button");
+        
+        $('[data-toggle="tooltip"]').tooltip();
+        
         $("#summernote").summernote({
           height: 485,
           disableResizeEditor: true
         });
-        if ($("#input-title").val() == "") {
-          console.log("아무것도없쪼?2");
-          $("#submit-button").attr("disabled", true);
+        
+        if (title.val() == "") {
+          submitBtn.attr("disabled", true);
         }
-        $("#input-title").keyup(function() {
-          if ($("#input-title").val() == "") {
+        
+        url.keyup(function() {
+          if (title.val() == ""
+              || url.val() == ""
+              || !url.val().startsWith("https://youtu.be/")) {
             console.log("아무것도없쪼?");
             $("#submit-button").attr("disabled", true);
           } else {
