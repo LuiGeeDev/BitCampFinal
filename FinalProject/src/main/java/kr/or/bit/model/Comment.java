@@ -2,6 +2,7 @@ package kr.or.bit.model;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 public class Comment {
   private int id;
@@ -13,6 +14,7 @@ public class Comment {
   
   private LocalDateTime timeLocal;
   private LocalDateTime updatedTimeLocal;
+  private HashMap<String,Integer> vote;
 
   public int getId() {
     return id;

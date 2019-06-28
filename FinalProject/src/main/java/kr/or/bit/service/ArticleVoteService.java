@@ -10,5 +10,6 @@ public class ArticleVoteService {
   @Autowired
   private SqlSession sqlSession;
   
+  
 
 }

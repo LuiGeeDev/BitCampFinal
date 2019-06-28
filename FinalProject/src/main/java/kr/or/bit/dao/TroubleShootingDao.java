@@ -8,7 +8,5 @@ public interface TroubleShootingDao extends OptionDao {
   
   void updateTroubleShootingByIssueClosed(int issueclosed);
   
-  void deleteTroubleShooting(int id);
-  
   void selectTroubleShootingByArticleId(int articleid);
 }

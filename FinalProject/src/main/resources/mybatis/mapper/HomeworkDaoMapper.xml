@@ -4,32 +4,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 
-  void insertHomework(ArticleOption homework);
   
-  void updateHomework(String filename);
+  void insertTroubleShooting(ArticleOption troubleshooting);
   
-  Homework selectAllHomeworkByArticleId(int articleid);
+  void updateTroubleShootingByIssueClosed(int issueclosed);
+  
+  void selectTroubleShootingByArticleId(int articleid);
+
+
  -->
 
 <!-- 작업자: 권순조 -->
 
-<mapper namespace="kr.or.bit.dao.HomeworkDao">
+<mapper namespace="kr.or.bit.dao.QnaDao">
 	
-  <insert id="insertHomework">
-  	insert into homework(id, end_date, file1, file2, article_id)
-	values (#{homework.id},#{homework.file1},#{homework.file2},#{homework.article_id})
+  <insert id="insertTroubleShooting">
+  	insert into troubleShooting(Article_id, Group_id)
+	values (#{troubleshooting.article_id}, #{troubleshooting.group_id})
   </insert>
   
-  <update id="updateHomework">
-	update homework
-	set file1 = #{General.file1}, file2 =#{General.file2}
-	where id=0;
+  <update id="updateTroubleShootingByIssueClosed">
+  	{call CHANGE("troubleshooting", ${id})}
   </update>
   
-  <select id="selectAllHomeworkByArticleId">
-	select id, file1, file2, article_id
-	from homework
-	where article_id=#{Article.article}
+  <select id="selectTroubleShootingByArticleId">
+  	select id, issue_closed, article_id, group_id
+  	from troubleshooting 
+  	where id=${article.id};
   </select>
   
 </mapper>
