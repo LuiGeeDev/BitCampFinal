@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  <mapper namespace="kr.or.bit.dao.VideoDao">
   <insert id="insertVideo">
   	insert into video(video_id, article_id)
-	values (#{id}, #{article_id})
+	values (#{video_id}, #{article_id})
   </insert>
 
   <update id="updateVideo">
