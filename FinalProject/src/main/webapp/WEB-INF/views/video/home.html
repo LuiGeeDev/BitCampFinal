@@ -13,40 +13,35 @@
       <div id="title">인터넷강의 게시판</div>
       <hr />
       <div id="boardWrapper">
-        <table id="board">
-          <tr id="videoBoard" onClick="location.href='/video/detail'">
-            <td id="thumnail">
-              <img
-                id="thumnail-image"
-                src="https://img.youtube.com/vi/tZooW6PritE/maxresdefault.jpg"
-              />
-            </td>
-            <td id="videoDetail">
-              <span id="videoTitle">[생활코딩] HTML5 기초강좌</span>
-              <span id="commentCount">5</span><br />
-              <div id="videoContent">
-                생활코딩 Egoing님과 함께하는 HTML5 기초강좌 ...
+        <div id="board">
+        <th:block th:each="video : ${videoList}">
+          <a th:href="@{/video/detail(id=${video.id})}">
+            <div class="video-board">
+              <div class="thumbnail">
+                <img
+                  class="thumbnail-image"
+                  src="https://img.youtube.com/vi/tZooW6PritE/maxresdefault.jpg"
+                  th:src="'https://img.youtube.com/vi/' + ${video.id} + 'maxresdefault.jpg'"
+                />
               </div>
-              <div id="videoViewCount">22시간 전 | 조회 43 | 매니저</div>
-            </td>
-          </tr>
-          <tr id="videoBoard" onClick="location.href='/video/detail'">
-            <td id="thumnail">
-              <img
-                id="thumnail-image"
-                src="https://img.youtube.com/vi/ONcmkf07EuI/maxresdefault.jpg"
-              />
-            </td>
-            <td id="videoDetail">
-              <span id="videoTitle">[생활코딩] CSS 기초강좌</span>
-              <span id="commentCount">5</span><br />
-              <div id="videoContent">
-                생활코딩 Egoing님과 함께하는 CSS 기초강좌 ...
+              <div class="video-detail">
+                <span class="video-title" th:text="${video.title}">
+                  [생활코딩] HTML5 기초강좌
+                </span>
+                <span class="comment-count" th:text="${video.commentlist.size()}">5</span><br />
+                <div class="video-content" th:utext="${video.content}">
+                  생활코딩 Egoing님과 함께하는 HTML5 기초강좌 ...
+                </div>
+                <div class="video-view-count">
+                  <span>22시간 전</span> | 
+                  조회 <span th:text="${video.view_count}">43</span> |
+                  <span th:text="${video.writer.name}">매니저</span>
+                </div>
               </div>
-              <div id="videoViewCount">2019.06.21 | 조회 329 | 매니저</div>
-            </td>
-          </tr>
-        </table>
+            </div>
+          </a>
+        </th:block>
+        </div>
 
         <div id="buttonWrapper">
           <button

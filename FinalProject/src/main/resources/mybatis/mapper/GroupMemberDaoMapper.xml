@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 *
 * @author: 권순조
 * 
-  void insertGroupMember();
+  void insertGroupMember(Member member);
 
   void updateGroupMember(Member member);
 
@@ -16,8 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
   List<Member> selectAllGroupMemberByGroup();
   
-  
-
+  Member getGroupIdByUsername(String id);
 */ -->
 <mapper namespace="kr.or.bit.dao.GroupMember">
   <insert id="insertGroup">     
@@ -37,5 +36,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select group_id, member_name
 	from group_member
 	where group_id=#{group_id}
+  </select>
+  <select id="getGroupIdByUsername" resultType="int">
+  	select group_id
+  	from group_member
+  	where member_name=#{id}
   </select>
 </mapper>

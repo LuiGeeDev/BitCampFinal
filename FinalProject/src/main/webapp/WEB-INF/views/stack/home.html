@@ -29,12 +29,12 @@
         </select>
         <input type="text" name="stacksearch" id="stacksearch"
           size="25" placeholder="검색내용을 적어주세요">
-        <img src="/css/stack/search.png" class="seaimg">
+        <img th:src="@{/css/stack/search.png}" class="seaimg">
         </td>
       </tr>
     </table>
-    <!-- 스택글목록 -->
-    <table>
+    <!--      테스트용 게시물-->    
+     <table>
       <tbody>
         <tr onClick="location.href='/stack/content'">
           <td class="td1"><span class="tdst">3<br></span><span
@@ -53,9 +53,13 @@
           </span></td>
           <td class="td4">dosii</td>
         </tr>
+        <tr>
+        <td colspan="3">
+        <hr>
+        </td>
+        </tr>
       </tbody>
     </table>
-    <hr>
     <table>
       <tr>
         <td class="td1"><span class="tdst">0<br></span><span
@@ -74,8 +78,46 @@
         </span></td>
         <td class="td4">zayn</td>
       </tr>
+      <tr>
+        <td colspan="3">
+        <hr>
+        </td>
+        </tr>
     </table>
-    <hr>
+    <!-- 스택글목록 -->
+    <table class="iteration" th:each="list : ${stacklist}">
+      <tbody>
+        <tr
+          th:onclick="'window.location.href = \'' + @{/stack/content(id=${list.id})} + '\''"
+          >
+          <td class="td1"><span class="tdst">
+          <span th:text="${list.votenum}"></span>
+          <br></span><span
+            class="td2">추천</span><br> <span class="tdst">
+            <span th:text="${list.commentnum}"></span>
+            <br></span><span
+            class="td2">답변</span></td>
+          <td colspan="2"><p class="tdtitle"><span th:text="${list.title}"></span></p>
+            <p class="tdcontent"><span th:utext="${list.content}"></span></p></td>
+        </tr>
+        <tr>
+          <td class="td2">
+          <span th:text="${list.view_count}"></span>view
+          </td>
+          <td class="td3"><span class="tag-name"> <span
+              id="c1">Spring</span> <span id="c2">Java</span> <span
+              id="c3">C++</span>
+          </span></td>
+          <td class="td4"><span th:text="${list.writer}"></span></td>
+        </tr>
+        <tr>
+        <td colspan="3">
+        <hr>
+        </td>
+        </tr>
+      </tbody>
+    </table>
+
     <table>
       <tr>
         <td colspan="6" class="btnalign btnpa">

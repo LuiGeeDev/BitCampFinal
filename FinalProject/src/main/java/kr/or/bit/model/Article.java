@@ -132,12 +132,25 @@ public class Article {
   public void setCommentlist(List<Comment> commentlist) {
     this.commentlist = commentlist;
   }
-  @Override
-  public String toString() {
-    return "Article [id=" + id + ", title=" + title + ", content=" + content + ", time=" + time + ", updated_time="
-        + updated_time + ", view_count=" + view_count + ", original_id=" + original_id + ", level=" + level
-        + ", enable=" + enable + ", username=" + username + ", board_id=" + board_id + ", timeLocal=" + timeLocal
-        + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", tags=" + tags + ", commentlist="
-        + commentlist + ", option=" + option + "]";
+  public HashMap<String, Integer> getVote() {
+    return vote;
   }
+  public void setVote(HashMap<String, Integer> vote) {
+    this.vote = vote;
+  }
+  public int getVotenum() {
+    return votenum;
+  }
+  public void setVotenum(int votenum) {
+    this.votenum = votenum;
+  }
+  public int getCommentnum() {
+    return commentnum;
+  }
+  public void setCommentnum(int commentnum) {
+    this.commentnum = commentnum;
+  }
+  
+  
+
 }
