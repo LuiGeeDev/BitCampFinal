@@ -13,14 +13,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  <mapper namespace="kr.or.bit.TroubleShooting">
   <insert id="insertTroubleShooting">
   	insert into TroubleShooting(Article_id, Group_id)
-	values (#{troubleshooting.article_id}, #{troubleshooting.group_id})
+	values (#{article_id}, #{group_id})
   </insert>
   <update id="updateVideo">
-	{call CHANGESTATUS("troubleshooting",#{troubleshooting.article_id})}
+	{call CHANGESTATUS("troubleshooting",#{article_id})}
   </update>
   <select id="selectTroubleShootingByArticleId" resultType="kr.or.bit.model.Video">
   	select id, video_id article_id 
   	from video 
-  	where article_id=${video.article_id};
+  	where article_id=${article_id};
   </select>
  </mapper>

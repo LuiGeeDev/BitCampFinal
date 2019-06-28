@@ -52,6 +52,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	FROM article_vote
   	WHERE article_id=#{id}
   </select>
+  <select id="getMostRecentArticleId" resultType="int">
+    SELECT MAX(id)
+    FROM ARTICLE
+  </select>
 </mapper>
 <!--  
  public interface ArticleDao {

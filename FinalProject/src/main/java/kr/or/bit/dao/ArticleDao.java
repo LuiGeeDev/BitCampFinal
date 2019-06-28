@@ -31,4 +31,6 @@ public interface ArticleDao {
   void deleteVote(@Param("id") int id, @Param("username") String username);
   
   void countVote(int id);
+  
+  int getMostRecentArticleId();
 }
