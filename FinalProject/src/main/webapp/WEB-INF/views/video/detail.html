@@ -10,20 +10,21 @@
     <div class="main" th:fragment="main">
       <div id="detailWrapper">
         <div id="detailHead">
-          <span id="detailTitle">[생활코딩] HTML5 기초강좌</span>
+          <span id="detailTitle" th:text="${article.title}">[생활코딩] HTML5 기초강좌</span>
           <div id="detailViewCount">
-            매니저 | 22시간 전 | 조회수 <span id="point"> 43 </span>| 댓글
-            <span id="point">2</span>
+            <span th:text="${article.writer.name}">매니저</span> | <span>22시간 전</span> | 조회수 <span id="point" th:text="${article.view_count}">43</span> | 
+            댓글 <span id="point" th:text="${article.commentlist.size()}">2</span>
           </div>
         </div>
         <div id="detailContent">
           <div id="videoWrapper">
             <iframe
               src="https://youtube.com/embed/tZooW6PritE"
+              th:src="'https://youtube.com/embed/' + ${video.video_id}"
               id="video"
             ></iframe>
           </div>
-          <div id="detailContentText">
+          <div id="detailContentText" th:utext="${article.content}">
             이고잉님과 함께하는 HTML5 기초강좌입니다 . <br />
             출처 :
             <a href="https://opentutorials.org/module/3129"
@@ -33,9 +34,9 @@
         </div>
       </div>
       <div id="buttonWrapper">
-        <button class="btn btn-warning btn-sm" id="boardButton">수정</button>
-        <button class="btn btn-warning btn-sm" id="boardButton">삭제</button>
-        <button class="btn btn-warning btn-sm" id="boardButton">목록</button>
+        <a class="btn btn-primary btn-sm" th:href="@{/video/edit}">수정</a>
+        <a class="btn btn-primary btn-sm" th:href="@{/video/delete}">삭제</a>
+        <a class="btn btn-primary btn-sm" th:href="@{/video/home}">목록</a>
       </div>
       <div id="commentsWrapper">
         <div id="commentsContent">

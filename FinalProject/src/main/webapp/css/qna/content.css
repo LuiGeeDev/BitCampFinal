@@ -70,6 +70,9 @@ padding: 5px;
 #c6 {
   background-color: #353b48 /* 어두운파란 */
 }
+#c7 {
+  background-color: pink;
+}
 .imgp {
   border-radius: 50%;
   width: auto;
@@ -101,10 +104,10 @@ padding: 5px;
   right: 8%;
 } */
 #sidebox {  
-  position: fixed; 
+  position: absolute; 
   font-size: 8pt; 
-  top: 32%; 
-  left: 75%; 
+  top: 5px; 
+  left: 0; 
   z-index: 10;  
   padding:5px; 
   border:1px; 
@@ -112,7 +115,7 @@ padding: 5px;
   text-align:center;
 } 
 #imgp2{
-  width: 15%;
+  width: 40%;
   height: auto;
 }
 .comtitle{
@@ -128,6 +131,9 @@ padding: 5px;
 .btnalign{
  text-align: right;
  float: right;
+}
+.btnpa{
+  padding: 20px;
 }
 .ctd1{
   width: 87%;
