@@ -48,7 +48,6 @@ public class VideoController {
     
     Video video = new Video();
     int beginIndex = "https://youtu.be/".length();
-    System.out.println(url.substring(beginIndex));
     video.setVideo_id(url.substring(beginIndex));
 
     articleInsertService.writeArticle(article, video);
