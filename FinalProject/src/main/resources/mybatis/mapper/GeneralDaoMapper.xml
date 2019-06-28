@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="selectGeneralByArticleId">
 	select id, file1, file2, article_id
 	from general
-	where article_id=#{article.id}
+	where article_id=#{article_id}
   </select>
   
 </mapper>

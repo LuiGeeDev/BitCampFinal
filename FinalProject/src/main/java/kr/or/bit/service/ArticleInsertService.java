@@ -13,6 +13,7 @@ import kr.or.bit.dao.TroubleShootingDao;
 import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.ArticleOption;
+import kr.or.bit.model.TroubleShooting;
 import kr.or.bit.model.Video;
 
 @Component
