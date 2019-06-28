@@ -33,33 +33,35 @@
       <tr>
         <td colspan="3" class="tdcontent">
           <p>
-          <span th:text="${stackcontent.content}"></span>
+            <span th:utext="${stackcontent.content}">
+            </span>
           </p>
         </td>
         <td class="td3" rowspan="2">
-          <div style="position: relative; top: -330px;">
+          <div><!--  style="position: fixed; top: 80px;" -->
             <div id="sidebox">
-              <img src="/css/stack/like.png" id="imgp2"><br>
-              <span th:text="${stackcontent.votenum"></span>
-              <br> <img src="/css/stack/unlike.png" id="imgp2">
+              <img th:src="@{/css/stack/like.png}" id="imgp2"><br>
+              0<br> <img th:src="@{/css/stack/unlike.png}" id="imgp2">
             </div>
           </div>
         </td>
       </tr>
       <tr>
-        <td class="td5"><img src="/css/stack/profile.jpg"
-          class="imgp"></td>
+        <td class="td5">
+        <img th:src="@{/css/stack/profile.jpg}"
+          class="imgp">
+          </td>
         <td colspan="2" class="td4">
-          <p class="pwriter"><span th:text="${stackcontent.username}"></span></p>
-          <p class="pfont">게시일:<span th:text="${stackcontent.time}"></span></p>
-          <p class="pfont"><span th:text="view_count"></span>view</p>
+          <p class="pwriter">dossi</p>
+          <p class="pfont">게시일:2019.01.28</p>
+          <p class="pfont">41view</p>
         </td>
       </tr>
     </table>
     <!-- 댓글창 -->
     <table>
       <tr>
-        <td class="comtitle" colspan="4">총 [<span th:text="${stackcontent.conmmentnum}"></span>]개의 답변</td>
+        <td class="comtitle" colspan="4">총 [4]개의 답변</td>
       </tr>
       <tr>
         <td class="ctd1">

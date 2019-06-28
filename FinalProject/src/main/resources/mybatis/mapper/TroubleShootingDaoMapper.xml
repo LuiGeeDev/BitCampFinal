@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   void updateTroubleShootingByIssueClosed(int issueclosed);
   
-  void selectTroubleShootingByArticleId(int articleid);
+  Member selectGroupIdByUsername(String id);
  -->
 
  <mapper namespace="kr.or.bit.TroubleShooting">
@@ -15,10 +15,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	insert into TroubleShooting(Article_id, Group_id)
 	values (#{article_id}, #{group_id})
   </insert>
-  <update id="updateVideo">
-	{call CHANGESTATUS("troubleshooting",#{article_id})}
+  <update id="updateTroubleShootingByIssueClosed">
+	{call CHANGESTATUS("TROUBLESHOOTING",#{article_id})}
   </update>
-  <select id="selectTroubleShootingByArticleId" resultType="kr.or.bit.model.Video">
+  <select id="selectTroubleShootingByArticleId" resultType="kr.or.bit.model.TroubleShooting">
   	select id, video_id article_id 
   	from video 
   	where article_id=${article_id};
