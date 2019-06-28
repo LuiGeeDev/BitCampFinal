@@ -16,6 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     select m.name as senderName, s.id, s.content, s.time, s.checked, s.sender_username, s.receiver_username
     from member m left join message s on m.username = s.sender_username 
     where s.receiver_username = #{receiver_username}
+    order by s.checked asc
   </select>
   <select id="selectMessageById"
     resultType="kr.or.bit.model.Message">
@@ -60,5 +61,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   set checked =1
   where id = #{id};
   </update>
+  
+  <select id="selectCountMessage" resultType="Integer">
+  select count(checked) 
+  from message 
+  where checked = 0 and receiver_username= #{receiver_username};
+  </select>
 </mapper>
   

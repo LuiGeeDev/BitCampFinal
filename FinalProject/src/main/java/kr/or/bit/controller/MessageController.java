@@ -24,9 +24,11 @@ public class MessageController {
     /*String receiver_username = "teacher";*/
     String username = Helper.userName();
     MessageDao messageDao = SqlSession.getMapper(MessageDao.class);
+    MessageDao messageDao2 = SqlSession.getMapper(MessageDao.class);
     List<Message> selectall = messageDao.selectAllMessage(username);
+    int countmessage = messageDao2.selectCountMessage(username);
     model.addAttribute("selectall", selectall);
-    
+    model.addAttribute("countmessage", countmessage);
     return "message";
   }
   

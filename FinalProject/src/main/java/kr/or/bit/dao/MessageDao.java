@@ -32,4 +32,6 @@ public interface MessageDao {
   
   void updateMessageChecked(int id);
   
+  int selectCountMessage(String receiver_username);
+  
 }
