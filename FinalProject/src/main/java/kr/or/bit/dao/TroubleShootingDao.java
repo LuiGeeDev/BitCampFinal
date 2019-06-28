@@ -6,9 +6,7 @@ public interface TroubleShootingDao extends OptionDao {
   
   void insertTroubleShooting(ArticleOption troubleshooting);
   
-  void updateTroubleShootingByIssueClosed(int issueclosed);
-  
-  void deleteTroubleShooting(int id);
+  void updateTroubleShootingByIssueClosed(ArticleOption troubelshooting);
   
   void selectTroubleShootingByArticleId(int articleid);
 }

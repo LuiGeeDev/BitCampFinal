@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.GeneralDao;
 import kr.or.bit.dao.HomeworkDao;
-import kr.or.bit.dao.QnaDao;
 import kr.or.bit.dao.TroubleShootingDao;
 import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.ArticleOption;
 
 @Service
-public class ArticleInsertService implements ArticleOri {
+public class ArticleDetailService {
+  
   @Autowired
   private SqlSession sqlSession;
 
@@ -34,19 +34,10 @@ public class ArticleInsertService implements ArticleOri {
         GeneralDao general = sqlSession.getMapper(GeneralDao.class);
         articledao.insertArticle(article);
         general.insertGeneral(option);
-    } else if (optionname.equals("video")) {
-      
     } else if(optionname.equals("video")) {
         VideoDao video = sqlSession.getMapper(VideoDao.class);
         articledao.insertArticle(article);
         video.insertVideo(option);
     }
-  }
-
-  public void writeQnaArticle(Article article) {// qna게시글 삭제하는 함수
-    ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
-    QnaDao qna = sqlSession.getMapper(QnaDao.class);
-    articledao.insertArticle(article);
-    qna.insertQna(article);
   }
 }
