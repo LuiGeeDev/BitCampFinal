@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+  void insertHomework(ArticleOption homework);
+  
+  void updateHomework(String filename);
+  
+  Homework selectAllHomeworkByArticleId(int articleid);
+ -->
+
+<!-- 작업자: 권순조 -->
+
+<mapper namespace="kr.or.bit.dao.HomeworkDao">
+	
+  <insert id="insertHomework">
+  	insert into homework(id, end_date, file1, file2, article_id)
+	values (#{homework.id},#{homework.file1},#{homework.file2},#{homework.article_id})
+  </insert>
+  
+  <update id="updateHomework">
+	update homework
+	set file1 = #{General.file1}, file2 =#{General.file2}
+	where id=0;
+  </update>
+  
+  <select id="selectAllHomeworkByArticleId">
+	select id, file1, file2, article_id
+	from homework
+	where article_id=#{Article.article}
+  </select>
+  
+</mapper>

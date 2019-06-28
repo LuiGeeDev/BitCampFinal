@@ -23,4 +23,5 @@ public interface ArticleDao {
   List<Article> selectAllArticleByBoardId(int board_id);
   
   Article selectOneArticle(int id);
+
 }

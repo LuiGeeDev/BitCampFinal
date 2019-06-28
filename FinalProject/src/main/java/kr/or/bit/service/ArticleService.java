@@ -23,9 +23,6 @@ class ArticleService {
   @Autowired
   private SqlSession sqlSession;
   
-  @Autowired
-  private CommentService commentService;
-  
   public void updateArticle() {
     
   }
