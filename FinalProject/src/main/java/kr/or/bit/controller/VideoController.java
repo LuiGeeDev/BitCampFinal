@@ -35,13 +35,14 @@ public class VideoController {
   }
   
   @PostMapping("/write")
-  public String writeVideoArticle(Article article, ArticleOption option) {
+  public String writeVideoArticle(Article article, String url) {
     /*
      * 글 쓰기 데이터를 받아서
      * 해당 글의 페이지로 넘겨준다.
      */
     ArticleInsertService articleinsert = new ArticleInsertService();
-    articleinsert.writeArticle(article, option);
+   System.out.println(article);
+   System.out.println(url);
     
     
     return "redirect:/video/detail";
