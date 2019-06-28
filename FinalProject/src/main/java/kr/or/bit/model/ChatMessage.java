@@ -6,6 +6,15 @@ public class ChatMessage {
   private long time;
   private String content;
   private int group_id;
+  private String filepath;
+
+  public String getFilepath() {
+    return filepath;
+  }
+
+  public void setFilepath(String filepath) {
+    this.filepath = filepath;
+  }
 
   public String getName() {
     return name;

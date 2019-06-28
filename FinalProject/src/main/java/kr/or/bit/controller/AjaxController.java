@@ -2,8 +2,10 @@ package kr.or.bit.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
@@ -20,6 +22,7 @@ import kr.or.bit.dao.MessageDao;
 import kr.or.bit.model.ChatMessage;
 import kr.or.bit.model.Classroom;
 import kr.or.bit.model.Message;
+import kr.or.bit.service.FileUploadService;
 import kr.or.bit.service.NewsService;
 import kr.or.bit.utils.Helper;
 
@@ -31,14 +34,17 @@ public class AjaxController {
   private SqlSession sqlSession;
   
   @PostMapping("/chat/file")
-  public ChatMessage uploadFile(int group_id, long time, String name, MultipartFile file) {
-    ChatMessage message = new ChatMessage();
+  public ChatMessage uploadFile(HttpServletRequest request, int group_id, long time, String name, MultipartFile file) throws IllegalStateException, IOException {
+    FileUploadService service = new FileUploadService();
+    String filepath = service.uploadFile(request, file);
     
+    ChatMessage message = new ChatMessage();
     message.setUsername("fileServer");
     message.setName(name);
     message.setContent(file.getOriginalFilename());
     message.setTime(time);
     message.setGroup_id(group_id);
+    message.setFilepath(filepath);
     
     return message;
   }
