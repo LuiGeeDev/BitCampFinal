@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/home.css}" />
     <link rel="stylesheet" th:href="@{/css/message.css}" />
     <link rel="stylesheet" th:href="@{/css/modal.css}" />
+    <link rel="stylesheet" th:href="@{/css/loading.css}" />
   </head>
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
@@ -15,10 +16,12 @@
       <div class="row">
         <div class="message-box2">
           <h4 class="message-title2">
-          <i class="far fa-envelope fa-2x"></i>
+          <div class="movemov">
+          <span><i class="far fa-envelope fa-2x"></i></span>
           <span class="text-move">받은쪽지함</span>
-          <span class="message-title-count">
-          <span class="countM" th:text="${countmessage}"></span>개의 쪽지가 왔습니다 </span>
+          <div class="message-title-count">
+          <span class="countM" th:text="${countmessage}"></span>개의 쪽지가 왔습니다 </div>
+          </div>
           </h4>
           <!-- 쪽지 있는 만큼 담기 -->
           <div th:each="all : ${selectall}">
@@ -59,7 +62,8 @@
           <div class="message-timeform">
             <div class="sender-message"></div>
             <!-- 메시지 보낸시간 -->
-            <div class="message-sender-time"></div>
+            <div class="hidden message-sender-time"></div>
+            <div class="message-realtime"></div>
           </div>
 
           <!-- 메시지 내용 -->
@@ -67,25 +71,6 @@
           <div class="message-sender-content"></div>
         </div>
       </div>
-
-      <!-- Modal  -->
-
-      <!--   <div class="modal">
-    <div class="modal-content">
-      <div class="message-modal">
-        <form action="<%=request.getContextPath()%>/message/send"
-          class="message-form" method="post">
-          <h3 class="message-title">쪽지 보내기</h3>
-          <textarea class="message-textarea" name="text"
-            placeholder="내용을 입력해주세요."></textarea>
-          <input type="hidden" value="${postId}" name="postId">
-          <input type="hidden" value="message" name="origin">
-          <input type="submit" value="전송" class="message-submit">
-        </form>
-        <a class="close-btn">&times;</a>
-      </div>
-    </div>
-  </div> -->
 
       <div
         class="modal fade"
@@ -144,7 +129,9 @@
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script>
-  
+  	
+    
+    
     
     $("#modal-submitbtn").click(function() {
       const messageText = $("#message-text").val();
@@ -169,14 +156,23 @@
             id: messageId
           },
           success: function(data) {
+           /*  console.log("new Date : " + new Date(${data.time})); */
             $(
-              ".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id"
+              ".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime"
             ).empty();
             $("#message-sender-id").append(`${data.sender_username}`);
             $(".message-sender-name")
               .append(`${data.senderName}`)
               .append(`(${data.sender_username})`);
             $(".message-sender-time").append(`${data.time}`);
+            console.log($(".message-sender-time").text());
+            const time = Number($(".message-sender-time").text());
+            const date = new Date(time);
+            console.log(`${date.getFullYear()}년 ${date.getMonth()}월 ${date.getDate()}일 ${date.getHours()}:${date.getMinutes()}`);
+            const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일 ${date.getHours()}:${date.getMinutes()}`;
+            console.log(timedate);
+            $(".message-realtime").append(timedate);
+            
             $(".message-sender-content").append(`${data.content}`);
             $(".sender-message").append(`<h6 class="text-font">받은쪽지</h6>`);
             $(".fa-paper-plane").css("display", "block");
@@ -229,20 +225,7 @@
                 
               }
             })
-          /*   event.stopPropagation();
-            const answer = confirm("쪽지를 삭제하시겠습니까?");
-            if (answer) {
-              $.ajax({
-                url: "/ajax/message/delete",
-                type: "POST",
-                data: {
-                  id: messageId
-                },
-                success: function(data) {
-                  location.href = "/message";
-                }
-              });
-            } */
+      
           });
         });
       }
@@ -279,7 +262,6 @@
               .children()
               .siblings(".unread")
               .remove();
-            console.log("아오29");
           }
         });
       });
