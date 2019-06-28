@@ -9,6 +9,7 @@ import kr.or.bit.dao.GeneralDao;
 import kr.or.bit.dao.HomeworkDao;
 import kr.or.bit.dao.QnaDao;
 import kr.or.bit.dao.TroubleShootingDao;
+import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.ArticleOption;
 
@@ -36,6 +37,10 @@ public class ArticleInsertService implements ArticleOri {
         articledao.insertArticle(article);
         general.insertGeneral(option);
       
+    } else if(optionname.equals("video")) {
+        VideoDao video = sqlSession.getMapper(VideoDao.class);
+        articledao.insertArticle(article);
+        video.insertVideo(option);
     }
   }
   

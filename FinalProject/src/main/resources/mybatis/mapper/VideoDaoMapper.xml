@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+  void insertVideo(ArticleOption video);
+  
+  void updateVideo(ArticleOption video);
+  
+  void selectVideoByArticleId();
+ -->
+
+ <mapper namespace="kr.or.bit.VideoDao">
+  <insert id="insertVideo">
+  	insert into video(video_id, article_id)
+	values (#{video.id}, #{video.article_id})
+  </insert>
+  
+  <update id="updateVideo">
+	update table video
+	set video= #{video.video_id}
+	where article_id = #{video.article_id}
+  </update>
+  
+  <select id="selectVideoByArticleId" resultType="kr.or.bit.model.Video">
+  	select id, video_id article_id 
+  	from video 
+  	where article_id=${video.article_id};
+  </select>
+ </mapper>
+ 
