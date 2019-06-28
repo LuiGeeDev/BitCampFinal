@@ -21,21 +21,20 @@ public class ArticleInsertService implements ArticleOri {
   public void writeArticle(Article article, ArticleOption option) {// 글쓰기 처리시 게시글 객체와 객체을 입력하면 각각 테이블에 데이터 저장
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
     String optionname = option.getClass().getName().toLowerCase().trim();
-    
+
     if (optionname.equals("troubleshooting")) {
       TroubleShootingDao trobleshooting = sqlSession.getMapper(TroubleShootingDao.class);
       articledao.insertArticle(article);
       trobleshooting.insertTroubleShooting(option);
-      
     } else if (optionname.equals("homework")) {
-        HomeworkDao homework = sqlSession.getMapper(HomeworkDao.class);
-        articledao.insertArticle(article);
-        homework.insertHomework(option);
-      
+      HomeworkDao homework = sqlSession.getMapper(HomeworkDao.class);
+      articledao.insertArticle(article);
+      homework.insertHomework(option);
     } else if (optionname.equals("general")) {
-        GeneralDao general = sqlSession.getMapper(GeneralDao.class);
-        articledao.insertArticle(article);
-        general.insertGeneral(option);
+      GeneralDao general = sqlSession.getMapper(GeneralDao.class);
+      articledao.insertArticle(article);
+      general.insertGeneral(option);
+    } else if (optionname.equals("video")) {
       
     } else if(optionname.equals("video")) {
         VideoDao video = sqlSession.getMapper(VideoDao.class);
@@ -43,8 +42,8 @@ public class ArticleInsertService implements ArticleOri {
         video.insertVideo(option);
     }
   }
-  
-  public void writeQnaArticle(Article article) {//qna게시글 삭제하는 함수
+
+  public void writeQnaArticle(Article article) {// qna게시글 삭제하는 함수
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
     QnaDao qna = sqlSession.getMapper(QnaDao.class);
     articledao.insertArticle(article);

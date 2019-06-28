@@ -32,11 +32,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </delete>
   <update id="updateArticle" parameterType="kr.or.bit.model.Article">
     UPDATE article
-    set updated_time=now(),
+    SET updated_time=now(),
     title=#{title},
     content=#{content}
     WHERE id=#{id}
   </update>
+  <insert id="insertVote">
+    INSERT INTO article_vote(article_id, username)
+    VALUES (#{id}, #{username})
+  </insert>
+  <delete id="deleteVote">
+  	DELETE FROM article_vote
+  	WHERE id=#{id} and username=#{username}
+  </delete>
+  <select id="countVote" resultType="kr.or.bit.model.ArticleVote">
+  
+  </select>
 </mapper>
 <!--  
  public interface ArticleDao {

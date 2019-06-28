@@ -3,38 +3,34 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
-
 <mapper namespace="kr.or.bit.dao.ScheduleDao">
-
-<insert id="insertSchedule">
-INSERT INTO schedule (start_date, end_date, content, color, group_id, course_id) 
-VALUES(#{start_date}, #{end_date}, #{content}, #{color}, #{group_id}, #{course_id})
-</insert>
-
-<update id="updateSchedule">
-UPDATE schedule
-SET start_date = #{start_date},
+  <insert id="insertSchedule">
+    INSERT INTO schedule (start_date, end_date, content, color, group_id,
+    course_id)
+    VALUES(#{start_date}, #{end_date}, #{content}, #{color}, #{group_id}, #{course_id})
+  </insert>
+  <update id="updateSchedule">
+    UPDATE schedule
+    SET start_date = #{start_date},
     end_date = #{end_date},
-    content = #{content},
+    content =
+    #{content},
     color = #{color},
     group_id = #{group_id},
-    course_id = #{group_id}
+    course_id =
+    #{group_id}
     WHERE id = #{id}
-</update>
-
-
-<delete id="deleteSchedule">
-DELETE 
-FROM schedule
-WHERE id = #{id}
-</delete>
-
-<select id="selectAllSchedule" resultType="kr.or.bit.model.Schedule">
-SELECT id, start_date, end_date, content, color, group_id, course_id
-FROM schedule
-WHERE course_id = ${param1} AND group_id = ${param2}
-</select>
-
+  </update>
+  <delete id="deleteSchedule">
+    DELETE
+    FROM schedule
+    WHERE id = #{id}
+  </delete>
+  <select id="selectAllSchedule"
+    resultType="kr.or.bit.model.Schedule">
+    SELECT id, start_date, end_date, content, color, group_id, course_id
+    FROM schedule
+    WHERE course_id = ${param1} AND group_id = ${param2}
+  </select>
 </mapper>
   
