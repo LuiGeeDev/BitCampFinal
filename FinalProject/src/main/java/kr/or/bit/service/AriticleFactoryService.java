@@ -5,7 +5,7 @@ public class AriticleFactoryService {
   public void artiFactory() {
     
     
-    ArticleOri article = new ArticleInsertService();
+  //  ArticleOri article = new ArticleInsertService();
     
     
   }

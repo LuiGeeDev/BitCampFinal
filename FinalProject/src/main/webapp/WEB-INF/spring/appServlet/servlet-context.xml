@@ -13,6 +13,14 @@
   <!-- Use spring servlet for all requests, including static resources -->
   <mvc:default-servlet-handler />
 
+  <!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+    up static resources in the ${webappRoot}/resources directory -->
+
+  <context:component-scan
+    base-package="kr.or.bit" />
+  <mvc:resources mapping="/resources/**"
+    location="/resources/" />
+
   <mvc:interceptors>
     <mvc:interceptor>
       <mvc:mapping path="/**" />
@@ -51,14 +59,6 @@
       </bean>
     </mvc:message-converters>
   </mvc:annotation-driven>
-
-  <!-- Handles HTTP GET requests for /resources/** by efficiently serving 
-    up static resources in the ${webappRoot}/resources directory -->
-  <context:component-scan
-    base-package="kr.or.bit" />
-  <mvc:resources mapping="/resources/**"
-    location="/resources/" />
-
   <!-- Thymeleaf View Resolver - implementation of Spring's ViewResolver 
     interface -->
   <bean id="viewResolver"
@@ -77,8 +77,6 @@
     <property name="cacheable" value="false" />
   </bean>
 
-  <bean name="jsonView"
-    class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
   <!-- Thymeleaf Template Engine (Spring4-specific version) -->
   <bean id="templateEngine"
     class="org.thymeleaf.spring4.SpringTemplateEngine">
@@ -93,8 +91,11 @@
     </property>
   </bean>
 
-  <!-- 멀티파트 리졸버 -->
+  <bean name="jsonView"
+    class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
 
+
+  <!-- 멀티파트 리졸버 -->
   <bean id="multipartResolver"
     class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
     <!-- 최대업로드 가능한 바이트크기 -->

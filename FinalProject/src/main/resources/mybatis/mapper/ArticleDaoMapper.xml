@@ -48,6 +48,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="countVote" resultType="kr.or.bit.model.ArticleVote">
   
   </select>
+  <select id="getMostRecentArticleId" resultType="int">
+    SELECT MAX(id)
+    FROM ARTICLE
+  </select>
 </mapper>
 <!--  
  public interface ArticleDao {

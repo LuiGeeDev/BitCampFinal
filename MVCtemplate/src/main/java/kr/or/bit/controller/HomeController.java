@@ -21,6 +21,7 @@ import kr.or.bit.dao.MemberDao;
 import kr.or.bit.model.Board;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Member;
+import kr.or.bit.service.TestService;
 
 @Controller
 public class HomeController {
@@ -33,11 +34,15 @@ public class HomeController {
     List<Board> boardList = boardDao.getList();
     
     model.addAttribute("boardList", boardList);
+    TestService service = new TestService();
+    service.service();
     return "home";
   }
 
   @GetMapping("/reg")
   public String reg() {
+    TestService service = new TestService();
+    service.service();
     return "reg";
   }
 

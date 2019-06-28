@@ -2,6 +2,7 @@ package kr.or.bit.service;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import kr.or.bit.dao.ArticleDao;
@@ -12,15 +13,18 @@ import kr.or.bit.dao.TroubleShootingDao;
 import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.ArticleOption;
+import kr.or.bit.model.Video;
 
-@Service
-public class ArticleInsertService implements ArticleOri {
+@Component
+public class ArticleInsertService {
+  
   @Autowired
   private SqlSession sqlSession;
 
   public void writeArticle(Article article, ArticleOption option) {// 글쓰기 처리시 게시글 객체와 객체을 입력하면 각각 테이블에 데이터 저장
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
-    String optionname = option.getClass().getName().toLowerCase().trim();
+    String optionname = option.getClass().getName().toLowerCase().trim().substring("kr.or.bit.model.".length());
+    System.out.println(optionname);
 
     if (optionname.equals("troubleshooting")) {
       TroubleShootingDao trobleshooting = sqlSession.getMapper(TroubleShootingDao.class);
@@ -34,12 +38,13 @@ public class ArticleInsertService implements ArticleOri {
         GeneralDao general = sqlSession.getMapper(GeneralDao.class);
         articledao.insertArticle(article);
         general.insertGeneral(option);
-    } else if (optionname.equals("video")) {
-      
     } else if(optionname.equals("video")) {
-        VideoDao video = sqlSession.getMapper(VideoDao.class);
+        VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
         articledao.insertArticle(article);
-        video.insertVideo(option);
+        int id = articledao.getMostRecentArticleId();
+        Video video = (Video) option;
+        video.setArticle_id(id);
+        videoDao.insertVideo(video);
     }
   }
 
@@ -47,6 +52,6 @@ public class ArticleInsertService implements ArticleOri {
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
     QnaDao qna = sqlSession.getMapper(QnaDao.class);
     articledao.insertArticle(article);
-    qna.insertQna(article);
+    // qna.insertQna(article);
   }
 }
