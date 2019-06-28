@@ -2,7 +2,9 @@ package kr.or.bit.model;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Article {
   private int id;
@@ -23,6 +25,8 @@ public class Article {
   private List<String> tags;
   private List<Comment> commentlist;
   private ArticleOption option;
+  private HashMap<String,Integer> vote;
+  
   public int getId() {
     return id;
   }

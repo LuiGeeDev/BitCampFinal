@@ -42,6 +42,6 @@ public class ArticleInsertService implements ArticleOri {
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
     QnaDao qna = sqlSession.getMapper(QnaDao.class);
     articledao.insertArticle(article);
-    qna.insertQna(article.getId());
+    qna.insertQna(article);
   }
 }

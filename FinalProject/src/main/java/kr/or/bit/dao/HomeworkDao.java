@@ -10,7 +10,5 @@ public interface HomeworkDao extends OptionDao {
   
   void updateHomework(String filename);
   
-  void deleteHomework(int id);
-  
-  Homework selectAllHomeworkByArticleId(int articleid);
+  Homework selectAllHomeworkByArticleId(Article article);
 }

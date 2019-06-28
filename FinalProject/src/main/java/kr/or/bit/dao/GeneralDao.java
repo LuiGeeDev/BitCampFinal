@@ -10,7 +10,5 @@ public interface GeneralDao extends OptionDao {
   
   void updateGeneral(String filename);
   
-  void deleteGeneral(int id);
-  
-  General selectAllGeneralByArticleId(int articleid);
+  General selectGeneralByArticleId(Article article);
 }
