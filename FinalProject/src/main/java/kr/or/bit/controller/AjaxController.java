@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.MessageDao;
+import kr.or.bit.model.ChatMessage;
 import kr.or.bit.model.Classroom;
 import kr.or.bit.model.Message;
 import kr.or.bit.service.NewsService;
@@ -27,6 +29,19 @@ public class AjaxController {
   
   @Autowired
   private SqlSession sqlSession;
+  
+  @PostMapping("/chat/file")
+  public ChatMessage uploadFile(int group_id, long time, String name, MultipartFile file) {
+    ChatMessage message = new ChatMessage();
+    
+    message.setUsername("fileServer");
+    message.setName(name);
+    message.setContent(file.getOriginalFilename());
+    message.setTime(time);
+    message.setGroup_id(group_id);
+    
+    return message;
+  }
   
   @PostMapping("/news")
   public String getNews() {
@@ -58,8 +73,7 @@ public class AjaxController {
     messageDao.insertMessage(message);
   }
   
-  
-  @PostMapping("message/update") 
+  @PostMapping("/message/update") 
    public String updateMessage(int id) {
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
     messageDao.updateMessageChecked(id);
@@ -67,7 +81,6 @@ public class AjaxController {
     
   }
   
-
 	@PostMapping("/classroom")
 	public List<Classroom> getClassroom(Date start_date, @RequestParam(defaultValue = "1970-01-01") Date end_date) {
 		CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
