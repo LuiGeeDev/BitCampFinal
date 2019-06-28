@@ -36,7 +36,7 @@ public class AjaxController {
   @PostMapping("/chat/file")
   public ChatMessage uploadFile(HttpServletRequest request, int group_id, long time, String name, MultipartFile file) throws IllegalStateException, IOException {
     FileUploadService service = new FileUploadService();
-    String filepath = service.uploadFile(request, file);
+    String filepath = service.uploadFile(file, request);
     
     ChatMessage message = new ChatMessage();
     message.setUsername("fileServer");

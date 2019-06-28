@@ -13,7 +13,7 @@ import kr.or.bit.utils.Helper;
 
 @Service
 public class FileUploadService {
-  public String uploadFile(HttpServletRequest request, MultipartFile file) throws IllegalStateException, IOException {
+  public String uploadFile(MultipartFile file, HttpServletRequest request) throws IllegalStateException, IOException {
     String originalFilename = file.getOriginalFilename();
     String filenameOnServer = Helper.userName() + System.currentTimeMillis() + originalFilename;
     String fileDirectory = "/files/" + LocalDate.now().getYear() + "/" + LocalDate.now().getMonthValue() + "/" + LocalDate.now().getDayOfMonth(); 
