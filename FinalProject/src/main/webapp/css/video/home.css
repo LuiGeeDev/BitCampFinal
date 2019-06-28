@@ -3,57 +3,74 @@
 body{
     font-family: 'Nanum Gothic'
 }
+
 #title{
-    margin : 10px 0px 0px 80px;
-    font-size : 32px;
-    font-weight: bold
-}
-#boardWrapper{
-    margin-left : 100px
-}
-#videoBoard{
-    cursor:pointer;
-}
-#videoBoard:hover{
-    background-color:#eeeeee;
-}
-#board{
-    border : 1px solid #eeeeee;
-    margin : 10px 0px 0px 0px;
-    background-color:white;
-}
-#videoTitle{
-    font-size: 30px;
-    font-weight: bold;
-}
-#commentCount{
-    color: #F39B10;
-    margin-left: 7.2px
-}
-#videoContent{
-    font-size: 14px;
-    color: gray;
+  margin: 10px 0 0 80px;
+  font-size : 32px;
+  font-weight: bold
 }
 
-#thumnail-image{
-    margin : 20px;
-    width: 500px;
-    height: 261px
+#boardWrapper{
+  margin-left : 100px;
+  margin-right: 100px;
 }
-#videoDetail{
-    width : 500px
+
+.video-board{
+  cursor: pointer;
+  color: black;
+  display: flex;
 }
-#videoViewCount{
+
+.video-board:hover{
+  background-color:#eeeeee;
+}
+
+#board{
+  border : 1px solid #eeeeee;
+  margin-top: 10px;
+  background-color:white;
+}
+
+.video-title{
+  display: inline-block;
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.comment-count{
+  color: #F39B10;
+  margin-left: 7.2px
+}
+
+.video-content{
+  font-size: 14px;
+  color: gray;
+  margin-top: 20px;
+}
+
+.thumbnail-image {
+  margin : 20px;
+  width: 500px;
+  height: 261px;
+}
+
+.video-detail {
+    width : 500px;
+}
+
+.video-view-count{
     font-size: 12px;
     color: gray;
-    margin-top : 50px
+    margin-top: 50px;
 }
+
 #buttonWrapper{
-    text-align: left;
-    margin-top: 10px;
-    margin-left : 985px;
+  float: right;
+  margin-top: 10px;
 }
+
 #writeButton{
-    font-weight: bold;
-    padding : 8px;
+  font-weight: bold;
+  padding: 8px;
 }
