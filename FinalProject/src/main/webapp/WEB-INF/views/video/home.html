@@ -58,7 +58,7 @@
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script th:inline="javascript">
       function getNextArticles() {
-        let lastArticleId = [[${videoList[4].id}]];
+        let lastArticleId = [[${videoList[videoList.size() - 1].id}]];
         
         function changeId(id) {
           lastArticleId = id;
