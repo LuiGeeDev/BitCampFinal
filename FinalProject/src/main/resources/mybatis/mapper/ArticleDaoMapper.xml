@@ -5,11 +5,6 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.bit.dao.ArticleDao"> 
-  <select id="selectOneArticle" resultType="kr.or.bit.model.Article">     
-	SELECT id, title, content, time, view_count, original_id, level, username, board_id, updated_time
-	FROM ARTICLE 
-	WHERE ID=#{id}
-  </select> 
   <select id="selectAllArticleByBoardId"
     resultType="kr.or.bit.model.Article">
     SELECT id, title, content, time, updated_time, view_count, original_id,
