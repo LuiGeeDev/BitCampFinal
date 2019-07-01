@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Video;
-import kr.or.bit.service.ArticleDeleteService;
 import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleUpdateService;
@@ -32,6 +31,7 @@ public class VideoController {
   private ArticleUpdateService articleUpdateService; 
   @Autowired
   private ArticleService articleService;
+  
   @GetMapping("/home")
   public String videoHome(Model model) {
     List<Article> videoList = articleService.selectAllArticle("video", VIDEO_BOARD_ID);
@@ -89,7 +89,7 @@ public class VideoController {
     Video video = new Video();
     int beginIndex = "https://youtu.be/".length();
     video.setVideo_id(url.substring(beginIndex));
-    articleUpdateService.updateArticle(article, video);
+   articleUpdateService.updateArticle(article, video);
     return "redirect:/video/home";
   }
 

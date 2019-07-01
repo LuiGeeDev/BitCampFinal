@@ -5,7 +5,7 @@ import kr.or.bit.model.TroubleShooting;
 public interface TroubleShootingDao extends OptionDao {
   void insertTroubleShooting(TroubleShooting troubleshooting);
   
-  void updateTroubleShootingByIssueClosed(TroubleShooting troubelshooting);
+  void updateTroubleShootingByIssueClosed(int id);
   
   TroubleShooting selectTroubleShootingByArticleId(int article_id);
 }
