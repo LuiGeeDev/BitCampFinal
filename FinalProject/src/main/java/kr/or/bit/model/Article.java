@@ -26,9 +26,6 @@ public class Article {
   private List<Comment> commentlist;
   private ArticleOption option;
   private Map<String, Integer> vote;
-  private int votenum;
-  private int commentnum;
-
   private int vote_count;
 
   public int getVote_count() {
@@ -178,33 +175,7 @@ public class Article {
   public void setVote(HashMap<String, Integer> vote) {
     this.vote = vote;
   }
-
-  public int getVotenum() {
-    return votenum;
-  }
-
-  public void setVotenum(int votenum) {
-    this.votenum = votenum;
-  }
-
-  public int getCommentnum() {
-    return commentnum;
-  }
-
-  public void setCommentnum(int commentnum) {
-    this.commentnum = commentnum;
-  }
-
-  @Override
-  public String toString() {
-    return "Article [id=" + id + ", title=" + title + ", content=" + content + ", time=" + time + ", updated_time="
-        + updated_time + ", view_count=" + view_count + ", original_id=" + original_id + ", level=" + level
-        + ", enable=" + enable + ", username=" + username + ", board_id=" + board_id + ", timeLocal=" + timeLocal
-        + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", tags=" + tags + ", commentlist="
-        + commentlist + ", option=" + option + ", vote=" + vote + ", votenum=" + votenum + ", commentnum=" + commentnum
-        + ", vote_count=" + vote_count + "]";
-  }
-
+  
   public List<Tag> getTags() {
     return tags;
   }
