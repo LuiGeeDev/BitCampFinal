@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     values (#{video_id}, #{article_id})
   </insert>
   <update id="updateVideo">
-    update table video
+    update video
     set video_id = #{video_id}
     where article_id = #{article_id}
   </update>
