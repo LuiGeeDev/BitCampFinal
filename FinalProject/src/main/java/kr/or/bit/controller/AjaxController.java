@@ -109,8 +109,8 @@ public class AjaxController {
   }
   @PostMapping("/vote")
   @ResponseBody
-  public int voteVideoArticle(String articleId){
-	 return articleVoteService.insertVote(Integer.parseInt(articleId), Helper.userName());
+  public Map<String, Object> voteVideoArticle(int articleId){
+	 return articleVoteService.insertVote(articleId, Helper.userName());
   }
   @PostMapping("/video/scroll")
   public List<Article> getNextVideoArticles(int article_id) {
