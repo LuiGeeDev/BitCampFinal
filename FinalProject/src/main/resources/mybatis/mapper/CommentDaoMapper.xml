@@ -19,6 +19,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON c.id = v.comment_id
 		WHERE article_id=#{article_id} and id=#{id}
 	</select>
+	<select id="selectOneComment" resultType="kr.or.bit.model.Comment">
+		SELECT id, content, time, updated_time, article_id, username
+		FROM comment
+		WHERE id=#{id}
+	</select>
 	<insert id="insertComment">
 		INSERT INTO comment(content, time, updated_time,
 		article_id, username)

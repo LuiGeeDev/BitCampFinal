@@ -25,12 +25,10 @@ public class StackController {
   
   @Autowired
   private SqlSession sqlsession;
-  
   @Autowired
-  ArticleService articleService;
-  
+  private ArticleService articleService;
   @Autowired
-  CommentService commentService;
+  private CommentService commentService;
   
   //stack 메인으로 이동
   @GetMapping("/home")

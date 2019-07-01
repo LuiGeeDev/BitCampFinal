@@ -27,6 +27,12 @@ public class CommentService {
     return comment;
   }
   
+  public Comment selectOnecomment(int id) {
+    CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
+    Comment comment = commentdao.selectOneComment(id);
+    return comment;
+  }
+  
   public void insertComment(Comment comment) {
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
     commentdao.insertComment(comment);
