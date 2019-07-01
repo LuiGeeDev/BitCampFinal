@@ -20,8 +20,9 @@ public class ArticleUpdateService implements ArticleOri {
   @Autowired
   private SqlSession sqlSession;
   
-  public void updateArti() {
-    
+  public void updateArti(Article article) {
+    ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
+    articledao.updateArticle(article);
   }
   
   public void updateArticle(Article article, ArticleOption option) {
