@@ -27,12 +27,9 @@
               id="video"
             ></iframe>
           </div>
-          <div id="detailContentText" th:utext="${article.content}">
-            이고잉님과 함께하는 HTML5 기초강좌입니다 . <br />
-            출처 :
-            <a href="https://opentutorials.org/module/3129"
-              >https://opentutorials.org/module/3129</a
-            >
+          <div id="detailContentText" th:utext="${article.content}"></div>
+          <div id="voteButtonWrapper">
+          	<button class="btn btn-primary btn-sm" id="voteButton">추천 <span id="voteText">0</span></button>
           </div>
         </div>
       </div>
@@ -70,7 +67,20 @@
     </div>
 
     <script>
-      console.log("Hello, world!");
+      $('#voteButton').click(function(data){
+        var para = document.location.href.split("?"); 
+        var param = para[1].split("=");
+        $.ajax({
+          url:"/ajax/vote",
+          data:{
+            articleId:param[1],           
+          },
+          method:"post",
+          success:function(data){
+            console.log("올ㅋ");
+          }
+        })
+      });
     </script>
   </body>
 </html>

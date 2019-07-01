@@ -1,9 +1,10 @@
 package kr.or.bit.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.RedirectView;
 
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.MessageDao;
@@ -102,7 +103,13 @@ public class AjaxController {
     }
     return classroomList;
   }
-  
+  @PostMapping("/vote")
+  @ResponseBody
+  public Map<String, Object> voteVideoArticle(String articleId, Principal principal){
+	 System.out.println("/////////"+articleId);
+	 System.out.println(principal.getName());
+	 return null; 
+  }
   @PostMapping("/video/scroll")
   public List<Article> getNextVideoArticles(int article_id) {
     List<Article> list = articleService.selectArticlesOnNextPage(article_id);
