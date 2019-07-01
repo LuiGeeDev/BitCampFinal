@@ -69,6 +69,6 @@ public class VideoController {
     video.setVideo_id(url.substring(beginIndex));
 
     articleInsertService.writeArticle(article, video);
-    return "redirect:/video/detail";
+    return "redirect:/video/detail?id=" + article.getId();
   }
 }
