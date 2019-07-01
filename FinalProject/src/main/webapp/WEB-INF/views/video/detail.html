@@ -61,6 +61,7 @@
         <div
           id="commentsContent"
           class="iteration"
+          th:if="${article.commentlist.size()} > 0"
           th:each="list : ${article.commentlist}"
         >
           <div id="commentsText">
@@ -83,6 +84,9 @@
           <div id="commentsDetail">
             [[${article.writer.name}]]님 사랑해용 쀼쀼
           </div>
+        </div>
+        <div th:if="${article.commentlist.size()} == 0" id ="noneComment">
+        	등록된 댓글이 없습니다.
         </div>
       </div>
       <div id="buttonWrapper">
