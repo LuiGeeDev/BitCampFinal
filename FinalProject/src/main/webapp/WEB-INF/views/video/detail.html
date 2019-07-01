@@ -1,20 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
-<head>
-<link rel="stylesheet" th:href="@{/css/video/detail.css}" />
-</head>
-<body>
-  <div class="main" th:fragment="main">
-    <div id="detailWrapper">
-      <div id="detailHead">
-        <span id="detailTitle" th:text="${article.title}">[생활코딩]
-          HTML5 기초강좌</span>
-        <div id="detailViewCount">
-          <span th:text="${article.writer.name}">매니저</span> | <span
-            th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd')}"></span>
-          | 조회수 <span id="point" th:text="${article.view_count}">43</span>
-          | 댓글 <span id="point" th:text="${article.commentlist.size()}">2</span>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <link rel="stylesheet" th:href="@{/css/video/detail.css}" />
+  </head>
+  <body>
+    <div class="main" th:fragment="main">
+      <div id="detailWrapper">
+        <div id="detailHead">
+          <span id="detailTitle" th:text="${article.title}"
+            >[생활코딩] HTML5 기초강좌</span
+          >
+          <div id="detailViewCount">
+            <span th:text="${article.writer.name}">매니저</span> |
+            <span
+              th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd')}"
+            ></span>
+            | 조회수
+            <span id="point" th:text="${article.view_count}">43</span> | 댓글
+            <span id="point" th:text="${article.commentlist.size()}">2</span>
+          </div>
         </div>
       </div>
       <div id="detailContent">
@@ -44,24 +51,35 @@
             <input type="submit" class="btn btn-primary btnalign" value="등록">
 
           </form>
-      </div>
-      <!-- 추가 ) 댓글 목록 불러오는 기능 -->
-      <div id="commentsWrapper">
-        <div id="commentsContent" class="iteration" th:each="list : ${article.commentlist}">
-          <div id="commentsText">
-            <div id="commentsWriter">
-              <span id="writerIcon">
-                <img src="https://via.placeholder.com/32" id="icon" />
-              </span>
-              <span id="writerName"><span th:text="${list.username}"></span>
-              <a th:href="@{/video/commentdelete(id=${list.id})}">[삭제]</a>
-              </span>
-              <span id="writeDate"><span th:text="${list.updated_time}"></span></span>
+        </div>
+        <!-- 추가 ) 댓글 목록 불러오는 기능 -->
+        <div id="commentsWrapper">
+          <div
+            id="commentsContent"
+            class="iteration"
+            th:each="list : ${article.commentlist}"
+          >
+            <div id="commentsText">
+              <div id="commentsWriter">
+                <span id="writerIcon">
+                  <img src="https://via.placeholder.com/32" id="icon" />
+                </span>
+                <span id="writerName">
+                  <span th:text="${list.username}"></span>
+                  <a th:href="@{/video/commentdelete(id=${list.id})}">[삭제]</a>
+                </span>
+                <span id="writeDate">
+                  <span th:text="${list.updated_time}"></span>
+                </span>
+              </div>
+              <div id="commentsDetail">
+                <span th:text="${list.content}"></span>
+              </div>
             </div>
-            <div id="commentsDetail"><span th:text="${list.content}"></span></div>
+            <div id="commentsDetail">
+              [[${article.writer.name}]]님 사랑해용 쀼쀼
+            </div>
           </div>
-          <div id="commentsDetail">[[${article.writer.name}]]님
-            사랑해용 쀼쀼</div>
         </div>
         	  <div id="buttonWrapper">
 		        <a class="btn btn-primary btn-sm" th:href="@{/video/edit(id=${article.id},video_id=${article.option.video_id})}">수정</a>
@@ -82,25 +100,37 @@
         })
       });
 
- 
-      $('#voteButton').click(function(data){
-        $.ajax({
-          url:"/ajax/vote",
-          data:{
-            articleId: [[${article.id}]],           
-          },
-          method: "post",
-          success: function(data) {
-			  $("#voteText").html(data.countVote);
-			  if(data.checkStatus == 1){
-				$('#thumbIcon').addClass("voted");
-				client.send("/app/notice/vote", {}, JSON.stringify({title: "추천", content: [[${user.name}]] + "님에게 글을 추천받았습니다.", username: [[${article.username}]]}));
-			  } else {
-				$('#thumbIcon').removeClass("voted");
-			  }
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script th:inline="javascript">
+      $(function() {
+        $("#deletebtn").click(function(event) {
+          const answer = confirm("정말 삭제하시겠습니까?");
+          if (!answer) {
+            event.preventDefault();
+           /*  location.href = "/video/delete?id=" + [[${article.id}]]; */
           }
+          })
         });
-      });
+
+
+        $('#voteButton').click(function(data){
+          $.ajax({
+            url:"/ajax/vote",
+            data:{
+              articleId: [[${article.id}]],
+            },
+            method: "post",
+            success: function(data) {
+       $("#voteText").html(data.countVote);
+       if(data.checkStatus == 1){
+      $('#thumbIcon').addClass("voted");
+      client.send("/app/notice/vote", {}, JSON.stringify({title: "추천", content: [[${user.name}]] + "님에게 글을 추천받았습니다.", username: [[${article.username}]]}));
+       } else {
+      $('#thumbIcon').removeClass("voted");
+       }
+            }
+          });
+        });
     </script>
-</body>
+  </body>
 </html>
