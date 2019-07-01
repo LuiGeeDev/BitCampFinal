@@ -104,17 +104,16 @@ body {
   font-size: 18px;
   color: #F39C20;
 }
-#commentInputWrapper{
-	margin : 20px 0px 20px 90px;
-}
-#commentInput{
-	width:50%;
-	height:36px;
-	padding-left:8px;
+
+#commentInputWrapper {
+  margin: 20px 0px 20px 90px;
 }
 
-
-
+#commentInput {
+  width: 50%;
+  height: 36px;
+  padding-left: 8px;
+}
 
 .voted {
   color: #f39c20;
