@@ -15,8 +15,34 @@
       <div id="boardWrapper">
         <div id="board">
         <th:block th:each="video : ${videoList}">
-          <a th:href="@{/video/detail(id=${video.id})}">
+          <a th:href="@{/video/detail(id=${video.id})}" th:if="${video.enable == 1}">
             <div class="video-board">
+              <div class="thumbnail">
+                <img
+                  class="thumbnail-image"
+                  src="https://img.youtube.com/vi/tZooW6PritE/maxresdefault.jpg"
+                  th:src="'https://img.youtube.com/vi/' + ${video.option.video_id} + '/maxresdefault.jpg'"
+                />
+              </div>
+              <div class="video-detail">
+                <span class="video-title" th:text="${video.title}">
+                  [생활코딩] HTML5 기초강좌
+                </span>
+                <span class="comment-count" th:text="${video.commentlist.size()}">5</span><br />
+                <div class="video-content" th:utext="${video.content}">
+                  생활코딩 Egoing님과 함께하는 HTML5 기초강좌 ...
+                </div>
+                <div class="video-view-count">
+                  <span th:text="${#temporals.format(video.timeLocal, 'yyyy-MM-dd')}">22시간 전</span> | 
+                  조회 <span th:text="${video.view_count}">43</span> |
+                   <span th:text="${video.writer.name}">매니저</span> | 
+                   <span th:text="${video.vote_count}"></span>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a th:href="@{/video/detail(id=${video.id})}" th:if="${video.enable == 0}" sec:authorize="hasRole('MANAGER')">
+            <div class="video-board article-disabled">
               <div class="thumbnail">
                 <img
                   class="thumbnail-image"
@@ -83,25 +109,31 @@
       }
       
       function addNewPage(list) {
+        console.log([[${user.role}]]);
         list.forEach(function(article) {
-          const articleDiv = $(`<a href="/video/detail?id=${article.id}">`);
-          const videoBoard = $(`<div class="video-board">`);
-          const thumbnail = $(`<div class="thumbnail">`);
-          thumbnail.append($(`<img class="thumbnail-image" src="https://img.youtube.com/vi/${article.option.video_id}/maxresdefault.jpg" />`));
-          const videoDetail = $(`<div class="video-detail">`);
-          const time = article.timeLocal;
-          const timeString = `${time.year}-${time.monthValue < 10 ? "0" + time.monthValue : time.monthValue}-${time.dayOfMonth < 10 ? "0" + time.dayOfMonth : time.dayOfMonth}`;
-          console.log(timeString);
-          
-          videoDetail.append($(`<span class="video-title">${article.title}</span>`))
-                     .append($(`<span class="comment-count">${article.commentlist.length}</span>`))
-                     .append($(`<div class="video-content">${article.content}</div>`))
-                     .append($(`<div class="video-view-count"><span>${timeString}</span> | 조회 <span>${article.view_count}</span> |<span>${article.writer.name}</span></div>`));
-          
-          videoBoard.append(thumbnail).append(videoDetail);
-          articleDiv.append(videoBoard);
+          if (article.enable === 1 || [[${user.role}]] === 'MANAGER') {
+            const articleDiv = $(`<a href="/video/detail?id=${article.id}">`);
+            const videoBoard = $(`<div class="video-board">`);
+            if (article.enable === 0) {
+              videoBoard.addClass("article-disabled");
+            }
+            const thumbnail = $(`<div class="thumbnail">`);
+            thumbnail.append($(`<img class="thumbnail-image" src="https://img.youtube.com/vi/${article.option.video_id}/maxresdefault.jpg" />`));
+            const videoDetail = $(`<div class="video-detail">`);
+            const time = article.timeLocal;
+            const timeString = `${time.year}-${time.monthValue < 10 ? "0" + time.monthValue : time.monthValue}-${time.dayOfMonth < 10 ? "0" + time.dayOfMonth : time.dayOfMonth}`;
+            console.log(timeString);
+            
+            videoDetail.append($(`<span class="video-title">${article.title}</span>`))
+                       .append($(`<span class="comment-count">${article.commentlist.length}</span>`))
+                       .append($(`<div class="video-content">${article.content}</div>`))
+                       .append($(`<div class="video-view-count"><span>${timeString}</span> | 조회 <span>${article.view_count}</span> |<span>${article.writer.name}</span></div>`));
+            
+            videoBoard.append(thumbnail).append(videoDetail);
+            articleDiv.append(videoBoard);
 
-          $('#board').append(articleDiv);
+            $('#board').append(articleDiv);
+          }
         });
       }
       
