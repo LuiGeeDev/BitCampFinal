@@ -35,4 +35,6 @@ public interface ArticleDao {
   int getMostRecentArticleId();
   
   List<Article> selectArticlesOnNextPage(int article_id);
+  
+  void updateEable(int id);
 }

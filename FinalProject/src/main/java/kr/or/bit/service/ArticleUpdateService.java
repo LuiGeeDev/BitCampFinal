@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.QnaDao;
-import kr.or.bit.dao.TroubleShootingDao;
 import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.ArticleOption;
@@ -25,21 +24,21 @@ public class ArticleUpdateService implements ArticleOri {
     articledao.updateArticle(article);
     
     if (optionname.equals("homework")) {
-        System.out.println("피카");
-        System.out.println("아직 ㄴ");
+       System.out.println("피카");
+       System.out.println("아직 ㄴ");
     } else if (optionname.equals("general")) {
         System.out.println("피카");
         System.out.println("아직 ㄴ");
     } else if(optionname.equals("video")) {
-      VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
-      Video video = (Video) option;
-      video.setArticle_id(articleid);
-      videoDao.updateVideo(video);
+        VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
+        Video video = (Video) option;
+        video.setArticle_id(articleid);
+        videoDao.updateVideo(video);
     }
   }
   
   public void updateTroubleShooting(int id ) {
-
+    
   }
   
   public void updateQna() {
@@ -50,5 +49,9 @@ public class ArticleUpdateService implements ArticleOri {
   public void updateQnaT() {
     QnaDao qnadao = sqlSession.getMapper(QnaDao.class);
     qnadao.updateQnaByTeacherAnswered();
+  }
+  public void updateArticleEnable(int id) {
+    ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
+    articledao.updateEable(id);
   }
 }
