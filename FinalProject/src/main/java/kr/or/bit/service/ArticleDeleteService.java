@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import kr.or.bit.dao.ArticleDao;
 
 @Service
-public class ArticleDeleteService implements ArticleOri {
+public class ArticleDeleteService {
   
   @Autowired
   private SqlSession sqlSession;
