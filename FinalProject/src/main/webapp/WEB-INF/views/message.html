@@ -13,6 +13,11 @@
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
+    <div class="wrap-loading display-none">
+
+    <div><img src="./images/loading1.gif" /></div>
+
+</div>  
       <div class="row">
         <div class="message-box2">
           <h4 class="message-title2">
@@ -167,6 +172,7 @@
             id: messageId
           },
           success: function(data) {
+            
            /*  console.log("new Date : " + new Date(${data.time})); */
             $(
               ".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime"
@@ -196,6 +202,17 @@
             $(".fa-paper-plane").css("display", "block");
             $(".fa-trash").css("display", "block");
           },
+          beforeSend:function() {
+            // 이미지 보여주기 처리
+            $(".wrap_loading").removeClass("display-none");
+          },
+          complete:function() {
+            // 이미지 감추기 처리
+            $(".wrap_loading").addClass("display-none");
+          },
+          timeout:100000 "응답제한 시간 ms",
+          
+          
           error: function(xhr) {
             alert("쪽지를 불러오지 못했습니다.");
           }
