@@ -2,7 +2,6 @@ package kr.or.bit.model;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -194,14 +193,5 @@ public class Article {
     this.commentnum = commentnum;
   }
 
-  @Override
-  public String toString() {
-    return "Article [id=" + id + ", title=" + title + ", content=" + content + ", time=" + time + ", updated_time="
-        + updated_time + ", view_count=" + view_count + ", original_id=" + original_id + ", level=" + level
-        + ", enable=" + enable + ", username=" + username + ", board_id=" + board_id + ", timeDate=" + timeDate
-        + ", updatedTimeDate=" + updatedTimeDate + ", timeLocal=" + timeLocal + ", writer=" + writer + ", tags=" + tags
-        + ", commentlist=" + commentlist + ", option=" + option + ", vote=" + vote + ", votenum=" + votenum
-        + ", commentnum=" + commentnum + "]";
-  }
   
 }
