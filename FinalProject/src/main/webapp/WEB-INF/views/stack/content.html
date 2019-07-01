@@ -72,9 +72,15 @@
       </tr>
     </table>
     <!-- 댓글목록 -->
-    <table class="iteration" th:each="list : ${stackcontent.commentlist}">
+    <table class="iteration" th:if="${stackcontent.commentlist.size()==0}">
+    <tr><td>질문에 대한 답변을 달아주세요!</td></tr>
+    </table>
+    <table th:unless="${stackcontent.commentlist.size()==0}" class="iteration" th:each="list : ${stackcontent.commentlist}">
     <tr>
-    <td><span th:text="${list.username}"></span></td><td><span th:text="${list.updated_time}"></span></td>
+    <td><span th:text="${list.username}"></span>
+    <a th:href="@{/stack/commentdelete(id=${list.id})}">[삭제]</a>
+    </td>
+    <td><span th:text="${list.updated_time}"></span></td>
     </tr>
     <tr>
     <td colspan="2"><span th:text="${list.content}"></span></td>

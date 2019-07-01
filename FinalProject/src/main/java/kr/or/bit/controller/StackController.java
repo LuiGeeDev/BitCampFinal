@@ -72,4 +72,12 @@ public class StackController {
   }
   
   
+  @GetMapping("/commentdelete")
+  public String stackCommentDelete(int id) {
+    commentService.deleteComment(id);
+    
+    return "redirect:/stack/content?id="+id;
+  }
+  
+  
 }

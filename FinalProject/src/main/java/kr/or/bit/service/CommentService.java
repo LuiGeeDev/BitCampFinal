@@ -37,9 +37,8 @@ public class CommentService {
     commentdao.updateComment(comment);
   }
   
-  public void deleteComment(Comment comment) {
+  public void deleteComment(int id) {
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
-    int id = comment.getId();
     commentdao.deleteComment(id);
   }
   
