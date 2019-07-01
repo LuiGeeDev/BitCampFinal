@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+  void insertFiles();
+  
+  void updateFiles();
+  
+  void deleteFiles();
+  
+  Files selectFilesById(int id);
+ -->
+ 
+<mapper namespace="kr.or.bit.dao.FilesDao">
+  <insert id="insertFiles">
+    insert into files(original_filename, filename)
+    values(original_filename, filename)
+  </insert>
+  <update id="updateFiles">
+    update files
+    set original_filename =#{original_filename}, filename=#{filename}
+    where id=#{id}    
+  </update>
+  <delete id="deleteFiles">
+    delete from files 
+    where id=#{id}
+  </delete>
+  <select id="selectFilesById" resultType="kr.or.bit.model.Files">
+    select id, original_filename, filename
+    from files
+    where id=#{id}
+  </select>
+</mapper>
+

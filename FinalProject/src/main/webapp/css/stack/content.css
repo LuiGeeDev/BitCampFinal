@@ -35,6 +35,7 @@ th, td {
 .tdcontent {
   font-size: 90%;
   border-right: 1.5px solid #eaebec;
+  padding-bottom: 30px;
   padding-top: 20px;
 }
 
@@ -62,6 +63,15 @@ th, td {
   border-bottom: 1.5px solid #eaebec;
   padding-bottom: 30px;
   padding-top: 20px;
+}
+
+.td6 {
+  border-bottom: 1.5px solid #eaebec;
+  padding-bottom: 35px;
+  padding-top: 25px;   
+}
+.td7 {
+  width:15%;
 }
 
 .tag-name span {
@@ -99,6 +109,12 @@ th, td {
   border-radius: 50%;
   width: auto;
   height: 20%;
+}
+
+.profileImg {
+  border-radius: 50%;
+  width: auto;
+  height: 90%;
 }
 
 .pwriter {
@@ -174,4 +190,14 @@ th, td {
 
 .ctd2 {
   width: 13%;
+}
+
+.commentTitle {
+  
+}
+
+.commentCalender {
+  font-size: 90%;
+  color: gray;
+  
 }

@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.model.ChatMessage;
 import kr.or.bit.model.Message;
+import kr.or.bit.model.Notification;
 
 @Controller
 public class SocketController {
@@ -33,10 +34,10 @@ public class SocketController {
     template.convertAndSend("/topic/noti/" + message.getId(), message);
   }
   
-  @MessageMapping("/notice")
-  public void sendAlarm(String hello) {
-    System.out.println(hello);
-    template.convertAndSendToUser("manager", "/queue/notice", "new notice");
+  @MessageMapping("/notice/vote")
+  public void sendVoteNotice(Notification notification) {
+    System.out.println(notification.getTitle() + "/" + notification.getContent() + "/" + notification.getUsername());
+    template.convertAndSendToUser(notification.getUsername(), "/queue/notice", notification);
   }
   
   @MessageMapping("/chat")
