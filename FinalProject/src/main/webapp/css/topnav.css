@@ -83,12 +83,36 @@ button:active {
 .notice {
   padding: 3px 10px;
   border-bottom: 1px solid gray;
+  margin-bottom: 3px;
 }
 
-.notice p {
-  margin-bottom: 5px;
+.notice-title {
+  font-weight: bold;
+}
+
+.notice:last-child {
+  border: none;
+  margin-bottom: 0;
+}
+
+.notice-content {
+  margin-bottom: 3px;
 }
 
 #notices {
   display: none;
+}
+
+.popover-body {
+  padding: 5px;
+}
+
+.toast-wrapper {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+
+.toast-content {
+  margin: 0;
 }
