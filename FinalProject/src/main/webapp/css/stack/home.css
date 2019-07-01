@@ -23,6 +23,10 @@ th, td {
   padding: 10px;
 }
 
+td[colspan="2"] {
+  max-height: 160px;
+}
+
 .tdtitle {
   color: #0984e3;
   font-size: 120%;
@@ -36,6 +40,9 @@ th, td {
 
 .tdcontent {
   cursor: pointer;
+  max-height: 70px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tdst {
@@ -90,6 +97,7 @@ th, td {
 #c6 {
   background-color: #353b48 /* 어두운파란 */
 }
+
 #c7 {
   background-color: pink;
 }
@@ -104,9 +112,11 @@ th, td {
   float: right;
   text-align: right;
 }
-.btnalign{
- text-align: right;
+
+.btnalign {
+  text-align: right;
 }
-.btnpa{
+
+.btnpa {
   padding: 10px;
 }
