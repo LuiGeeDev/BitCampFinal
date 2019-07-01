@@ -25,12 +25,10 @@ public class StackController {
   
   @Autowired
   private SqlSession sqlsession;
-  
   @Autowired
-  ArticleService articleService;
-  
+  private ArticleService articleService;
   @Autowired
-  CommentService commentService;
+  private CommentService commentService;
   
   //stack 메인으로 이동
   @GetMapping("/home")
@@ -67,6 +65,14 @@ public class StackController {
     comment.setUsername(Helper.userName());
     comment.setArticle_id(id);
     commentService.insertComment(comment);
+    
+    return "redirect:/stack/content?id="+id;
+  }
+  
+  
+  @GetMapping("/commentdelete")
+  public String stackCommentDelete(int id) {
+    commentService.deleteComment(id);
     
     return "redirect:/stack/content?id="+id;
   }
