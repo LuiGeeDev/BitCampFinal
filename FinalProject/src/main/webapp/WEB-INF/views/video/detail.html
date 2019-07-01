@@ -35,19 +35,16 @@
           </div>
         </div>
       </div>
-      <div id="buttonWrapper">
-        <a class="btn btn-primary btn-sm" th:href="@{/video/edit(id=${article.id},video_id=${article.option.video_id})}">수정</a>
-        <a class="btn btn-primary btn-sm" th:href="@{/video/delete(id = ${article.id})}"id="deletebtn">삭제</a>
-        <a class="btn btn-primary btn-sm" th:href="@{/video/home}">목록</a>
-      </div>
-      <!-- 추가 ) 댓글수 -->
-      <div>댓글 [[${article.commentlist.size()}]]개</div>
       <!-- 추가 ) 댓글 insert form -->
-      <div>
+      <div id="commentInputWrapper">
           <form th:action="@{/video/commentwrite(id=${article.id})}" method="post">
-            <textarea name="content" class="comtext"></textarea>
-            <br> <input type="submit"
-              class="btn btn-primary btnalign" value="등록">
+              <span id="writerIcon">
+                <img src="https://via.placeholder.com/32" id="icon" />
+           	  </span>
+          	<span id="writerName" name="writerName" th:text = "${user.name}"></span>
+            <input type="text" name="content" class="comtext" id="commentInput" placeholder ="댓글을 입력하세요."/>
+            <input type="submit" class="btn btn-primary btnalign" value="등록">
+
           </form>
       </div>
       <!-- 추가 ) 댓글 목록 불러오는 기능 -->
@@ -67,6 +64,13 @@
           </div>
         </div>
         </div>
+        	  <div id="buttonWrapper">
+		        <a class="btn btn-primary btn-sm" th:href="@{/video/edit(id=${article.id},video_id=${article.option.video_id})}">수정</a>
+		        <a class="btn btn-primary btn-sm" th:href="@{/video/delete(id = ${article.id})}"id="deletebtn">삭제</a>
+		        <a class="btn btn-primary btn-sm" th:href="@{/video/home}">목록</a>
+		      </div>
+        </div>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script th:inline="javascript">
     $(function() {

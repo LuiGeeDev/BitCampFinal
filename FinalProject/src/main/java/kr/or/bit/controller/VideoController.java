@@ -57,6 +57,7 @@ public class VideoController {
     Article article = articleService.selectOneArticle("video", id);
     VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
     
+    model.addAttribute("voteStatus", articleVoteService.selectVote(id, Helper.userName()));
     model.addAttribute("article", article);
     return "video/detail";
   }
