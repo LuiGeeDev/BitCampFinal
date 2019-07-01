@@ -30,7 +30,8 @@
           </div>
           <div id="detailContentText" th:utext="${article.content}"></div>
           <div id="voteButtonWrapper">
-          	<button class="btn btn-primary btn-sm" id="voteButton">추천 <span id="voteText" th:utext = "${article.vote_count}">0</span></button>
+          	<button class="btn btn-primary btn-sm" id="voteButton">
+          	<i class="fas fa-thumbs-up" id="thumbIcon" th:classappend="${voteStatus} == 1 ? 'voted'"></i>  <span id="voteText" th:utext = "${article.vote_count}">0</span></button>
           </div>
         </div>
       </div>
@@ -61,7 +62,7 @@
               <span id="writerName">이힘찬</span>
               <span id="writeDate">2019.6.22 17:55</span>
             </div>
-            <div id="commentsDetail">이고잉님 사랑해용 쀼쀼</div>
+            <div id="commentsDetail">[[${article.writer.name}]]님 사랑해용 쀼쀼</div>
           </div>
         </div>
       </div>
@@ -81,16 +82,19 @@
 
  
       $('#voteButton').click(function(data){
-        var para = document.location.href.split("?"); 
-        var param = para[1].split("=");
         $.ajax({
           url:"/ajax/vote",
           data:{
-            articleId:param[1],           
+            articleId: [[${article.id}]],           
           },
           method:"post",
           success:function(data){
-			      $("#voteText").html(data);
+			  $("#voteText").html(data.countVote);
+			  if(data.checkStatus == 1){
+				  $('#thumbIcon').addClass("voted");
+			  }else{
+				  $('#thumbIcon').removeClass("voted");
+			  }
           }
         })
       });
