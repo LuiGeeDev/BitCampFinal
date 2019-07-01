@@ -24,15 +24,18 @@ public interface ArticleDao {
 
   List<Article> selectAllArticleByBoardId(int board_id);
   
-  Article selectOneArticle(int id);
+  Article selectOneArticle(@Param("id") int id);
   
   void insertVote(@Param("id") int id, @Param("username") String username);
   
   void deleteVote(@Param("id") int id, @Param("username") String username);
   
-  void countVote(int id);
+  int countVote(@Param("id") int id);
   
   int getMostRecentArticleId();
   
   List<Article> selectArticlesOnNextPage(int article_id);
+  
+  int selectVote(@Param("id") int articleId, @Param("username") String username);
+  
 }

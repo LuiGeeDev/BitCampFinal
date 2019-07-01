@@ -29,7 +29,17 @@ public class Article {
   private int votenum;
   private int commentnum;
 
-  public LocalDateTime getUpdatedTimeLocal() {
+  private int vote_count;
+  
+  public int getVote_count() {
+	return vote_count;
+}
+
+public void setVote_count(int vote_count) {
+	this.vote_count = vote_count;
+}
+
+public LocalDateTime getUpdatedTimeLocal() {
     return updatedTimeLocal;
   }
 
@@ -192,6 +202,17 @@ public class Article {
   public void setCommentnum(int commentnum) {
     this.commentnum = commentnum;
   }
+
+@Override
+public String toString() {
+	return "Article [id=" + id + ", title=" + title + ", content=" + content + ", time=" + time + ", updated_time="
+			+ updated_time + ", view_count=" + view_count + ", original_id=" + original_id + ", level=" + level
+			+ ", enable=" + enable + ", username=" + username + ", board_id=" + board_id + ", timeLocal=" + timeLocal
+			+ ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", tags=" + tags + ", commentlist="
+			+ commentlist + ", option=" + option + ", vote=" + vote + ", votenum=" + votenum + ", commentnum="
+			+ commentnum + ", vote_count=" + vote_count + "]";
+}
+
 
   
 }

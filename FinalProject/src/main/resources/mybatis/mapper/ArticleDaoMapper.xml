@@ -30,9 +30,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="selectOneArticle"
     resultType="kr.or.bit.model.Article">
     SELECT id, title, content, time, view_count, original_id, level, username,
-    board_id, updated_time
+    board_id, (SELECT COUNT(*) FROM ARTICLE_VOTE WHERE article_id=#{id}) as "vote_Count", updated_time 
     FROM ARTICLE
-    WHERE ID=#{id}
+    WHERE ID=#{id};
   </select>
   <insert id="insertArticle">
     INSERT INTO article(original_id, time, updated_time, title, content,
@@ -57,16 +57,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </insert>
   <delete id="deleteVote">
     DELETE FROM article_vote
-    WHERE id=#{id} and username=#{username}
+    WHERE article_id=#{id} and username=#{username}
   </delete>
-  <select id="countVote" resultType="kr.or.bit.model.ArticleVote">
-    SELECT count(username)
+  <select id="countVote" resultType="int">
+    SELECT count(*)
     FROM article_vote
     WHERE article_id=#{id}
   </select>
   <select id="getMostRecentArticleId" resultType="int">
     SELECT MAX(id)
     FROM ARTICLE
+  </select>
+  <select id="selectVote" resultType = "int">
+  	SELECT COUNT(*)
+  	FROM ARTICLE_VOTE
+  	WHERE article_id=#{id} AND username=#{username}
   </select>
 </mapper>
 <!-- public interface ArticleDao { void insertArticle(Article article); void 
