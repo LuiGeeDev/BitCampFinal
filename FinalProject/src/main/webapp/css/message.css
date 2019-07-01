@@ -174,9 +174,6 @@
 .message-sender-content {
   margin-left: 20px;
   margin-top: 50px;
-  border: 1px solid #F39B0F;
-  padding: 20px;
-  border-radius: 20px;
 }
 
 .main {
@@ -248,8 +245,10 @@
 
 /* The typing effect */
 @
-keyframes typing {from { width:0
-  
+keyframes typing {
+  from 
+  { 
+  width:0
 }
 
 to {
@@ -273,10 +272,7 @@ border-color
 
 
 
-
-
 :
-
 
 
 
@@ -284,10 +280,7 @@ border-color
 
 
 
-
 orange
-
-
 
 
 
@@ -303,17 +296,8 @@ orange
   left: 50%;
 }
 
-.display-none {
-  displayn: none;
-}
 
-.wrap-loading { /*화면 전체를 어둡게 합니다.*/
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.2); /*not in ie */
-  filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000',
-    endColorstr='#20000000'); /* ie */
+.spinner-border {
+  width: 3rem; 
+  height: 3rem;
 }

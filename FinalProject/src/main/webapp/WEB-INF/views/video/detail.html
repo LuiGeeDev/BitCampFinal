@@ -97,28 +97,30 @@
         </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-    <script th:inline="javascript">
-    $(function() {
+    <script>
       $("#deletebtn").click(function(event) {
-        const answer = confirm("정말 삭제하시겠습니까?");
-        if (!answer) {
-          event.preventDefault();
-         /*  location.href = "/video/delete?id=" + [[${article.id}]]; */
-        }    
-        })
+        Swal.fire({
+          title: '정말 삭제하시겠습니까?',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#F39B10',
+          cancelButtonColor: '#A6A6A6',
+          confirmButtonText: '네',
+          cancelButtonText: '아니요'
+        }).then((result) => {
+          if (result.value) {
+                Swal.fire({
+                  	title: '삭제되었습니다',
+                  	type: 'success',
+                  	confirmButtonText: '확인',
+                  	confirmButtonColor: '#F39B10'
+                });
+          }
+        });
       });
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-    <script th:inline="javascript">
-      $(function() {
-        $("#deletebtn").click(function(event) {
-          const answer = confirm("정말 삭제하시겠습니까?");
-          if (!answer) {
-            event.preventDefault();
-           /*  location.href = "/video/delete?id=" + [[${article.id}]]; */
-          }
-          })
-        });
+ 
+        
 
 
         $('#voteButton').click(function(data){
@@ -139,6 +141,7 @@
             }
           });
         });
+      
     </script>
   </body>
 </html>
