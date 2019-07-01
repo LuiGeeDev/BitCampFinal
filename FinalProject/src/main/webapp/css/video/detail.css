@@ -118,3 +118,7 @@ body {
 .voted {
   color: #f39c20;
 }
+#noneComment{
+	padding : 10px 0px 10px 30px;
+	font-weight:bold;
+}
