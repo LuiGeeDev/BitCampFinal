@@ -3,11 +3,9 @@ package kr.or.bit.service;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.GeneralDao;
-import kr.or.bit.dao.GroupDao;
 import kr.or.bit.dao.GroupMemberDao;
 import kr.or.bit.dao.HomeworkDao;
 import kr.or.bit.dao.QnaDao;
@@ -15,6 +13,7 @@ import kr.or.bit.dao.TroubleShootingDao;
 import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.ArticleOption;
+import kr.or.bit.model.General;
 import kr.or.bit.model.TroubleShooting;
 import kr.or.bit.model.Video;
 import kr.or.bit.utils.Helper;
@@ -53,7 +52,6 @@ public class ArticleInsertService {
          * .
          */
         
-        homework.insertHomework(option);
     } else if (optionname.equals("general")) {
         GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
         //파일저장 부분 미구현
