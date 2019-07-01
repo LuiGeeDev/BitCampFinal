@@ -32,6 +32,22 @@ public class FileUploadService {
   }
 
   public String uploadFile(List<MultipartFile> file, HttpServletRequest request) throws IllegalStateException, IOException {
+    List<String> filespath = null;
+    for(MultipartFile mfile : file) {
+      String originalFilename = mfile.getOriginalFilename();
+      String filenameOnServer = Helper.userName() + System.currentTimeMillis() + originalFilename;
+      String fileDirectory = "/files/" + LocalDate.now().getYear() + "/" + LocalDate.now().getMonthValue() + "/"
+          + LocalDate.now().getDayOfMonth();
+      String filepath = fileDirectory + filenameOnServer;
+      String realPath = request.getServletContext().getRealPath(fileDirectory);
+      new File(realPath).mkdirs();
+      File fileToSave = new File(realPath + filenameOnServer);
+      System.out.println(fileToSave.getAbsolutePath());
+      mfile.transferTo(fileToSave);
+      System.out.println(filepath);// 진짜주소
+      System.out.println(realPath);
+      System.out.println(originalFilename);// 오리지널
+    }
     
     return null;
   }
