@@ -6,9 +6,9 @@ public interface QnaDao extends OptionDao {
   
   void insertQna(int article_id);
   
-  void updateQnaByAnswered();
+  void updateQnaByAnswered(int id);
   
-  void updateQnaByTeacherAnswered();
+  void updateQnaByTeacherAnswered(int id);
   
   Qna selectQnaByArticleId(int article_id);
 }

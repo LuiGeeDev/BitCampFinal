@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Video;
-import kr.or.bit.service.ArticleDeleteService;
 import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
-import kr.or.bit.service.ArticleUpdateService;
 import kr.or.bit.utils.Helper;
 
 @Controller
@@ -30,6 +28,7 @@ public class VideoController {
   private ArticleInsertService articleInsertService;  
   @Autowired
   private ArticleService articleService;
+  
   @GetMapping("/home")
   public String videoHome(Model model) {
     List<Article> videoList = articleService.selectAllArticle("video", VIDEO_BOARD_ID);
