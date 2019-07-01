@@ -56,6 +56,57 @@
     </div>
 
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-    <script></script>
+    <script th:inline="javascript">
+      function getNextArticles() {
+        let lastArticleId = [[${videoList[4].id}]];
+        
+        function changeId(id) {
+          lastArticleId = id;
+        }
+        
+        return function() {
+          $.ajax({
+            url: "/ajax/video/scroll",
+            data: {
+              article_id: lastArticleId
+            },
+            method: "post",
+            success: function(data) {
+              if (data[0]) {
+                changeId(data[data.length - 1].id);
+                addNewPage(data);
+              }
+            }
+          });
+        }
+      }
+      
+      function addNewPage(list) {
+        list.forEach(function(article) {
+          const articleDiv = $(`<a href="/video/detail?id=${article.id}">`);
+          const videoBoard = $(`<div class="video-board">`);
+          const thumbnail = $(`<div class="thumbnail">`);
+          thumbnail.append($(`<img class="thumbnail-image" src="https://img.youtube.com/vi/${article.option.video_id}/maxresdefault.jpg" />`));
+          const videoDetail = $(`<div class="video-detail">`);
+          videoDetail.append($(`<span class="video-title">${article.title}</span>`))
+                     .append($(`<span class="comment-count">${article.commentlist.length}</span>`))
+                     .append($(`<div class="video-content">${article.content}</div>`))
+                     .append($(`<div class="video-view-count"><span>${article.timeLocal}</span> | 조회 <span>${article.view_count}</span> |<span>${article.writer.name}</span></div>`));
+          
+          videoBoard.append(thumbnail).append(videoDetail);
+          articleDiv.append(videoBoard);
+
+          $('#board').append(articleDiv);
+        });
+      }
+      
+      const ajax = getNextArticles();
+      
+      window.addEventListener("scroll", function() {
+        if ($(window).scrollTop() + $(window).height() === $(document).height()) {
+          ajax();
+        }
+      });
+    </script>
   </body>
 </html>
