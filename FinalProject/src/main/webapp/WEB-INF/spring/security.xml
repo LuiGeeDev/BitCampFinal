@@ -28,12 +28,17 @@
       access="hasRole('MANAGER')" />
     <intercept-url pattern="/**"
       access="isAuthenticated()" />
-    <form-login login-page="/login"
-      login-processing-url="/login" default-target-url="/"
+    <form-login 
+      login-page="/login"
+      login-processing-url="/login" 
+      default-target-url="/"
       authentication-failure-url="/login-error" />
-    <logout logout-url="/logout" logout-success-url="/login"
-      delete-cookies="remember_cookie" invalidate-session="true" />
-    <remember-me key="autoLoginKey"
+    <logout 
+      logout-url="/logout" 
+      logout-success-url="/login"
+      delete-cookies="remember_cookie" 
+      invalidate-session="true" />
+    <remember-me key="autoLoginKey" 
       token-validity-seconds="604800"
       remember-me-parameter="remember-me"
       remember-me-cookie="remember_cookie"

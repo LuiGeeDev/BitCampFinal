@@ -3,18 +3,13 @@ package kr.or.bit.service;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.config.ViewResolversBeanDefinitionParser;
 
 import kr.or.bit.dao.ArticleDao;
-import kr.or.bit.dao.GeneralDao;
-import kr.or.bit.dao.HomeworkDao;
 import kr.or.bit.dao.QnaDao;
 import kr.or.bit.dao.TroubleShootingDao;
 import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.ArticleOption;
-import kr.or.bit.model.TroubleShooting;
 import kr.or.bit.model.Video;
 
 
@@ -44,8 +39,7 @@ public class ArticleUpdateService implements ArticleOri {
   }
   
   public void updateTroubleShooting(int id ) {
-    TroubleShootingDao troubleshootingdao= sqlSession.getMapper(TroubleShootingDao.class);
-    troubleshootingdao.updateTroubleShootingByIssueClosed(id);
+
   }
   
   public void updateQna() {

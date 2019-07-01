@@ -1,14 +1,11 @@
 package kr.or.bit.dao;
 
-import kr.or.bit.model.Article;
-import kr.or.bit.model.ArticleOption;
 import kr.or.bit.model.General;
 
 public interface GeneralDao extends OptionDao {
-  
-  void insertGeneral(ArticleOption general);
-  
+  void insertGeneral(General general);
+
   void updateGeneral(String filename);
-  
-  General selectGeneralByArticleId(Article article);
+
+  General selectGeneralByArticleId(int article_id);
 }

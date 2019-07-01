@@ -32,7 +32,7 @@ public class VideoController {
   
   @GetMapping("/home")
   public String videoHome(Model model) {
-    List<Article> videoList = articleService.selectAllArticle(VIDEO_BOARD_ID);
+    List<Article> videoList = articleService.selectAllArticle("video", VIDEO_BOARD_ID);
     model.addAttribute("videoList", videoList);
     
     return "video/home";
@@ -44,12 +44,10 @@ public class VideoController {
      * parameter로 받은 아이디 값을 이용, 해당하는 글을 불러와서 페이지에 글을 넘겨준다
      */
     System.out.println(id);
-    Article article = articleService.selectOneArticle(id);
+    Article article = articleService.selectOneArticle("video", id);
     VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
-    Video video = videoDao.selectVideoByArticleId(id);
     
     model.addAttribute("article", article);
-    model.addAttribute("video", video);
     return "video/detail";
   }
 
@@ -71,6 +69,6 @@ public class VideoController {
     video.setVideo_id(url.substring(beginIndex));
 
     articleInsertService.writeArticle(article, video);
-    return "redirect:/video/detail";
+    return "redirect:/video/detail?id=" + article.getId();
   }
 }

@@ -98,7 +98,10 @@
             <br></span><span
             class="td2">답변</span></td>
           <td colspan="2"><p class="tdtitle"><span th:text="${list.title}"></span></p>
-            <p class="tdcontent"><span th:utext="${list.content}"></span></p></td>
+            <p class="tdcontent">
+            <span th:utext="${list.content}">
+            
+            </span></p></td>
         </tr>
         <tr>
           <td class="td2">
@@ -108,7 +111,7 @@
               id="c1">Spring</span> <span id="c2">Java</span> <span
               id="c3">C++</span>
           </span></td>
-          <td class="td4"><span th:text="${list.writer}"></span></td>
+          <td class="td4"><span th:text="${list.writer.username}"></span></td>
         </tr>
         <tr>
         <td colspan="3">
