@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	values (#{article_id}, #{group_id})
   </insert>
   <update id="updateTroubleShootingByIssueClosed">
-	{call CHANGESTATUS("TROUBLESHOOTING",#{article_id})}
+	{call CHANGESTATUS("TROUBLESHOOTING",#{id})}
   </update>
   <select id="selectTroubleShootingByArticleId" resultType="kr.or.bit.model.TroubleShooting">
   	select id, video_id article_id 
