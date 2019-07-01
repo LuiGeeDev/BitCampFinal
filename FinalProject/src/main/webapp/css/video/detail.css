@@ -122,3 +122,14 @@ body {
 	padding : 10px 0px 10px 30px;
 	font-weight:bold;
 }
+.spin-where {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+}
+
+.spinner-border {
+  width: 3rem; 
+  height: 3rem;
+}
+
