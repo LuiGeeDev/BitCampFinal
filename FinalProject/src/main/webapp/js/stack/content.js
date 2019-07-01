@@ -1,5 +1,20 @@
-var currentPosition = parseInt($("#sidebox").css("top"));
-$(window).scroll(function() { 
-  var position = $(window).scrollTop();
-  $('#sidebox').animate({top:$(window).scrollTop() },{queue: false, duration: 500});
-}); 
+$(document).ready(function() {
+  var currentPosition = parseInt($("#floatMenu").css("top"));
+  $(window).scroll(function() {
+    var position = $(window).scrollTop();
+    $("#floatMenu").stop().animate({
+      "top" : position + currentPosition + "px"
+    }, 1000);
+  });
+});
+$(document).ready(function() {
+  $('#top1,#top2,#top3,#bottom1,#c_w1,#category1,#g_w1').click(function() {
+    var id = $(this).attr("href");
+    var offset = 60;
+    var target = $(id).offset().top - offset;
+    $('html,body').animate({
+      scrollTop : target
+    }, 500);
+    event.preventDefault();
+  });
+});
