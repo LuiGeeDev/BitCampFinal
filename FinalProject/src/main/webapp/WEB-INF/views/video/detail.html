@@ -30,7 +30,8 @@
           </div>
           <div id="detailContentText" th:utext="${article.content}"></div>
           <div id="voteButtonWrapper">
-          	<button class="btn btn-primary btn-sm" id="voteButton">추천 <span id="voteText" th:utext = "${article.vote_count}">0</span></button>
+          	<button class="btn btn-primary btn-sm" id="voteButton">
+          	<i class="fas fa-thumbs-up" id="thumbIcon" th:classappend="${voteStatus} == 1 ? 'voted'"></i>  <span id="voteText" th:utext = "${article.vote_count}">0</span></button>
           </div>
         </div>
       </div>
@@ -39,34 +40,33 @@
         <a class="btn btn-primary btn-sm" th:href="@{/video/delete(id = ${article.id})}"id="deletebtn">삭제</a>
         <a class="btn btn-primary btn-sm" th:href="@{/video/home}">목록</a>
       </div>
-      <div id="commentsWrapper">
-        <div id="commentsContent">
-          <div id="commentsText">
-            <div id="commentsWriter">
-              <span id="writerIcon">
-                <img src="https://via.placeholder.com/32" id="icon" />
-              </span>
-              <span id="writerName">권순조</span>
-              <span id="writeDate">2019.6.22 17:59</span>
-            </div>
-            <div id="commentsDetail">사퇴하겠습니다</div>
-          </div>
-        </div>
-        <div id="commentsContent">
-          <div id="commentsText">
-            <div id="commentsWriter">
-              <span id="writerIcon">
-                <img src="https://via.placeholder.com/32" id="icon" />
-              </span>
-              <span id="writerName">이힘찬</span>
-              <span id="writeDate">2019.6.22 17:55</span>
-            </div>
-            <div id="commentsDetail">이고잉님 사랑해용 쀼쀼</div>
-          </div>
-        </div>
+      <!-- 추가 ) 댓글수 -->
+      <div>댓글 [[${article.commentlist.size()}]]개</div>
+      <!-- 추가 ) 댓글 insert form -->
+      <div>
+          <form th:action="@{/video/commentwrite(id=${article.id})}" method="post">
+            <textarea name="content" class="comtext"></textarea>
+            <br> <input type="submit"
+              class="btn btn-primary btnalign" value="등록">
+          </form>
       </div>
-    </div>
-
+      <!-- 추가 ) 댓글 목록 불러오는 기능 -->
+      <div id="commentsWrapper">
+        <div id="commentsContent" class="iteration" th:each="list : ${article.commentlist}">
+          <div id="commentsText">
+            <div id="commentsWriter">
+              <span id="writerIcon">
+                <img src="https://via.placeholder.com/32" id="icon" />
+              </span>
+              <span id="writerName"><span th:text="${list.username}"></span>
+              <a th:href="@{/video/commentdelete(id=${list.id})}">[삭제]</a>
+              </span>
+              <span id="writeDate"><span th:text="${list.updated_time}"></span></span>
+            </div>
+            <div id="commentsDetail"><span th:text="${list.content}"></span></div>
+          </div>
+        </div>
+        </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script th:inline="javascript">
     $(function() {
@@ -81,16 +81,19 @@
 
  
       $('#voteButton').click(function(data){
-        var para = document.location.href.split("?"); 
-        var param = para[1].split("=");
         $.ajax({
           url:"/ajax/vote",
           data:{
-            articleId:param[1],           
+            articleId: [[${article.id}]],           
           },
           method:"post",
           success:function(data){
-			      $("#voteText").html(data);
+			  $("#voteText").html(data.countVote);
+			  if(data.checkStatus == 1){
+				  $('#thumbIcon').addClass("voted");
+			  }else{
+				  $('#thumbIcon').removeClass("voted");
+			  }
           }
         })
       });

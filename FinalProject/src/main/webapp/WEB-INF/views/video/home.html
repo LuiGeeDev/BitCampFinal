@@ -33,9 +33,10 @@
                   생활코딩 Egoing님과 함께하는 HTML5 기초강좌 ...
                 </div>
                 <div class="video-view-count">
-                  <span>22시간 전</span> | 
+                  <span th:text="${#temporals.format(video.timeLocal, 'yyyy-MM-dd')}">22시간 전</span> | 
                   조회 <span th:text="${video.view_count}">43</span> |
-                  <span th:text="${video.writer.name}">매니저</span>
+                   <span th:text="${video.writer.name}">매니저</span> | 
+                   <span th:text="${video.vote_count}"></span>
                 </div>
               </div>
             </div>
@@ -88,10 +89,14 @@
           const thumbnail = $(`<div class="thumbnail">`);
           thumbnail.append($(`<img class="thumbnail-image" src="https://img.youtube.com/vi/${article.option.video_id}/maxresdefault.jpg" />`));
           const videoDetail = $(`<div class="video-detail">`);
+          const time = article.timeLocal;
+          const timeString = `${time.year}-${time.monthValue < 10 ? "0" + time.monthValue : time.monthValue}-${time.dayOfMonth < 10 ? "0" + time.dayOfMonth : time.dayOfMonth}`;
+          console.log(timeString);
+          
           videoDetail.append($(`<span class="video-title">${article.title}</span>`))
                      .append($(`<span class="comment-count">${article.commentlist.length}</span>`))
                      .append($(`<div class="video-content">${article.content}</div>`))
-                     .append($(`<div class="video-view-count"><span>${article.timeLocal}</span> | 조회 <span>${article.view_count}</span> |<span>${article.writer.name}</span></div>`));
+                     .append($(`<div class="video-view-count"><span>${timeString}</span> | 조회 <span>${article.view_count}</span> |<span>${article.writer.name}</span></div>`));
           
           videoBoard.append(thumbnail).append(videoDetail);
           articleDiv.append(videoBoard);
@@ -107,6 +112,12 @@
           ajax();
         }
       });
+      
+      function formatTime(ms) {
+        const time = new Date(ms);
+        const timeString = `${time.getHours() <= 12 ? time.getHours() : time.getHours() - 12}:${time.getMinutes() < 10 ? "0" + time.getMinutes() : time.getMinutes()} ${time.getHours() <= 11 ? 'AM' : 'PM'}`;
+        return timeString;
+      }
     </script>
   </body>
 </html>
