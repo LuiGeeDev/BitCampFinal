@@ -23,6 +23,7 @@ import kr.or.bit.dao.MessageDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.ChatMessage;
 import kr.or.bit.model.Classroom;
+import kr.or.bit.model.Files;
 import kr.or.bit.model.Message;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleVoteService;
@@ -47,7 +48,7 @@ public class AjaxController {
   public ChatMessage uploadFile(HttpServletRequest request, int group_id, long time, String name, MultipartFile file)
       throws IllegalStateException, IOException {
     FileUploadService service = new FileUploadService();
-    String filepath = service.uploadFile(file, request);
+    Files filepath = service.uploadFile(file, request);
 
     ChatMessage message = new ChatMessage();
     message.setUsername("fileServer");
@@ -55,7 +56,7 @@ public class AjaxController {
     message.setContent(file.getOriginalFilename());
     message.setTime(time);
     message.setGroup_id(group_id);
-    message.setFilepath(filepath);
+    message.setFilepath(filepath.getFilename());
 
     return message;
   }

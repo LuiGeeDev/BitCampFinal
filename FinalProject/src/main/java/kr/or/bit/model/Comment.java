@@ -15,7 +15,9 @@ public class Comment {
   private LocalDateTime timeLocal;
   private LocalDateTime updatedTimeLocal;
   private HashMap<String,Integer> vote;
-
+  private String profile_photo;
+  
+  
   public int getId() {
     return id;
   }
@@ -79,4 +81,21 @@ public class Comment {
   public void setUpdatedTimeLocal(LocalDateTime updatedTimeLocal) {
     this.updatedTimeLocal = updatedTimeLocal;
   }
+
+  public HashMap<String, Integer> getVote() {
+    return vote;
+  }
+
+  public void setVote(HashMap<String, Integer> vote) {
+    this.vote = vote;
+  }
+
+  public String getProfile_photo() {
+    return profile_photo;
+  }
+
+  public void setProfile_photo(String profile_photo) {
+    this.profile_photo = profile_photo;
+  }
+  
 }
