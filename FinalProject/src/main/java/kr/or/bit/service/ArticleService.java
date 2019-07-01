@@ -109,6 +109,7 @@ public class ArticleService {
       case "video":
         VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
         option = videoDao.selectVideoByArticleId(article.getId()); 
+        System.out.println(videoDao);
         break;
       case "troubleshooting":
         TroubleShootingDao troubleShootingDao = sqlSession.getMapper(TroubleShootingDao.class);
