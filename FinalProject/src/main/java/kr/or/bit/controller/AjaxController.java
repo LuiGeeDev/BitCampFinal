@@ -25,6 +25,7 @@ import kr.or.bit.model.ChatMessage;
 import kr.or.bit.model.Classroom;
 import kr.or.bit.model.Message;
 import kr.or.bit.service.ArticleService;
+import kr.or.bit.service.ArticleVoteService;
 import kr.or.bit.service.FileUploadService;
 import kr.or.bit.service.NewsService;
 import kr.or.bit.utils.Helper;
@@ -38,7 +39,10 @@ public class AjaxController {
   
   @Autowired
   private ArticleService articleService;
-
+  
+  @Autowired
+  private ArticleVoteService articleVoteService;
+  
   @PostMapping("/chat/file")
   public ChatMessage uploadFile(HttpServletRequest request, int group_id, long time, String name, MultipartFile file)
       throws IllegalStateException, IOException {
@@ -105,10 +109,8 @@ public class AjaxController {
   }
   @PostMapping("/vote")
   @ResponseBody
-  public Map<String, Object> voteVideoArticle(String articleId, Principal principal){
-	 System.out.println("/////////"+articleId);
-	 System.out.println(principal.getName());
-	 return null; 
+  public int voteVideoArticle(String articleId){
+	 return articleVoteService.insertVote(Integer.parseInt(articleId), Helper.userName());
   }
   @PostMapping("/video/scroll")
   public List<Article> getNextVideoArticles(int article_id) {
