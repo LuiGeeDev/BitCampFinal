@@ -1,5 +1,7 @@
 package kr.or.bit.dao;
 
+import kr.or.bit.model.Files;
+
 public interface FilesDao {
   
   void insertFiles(FilesDao files);
@@ -8,5 +10,5 @@ public interface FilesDao {
   
   void deleteFiles(int id);
   
-  FilesDao selectFilesById(int id);
+  Files selectFilesById(int id);
 }
