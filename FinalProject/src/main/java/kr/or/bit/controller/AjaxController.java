@@ -24,6 +24,7 @@ import kr.or.bit.model.Article;
 import kr.or.bit.model.ChatMessage;
 import kr.or.bit.model.Classroom;
 import kr.or.bit.model.Message;
+import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.FileUploadService;
 import kr.or.bit.service.NewsService;
 import kr.or.bit.utils.Helper;
@@ -34,6 +35,9 @@ public class AjaxController {
 
   @Autowired
   private SqlSession sqlSession;
+  
+  @Autowired
+  private ArticleService articleService;
 
   @PostMapping("/chat/file")
   public ChatMessage uploadFile(HttpServletRequest request, int group_id, long time, String name, MultipartFile file)
@@ -99,11 +103,19 @@ public class AjaxController {
     }
     return classroomList;
   }
+<<<<<<< HEAD
   @PostMapping("/vote")
   @ResponseBody
   public Map<String, Object> voteVideoArticle(String articleId, Principal principal){
 	 System.out.println("/////////"+articleId);
 	 System.out.println(principal.getName());
 	 return null; 
+=======
+  
+  @PostMapping("/video/scroll")
+  public List<Article> getNextVideoArticles(int article_id) {
+    List<Article> list = articleService.selectArticlesOnNextPage(article_id);
+    return list;
+>>>>>>> 20871c3f3563ce380aa89ad258cf3ba60bfc95d2
   }
 }
