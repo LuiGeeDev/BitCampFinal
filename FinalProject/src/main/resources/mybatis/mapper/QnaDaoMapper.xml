@@ -3,25 +3,18 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 
-  void insertQna(int articleid);
-  
-  void updateQnaByAnswered(String qna, int id);
-  
-  void updateQnaByTeacherAnswered(String qnat, int id);
-  
-  void selectQnaByArticleId(int id);
+<!-- void insertQna(int articleid); void updateQnaByAnswered(String qna, 
+  int id); void updateQnaByTeacherAnswered(String qnat, int id); void selectQnaByArticleId(int 
+  id); -->
 
-
- -->
 <!-- 작업자: 권순조 -->
 <mapper namespace="kr.or.bit.dao.QnaDao">
   <insert id="insertQna">
-  	insert into QNA(article_id)
-	values (#{article_id})
+    insert into QNA(article_id)
+    values (#{article_id})
   </insert>
   <update id="updateQnaByAnswered">
-  	{call CHANGE("QNA", #{id})}
+    {call CHANGE("QNA", #{id})}
   </update>
   <update id="updateQnaByTeacherAnswered">
 	{call CHANGE("QNA", #{id})}

@@ -71,6 +71,7 @@ public class VideoController {
     articleInsertService.writeArticle(article, video);
     return "redirect:/video/detail?id=" + article.getId();
   }
+<<<<<<< HEAD
   
   @GetMapping("/delete")
   public String deleteVideo(int id) {
@@ -84,4 +85,7 @@ public class VideoController {
   
   
   
+=======
+
+>>>>>>> d9bcb67bb714cf7fa02760e32586adee78c3a70c
 }

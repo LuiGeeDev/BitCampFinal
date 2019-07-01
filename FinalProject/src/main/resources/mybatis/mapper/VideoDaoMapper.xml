@@ -19,4 +19,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     from video
     where article_id=#{article_id}
   </select>
+  
+  <update id="deleteVideo" parameterType="Integer">
+  {call CHANGESTATUS("ARTICLE",#{id})}
+  </update>
 </mapper>

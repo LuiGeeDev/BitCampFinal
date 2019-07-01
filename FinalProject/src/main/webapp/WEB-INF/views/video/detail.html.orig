@@ -67,6 +67,7 @@
       </div>
     </div>
 
+<<<<<<< HEAD
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script th:inline="javascript">
     $(function() {
@@ -78,8 +79,51 @@
         }    
         })
       });
+      
+   
+    
+   
+    
+    
+   /*  $("#delete").click(function(event) {
+      
+      Swal.fire({
+        title: '정말 삭제하시겠습니까?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#F39B10',
+        cancelButtonColor: '#A6A6A6',
+        confirmButtonText: '네',
+        cancelButtonText: '아니요'
+      }).then((result) => {
+        if (result.value) {
+         
+          $.ajax({
+            url: "/ajax/message/delete",
+            type: "POST",
+            data: {
+              id: messageId
+            },
+            success: function(data) {
+              Swal.fire({
+                	title: '삭제되었습니다',
+                	type: 'success',
+                	confirmButtonText: '확인',
+                	confirmButtonColor: '#F39B10'
+                  
+              }).then(function() {
+                  location.href = "/message";
+                });
+              
+            }
+          });
+          
+        }
+      })
 
- 
+    }); */
+=======
+    <script>
       $('#voteButton').click(function(data){
         var para = document.location.href.split("?"); 
         var param = para[1].split("=");
@@ -94,6 +138,7 @@
           }
         })
       });
+>>>>>>> 47d4c63805a0929d243846a2fdb335ec1213d14e
     </script>
   </body>
 </html>

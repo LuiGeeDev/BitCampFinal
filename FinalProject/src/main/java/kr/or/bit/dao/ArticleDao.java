@@ -33,4 +33,8 @@ public interface ArticleDao {
   void countVote(int id);
   
   int getMostRecentArticleId();
+  
+  List<Article> selectArticlesOnNextPage(int article_id);
+  
+  void updateEable(int id);
 }

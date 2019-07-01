@@ -10,4 +10,6 @@ public interface VideoDao {
   void updateVideo(ArticleOption video);
   
   Video selectVideoByArticleId(int article_id);
+  
+  void deleteVideo(int id);
 }
