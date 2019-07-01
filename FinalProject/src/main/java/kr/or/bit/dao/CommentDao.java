@@ -23,6 +23,8 @@ public interface CommentDao {
   
   Comment selectComment(@Param("article_id") int article_id, @Param("id") int id);
   
+  Comment selectOneComment(int id);
+  
   void insertComment(Comment comment); // ArticleDTO의 id[글번호]
 
   void updateComment(Comment comment);

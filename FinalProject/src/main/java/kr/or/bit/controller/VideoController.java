@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
+import kr.or.bit.model.Comment;
 import kr.or.bit.model.Video;
 import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleUpdateService;
+import kr.or.bit.service.ArticleVoteService;
+import kr.or.bit.service.CommentService;
 import kr.or.bit.utils.Helper;
 
 @Controller
@@ -31,7 +34,12 @@ public class VideoController {
   private ArticleUpdateService articleUpdateService; 
   @Autowired
   private ArticleService articleService;
-  
+  @Autowired
+  private ArticleVoteService articleVoteService;
+  @Autowired
+  private CommentService commentService;
+
+
   @GetMapping("/home")
   public String videoHome(Model model) {
     List<Article> videoList = articleService.selectAllArticle("video", VIDEO_BOARD_ID);
@@ -89,8 +97,11 @@ public class VideoController {
     Video video = new Video();
     int beginIndex = "https://youtu.be/".length();
     video.setVideo_id(url.substring(beginIndex));
-  
-    articleUpdateService.updateArticle(article, video);
+    
+
+    articleUpdateService.updateArticle(article);
+    articleUpdateService.updateArticleOption(article.getId(), video);
+    
     return "redirect:/video/home";
   }
 
@@ -101,4 +112,21 @@ public class VideoController {
    
     return "redirect:/video/home";
   }
+  
+  @PostMapping("/commentwrite")
+  public String writeCommentVideo(int id, Comment comment) {
+    comment.setUsername(Helper.userName());
+    comment.setArticle_id(id);
+    commentService.insertComment(comment);
+    return "redirect:/video/detail?id="+id;
+  }
+  
+  @GetMapping("/commentdelete")
+  public String deleteCommentVideo(int id) {
+    Comment comment = commentService.selectOnecomment(id);
+    int article_id = comment.getArticle_id();
+    commentService.deleteComment(id);
+    return "redirect:/video/detail?id="+article_id;
+  }
+  
 }

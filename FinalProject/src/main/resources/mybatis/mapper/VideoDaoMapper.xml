@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </update>
   <select id="selectVideoByArticleId"
     resultType="kr.or.bit.model.Video">
-    select id, video_id, article_id
+    select id, video_id, article_id, (SELECT COUNT(*) FROM ARTICLE_VOTE WHERE ARTICLE_ID = #{article_id}) as "vote_count"
     from video
     where article_id=#{article_id}
   </select>
