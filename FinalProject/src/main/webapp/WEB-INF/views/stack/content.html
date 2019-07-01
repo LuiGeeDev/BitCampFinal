@@ -38,7 +38,8 @@
           <div>
             <div id="floatMenu">
               <img th:src="@{/css/stack/like.png}" id="imgp2"><br>
-              0<br> <img th:src="@{/css/stack/unlike.png}"
+              &nbsp;<span th:text="${stackcontent.vote_count}"></span>
+              <br> <img th:src="@{/css/stack/unlike.png}"
                 id="imgp2">
             </div>
           </div>
@@ -48,27 +49,36 @@
         <td class="td5"><img th:src="@{/css/stack/profile.jpg}"
           class="imgp"></td>
         <td colspan="2" class="td4">
-          <p class="pwriter">dossi</p>
-          <p class="pfont">게시일:2019.01.28</p>
-          <p class="pfont">41view</p>
+          <p class="pwriter"><span th:text="${stackcontent.writer.username}"></span></p>
+          <p class="pfont">게시일:<span th:text="${stackcontent.updated_time}"></span></p>
+          <p class="pfont"><span th:text="${stackcontent.view_count}"></span>view</p>
         </td>
       </tr>
     </table>
-    <!-- 댓글창 -->
+    <!-- 댓글insert -->
     <table>
       <tr>
-        <td class="comtitle" colspan="4">총 [4]개의 답변</td>
+        <td class="comtitle" colspan="4">총 [<span th:text="${stackcontent.commentlist.size()}"></span>]개의 답변</td>
       </tr>
       <tr>
         <td class="ctd1" colspan="3">
-          <form th:action="@{/}" method="post">
-            <textarea name="comment" class="comtext"></textarea>
+          <form th:action="@{/stack/commentwrite(id=${stackcontent.id})}" method="post">
+            <textarea name="content" class="comtext"></textarea>
             <br> <input type="submit"
               class="btn btn-primary btnalign" value="등록">
           </form>
         </td>
         <td class="ctd2"></td>
       </tr>
+    </table>
+    <!-- 댓글목록 -->
+    <table class="iteration" th:each="list : ${stackcontent.commentlist}">
+    <tr>
+    <td><span th:text="${list.username}"></span></td><td><span th:text="${list.updated_time}"></span></td>
+    </tr>
+    <tr>
+    <td colspan="2"><span th:text="${list.content}"></span></td>
+    </tr>
     </table>
 
   </div>

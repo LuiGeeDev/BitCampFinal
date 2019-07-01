@@ -12,7 +12,8 @@
         <div id="detailHead">
           <span id="detailTitle" th:text="${article.title}">[생활코딩] HTML5 기초강좌</span>
           <div id="detailViewCount">
-            <span th:text="${article.writer.name}">매니저</span> | 
+            <span th:text="${article.writer.name}">매니저</span> |
+             
             <span th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd')}"></span>
             | 
             조회수 <span id="point" th:text="${article.view_count}">43</span> | 
@@ -27,18 +28,15 @@
               id="video"
             ></iframe>
           </div>
-          <div id="detailContentText" th:utext="${article.content}">
-            이고잉님과 함께하는 HTML5 기초강좌입니다 . <br />
-            출처 :
-            <a href="https://opentutorials.org/module/3129"
-              >https://opentutorials.org/module/3129</a
-            >
+          <div id="detailContentText" th:utext="${article.content}"></div>
+          <div id="voteButtonWrapper">
+          	<button class="btn btn-primary btn-sm" id="voteButton">추천 <span id="voteText" th:utext = "${article.vote_count}">0</span></button>
           </div>
         </div>
       </div>
       <div id="buttonWrapper">
-        <a class="btn btn-primary btn-sm" th:href="@{/video/edit}">수정</a>
-        <a class="btn btn-primary btn-sm" th:href="@{/video/delete}">삭제</a>
+        <a class="btn btn-primary btn-sm" th:href="@{/video/edit(id=${article.id},video_id=${article.option.video_id})}">수정</a>
+        <a class="btn btn-primary btn-sm" th:href="@{/video/delete(id = ${article.id})}"id="deletebtn">삭제</a>
         <a class="btn btn-primary btn-sm" th:href="@{/video/home}">목록</a>
       </div>
       <div id="commentsWrapper">
@@ -69,8 +67,33 @@
       </div>
     </div>
 
-    <script>
-      console.log("Hello, world!");
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script th:inline="javascript">
+    $(function() {
+      $("#deletebtn").click(function(event) {
+        const answer = confirm("정말 삭제하시겠습니까?");
+        if (!answer) {
+          event.preventDefault();
+         /*  location.href = "/video/delete?id=" + [[${article.id}]]; */
+        }    
+        })
+      });
+
+ 
+      $('#voteButton').click(function(data){
+        var para = document.location.href.split("?"); 
+        var param = para[1].split("=");
+        $.ajax({
+          url:"/ajax/vote",
+          data:{
+            articleId:param[1],           
+          },
+          method:"post",
+          success:function(data){
+			      $("#voteText").html(data);
+          }
+        })
+      });
     </script>
   </body>
 </html>
