@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     (SELECT count(*) FROM comment WHERE article_id=a.id) as commentnum
     FROM ARTICLE as a
     WHERE BOARD_ID=#{board_id}
-    AND enable=1
+    AND enable = 1
     ORDER BY id DESC
     LIMIT 5
   </select>
@@ -24,6 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM ARTICLE
     WHERE BOARD_ID = 2
     AND id &lt; #{article_id}
+    AND enable = 1
     ORDER BY id DESC
     LIMIT 5
   </select>
