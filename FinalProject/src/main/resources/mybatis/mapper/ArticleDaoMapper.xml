@@ -1,38 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- /*
-*
-* @date: 2019. 06. 28.
-*
-* @author: 권예지
-*
-* @description: ArticleDaMapper로 DAO의 parameter에 들어갈 값을 매핑해서 쿼리문을 보낸다
-* 
-*/ -->
+<!-- /* * * @date: 2019. 06. 28. * * @author: 권예지 * * @description: ArticleDaMapper로 
+  DAO의 parameter에 들어갈 값을 매핑해서 쿼리문을 보낸다 * */ -->
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.bit.dao.ArticleDao">
-  <select id="selectAllArticleByBoardId" resultType="kr.or.bit.model.Article">     
-	SELECT id, title, content, time, updated_time, view_count, original_id, level, username, board_id,
-	(SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum,
-	(SELECT count(*) FROM comment WHERE article_id=a.id) as commentnum
-	FROM ARTICLE as a
-	WHERE BOARD_ID=#{board_id} ORDER BY DECS
-  </select> 
-  <select id="selectOneArticle" resultType="kr.or.bit.model.Article">     
-	SELECT id, title, content, time, view_count, original_id, level, username, board_id, updated_time
-	FROM ARTICLE 
-	WHERE ID=#{id}
-  </select> 
+  <select id="selectAllArticleByBoardId"
+    resultType="kr.or.bit.model.Article">
+    SELECT id, title, content, time, updated_time, view_count, original_id,
+    level, username, board_id,
+    (SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum,
+    (SELECT count(*) FROM comment WHERE article_id=a.id) as commentnum
+    FROM ARTICLE as a
+    WHERE BOARD_ID=#{board_id}
+    ORDER BY id DESC
+    LIMIT 5
+  </select>
+  <select id="selectArticlesOnNextPage"
+    resultType="kr.or.bit.model.Article">
+    SELECT id, title, content, time, updated_time, view_count, original_id,
+    level, username, board_id
+    FROM ARTICLE
+    WHERE BOARD_ID = 2
+    AND id &lt; #{article_id}
+    ORDER BY id DESC
+    LIMIT 5
+  </select>
+  <select id="selectOneArticle"
+    resultType="kr.or.bit.model.Article">
+    SELECT id, title, content, time, view_count, original_id, level, username,
+    board_id, updated_time
+    FROM ARTICLE
+    WHERE ID=#{id}
+  </select>
   <insert id="insertArticle">
- 	INSERT INTO article(original_id, time, updated_time, title, content, username, board_id)
- 	VALUES (#{id}, now(), now(), #{title}, #{content}, #{username}, #{board_id})
+    INSERT INTO article(original_id, time, updated_time, title, content,
+    username, board_id)
+    VALUES (#{id}, now(), now(), #{title}, #{content}, #{username}, #{board_id})
   </insert>
   <delete id="deleteArticle">
-    DELETE FROM article 
+    DELETE FROM article
     WHERE id=#{id}
   </delete>
-  <update id="updateArticle" parameterType="kr.or.bit.model.Article">
+  <update id="updateArticle"
+    parameterType="kr.or.bit.model.Article">
     UPDATE article
     SET updated_time=now(),
     title=#{title},
@@ -44,28 +55,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     VALUES (#{id}, #{username})
   </insert>
   <delete id="deleteVote">
-  	DELETE FROM article_vote
-  	WHERE id=#{id} and username=#{username}
+    DELETE FROM article_vote
+    WHERE id=#{id} and username=#{username}
   </delete>
   <select id="countVote" resultType="kr.or.bit.model.ArticleVote">
-  	SELECT count(username)
-  	FROM article_vote
-  	WHERE article_id=#{id}
+    SELECT count(username)
+    FROM article_vote
+    WHERE article_id=#{id}
   </select>
   <select id="getMostRecentArticleId" resultType="int">
     SELECT MAX(id)
     FROM ARTICLE
   </select>
 </mapper>
-<!--  
- public interface ArticleDao {
-  void insertArticle(Article article);
- 
-  void updateArticle(Article article);
-
-  void deleteArticle(int id);
-
-  List<Article> selectAllArticle(int board_id);
-}
-  -->
+<!-- public interface ArticleDao { void insertArticle(Article article); void 
+  updateArticle(Article article); void deleteArticle(int id); List<Article> 
+  selectAllArticle(int board_id); } -->
  
