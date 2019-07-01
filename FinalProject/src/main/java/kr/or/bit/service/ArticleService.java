@@ -90,6 +90,9 @@ public class ArticleService {
       article.setTimeLocal(article.getTime().toLocalDateTime());
       article.setUpdatedTimeLocal(article.getUpdated_time().toLocalDateTime());
       article.setCommentlist(commentdao.selectAllComment(article.getId()));
+      for (Comment comment: article.getCommentlist()) {
+        comment.setTimeLocal(comment.getTime().toLocalDateTime());
+      }
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
       article.setOption(option);
     }
@@ -133,8 +136,14 @@ public class ArticleService {
     article.setTimeLocal(article.getTime().toLocalDateTime());
     article.setUpdatedTimeLocal(article.getUpdated_time().toLocalDateTime());
     article.setCommentlist(commentdao.selectAllComment(id));
+    for (Comment comment: article.getCommentlist()) {
+      System.out.println(comment.getTime());
+      comment.setTimeLocal(comment.getTime().toLocalDateTime());
+    }
+    
     article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
-    article.setOption(option);
+    article.setOption(option);    
+    
     return article;
   }
 }
