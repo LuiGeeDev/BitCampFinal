@@ -19,29 +19,26 @@ import kr.or.bit.model.Video;
 public class ArticleUpdateService implements ArticleOri {
   @Autowired
   private SqlSession sqlSession;
-  
-  public void updateArti(Article article) {
+
+  public void updateArticle(Article article) {
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
     articledao.updateArticle(article);
   }
-  
-  public void updateArticle(Article article, ArticleOption option) {
-    ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
+
+  public void updateArticleOption(int articleid, ArticleOption option) {
     String optionname = option.getClass().getName().toLowerCase().trim().substring("kr.or.bit.model.".length());
-    int articleid = article.getId();
-    articledao.updateArticle(article);
-    /*    if (optionname.equals("homework")) {
-    System.out.println("피카");
-    System.out.println("아직 ㄴ");
-  } else if (optionname.equals("general")) {
-    System.out.println("피카");
-    System.out.println("아직 ㄴ");
-  } else if (optionname.equals("video")) {
-    VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
-    Video video = (Video) option;
-    video.setArticle_id(articleid);
-    videoDao.updateVideo(video);
-  }*/
+    if (optionname.equals("homework")) {
+      System.out.println("피카");
+      System.out.println("아직 ㄴ");
+    } else if (optionname.equals("general")) {
+      System.out.println("피카");
+      System.out.println("아직 ㄴ");
+    } else if (optionname.equals("video")) {
+      VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
+      Video video = (Video) option;
+      video.setArticle_id(articleid);
+      videoDao.updateVideo(video);
+    }
   }
 
   public void updateChangeStatus(String optionname, int id) {
