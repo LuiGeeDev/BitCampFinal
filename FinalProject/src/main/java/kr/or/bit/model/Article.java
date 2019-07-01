@@ -22,7 +22,7 @@ public class Article {
   private LocalDateTime timeLocal;
   private LocalDateTime updatedTimeLocal;
   private Member writer;
-  private List<String> tags;
+  private List<Tag> tags;
   private List<Comment> commentlist;
   private ArticleOption option;
   private Map<String, Integer> vote;
@@ -30,16 +30,16 @@ public class Article {
   private int commentnum;
 
   private int vote_count;
-  
+
   public int getVote_count() {
-	return vote_count;
-}
+    return vote_count;
+  }
 
-public void setVote_count(int vote_count) {
-	this.vote_count = vote_count;
-}
+  public void setVote_count(int vote_count) {
+    this.vote_count = vote_count;
+  }
 
-public LocalDateTime getUpdatedTimeLocal() {
+  public LocalDateTime getUpdatedTimeLocal() {
     return updatedTimeLocal;
   }
 
@@ -155,14 +155,6 @@ public LocalDateTime getUpdatedTimeLocal() {
     this.writer = writer;
   }
 
-  public List<String> getTags() {
-    return tags;
-  }
-
-  public void setTags(List<String> tags) {
-    this.tags = tags;
-  }
-
   public ArticleOption getOption() {
     return option;
   }
@@ -203,16 +195,21 @@ public LocalDateTime getUpdatedTimeLocal() {
     this.commentnum = commentnum;
   }
 
-@Override
-public String toString() {
-	return "Article [id=" + id + ", title=" + title + ", content=" + content + ", time=" + time + ", updated_time="
-			+ updated_time + ", view_count=" + view_count + ", original_id=" + original_id + ", level=" + level
-			+ ", enable=" + enable + ", username=" + username + ", board_id=" + board_id + ", timeLocal=" + timeLocal
-			+ ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", tags=" + tags + ", commentlist="
-			+ commentlist + ", option=" + option + ", vote=" + vote + ", votenum=" + votenum + ", commentnum="
-			+ commentnum + ", vote_count=" + vote_count + "]";
-}
+  @Override
+  public String toString() {
+    return "Article [id=" + id + ", title=" + title + ", content=" + content + ", time=" + time + ", updated_time="
+        + updated_time + ", view_count=" + view_count + ", original_id=" + original_id + ", level=" + level
+        + ", enable=" + enable + ", username=" + username + ", board_id=" + board_id + ", timeLocal=" + timeLocal
+        + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", tags=" + tags + ", commentlist="
+        + commentlist + ", option=" + option + ", vote=" + vote + ", votenum=" + votenum + ", commentnum=" + commentnum
+        + ", vote_count=" + vote_count + "]";
+  }
 
+  public List<Tag> getTags() {
+    return tags;
+  }
 
-  
+  public void setTags(List<Tag> tags) {
+    this.tags = tags;
+  }
 }

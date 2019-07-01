@@ -17,25 +17,26 @@ import kr.or.bit.model.Article;
  */
 public interface ArticleDao {
   void insertArticle(Article article);
- 
+
   void updateArticle(Article article);
 
   void deleteArticle(int id);
 
   List<Article> selectAllArticleByBoardId(int board_id);
-  
+
   Article selectOneArticle(@Param("id") int id);
-  
+
   void insertVote(@Param("id") int id, @Param("username") String username);
-  
+
   void deleteVote(@Param("id") int id, @Param("username") String username);
-  
+
   int countVote(@Param("id") int id);
-  
+
   int getMostRecentArticleId();
-  
+
   List<Article> selectArticlesOnNextPage(int article_id);
-  
+
   int selectVote(@Param("id") int articleId, @Param("username") String username);
-  
+
+  void updateEable(int id);
 }
