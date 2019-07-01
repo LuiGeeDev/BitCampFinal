@@ -16,7 +16,7 @@ import kr.or.bit.model.TroubleShooting;
 import kr.or.bit.model.Video;
 
 @Service
-public class ArticleUpdateService implements ArticleOri {
+public class ArticleUpdateService{
   @Autowired
   private SqlSession sqlSession;
 
