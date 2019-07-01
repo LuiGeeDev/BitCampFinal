@@ -48,15 +48,13 @@ public class StackController {
   
   //글쓰기 폼 화면으로..
   @GetMapping("/write")
-  public String stackWrite(Model model) {
-    
+  public String stackWrite(Model model) {   
     return "stack/write";
   }
   
   //글쓰기 버튼 누르기..
   @PostMapping("/write")
-  public String stackWriteOk(Article article) {
-    
+  public String stackWriteOk(Article article) {    
     return "stack/home";
   }
   
@@ -64,18 +62,16 @@ public class StackController {
   public String stackCommentWrite(int id, Comment comment) {
     comment.setUsername(Helper.userName());
     comment.setArticle_id(id);
-    commentService.insertComment(comment);
-    
+    commentService.insertComment(comment);   
     return "redirect:/stack/content?id="+id;
   }
   
   
   @GetMapping("/commentdelete")
   public String stackCommentDelete(int id) {
-    commentService.deleteComment(id);
-    
-    return "redirect:/stack/content?id="+id;
-  }
-  
-  
+    Comment comment = commentService.selectOnecomment(id);
+    int article_id = comment.getArticle_id();
+    commentService.deleteComment(id); 
+    return "redirect:/stack/content?id="+article_id;
+  } 
 }

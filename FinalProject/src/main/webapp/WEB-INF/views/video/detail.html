@@ -42,20 +42,6 @@
               <span id="voteText" th:utext="${article.vote_count}">0</span>
             </button>
           </div>
-          <div id="buttonWrapper">
-            <a
-              class="btn btn-primary btn-sm"
-              th:href="@{/video/edit(id=${article.id},video_id=${article.option.video_id})}"
-              >수정</a
-            >
-            <a
-              class="btn btn-primary btn-sm"
-              th:href="@{/video/delete(id = ${article.id})}"
-              id="deletebtn"
-              >삭제</a
-            >
-            <a class="btn btn-primary btn-sm" th:href="@{/video/home}">목록</a>
-          </div>
         </div>
         <!-- 추가 ) 댓글수 -->
         <div>댓글 [[${article.commentlist.size()}]]개</div>
@@ -102,8 +88,25 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
+        </div>
+        	  <div id="buttonWrapper">
+		        <a class="btn btn-primary btn-sm" th:href="@{/video/edit(id=${article.id},video_id=${article.option.video_id})}">수정</a>
+		        <a class="btn btn-primary btn-sm" th:href="@{/video/delete(id = ${article.id})}"id="deletebtn">삭제</a>
+		        <a class="btn btn-primary btn-sm" th:href="@{/video/home}">목록</a>
+		      </div>
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script th:inline="javascript">
+    $(function() {
+      $("#deletebtn").click(function(event) {
+        const answer = confirm("정말 삭제하시겠습니까?");
+        if (!answer) {
+          event.preventDefault();
+         /*  location.href = "/video/delete?id=" + [[${article.id}]]; */
+        }    
+        })
+      });
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script th:inline="javascript">
