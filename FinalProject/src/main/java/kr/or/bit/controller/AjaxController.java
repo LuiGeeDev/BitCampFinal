@@ -103,19 +103,16 @@ public class AjaxController {
     }
     return classroomList;
   }
-<<<<<<< HEAD
   @PostMapping("/vote")
   @ResponseBody
   public Map<String, Object> voteVideoArticle(String articleId, Principal principal){
 	 System.out.println("/////////"+articleId);
 	 System.out.println(principal.getName());
 	 return null; 
-=======
-  
+  }
   @PostMapping("/video/scroll")
   public List<Article> getNextVideoArticles(int article_id) {
     List<Article> list = articleService.selectArticlesOnNextPage(article_id);
     return list;
->>>>>>> 20871c3f3563ce380aa89ad258cf3ba60bfc95d2
   }
 }
