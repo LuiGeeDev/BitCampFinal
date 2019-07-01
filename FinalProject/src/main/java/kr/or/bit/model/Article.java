@@ -24,7 +24,7 @@ public class Article {
   private Date updatedTimeDate;
   private LocalDateTime timeLocal;
   private Member writer;
-  private List<String> tags;
+  private List<Tag> tags;
   private List<Comment> commentlist;
   private ArticleOption option;
   private Map<String, Integer> vote;
@@ -156,15 +156,7 @@ public class Article {
   public void setWriter(Member writer) {
     this.writer = writer;
   }
-
-  public List<String> getTags() {
-    return tags;
-  }
-
-  public void setTags(List<String> tags) {
-    this.tags = tags;
-  }
-
+  
   public ArticleOption getOption() {
     return option;
   }
@@ -204,5 +196,15 @@ public class Article {
   public void setCommentnum(int commentnum) {
     this.commentnum = commentnum;
   }
+
+  public List<Tag> getTags() {
+    return tags;
+  }
+
+  public void setTags(List<Tag> tags) {
+    this.tags = tags;
+  }
+  
+  
 
 }

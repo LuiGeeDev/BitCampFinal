@@ -17,11 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	(SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum,
 	(SELECT count(*) FROM comment WHERE article_id=a.id) as commentnum
 	FROM ARTICLE as a
-<<<<<<< HEAD
 	WHERE BOARD_ID=#{board_id} ORDER BY BOARD_ID DESC
-=======
-	WHERE BOARD_ID=#{board_id} ORDER BY DESC
->>>>>>> 548396c8df20b41b8f5d149806371abfdf8ef862
   </select> 
   <select id="selectOneArticle" resultType="kr.or.bit.model.Article">     
 	SELECT id, title, content, time, view_count, original_id, level, username, board_id, updated_time
