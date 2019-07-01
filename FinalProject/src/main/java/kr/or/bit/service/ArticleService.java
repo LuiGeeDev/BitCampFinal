@@ -33,6 +33,25 @@ public class ArticleService {
   public void updateArticle() {
     
   }
+  
+  public List<Article> selectArticlesOnNextPage(int article_id) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
+    
+    List<Article> articleList = articleDao.selectArticlesOnNextPage(article_id);
+    
+    for (Article article : articleList) {
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+      article.setCommentlist(commentdao.selectAllComment(article.getId()));
+      article.setTimeLocal(article.getTime().toLocalDateTime());
+      article.setUpdatedTimeLocal(article.getUpdated_time().toLocalDateTime());
+      article.setOption(videoDao.selectVideoByArticleId(article.getId())); 
+    }
+    
+    return articleList;
+  }
 
   public List<Article> selectAllArticle(String optionName, int boardId) {//게시판아이디를 기준으로 게시글을 전부 불러오는 함수
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
@@ -68,8 +87,8 @@ public class ArticleService {
           break;
       }
       
-      article.setTimeDate(new Date(article.getTime().getTime()));
-      article.setUpdatedTimeDate(new Date(article.getUpdated_time().getTime()));
+      article.setTimeLocal(article.getTime().toLocalDateTime());
+      article.setUpdatedTimeLocal(article.getUpdated_time().toLocalDateTime());
       article.setCommentlist(commentdao.selectAllComment(article.getId()));
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
       article.setOption(option);
@@ -111,13 +130,11 @@ public class ArticleService {
         break;
     }
     
-    article.setTimeDate(new Date(article.getTime().getTime()));
-    article.setUpdatedTimeDate(new Date(article.getUpdated_time().getTime()));
     article.setTimeLocal(article.getTime().toLocalDateTime());
-    System.out.println(article.getTimeLocal());
+    article.setUpdatedTimeLocal(article.getUpdated_time().toLocalDateTime());
     article.setCommentlist(commentdao.selectAllComment(id));
     article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
     article.setOption(option);
     return article;
-  } 
+  }
 }

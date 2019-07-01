@@ -2,7 +2,6 @@ package kr.or.bit.model;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,18 +19,23 @@ public class Article {
   private String username;
   private int board_id;
 
-  private Date timeDate;
-  private Date updatedTimeDate;
   private LocalDateTime timeLocal;
+  private LocalDateTime updatedTimeLocal;
   private Member writer;
-  private List<String> tags;
+  private List<Tag> tags;
   private List<Comment> commentlist;
   private ArticleOption option;
   private Map<String, Integer> vote;
   private int votenum;
   private int commentnum;
-  
-  
+
+  public LocalDateTime getUpdatedTimeLocal() {
+    return updatedTimeLocal;
+  }
+
+  public void setUpdatedTimeLocal(LocalDateTime updatedTimeLocal) {
+    this.updatedTimeLocal = updatedTimeLocal;
+  }
 
   public LocalDateTime getTimeLocal() {
     return timeLocal;
@@ -39,22 +43,6 @@ public class Article {
 
   public void setTimeLocal(LocalDateTime timeLocal) {
     this.timeLocal = timeLocal;
-  }
-
-  public Date getTimeDate() {
-    return timeDate;
-  }
-
-  public void setTimeDate(Date timeDate) {
-    this.timeDate = timeDate;
-  }
-
-  public Date getUpdatedTimeDate() {
-    return updatedTimeDate;
-  }
-
-  public void setUpdatedTimeDate(Date updatedTimeDate) {
-    this.updatedTimeDate = updatedTimeDate;
   }
 
   public void setVote(Map<String, Integer> vote) {
@@ -156,15 +144,7 @@ public class Article {
   public void setWriter(Member writer) {
     this.writer = writer;
   }
-
-  public List<String> getTags() {
-    return tags;
-  }
-
-  public void setTags(List<String> tags) {
-    this.tags = tags;
-  }
-
+  
   public ArticleOption getOption() {
     return option;
   }
@@ -205,4 +185,23 @@ public class Article {
     this.commentnum = commentnum;
   }
 
+  public List<Tag> getTags() {
+    return tags;
+  }
+
+  public void setTags(List<Tag> tags) {
+    this.tags = tags;
+  }
+  
+
+  @Override
+  public String toString() {
+    return "Article [id=" + id + ", title=" + title + ", content=" + content + ", time=" + time + ", updated_time="
+        + updated_time + ", view_count=" + view_count + ", original_id=" + original_id + ", level=" + level
+        + ", enable=" + enable + ", username=" + username + ", board_id=" + board_id + ", timeLocal=" + timeLocal
+        + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", tags=" + tags + ", commentlist="
+        + commentlist + ", option=" + option + ", vote=" + vote + ", votenum=" + votenum + ", commentnum=" + commentnum
+        + "]";
+  }
 }
+
