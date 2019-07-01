@@ -12,7 +12,8 @@
         <div id="detailHead">
           <span id="detailTitle" th:text="${article.title}">[생활코딩] HTML5 기초강좌</span>
           <div id="detailViewCount">
-            <span th:text="${article.writer.name}">매니저</span> | 
+            <span th:text="${article.writer.name}">매니저</span> |
+             
             <span th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd')}"></span>
             | 
             조회수 <span id="point" th:text="${article.view_count}">43</span> | 
@@ -38,7 +39,7 @@
       </div>
       <div id="buttonWrapper">
         <a class="btn btn-primary btn-sm" th:href="@{/video/edit}">수정</a>
-        <a class="btn btn-primary btn-sm" th:href="@{/video/delete}">삭제</a>
+        <a class="btn btn-primary btn-sm" th:href="@{/video/delete(id = ${article.id})}"id="deletebtn">삭제</a>
         <a class="btn btn-primary btn-sm" th:href="@{/video/home}">목록</a>
       </div>
       <div id="commentsWrapper">
@@ -69,8 +70,60 @@
       </div>
     </div>
 
-    <script>
-      console.log("Hello, world!");
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script th:inline="javascript">
+    $(function() {
+      $("#deletebtn").click(function(event) {
+        const answer = confirm("정말 삭제하시겠습니까?");
+        if (!answer) {
+          event.preventDefault();
+         /*  location.href = "/video/delete?id=" + [[${article.id}]]; */
+        }    
+        })
+      });
+      
+   
+    
+   
+    
+    
+   /*  $("#delete").click(function(event) {
+      
+      Swal.fire({
+        title: '정말 삭제하시겠습니까?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#F39B10',
+        cancelButtonColor: '#A6A6A6',
+        confirmButtonText: '네',
+        cancelButtonText: '아니요'
+      }).then((result) => {
+        if (result.value) {
+         
+          $.ajax({
+            url: "/ajax/message/delete",
+            type: "POST",
+            data: {
+              id: messageId
+            },
+            success: function(data) {
+              Swal.fire({
+                	title: '삭제되었습니다',
+                	type: 'success',
+                	confirmButtonText: '확인',
+                	confirmButtonColor: '#F39B10'
+                  
+              }).then(function() {
+                  location.href = "/message";
+                });
+              
+            }
+          });
+          
+        }
+      })
+
+    }); */
     </script>
   </body>
 </html>

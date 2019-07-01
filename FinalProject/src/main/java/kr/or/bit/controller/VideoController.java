@@ -71,4 +71,18 @@ public class VideoController {
     articleInsertService.writeArticle(article, video);
     return "redirect:/video/detail?id=" + article.getId();
   }
+  
+  @GetMapping("/delete")
+  public String deleteVideo(int id) {
+    System.out.println("여기야 !!!!");
+    VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
+    videoDao.deleteVideo(id);
+   
+    return "redirect:/video/home";
+  }
+  
+  
+  
+  
+  
 }
