@@ -97,8 +97,11 @@ public class VideoController {
     Video video = new Video();
     int beginIndex = "https://youtu.be/".length();
     video.setVideo_id(url.substring(beginIndex));
-  
-    articleUpdateService.updateArticle(article, video);
+    
+
+    articleUpdateService.updateArticle(article);
+    articleUpdateService.updateArticleOption(article.getId(), video);
+    
     return "redirect:/video/home";
   }
 

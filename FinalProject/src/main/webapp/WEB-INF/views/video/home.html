@@ -35,7 +35,8 @@
                 <div class="video-view-count">
                   <span th:text="${#temporals.format(video.timeLocal, 'yyyy-MM-dd')}">22시간 전</span> | 
                   조회 <span th:text="${video.view_count}">43</span> |
-                  <span th:text="${video.writer.name}">매니저</span>
+                   <span th:text="${video.writer.name}">매니저</span> | 
+                   <span th:text="${video.vote_count}"></span>
                 </div>
               </div>
             </div>
@@ -58,7 +59,7 @@
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script th:inline="javascript">
       function getNextArticles() {
-        let lastArticleId = [[${videoList[4].id}]];
+        let lastArticleId = [[${videoList[videoList.size() - 1].id}]];
         
         function changeId(id) {
           lastArticleId = id;
