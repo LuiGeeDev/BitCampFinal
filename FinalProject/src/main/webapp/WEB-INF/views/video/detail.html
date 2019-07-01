@@ -32,33 +32,30 @@
           </button>
         </div>
       </div>
-    </div>
-    <div id="buttonWrapper">
-      <a class="btn btn-primary btn-sm"
-        th:href="@{/video/edit(id=${article.id},video_id=${article.option.video_id})}">수정</a>
-      <a class="btn btn-primary btn-sm"
-        th:href="@{/video/delete(id = ${article.id})}" id="deletebtn">삭제</a>
-      <a class="btn btn-primary btn-sm" th:href="@{/video/home}">목록</a>
-    </div>
-    <div id="commentsWrapper">
-      <div id="commentsContent">
-        <div id="commentsText">
-          <div id="commentsWriter">
-            <span id="writerIcon"> <img
-              src="https://via.placeholder.com/32" id="icon" />
-            </span> <span id="writerName">권순조</span> <span id="writeDate">2019.6.22
-              17:59</span>
-          </div>
-          <div id="commentsDetail">사퇴하겠습니다</div>
-        </div>
+      <!-- 추가 ) 댓글수 -->
+      <div>댓글 [[${article.commentlist.size()}]]개</div>
+      <!-- 추가 ) 댓글 insert form -->
+      <div>
+          <form th:action="@{/video/commentwrite(id=${article.id})}" method="post">
+            <textarea name="content" class="comtext"></textarea>
+            <br> <input type="submit"
+              class="btn btn-primary btnalign" value="등록">
+          </form>
       </div>
-      <div id="commentsContent">
-        <div id="commentsText">
-          <div id="commentsWriter">
-            <span id="writerIcon"> <img
-              src="https://via.placeholder.com/32" id="icon" />
-            </span> <span id="writerName">이힘찬</span> <span id="writeDate">2019.6.22
-              17:55</span>
+      <!-- 추가 ) 댓글 목록 불러오는 기능 -->
+      <div id="commentsWrapper">
+        <div id="commentsContent" class="iteration" th:each="list : ${article.commentlist}">
+          <div id="commentsText">
+            <div id="commentsWriter">
+              <span id="writerIcon">
+                <img src="https://via.placeholder.com/32" id="icon" />
+              </span>
+              <span id="writerName"><span th:text="${list.username}"></span>
+              <a th:href="@{/video/commentdelete(id=${list.id})}">[삭제]</a>
+              </span>
+              <span id="writeDate"><span th:text="${list.updated_time}"></span></span>
+            </div>
+            <div id="commentsDetail"><span th:text="${list.content}"></span></div>
           </div>
           <div id="commentsDetail">[[${article.writer.name}]]님
             사랑해용 쀼쀼</div>
