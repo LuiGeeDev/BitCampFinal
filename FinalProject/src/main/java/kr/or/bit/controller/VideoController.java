@@ -71,4 +71,12 @@ public class VideoController {
     articleInsertService.writeArticle(article, video);
     return "redirect:/video/detail?id=" + article.getId();
   }
+  @GetMapping("/update")
+  public String getUpdatePage() {
+    return "video/update";
+  }
+  @PostMapping("/update")
+  public String Updatepage() {
+    return null;
+  }
 }
