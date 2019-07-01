@@ -15,6 +15,7 @@ import kr.or.bit.model.Article;
 import kr.or.bit.model.Video;
 import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
+import kr.or.bit.service.ArticleUpdateService;
 import kr.or.bit.utils.Helper;
 
 @Controller
@@ -70,13 +71,13 @@ public class VideoController {
     video.setVideo_id(url.substring(beginIndex));
 
     articleInsertService.writeArticle(article, video);
-    return "redirect:/video/detail?id=" + article.getId();
+    return "redirect:/video/home";
   }
   @GetMapping("/edit")
   public String getEditPage(int id,String video_id, Model model) {
     Article article = articleService.selectOneArticle("video", id);
     model.addAttribute("article", article);
-    model.addAttribute("video_id", "https://youtube.com/embed/" + video_id);
+    model.addAttribute("video_id", "https://youtu.be/" + video_id);
     return "video/edit";
   }
   
@@ -88,6 +89,12 @@ public class VideoController {
     Video video = new Video();
     int beginIndex = "https://youtu.be/".length();
     video.setVideo_id(url.substring(beginIndex));
+    System.out.println("#######################################");
+    System.out.println(url);
+    System.out.println(url.substring(beginIndex));
+    
+    
+    System.out.println("#######################################");
     articleUpdateService.updateArticle(article, video);
     return "redirect:/video/home";
   }
