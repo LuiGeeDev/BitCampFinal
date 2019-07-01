@@ -7,7 +7,7 @@ public interface VideoDao {
   
   void insertVideo(ArticleOption video);
   
-  void updateVideo(ArticleOption video);
+  void updateVideo(Video video);
   
   Video selectVideoByArticleId(int article_id);
   
