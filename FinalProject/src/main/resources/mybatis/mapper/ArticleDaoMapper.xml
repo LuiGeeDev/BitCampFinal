@@ -67,6 +67,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT MAX(id)
     FROM ARTICLE
   </select>
+  <update id="updateEnable">
+  	{call CHANGESTATUS('ARTICLE',#{id})}
+  </update>
 </mapper>
 <!-- public interface ArticleDao { void insertArticle(Article article); void 
   updateArticle(Article article); void deleteArticle(int id); List<Article> 
