@@ -17,6 +17,7 @@ import kr.or.bit.service.ArticleDeleteService;
 import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleUpdateService;
+import kr.or.bit.service.ArticleVoteService;
 import kr.or.bit.utils.Helper;
 
 @Controller
@@ -32,6 +33,9 @@ public class VideoController {
   private ArticleUpdateService articleUpdateService; 
   @Autowired
   private ArticleService articleService;
+  @Autowired
+  private ArticleVoteService articleVoteService;
+  
   @GetMapping("/home")
   public String videoHome(Model model) {
     List<Article> videoList = articleService.selectAllArticle("video", VIDEO_BOARD_ID);
@@ -45,10 +49,9 @@ public class VideoController {
     /*
      * parameter로 받은 아이디 값을 이용, 해당하는 글을 불러와서 페이지에 글을 넘겨준다
      */
-    System.out.println(id);
     Article article = articleService.selectOneArticle("video", id);
     VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
-    
+    model.addAttribute("voteStatus",articleVoteService.selectVote(id, Helper.userName()));
     model.addAttribute("article", article);
     return "video/detail";
   }
