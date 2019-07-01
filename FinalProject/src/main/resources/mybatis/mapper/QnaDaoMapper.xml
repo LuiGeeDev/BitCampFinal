@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
   <insert id="insertQna">
   	insert into QNA(article_id)
-	values (#{id})
+	values (#{article_id})
   </insert>
   
   <update id="updateQnaByAnswered">
@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="selectQnaByArticleId">
   	select id, answered, teacher_answered, article_id 
   	from QNA 
-  	where id=#{id};
+  	where article_id=#{article_id};
   </select>
   
 </mapper>

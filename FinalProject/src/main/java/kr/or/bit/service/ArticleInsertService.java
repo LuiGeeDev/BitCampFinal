@@ -7,13 +7,17 @@ import org.springframework.stereotype.Service;
 
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.GeneralDao;
+import kr.or.bit.dao.GroupDao;
+import kr.or.bit.dao.GroupMemberDao;
 import kr.or.bit.dao.HomeworkDao;
 import kr.or.bit.dao.QnaDao;
 import kr.or.bit.dao.TroubleShootingDao;
 import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.ArticleOption;
+import kr.or.bit.model.TroubleShooting;
 import kr.or.bit.model.Video;
+import kr.or.bit.utils.Helper;
 
 @Component
 public class ArticleInsertService {
@@ -25,22 +29,42 @@ public class ArticleInsertService {
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
     String optionname = option.getClass().getName().toLowerCase().trim().substring("kr.or.bit.model.".length());
     System.out.println(optionname);
-
+    articledao.insertArticle(article);
+    
     if (optionname.equals("troubleshooting")) {
-      TroubleShootingDao trobleshooting = sqlSession.getMapper(TroubleShootingDao.class);
-      articledao.insertArticle(article);
-      trobleshooting.insertTroubleShooting(option);
+      TroubleShootingDao troubleshootingDao = sqlSession.getMapper(TroubleShootingDao.class);
+      GroupMemberDao groupmemberdao = sqlSession.getMapper(GroupMemberDao.class);
+      
+      String username = Helper.userName();
+      int articleid = articledao.getMostRecentArticleId();
+      int groupid = groupmemberdao.getGroupIdByUsername(username);
+      
+      TroubleShooting troubleshooting = (TroubleShooting)option;
+      troubleshooting.setArticle_id(articleid);
+      troubleshooting.setGroup_id(groupid);
+      
+      troubleshootingDao.insertTroubleShooting(troubleshooting);
+      
+      
     } else if (optionname.equals("homework")) {
         HomeworkDao homework = sqlSession.getMapper(HomeworkDao.class);
-        articledao.insertArticle(article);
+        /*
+         * 파일 업로드 미구현
+         * .
+         */
+        
         homework.insertHomework(option);
     } else if (optionname.equals("general")) {
-        GeneralDao general = sqlSession.getMapper(GeneralDao.class);
-        articledao.insertArticle(article);
-        general.insertGeneral(option);
+        GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
+        //파일저장 부분 미구현
+        
+        //
+        int id = articledao.getMostRecentArticleId();
+        General general = (General)option;
+        general.setArticle_id(id);
+        generalDao.insertGeneral(general);
     } else if(optionname.equals("video")) {
         VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
-        articledao.insertArticle(article);
         int id = articledao.getMostRecentArticleId();
         Video video = (Video) option;
         video.setArticle_id(id);
@@ -52,6 +76,6 @@ public class ArticleInsertService {
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
     QnaDao qna = sqlSession.getMapper(QnaDao.class);
     articledao.insertArticle(article);
-    // qna.insertQna(article);
+    qna.insertQna(article.getId());
   }
 }

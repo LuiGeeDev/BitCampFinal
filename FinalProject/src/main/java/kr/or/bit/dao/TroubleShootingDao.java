@@ -1,12 +1,11 @@
 package kr.or.bit.dao;
 
-import kr.or.bit.model.ArticleOption;
+import kr.or.bit.model.TroubleShooting;
 
 public interface TroubleShootingDao extends OptionDao {
+  void insertTroubleShooting(TroubleShooting troubleshooting);
   
-  void insertTroubleShooting(ArticleOption troubleshooting);
+  void updateTroubleShootingByIssueClosed(TroubleShooting troubelshooting);
   
-  void updateTroubleShootingByIssueClosed(ArticleOption troubelshooting);
-  
-  void selectTroubleShootingByArticleId(int articleid);
+  TroubleShooting selectTroubleShootingByArticleId(int article_id);
 }

@@ -1,6 +1,7 @@
 package kr.or.bit.controller;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,13 +30,8 @@ public class HomeController {
   private SqlSession sqlsession;
 
   @GetMapping("/")
-  public String home(Model model, HttpSession session) {
-    BoardDao boardDao = sqlsession.getMapper(BoardDao.class);
-    List<Board> boardList = boardDao.getList();
-    
-    model.addAttribute("boardList", boardList);
-    TestService service = new TestService();
-    service.service();
+  public String home(Model model, HttpSession session) {   
+    model.addAttribute("time", LocalDateTime.now());
     return "home";
   }
 
