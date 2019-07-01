@@ -16,6 +16,7 @@ import kr.or.bit.model.Article;
 import kr.or.bit.model.Video;
 import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
+import kr.or.bit.service.ArticleUpdateService;
 import kr.or.bit.utils.Helper;
 
 @Controller
@@ -26,7 +27,9 @@ public class VideoController {
   @Autowired
   private SqlSession sqlSession;
   @Autowired
-  private ArticleInsertService articleInsertService;  
+  private ArticleInsertService articleInsertService;
+  @Autowired
+  private ArticleUpdateService articleUpdateService; 
   @Autowired
   private ArticleService articleService;
   
@@ -70,5 +73,29 @@ public class VideoController {
 
     articleInsertService.writeArticle(article, video);
     return "redirect:/video/detail?id=" + article.getId();
+  }
+  
+  @GetMapping("/edit")
+  public String getEditPage(int id,String video_id, Model model) {
+    Article article = articleService.selectOneArticle("video", id);
+  
+    model.addAttribute("article", article);
+    model.addAttribute("video_id", "https://youtube.com/embed/" + video_id);
+    return "video/edit";
+  }
+  
+  @PostMapping("/edit")
+  public String editVideoArticle(Article article, String url) {
+    article.setUsername(Helper.userName());
+    article.setBoard_id(VIDEO_BOARD_ID);
+    
+    Video video = new Video();
+    int beginIndex = "https://youtu.be/".length();
+    video.setVideo_id(url.substring(beginIndex));
+    System.out.println("______---------------------------------------------");
+    System.out.println(article.getId());
+    System.out.println("______---------------------------------------------");
+    articleUpdateService.updateArticle(article, video);
+    return "redirect:/video/home";
   }
 }

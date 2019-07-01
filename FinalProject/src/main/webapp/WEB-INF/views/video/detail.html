@@ -37,7 +37,7 @@
         </div>
       </div>
       <div id="buttonWrapper">
-        <a class="btn btn-primary btn-sm" th:href="@{/video/edit}">수정</a>
+        <a class="btn btn-primary btn-sm" th:href="@{/video/edit(id=${article.id},video_id=${article.option.video_id})}">수정</a>
         <a class="btn btn-primary btn-sm" th:href="@{/video/delete}">삭제</a>
         <a class="btn btn-primary btn-sm" th:href="@{/video/home}">목록</a>
       </div>
