@@ -16,7 +16,7 @@ public class BoardService {
 
   public List<Article> getArticlesByPage(int boardId, int page) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
-    List<Article> articleList = articleDao.selectArticlesByPage(boardId, page);
+    List<Article> articleList = articleDao.selectArticlesByPage(boardId, (page - 1) * 20, page * 20);
 
     return articleList;
   }

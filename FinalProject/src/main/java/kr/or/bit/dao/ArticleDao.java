@@ -40,5 +40,5 @@ public interface ArticleDao {
 
   void updateEable(int id);
 
-  List<Article> selectArticlesByPage(@Param("board_id") int board_id, @Param("page") int page);
+  List<Article> selectArticlesByPage(@Param("board_id") int board_id, @Param("start") int start, @Param("end") int end);
 }

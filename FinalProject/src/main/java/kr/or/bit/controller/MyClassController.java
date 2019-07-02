@@ -1,5 +1,7 @@
 package kr.or.bit.controller;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,7 +31,7 @@ public class MyClassController {
   private ArticleInsertService articleInsertService;
 
   @GetMapping("/board")
-  public String boardPage(int boardId, @RequestParam(name = "page", defaultValue = 1) int page, Model model) {
+  public String boardPage(int boardId, @RequestParam(name = "page", defaultValue = "1") int page, Model model) {
     List<Article> articleList = boardService.getArticlesByPage(boardId, page);
     model.addAttribute("articles", articleList);
     return "myclass/board/list";

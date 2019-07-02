@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.ArticleDao;
@@ -23,6 +24,7 @@ import kr.or.bit.model.Article;
 import kr.or.bit.model.ArticleOption;
 import kr.or.bit.model.Files;
 import kr.or.bit.model.General;
+import kr.or.bit.model.Homework;
 import kr.or.bit.model.TroubleShooting;
 import kr.or.bit.model.Video;
 import kr.or.bit.utils.Helper;
@@ -68,32 +70,51 @@ public class ArticleInsertService {
     }
   }
 
+  @Transactional
   public void writeArticle(Article article, ArticleOption option, List<MultipartFile> file,
       HttpServletRequest request) {
     FileUploadService fileupload = new FileUploadService();
     String optionname = option.getClass().getName().toLowerCase().trim().substring("kr.or.bit.model.".length());
-    List<Integer> id = new ArrayList<Integer>();
+    List<Integer> fileIds = new ArrayList<Integer>();
     try {
       List<Files> files = fileupload.uploadFile(file, request);
       FilesDao filesdao = sqlSession.getMapper(FilesDao.class);
       for (Files list : files) {
         filesdao.insertFiles(list);
-        id.add(filesdao.selectFilesByOriginalFileName(list.getOriginal_filename()));
+        fileIds.add(filesdao.selectFilesByOriginalFileName(list.getOriginal_filename()));
       }
       
+      ArticleDao artidao = wArticle(article);
+
       switch (optionname) {
       case "general":
         GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
-        ArticleDao artidao = wArticle(article);
-        General general = new General();
+        General general = (General) option;
         general.setArticle_id(artidao.getMostRecentArticleId());
-        for()
+        
+        for (int id : fileIds) {
+          if (general.getFile1() == 0) {
+            general.setFile1(id);
+          } else {
+            general.setFile2(id);
+          }
+        }
+
         generalDao.insertGeneral(general);
         break;
       case "homework":
         HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
-        ArticleDao artidao2 = wArticle(article);
-        option = homeworkDao.insertHomework(homework);
+        Homework homework = (Homework) option;
+        homework.setArticle_id(artidao.getMostRecentArticleId());
+
+        for (int id : fileIds) {
+          if (homework.getFile1() == 0) {
+            homework.setFile1(id);
+          } else {
+            homework.setFile2(id);
+          }
+        }
+        homeworkDao.insertHomework(homework);
         break;
       default:
         break;

@@ -11,9 +11,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
           FROM (SELECT id, title, content, time, updated_time, view_count, original_id, enable, level, username, board_id
           FROM ARTICLE 
-	        WHERE board_id = #{board_id}
+	      WHERE board_id = #{board_id}
           ORDER BY time DESC, id DESC) a) b
-    WHERE rownum BETWEEN #{(page - 1) * 20} AND #{page * 20}
+    WHERE rownum BETWEEN #{start} AND #{end}
     LIMIT 20;
   </select>
   <select id="selectAllArticleByBoardId"
