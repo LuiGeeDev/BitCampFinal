@@ -7,8 +7,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="kr.or.bit.dao.CommentDao">
 	<select id="selectAllComment"
 		resultType="kr.or.bit.model.Comment">
-		SELECT id, content, time, updated_time, article_id, username
-		FROM comment
+		SELECT c.id as id, content, time, updated_time, article_id, c.username as username, m.profile_photo as profile_photo
+		FROM comment as c
+		LEFT JOIN member as m
+		on c.username=m.username
 		WHERE article_id=#{article_id}
 	</select>
 	<select id="selectComment" resultType="kr.or.bit.model.Comment">
