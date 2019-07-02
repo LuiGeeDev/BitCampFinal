@@ -36,8 +36,7 @@ public class FileUploadService {
     return files;
   }
 
-  public List<Files> uploadFile(List<MultipartFile> file, HttpServletRequest request)
-      throws IllegalStateException, IOException {
+  public List<Files> uploadFile(List<MultipartFile> file, HttpServletRequest request) throws IllegalStateException, IOException {
     List<Files> filess = new ArrayList<Files>();
     for (MultipartFile mfile : file) {
       Files files = new Files();
