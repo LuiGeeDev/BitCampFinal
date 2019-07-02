@@ -68,6 +68,7 @@ public class StackController {
   public String writeOkStack(Article article) {
     General general = new General();
     article.setUsername(Helper.userName());
+    article.setBoard_id(STACK_BOARD_ID);
     articleInsertService.writeArticle(article, general);
     return "redirect:/stack/home";
   }
