@@ -72,6 +72,16 @@ public class MyClassController {
   
   @GetMapping("/homework")
   public String homework() {
+    return "myclass/homework/homeworkList";
+  }
+  
+  @GetMapping("/homework/detail")
+  public String homeworkDetail() {
     return "myclass/homework/homeworkDetail";
+  }
+  
+  @GetMapping("/homework/create")
+  public String createHomework() {
+    return "myclass/homework/createHomework";
   }
 }
