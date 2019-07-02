@@ -52,9 +52,9 @@
               <i class="fas fa-database fa-2x"></i>
             </div>
           </div>
-          <div class="nav-menu" sec:authrorize="hasRole('MANAGER')">
+          <div class="nav-menu" sec:authorize="hasRole('MANAGER')">
             <div th:classappend="${#strings.contains(#request.getRequestURI(),'manage')} ? 'active-menu'" class="nav-icon">
-             <a th:href="@{/manage/home}">
+              <a th:href="@{/manage/home}">
               <i class="fas fa-tasks fa-2x"></i>
              </a>
             </div>

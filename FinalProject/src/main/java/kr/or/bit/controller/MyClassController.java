@@ -64,6 +64,16 @@ public class MyClassController {
   public String troubleshootingPage() {
     return "myclass/troubleshooting/main";
   }
+  
+  @GetMapping("/troubleshooting/write")
+  public String writeNewIssue() {
+    return "myclass/troubleshooting/write";
+  }
+  
+  @GetMapping("/troubleshooting/read") 
+  public String readIssue() {
+    return "myclass/troubleshooting/detail";
+  }
 
   @GetMapping("/chat")
   public String chatPage() {
