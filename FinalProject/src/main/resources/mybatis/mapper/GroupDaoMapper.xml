@@ -43,4 +43,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	from groups
 	where project_id=#{project_id}
   </select>
+  <select id="selectRecentGroup" resultType="kr.or.bit.model.Group">
+    SELECT id, group_no, link1, link2, link3, leader_name, project_id
+    FROM GROUPS
+    WHERE id = (SELECT MAX(group_id)
+                 FROM GROUP_MEMBER
+                 WHERE member_name = #{username})
+  </select>
+  <select id="selectAllMyGroup" resultType="kr.or.bit.model.Group">
+    SELECT id, group_no, link1, link2, link3, leader_name, project_id
+    FROM GROUPS
+    WHERE id in (SELECT group_id
+                 FROM GROUP_MEMBER
+                 WHERE member_name = #{username})
+  </select>
+  <select id="getProjectSeason" resultType="int">
+    SELECT season
+    FROM project
+  </select>
 </mapper>

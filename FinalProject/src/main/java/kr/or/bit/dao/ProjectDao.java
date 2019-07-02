@@ -21,4 +21,6 @@ public interface ProjectDao {
   void updateProject(int course_id);
 
   List<Project> selectAllProject(int course_id);
+  
+  List<Project> selectMyProject(String username);
 }

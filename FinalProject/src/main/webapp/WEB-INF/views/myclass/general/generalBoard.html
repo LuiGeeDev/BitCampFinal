@@ -10,14 +10,26 @@
 <body>
   <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
   <div class="main" th:fragment="main">
-    <div class="board-main-title">일반 게시판</div>
+    <div class="board-main-title">일반 게시판
+      <div class="search-item">
+      <select class="board-search">
+        <option selected>제목 + 내용</option>
+        <option>제목만</option>
+        <option>글작성자</option>
+        <option>댓글내용</option>
+        <option>댓글작성자</option>
+      </select>
+      <input type="text" class = "inputtext" id="boardSearch" name="boardSearch" placeholder="검색어를 입력해주세요">
+      <input type="button" class="btn btn-primary" value="검색">
+      </div>
+    </div>
     <div class="board">
       <div class="board-topnav">
         <span class="board-title">제목</span> <span class="board-writer">작성자</span>
         <span class="board-write-time">작성일</span> <span
           class="board-count">조회</span>
       </div>
-      <a href="/board/read?id=3" class="article">
+      <a href="/general/detail" class="article">
       <div class="board-content">
         <span class="title">안녕 나는 미니라고해</span> <span class="writer">정성윤</span>
         <span class="write-time">2019.07.01</span> <span

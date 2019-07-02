@@ -69,6 +69,11 @@ public class MyClassController {
   public String chatPage() {
     return "myclass/chat/main";
   }
+<<<<<<< HEAD
+  @GetMapping("/managing/main")
+  public String manageClassMain() {
+    return "myclass/teacher/manager/main";
+=======
 
   @GetMapping("/qna")
   public String qnaPage() {
@@ -93,5 +98,6 @@ public class MyClassController {
   @GetMapping("/homework/create")
   public String createHomework() {
     return "myclass/homework/createHomework";
+>>>>>>> c734d8d7b6218c3b3dc3c5cefcb456bdeb9db8c4
   }
 }
