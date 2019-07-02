@@ -1,6 +1,5 @@
 package kr.or.bit.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.bit.dao.ArticleDao;
-import kr.or.bit.dao.ArticleOptionDao;
 import kr.or.bit.dao.CommentDao;
 import kr.or.bit.dao.GeneralDao;
 import kr.or.bit.dao.HomeworkDao;
@@ -19,11 +17,6 @@ import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.ArticleOption;
 import kr.or.bit.model.Comment;
-import kr.or.bit.model.General;
-import kr.or.bit.model.Homework;
-import kr.or.bit.model.Qna;
-import kr.or.bit.model.TroubleShooting;
-import kr.or.bit.model.Video;
 
 @Service
 public class ArticleService {

@@ -1,0 +1,74 @@
+@charset "UTF-8";
+
+body {
+  font-family: 'Nanum Gothic';
+}
+.title {
+  font-size: 190%;
+  margin: 20px;
+}
+
+#write-form-wrapper {
+  margin: 50px 50px 10px 50px;
+  padding: 20px 10px 20px 10px;
+  border: 1px solid #eeeeee;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+#input-url::placeholder {
+  color: #c2c2c2;
+}
+
+#input-title {
+  width: 98%;
+  height: 31.6px;
+  border: 1px solid #c2c2c2;
+  border-radius: 5px;
+  outline: none;
+  padding: 20px 10px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+  margin: 0 5px 10px;
+}
+
+#input-title::placeholder {
+  color: #c2c2c2;
+}
+
+#input-url {
+  width: 100%;
+  margin-left: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #c2c2c2;
+  border-radius: 5px;
+  padding: 5px 10px;
+  outline: none;
+}
+
+#submitbtn {
+  float: right;
+  text-align: right;
+  margin-top: 10px;
+  margin-right: 5px;
+  margin-left: auto;
+}
+
+.note-editor {
+  margin: 0 5px;
+  border-radius: 5px;
+  width: 98%;
+}
+
+.url {
+  position: relative;
+  width: 98%;
+}
+
+.info {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #a6a6a6;
+}
