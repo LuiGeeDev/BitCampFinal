@@ -1,4 +1,4 @@
-$(document).ready(function() {
+
   var currentPosition = parseInt($("#floatMenu").css("top"));
   $(window).scroll(function() {
     var position = $(window).scrollTop();
@@ -6,8 +6,7 @@ $(document).ready(function() {
       "top" : position + currentPosition + "px"
     }, 1000);
   });
-});
-$(document).ready(function() {
+
   $('#top1,#top2,#top3,#bottom1,#c_w1,#category1,#g_w1').click(function() {
     var id = $(this).attr("href");
     var offset = 60;
@@ -17,4 +16,3 @@ $(document).ready(function() {
     }, 500);
     event.preventDefault();
   });
-});
