@@ -63,11 +63,13 @@
       </div>
 	
       <div th:if="${#strings.contains(#request.getRequestURI(),'myclass')}" class="side-nav-menu">
-        <a href="#">프로젝트 게시판</a>
-        <a href="#">과제제출 게시판</a>
-        <a href="/myclass/qna/home">질문 게시판</a>
-        <a href="#">임시 게시판</a>
-        <a href="/myclass/create">프로젝트 생성</a>
+        <!-- 프로젝트 게시판 -->
+        <a href="#project" data-toggle="collapse" th:if="${projects.size() != 0}">프로젝트 게시판</a>
+        <div id="project" class="collapse" th:if="${projects.size() != 0}">
+          <a href="#" th:each="project : ${projects}" th:text="'-' + ${project.project_name}"></a>
+        </div>
+        <a href="#" th:each="board : ${boardList}" th:text="${board.board_name}"></a>
+        <a th:href="@{/myclass/create}" sec:authorize="hasRole('TEACHER')">프로젝트 생성</a> 
       </div>
       <div th:if="${#strings.contains(#request.getRequestURI(),'stack')}" class="side-nav-menu">
         <a href="#">스택!!! 게시판</a>
@@ -79,7 +81,6 @@
       </div>
       <div th:if="${#strings.contains(#request.getRequestURI(),'manage')}" class="side-nav-menu">
         <a href="#">매니지!!! 게시판</a>
-
       </div>
     </div>
   </body>

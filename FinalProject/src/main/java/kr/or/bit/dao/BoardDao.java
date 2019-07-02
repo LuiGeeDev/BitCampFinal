@@ -14,6 +14,7 @@ import kr.or.bit.model.Board;
 * 
 */
 public interface BoardDao {
-
   void updateBoard(int id);
+  
+  List<Board> selectMyClassBoard(int course_id);
 }

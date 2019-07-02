@@ -30,6 +30,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     course_id=#{course_id}
     where id=#{id}
   </update>
+  <select id="selectMyClassBoard" resultType="kr.or.bit.model.Board">
+    SELECT id, board_name, boardtype, course_id
+    FROM BOARD
+    WHERE course_id = #{course_id}
+  </select>
 </mapper>  
 
 
