@@ -21,4 +21,9 @@ public class MyClassController {
   public String chatPage() {
     return "myclass/chat/main";
   }
+  
+  @GetMapping("/homework")
+  public String homework() {
+    return "myclass/homework/homeworkDetail";
+  }
 }
