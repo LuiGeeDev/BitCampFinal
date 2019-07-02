@@ -80,7 +80,8 @@
         
       </div>
       <div th:if="${#strings.contains(#request.getRequestURI(),'manage')}" class="side-nav-menu">
-        <a href="#">매니지!!! 게시판</a>
+        <a th:href="@{/manage/home}">매니지!!! 게시판</a>
+        <a th:href="@{/manage/students}">학생관리 게시판</a>
       </div>
     </div>
   </body>
