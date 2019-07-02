@@ -69,7 +69,17 @@ public class MyClassController {
   public String chatPage() {
     return "myclass/chat/main";
   }
-  
+
+  @GetMapping("/qna")
+  public String qnaPage() {
+    return "myclass/qna/home";
+  }
+
+  @GetMapping("/create")
+  public String createProject() {
+    return "myclass/create/main";
+  }
+
   @GetMapping("/homework")
   public String homework() {
     return "myclass/homework/homeworkList";

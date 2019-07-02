@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
+<head>
+<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+<link rel="stylesheet" th:href="@{/css/myclass/create/main.css}" />
+</head>
+<body>
+  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+
+  <div class="main" th:fragment="main">
+    <div class="content-wrapper">
+      <div class="page-title-wrapper">
+        <span class="page-title">프로젝트 생성하기</span>
+      </div>
+      <hr />
+      <div class="inner wrapper project-name-wrapper">
+        <span class="project-name-text">프로젝트 이름 : </span> <span
+          class="project-name-input"><input type="text"
+          class="project-name" /></span>
+      </div>
+      <div class="inner wrapper group-count-wrapper">
+        <span class="group-count-text">조 개수 : </span> <span
+          class="select-group-count"><input type="number"
+          value="4" id="member-count" class="group-count" min="1"/></span>
+      </div>
+      <div class="inner wrapper project-term-wrapper">
+        <div class="project-term-text">프로젝트 기간</div>
+        <span class="project-term-start-day-text">시작일</span> <span
+          class="select-project-term-start-day"><input
+          type="date" class="select-start-date" /></span> ~ <span
+          class="project-term-end-day-text">종료일</span> <span
+          class="select-project-term-end-day"><input type="date"
+          class="select-end-date" /></span>
+      </div>
+      <div>
+        <div class="row">
+          <div id = "member-list" class="class-member-list">
+            <div id="student1" draggable="true" class="class-member">
+              복다빈</div>
+            <div id="student2" draggable="true" class="class-member">
+              권순조</div>
+            <div id="student3" draggable="true" class="class-member">
+              복다빈</div>
+            <div id="student4" draggable="true" class="class-member">
+              권순조</div>
+            <div id="student5" draggable="true" class="class-member">
+              복다빈</div>
+            <div id="student6" draggable="true" class="class-member">
+              권순조</div>
+            <div id="student7" draggable="true" class="class-member">
+              복다빈</div>
+            <div id="student8" draggable="true" class="class-member">
+              권순조</div>
+            <div id="student9" draggable="true" class="class-member">
+              복다빈</div>
+            <div id="student10" draggable="true" class="class-member">
+              권순조</div>
+            <div id="student11" draggable="true" class="class-member">
+              복다빈</div>
+            <div id="student12" draggable="true" class="class-member">
+              권순조</div>
+            <div id="student13" draggable="true" class="class-member">
+              복다빈</div>
+            <div id="student14" draggable="true" class="class-member">
+              권순조</div>
+            <div id="student15" draggable="true" class="class-member">
+              복다빈</div>
+            <div id="student16" draggable="true" class="class-member">
+              권순조</div>
+          </div>
+          <div id="class-group-list" class="class-group-list">
+            <div class="group">
+              <div class="class-group">1조</div>
+            </div>
+            <div class="group">
+              <div class="class-group">2조</div>
+            </div>
+            <div class="group">
+              <div class="class-group">3조</div>
+            </div>
+            <div class="group">
+              <div class="class-group">4조</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="button-wrapper">
+            <button id="reset-button" class="btn btn-warning btn-sm">초기화</button>
+            <button id="submit-button" class="btn btn-warning btn-sm" type="submit">생성</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+      function dragstart_handler(event) {
+        event.dataTransfer.setData("text/plain", event.target.id);
+      }
+
+      function dragover_handler(event) {
+        event.preventDefault();
+      }
+
+      function drop_handler(event) {
+        const id = event.dataTransfer.getData("text");
+        const target = event.target;
+        if (target.classList.contains("group")) {
+          target.appendChild(document.getElementById(id));  
+        } else {
+          target.parentNode.appendChild(document.getElementById(id));
+        }
+      }
+      function addEventToGroup() {
+        Array.from(document.getElementsByClassName("group")).forEach(group => {
+          group.addEventListener("dragover", dragover_handler);
+          group.addEventListener("drop", drop_handler);
+        });
+      }
+
+      Array.from(document.getElementsByClassName("class-member")).forEach(
+        student => {
+          student.addEventListener("dragstart", dragstart_handler);
+        }
+      );
+      
+      addEventToGroup();
+
+      function reset() {
+        const groupList = document.getElementById("class-group-list");
+		Array.from(groupList.getElementsByClassName("class-member")).forEach(
+		  function(student){
+		    document.getElementById("member-list").appendChild(student);
+		  }    
+	    )
+      }
+      
+      document.getElementById("reset-button").onclick = reset;
+      
+      $("#member-count").change(function() {
+		reset();
+        const count = $("#member-count").val();
+        
+        $("#class-group-list").empty();
+        for(let i = 1 ; i <= count ; i++){
+          $("#class-group-list").append(`<div class="group"><div class="class-group">${i}조</div></div>`)          
+        }
+        
+        addEventToGroup();
+      });
+      /*
+                  <div class="group">
+              <div class="class-group">1조</div>
+            </div>
+            */
+      
+    </script>
+</body>
+</html>

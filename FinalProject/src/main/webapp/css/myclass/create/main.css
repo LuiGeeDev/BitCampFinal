@@ -1,0 +1,70 @@
+@charset "UTF-8";
+
+body {
+  font-family: "Nanum Gothic";
+}
+
+.content-wrapper {
+  padding: 10px 0px 10px 50px;
+}
+
+.page-title-wrapper {
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.project-name {
+  width: 30%;
+}
+
+.wrapper {
+  margin: 20px;
+}
+
+.class-member-list {
+  width: 250px;
+  height: 25em;
+  overflow-y: scroll;
+  border: #2d3e50 0.5px solid;
+  margin-left: auto;
+}
+
+.class-member {
+  padding: 10px;
+  margin-top: -1px;
+  border-bottom: 0.5px #a6a6a6 solid;
+}
+
+.class-group {
+  padding: 10px;
+  margin-top: -1px;
+  border-bottom: 0.5px #a6a6a6 solid;
+  background-color: #f39c12;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2px;
+}
+
+.class-group-list {
+  margin-left: 30px;
+  margin-right: auto;
+  width: 350px;
+  overflow-y: scroll;
+  height: 25em;
+  border: 0.5px solid #2d3e50;
+  padding-left: 1px;
+}
+
+.class-member:last-child {
+  border: none;
+}
+.button-wrapper{  
+  margin: 10px auto;
+}
+.button-wrapper button{
+  font-weight:bold;
+}
