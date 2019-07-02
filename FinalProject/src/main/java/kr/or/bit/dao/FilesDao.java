@@ -4,11 +4,11 @@ import kr.or.bit.model.Files;
 
 public interface FilesDao {
   
-  void insertFiles(FilesDao files);
+  void insertFiles(Files files);
   
-  void updateFiles(FilesDao files);
+  void updateFiles(Files files);
   
   void deleteFiles(int id);
   
-  Files selectFilesById(int id);
+  int selectFilesByOriginalFileName(String originalName);
 }
