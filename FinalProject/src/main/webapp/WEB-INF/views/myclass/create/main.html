@@ -10,32 +10,36 @@
 
   <div class="main" th:fragment="main">
     <div class="content-wrapper">
-      <div class="page-title-wrapper">
-        <span class="page-title">프로젝트 생성하기</span>
+      <div class="header-wrapper">
+        <div class="page-title-wrapper">
+          <span class="page-title">프로젝트 생성하기</span>
+        </div>
+
+        <hr />
+        <div class="inner wrapper project-name-wrapper">
+          <span class="project-name-text text">프로젝트 명 : </span> <span
+            class="project-name-input"><input type="text"
+            class="project-name" /></span>
+        </div>
+        <div class="inner wrapper group-count-wrapper">
+          <span class="group-count-text text">생성할 조 수 : </span> <span
+            class="select-group-count"><input type="number"
+            value="4" id="member-count" class="group-count" min="1" /></span>
+        </div>
+        <div class="inner wrapper project-term-wrapper">
+          <div class="project-term-text text">프로젝트 기간</div>
+          <span class="project-term-start-day-text text date">시작일</span>
+          <span class="select-project-term-start-day"><input
+            type="date" class="select-start-date date-input" /></span> ~ <span
+            class="project-term-end-day-text text date">종료일</span> <span
+            class="select-project-term-end-day"><input
+            type="date" class="select-end-date date-input" /></span>
+        </div>
       </div>
-      <hr />
-      <div class="inner wrapper project-name-wrapper">
-        <span class="project-name-text">프로젝트 이름 : </span> <span
-          class="project-name-input"><input type="text"
-          class="project-name" /></span>
-      </div>
-      <div class="inner wrapper group-count-wrapper">
-        <span class="group-count-text">조 개수 : </span> <span
-          class="select-group-count"><input type="number"
-          value="4" id="member-count" class="group-count" min="1"/></span>
-      </div>
-      <div class="inner wrapper project-term-wrapper">
-        <div class="project-term-text">프로젝트 기간</div>
-        <span class="project-term-start-day-text">시작일</span> <span
-          class="select-project-term-start-day"><input
-          type="date" class="select-start-date" /></span> ~ <span
-          class="project-term-end-day-text">종료일</span> <span
-          class="select-project-term-end-day"><input type="date"
-          class="select-end-date" /></span>
-      </div>
+
       <div>
         <div class="row">
-          <div id = "member-list" class="class-member-list">
+          <div id="member-list" class="class-member-list">
             <div id="student1" draggable="true" class="class-member">
               복다빈</div>
             <div id="student2" draggable="true" class="class-member">
@@ -87,7 +91,8 @@
         <div class="row">
           <div class="button-wrapper">
             <button id="reset-button" class="btn btn-warning btn-sm">초기화</button>
-            <button id="submit-button" class="btn btn-warning btn-sm" type="submit">생성</button>
+            <button id="submit-button" class="btn btn-warning btn-sm"
+              type="submit">생성</button>
           </div>
         </div>
       </div>
