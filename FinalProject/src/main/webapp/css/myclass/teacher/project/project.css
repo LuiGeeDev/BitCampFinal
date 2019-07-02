@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+.title{
+		padding: 10px;
+}
+
+.make-project{
+		padding: 10px;
+}
+.my-project {
+		margin: auto;
+		margin-left: 50px;
+		padding: 30px 20px 20px 25px;
+		position: relative;
+		width: 350px;
+}
+
+.student-list {
+		padding:11px;
+		float: left;
+		position: relative;
+		width: 220px;
+		height: 400px;
+		border: 1px solid #b1b1b1;
+}
+.student-list h5 {
+		padding: 10px 0 5px 10px;
+}
+.student-block {
+		border: 1px solid;
+	background: #white;
+}
+.group-block{
+	background: #F39B10;
+	color:white;
+}
+
+.edit-group {
+		padding:11px;
+		float: left;
+		position: relative;
+		width: 220px;
+		height: 400px;
+		border: 1px solid #b1b1b1;
+}
+.edit-group h5 {
+		padding: 10px 0 5px 10px;
+}
+
+
+.btn-add {
+		float: left;
+		width: 35px
+}
+
+.btn-add a {
+		display: block;
+		width: 25px;
+		height: 137px;
+		margin: 160px auto;
+		background: url(https://cafe.pstatic.net/img/manage/btn_add.gif)
+				no-repeat 0 0;
+		text-indent: -500em;
+		cursor: default
+}
+
+.btn-add.on a {
+		background-position: -30px 0;
+		cursor: pointer
+}
+
+ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		margin-bottom: 10px;
+}
+
+li {
+		margin: 5px;
+		padding: 5px;
+		width: 150px;
+}

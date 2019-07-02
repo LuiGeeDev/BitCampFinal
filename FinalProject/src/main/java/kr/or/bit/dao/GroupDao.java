@@ -25,4 +25,7 @@ public interface GroupDao {
   
   List<Group> selectAllGroupByProject();
   
+  Group selectRecentGroup(String username);
+  
+  List<Group> selectAllMyGroup(String username);
 }

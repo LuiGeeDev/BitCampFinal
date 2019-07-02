@@ -1,0 +1,201 @@
+body {
+  background: #F2F4F7;
+}
+
+.active-list {
+  border-bottom: 1px solid #F2F4F7 !important;
+}
+
+.links {
+  margin-left: 127px;
+}
+
+.links, .checklist {
+  margin-right: 10px;
+  width: 17vw;
+  height: 38vh;
+  padding: 10px 20px;
+}
+
+.edit-link, .edit-checklist {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #F39C20;
+}
+
+.project-link {
+  padding: 10px 10px 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+}
+
+.link-address {
+  display: block;
+  margin-left: 15px;
+  line-height: 30px;
+}
+
+.checklist-item {
+  padding: 10px 10px;
+}
+
+input[type=checkbox] {
+  display: none;
+}
+
+input[type=checkbox]+label {
+  display: block;
+}
+
+input[type=checkbox]+label:active {
+  display: block;
+  transform: scale(0.98);
+}
+
+input[type=checkbox]+label svg {
+  color: #a6a6a6;
+  font-size: 22px;
+}
+
+input[type=checkbox]:checked+label svg {
+  color: #F39C20;
+}
+
+.item-description {
+  font-size: 17px;
+  margin-left: 50px;
+}
+
+.timeline {
+  width: 70vw;
+  margin: 10px 127px 0;
+}
+
+.timeline--horizontal {
+  padding: 20px !important;
+}
+
+#calendar {
+  width: 70vw;
+  margin: 10px 127px;
+  padding: 20px;
+}
+
+.recent-issues {
+  flex: 1;
+  margin-right: 127px;
+}
+
+.issue {
+  display: flex;
+  border-bottom: 1px solid #292929;
+  padding: 10px 10px 5px 10px;
+}
+
+.issue:last-child {
+  border: none;
+}
+
+.issue-info * {
+  margin: 0;
+}
+
+.issue-title h3 {
+  margin-left: 15px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 27px;
+}
+
+.issue-info {
+  margin-left: auto;
+  font-size: 14px;
+}
+
+.tag {
+  background: #F39C20;
+  border-radius: 5px;
+  padding: 2px 8px;
+  font-size: 14px;
+}
+
+.issue-tags {
+  margin-left: 10px;
+}
+
+.fa-exclamation-circle {
+  color: #e74c3c;
+}
+
+.fa-check-circle {
+  color: #2ecc71;
+}
+
+.card {
+  width: 1000px;
+  height: 370px;
+  margin: 10px auto 0;
+  flex-direction: row;
+  margin: 10px auto 0;
+}
+
+.teacher-manage-left {
+  width: 55%;
+  display: flex;
+  flex-direction: column;
+}
+
+.teacher-manage-right {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-teacher {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+}
+
+.btn-teacher>button {
+  margin: 5px;
+  border: 10px;
+  max-width: 300px;
+}
+
+.teacher-manage-left, .teacher-manage-right {
+  padding: 18px;
+  font-family: NANUM GODIC;
+}
+
+.my_class {
+  font-size: 40px;
+  margin-bottom: 5px;
+}
+
+.subject_name {
+  font-size: 20px;
+}
+
+.teacher-manage-right>span {
+  position: absolute;
+  left: auto;
+  right: auto;
+}
+
+.progre {
+  display: flex;
+  flex-direction: row;
+}
+
+.progress {
+  width: 45%;
+  margin-top: 5px;
+}
+
+.projress_f {
+  width: 35%;
+}

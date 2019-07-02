@@ -1,0 +1,84 @@
+@charset "UTF-8";
+
+.detail-container {
+  background-color: #e8e8e8;
+  margin: 50px 50px 10px 50px;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.detail-head {
+  background-color: white;
+  margin: 10px;
+  padding: 10px;
+}
+
+.detail-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+.detail-subtitle {
+  font-size: 12px;
+  color: gray;
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.detail-content {
+  background-color: white;
+  padding: 10px;
+  margin: 10px;
+  min-height: 300px;
+}
+
+.detail-comment {
+  margin: 20px 0px 20px 90px;
+}
+
+.writerName {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.comment-text {
+  width: 80%;
+  height: 36px;
+}
+
+.detail-btn {
+  margin-bottom: 5px;
+}
+
+.detail-subtitle {
+  display: flex;
+}
+
+.btn-group {
+  margin-left: auto;
+}
+
+
+.content-reply-form {
+  background-color: #e8e8e8;
+  margin: 10px 50px 10px 50px;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.content-reply {
+  background-color: white;
+  padding: 10px;
+  margin: 10px;
+}
+
+.content-move {
+  display:flex;
+}
+
+.write-date {
+  margin-left: auto;
+  font-size:15px;
+  font-weight: bold;
+}

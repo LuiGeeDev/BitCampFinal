@@ -1,0 +1,101 @@
+@charset "UTF-8";
+
+body {
+  font-family: "Nanum Gothic";
+}
+
+.content-wrapper {
+  padding: 10px 0px 10px 50px;
+  margin-left: 16vw;
+}
+
+.page-title-wrapper {
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.project-name {
+  width: 30%;
+}
+
+.wrapper {
+  margin-bottom: 25px;
+}
+
+.class-member-list {
+  width: 250px;
+  height: 25em;
+  overflow-y: scroll;
+  border: #2d3e50 0.5px solid;
+}
+
+.class-member {
+  padding: 10px;
+  margin-top: -1px;
+  border-bottom: 0.5px #a6a6a6 solid;
+  font-weight: bold;
+}
+
+.text {
+  font-weight: bold;
+}
+
+.class-group {
+  padding: 10px;
+  margin-top: -1px;
+  border-bottom: 0.5px #a6a6a6 solid;
+  background-color: #2D3E50;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2px;
+  color: white;
+}
+
+.class-group-list {
+  margin-left: 30px;
+  margin-right: auto;
+  width: 350px;
+  overflow-y: scroll;
+  height: 25em;
+  border: 0.5px solid #2d3e50;
+  padding-left: 1px;
+}
+
+.class-member:last-child {
+  border: none;
+}
+
+.button-wrapper {
+  margin: 10px auto;
+}
+
+.button-wrapper button {
+  font-weight: bold;
+}
+
+.content-wrapper input {
+  border-radius: 10px;
+  border: 1px solid;
+  outline: none;
+  border: 1px solid;
+  padding: 5px 10px;
+  width: 50%;
+}
+
+.date-input {
+  width: 25% !important;
+  font-size: 13px;
+}
+
+.date {
+  font-size: 13px;
+}
+
+
+.project-term-text {
+  text-align: left;
+}
