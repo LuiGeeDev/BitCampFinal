@@ -64,21 +64,16 @@ public class MyClassController {
   public String troubleshootingPage() {
     return "myclass/troubleshooting/main";
   }
-  
-  @GetMapping("/troubleshooting/write")
-  public String writeNewIssue() {
-    return "myclass/troubleshooting/write";
-  }
-  
-  @GetMapping("/troubleshooting/read") 
-  public String readIssue() {
-    return "myclass/troubleshooting/detail";
-  }
 
   @GetMapping("/chat")
   public String chatPage() {
     return "myclass/chat/main";
   }
+<<<<<<< HEAD
+  @GetMapping("/managing/main")
+  public String manageClassMain() {
+    return "myclass/teacher/manager/main";
+=======
 
   @GetMapping("/qna")
   public String qnaPage() {
@@ -92,16 +87,17 @@ public class MyClassController {
 
   @GetMapping("/homework")
   public String homework() {
-    return "myclass/homework/list";
+    return "myclass/homework/homeworkList";
   }
   
   @GetMapping("/homework/detail")
   public String homeworkDetail() {
-    return "myclass/homework/detail";
+    return "myclass/homework/homeworkDetail";
   }
   
   @GetMapping("/homework/create")
   public String createHomework() {
-    return "myclass/homework/create";
+    return "myclass/homework/createHomework";
+>>>>>>> c734d8d7b6218c3b3dc3c5cefcb456bdeb9db8c4
   }
 }

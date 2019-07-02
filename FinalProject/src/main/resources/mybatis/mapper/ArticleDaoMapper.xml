@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     (SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum,
     (SELECT count(*) FROM comment WHERE article_id=a.id) as commentnum
     FROM ARTICLE as a
-    WHERE BOARD_ID=#{board_id}
+    WHERE BOARD_ID=#{board_id} AND ENABLE=1
     ORDER BY id DESC
     LIMIT 5
   </select>
@@ -49,10 +49,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     username, board_id)
     VALUES (#{id}, now(), now(), #{title}, #{content}, #{username}, #{board_id})
   </insert>
-  <delete id="deleteArticle">
-    DELETE FROM article
+  <update id="deleteArticle"
+      parameterType="Integer">
+    UPDATE article
+    SET enable=0
     WHERE id=#{id}
-  </delete>
+  </update>
   <update id="updateArticle"
     parameterType="kr.or.bit.model.Article">
     UPDATE article
