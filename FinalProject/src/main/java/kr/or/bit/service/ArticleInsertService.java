@@ -47,10 +47,7 @@ public class ArticleInsertService {
       
     } else if (optionname.equals("homework")) {
         HomeworkDao homework = sqlSession.getMapper(HomeworkDao.class);
-        /*
-         * 파일 업로드 미구현
-         * .
-         */
+        FileUploadService fileUploadService = new FileUploadService();
         
     } else if (optionname.equals("general")) {
         GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
@@ -70,7 +67,7 @@ public class ArticleInsertService {
     }
   }
 
-  public void writeQnaArticle(Article article) {// qna게시글 삭제하는 함수
+  public void writeQnaArticle(Article article) {
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
     QnaDao qna = sqlSession.getMapper(QnaDao.class);
     articledao.insertArticle(article);
