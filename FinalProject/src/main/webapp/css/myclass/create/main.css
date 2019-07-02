@@ -62,7 +62,9 @@ body {
 .class-member:last-child {
   border: none;
 }
-
-.button-wrapper {
-  margin: 10px;
+.button-wrapper{  
+  margin: 10px auto;
+}
+.button-wrapper button{
+  font-weight:bold;
 }
