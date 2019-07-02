@@ -64,6 +64,16 @@ public class MyClassController {
   public String troubleshootingPage() {
     return "myclass/troubleshooting/main";
   }
+  
+  @GetMapping("/troubleshooting/write")
+  public String writeNewIssue() {
+    return "myclass/troubleshooting/write";
+  }
+  
+  @GetMapping("/troubleshooting/read") 
+  public String readIssue() {
+    return "myclass/troubleshooting/detail";
+  }
 
   @GetMapping("/chat")
   public String chatPage() {
@@ -82,16 +92,16 @@ public class MyClassController {
 
   @GetMapping("/homework")
   public String homework() {
-    return "myclass/homework/homeworkList";
+    return "myclass/homework/list";
   }
   
   @GetMapping("/homework/detail")
   public String homeworkDetail() {
-    return "myclass/homework/homeworkDetail";
+    return "myclass/homework/detail";
   }
   
   @GetMapping("/homework/create")
   public String createHomework() {
-    return "myclass/homework/createHomework";
+    return "myclass/homework/create";
   }
 }
