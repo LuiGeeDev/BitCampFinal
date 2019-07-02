@@ -27,13 +27,10 @@ public class FileUploadService {
     new File(realPath).mkdirs();
     File fileToSave = new File(realPath + filenameOnServer);
     System.out.println(fileToSave.getAbsolutePath());
- 
     file.transferTo(fileToSave);
-    
     System.out.println(filepath);// 진짜주소
     System.out.println(realPath);
     System.out.println(originalFilename);// 오리지널
-    
     files.setOriginal_filename(originalFilename);
     files.setFilename(filepath);
     return files;
@@ -41,7 +38,7 @@ public class FileUploadService {
 
   public List<Files> uploadFile(List<MultipartFile> file, HttpServletRequest request) throws IllegalStateException, IOException {
     List<Files> filess = new ArrayList<Files>();
-    for(MultipartFile mfile : file) {
+    for (MultipartFile mfile : file) {
       Files files = new Files();
       String originalFilename = mfile.getOriginalFilename();
       String filenameOnServer = Helper.userName() + System.currentTimeMillis() + originalFilename;
@@ -53,16 +50,13 @@ public class FileUploadService {
       File fileToSave = new File(realPath + filenameOnServer);
       System.out.println(fileToSave.getAbsolutePath());
       mfile.transferTo(fileToSave);
-
       System.out.println(filepath);// 진짜주소
       System.out.println(realPath);
       System.out.println(originalFilename);// 오리지널
-      
       files.setOriginal_filename(originalFilename);
       files.setFilename(filepath);
       filess.add(files);
     }
-    
     return filess;
   }
 }

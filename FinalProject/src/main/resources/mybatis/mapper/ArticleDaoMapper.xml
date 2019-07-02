@@ -5,22 +5,32 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.bit.dao.ArticleDao"> 
+  <select id="selectArticlesByPage" resultType="kr.or.bit.model.Article">
+    SET @rownum:=0;
+    SELECT * 
+    FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
+          FROM (SELECT id, title, content, time, updated_time, view_count, original_id, enable, level, username, board_id
+          FROM ARTICLE 
+	      WHERE board_id = #{board_id}
+          ORDER BY time DESC, id DESC) a) b
+    WHERE rownum BETWEEN #{start} AND #{end}
+    LIMIT 20;
+  </select>
   <select id="selectAllArticleByBoardId"
     resultType="kr.or.bit.model.Article">
-    SELECT id, title, content, time, updated_time, view_count, original_id,
+    SELECT id, title, content, time, updated_time, view_count, original_id, enable,
     level, username, board_id,
     (SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum,
     (SELECT count(*) FROM comment WHERE article_id=a.id) as commentnum
     FROM ARTICLE as a
     WHERE BOARD_ID=#{board_id}
-    AND enable=1
     ORDER BY id DESC
     LIMIT 5
   </select>
   <select id="selectArticlesOnNextPage"
     resultType="kr.or.bit.model.Article">
     SELECT id, title, content, time, updated_time, view_count, original_id,
-    level, username, board_id
+    level, username, board_id, enable
     FROM ARTICLE
     WHERE BOARD_ID = 2
     AND id &lt; #{article_id}

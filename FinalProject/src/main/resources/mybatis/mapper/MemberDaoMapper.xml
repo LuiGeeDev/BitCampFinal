@@ -11,7 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     VALUES(#{username}, #{password}, #{enabled}, #{course_id})
   </insert>
   <insert id="insertNewCourseMembers" parameterType="map">
-    { call MakeCourseMembers(#{people}, #{teacher_id}, #{course_id},
+    { call MakeCourse(#{people}, #{teacher_id}, #{course_id},
     #{start_date}, #{password}) }
   </insert>
   <update id="updateMember"
@@ -44,11 +44,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   <select id="selectMemberByUsername"
     resultType="kr.or.bit.model.Member">
-    SELECT username, password, name, email, profile_photo, course_id, group_id
+    SELECT m.username, password, name, email, profile_photo, course_id, group_id, role
     FROM MEMBER m
     LEFT JOIN GROUP_MEMBER g
     ON m.username = g.member_name
-    WHERE username = #{username}
+    LEFT JOIN authorities a
+    ON m.username = a.username
+    WHERE m.username = #{username}
   </select>
 </mapper>
 
