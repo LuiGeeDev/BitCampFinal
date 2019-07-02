@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT id, title, content, time, updated_time, view_count, original_id,
     level, username, board_id, enable
     FROM ARTICLE
-    WHERE BOARD_ID = 2
+    WHERE BOARD_ID = #{board_id}
     AND id &lt; #{article_id}
     ORDER BY id DESC
     LIMIT 5
