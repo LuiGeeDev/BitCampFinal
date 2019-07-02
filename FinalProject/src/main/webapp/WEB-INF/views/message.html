@@ -26,12 +26,14 @@
         <div th:each="all : ${selectall}">
           <div class="message2">
             <span class="hidden" th:text="${all.id}"></span>
-             
+
             <div class="message-sender2">
               <span class="hidden" th:text="${all.receiver_username}"></span>
               <span class="hidden" th:text="${all.sender_username}"></span>
               <!-- <span class="readbtn"><i class="fas fa-circle"></i>&nbsp;</span> -->
-              <span class="unread" th:unless="${all.checked}"><span class="badge badge-danger">N</span></span><span class="hidden removenoti" th:text="${all.checked}"></span>
+              <span class="unread" th:unless="${all.checked}"><span
+                class="badge badge-danger">N</span></span><span
+                class="hidden removenoti" th:text="${all.checked}"></span>
               <span class="sender2" th:text="${all.senderName}"></span>
               <span>(</span> <span class="senderName"
                 th:text="${all.sender_username}"></span> <span>)</span>
@@ -47,11 +49,12 @@
         </div>
       </div>
       <div class="message-paper2">
-      
-       <div class="spinner-border text-warning spin-where" role="status" id="spinner">
-        <span class="sr-only">Loading...</span>
-      </div>
-        
+
+        <div class="spinner-border text-warning spin-where"
+          role="status" id="spinner">
+          <span class="sr-only">Loading...</span>
+        </div>
+
         <span class="hidden" id="message-sender-id"></span>
         <!-- 메시지 보낸사람   -->
         <div class="send-message-icon">
