@@ -12,16 +12,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
+import kr.or.bit.model.General;
+import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
+import kr.or.bit.service.ArticleUpdateService;
+import kr.or.bit.service.ArticleVoteService;
 import kr.or.bit.service.CommentService;
 import kr.or.bit.utils.Helper;
 
 @Controller
 @RequestMapping("/stack")
 public class StackController {
-  private final int VIDEO_BOARD_ID = 1;
+  private final int STACK_BOARD_ID = 1;
   
   @Autowired
   private SqlSession sqlsession;
@@ -29,18 +34,24 @@ public class StackController {
   private ArticleService articleService;
   @Autowired
   private CommentService commentService;
+  @Autowired
+  private ArticleInsertService articleInsertService;
+  @Autowired
+  private ArticleVoteService articleVoteService;
+  @Autowired
+  private ArticleUpdateService articleUpdateService;
   
   //stack 메인으로 이동
   @GetMapping("/home")
-  public String selectAllStack(Model model) {
-    List<Article> article = articleService.selectAllArticle("qna",2);
+  public String getStackList(Model model) {
+    List<Article> article = articleService.selectAllArticle("qna",1);
     model.addAttribute("stacklist",article);
     return "stack/home";
   }
   
   //stack 게시물 상세보기 버튼
   @GetMapping("/content")
-  public String selectStack(int id, Model model) {
+  public String GetStackContent(int id, Model model) {
     Article article = articleService.selectOneArticle("qna",id);
     model.addAttribute("stackcontent",article);
     return "stack/content";
@@ -48,14 +59,42 @@ public class StackController {
   
   //글쓰기 폼 화면으로..
   @GetMapping("/write")
-  public String stackWrite(Model model) {   
+  public String writeStack(Model model) {   
     return "stack/write";
   }
   
   //글쓰기 버튼 누르기..
   @PostMapping("/write")
-  public String stackWriteOk(Article article) {    
-    return "stack/home";
+  public String writeOkStack(Article article) {
+    General general = new General();
+    article.setUsername(Helper.userName());
+    articleInsertService.writeArticle(article, general);
+    return "redirect:/stack/home";
+  }
+  
+  @GetMapping("/edit")
+  public String editStack(int id, Model model) {
+    Article article = articleService.selectOneArticle("general", id);
+    model.addAttribute("article",article);
+    return "stack/edit";
+  }
+  
+  @PostMapping("/edit")
+  public String editStackArticle(Article article) {
+    article.setUsername(Helper.userName());
+    article.setBoard_id(STACK_BOARD_ID);
+    General general = new General();
+    articleUpdateService.updateArticle(article);
+    articleUpdateService.updateArticleOption(article.getId(), general);
+    return "redirect:/stack/home";
+  }
+  
+  @GetMapping("/delete")
+  public String deleteStack(int id) {
+    ArticleDao articleDao = sqlsession.getMapper(ArticleDao.class);
+    articleDao.deleteArticle(id);
+    
+    return "redirect:/stack/home";
   }
   
   @PostMapping("/commentwrite")

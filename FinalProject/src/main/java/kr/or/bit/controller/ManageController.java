@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.model.Course;
+import kr.or.bit.service.ClassCreateService;
 
 @Controller
 @RequestMapping("/manage")
@@ -20,6 +21,9 @@ public class ManageController {
 	
 	@Autowired
 	private SqlSession sqlSession;
+
+	@Autowired
+	private ClassCreateService classCreateService;
 	
 	@GetMapping("/home")
 	public String manageHome() {
@@ -27,14 +31,8 @@ public class ManageController {
 	}
 	
 	@PostMapping("/createClass")
-	@Transactional
 	public String createClass(Course course, @RequestParam(required = true) int people, @RequestParam int teacher_id, Model model) {
-		String defaultPassword = "$2a$10$L1pWhHeMtfEafgAFLR9iUO/gbTZFFoqFMMAWQ7RRDaKVd88kO92Ve"; // bitcamp
-		CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
-		MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-		courseDao.insertCourse(course);
-		Course newCourse = courseDao.selectRecentCourse();
-		memberDao.insertNewCourseMembers(people, teacher_id, newCourse.getId(), newCourse.getStart_date(), defaultPassword);
+		classCreateService.createClass(course, people, teacher_id);
 		
 		return "redirect:/manage/home";
 	}
