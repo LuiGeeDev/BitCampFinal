@@ -17,10 +17,14 @@
     <hr>
     <table>
       <tr>
-        <td colspan="4"><span class="tag-name"> <span
+        <td colspan="2" class="td1"><span class="tag-name"> <span
             id="c1">Spring</span> <span id="c2">Java</span> <span
             id="c3">C++</span>
         </span></td>
+        <td colspan="2" id="contenteditor">
+        <a th:href="@{/stack/edit(id=${stackcontent.id})}">[수정]</a>
+        <a th:href="@{/stack/delete(id=${stackcontent.id})}">[삭제]</a>
+        </td>
       </tr>
       <tr>
         <td colspan="4" class="tdtitle"><span
@@ -32,15 +36,15 @@
             <span th:utext="${stackcontent.content}"> </span>
           </p>
         </td>
-        <td class="td3" rowspan="2">
-          <div>
+        <td class="td3" rowspan="2" style="vertical-align: top;">
             <div id="floatMenu">
-              <img th:src="@{/css/stack/like.png}" id="imgp2"><br>
+              <a th:href="@{/stack/plusvote(id=${stackcontent.id})}">
+              <img th:src="@{/css/stack/like.png}" id="imgp2"></a><br>
               &nbsp;<span th:text="${stackcontent.vote_count}"></span>
-              <br> <img th:src="@{/css/stack/unlike.png}"
+              <br>
+              <img th:src="@{/css/stack/unlike.png}"
                 id="imgp2">
             </div>
-          </div>
         </td>
       </tr>
       <tr>

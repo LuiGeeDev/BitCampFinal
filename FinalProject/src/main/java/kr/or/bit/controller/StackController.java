@@ -44,8 +44,9 @@ public class StackController {
   //stack 메인으로 이동
   @GetMapping("/home")
   public String getStackList(Model model) {
-    List<Article> article = articleService.selectAllArticle("qna",1);
+    List<Article> article = articleService.selectAllArticle("qna",STACK_BOARD_ID);
     model.addAttribute("stacklist",article);
+    
     return "stack/home";
   }
   
@@ -54,6 +55,7 @@ public class StackController {
   public String GetStackContent(int id, Model model) {
     Article article = articleService.selectOneArticle("qna",id);
     model.addAttribute("stackcontent",article);
+    
     return "stack/content";
   }
   
@@ -75,7 +77,7 @@ public class StackController {
   
   @GetMapping("/edit")
   public String editStack(int id, Model model) {
-    Article article = articleService.selectOneArticle("general", id);
+    Article article = articleService.selectOneArticle("qna", id);
     model.addAttribute("article",article);
     return "stack/edit";
   }
@@ -114,4 +116,11 @@ public class StackController {
     commentService.deleteComment(id); 
     return "redirect:/stack/content?id="+article_id;
   } 
+  
+  @GetMapping("/plusvote")
+  public String stackplustVote(int id) {
+    articleVoteService.insertVote(id, Helper.userName());
+    return "redirect:/stack/content?id="+id;
+  }
+  
 }

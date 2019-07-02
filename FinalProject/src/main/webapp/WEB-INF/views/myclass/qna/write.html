@@ -4,24 +4,24 @@
   th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
   <head>
     <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-    <link rel="stylesheet" th:href="@{/css/home.css}" />
+    <link rel="stylesheet" th:href="@{/css/myclass/qna/write.css}" />
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
   </head>
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
-    <div class="main" th:fragment="main">
-
-
-    <form method="post" class="sumform">
-    <textarea id="summernote" name="editordata"></textarea>
+  <div class="main" th:fragment="main">
+    <form method="POST">
+      <div id="write-form-wrapper">
+        <input type="text" id="input-title" placeholder="제목"
+          name="title" />
+        <textarea name="content" id="summernote"></textarea>
+        <div id ="submitbtn"><button type="submit" class="btn btn-primary">
+          올리기</button></div>
+      </div>
     </form>
-
-
-    </div>
+  </div>
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
   	<script src="/js/qna/write.js"></script>
     </body>

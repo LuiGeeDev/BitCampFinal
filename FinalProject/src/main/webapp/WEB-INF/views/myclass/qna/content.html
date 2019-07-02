@@ -3,9 +3,9 @@
   th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
 <head>
 <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-<link rel="stylesheet" th:href="@{/css/myclass/stack/content.css}" />
+<link rel="stylesheet" th:href="@{/css/stack/content.css}" />
 </head>
-<body onload="InitializeStaticMenu();">
+<body>
   <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
   <div class="main" th:fragment="main">
     <div class="title">
@@ -17,73 +17,83 @@
     <hr>
     <table>
       <tr>
-        <td colspan="4">
-          <span class="tag-name">
-          <span id="c4">Spring</span>
-          <span id="c5">Java</span>
-          <span id="c6">C++</span>
-          </span>
+        <td colspan="2" class="td1"><span class="tag-name"> <span
+            id="c1">Spring</span> <span id="c2">Java</span> <span
+            id="c3">C++</span>
+        </span></td>
+        <td colspan="2" id="contenteditor">
+        <a th:href="@{/myclass/qna/edit(id=${qnacontent.id})}">[수정]</a>
+        <a th:href="@{/myclass/qna/delete(id=${qnacontent.id})}">[삭제]</a>
         </td>
       </tr>
       <tr>
-        <td colspan="4" class="tdtitle">작은 것들을 위한 시(Feat.Halsey)</td>
+        <td colspan="4" class="tdtitle">
+        <sapn th:text="${qnacontent.title}"></sapn>
+        </td>
       </tr>
       <tr>
         <td colspan="3" class="tdcontent">
           <p>
-                    모든 게 궁금해 How’s your day<br>Oh tell me<br>뭐가 널 행복하게 하는지<br>Oh text me<br><br>
-           Your every picture<br>내 머리맡에 두고 싶어 oh bae<br>Come be my teacher<br>
-                    네 모든 걸 다 가르쳐줘<br>Your 1, your 2<br><br>
-           Listen my my baby 나는<br>저 하늘을 높이 날고 있어<br>(그때 니가 내게 줬던 두 날개로)<br>이제 여긴 너무 높아<br>
-                    난 내 눈에 널 맞추고 싶어<br>Yeah you makin’ me a boy with luv<br><br>
-           Oh my my my oh my my my<br>I've waited all my life<br>네 전부를 함께하고 싶어<br>
-           Oh my my my oh my my my<br>Looking for something right<br>이제 조금은 나 알겠어<br><br>
-           I want something stronger<br>Than a moment, than a moment, love<br>I have waited longer<br>
-           For a boy with<br>For a boy with luv<br><br>
-                    널 알게 된 이후 ya 내 삶은 온통 너 ya<br>사소한 게 사소하지 않게 만들어버린 너라는 별<br>
-                    하나부터 열까지 모든 게 특별하지<br>너의 관심사 걸음걸이 말투와 사소한 작은 습관들까지<br>
+            <span th:utext="${qnacontent.content}"> </span>
           </p>
         </td>
-        <td class="td3" rowspan="2">
-          <div style="position: relative; top: -330px;">
-            <div id="sidebox">
-              <img src="/css/stack/like.png" id="imgp2"><br>
-              0<br> <img src="/css/stack/unlike.png" id="imgp2">
+        <td class="td3" rowspan="2" style="vertical-align: top;">
+            <div id="floatMenu">
+              <img th:src="@{/css/stack/like.png}" id="imgp2"><br>
+              &nbsp;<span th:text="${qnacontent.vote_count}"></span>
+              <br> <img th:src="@{/css/stack/unlike.png}"
+                th:classappend="${voteStatus} == 1 ? 'voted'"
+                id="imgp2">
             </div>
-          </div>
         </td>
       </tr>
       <tr>
-        <td class="td5"><img src="/css/stack/profile.jpg"
+        <td class="td5"><img th:src="@{/css/stack/profile.jpg}"
           class="imgp"></td>
         <td colspan="2" class="td4">
-          <p class="pwriter">BTS</p>
-          <p class="pfont">게시일:2019.01.28</p>
-          <p class="pfont">41view</p>
+          <p class="pwriter"><span th:text="${qnacontent.writer.username}"></span></p>
+          <p class="pfont">게시일:<span th:text="${qnacontent.updated_time}"></span></p>
+          <p class="pfont"><span th:text="${qnacontent.view_count}"></span>view</p>
         </td>
       </tr>
     </table>
-    <!-- 댓글창 -->
+    <!-- 댓글insert -->
     <table>
       <tr>
-        <td class="comtitle" colspan="4">총 [4]개의 답변</td>
+        <td class="comtitle" colspan="4">총 [<span th:text="${qnacontent.commentlist.size()}"></span>]개의 답변</td>
       </tr>
       <tr>
-        <td class="ctd1">
-          <form th:action="@{/}" method="post" colspan="3">
-            <textarea name="comment" class="comtext"></textarea>
+        <td class="ctd1" colspan="3">
+          <form th:action="@{/myclass/qna/commentwrite(id=${qnacontent.id})}" method="post">
+            <textarea name="content" class="comtext"></textarea>
             <br> <input type="submit"
               class="btn btn-primary btnalign" value="등록">
           </form>
         </td>
         <td class="ctd2"></td>
       </tr>
+    </table>   
+    <!-- 댓글목록 -->
+    <table class="iteration" th:if="${qnacontent.commentlist.size()==0}">
+    <tr><td>질문에 대한 답변을 달아주세요!</td></tr>
     </table>
-
+    <table th:unless="${qnacontent.commentlist.size()==0}" class="iteration" th:each="list : ${qnacontent.commentlist}">
+    <tr>
+    <td class="td3"><img th:src="@{/css/stack/profile2.png}" class="profileImg"></td>
+    <td>
+    [[${list.username}]]</span>
+    <a th:href="@{/myclass/qna/commentdelete(id=${list.id})}">[삭제]</a><br>
+    <span class="commentCalender">[[${list.updated_time}]]</span></td>
+    <td class="td7"></td>
+    </tr>
+    <tr>
+    <td colspan="2" class="td6">[[${list.content}]]</span></td>
+    <td></td>
+    </tr>
+    </table>
   </div>
-  <script src="/js/stack/content.js">
-      
-    </script>
+<script src="/js/qna/content.js"></script>
+<script src="jquery-3.4.1.min.js"></script>
 </body>
 </html>
 
