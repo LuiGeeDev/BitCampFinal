@@ -4,7 +4,7 @@
   margin: 10px 0 0 80px;
   font-size: 32px;
   font-weight: bold;
-  display:flex;
+  display: flex;
   width: 83%;
   margin-bottom: 20px;
 }
@@ -81,7 +81,7 @@ a {
 
 .board-search {
   font-size: 17px;
-  margin-left:auto;
+  margin-left: auto;
   height: 31px;
   margin-top: 1;
 }
@@ -93,9 +93,4 @@ a {
 .search-item {
   margin-left: auto;
 }
-
-
-
-
-
 

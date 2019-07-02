@@ -13,22 +13,51 @@
     <div class="main" th:fragment="main">
       <div class="detail-container">
         <div class="detail-head">
-          <span class="detail-title">나는 해적왕이 될꺼야 !!</span>
+          <span class="detail-title">???</span>
           <div class="detail-subtitle">
-            <span>권예지</span>  |
-            <span>2019-07-02</span>  | 조회수
-            <span>0</span>  | 댓글
-            <span>2</span>  |
-          
+            <span>권예지&nbsp;</span>|
+            <span>&nbsp;2019-07-02&nbsp;</span>| 조회수
+            <span>0&nbsp;</span>| 댓글
+            <span>2&nbsp;</span>|
+          <div class="btn-group">
+          <form action="" method="">
+            <input type="submit" class="btn btn-primary btn-align" value="수정">
+            <input type="submit" class="btn btn-primary btn-align" value="삭제">
+            <input type="submit" class="btn btn-primary btn-align" value="목록">
+            </form>
+          </div>
           </div>
         
         </div>
-        
-        
-      
-      
-      
+        <div class="detail-content">  
+            안녕하세요 오늘도 행복한 하루되세요
+        </div>
       </div>
+      
+      <div class="detail-comment">
+          
+            <span class="userIcon">
+                <i class="fas fa-user-circle fa-lg"></i>
+            </span>
+            <span class="writerName">정성윤</span>
+            
+          <form action="" method="">
+          <input type="text" name="content" id="content" class="comment-text">
+          <input type="submit" class="btn btn-primary detail-btn" value="등록">
+          </form>
+        </div>
+        
+         <div class="content-reply-form">
+              <div class="content-reply">
+              <div class="content-move">
+                <span class="userIcon"><i class="fas fa-user-circle fa-lg"></i></span>
+                <span class="writerName">정성윤</span>
+                <a href = "">[삭제]</a>
+                <span class="write-date">2019.10.16</span>
+                </div>
+            <div class="content-comment">이것은 내용입니다</div>
+            </div>
+        </div>
     
     
     </div>
