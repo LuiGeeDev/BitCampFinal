@@ -40,10 +40,14 @@ td[colspan="2"] {
 
 .tdcontent {
   cursor: pointer;
-  max-height: 70px;
+  max-height: 50px;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 110%
 }
+.tdcontent br { 
+    display: none; 
+} 
 
 .tdst {
   font-size: 130%;

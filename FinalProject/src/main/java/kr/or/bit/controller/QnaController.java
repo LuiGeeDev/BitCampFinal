@@ -6,26 +6,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/qna")
+@RequestMapping("/myclass")
 public class QnaController {
   
  
   
-  @GetMapping("/home")
+  @GetMapping("/qna/home")
   public String selectAllQna(Model model) {
     
-    return "qna/home";
+    return "myclass/qna/home";
   }
   
-  @GetMapping("/content")
+  @GetMapping("/qna/content")
   public String selectQna(Model model) {
     
-    return "qna/content";
+    return "myclass/qna/content";
   }
-  @GetMapping("/write")
+  @GetMapping("/qna/write")
   public String qnaWrite(Model model) {
     
-    return "qna/write";
+    return "myclass/qna/write";
   }
   
 }

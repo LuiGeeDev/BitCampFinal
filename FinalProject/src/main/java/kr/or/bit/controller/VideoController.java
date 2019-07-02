@@ -25,13 +25,12 @@ import kr.or.bit.utils.Helper;
 @RequestMapping("/video")
 public class VideoController {
   private final int VIDEO_BOARD_ID = 2;
-  
   @Autowired
   private SqlSession sqlSession;
   @Autowired
   private ArticleInsertService articleInsertService;
   @Autowired
-  private ArticleUpdateService articleUpdateService; 
+  private ArticleUpdateService articleUpdateService;
   @Autowired
   private ArticleService articleService;
   @Autowired
@@ -39,12 +38,10 @@ public class VideoController {
   @Autowired
   private CommentService commentService;
 
-
   @GetMapping("/home")
   public String videoHome(Model model) {
     List<Article> videoList = articleService.selectAllArticle("video", VIDEO_BOARD_ID);
     model.addAttribute("videoList", videoList);
-    
     return "video/home";
   }
 
@@ -55,7 +52,6 @@ public class VideoController {
      */
     Article article = articleService.selectOneArticle("video", id);
     VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
-    
     model.addAttribute("voteStatus", articleVoteService.selectVote(id, Helper.userName()));
     model.addAttribute("article", article);
     return "video/detail";
@@ -73,35 +69,30 @@ public class VideoController {
      */
     article.setUsername(Helper.userName());
     article.setBoard_id(VIDEO_BOARD_ID);
-    
     Video video = new Video();
     int beginIndex = "https://youtu.be/".length();
     video.setVideo_id(url.substring(beginIndex));
-
     articleInsertService.writeArticle(article, video);
     return "redirect:/video/home";
   }
+
   @GetMapping("/edit")
-  public String getEditPage(int id,String video_id, Model model) {
+  public String getEditPage(int id, String video_id, Model model) {
     Article article = articleService.selectOneArticle("video", id);
     model.addAttribute("article", article);
     model.addAttribute("video_id", "https://youtu.be/" + video_id);
     return "video/edit";
   }
-  
+
   @PostMapping("/edit")
   public String editVideoArticle(Article article, String url) {
     article.setUsername(Helper.userName());
     article.setBoard_id(VIDEO_BOARD_ID);
-    
     Video video = new Video();
     int beginIndex = "https://youtu.be/".length();
     video.setVideo_id(url.substring(beginIndex));
-    
-
     articleUpdateService.updateArticle(article);
     articleUpdateService.updateArticleOption(article.getId(), video);
-    
     return "redirect:/video/home";
   }
 
@@ -109,24 +100,22 @@ public class VideoController {
   public String deleteVideo(int id) {
     VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
     videoDao.deleteVideo(id);
-   
     return "redirect:/video/home";
   }
-  
+
   @PostMapping("/commentwrite")
   public String writeCommentVideo(int id, Comment comment) {
     comment.setUsername(Helper.userName());
     comment.setArticle_id(id);
     commentService.insertComment(comment);
-    return "redirect:/video/detail?id="+id;
+    return "redirect:/video/detail?id=" + id;
   }
-  
+
   @GetMapping("/commentdelete")
   public String deleteCommentVideo(int id) {
     Comment comment = commentService.selectOnecomment(id);
     int article_id = comment.getArticle_id();
     commentService.deleteComment(id);
-    return "redirect:/video/detail?id="+article_id;
+    return "redirect:/video/detail?id=" + article_id;
   }
-  
 }

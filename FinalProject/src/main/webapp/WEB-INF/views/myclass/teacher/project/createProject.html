@@ -32,8 +32,9 @@
     <div class="row">
       <div class="student-list">
         <h5>학생리스트</h5>
-        <ul id="students" th:each="member,iterStat : ${memberList}">
-          <li th:id="'draggable' + ${iterStat.count}" class="student-block" th:text="${member.name}"></li>
+        <ul id="students"><!--th:each="member,iterStat : ${memberList}" -->
+          <!--  <li th:id="'draggable' + ${iterStat.count}" class="student-block" th:text="${member.name}"></li>-->
+          <li id="draggable1" class="student-block">권순조</li>
         </ul>
       </div>
       <div class="btn-add">
@@ -52,7 +53,6 @@
     </div>
   </div>
   <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
       $(function() {
