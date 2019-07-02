@@ -37,13 +37,13 @@ public class AjaxController {
 
   @Autowired
   private SqlSession sqlSession;
-  
+
   @Autowired
   private ArticleService articleService;
-  
+
   @Autowired
   private ArticleVoteService articleVoteService;
-  
+
   @PostMapping("/chat/file")
   public ChatMessage uploadFile(HttpServletRequest request, int group_id, long time, String name, MultipartFile file)
       throws IllegalStateException, IOException {
@@ -103,16 +103,15 @@ public class AjaxController {
   public List<Classroom> getClassroom(Date start_date, @RequestParam(defaultValue = "1970-01-01") Date end_date) {
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     List<Classroom> classroomList = courseDao.selectAvailableClassroom(start_date, end_date);
-    for (Classroom cr : classroomList) {
-      System.out.println(cr.getId() + "/" + cr.getClassroom_name());
-    }
+
     return classroomList;
   }
+
   @PostMapping("/vote")
-  @ResponseBody
-  public Map<String, Object> voteVideoArticle(int articleId){
-	 return articleVoteService.insertVote(articleId, Helper.userName());
+  public Map<String, Object> voteVideoArticle(int articleId) {
+    return articleVoteService.insertVote(articleId, Helper.userName());
   }
+
   @PostMapping("/video/scroll")
   public List<Article> getNextVideoArticles(int article_id) {
     List<Article> list = articleService.selectArticlesOnNextPage(article_id);

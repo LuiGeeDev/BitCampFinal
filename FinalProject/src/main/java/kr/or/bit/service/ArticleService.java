@@ -29,10 +29,7 @@ import kr.or.bit.model.Video;
 public class ArticleService {
   @Autowired
   private SqlSession sqlSession;
-
-  public void updateArticle() {
-  }
-
+  
   public List<Article> selectArticlesOnNextPage(int article_id) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
