@@ -6,6 +6,7 @@ body {
 
 .content-wrapper {
   padding: 10px 0px 10px 50px;
+  margin-left: 16vw;
 }
 
 .page-title-wrapper {
@@ -22,7 +23,7 @@ body {
 }
 
 .wrapper {
-  margin: 20px;
+  margin-bottom: 25px;
 }
 
 .class-member-list {
@@ -30,23 +31,28 @@ body {
   height: 25em;
   overflow-y: scroll;
   border: #2d3e50 0.5px solid;
-  margin-left: auto;
 }
 
 .class-member {
   padding: 10px;
   margin-top: -1px;
   border-bottom: 0.5px #a6a6a6 solid;
+  font-weight: bold;
+}
+
+.text {
+  font-weight: bold;
 }
 
 .class-group {
   padding: 10px;
   margin-top: -1px;
   border-bottom: 0.5px #a6a6a6 solid;
-  background-color: #f39c12;
+  background-color: #2D3E50;
   font-weight: bold;
   text-align: center;
   margin-bottom: 2px;
+  color: white;
 }
 
 .class-group-list {
@@ -62,9 +68,34 @@ body {
 .class-member:last-child {
   border: none;
 }
-.button-wrapper{  
+
+.button-wrapper {
   margin: 10px auto;
 }
-.button-wrapper button{
-  font-weight:bold;
+
+.button-wrapper button {
+  font-weight: bold;
+}
+
+.content-wrapper input {
+  border-radius: 10px;
+  border: 1px solid;
+  outline: none;
+  border: 1px solid;
+  padding: 5px 10px;
+  width: 50%;
+}
+
+.date-input {
+  width: 25% !important;
+  font-size: 13px;
+}
+
+.date {
+  font-size: 13px;
+}
+
+
+.project-term-text {
+  text-align: left;
 }

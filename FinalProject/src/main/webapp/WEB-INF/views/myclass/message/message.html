@@ -122,16 +122,6 @@
     }).ajaxStop(function() {
       $("#spinner").hide();
     });
-    var str = "New";
-    var c = 0;
-
-    setInterval(function(){
-          if(c < 3)
-             $('.iconnew').append(str[c]);
-          c++;
-    }, 300);
-    
-    
     
     $("#modal-submitbtn").click(function() {
       const messageText = $("#message-text").val();

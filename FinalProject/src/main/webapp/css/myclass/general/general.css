@@ -4,7 +4,7 @@
   margin: 10px 0 0 80px;
   font-size: 32px;
   font-weight: bold;
-  display:flex;
+  display: flex;
   width: 83%;
   margin-bottom: 20px;
 }
@@ -81,7 +81,7 @@ a {
 
 .board-search {
   font-size: 17px;
-  margin-left:auto;
+  margin-left: auto;
   height: 31px;
   margin-top: 1;
 }
@@ -94,8 +94,16 @@ a {
   margin-left: auto;
 }
 
+.pointerImg {
+  width:20px;
+  height:20px;
+  position: absolute;
+  margin-left: 820px;
+}
 
-
-
-
-
+.pointerImg2 {
+  width:20px;
+  height:20px;
+  position: absolute;
+  margin-left: 980px;
+}

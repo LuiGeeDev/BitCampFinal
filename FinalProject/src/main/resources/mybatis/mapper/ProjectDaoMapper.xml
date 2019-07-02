@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="kr.or.bit.dao.ProjectDao">
+  <select id="selectMyProject" resultType="kr.or.bit.model.Project">
+    SELECT id, project_name, start_date, end_date, season, course_id
+    FROM project
+    WHERE course_id = (SELECT course_id
+	            	   FROM member
+			           WHERE username = #{username})    
+  </select>
+</mapper>
+

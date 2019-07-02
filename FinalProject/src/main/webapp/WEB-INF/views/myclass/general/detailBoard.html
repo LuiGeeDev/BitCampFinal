@@ -11,31 +11,97 @@
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
+    <div class="spinner-border text-warning spin-where"
+          role="status" id="spinner">
+          <span class="sr-only">Loading...</span>
+        </div>
       <div class="detail-container">
         <div class="detail-head">
-          <span class="detail-title">나는 해적왕이 될꺼야 !!</span>
+          <span class="detail-title">???</span>
           <div class="detail-subtitle">
-            <span>권예지</span>  |
-            <span>2019-07-02</span>  | 조회수
-            <span>0</span>  | 댓글
-            <span>2</span>  |
-          
+            <span>권예지&nbsp;</span>|
+            <span>&nbsp;2019-07-02&nbsp;</span>| 조회수
+            <span>0&nbsp;</span>| 댓글
+            <span>2&nbsp;</span>|
+          <div class="btn-group">
+          <form action="" method="">
+            <input type="submit" id="updatebtn"class="btn btn-primary btn-align" value="수정">
+            <input type="submit" id="deletebtn" class="btn btn-primary btn-align" value="삭제">
+            <input type="submit" id="listbtn" class="btn btn-primary btn-align" value="목록">
+            </form>
+          </div>
           </div>
         
         </div>
-        
-        
-      
-      
-      
+        <div class="detail-content">  
+            안녕하세요 오늘도 행복한 하루되세요
+        </div>
       </div>
+      
+      <div class="detail-comment">
+          
+            <span class="userIcon">
+                <i class="fas fa-user-circle fa-lg"></i>
+            </span>
+            <span class="writerName">정성윤</span>
+            
+          <form action="" method="">
+          <input type="text" name="content" id="content" class="comment-text">
+          <input type="submit" class="btn btn-primary detail-btn" value="등록">
+          </form>
+        </div>
+        
+         <div class="content-reply-form">
+              <div class="content-reply">
+              <div class="content-move">
+                <span class="userIcon"><i class="fas fa-user-circle fa-lg"></i></span>
+                <span class="writerName">정성윤</span>
+                <a href = "">[삭제]</a>
+                <span class="write-date">2019.10.16</span>
+                </div>
+            <div class="content-comment">이것은 내용입니다</div>
+            </div>
+        </div>
     
     
     </div>
     <!-- 필요하다면 이 아래에 외부 자바스크립트도 추가 가능 -->
     
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script>
+    $(document).ready(function() {
+      $("#spinner").hide();
+    }).ajaxStart(function() {
+      $("#spinner").show();
+    }).ajaxStop(function() {
+      $("#spinner").hide();
+    });
+    	$("#deletebtn").click(function(event) {
+    	  event.preventDefault();
+        Swal.fire({
+          title: '정말 삭제하시겠습니까?',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#F39B10',
+          cancelButtonColor: '#A6A6A6',
+          confirmButtonText: '네',
+          cancelButtonText: '아니요'
+        }).then((result) => {
+          if (result.value) {
+                Swal.fire({
+                  	title: '삭제되었습니다',
+                  	type: 'success',
+                  	confirmButtonText: '확인',
+                  	confirmButtonColor: '#F39B10'
+                }).then(() => {
+                  
+                });
+          }
+        })
+    	});
+    
+    
     </script>
   </body>
 </html>

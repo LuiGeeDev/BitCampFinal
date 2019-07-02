@@ -4,7 +4,7 @@
     var position = $(window).scrollTop();
     $("#floatMenu").stop().animate({
       "top" : position + currentPosition + "px"
-    }, 1000);
+    }, 2000);
   });
 
   $('#top1,#top2,#top3,#bottom1,#c_w1,#category1,#g_w1').click(function() {
@@ -13,6 +13,6 @@
     var target = $(id).offset().top - offset;
     $('html,body').animate({
       scrollTop : target
-    }, 500);
+    }, 1000);
     event.preventDefault();
   });
