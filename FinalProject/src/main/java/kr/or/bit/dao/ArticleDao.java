@@ -39,4 +39,6 @@ public interface ArticleDao {
   int selectVote(@Param("id") int articleId, @Param("username") String username);
 
   void updateEable(int id);
+
+  List<Article> selectArticlesByPage(@Param("board_id") int board_id, @Param("page") int page);
 }
