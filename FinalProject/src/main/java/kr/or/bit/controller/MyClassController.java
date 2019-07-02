@@ -69,4 +69,8 @@ public class MyClassController {
   public String chatPage() {
     return "myclass/chat/main";
   }
+  @GetMapping("/managing/main")
+  public String manageClassMain() {
+    return "myclass/teacher/manager/main";
+  }
 }
