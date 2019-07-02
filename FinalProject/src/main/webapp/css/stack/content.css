@@ -33,7 +33,7 @@ th, td {
 }
 
 .tdcontent {
-  font-size: 90%;
+  font-size: 110%;
   border-right: 1.5px solid #eaebec;
   padding-bottom: 30px;
   padding-top: 20px;
@@ -159,7 +159,8 @@ th, td {
   padding: 0;
   margin: 0;
   z-index: 500;
-  text-align: center
+  text-align: center;
+  margin-top: 30px;
 }
 
 #imgp2 {
@@ -192,12 +193,13 @@ th, td {
   width: 13%;
 }
 
-.commentTitle {
-  
-}
-
 .commentCalender {
   font-size: 90%;
   color: gray;
   
 }
+#contenteditor{
+  width: 40%;
+  text-align: right;
+}
+

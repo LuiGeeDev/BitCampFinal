@@ -94,3 +94,16 @@ a {
   margin-left: auto;
 }
 
+.pointerImg {
+  width:20px;
+  height:20px;
+  position: absolute;
+  margin-left: 820px;
+}
+
+.pointerImg2 {
+  width:20px;
+  height:20px;
+  position: absolute;
+  margin-left: 980px;
+}
