@@ -4,9 +4,8 @@
 <head>
 <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
 <link rel="stylesheet" th:href="@{/css/home.css}" />
-<link rel="stylesheet" th:href="@{/css/message.css}" />
+<link rel="stylesheet" th:href="@{/css/message/message.css}" />
 <link rel="stylesheet" th:href="@{/css/modal.css}" />
-<link rel="stylesheet" th:href="@{/css/loading.css}" />
 </head>
 <body>
   <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
@@ -27,14 +26,12 @@
         <div th:each="all : ${selectall}">
           <div class="message2">
             <span class="hidden" th:text="${all.id}"></span>
-
+             
             <div class="message-sender2">
               <span class="hidden" th:text="${all.receiver_username}"></span>
               <span class="hidden" th:text="${all.sender_username}"></span>
               <!-- <span class="readbtn"><i class="fas fa-circle"></i>&nbsp;</span> -->
-              <span class="unread" th:unless="${all.checked}"><span
-                class="iconnew"></span>&nbsp;</span> <span
-                class="hidden removenoti" th:text="${all.checked}"></span>
+              <span class="unread" th:unless="${all.checked}"><span class="badge badge-danger">N</span></span><span class="hidden removenoti" th:text="${all.checked}"></span>
               <span class="sender2" th:text="${all.senderName}"></span>
               <span>(</span> <span class="senderName"
                 th:text="${all.sender_username}"></span> <span>)</span>
