@@ -10,5 +10,5 @@ public interface FilesDao {
   
   void deleteFiles(int id);
   
-  int selectFilesByOriginalFileName(String originalName);
+  int selectFilesByFilename(String filename);
 }

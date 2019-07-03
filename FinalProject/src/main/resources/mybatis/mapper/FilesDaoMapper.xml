@@ -3,13 +3,13 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 
-  void insertFiles();
+  void insertFiles(Files files);
   
-  void updateFiles();
+  void updateFiles(Files files);
   
-  void deleteFiles();
+  void deleteFiles(int id);
   
-  Files selectFilesById(int id);
+  int selectFilesByFilename(String originalName);
  -->
  
 <mapper namespace="kr.or.bit.dao.FilesDao">
@@ -26,10 +26,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     delete from files 
     where id=#{id}
   </delete>
-  <select id="selectFilesById" resultType="kr.or.bit.model.Files">
-    select id, original_filename, filename
+  <select id="selectFilesByFilename" resultType="Integer">
+    select id
     from files
-    where id=#{id}
+    where filename=#{filename}
   </select>
 </mapper>
 
