@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+#title {
+    margin: 10px 0 0 150px;
+    font-size: 32px;
+}
+.hw-title {
+  flex-basis:15%;
+  border:1px solid #ebeced;
+  border-radius: 3px;
+  margin:0 7px;
+  background-color:#ebeced;
+  padding:5px 10px;
+  text-align:center;
+}
+.homework-container {
+  display: flex;
+  width:70%;
+  margin:8px 150px;
+}
+.homework-content {
+  width:70%;
+  height:100%;
+  margin:10px 150px;
+}
+#buttons {
+  text-align: right;
+  margin-right: 20%;
+  margin-bottom: 60px;
+}
