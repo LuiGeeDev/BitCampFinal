@@ -100,8 +100,8 @@ public class MyClassController {
     return "myclass/homework/detail";
   }
   
-  @GetMapping("/homework/create")
-  public String createHomework() {
-    return "myclass/homework/create";
+  @GetMapping("/homework/write")
+  public String writeHomework() {
+    return "myclass/homework/write";
   }
 }

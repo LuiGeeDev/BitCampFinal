@@ -75,12 +75,15 @@ public class ArticleInsertService {
       HttpServletRequest request) {
     FileUploadService fileupload = new FileUploadService();
     String optionname = option.getClass().getName().toLowerCase().trim().substring("kr.or.bit.model.".length());
+    System.out.println(optionname);
     List<Integer> fileIds = new ArrayList<Integer>();
     try {
       List<Files> files = fileupload.uploadFile(file, request);
       FilesDao filesdao = sqlSession.getMapper(FilesDao.class);
       for (Files list : files) {
         filesdao.insertFiles(list);
+        System.out.println("2");
+        System.out.println(list.getOriginal_filename());
         fileIds.add(filesdao.selectFilesByOriginalFileName(list.getOriginal_filename()));
       }
       

@@ -165,6 +165,16 @@ public class Article {
     return commentlist;
   }
 
+  @Override
+  public String toString() {
+    return "Article [id=" + id + ", title=" + title + ", content=" + content + ", time=" + time + ", updated_time="
+        + updated_time + ", view_count=" + view_count + ", original_id=" + original_id + ", level=" + level
+        + ", enable=" + enable + ", username=" + username + ", board_id=" + board_id + ", timeLocal=" + timeLocal
+        + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", tags=" + tags + ", commentlist="
+        + commentlist + ", option=" + option + ", vote=" + vote + ", votenum=" + votenum + ", vote_count=" + vote_count
+        + "]";
+  }
+
   public void setCommentlist(List<Comment> commentlist) {
     this.commentlist = commentlist;
   }
