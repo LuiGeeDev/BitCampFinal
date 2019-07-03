@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   List<Group> selectAllGroupByProject();
 
 */ -->
-<mapper namespace="kr.or.bit.dao.Group">
+<mapper namespace="kr.or.bit.dao.GroupDao">
   <insert id="insertGroup" parameterType="kr.or.bit.model.Group">     
 	insert into groups(group_no, leader_name, project_id)
 	values(#{group_no}, #{leader_name}, #{project_id})
@@ -60,5 +60,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="getProjectSeason" resultType="int">
     SELECT season
     FROM project
+  </select>
+  <select id="selectMyNewGroup" resultType="kr.or.bit.model.Group">
+  	SELECT ID, GROUP_NO, LEADER_NAME, PROJECT_ID
+  	FROM GROUPS
+  	WHERE PROJECT_ID=#{project_id} AND GROUP_NO=#{group_no}
   </select>
 </mapper>
