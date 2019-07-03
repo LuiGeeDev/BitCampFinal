@@ -86,7 +86,7 @@ public class ArticleInsertService {
         FilesDao filesdao = sqlSession.getMapper(FilesDao.class);
         for (Files list : files) {
           filesdao.insertFiles(list);
-          fileIds.add(filesdao.selectFilesByOriginalFileName(list.getOriginal_filename()));
+          fileIds.add(filesdao.selectFilesByFilename(list.getOriginal_filename()));
         }
         ArticleDao artidao = wArticle(article);
         switch (optionname) {
