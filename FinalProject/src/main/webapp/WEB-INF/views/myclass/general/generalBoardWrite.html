@@ -5,18 +5,44 @@
 >
   <head>
     <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-    <link rel="stylesheet" th:href="@{/css/home.css}" />
+    <link rel="stylesheet" th:href="@{/css/myclass/general/generalWrite.css}" />
+    <link
+      href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css"
+      rel="stylesheet"
+    />    
   </head>
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
-    
-    
+      <form method="POST">
+        <div id="write-form-wrapper">
+          <input type="text" id="input-title" placeholder="제목" name="title"/>
+          <textarea class="summernote-parent" name="content" id="summernote">
+          </textarea>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            id="submit-button"
+          >
+            올리기
+          </button>
+        </div>
+      </form>
     </div>
-    <!-- 필요하다면 이 아래에 외부 자바스크립트도 추가 가능 -->
-    
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
     <script>
+      $(document).ready(function() {
+        const title = $("#input-title");
+        const submitBtn = $("#submit-button");
+        
+        $("#summernote").summernote({
+          height: 485,
+          disableResizeEditor: true
+        });
+        
+        
+      });
     </script>
   </body>
 </html>
