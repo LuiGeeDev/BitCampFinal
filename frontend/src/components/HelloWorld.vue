@@ -1,8 +1,7 @@
 <template>
     <div id = "todolistapp">
         <div id = "header" class = "header">
-            <h2>투두리스트</h2>
-            <input class = "input" type="text" id = "task" placeholder="입력후 엔터"
+            <input class = "input" type="text" id = "task" placeholder="체크리스트 입력"
             v-model.trim="todo"
             v-on:keyup.enter="addTodo">
             <span class = "addbutton" v-on:click="addTodo">추가하기</span>
@@ -101,10 +100,16 @@ export default {
       float: left; font-size:16px
   }
   .addbutton{
-      padding:10px; width:25% ; height: 35px ; background : #d9d9d9;
-      color: #555 ; float : left; text-align: center;
-      font-size: 13px; cursor: pointer; transition: 0.3s
+      padding:10px; width:24% ; height: 35px ; background : #2D3E50;
+      color:white;
+      float : left; text-align: center;
+      font-size: 13px; cursor: pointer; transition: 0.3s;
+      font-weight: bold;
+      font-family: 'Nanum Gothic';
+      border-radius:10px;
+      margin-left:1px;
   }
   .addbutton:hover{background-color:#bbb}
   .completed {text-decoration: none}
+  .input{outline:none;border:1px #2D3E50 solid;border-radius:10px;}
 </style>

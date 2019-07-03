@@ -135,11 +135,31 @@ input[type=checkbox]:checked+label svg {
 }
 
 .card {
-  width: 1000px;
-  height: 370px;
+  width: 900px;
+  height: 300px;
   margin: 10px auto 0;
   flex-direction: row;
   margin: 10px auto 0;
+}
+
+.row-control {
+  width: 900px;
+  height: 500px;
+  display: flex;
+  margin: auto;
+  border-top: 15px;
+}
+
+.row-control-left {
+  width: 55%;
+  border-width: initial;
+  flex-direction: column;
+}
+
+.row-control-right {
+  width: 45%;
+  border-width: initial;
+  flex-direction: column;
 }
 
 .teacher-manage-left {
@@ -152,6 +172,16 @@ input[type=checkbox]:checked+label svg {
   width: 45%;
   display: flex;
   flex-direction: column;
+}
+
+.left-child1, .left-child2 {
+  height: 50%;
+  flex-direction: row;
+}
+
+.left-child1>div, .left-child2>div {
+  width: 400px;
+  height: 200px;
 }
 
 .btn-teacher {
@@ -173,7 +203,16 @@ input[type=checkbox]:checked+label svg {
 
 .my_class {
   font-size: 40px;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+}
+
+.row-control-right > div{
+  width: 400px;
+  height: 460px;
+}
+
+.course-date {
+  margin-bottom: 8px;
 }
 
 .subject_name {
@@ -184,6 +223,8 @@ input[type=checkbox]:checked+label svg {
   position: absolute;
   left: auto;
   right: auto;
+  font-size: 55px;
+  padding-top: 20px;
 }
 
 .progre {

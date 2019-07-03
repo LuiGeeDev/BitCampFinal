@@ -42,4 +42,8 @@ public class ProjectController {
     projectDao.insertProject(project);
     return "redirect:/";
   }
+  @GetMapping("/main")
+  public String manageMain() {
+    return "myclass/teacher/manager/main";
+  }
 }
