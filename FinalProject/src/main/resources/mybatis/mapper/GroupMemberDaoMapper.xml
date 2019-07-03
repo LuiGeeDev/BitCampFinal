@@ -18,10 +18,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   Member getGroupIdByUsername(String id);
 */ -->
-<mapper namespace="kr.or.bit.dao.GroupMember">
-  <insert id="insertGroup">     
+<mapper namespace="kr.or.bit.dao.GroupMemberDao">
+  <insert id="insertGroupMember">     
 	insert into group_member(group_id, member_name)
-	values(#{group_id}, #{member_name})
+	values(#{group_id}, #{username})
   </insert> 
   <delete id="deleteGroupMember">
 	delete from group_member 
@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <update id="updateGroupMember">
 	update group_member
 	set group_id = #{group_id}
-	where member_name=#{member_name}
+	where member_name=#{username}
   </update>
   <select id="selectAllGroupMemberByGroup">
 	select group_id, member_name

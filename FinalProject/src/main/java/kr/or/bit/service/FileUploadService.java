@@ -39,23 +39,29 @@ public class FileUploadService {
   public List<Files> uploadFile(List<MultipartFile> file, HttpServletRequest request) throws IllegalStateException, IOException {
     List<Files> filess = new ArrayList<Files>();
     for (MultipartFile mfile : file) {
-      Files files = new Files();
-      String originalFilename = mfile.getOriginalFilename();
-      String filenameOnServer = Helper.userName() + System.currentTimeMillis() + originalFilename;
-      String fileDirectory = "/files/" + LocalDate.now().getYear() + "/" + LocalDate.now().getMonthValue() + "/"
-          + LocalDate.now().getDayOfMonth();
-      String filepath = fileDirectory + filenameOnServer;
-      String realPath = request.getServletContext().getRealPath(fileDirectory);
-      new File(realPath).mkdirs();
-      File fileToSave = new File(realPath + filenameOnServer);
-      System.out.println(fileToSave.getAbsolutePath());
-      mfile.transferTo(fileToSave);
-      System.out.println(filepath);// 진짜주소
-      System.out.println(realPath);
-      System.out.println(originalFilename);// 오리지널
-      files.setOriginal_filename(originalFilename);
-      files.setFilename(filepath);
-      filess.add(files);
+      if(mfile.getOriginalFilename().trim()!="") {
+        Files files = new Files();
+        String originalFilename = mfile.getOriginalFilename();
+        System.out.println(originalFilename.trim());
+        String filenameOnServer = Helper.userName() + System.currentTimeMillis() + originalFilename;
+        String fileDirectory = "/files/" + LocalDate.now().getYear() + "/" + LocalDate.now().getMonthValue() + "/"
+            + LocalDate.now().getDayOfMonth();
+        String filepath = fileDirectory + filenameOnServer;
+        String realPath = request.getServletContext().getRealPath(fileDirectory);
+        new File(realPath).mkdirs();
+        File fileToSave = new File(realPath + filenameOnServer);
+        System.out.println("파일업로드 sysout");
+        System.out.println(fileToSave.getAbsolutePath());
+        mfile.transferTo(fileToSave);
+        System.out.println(filepath);// 진짜주소
+        System.out.println(realPath);
+        System.out.println(originalFilename);// 오리지널
+        System.out.println("파일 업로드 sysout end");
+        
+        files.setOriginal_filename(originalFilename);
+        files.setFilename(filepath);
+        filess.add(files);
+      }
     }
     return filess;
   }

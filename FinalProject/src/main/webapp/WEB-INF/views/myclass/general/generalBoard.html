@@ -27,8 +27,12 @@
       <div class="board-topnav">
         <span class="board-title">제목</span> 
         <span class="board-writer">작성자</span>
+        <div class="icon-wrapper">
         <a href="" class="board-write-time"><span>작성일</span></a><img src="/css/myclass/general/imgs/pointer.png" class="pointerImg">
+        </div>
+        <div class="icon-wrapper">
         <a href="" class="board-count"><span>조회</span></a><img src="/css/myclass/general/imgs/pointer.png" class="pointerImg2">
+        </div>
       </div>
       <a href="/general/detail" class="article">
       <div class="board-content">
@@ -39,11 +43,26 @@
       </a>
       <a href="/board/read?id=3" class="article">
       <div class="board-content">
-        <span class="title">안녕 나는 미니라고해</span> <span class="writer">정성윤</span>
+        <span class="title">예지야 조금만 더 힘내자 사랑해</span> <span class="writer">정성윤</span>
         <span class="write-time">2019.07.01</span> <span
           class="write-count">16</span>
       </div>
       </a>
+      <a href="/board/read?id=3" class="article">
+      <div class="board-content">
+        <span class="title">뭐라고 날 사랑한다고? ...   나돈데 ㅎㅎ</span> <span class="writer">정성윤</span>
+        <span class="write-time">2019.07.01</span> <span
+          class="write-count">16</span>
+      </div>
+      </a>
+      <a href="/board/read?id=3" class="article">
+      <div class="board-content">
+        <span class="title">조금만 버티고 재밌는데 놀러가자~</span> <span class="writer">정성윤</span>
+        <span class="write-time">2019.07.01</span> <span
+          class="write-count">16</span>
+      </div>
+      </a>
+      
       <a href="/board/read?id=3" class="article">
       <div class="board-content">
         <span class="title">안녕 나는 미니라고해</span> <span class="writer">정성윤</span>
@@ -121,20 +140,9 @@
           class="write-count">16</span>
       </div>
       </a>
-      <a href="/board/read?id=3" class="article">
-      <div class="board-content">
-        <span class="title">안녕 나는 미니라고해</span> <span class="writer">정성윤</span>
-        <span class="write-time">2019.07.01</span> <span
-          class="write-count">16</span>
+      <div class="write-btn-right">
+      <input type="button" class="btn btn-primary board-writeBtn" id="board-write-btn" name="board-write-btn" value="글쓰기">
       </div>
-      </a>
-      <a href="/board/read?id=3" class="article">
-      <div class="board-content">
-        <span class="title">안녕 나는 미니라고해</span> <span class="writer">정성윤</span>
-        <span class="write-time">2019.07.01</span> <span
-          class="write-count">16</span>
-      </div>
-      </a>
     </div>
 
 
@@ -145,7 +153,10 @@
 
   <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
   <script>
-      
+      $("#board-write-btn").click(function() {
+        	location.href = "/general/generalBoardWrite";
+      });
+  
     </script>
 </body>
 </html>

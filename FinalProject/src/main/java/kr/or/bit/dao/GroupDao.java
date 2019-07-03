@@ -11,6 +11,8 @@ package kr.or.bit.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.or.bit.model.Group;
 
 public interface GroupDao {
@@ -28,4 +30,6 @@ public interface GroupDao {
   Group selectRecentGroup(String username);
   
   List<Group> selectAllMyGroup(String username);
+  
+  Group selectMyNewGroup(@Param("project_id")int project_id, @Param("group_no")int group_no);
 }

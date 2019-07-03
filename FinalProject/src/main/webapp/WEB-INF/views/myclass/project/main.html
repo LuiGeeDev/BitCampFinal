@@ -8,7 +8,7 @@
 <link rel="stylesheet"
   th:href="@{/css/myclass/project/timeline.min.css}" />
 <link
-  href=/resources/dist/static/css/app.9d6719ebaa5b7c9ed07a5dbc56c4762d.css
+  href=/resources/dist/static/css/app.093b44a44b72c4606a739cad77ca4f84.css
   rel=stylesheet>
 </head>
 <body>
@@ -36,7 +36,7 @@
       </div>
       <div class="card checklist">
         <h3 class="card-title">체크리스트</h3>
-        <button class="edit-checklist">
+        <button class="edit-checklist" id ="button-checklist" data-toggle="modal" data-target="#modal-checklist">
           <i class="fas fa-pen-square fa-2x"></i>
         </button>
         <div class="checklist-item">
@@ -201,70 +201,83 @@
     <div class="row">
       <div id="calendar" class="card"></div>
     </div>
-    <div id="app"></div>
+    <div class="modal fade" id="modal-checklist" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">체크리스트</h5>
+            <button type="button" class="close" data-dismiss="modal"
+              aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="app"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary"
+              data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <script type=text/javascript
     src=/resources/dist/static/js/manifest.d2e3a334bc98c3b96650.js></script>
   <script type=text/javascript
     src=/resources/dist/static/js/vendor.71750e988b55e9735a64.js></script>
   <script type=text/javascript
-    src=/resources/dist/static/js/app.d4b09f27aa6852ca21b9.js></script>
+    src=/resources/dist/static/js/app.55e5fc1c8db3bc542a1f.js></script>
   <script th:src="@{/js/timeline.js}"></script>
   <script>
       $(".timeline").timeline({
-        forceVerticalMode: 700,
-        mode: "horizontal",
-        visibleItems: 6
+        forceVerticalMode : 700,
+        mode : "horizontal",
+        visibleItems : 6
       });
-
       const calendarEl = document.getElementById("calendar");
-
       let calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins: ["dayGrid"],
-        defaultView: "dayGridMonth",
-        locale: "ko",
-        columnHeaderFormat: {
-          day: "2-digit",
-          weekday: "short"
+        plugins : [ "dayGrid" ],
+        defaultView : "dayGridMonth",
+        locale : "ko",
+        columnHeaderFormat : {
+          day : "2-digit",
+          weekday : "short"
         },
-        header: {
-          left: "title",
-          center: "",
-          right: "today prev,next"
+        header : {
+          left : "title",
+          center : "",
+          right : "today prev,next"
         },
-
-        events: [
-          {
-            title: "프로젝트 시작",
-            start: "2019-06-21",
-            end: "2019-06-21",
-            color: "tomato",
-            textColor: "white"
-          },
-          {
-            title: "프로젝트 종료",
-            start: "2019-06-26",
-            end: "2019-06-26",
-            color: "coral",
-            textColor: "white"
-          },
-          {
-            title: "프로젝트 진행",
-            start: "2019-06-22",
-            end: "2019-06-25",
-            color: "purple",
-            textColor: "white"
-          },
-          {
-            title: "회식",
-            start: "2019-06-24",
-            end: "2019-06-24",
-            textColor: "white"
-          }
-        ]
+        events : [ {
+          title : "프로젝트 시작",
+          start : "2019-06-21",
+          end : "2019-06-21",
+          color : "tomato",
+          textColor : "white"
+        }, {
+          title : "프로젝트 종료",
+          start : "2019-06-26",
+          end : "2019-06-26",
+          color : "coral",
+          textColor : "white"
+        }, {
+          title : "프로젝트 진행",
+          start : "2019-06-22",
+          end : "2019-06-25",
+          color : "purple",
+          textColor : "white"
+        }, {
+          title : "회식",
+          start : "2019-06-24",
+          end : "2019-06-24",
+          textColor : "white"
+        } ]
       });
-
       calendar.render();
+      $('#button-checklist').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+      })
     </script>
 </body>
 </html>

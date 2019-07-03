@@ -1,12 +1,10 @@
 @charset "UTF-8";
 
 .board-main-title {
-  margin: 10px 0 0 80px;
+  margin: 30px 0 20px 150px;
   font-size: 32px;
-  font-weight: bold;
-  display: flex;
+  display:flex;
   width: 83%;
-  margin-bottom: 20px;
 }
 
 .board-topnav {
@@ -65,7 +63,7 @@ span {
 }
 
 .board {
-  margin: 0 auto;
+  margin: 30px 100px;
   width: 80%;
   border: 1px solid #e5e5e5;
   border-radius: 5px;
@@ -81,7 +79,7 @@ a {
 
 .board-search {
   font-size: 17px;
-  margin-left: auto;
+  margin-left:auto;
   height: 31px;
   margin-top: 1;
 }
@@ -92,36 +90,11 @@ a {
 
 .search-item {
   margin-left: auto;
+  margin-right:13%;
 }
-
-.pointerImg, .pointerImg2 {
-  width: 15px;
-  height: 15px;
-  position: absolute;
-  top: 2px;
-  right: -1px;
+.page-btns {
+  margin: auto;
 }
-
-.pointerImg2 {
-  right: 4px;
-}
-
-.inputtext {
-  border-radius: 3px;
-  outline: none;
-  padding: 5px 10px;
-  width: 50%;
-}
-
-.icon-wrapper {
-  position: relative;
-  flex: 0.15 0.15 0;
-}
-
-.write-btn-right {
-  display:flex;
-}
-
-.board-writeBtn {
-  margin-left: auto;
+.write-btns {
+  margin-right:17%;
 }

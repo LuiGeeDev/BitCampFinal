@@ -23,4 +23,6 @@ public interface ProjectDao {
   List<Project> selectAllProject(int course_id);
   
   List<Project> selectMyProject(String username);
+  
+  Project selectRecentProject(int course_id);
 }

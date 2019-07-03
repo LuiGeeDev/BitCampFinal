@@ -16,13 +16,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="kr.or.bit.dao.GeneralDao">
 	
   <insert id="insertGeneral">
-  	insert into general(id, file1, file2, article_id)
-	values (#{general.id},#{general.file1},#{general.file2},#{general.id})
+  	insert into general(file1, file2, article_id)
+	values (#{file1},#{file2},#{article_id})
   </insert>
   
   <update id="updateGeneral">
 	update general
-	set file = #{General.file1}
+	set file = #{file1}
 	where id=0;
   </update>
   

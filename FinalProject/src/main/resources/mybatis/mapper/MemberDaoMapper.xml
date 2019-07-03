@@ -52,6 +52,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ON m.username = a.username
     WHERE m.username = #{username}
   </select>
+  <select id="selectAllMembersByMycourse" resultType="kr.or.bit.model.Member">
+  	SELECT m.username, name, email, profile_photo, course_id, role
+	FROM member m
+	LEFT JOIN authorities a ON m.username=a.username
+	WHERE m.course_id=#{course_id} AND m.enabled=1 AND a.role='STUDENT';
+  </select>
 </mapper>
 
 
