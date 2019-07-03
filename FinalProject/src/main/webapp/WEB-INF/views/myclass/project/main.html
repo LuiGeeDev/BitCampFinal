@@ -1,270 +1,283 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
->
-  <head>
-    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-    <link rel="stylesheet" th:href="@{/css/myclass/project/main.css}" />
-    <link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
-    <link rel="stylesheet" th:href="@{/css/myclass/project/timeline.min.css}" />
-  </head>
-  <body>
-    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
-    <div class="main" th:fragment="main">
-      <div th:replace="myclass/nav :: project-nav(main)"></div>
-      <div class="row">
-                <div class="card links">
-          <h3 class="card-title">링크</h3>
-          <div class="project-link">
-            <button class="edit-link">
-              <i class="fas fa-pen-square fa-2x"></i>
-            </button>
-            <i class="fab fa-github fa-2x"></i>
-            <a class="link-address" href="#">github.com/project</a>
-          </div>
-          <div class="project-link">
-            <i class="fab fa-google-drive fa-2x"></i>
-            <a class="link-address" href="#">drive.google.com/project</a>
-          </div>
-          <div class="project-link">
-            <i class="fas fa-inbox fa-2x"></i>
-            <a class="link-address" href="#">project@gmail.com</a>
-          </div>
-        </div>
-        <div class="card checklist">
-          <h3 class="card-title">체크리스트</h3>
-          <button class="edit-checklist">
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
+<head>
+<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+<link rel="stylesheet" th:href="@{/css/myclass/project/main.css}" />
+<link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
+<link rel="stylesheet"
+  th:href="@{/css/myclass/project/timeline.min.css}" />
+<link
+  href=/resources/dist/static/css/app.093b44a44b72c4606a739cad77ca4f84.css
+  rel=stylesheet>
+</head>
+<body>
+  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+  <div class="main" th:fragment="main">
+    <div th:replace="myclass/nav :: project-nav(main)"></div>
+    <div class="row">
+      <div class="card links">
+        <h3 class="card-title">링크</h3>
+        <div class="project-link">
+          <button class="edit-link">
             <i class="fas fa-pen-square fa-2x"></i>
           </button>
-          <div class="checklist-item">
-            <input type="checkbox" name="" id="1" />
-            <label for="1">
-              <i class="fas fa-check-square"></i>
-              <span class="item-description">퇴실하기</span>
-            </label>
-          </div>
-          <div class="checklist-item">
-            <input type="checkbox" name="" id="2" />
-            <label for="2">
-              <i class="fas fa-check-square"></i>
-              <span class="item-description">입실하기</span>
-            </label>
-          </div>
-          <div class="checklist-item">
-            <input type="checkbox" name="" id="3" />
-            <label for="3">
-              <i class="fas fa-check-square"></i>
-              <span class="item-description">퇴실하기</span>
-            </label>
-          </div>
-          <div class="checklist-item">
-            <input type="checkbox" name="" id="4" />
-            <label for="4">
-              <i class="fas fa-check-square"></i>
-              <span class="item-description">입실하기</span>
-            </label>
-          </div>
+          <i class="fab fa-github fa-2x"></i> <a class="link-address"
+            href="#">github.com/project</a>
         </div>
-        <div class="card recent-issues">
-          <div class="issue">
-            <div class="closed">
-              <i class="fas fa-exclamation-circle fa-2x"></i>
-            </div>
-            <div class="issue-title">
-              <h3>오늘 저녁은 배가 고프다</h3>
-            </div>
-            <div class="issue-tags">
-              <span class="tag">DB</span>
-              <span class="tag">Java</span>
-            </div>
-            <div class="issue-info">
-              <p class="issue-writer">윤종석</p>
-              <p class="issue-time">03-21 10:39</p>
-            </div>
-          </div>
-          <div class="issue">
-            <div class="closed">
-              <i class="fas fa-exclamation-circle fa-2x"></i>
-            </div>
-            <div class="issue-title">
-              <h3>오늘 저녁은 배가 고프다</h3>
-            </div>
-            <div class="issue-tags">
-              <span class="tag">DB</span>
-              <span class="tag">Java</span>
-            </div>
-            <div class="issue-info">
-              <p class="issue-writer">윤종석</p>
-              <p class="issue-time">03-21 10:39</p>
-            </div>
-          </div>
-          <div class="issue">
-            <div class="closed">
-              <i class="fas fa-check-circle fa-2x"></i>
-            </div>
-            <div class="issue-title">
-              <h3>오늘 저녁은 배가 고프다</h3>
-            </div>
-            <div class="issue-tags">
-              <span class="tag">DB</span>
-              <span class="tag">Java</span>
-            </div>
-            <div class="issue-info">
-              <p class="issue-writer">윤종석</p>
-              <p class="issue-time">03-21 10:39</p>
-            </div>
-          </div>
-          <div class="issue">
-            <div class="closed">
-              <i class="fas fa-check-circle fa-2x"></i>
-            </div>
-            <div class="issue-title">
-              <h3>오늘 저녁은 배가 고프다</h3>
-            </div>
-            <div class="issue-tags">
-              <span class="tag">DB</span>
-              <span class="tag">Java</span>
-            </div>
-            <div class="issue-info">
-              <p class="issue-writer">윤종석</p>
-              <p class="issue-time">03-21 10:39</p>
-            </div>
-          </div>
-          <div class="issue">
-            <div class="closed">
-              <i class="fas fa-exclamation-circle fa-2x"></i>
-            </div>
-            <div class="issue-title">
-              <h3>오늘 저녁은 배가 고프다</h3>
-            </div>
-            <div class="issue-tags">
-              <span class="tag">DB</span>
-              <span class="tag">Java</span>
-            </div>
-            <div class="issue-info">
-              <p class="issue-writer">윤종석</p>
-              <p class="issue-time">03-21 10:39</p>
-            </div>
-          </div>
+        <div class="project-link">
+          <i class="fab fa-google-drive fa-2x"></i> <a
+            class="link-address" href="#">drive.google.com/project</a>
+        </div>
+        <div class="project-link">
+          <i class="fas fa-inbox fa-2x"></i> <a class="link-address"
+            href="#">project@gmail.com</a>
         </div>
       </div>
-      <div class="row">
-        <div class="card timeline">
-          <div class="timeline__wrap">
-            <div class="timeline__items">
-              <div class="timeline__item">
-                <div class="timeline__content">
-                  <h2>1</h2>
-                  <p>asdasdsdsdasdas</p>
-                </div>
-              </div>
-              <div class="timeline__item">
-                <div class="timeline__content">
-                  <h2>1</h2>
-                  <p>asdassdasdas</p>
-                </div>
-              </div>
-              <div class="timeline__item">
-                <div class="timeline__content">
-                  <h2>1</h2>
-                  <p>asdasdasdasdas</p>
-                </div>
-              </div>
-              <div class="timeline__item">
-                <div class="timeline__content">
-                  <h2>1</h2>
-                  <p>asdasdasdsadasdsdasdas</p>
-                </div>
-              </div>
-              <div class="timeline__item">
-                <div class="timeline__content">
-                  <h2>1</h2>
-                  <p>asdasdasdasdas</p>
-                </div>
-              </div>
-              <div class="timeline__item">
-                <div class="timeline__content">
-                  <h2>1</h2>
-                  <p>asdasdasds</p>
-                </div>
-              </div>
-              <div class="timeline__item">
-                <div class="timeline__content">
-                  <h2>1</h2>
-                  <p>asdasdasdsa</p>
-                </div>
-              </div>
-              <div class="timeline__item">
-                <div class="timeline__content">
-                  <h2>1</h2>
-                  <p>asdasdasdsad</p>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="card checklist">
+        <h3 class="card-title">체크리스트</h3>
+        <button class="edit-checklist" id ="button-checklist" data-toggle="modal" data-target="#modal-checklist">
+          <i class="fas fa-pen-square fa-2x"></i>
+        </button>
+        <div class="checklist-item">
+          <input type="checkbox" name="" id="1" /> <label for="1">
+            <i class="fas fa-check-square"></i> <span
+            class="item-description">퇴실하기</span>
+          </label>
+        </div>
+        <div class="checklist-item">
+          <input type="checkbox" name="" id="2" /> <label for="2">
+            <i class="fas fa-check-square"></i> <span
+            class="item-description">입실하기</span>
+          </label>
+        </div>
+        <div class="checklist-item">
+          <input type="checkbox" name="" id="3" /> <label for="3">
+            <i class="fas fa-check-square"></i> <span
+            class="item-description">퇴실하기</span>
+          </label>
+        </div>
+        <div class="checklist-item">
+          <input type="checkbox" name="" id="4" /> <label for="4">
+            <i class="fas fa-check-square"></i> <span
+            class="item-description">입실하기</span>
+          </label>
         </div>
       </div>
-      <div class="row">
-        <div id="calendar" class="card"></div>
+      <div class="card recent-issues">
+        <div class="issue">
+          <div class="closed">
+            <i class="fas fa-exclamation-circle fa-2x"></i>
+          </div>
+          <div class="issue-title">
+            <h3>오늘 저녁은 배가 고프다</h3>
+          </div>
+          <div class="issue-tags">
+            <span class="tag">DB</span> <span class="tag">Java</span>
+          </div>
+          <div class="issue-info">
+            <p class="issue-writer">윤종석</p>
+            <p class="issue-time">03-21 10:39</p>
+          </div>
+        </div>
+        <div class="issue">
+          <div class="closed">
+            <i class="fas fa-exclamation-circle fa-2x"></i>
+          </div>
+          <div class="issue-title">
+            <h3>오늘 저녁은 배가 고프다</h3>
+          </div>
+          <div class="issue-tags">
+            <span class="tag">DB</span> <span class="tag">Java</span>
+          </div>
+          <div class="issue-info">
+            <p class="issue-writer">윤종석</p>
+            <p class="issue-time">03-21 10:39</p>
+          </div>
+        </div>
+        <div class="issue">
+          <div class="closed">
+            <i class="fas fa-check-circle fa-2x"></i>
+          </div>
+          <div class="issue-title">
+            <h3>오늘 저녁은 배가 고프다</h3>
+          </div>
+          <div class="issue-tags">
+            <span class="tag">DB</span> <span class="tag">Java</span>
+          </div>
+          <div class="issue-info">
+            <p class="issue-writer">윤종석</p>
+            <p class="issue-time">03-21 10:39</p>
+          </div>
+        </div>
+        <div class="issue">
+          <div class="closed">
+            <i class="fas fa-check-circle fa-2x"></i>
+          </div>
+          <div class="issue-title">
+            <h3>오늘 저녁은 배가 고프다</h3>
+          </div>
+          <div class="issue-tags">
+            <span class="tag">DB</span> <span class="tag">Java</span>
+          </div>
+          <div class="issue-info">
+            <p class="issue-writer">윤종석</p>
+            <p class="issue-time">03-21 10:39</p>
+          </div>
+        </div>
+        <div class="issue">
+          <div class="closed">
+            <i class="fas fa-exclamation-circle fa-2x"></i>
+          </div>
+          <div class="issue-title">
+            <h3>오늘 저녁은 배가 고프다</h3>
+          </div>
+          <div class="issue-tags">
+            <span class="tag">DB</span> <span class="tag">Java</span>
+          </div>
+          <div class="issue-info">
+            <p class="issue-writer">윤종석</p>
+            <p class="issue-time">03-21 10:39</p>
+          </div>
+        </div>
       </div>
     </div>
-    <script th:src="@{/js/timeline.js}"></script>
-    <script>
+    <div class="row">
+      <div class="card timeline">
+        <div class="timeline__wrap">
+          <div class="timeline__items">
+            <div class="timeline__item">
+              <div class="timeline__content">
+                <h2>1</h2>
+                <p>asdasdsdsdasdas</p>
+              </div>
+            </div>
+            <div class="timeline__item">
+              <div class="timeline__content">
+                <h2>1</h2>
+                <p>asdassdasdas</p>
+              </div>
+            </div>
+            <div class="timeline__item">
+              <div class="timeline__content">
+                <h2>1</h2>
+                <p>asdasdasdasdas</p>
+              </div>
+            </div>
+            <div class="timeline__item">
+              <div class="timeline__content">
+                <h2>1</h2>
+                <p>asdasdasdsadasdsdasdas</p>
+              </div>
+            </div>
+            <div class="timeline__item">
+              <div class="timeline__content">
+                <h2>1</h2>
+                <p>asdasdasdasdas</p>
+              </div>
+            </div>
+            <div class="timeline__item">
+              <div class="timeline__content">
+                <h2>1</h2>
+                <p>asdasdasds</p>
+              </div>
+            </div>
+            <div class="timeline__item">
+              <div class="timeline__content">
+                <h2>1</h2>
+                <p>asdasdasdsa</p>
+              </div>
+            </div>
+            <div class="timeline__item">
+              <div class="timeline__content">
+                <h2>1</h2>
+                <p>asdasdasdsad</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div id="calendar" class="card"></div>
+    </div>
+    <div class="modal fade" id="modal-checklist" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">체크리스트</h5>
+            <button type="button" class="close" data-dismiss="modal"
+              aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="app"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary"
+              data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type=text/javascript
+    src=/resources/dist/static/js/manifest.d2e3a334bc98c3b96650.js></script>
+  <script type=text/javascript
+    src=/resources/dist/static/js/vendor.71750e988b55e9735a64.js></script>
+  <script type=text/javascript
+    src=/resources/dist/static/js/app.55e5fc1c8db3bc542a1f.js></script>
+  <script th:src="@{/js/timeline.js}"></script>
+  <script>
       $(".timeline").timeline({
-        forceVerticalMode: 700,
-        mode: "horizontal",
-        visibleItems: 6
+        forceVerticalMode : 700,
+        mode : "horizontal",
+        visibleItems : 6
       });
-
       const calendarEl = document.getElementById("calendar");
-
       let calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins: ["dayGrid"],
-        defaultView: "dayGridMonth",
-        locale: "ko",
-        columnHeaderFormat: {
-          day: "2-digit",
-          weekday: "short"
+        plugins : [ "dayGrid" ],
+        defaultView : "dayGridMonth",
+        locale : "ko",
+        columnHeaderFormat : {
+          day : "2-digit",
+          weekday : "short"
         },
-        header: {
-          left: "title",
-          center: "",
-          right: "today prev,next"
+        header : {
+          left : "title",
+          center : "",
+          right : "today prev,next"
         },
-
-        events: [
-          {
-            title: "프로젝트 시작",
-            start: "2019-06-21",
-            end: "2019-06-21",
-            color: "tomato",
-            textColor: "white"
-          },
-          {
-            title: "프로젝트 종료",
-            start: "2019-06-26",
-            end: "2019-06-26",
-            color: "coral",
-            textColor: "white"
-          },
-          {
-            title: "프로젝트 진행",
-            start: "2019-06-22",
-            end: "2019-06-25",
-            color: "purple",
-            textColor: "white"
-          },
-          {
-            title: "회식",
-            start: "2019-06-24",
-            end: "2019-06-24",
-            textColor: "white"
-          }
-        ]
+        events : [ {
+          title : "프로젝트 시작",
+          start : "2019-06-21",
+          end : "2019-06-21",
+          color : "tomato",
+          textColor : "white"
+        }, {
+          title : "프로젝트 종료",
+          start : "2019-06-26",
+          end : "2019-06-26",
+          color : "coral",
+          textColor : "white"
+        }, {
+          title : "프로젝트 진행",
+          start : "2019-06-22",
+          end : "2019-06-25",
+          color : "purple",
+          textColor : "white"
+        }, {
+          title : "회식",
+          start : "2019-06-24",
+          end : "2019-06-24",
+          textColor : "white"
+        } ]
       });
-
       calendar.render();
+      $('#button-checklist').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+      })
     </script>
-  </body>
+</body>
 </html>

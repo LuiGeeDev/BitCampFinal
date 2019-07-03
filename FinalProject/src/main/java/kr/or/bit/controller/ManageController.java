@@ -36,4 +36,10 @@ public class ManageController {
 		
 		return "redirect:/manage/home";
 	}
+	
+	@GetMapping("/students")
+	public String manageStudentHome() {
+	  
+	  return "manage/students";
+	}
 }

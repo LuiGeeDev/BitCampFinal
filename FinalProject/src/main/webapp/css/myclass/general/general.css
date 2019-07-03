@@ -94,3 +94,26 @@ a {
   margin-left: auto;
 }
 
+.pointerImg, .pointerImg2 {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 2px;
+  right: -1px;
+}
+
+.pointerImg2 {
+  right: 4px;
+}
+
+.inputtext {
+  border-radius: 3px;
+  outline: none;
+  padding: 5px 10px;
+  width: 50%;
+}
+
+.icon-wrapper {
+  position: relative;
+  flex: 0.15 0.15 0;
+}

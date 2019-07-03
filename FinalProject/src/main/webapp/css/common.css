@@ -24,7 +24,6 @@
 }
 
 .main {
-  height: 150vh;
   flex: 1;
   margin-left: 210px;
   margin-top: 50px;
@@ -36,4 +35,8 @@
 
 a:hover {
   text-decoration: none;
+}
+
+.note-popover, .popover-content {
+  display: none;
 }

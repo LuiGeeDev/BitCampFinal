@@ -1,6 +1,8 @@
 .chat-room {
-  width: 70%;
+  width: 80%;
   margin-left: 20px;
+  height: 75vh;
+  overflow-y: scroll;
 }
 
 .chat-message {
@@ -19,8 +21,8 @@
 }
 
 .chat-sender-name {
-    color: #23262a;
-    font-weight: 600;
+  color: #23262a;
+  font-weight: 600;
 }
 
 .chat-sender-time {
@@ -37,8 +39,8 @@
 
 .chat-input {
   margin: 20px 20px;
-  width: 70%;
-  position: absolute;
+  width: 80%;
+  /* position: absolute; */
 }
 
 #chat-message {
@@ -56,7 +58,7 @@
   display: none;
 }
 
-#file + label {
+#file+label {
   vertical-align: top;
   position: absolute;
   font-size: 42px;
@@ -65,6 +67,7 @@
   left: 2px;
   padding: 0 2px 9px 0px;
   margin: 0 3px;
+  margin-left: 234px;
   border-right: 1px solid #23262a;
   cursor: pointer;
 }

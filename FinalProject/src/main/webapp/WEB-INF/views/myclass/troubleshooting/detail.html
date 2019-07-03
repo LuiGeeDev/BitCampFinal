@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+    <link
+      rel="stylesheet"
+      th:href="@{/css/myclass/troubleshooting/detail.css}"
+    />
+    <link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
+    <link
+      href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+    <div class="main" th:fragment="main">
+      <div th:replace="myclass/nav :: project-nav(ts)"></div>
+      <div class="row">
+        <div class="page-title">
+        <div class="issue-main-title">
+          <h2 class="title">테스트 해보는 중입니다.</h2>
+          <p class="issue-info">
+            <span class="badge badge-danger">
+              <i class="fas fa-exclamation-circle fa-xs"></i>
+              미해결
+            </span>
+            <strong>윤종석님</strong>이 2019년 7월 1일에 올림
+            <span class="comments">댓글 4개</span>
+          </p>
+        </div>
+        
+        <a th:href="@{/myclass/troubleshooting/write}" class="btn btn-outline-primary btn-sm new">새로 올리기</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="issue">
+          <img
+            class="profile-photo"
+            src="https://via.placeholder.com/44"
+            alt=""
+          />
+          <div class="issue-main">
+            <div class="issue-title">
+              <span class="writer">
+                <strong>윤종석님</strong>이 2019년 7월 1일에 작성
+              </span>
+              <span class="author-badge">작성자</span>
+            </div>
+            <div class="issue-content">
+              테스트를 해보는 중입니다. @이힘찬 이런것도 되나요?
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="timeline"></div>
+      <div class="row">
+        <div class="issue">
+          <img
+            class="profile-photo"
+            src="https://via.placeholder.com/44"
+            alt=""
+          />
+          <div class="issue-main">
+            <div class="issue-title">
+              <span class="writer">
+                <strong>이힘찬님</strong>이 2019년 7월 2일에 작성
+              </span>
+            </div>
+            <div class="issue-content">
+              잘되네요. @권예지 도 되나요?
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="timeline"></div>
+      <div class="row">
+        <div class="new-issue">
+          <img
+            class="profile-photo"
+            src="https://via.placeholder.com/44"
+            alt=""
+          />
+          <form class="write-form" method="post">
+            <div class="content">
+              <textarea
+                name="content"
+                id="content"
+                placeholder="내용을 적어주세요"
+              ></textarea>
+            </div>
+            <div class="form-footer">
+              <button type="submit" class="btn btn-outline-success">
+                해결됨 표시
+              </button>
+              <button type="submit" class="btn btn-outline-primary">
+                댓글 달기
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+    <script>
+      $("#content").summernote({
+        placeholder: "댓글을 남겨주세요",
+        height: 100,
+        width: 700
+      });
+    </script>
+  </body>
+</html>
