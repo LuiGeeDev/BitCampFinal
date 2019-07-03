@@ -20,9 +20,13 @@ public class GeneralBoardController {
   }
   
   @GetMapping("/detail")
-  public String readBoard() {
-    return "myclass/general/detailBoard";
+  public String generalBoardDetail() {
+    return "myclass/general/generalBoardDetail";
   }
   
+  @GetMapping("/generalBoardWrite")
+  public String generalBoardWrite() {
+    return "myclass/general/generalBoardWrite";
+  }
   
 }

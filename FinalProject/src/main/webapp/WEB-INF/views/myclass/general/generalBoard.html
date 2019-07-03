@@ -139,6 +139,9 @@
           class="write-count">16</span>
       </div>
       </a>
+      <div class="write-btn-right">
+      <input type="button" class="btn btn-primary board-writeBtn" id="board-write-btn" name="board-write-btn" value="글쓰기">
+      </div>
     </div>
 
 
@@ -149,7 +152,10 @@
 
   <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
   <script>
-      
+      $("#board-write-btn").click(function() {
+        	location.href = "/general/generalBoardWrite";
+      });
+  
     </script>
 </body>
 </html>
