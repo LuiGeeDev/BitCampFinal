@@ -75,54 +75,58 @@ public class ArticleInsertService {
       HttpServletRequest request) {
     FileUploadService fileupload = new FileUploadService();
     String optionname = option.getClass().getName().toLowerCase().trim().substring("kr.or.bit.model.".length());
-    List<Integer> fileIds = new ArrayList<Integer>();
-    try {
-      List<Files> files = fileupload.uploadFile(file, request);
-      FilesDao filesdao = sqlSession.getMapper(FilesDao.class);
-      for (Files list : files) {
-        filesdao.insertFiles(list);
-        fileIds.add(filesdao.selectFilesByOriginalFileName(list.getOriginal_filename()));
+    
+    if (file != null) {
+      List<Integer> fileIds = new ArrayList<Integer>();
+      try {
+        List<Files> files = fileupload.uploadFile(file, request);
+        FilesDao filesdao = sqlSession.getMapper(FilesDao.class);
+        for (Files list : files) {
+          filesdao.insertFiles(list);
+          fileIds.add(filesdao.selectFilesByOriginalFileName(list.getOriginal_filename()));
+        }
+        ArticleDao artidao = wArticle(article);
+        switch (optionname) {
+        case "general":
+          GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
+          General general = (General) option;
+          general.setArticle_id(artidao.getMostRecentArticleId());
+          for (int id : fileIds) {
+            if (general.getFile1() == 0) {
+              general.setFile1(id);
+            } else {
+              general.setFile2(id);
+            }
+          }
+          generalDao.insertGeneral(general);
+          break;
+        case "homework":
+          HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
+          Homework homework = (Homework) option;
+          homework.setArticle_id(artidao.getMostRecentArticleId());
+          for (int id : fileIds) {
+            if (homework.getFile1() == 0) {
+              homework.setFile1(id);
+            } else {
+              homework.setFile2(id);
+            }
+          }
+          homeworkDao.insertHomework(homework);
+          break;
+        default:
+          break;
+        }
+      } catch (IllegalStateException e) {
+        e.printStackTrace();
+      } catch (IOException e) {
+        e.printStackTrace();
       }
-      
+    }else {
       ArticleDao artidao = wArticle(article);
-
-      switch (optionname) {
-      case "general":
-        GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
-        General general = (General) option;
-        general.setArticle_id(artidao.getMostRecentArticleId());
-        
-        for (int id : fileIds) {
-          if (general.getFile1() == 0) {
-            general.setFile1(id);
-          } else {
-            general.setFile2(id);
-          }
-        }
-
-        generalDao.insertGeneral(general);
-        break;
-      case "homework":
-        HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
-        Homework homework = (Homework) option;
-        homework.setArticle_id(artidao.getMostRecentArticleId());
-
-        for (int id : fileIds) {
-          if (homework.getFile1() == 0) {
-            homework.setFile1(id);
-          } else {
-            homework.setFile2(id);
-          }
-        }
-        homeworkDao.insertHomework(homework);
-        break;
-      default:
-        break;
-      }
-    } catch (IllegalStateException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
+      HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
+      Homework homework = (Homework) option;
+      homework.setArticle_id(artidao.getMostRecentArticleId());
+      homeworkDao.insertHomework(homework);
     }
   }
 }
