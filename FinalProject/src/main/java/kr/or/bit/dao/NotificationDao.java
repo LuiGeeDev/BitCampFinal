@@ -16,7 +16,7 @@ import kr.or.bit.model.Notification;
 public interface NotificationDao {
   void insertNotification(Notification Notification);
 
-  void updateNotification(int id);
+  void checkAllNotification(String username);
 
   void deleteNotification(int id);
 

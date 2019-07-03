@@ -5,7 +5,7 @@
   height: 38px;
   width: 100%;
   display: flex;
-  padding-right: 10px;  
+  padding-right: 10px;
   border-bottom: 1px solid #9E9E9E;
   margin-bottom: 10px;
   position: fixed;
@@ -38,7 +38,7 @@
 }
 
 .fa-envelope:hover {
-  color:#3F51B5;
+  color: #3F51B5;
 }
 
 svg:active {
@@ -82,17 +82,21 @@ button:active {
 
 .notice {
   padding: 3px 10px;
-  border-bottom: 1px solid gray;
   margin-bottom: 3px;
+  color: black;
+}
+
+.no-notice, .notice-link {
+  display: block;
+  border-bottom: 1px solid gray;
 }
 
 .notice-title {
   font-weight: bold;
 }
 
-.notice:last-child {
+.popover-body *:last-child {
   border: none;
-  margin-bottom: 0;
 }
 
 .notice-content {
@@ -115,4 +119,5 @@ button:active {
 
 .toast-content {
   margin: 0;
+  color: black;
 }

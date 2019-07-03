@@ -202,11 +202,4 @@ public class Article {
   public void setTags(List<Tag> tags) {
     this.tags = tags;
   }
-
-  @Override
-  public String toString() {
-    return "Article [id=" + id + ", title=" + title + ", content=" + content + ", username=" + username + ", board_id="
-        + board_id + "]";
-  }
-  
 }
