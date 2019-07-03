@@ -10,7 +10,7 @@ public interface VideoDao {
 
   void updateVideo(Video video);
 
-  Video selectVideoByArticleId(@Param("article_id") int article_id);
+  Video selectVideoByArticleId(int article_id);
 
   void deleteVideo(int id);
 }

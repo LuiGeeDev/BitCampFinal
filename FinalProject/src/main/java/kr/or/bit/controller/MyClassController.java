@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.GroupDao;
@@ -185,8 +186,21 @@ public class MyClassController {
   }
   
   @GetMapping("/homework/detail")
-  public String homeworkDetail() {
+  public String homeworkDetailPage() {
     return "myclass/homework/detail";
+  }
+  
+  @PostMapping("/homework/detail")
+  public String submitHomeworkDetail(Article article, MultipartFile file1, MultipartFile file2, HttpServletRequest request) {
+    article.setUsername(Helper.userName());
+    article.setBoard_id(HOMEWORK_BOARD_ID);
+    article.setLevel(2);
+    Homework homework = new Homework();
+    List<MultipartFile> files = new ArrayList<>();
+    files.add(file1);
+    files.add(file2);
+    articleInsertService.writeReplyArticle(article, homework, files, request);
+    return"redirect:/myclass/homework";
   }
   
   @GetMapping("/homework/write")
@@ -202,5 +216,10 @@ public class MyClassController {
     homework.setEnd_date(end_date);
     articleInsertService.writeArticle(article, homework, null, request);
     return "redirect:/myclass/homework";
+  }
+  
+  @GetMapping("/main/home")
+  public String mainPage() {
+    return "myclass/main/home";
   }
 }
