@@ -70,6 +70,7 @@
         </div>
         <a href="#" th:each="board : ${boardList}" th:text="${board.board_name}"></a>
         <a th:href="@{/myclass/create}" sec:authorize="hasRole('TEACHER')">프로젝트 생성</a> 
+        <a th:href="@{/myclass/main/home}">메인 페이지</a>
       </div>
       <div th:if="${#strings.contains(#request.getRequestURI(),'stack')}" class="side-nav-menu">
         <a href="#">스택!!! 게시판</a>

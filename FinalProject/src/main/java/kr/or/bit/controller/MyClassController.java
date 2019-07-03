@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,7 @@ import kr.or.bit.dao.ProjectDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.General;
+import kr.or.bit.model.Homework;
 import kr.or.bit.model.Group;
 import kr.or.bit.model.Member;
 import kr.or.bit.model.Project;
@@ -35,6 +38,7 @@ import kr.or.bit.utils.Helper;
 @Controller
 @RequestMapping("/myclass")
 public class MyClassController {
+  private final int HOMEWORK_BOARD_ID = 7;
   @Autowired
   private SqlSession sqlSession;
   
@@ -174,7 +178,9 @@ public class MyClassController {
   
   
   @GetMapping("/homework")
-  public String homework() {
+  public String homework(Model model) {
+//    List<Article> homeworkList = articleService.selectAllArticle("homework", HOMEWORK_BOARD_ID);
+//    model.addAttribute("homeworkList", homeworkList);
     return "myclass/homework/list";
   }
   
@@ -184,7 +190,22 @@ public class MyClassController {
   }
   
   @GetMapping("/homework/write")
-  public String writeHomework() {
+  public String homeworkWritePage() {
     return "myclass/homework/write";
+  }
+  
+  @PostMapping("/homework/write")
+  public String writeHomeworkArticle(Article article, Date end_date,HttpServletRequest request) {
+    article.setUsername(Helper.userName());
+    article.setBoard_id(HOMEWORK_BOARD_ID);
+    Homework homework = new Homework();
+    homework.setEnd_date(end_date);
+    articleInsertService.writeArticle(article, homework, null, request);
+    return "redirect:/myclass/homework";
+  }
+  
+  @GetMapping("/main/home")
+  public String mainPage() {
+    return "myclass/main/home";
   }
 }
