@@ -12,10 +12,10 @@ public class ArticleDeleteService {
   @Autowired
   private SqlSession sqlSession;
   
-  public void deleteArticle(String articleId, String boardOption) {//게시글번호와 게시판 종류를 입력하면 게시글을 삭제하는 함수
+  public void deleteArticle(int articleId, String boardOption) {//게시글번호와 게시판 종류를 입력하면 게시글을 삭제하는 함수
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
     String bo = boardOption.trim().toLowerCase();
-    int artiId = Integer.parseInt(articleId);
+    int artiId = articleId;
     
     if (bo.equals("qna")) {
       articledao.deleteArticle(artiId);

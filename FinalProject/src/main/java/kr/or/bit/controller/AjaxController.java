@@ -27,6 +27,7 @@ import kr.or.bit.model.ChatMessage;
 import kr.or.bit.model.Classroom;
 import kr.or.bit.model.Files;
 import kr.or.bit.model.Message;
+import kr.or.bit.service.ArticleDeleteService;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleVoteService;
 import kr.or.bit.service.FileUploadService;
@@ -45,6 +46,9 @@ public class AjaxController {
 
   @Autowired
   private ArticleVoteService articleVoteService;
+
+  @Autowired
+  private ArticleDeleteService articleDeleteService;
 
   @PostMapping("/chat/file")
   public ChatMessage uploadFile(HttpServletRequest request, int group_id, long time, String name, MultipartFile file)
@@ -117,11 +121,19 @@ public class AjaxController {
     List<Article> list = articleService.selectArticlesOnNextPage(article_id);
     return list;
   }
-  
+
   @GetMapping("/notification/checked")
   public void notificationChecked() {
     NotificationDao notificationDao = sqlSession.getMapper(NotificationDao.class);
     String username = Helper.userName();
     notificationDao.checkAllNotification(username);
+  }
+
+  @PostMapping("/general/delete")
+  public String generalBoardDelete(int articleId) {
+    System.out.println("delete 타고있냐?");
+    String boardOption = "general";
+    articleDeleteService.deleteArticle(articleId, boardOption);
+    return "redirect:/general/generalBoard";
   }
 }
