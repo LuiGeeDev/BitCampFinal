@@ -94,16 +94,26 @@ a {
   margin-left: auto;
 }
 
-.pointerImg {
-  width:20px;
-  height:20px;
+.pointerImg, .pointerImg2 {
+  width: 15px;
+  height: 15px;
   position: absolute;
-  margin-left: 820px;
+  top: 2px;
+  right: -1px;
 }
 
 .pointerImg2 {
-  width:20px;
-  height:20px;
-  position: absolute;
-  margin-left: 980px;
+  right: 4px;
+}
+
+.inputtext {
+  border-radius: 3px;
+  outline: none;
+  padding: 5px 10px;
+  width: 50%;
+}
+
+.icon-wrapper {
+  position: relative;
+  flex: 0.15 0.15 0;
 }
