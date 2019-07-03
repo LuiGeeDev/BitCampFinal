@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+    <link rel="stylesheet" th:href="@{/css/myclass/main/home.css}" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+  </head>
+  <body>
+    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+    <div class="main" th:fragment="main">
+      <div class="myclassWrapper">
+      <div class="row1">
+          <div class="processBar cardshadow">
+            <span class="barTitle">
+            <h3><b>[내 수업]</b></h3>
+            <h5><b>프론트엔드 및 백엔드 개발자 양성과정</b></h5></span>
+            <span class="barDate">2019-01-30 ~ 2019-07-03</span>
+            <span class="barPercent">
+            <span id="progressbar"></span><span>70퍼센트 진행</span>
+            </span>
+            </div>
+          <div class="recentBoard"> 
+            <span class="recentHomework cardshadow">
+            <span><b>[최근 과제]</b></span><br>
+            <span class="recentHomeworkcontent">7월30일에 칸반 보드 정리할 사람 가위바위보로 정하기</span>
+            </span>
+            <span class="recentProject cardshadow"><b>[최근 프로젝트]</b><br>
+            <span class="recentProjectcontent">파이널 프로젝트 진행중</span>
+            </span>
+        </div>
+     </div> 
+        <div class="myclassBoard cardshadow">
+            <h3><b>[최신글]</b></h3>
+            <div><span class="recentBoardTitle">스택게시판</span><span class="recentBoardContent">안내면 진거 가위바위보</span><span class="recentBoardwrtier">이승엽</span></div>
+            <div><span class="recentBoardTitle">일반게시판</span><span class="recentBoardContent">안내면 진거 가위바위보</span><span class="recentBoardwrtier">정성윤</span></div>
+            <div><span class="recentBoardTitle">공지게시판</span><span class="recentBoardContent">안내면 진거 가위바위보</span><span class="recentBoardwrtier">홍진호</span></div>
+            <div><span class="recentBoardTitle">일반게시판</span><span class="recentBoardContent">안내면 진거 가위바위보</span><span class="recentBoardwrtier">나르</span></div>
+        </div>
+        </div>
+      </div>
+    <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
+    <script th:inline="javascript"></script>
+    <script src="/js/stack/write.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>    <script>
+    $( function() {
+      $( "#progressbar" ).progressbar({
+        value: 70
+      });
+    } );
+    </script>
+  </body>
+</html>

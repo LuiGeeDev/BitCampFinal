@@ -104,4 +104,9 @@ public class MyClassController {
   public String createHomework() {
     return "myclass/homework/create";
   }
+  
+  @GetMapping("/main/home")
+  public String mainPage() {
+    return "myclass/main/home";
+  }
 }
