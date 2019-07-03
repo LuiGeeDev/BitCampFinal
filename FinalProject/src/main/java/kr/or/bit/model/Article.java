@@ -29,34 +29,6 @@ public class Article {
   private int votenum;
   private int vote_count;
 
-  public int getVote_count() {
-    return vote_count;
-  }
-
-  public void setVote_count(int vote_count) {
-    this.vote_count = vote_count;
-  }
-
-  public LocalDateTime getUpdatedTimeLocal() {
-    return updatedTimeLocal;
-  }
-
-  public void setUpdatedTimeLocal(LocalDateTime updatedTimeLocal) {
-    this.updatedTimeLocal = updatedTimeLocal;
-  }
-
-  public LocalDateTime getTimeLocal() {
-    return timeLocal;
-  }
-
-  public void setTimeLocal(LocalDateTime timeLocal) {
-    this.timeLocal = timeLocal;
-  }
-
-  public void setVote(Map<String, Integer> vote) {
-    this.vote = vote;
-  }
-
   public int getId() {
     return id;
   }
@@ -145,12 +117,44 @@ public class Article {
     this.board_id = board_id;
   }
 
+  public LocalDateTime getTimeLocal() {
+    return timeLocal;
+  }
+
+  public void setTimeLocal(LocalDateTime timeLocal) {
+    this.timeLocal = timeLocal;
+  }
+
+  public LocalDateTime getUpdatedTimeLocal() {
+    return updatedTimeLocal;
+  }
+
+  public void setUpdatedTimeLocal(LocalDateTime updatedTimeLocal) {
+    this.updatedTimeLocal = updatedTimeLocal;
+  }
+
   public Member getWriter() {
     return writer;
   }
 
   public void setWriter(Member writer) {
     this.writer = writer;
+  }
+
+  public List<Tag> getTags() {
+    return tags;
+  }
+
+  public void setTags(List<Tag> tags) {
+    this.tags = tags;
+  }
+
+  public List<Comment> getCommentlist() {
+    return commentlist;
+  }
+
+  public void setCommentlist(List<Comment> commentlist) {
+    this.commentlist = commentlist;
   }
 
   public ArticleOption getOption() {
@@ -161,29 +165,11 @@ public class Article {
     this.option = option;
   }
 
-  public List<Comment> getCommentlist() {
-    return commentlist;
-  }
-
-  @Override
-  public String toString() {
-    return "Article [id=" + id + ", title=" + title + ", content=" + content + ", time=" + time + ", updated_time="
-        + updated_time + ", view_count=" + view_count + ", original_id=" + original_id + ", level=" + level
-        + ", enable=" + enable + ", username=" + username + ", board_id=" + board_id + ", timeLocal=" + timeLocal
-        + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", tags=" + tags + ", commentlist="
-        + commentlist + ", option=" + option + ", vote=" + vote + ", votenum=" + votenum + ", vote_count=" + vote_count
-        + "]";
-  }
-
-  public void setCommentlist(List<Comment> commentlist) {
-    this.commentlist = commentlist;
-  }
-
   public Map<String, Integer> getVote() {
     return vote;
   }
 
-  public void setVote(HashMap<String, Integer> vote) {
+  public void setVote(Map<String, Integer> vote) {
     this.vote = vote;
   }
 
@@ -195,11 +181,21 @@ public class Article {
     this.votenum = votenum;
   }
 
-  public List<Tag> getTags() {
-    return tags;
+  public int getVote_count() {
+    return vote_count;
   }
 
-  public void setTags(List<Tag> tags) {
-    this.tags = tags;
+  public void setVote_count(int vote_count) {
+    this.vote_count = vote_count;
+  }
+
+  @Override
+  public String toString() {
+    return "Article [id=" + id + ", title=" + title + ", content=" + content + ", time=" + time + ", updated_time="
+        + updated_time + ", view_count=" + view_count + ", original_id=" + original_id + ", level=" + level
+        + ", enable=" + enable + ", username=" + username + ", board_id=" + board_id + ", timeLocal=" + timeLocal
+        + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", tags=" + tags + ", commentlist="
+        + commentlist + ", option=" + option + ", vote=" + vote + ", votenum=" + votenum + ", vote_count=" + vote_count
+        + "]";
   }
 }

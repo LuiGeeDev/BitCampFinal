@@ -203,4 +203,9 @@ public class MyClassController {
     articleInsertService.writeArticle(article, homework, null, request);
     return "redirect:/myclass/homework";
   }
+  
+  @GetMapping("/main/home")
+  public String mainPage() {
+    return "myclass/main/home";
+  }
 }
