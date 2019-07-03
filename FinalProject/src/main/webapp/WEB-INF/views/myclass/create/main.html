@@ -19,7 +19,7 @@
         <div class="inner wrapper project-name-wrapper">
           <span class="project-name-text text">프로젝트 명 : </span> <span
             class="project-name-input"><input type="text"
-            class="project-name" /></span>
+            class="project-name" form="submit-form" name="project_name" /></span>
         </div>
         <div class="inner wrapper group-count-wrapper">
           <span class="group-count-text text">생성할 조 수 : </span> <span
@@ -30,48 +30,24 @@
           <div class="project-term-text text">프로젝트 기간</div>
           <span class="project-term-start-day-text text date">시작일</span>
           <span class="select-project-term-start-day"><input
-            type="date" class="select-start-date date-input" /></span> ~ <span
+            type="date" class="select-start-date date-input"
+            form="submit-form" name="start_date" /></span> ~ <span
             class="project-term-end-day-text text date">종료일</span> <span
             class="select-project-term-end-day"><input
-            type="date" class="select-end-date date-input" /></span>
+            type="date" class="select-end-date date-input"
+            form="submit-form" name="end_date" /></span>
         </div>
       </div>
 
       <div>
         <div class="row">
           <div id="member-list" class="class-member-list">
-            <div id="student1" draggable="true" class="class-member">
-              복다빈</div>
-            <div id="student2" draggable="true" class="class-member">
-              권순조</div>
-            <div id="student3" draggable="true" class="class-member">
-              복다빈</div>
-            <div id="student4" draggable="true" class="class-member">
-              권순조</div>
-            <div id="student5" draggable="true" class="class-member">
-              복다빈</div>
-            <div id="student6" draggable="true" class="class-member">
-              권순조</div>
-            <div id="student7" draggable="true" class="class-member">
-              복다빈</div>
-            <div id="student8" draggable="true" class="class-member">
-              권순조</div>
-            <div id="student9" draggable="true" class="class-member">
-              복다빈</div>
-            <div id="student10" draggable="true" class="class-member">
-              권순조</div>
-            <div id="student11" draggable="true" class="class-member">
-              복다빈</div>
-            <div id="student12" draggable="true" class="class-member">
-              권순조</div>
-            <div id="student13" draggable="true" class="class-member">
-              복다빈</div>
-            <div id="student14" draggable="true" class="class-member">
-              권순조</div>
-            <div id="student15" draggable="true" class="class-member">
-              복다빈</div>
-            <div id="student16" draggable="true" class="class-member">
-              권순조</div>
+            <div th:each="student, status : ${memberList}"
+              th:text="${student.name}"
+              th:id="'student'+${status.count}" class="class-member"
+              draggable="true"
+              th:attr="data-username=${student.username}"></div>
+
           </div>
           <div id="class-group-list" class="class-group-list">
             <div class="group">
@@ -91,12 +67,54 @@
         <div class="row">
           <div class="button-wrapper">
             <button id="reset-button" class="btn btn-warning btn-sm">초기화</button>
-            <button id="submit-button" class="btn btn-warning btn-sm"
-              type="submit">생성</button>
+            <button id="submit-button" class="btn btn-warning btn-sm">생성</button>
+          </div>
+        </div>
+        <div class="modal fade" id="modal" tabindex="-1" role="dialog"
+          aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">클래스
+                  생성 확인</h5>
+
+                <button type="button" class="close" data-dismiss="modal"
+                  aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form id="submit-form" action="" method="post">
+                <div class="modal-body" id="modal-body">
+                  <h6 class="modal-desc">조장을 선택해주세요.</h6>
+                  <div class="modal-group" id="group1">
+                    <div class="modal-group-title">1조</div>
+                    <div class="modal-group-member"></div>
+                  </div>
+                  <div class="modal-group" id="group2">
+                    <div class="modal-group-title">2조</div>
+                    <div class="modal-group-member"></div>
+                  </div>
+                  <div class="modal-group" id="group3">
+                    <div class="modal-group-title">3조</div>
+                    <div class="modal-group-member"></div>
+                  </div>
+                  <div class="modal-group" id="group4">
+                    <div class="modal-group-title">4조</div>
+                    <div class="modal-group-member"></div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-primary" type="submit">생성</button>
+                  <button type="button" class="btn btn-primary"
+                    data-dismiss="modal">취소</button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
   <script>
       function dragstart_handler(event) {
@@ -147,18 +165,78 @@
         const count = $("#member-count").val();
         
         $("#class-group-list").empty();
+        $(".modal-body").empty();
         for(let i = 1 ; i <= count ; i++){
-          $("#class-group-list").append(`<div class="group"><div class="class-group">${i}조</div></div>`)          
+          $("#class-group-list").append(`<div class="group"><div class="class-group">${i}조</div></div>`);
+          $(".modal-body").append(`<div class="modal-group" id="group${i}"><div class="modal-group-title">${i}조</div><div class="modal-group-member"></div></div>`);
         }
         
         addEventToGroup();
       });
-      /*
-                  <div class="group">
-              <div class="class-group">1조</div>
-            </div>
-            */
+		
+      $('#submit-button').click(function(){
+        const studentArray = [];
+        $(".modal-group-member").empty();
+        $(".class-member").each(function(index, member){
+          const student ={name:$(member).text(), username:$(member).data("username"), group:$(member).siblings(".class-group").text().slice(0,1)};
+          studentArray.push(student);
+        });
+        
+        $(studentArray).each(function(index, member){
+          $(`#group${member.group} .modal-group-member`).append(`<label><input type="radio" name="leader_name[${member.group-1}]" value="${member.username}">${member.name}<span class="fas fa-chess-king icon hide"></span></label>`);
+        })
+        
+       $('input[type="radio"]').change(function() {
+        $('input[type="radio"]').each(function() {
+        	const checked = $(this).prop('checked');
+        	const icon = $(this).next();
+        	if(checked){
+        	  icon.removeClass('hide');
+        	}else{
+        	  icon.addClass('hide');
+        	}
+        })
+      })
+        
+        $("#modal").modal('show');
+        //<div class="modal-group-member"></div>
+      });
       
+      $("button[type='submit']").click(function(event) {
+        event.preventDefault();
+        const form = document.getElementById("submit-form");
+        const formData = new FormData(form);
+        const studentArray = [];
+        $(".class-member").each(function(index, member){
+          const student = {
+              name:$(member).text(), 
+              username:$(member).data("username"), 
+              group:$(member).siblings(".class-group").text().slice(0,1),
+              leader: $(`.modal-group-member input[value="${$(member).data('username')}"]`).prop("checked")              
+          };
+          studentArray.push(student);
+        });
+        
+        const project = {
+            project_name: formData.get("project_name"),
+            groups: $("#member-count").val(),
+            start_date: formData.get("start_date"),
+            end_date: formData.get("end_date"),
+            students: studentArray,
+        }
+        
+        $.ajax({
+          url: "/myclass/create",
+          method: "post",
+          data: JSON.stringify(project),
+          dataType: "json",
+          contentType: "application/json"
+        }).done(function() {
+          console.log("성공");
+        });
+      });
+      
+
     </script>
 </body>
 </html>

@@ -43,7 +43,12 @@ body {
 .text {
   font-weight: bold;
 }
-
+.project-name-text{
+  margin-right:8.8px;
+}
+.group-count-text{
+  margin-right:4.5px;
+}
 .class-group {
   padding: 10px;
   margin-top: -1px;
@@ -78,7 +83,7 @@ body {
 }
 
 .content-wrapper input {
-  border-radius: 10px;
+  border-radius: 5px;
   border: 1px solid;
   outline: none;
   border: 1px solid;
@@ -95,7 +100,78 @@ body {
   font-size: 13px;
 }
 
-
 .project-term-text {
   text-align: left;
+}
+
+.modal-content {
+  font-weight: bold;
+}
+
+.modal-title{
+  font-weight:bold;
+  font-size:32px;
+}
+
+.modal input{
+  width:10px
+}
+.modal-footer button{
+  color:black;
+  font-weight:bold;
+  background-color:#EA8A02;
+}
+.modal-body{
+  min-height:500px;
+  overflow-y:scroll;
+}
+.modal-content{
+
+}
+
+
+.hide{
+  display:none;
+}
+
+input[type="radio"]{
+  display:none;
+}
+
+.modal-group-member{
+  display:flex;
+  flex-wrap: wrap;
+
+}
+
+.modal label{
+  display:inline;
+  position:relative;
+  margin-right: 20px;
+}
+
+.modal-dialog{
+  margin:auto;
+  margin-top:50px
+}
+
+.icon{
+  position:absolute;
+  right:35%;
+  top:-60%;
+  color:#EA8A02;
+}
+.modal-group-title{
+  margin-bottom:12px;
+  font-size:20px
+}
+.modal-group{
+  border : 1px #2D3E50 solid;
+  margin-bottom:30px;
+  border-radius:5px;
+  padding-top:10px;
+  padding-left: 20px;
+}
+.modal-desc{
+  color:gray
 }
