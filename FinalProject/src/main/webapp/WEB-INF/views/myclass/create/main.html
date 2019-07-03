@@ -19,7 +19,8 @@
         <div class="inner wrapper project-name-wrapper">
           <span class="project-name-text text">프로젝트 명 : </span> <span
             class="project-name-input"><input type="text"
-            class="project-name" form="submit-form" name="project_name" /></span>
+            class="project-name" form="submit-form" name="project_name"
+            id="project-name" /></span>
         </div>
         <div class="inner wrapper group-count-wrapper">
           <span class="group-count-text text">생성할 조 수 : </span> <span
@@ -31,10 +32,10 @@
           <span class="project-term-start-day-text text date">시작일</span>
           <span class="select-project-term-start-day"><input
             type="date" class="select-start-date date-input"
-            form="submit-form" name="start_date" /></span> ~ <span
+            id="start-date" form="submit-form" name="start_date" /></span> ~ <span
             class="project-term-end-day-text text date">종료일</span> <span
             class="select-project-term-end-day"><input
-            type="date" class="select-end-date date-input"
+            type="date" class="select-end-date date-input" id="end-date"
             form="submit-form" name="end_date" /></span>
         </div>
       </div>
@@ -43,7 +44,7 @@
         <div class="row">
           <div id="member-list" class="class-member-list">
             <div th:each="student, status : ${memberList}"
-              th:text="${student.name}"
+              th:text = "${student.name}"
               th:id="'student'+${status.count}" class="class-member"
               draggable="true"
               th:attr="data-username=${student.username}"></div>
@@ -67,7 +68,8 @@
         <div class="row">
           <div class="button-wrapper">
             <button id="reset-button" class="btn btn-warning btn-sm">초기화</button>
-            <button id="submit-button" class="btn btn-warning btn-sm">생성</button>
+            <button id="submit-button" class="btn btn-warning btn-sm"
+              disabled>생성</button>
           </div>
         </div>
         <div class="modal fade" id="modal" tabindex="-1" role="dialog"
@@ -104,7 +106,8 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button class="btn btn-primary" type="submit">생성</button>
+                  <button class="btn btn-primary" type="submit"
+                    id="modal-submit-button" disabled>생성</button>
                   <button type="button" class="btn btn-primary"
                     data-dismiss="modal">취소</button>
                 </div>
@@ -187,6 +190,11 @@
         })
         
        $('input[type="radio"]').change(function() {
+         if($('input[type="radio"]:checked').length == $('#member-count').val()){
+           $('#modal-submit-button').attr('disabled',false);
+         }else{
+           $('#modal-submit-button').attr('disabled',true);
+         }
         $('input[type="radio"]').each(function() {
         	const checked = $(this).prop('checked');
         	const icon = $(this).next();
@@ -236,7 +244,49 @@
         });
       });
       
-
+      // 프로젝트명, 조 수, 기간 유효성 검증 disabled
+		$("#project-name, #member-count, #start-date, #end-date").change(function(){ 
+      	console.log();
+		  if($("#project-name").val() !== "" &&
+		     $("#member-count").val() !== "" &&
+		     $("#start-date").val() !== "" &&
+		     $("#end-date").val() !== "" &&
+		     $("#member-list").children().length === 0
+		     ){
+		    $("#submit-button").attr('disabled',false);
+		  }else{
+		    $("#submit-button").attr('disabled',true);
+		  }
+		})
+		
+		//드래그하고나서 이벤트임
+		$("#class-group-list").hover(function(){
+  		  if($("#project-name").val() !== "" &&
+			     $("#member-count").val() !== "" &&
+			     $("#start-date").val() !== "" &&
+			     $("#end-date").val() !== "" &&
+			     $("#member-list").children().length === 0
+			     ){
+			    $("#submit-button").attr('disabled',false);
+			  }else{
+			    $("#submit-button").attr('disabled',true);
+			  }  
+		})
+		$("#modal-submit-button").hover(function(){
+    	  if($('input[type="radio"]:checked').length == $('#member-count').val()){
+      	  	$('#modal-submit-button').attr('disabled',false);
+   		  }else{
+        	$('#modal-submit-button').attr('disabled',true);
+      	  }
+		})
+		$("#end-date, #start-date").change(function(){
+		  if($("#end-date").val() !== ""){
+		  if($("#start-date").val() >= $("#end-date").val()){
+		    $("#end-date").val("");
+		    alert("시작일보다 크거나 같은 값을 입력해주세요");
+		  }
+		  }
+		})
     </script>
 </body>
 </html>
