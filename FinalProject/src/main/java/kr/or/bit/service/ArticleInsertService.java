@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.fileupload.UploadContext;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,6 +34,8 @@ import kr.or.bit.utils.Helper;
 public class ArticleInsertService {
   @Autowired
   private SqlSession sqlSession;
+  @Autowired
+  private FileUploadService fileUploadService;
 
   private ArticleDao wArticle(Article article) {
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
@@ -73,13 +76,13 @@ public class ArticleInsertService {
   @Transactional
   public void writeArticle(Article article, ArticleOption option, List<MultipartFile> file,
       HttpServletRequest request) {
-    FileUploadService fileupload = new FileUploadService();
+    
     String optionname = option.getClass().getName().toLowerCase().trim().substring("kr.or.bit.model.".length());
     
     if (file != null) {
-      List<Integer> fileIds = new ArrayList<Integer>();
       try {
-        List<Files> files = fileupload.uploadFile(file, request);
+        List<Integer> fileIds = new ArrayList<Integer>();
+        List<Files> files = fileUploadService.uploadFile(file, request);
         FilesDao filesdao = sqlSession.getMapper(FilesDao.class);
         for (Files list : files) {
           filesdao.insertFiles(list);

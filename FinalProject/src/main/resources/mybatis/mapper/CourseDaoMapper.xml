@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   <insert id="insertCourse">
  	INSERT INTO course(course_name, start_date, end_date, subject, classroom_id)
- 	VALUES (#{course_name}, (SELECT date_add(#{start_date},INTERVAL 1 DAY)), (SELECT date_add(#{end_date},INTERVAL 1 DAY)), #{subject}, #{classroom_id})
+ 	VALUES (#{course_name}, #{start_date}, #{end_date}, #{subject}, #{classroom_id})
   </insert>
   <delete id="deleteCourse">
     DELETE FROM course 

@@ -1,137 +1,5 @@
 body {
-  background: #F2F4F7;
-}
-
-.active-list {
-  border-bottom: 1px solid #F2F4F7 !important;
-}
-
-.links {
-  margin-left: 127px;
-}
-
-.links, .checklist {
-  margin-right: 10px;
-  width: 17vw;
-  height: 38vh;
-  padding: 10px 20px;
-}
-
-.edit-link, .edit-checklist {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #F39C20;
-}
-
-.project-link {
-  padding: 10px 10px 20px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: flex;
-}
-
-.link-address {
-  display: block;
-  margin-left: 15px;
-  line-height: 30px;
-}
-
-.checklist-item {
-  padding: 10px 10px;
-}
-
-input[type=checkbox] {
-  display: none;
-}
-
-input[type=checkbox]+label {
-  display: block;
-}
-
-input[type=checkbox]+label:active {
-  display: block;
-  transform: scale(0.98);
-}
-
-input[type=checkbox]+label svg {
-  color: #a6a6a6;
-  font-size: 22px;
-}
-
-input[type=checkbox]:checked+label svg {
-  color: #F39C20;
-}
-
-.item-description {
-  font-size: 17px;
-  margin-left: 50px;
-}
-
-.timeline {
-  width: 70vw;
-  margin: 10px 127px 0;
-}
-
-.timeline--horizontal {
-  padding: 20px !important;
-}
-
-#calendar {
-  width: 70vw;
-  margin: 10px 127px;
-  padding: 20px;
-}
-
-.recent-issues {
-  flex: 1;
-  margin-right: 127px;
-}
-
-.issue {
-  display: flex;
-  border-bottom: 1px solid #292929;
-  padding: 10px 10px 5px 10px;
-}
-
-.issue:last-child {
-  border: none;
-}
-
-.issue-info * {
-  margin: 0;
-}
-
-.issue-title h3 {
-  margin-left: 15px;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 27px;
-}
-
-.issue-info {
-  margin-left: auto;
-  font-size: 14px;
-}
-
-.tag {
-  background: #F39C20;
-  border-radius: 5px;
-  padding: 2px 8px;
-  font-size: 14px;
-}
-
-.issue-tags {
-  margin-left: 10px;
-}
-
-.fa-exclamation-circle {
-  color: #e74c3c;
-}
-
-.fa-check-circle {
-  color: #2ecc71;
+  font-family: NANUM GODIC;
 }
 
 .card {
@@ -142,36 +10,31 @@ input[type=checkbox]:checked+label svg {
   margin: 10px auto 0;
 }
 
+.card  p {
+  font-size: 30px;
+}
+
 .row-control {
   width: 900px;
   height: 500px;
   display: flex;
   margin: auto;
-  border-top: 15px;
+  margin-top: 10px;
 }
 
-.row-control-left {
-  width: 55%;
+.row-control>div {
+  width: 50%;
   border-width: initial;
   flex-direction: column;
 }
 
-.row-control-right {
-  width: 45%;
-  border-width: initial;
-  flex-direction: column;
-}
-
-.teacher-manage-left {
-  width: 55%;
+.teacher-manage-left, .teacher-manage-right {
+  width: 50%;
   display: flex;
   flex-direction: column;
-}
-
-.teacher-manage-right {
-  width: 45%;
-  display: flex;
-  flex-direction: column;
+  width: 460px;
+  margin-left: 0;
+  padding: 18px;
 }
 
 .left-child1, .left-child2 {
@@ -180,7 +43,16 @@ input[type=checkbox]:checked+label svg {
 }
 
 .left-child1>div, .left-child2>div {
-  width: 400px;
+  width: 460px;
+  margin-left: 0;
+  padding: 18px;
+}
+
+.left-child1>div {
+  height: 240px;
+}
+
+.left-child2>div {
   height: 200px;
 }
 
@@ -188,6 +60,7 @@ input[type=checkbox]:checked+label svg {
   display: flex;
   flex-direction: column;
   margin-top: 15px;
+  border-top: 5px;
 }
 
 .btn-teacher>button {
@@ -196,47 +69,44 @@ input[type=checkbox]:checked+label svg {
   max-width: 300px;
 }
 
-.teacher-manage-left, .teacher-manage-right {
-  padding: 18px;
-  font-family: NANUM GODIC;
+.btn btn-primary {
+  border-radius: 5px;
 }
 
-.my_class {
-  font-size: 40px;
-  margin-bottom: 8px;
-}
-
-.row-control-right > div{
-  width: 400px;
+.row-control-right>div {
+  width: 420px;
   height: 460px;
+  margin-left: 30px;
+  padding: 18px;
 }
 
-.course-date {
-  margin-bottom: 8px;
-}
-
-.subject_name {
-  font-size: 20px;
-}
-
-.teacher-manage-right>span {
-  position: absolute;
+.teacher-manage-right>div>span {
+  position: relative;
   left: auto;
   right: auto;
   font-size: 55px;
   padding-top: 20px;
 }
 
-.progre {
+.teacher-manage-right>div {
+  padding-top: 40px;
+  padding-left: 35px;
+}
+
+.progres {
   display: flex;
   flex-direction: row;
 }
 
-.progress {
-  width: 45%;
+.progres>div {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
   margin-top: 5px;
+  border: 1px solid;
+  border-radius: 5px;
 }
 
-.projress_f {
+.progres>span {
   width: 35%;
 }

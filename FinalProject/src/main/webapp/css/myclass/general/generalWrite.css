@@ -62,3 +62,13 @@
   right: 10px;
   color: #a6a6a6;
 }
+
+input[type=file] {
+  background-color:#EEEEEE;
+  border-radius: 3px;
+}
+
+.input-file {
+  margin-bottom: 10px;
+}
+

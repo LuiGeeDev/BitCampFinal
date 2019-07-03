@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   Member selectGroupIdByUsername(String id);
  -->
 
- <mapper namespace="kr.or.bit.TroubleShooting">
+ <mapper namespace="kr.or.bit.TroubleShootingDao">
   <insert id="insertTroubleShooting">
   	insert into TroubleShooting(Article_id, Group_id)
 	values (#{article_id}, #{group_id})

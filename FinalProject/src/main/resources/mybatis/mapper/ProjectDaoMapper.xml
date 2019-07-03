@@ -11,5 +11,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	            	   FROM member
 			           WHERE username = #{username})    
   </select>
+  
+  <insert id="insertProject">
+  	INSERT INTO PROJECT(PROJECT_NAME, START_DATE, END_DATE, SEASON, COURSE_ID)
+  	VALUES (#{project_name}, 
+  	        #{start_date}, 
+  	        #{end_date},
+  	        (SELECT IFNULL(MAX(season),0)+1 
+  		     FROM PROJECT p
+  		     WHERE COURSE_ID=#{course_id}),
+  		    #{course_id})
+  </insert>
+  <select id="selectRecentProject" resultType="kr.or.bit.model.Project">
+  	SELECT ID, PROJECT_NAME, START_DATE, END_DATE, SEASON, COURSE_ID
+  	FROM PROJECT
+  	WHERE ID=(SELECT MAX(ID) FROM PROJECT WHERE COURSE_ID=#{course_id})
+  </select>
 </mapper>
 

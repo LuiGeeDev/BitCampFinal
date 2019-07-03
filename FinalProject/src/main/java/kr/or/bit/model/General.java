@@ -1,7 +1,6 @@
 package kr.or.bit.model;
 
 public class General implements ArticleOption {
-
   private int id;
   private int file1;
   private int file2;
@@ -43,5 +42,4 @@ public class General implements ArticleOption {
   public String toString() {
     return "General [id=" + id + ", file1=" + file1 + ", file2=" + file2 + ", Article_id=" + Article_id + "]";
   }
-
 }

@@ -34,9 +34,6 @@ public class MyClassInterceptor extends HandlerInterceptorAdapter {
     Member user = memberDao.selectMemberByUsername(username);
     List<Board> board = boardDao.selectMyClassBoard(user.getCourse_id());
     List<Project> projects = projectDao.selectMyProject(username);
-    for (Project p : projects) {
-      System.out.println(p.getProject_name());
-    }
     
     modelAndView.addObject("boardList", board);
     modelAndView.addObject("projects", projects);
