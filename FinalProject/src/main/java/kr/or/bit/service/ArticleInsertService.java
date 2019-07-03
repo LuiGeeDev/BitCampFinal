@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.fileupload.UploadContext;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -40,6 +39,12 @@ public class ArticleInsertService {
   private ArticleDao wArticle(Article article) {
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
     articledao.insertArticle(article);
+    return articledao;
+  }
+  
+  public ArticleDao writeReplyArticle(Article article) {
+    ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
+    articledao.insertReplyArticle(article);
     return articledao;
   }
 
@@ -86,7 +91,7 @@ public class ArticleInsertService {
         FilesDao filesdao = sqlSession.getMapper(FilesDao.class);
         for (Files list : files) {
           filesdao.insertFiles(list);
-          fileIds.add(filesdao.selectFilesByFilename(list.getOriginal_filename()));
+          fileIds.add(filesdao.selectFilesByFilename(list.getFilename()));
         }
         ArticleDao artidao = wArticle(article);
         switch (optionname) {
@@ -132,4 +137,65 @@ public class ArticleInsertService {
       homeworkDao.insertHomework(homework);
     }
   }
+  
+  @Transactional
+  public void writeReplyArticle(Article article, ArticleOption option, List<MultipartFile> file,
+      HttpServletRequest request) {
+    
+    String optionname = option.getClass().getName().toLowerCase().trim().substring("kr.or.bit.model.".length());
+    
+    if (file != null) {
+      try {
+        List<Integer> fileIds = new ArrayList<Integer>();
+        List<Files> files = fileUploadService.uploadFile(file, request);
+        FilesDao filesdao = sqlSession.getMapper(FilesDao.class);
+        for (Files list : files) {
+          filesdao.insertFiles(list);
+          fileIds.add(filesdao.selectFilesByFilename(list.getFilename()));
+        }
+        ArticleDao artidao = writeReplyArticle(article);
+        switch (optionname) {
+        case "general":
+          GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
+          General general = (General) option;
+          general.setArticle_id(artidao.getMostRecentArticleId());
+          for (int id : fileIds) {
+            if (general.getFile1() == 0) {
+              general.setFile1(id);
+            } else {
+              general.setFile2(id);
+            }
+          }
+          generalDao.insertGeneral(general);
+          break;
+        case "homework":
+          HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
+          Homework homework = (Homework) option;
+          homework.setArticle_id(artidao.getMostRecentArticleId());
+          for (int id : fileIds) {
+            if (homework.getFile1() == 0) {
+              homework.setFile1(id);
+            } else {
+              homework.setFile2(id);
+            }
+          }
+          homeworkDao.insertHomework(homework);
+          break;
+        default:
+          break;
+        }
+      } catch (IllegalStateException e) {
+        e.printStackTrace();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }else {
+      ArticleDao artidao = wArticle(article);
+      HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
+      Homework homework = (Homework) option;
+      homework.setArticle_id(artidao.getMostRecentArticleId());
+      homeworkDao.insertHomework(homework);
+    }
+  }
+
 }
