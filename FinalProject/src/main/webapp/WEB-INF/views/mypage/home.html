@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
+<head>
+<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+<link rel="stylesheet" th:href="@{/css/myclass/qna/home.css}" />
+</head>
+<body>
+  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+  <div class="main" th:fragment="main">
+
+
+    <div class="main" th:fragment="main">
+      <input type="button" value="send" id="send">
+      <div th:object="${user}">
+      <form method="post">
+        아이디 : <input type="text" name="username" th:value="*{username}" readonly><br>
+        비밀번호 : <input type="password" name="password"><br>
+        이름 : <input type="text" name="name" th:value="*{name}"><br>
+        이메일 : <input type="text" name="email" th:value="*{email}"><br>
+        프사 : <input type="text" name="profile_photo" th:value="*{profile_photo}"><br>
+        <input type="submit" value="수정">
+      </form>
+    </div>
+    </div>
+
+
+  </div>
+    <script>
+      $("#send").click(function() {
+        console.log("Hello");
+        client.send("/app/notice", {}, "Hello");
+      })
+    </script>
+</body>
+</html>
