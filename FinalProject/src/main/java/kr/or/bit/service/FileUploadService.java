@@ -48,11 +48,13 @@ public class FileUploadService {
       String realPath = request.getServletContext().getRealPath(fileDirectory);
       new File(realPath).mkdirs();
       File fileToSave = new File(realPath + filenameOnServer);
+      System.out.println("파일업로드 sysout");
       System.out.println(fileToSave.getAbsolutePath());
       mfile.transferTo(fileToSave);
       System.out.println(filepath);// 진짜주소
       System.out.println(realPath);
       System.out.println(originalFilename);// 오리지널
+      System.out.println("파일 업로드 sysout end");
       files.setOriginal_filename(originalFilename);
       files.setFilename(filepath);
       filess.add(files);
