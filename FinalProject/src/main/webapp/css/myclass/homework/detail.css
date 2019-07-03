@@ -1,0 +1,111 @@
+@charset "UTF-8";
+
+#buttons {
+  text-align: right;
+  margin-right: 20%;
+  margin-bottom: 60px;
+}
+#update-buttons {
+  text-align: right;
+  margin-right: 20%;
+}
+#title {
+    margin: 10px 0 0 150px;
+    font-size: 32px;
+}
+
+.homework-container {
+  display: flex;
+  width:70%;
+  margin:8px 150px;
+}
+.homework-content {
+  width:70%;
+  height:100px;
+  margin:13px 150px;
+  border:1px solid #a3a3a3;
+  border-radius: 3px;
+  padding:15px 30px;
+}
+.homework-submit {
+  width:70%;
+  height:100%;
+  margin:10px 150px;
+}
+.hw-title {
+  flex-basis:15%;
+  border:1px solid #ebeced;
+  border-radius: 3px;
+  margin:0 7px;
+  background-color:#ebeced;
+  padding:5px 10px;
+  text-align:center;
+}
+.sm-title {
+  flex-basis:15%;
+  border:1px solid #ebeced;
+  border-radius: 3px;
+  margin:0 7px;
+  background-color:#ebeced;
+  padding:5px 10px;
+  text-align:center;
+
+}
+.homework-title {
+  flex-basis:35%;
+  border:1px solid ;
+  border-radius: 3px;
+  padding:5px 20px;
+}
+
+.homework-startDate {
+  flex-basis:35%;
+  border:1px solid;
+  border-radius: 3px;
+  padding:5px 20px;
+}
+
+.homework-endDate {
+  flex-basis:35%;
+  border:1px solid;
+  border-radius: 3px;
+  padding:5px 20px;
+}
+
+.homework-name {
+  flex-basis:35%;
+  border:1px solid;
+  border-radius: 3px;
+  padding:5px 20px;
+}
+
+.submit-container {
+  display: flex;
+  width:70%;
+  margin:8px 150px;
+  
+}
+.submit-name {
+  flex-basis:35%;
+  border:1px solid;
+  border-radius: 3px;
+  padding:5px 20px;
+}
+.submit-writeDate {
+  flex-basis:35%;
+  border:1px solid;
+  border-radius: 3px;
+  padding:5px 20px;
+}
+.submit-group {
+  flex-basis:35%;
+  border:1px solid;
+  border-radius: 3px;
+  padding:5px 20px;
+}
+.submit-file {
+  flex-basis:35%;
+  border:1px solid;
+  border-radius: 3px;
+  padding:5px 20px;
+}
