@@ -210,3 +210,10 @@ input[type="radio"] {
   color: #F39C12;
   cursor: pointer;
 }
+.swal2-styled{
+  background-color:#F39C12 !important;
+  outline:none !important;
+  font-family: 'Nanum Gothic' !important;
+  font-weight: bold !important;
+  color:black !important;
+}

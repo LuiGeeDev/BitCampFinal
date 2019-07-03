@@ -119,6 +119,7 @@
     </div>
 
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <script>
       function dragstart_handler(event) {
         event.dataTransfer.setData("text/plain", event.target.id);
@@ -283,7 +284,13 @@
 		  if($("#end-date").val() !== ""){
 		  if($("#start-date").val() >= $("#end-date").val()){
 		    $("#end-date").val("");
-		    alert("시작일보다 크거나 같은 값을 입력해주세요");
+		    Swal.fire({
+		      type: 'error',
+		      title: '잘못된 값입니다.',
+		      text: '종료일이 시작일보다 빠릅니다!',
+		      footer: '종료일이 알맞은 값인지 확인해보세요.',
+		      confirmButtonText:"확인",
+		    })
 		  }
 		  }
 		})
