@@ -21,7 +21,7 @@ import kr.or.bit.utils.Helper;
 @Controller
 @RequestMapping("/general")
 public class GeneralBoardController {
-  private final int GENERAL_BOARD_ID = 3;
+  private final int GENERAL_BOARD_ID = 23;
   
   @Autowired
   private SqlSession sqlsession;

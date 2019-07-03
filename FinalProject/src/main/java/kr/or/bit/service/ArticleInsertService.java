@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.fileupload.UploadContext;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,6 +34,8 @@ import kr.or.bit.utils.Helper;
 public class ArticleInsertService {
   @Autowired
   private SqlSession sqlSession;
+  @Autowired
+  private FileUploadService fileUploadService;
 
   private ArticleDao wArticle(Article article) {
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
@@ -73,22 +76,23 @@ public class ArticleInsertService {
   @Transactional
   public void writeArticle(Article article, ArticleOption option, List<MultipartFile> file,
       HttpServletRequest request) {
-    FileUploadService fileupload = new FileUploadService();
+    
     String optionname = option.getClass().getName().toLowerCase().trim().substring("kr.or.bit.model.".length());
     System.out.println(optionname);
-    List<Integer> fileIds = new ArrayList<Integer>();
     try {
-      List<Files> files = fileupload.uploadFile(file, request);
+      List<Integer> fileIds = new ArrayList<Integer>();
+      List<Files> files = fileUploadService.uploadFile(file, request);
       FilesDao filesdao = sqlSession.getMapper(FilesDao.class);
       for (Files list : files) {
         filesdao.insertFiles(list);
         System.out.println("2");
-        System.out.println(list.getOriginal_filename());
-        fileIds.add(filesdao.selectFilesByOriginalFileName(list.getOriginal_filename()));
+        System.out.println(list.getFilename());
+        fileIds.add(filesdao.selectFilesByFilename(list.getFilename()));
       }
       
       ArticleDao artidao = wArticle(article);
-
+      System.out.println(fileIds);
+      System.out.println(artidao.getMostRecentArticleId());
       switch (optionname) {
       case "general":
         GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
