@@ -154,7 +154,7 @@
             $("#voteText").html(data.countVote);
             if (data.checkStatus == 1) {
               $('#thumbIcon').addClass("voted");
-              client.send("/app/notice/vote", {}, JSON.stringify({title: "추천", content: [[${user.name}]] + "님에게 글을 추천받았습니다.", username: [[${article.username}]]}));
+              sendVoteNotice([[${user.name}]], [[${article.username}]], "link");
             } else {
               $('#thumbIcon').removeClass("voted");
             }

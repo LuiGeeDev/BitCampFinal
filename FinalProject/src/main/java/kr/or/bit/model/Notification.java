@@ -5,8 +5,17 @@ public class Notification {
   private String content;
   private int checked;
   private String username;
+  private String link;
 
   private String title;
+
+  public String getLink() {
+    return link;
+  }
+
+  public void setLink(String link) {
+    this.link = link;
+  }
 
   public String getTitle() {
     return title;

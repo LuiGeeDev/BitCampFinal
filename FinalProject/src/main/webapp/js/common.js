@@ -7,18 +7,31 @@ client.connect({}, function() {
     showToast(notification);
   });
 });
+
 function addNotice(notification) {
+  const link = $(`<a class="notice-link" href="${notification.link}">`);
   const notice = $("<div class='notice'>");
   const noticeTitle = $(`<h6 class="notice-title">${notification.title}</h6>`);
   const noticeContent = $(`<p class="notice-content">${notification.content}</p>`);
   notice.append(noticeTitle).append(noticeContent);
-  if ($(".notice")[3]) {
-    $(".notice")[3].remove();
+  link.append(notice);
+  
+  if ($(".notice").length === 20) {
+    $(".notice")[19].remove();
   }
-  $("#notices").prepend(notice);
+  
+  if ($(".no-notice")) {
+    $(".no-notice").remove();
+  }
+  
+  $("#notices").prepend(link);
+  $(".noti-count").show();
+  $(".noti-count").text(Number($(".noti-count").text()) + 1);
 }
+
 function showToast(notification) {
   const toastPositioner = $(".toast-positioner");
+  const link = $(`<a href="${notification.link}">`);
   const toast = $(`<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">`);
   const toastHeader = $(`<div class="toast-header">`);
   const toastBody = $(`<div class="toast-body">`);
@@ -27,7 +40,66 @@ function showToast(notification) {
   const closeButton = $(`<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button>`);
   toastHeader.append(toastTitle).append(closeButton);
   toastBody.append(toastContent);
-  toast.append(toastHeader).append(toastBody);
+  link.append(toastBody);
+  toast.append(toastHeader).append(link);
   toastPositioner.append(toast);
-  $(".toast:last-child").toast('show');
+  $(".toast-positioner .toast:last-child").toast('show');
+}
+
+// 추천 알림
+function sendVoteNotice(senderUsername, receiverUsername, link) {
+  const notification = {
+    title: "추천",
+    content: `${senderUsername}님에게 추천받았습니다.`,
+    username: receiverUsername,
+    link
+  };
+
+  client.send("/app/notice/vote", {}, JSON.stringify(notification));
+}
+
+// 댓글 알림
+function sendCommentNotice(senderUsername, receiverUsername, link) {
+  const notification = {
+    title: "댓글",
+    content: `${senderUsername}님이 댓글을 달았습니다.`,
+    username: receiverUsername,
+    link
+  };
+
+  client.send("/app/notice/comment", {}, JSON.stringify(notification));
+}
+
+// 
+function sendReplyNotice(senderUsername, receiverUsername, link) {
+  const notification = {
+    title: "답글",
+    content: `${senderUsername}님이 답글을 달았습니다.`,
+    username: receiverUsername,
+    link
+  };
+
+  client.send("/app/notice/reply", {}, JSON.stringify(notification));
+}
+
+function sendAssembleNotice(senderUsername, receiverUsername, link) {
+  const notification = {
+    title: "모여라",
+    content: `${senderUsername} 강사님이 모여라를 외칩니다.`,
+    username: receiverUsername,
+    link
+  };
+
+  client.send("/app/notice/assemble", {}, JSON.stringify(notification));
+}
+
+function sendMessageNotice(senderUsername, receiverUsername) {
+  const notification = {
+      title: "쪽지",
+      content: `${senderUsername}님이 쪽지를 보냈습니다.`,
+      username: receiverUsername,
+      link: "/message"
+  }
+
+  client.send("/app/notice/message", {}, JSON.stringify(notification));
 }

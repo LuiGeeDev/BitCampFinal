@@ -35,8 +35,4 @@ public class NotificationController {
     model.addAttribute("oldnoti", oldnoti);
     return "notification";
   }
-  
-  
-  
-  
 }

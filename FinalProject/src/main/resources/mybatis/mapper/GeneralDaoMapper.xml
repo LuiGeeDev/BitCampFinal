@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where id=0;
   </update>
   
-  <select id="selectGeneralByArticleId">
+  <select id="selectGeneralByArticleId" resultType="kr.or.bit.model.General">
 	select id, file1, file2, article_id
 	from general
 	where article_id=#{article_id}
