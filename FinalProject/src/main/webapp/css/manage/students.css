@@ -42,6 +42,7 @@ body {
   flex-direction: column;
   width: 28%;
   padding: 10px 0px 10px 10px;
+  margin-right: 10px;
 }
 
 .search {
@@ -53,7 +54,7 @@ body {
 .list {
   display: flex;
   flex-direction: row;
-  margin-top: 10px;
+  margin-top: 19px;
   height: 600px;
   border: 1px solid rgba(0, 0, 0, .125);
 }
@@ -64,6 +65,7 @@ body {
   border: 1px solid rgba(0, 0, 0, .125);
   margin: 10px;
   padding: 10px;
+  margin-bottom: 19px;
 }
 
 .studentDetailContainer {
@@ -146,6 +148,7 @@ body {
 .detail {
   border: 1px solid rgba(0, 0, 0, .125);
   margin: 0 10px 10px 10px;
+  margin-bottom: 19px;
 }
 
 .detailName {
@@ -160,6 +163,7 @@ body {
 .counseling {
   border: 1px solid rgba(0, 0, 0, .125);
   margin: 0 10px 10px 10px;
+  margin-bottom: 19px;
 }
 
 .counselingName {
@@ -178,6 +182,7 @@ body {
 .studentArticle {
   border: 1px solid rgba(0, 0, 0, .125);
   margin: 0 10px 10px 10px;
+  margin-bottom: 19px;
 }
 
 .studentArticleTitle {
