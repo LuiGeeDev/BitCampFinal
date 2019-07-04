@@ -21,8 +21,8 @@
           <div class="detail-subtitle">
             <span th:text="${list.username}"></span>&nbsp;| &nbsp;
             <span th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd')}"></span>&nbsp;| 조회수 &nbsp;
-            <span th:text="${list.view_count}"></span>&nbsp;|
-            <span>댓글수 넣어야함</span>&nbsp;|
+            <span th:text="${list.view_count}" class="pointOrange"></span>&nbsp;|댓글수&nbsp;
+            <span th:text="${list.commentlist.size()}" class="pointOrange2"></span>&nbsp;|
           <div class="btn-group">
           
             <input type="submit" id="updatebtn"class="btn btn-primary btn-align" value="수정">
@@ -33,8 +33,8 @@
           </div>
         
         </div>
-        <div class="detail-content">  
-            안녕하세요 오늘도 행복한 하루되세요
+        <div class="detail-content" th:text="${list.content}">  
+            
         </div>
       </div>
       
@@ -43,24 +43,28 @@
             <span class="userIcon">
                 <i class="fas fa-user-circle fa-lg"></i>
             </span>
-            <span class="writerName">정성윤</span>
-            
+            <span class="writerName" th:text="${user.name}"></span>
           <form th:action="@{/general/commentwrite(id=${list.id})}" method="POST">
-          <input type="text" name="content" id="content" class="comment-text">
+          <input type="text" name="content" id="content" class="comment-text" placeholder="댓글을 입력하세요">
           <input type="submit" class="btn btn-primary detail-btn" value="등록">
           </form>
         </div>
         
          <div class="content-reply-form">
-              <div class="content-reply" th:if="${list.commentlist.size()} > 0" th:each="list : ${list.commentlist}">
+              <div class="content-reply" th:if="${list.commentlist.size()} > 0"
+                                         th:each="comlist : ${list.commentlist}">
               <div class="content-move">
                 <span class="userIcon"><i class="fas fa-user-circle fa-lg"></i></span>
-                <span class="writerName">정성윤</span>
-                <a href = "">[삭제]</a>
-                <span class="write-date">2019.10.16</span>
+                <span class="writerName" th:text="${comlist.username}"></span>
+                <a th:href="@{/general/commentdelete(id=${comlist.id})}">[삭제]</a>
+                <span class="write-date" th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
                 </div>
-            <div class="content-comment">이것은 내용입니다</div>
+            <div class="content-comment" th:text="${comlist.content}"></div>
             </div>
+             <div th:if="${list.commentlist.size()} == 0" class="noComment">
+               등록된 댓글이 없습니다
+               </div>    
+            
         </div>
     
     
