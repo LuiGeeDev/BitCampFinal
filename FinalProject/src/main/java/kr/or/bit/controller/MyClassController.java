@@ -206,6 +206,13 @@ public class MyClassController {
   
   @PostMapping("/homework/detail")
   public String submitHomeworkDetail(Article article, MultipartFile file1, MultipartFile file2, HttpServletRequest request) {
+    System.out.println(article + "/" + file1 + "/" + file2 + "/" + request);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+   
+    Member member = memberDao.selectMemberByUsername(Helper.userName());
+    Board board = boardDao.selectBoardByCourseId(member.getCourse_id(), 4);
+    
     article.setUsername(Helper.userName());
     article.setBoard_id(HOMEWORK_BOARD_ID);
     article.setTitle("과제제출");
@@ -215,7 +222,7 @@ public class MyClassController {
     files.add(file1);
     files.add(file2);
     articleInsertService.writeReplyArticle(article, homework, files, request);
-    return"redirect:/myclass/homework";
+    return"redirect:/myclass/homework/detail?id=" + article.getOriginal_id();
   }
   
   @GetMapping("/homework/write")

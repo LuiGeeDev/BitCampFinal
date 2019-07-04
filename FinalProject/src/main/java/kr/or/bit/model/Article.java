@@ -28,15 +28,6 @@ public class Article {
   private Map<String, Integer> vote;
   private int votenum;
   private int vote_count;
-  private List<Files> files;
-  
-  public List<Files> getFiles() {
-    return files;
-  }
-
-  public void setFiles(List<Files> files) {
-    this.files = files;
-  }
 
   public int getId() {
     return id;
@@ -205,8 +196,6 @@ public class Article {
         + ", enable=" + enable + ", username=" + username + ", board_id=" + board_id + ", timeLocal=" + timeLocal
         + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", tags=" + tags + ", commentlist="
         + commentlist + ", option=" + option + ", vote=" + vote + ", votenum=" + votenum + ", vote_count=" + vote_count
-        + ", files=" + files + "]";
+        + "]";
   }
-
-  
 }

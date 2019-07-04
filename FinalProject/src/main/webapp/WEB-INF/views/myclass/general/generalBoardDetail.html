@@ -17,18 +17,18 @@
         </div>
       <div class="detail-container">
         <div class="detail-head">
-          <span class="detail-title" th:text="${list.title}"></span>
+          <span class="detail-title">???</span>
           <div class="detail-subtitle">
-            <span th:text="${list.username}"></span>&nbsp;| &nbsp;
-            <span th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd')}"></span>&nbsp;| 조회수 &nbsp;
-            <span th:text="${list.view_count}"></span>&nbsp;|
-            <span>댓글수 넣어야함</span>&nbsp;|
+            <span th:text="${list.username}">&nbsp;</span>|
+            <span>&nbsp;2019-07-02&nbsp;</span>| 조회수
+            <span>0&nbsp;</span>| 댓글
+            <span>2&nbsp;</span>|
           <div class="btn-group">
-          
+          <form action="" method="">
             <input type="submit" id="updatebtn"class="btn btn-primary btn-align" value="수정">
             <input type="submit" id="deletebtn" class="btn btn-primary btn-align" value="삭제">
             <input type="submit" id="listbtn" class="btn btn-primary btn-align" value="목록">
-           
+            </form>
           </div>
           </div>
         
@@ -45,14 +45,14 @@
             </span>
             <span class="writerName">정성윤</span>
             
-          <form th:action="@{/general/commentwrite(id=${list.id})}" method="POST">
+          <form action="" method="">
           <input type="text" name="content" id="content" class="comment-text">
           <input type="submit" class="btn btn-primary detail-btn" value="등록">
           </form>
         </div>
         
          <div class="content-reply-form">
-              <div class="content-reply" th:if="${list.commentlist.size()} > 0" th:each="list : ${list.commentlist}">
+              <div class="content-reply">
               <div class="content-move">
                 <span class="userIcon"><i class="fas fa-user-circle fa-lg"></i></span>
                 <span class="writerName">정성윤</span>
@@ -78,8 +78,6 @@
       $("#spinner").hide();
     });
     	$("#deletebtn").click(function(event) {
-    	  let articleId = [[${list.id}]];
-    	  console.log(articleId);
     	  event.preventDefault();
         Swal.fire({
           title: '정말 삭제하시겠습니까?',
@@ -91,38 +89,16 @@
           cancelButtonText: '아니요'
         }).then((result) => {
           if (result.value) {
-                  $.ajax({
-                    url: "/ajax/general/delete",
-                    type: "POST",
-                    data: {
-                      id: articleId
-                    },
-                    success: function(data) {
-                      Swal.fire({
-                        	title: '삭제되었습니다',
-                        	type: 'success',
-                        	confirmButtonText: '확인',
-                        	confirmButtonColor: '#F39B10'
-                      }).then(function() {
-                        location.href = "/general/generalBoard";
-                      });
-                      
-                    }
-                  });
+                Swal.fire({
+                  	title: '삭제되었습니다',
+                  	type: 'success',
+                  	confirmButtonText: '확인',
+                  	confirmButtonColor: '#F39B10'
+                }).then(() => {
                   
-               
+                });
           }
         })
-    	});
-    	
-    	$("#listbtn").click(function() {
-    	  location.href = "/general/generalBoard";
-    	});
-    	
-    	$("#updatebtn").click(function() {
-    	  location.href = "/general/edit?id="+[[${list.id}]];
-    	  
-    	  /* th:href="@{/video/edit(id=${article.id},video_id=${article.option.video_id})}" */
     	});
     
     
