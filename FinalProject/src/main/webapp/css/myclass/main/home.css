@@ -10,6 +10,13 @@ body {
   margin: 20px;
 }
 
+.moreRow{
+  display: flex;
+}
+.moreLotation{
+ margin-left: auto;
+}
+
 .myclassWrapper {
   margin-top: 2%;
 }
@@ -18,33 +25,33 @@ body {
   display: flex;
   flex-direction: column;
   border: 1px solid rgba(0, 0, 0, .125);
-  border-radius: 10px;
-  width: 60%;
-  height: 220px;
+  border-radius: 8px;
+  width: 51%;
+  height: 200px;
   padding: 20px;
 }
 
 .recentHomework {
   border: 1px solid rgba(0, 0, 0, .125);
-  border-radius: 10px;
-  height: 100px;
-  margin-bottom: 20px;
+  border-radius: 8px;
+  height: 46.5%;
+  margin-bottom: 2.7%;
   padding: 10 0 0 20;
   padding: 15px;
 }
 
 .recentHomeworkcontent {
-  font-size: 80%;
+  font-size: 96%;
 }
 
 .recentProjectcontent {
-  font-size: 80%;
+  font-size: 96%;
 }
 
 .recentProject {
   border: 1px solid rgba(0, 0, 0, .125);
-  border-radius: 10px;
-  height: 100px;
+  border-radius: 8px;
+  height: 46.5%;
   padding: 15px;
 }
 
@@ -52,14 +59,14 @@ body {
   display: flex;
   flex-direction: row;
   margin-left: 8%;
-  margin-bottom: 20px;
+  margin-bottom: 0.8%;
 }
 
 .recentBoard {
   display: flex;
   flex-direction: column;
-  width: 25%;
-  margin-left: 2%;
+  width: 35%;
+  margin-left: 0.8%;
 }
 
 .myclassBoard {
@@ -67,6 +74,8 @@ body {
   border-radius: 10px;
   margin-left: 8%;
   width: 80%;
+  padding: 20px;
+  margin-bottom: 0.8%;
 }
 
 .cardshadow {
@@ -78,18 +87,80 @@ body {
   color: gray;
 }
 
-.myclassBoard {
+.progres {
+  display: flex;
+  flex-direction: row;
+  width:80%
+}
+
+.progres>span {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 5px;
+  border: 1px solid;
+  border-radius: 5px;
+}
+
+.progressview{
+  font-size: 110%;
+}
+
+.myclassBoardTag{
+  display:flex;
+  flex-direction: column;
+  margin: 10px;
+  margin-right: 7%;
+  text-align: center;
+  margin-left: 5%;
+}
+
+.TitleStyle{
+  font-size: 120%;
+  text-decoration: underline;
+}
+
+.myclassBoardTitle{
+  display:flex;
+  flex-direction: column;
+  margin: 10px;
+  margin-right: 12%;
+  text-align: center;
+}
+
+.myclassBoardWriter{
+  display:flex;
+  flex-direction: column;
+  margin: 10px;
+  margin-right: 7%;
+  text-align: center;
+}
+
+.myclassBoardDate{
+  display:flex;
+  flex-direction: column;
+  margin: 10px;
+  margin-right: 7%;
+  text-align: center;
+}
+.myclassBoardVote{
+  display:flex;
+  flex-direction: column;
+  margin: 10px;
+  text-align: center;
+}
+.myclassTitle{
+
+}
+.myclassContent{
+  display: flex;
+  flex-direction: row;
+}
+.CalendarCard{
+  border: 1px solid rgba(0, 0, 0, .125);
+  border-radius: 10px;
+  margin-left: 8%;
+  width: 80%;
   padding: 20px;
-}
-
-.recentBoardContent {
-  padding: 10%; 
-}
-
-.recentBoardwrtier {
-  padding: 15%;
-}
-
-.recentBoardTitle {
-  padding: 5%;  
+  background-color: white;
 }
