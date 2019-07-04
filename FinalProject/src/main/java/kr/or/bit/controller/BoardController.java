@@ -22,15 +22,16 @@ import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
 import kr.or.bit.model.Files;
 import kr.or.bit.model.General;
+import kr.or.bit.service.BoardService;
 import kr.or.bit.utils.Helper;
 
 //@Controller
 @RequestMapping("/myclass/board")
 public class BoardController {
-  private final int GENERAL_BOARD = 3;
-
   @Autowired
   private SqlSession sqlSession;
+  @Autowired
+  private BoardService boardService;
 
   @GetMapping("/")
   public String listPage(int board_id, @RequestParam(defaultValue = "1") int page,
@@ -88,8 +89,8 @@ public class BoardController {
     General general = generalDao.selectGeneralByArticleId(article_id);
 
     List<Files> files = new ArrayList<>();
-    files.add(filesDao.selectFilesById(general.getFile1()));
-    files.add(filesDao.selectFilesById(general.getFile2()));
+    files.add(filesDao.selectFilenameById(general.getFile1()));
+    files.add(filesDao.selectFilenameById(general.getFile2()));
     general.setFiles(files);
     article.setOption(general);
 
@@ -100,22 +101,15 @@ public class BoardController {
 
   @GetMapping("/update")
   public String updatePage(int article_id, Model model) {    
-    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
     GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
     
-    Article article = articleDao.selectOneArticle(article_id);
-
-    String username = Helper.userName();
-
-    if (username != article.getUsername()) {
-      return "redirect:/"; // 403 페이지로 이후에 변경, security?
-    }
+    Article article = boardService.getArticleForUpdateOrDelete(article_id);
 
     General general = generalDao.selectGeneralByArticleId(article_id);
     List<Files> files = new ArrayList<>();
-    files.add(filesDao.selectFilesById(general.getFile1()));
-    files.add(filesDao.selectFilesById(general.getFile2()));
+    files.add(filesDao.selectFilenameById(general.getFile1()));
+    files.add(filesDao.selectFilenameById(general.getFile2()));
     general.setFiles(files);
     article.setOption(general);
     
@@ -126,28 +120,16 @@ public class BoardController {
 
   @PostMapping("/update")
   public String updateArticle(Article article, List<MultipartFile> files) {
-    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-    Board board = boardDao.selectBoardById(article.getBoard_id());
-
+    boardService.updateArticle(article);
     return "redirect:/myclass/board/read?article_id=" + article.getId();
   }
 
   @GetMapping("/delete")
   public String deleteArticle(int article_id) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
-    Article article = articleDao.selectOneArticle(article_id);
+    Article article = boardService.getArticleForUpdateOrDelete(article_id);
+    boardService.deleteArticle(article);
 
-    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-    Board board = boardDao.selectBoardById(article.getBoard_id());
-
-    String username = Helper.userName();
-
-    if (username != article.getUsername()) {
-      return "redirect:/"; // 403 페이지로 이후에 변경
-    }
-
-    articleDao.deleteArticle(article_id);
-
-    return "redirect:/myclass/board?board_id=" + board.getId();
+    return "redirect:/myclass/board?board_id=" + article.getBoard_id();
   }
 }

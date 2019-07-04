@@ -46,6 +46,15 @@ public class Article {
   private Map<String, Integer> vote;
   private int votenum;
   private int vote_count;
+  private List<Files> files;
+  
+  public List<Files> getFiles() {
+    return files;
+  }
+
+  public void setFiles(List<Files> files) {
+    this.files = files;
+  }
 
   public String getName() {
     return name;
@@ -219,9 +228,11 @@ public class Article {
   public String toString() {
     return "Article [id=" + id + ", title=" + title + ", content=" + content + ", time=" + time + ", updated_time="
         + updated_time + ", view_count=" + view_count + ", original_id=" + original_id + ", level=" + level
-        + ", enable=" + enable + ", original_filename=" + original_filename + ", filename=" + filename + ", username="
-        + username + ", board_id=" + board_id + ", name=" + name + ", timeLocal=" + timeLocal + ", updatedTimeLocal="
-        + updatedTimeLocal + ", writer=" + writer + ", tags=" + tags + ", commentlist=" + commentlist + ", option="
-        + option + ", vote=" + vote + ", votenum=" + votenum + ", vote_count=" + vote_count + "]";
+        + ", enable=" + enable + ", username=" + username + ", board_id=" + board_id + ", timeLocal=" + timeLocal
+        + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", tags=" + tags + ", commentlist="
+        + commentlist + ", option=" + option + ", vote=" + vote + ", votenum=" + votenum + ", vote_count=" + vote_count
+        + ", files=" + files + "]";
   }
+
+  
 }
