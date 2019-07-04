@@ -1,5 +1,7 @@
 package kr.or.bit.model;
 
+import java.util.List;
+
 public class Files {
   private int id;
   private String original_filename;
