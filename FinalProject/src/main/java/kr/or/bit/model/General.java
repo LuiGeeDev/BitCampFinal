@@ -1,10 +1,22 @@
 package kr.or.bit.model;
 
+import java.util.List;
+
 public class General implements ArticleOption {
   private int id;
   private int file1;
   private int file2;
   private int Article_id;
+
+  private List<Files> files;
+
+  public List<Files> getFiles() {
+    return files;
+  }
+
+  public void setFiles(List<Files> files) {
+    this.files = files;
+  }
 
   public int getId() {
     return id;

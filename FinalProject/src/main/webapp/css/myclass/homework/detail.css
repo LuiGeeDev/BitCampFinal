@@ -108,3 +108,24 @@
   border-radius: 3px;
   padding:5px 20px;
 }
+
+.ppt-upload-text{
+  margin-right:10px;
+  font-weight:bold;
+  border:1px solid; 
+  padding:5px
+}
+.source-upload-text{
+  margin-left:20px;
+  margin-right:10px;
+  font-weight:bold;
+  border:1px solid; 
+  padding:5px
+
+}
+.ppt-upload-input{
+  border:1px solid;
+}
+.source-upload-input{
+  border:1px solid;
+}

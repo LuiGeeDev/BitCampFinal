@@ -1,5 +1,6 @@
 package kr.or.bit.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.CommentDao;
+import kr.or.bit.dao.FilesDao;
 import kr.or.bit.dao.GeneralDao;
 import kr.or.bit.dao.HomeworkDao;
 import kr.or.bit.dao.MemberDao;
@@ -17,12 +19,14 @@ import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.ArticleOption;
 import kr.or.bit.model.Comment;
+import kr.or.bit.model.Files;
+import kr.or.bit.model.General;
 
 @Service
 public class ArticleService {
   @Autowired
   private SqlSession sqlSession;
-
+  
   public void updateArticle() {
   }
 
@@ -103,6 +107,26 @@ public class ArticleService {
     case "general":
       GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
       option = generalDao.selectGeneralByArticleId(article.getId());
+      /*General general = (General)option;
+      List<Integer> list = new ArrayList<>();
+      
+      if(general.getFile1() != 0) {
+        list.add(general.getFile1());
+        if(general.getFile2() != 0) {
+          list.add(general.getFile2());
+        }
+      }
+      FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
+      List<Files> filelist = new ArrayList<>(); 
+      if(general.getFile1() != 0) {
+        break;
+      } else if(list.size() > 0 ){
+        for(int fileid : list) {
+          files = filesDao.selectFileById(fileid);
+          filelist.add(files);
+        }
+      }
+      article.setFiles(filelist);*/
       break;
     case "qna":
       QnaDao qnaDao = sqlSession.getMapper(QnaDao.class);
