@@ -231,6 +231,7 @@ public class MyClassController {
   
   @PostMapping("/homework/detail")
   public String submitHomeworkDetail(Article article, MultipartFile file1, MultipartFile file2, HttpServletRequest request) {
+    System.out.println(article + "/" + file1 + "/" + file2 + "/" + request);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
    
@@ -247,7 +248,7 @@ public class MyClassController {
     files.add(file1);
     files.add(file2);
     articleInsertService.writeReplyArticle(article, homework, files, request);
-    return"redirect:/myclass/homework/detail?id="+article.getId();
+    return"redirect:/myclass/homework/detail?id=" + article.getOriginal_id();
   }
   
   @GetMapping("/homework/write")
