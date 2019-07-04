@@ -35,6 +35,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM BOARD
     WHERE course_id = #{course_id}
   </select>
+  
+  <select id="selectBoardByCourseId" resultType="kr.or.bit.model.Board">
+  	SELECT ID, BOARD_NAME, BOARDTYPE, COURSE_ID
+  	FROM BOARD
+  	WHERE COURSE_ID=#{course_id} AND BOARDTYPE=#{boardtype};
+  </select>
 </mapper>  
 
 

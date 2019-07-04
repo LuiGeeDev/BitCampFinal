@@ -2,6 +2,8 @@ package kr.or.bit.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.or.bit.model.Board;
 
 /*
@@ -17,4 +19,6 @@ public interface BoardDao {
   void updateBoard(int id);
   
   List<Board> selectMyClassBoard(int course_id);
+  
+  Board selectBoardByCourseId(@Param("course_id")int course_id,@Param("boardtype") int boardType);
 }

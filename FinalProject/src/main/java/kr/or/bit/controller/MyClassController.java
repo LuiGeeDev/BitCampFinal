@@ -18,18 +18,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.bit.dao.BoardDao;
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.GroupDao;
 import kr.or.bit.dao.GroupMemberDao;
 import kr.or.bit.dao.HomeworkDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.ProjectDao;
-import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
+import kr.or.bit.model.Board;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.General;
-import kr.or.bit.model.Homework;
 import kr.or.bit.model.Group;
+import kr.or.bit.model.Homework;
 import kr.or.bit.model.Member;
 import kr.or.bit.model.Project;
 import kr.or.bit.model.ProjectMember;
@@ -224,8 +225,12 @@ public class MyClassController {
   
   @PostMapping("/homework/write")
   public String writeHomeworkArticle(Article article, Date end_date,HttpServletRequest request) {
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    Member member = memberDao.selectMemberByUsername(Helper.userName());
+    int board_id = boardDao.selectBoardByCourseId(member.getCourse_id(), 4).getId();
     article.setUsername(Helper.userName());
-    article.setBoard_id(HOMEWORK_BOARD_ID);
+    article.setBoard_id(board_id);
     Homework homework = new Homework();
     homework.setEnd_date(end_date);
     articleInsertService.writeArticle(article, homework, null, request);
