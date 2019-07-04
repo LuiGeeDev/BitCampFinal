@@ -92,9 +92,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	{call CHANGESTATUS('ARTICLE',#{id})}
   </update>
   <select id="selectHomeworkReplies" resultType="kr.or.bit.model.Article">
-	SELECT * 
-	FROM article 
-	WHERE ORIGINAL_ID = #{article_id} AND ID != #{article_id};
+	  SELECT * 
+	  FROM article 
+	  WHERE ORIGINAL_ID = #{article_id} AND ID != #{article_id};
   </select>
 </mapper>
 <!-- public interface ArticleDao { void insertArticle(Article article); void 

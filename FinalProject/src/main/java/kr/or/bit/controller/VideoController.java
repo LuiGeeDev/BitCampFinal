@@ -64,9 +64,6 @@ public class VideoController {
 
   @PostMapping("/write")
   public String writeVideoArticle(Article article, String url) {
-    /*
-     * 글 쓰기 데이터를 받아서 해당 글의 페이지로 넘겨준다.
-     */
     article.setUsername(Helper.userName());
     article.setBoard_id(VIDEO_BOARD_ID);
     Video video = new Video();

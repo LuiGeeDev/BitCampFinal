@@ -15,24 +15,6 @@ public class Article {
   private int original_id;
   private int level; // default 1
   private int enable; // default 1
-  
-  private String original_filename;
-  private String filename;
-  public String getOriginal_filename() {
-    return original_filename;
-  }
-
-  public void setOriginal_filename(String original_filename) {
-    this.original_filename = original_filename;
-  }
-
-  public String getFilename() {
-    return filename;
-  }
-
-  public void setFilename(String filename) {
-    this.filename = filename;
-  }
 
   private String username;
   private int board_id;
