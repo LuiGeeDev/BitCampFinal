@@ -21,8 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.GroupDao;
 import kr.or.bit.dao.GroupMemberDao;
+import kr.or.bit.dao.HomeworkDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.ProjectDao;
+import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.General;
@@ -186,7 +188,11 @@ public class MyClassController {
   }
   
   @GetMapping("/homework/detail")
-  public String homeworkDetailPage() {
+  public String homeworkDetailPage(Model model) { 
+    Article article = articleService.selectOneArticle("homework", 74);
+    System.out.println(article.toString());
+    model.addAttribute("article", article);
+    
     return "myclass/homework/detail";
   }
   
@@ -194,6 +200,7 @@ public class MyClassController {
   public String submitHomeworkDetail(Article article, MultipartFile file1, MultipartFile file2, HttpServletRequest request) {
     article.setUsername(Helper.userName());
     article.setBoard_id(HOMEWORK_BOARD_ID);
+    article.setTitle("과제제출");
     article.setLevel(2);
     Homework homework = new Homework();
     List<MultipartFile> files = new ArrayList<>();

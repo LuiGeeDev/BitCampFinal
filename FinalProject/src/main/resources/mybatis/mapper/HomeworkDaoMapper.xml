@@ -9,12 +9,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   void updateHomework(String filename);
   
   Homework selectHomeworkByArticleId(int article_id);
+  Homework selectHomeworkByArticleId(int article_id);
  -->
 <mapper namespace="kr.or.bit.dao.HomeworkDao">
 	
   <insert id="insertHomework">
   	insert into homework(end_date, file1, file2, article_id)
-	values (#{end_date},#{file1},#{file2},#{article_id})
+	values (now(),#{file1},#{file2},#{article_id})
   </insert>
   
   <update id="updateHomework">
@@ -22,9 +23,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </update>
   
   <select id="selectHomeworkByArticleId">
-  	select id, issue_closed, article_id, group_id
-  	from troubleshooting 
-  	where id=${id};
+  	select id, end_date, file1, file2, article_id
+	from homework
+	where article_id=#{article_id}
   </select>
   
 </mapper>
