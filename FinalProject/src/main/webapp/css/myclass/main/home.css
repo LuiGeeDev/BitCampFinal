@@ -10,6 +10,13 @@ body {
   margin: 20px;
 }
 
+.moreRow{
+  display: flex;
+}
+.moreLotation{
+ margin-left: auto;
+}
+
 .myclassWrapper {
   margin-top: 2%;
 }
@@ -19,32 +26,32 @@ body {
   flex-direction: column;
   border: 1px solid rgba(0, 0, 0, .125);
   border-radius: 10px;
-  width: 60%;
-  height: 220px;
+  width: 50%;
+  height: 200px;
   padding: 20px;
 }
 
 .recentHomework {
   border: 1px solid rgba(0, 0, 0, .125);
   border-radius: 10px;
-  height: 100px;
+  height: 45%;
   margin-bottom: 20px;
   padding: 10 0 0 20;
   padding: 15px;
 }
 
 .recentHomeworkcontent {
-  font-size: 80%;
+  font-size: 96%;
 }
 
 .recentProjectcontent {
-  font-size: 80%;
+  font-size: 96%;
 }
 
 .recentProject {
   border: 1px solid rgba(0, 0, 0, .125);
   border-radius: 10px;
-  height: 100px;
+  height: 45%;
   padding: 15px;
 }
 
@@ -58,8 +65,8 @@ body {
 .recentBoard {
   display: flex;
   flex-direction: column;
-  width: 25%;
-  margin-left: 2%;
+  width: 35%;
+  margin-left: 1.6%;
 }
 
 .myclassBoard {
@@ -93,3 +100,22 @@ body {
 .recentBoardTitle {
   padding: 5%;  
 }
+.progres {
+  display: flex;
+  flex-direction: row;
+  width:80%
+}
+
+.progres>span {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 5px;
+  border: 1px solid;
+  border-radius: 5px;
+}
+
+.progressview{
+  font-size: 110%;
+}
+
