@@ -11,8 +11,9 @@ body {
 }
 
 #profileimg {
-  width: 180px;
   height: auto;
+  border-radius: 20px;
+  width: 180px;
 }
 
 .title {
@@ -26,72 +27,185 @@ body {
   display: flex;
   flex-direction: row;
   margin: 10px;
+  margin-left: 20px;
 }
 
 .manageContainer {
   display: flex;
   flex-direction: row;
   margin: 10px;
+  height: 640px;
 }
 
 .studentSearchContainer {
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
-  padding: 10px;
   width: 28%;
+  padding: 10px 0px 10px 10px;
 }
 
 .search {
   display: flex;
   flex-direction: row;
-  border: 1px solid black;
+  border: 1px solid rgba(0, 0, 0, .125);
 }
 
 .list {
   display: flex;
   flex-direction: row;
+  margin-top: 10px;
+  height: 600px;
+  border: 1px solid rgba(0, 0, 0, .125);
 }
 
 .profile {
   display: flex;
   flex-direction: row;
+  border: 1px solid rgba(0, 0, 0, .125);
+  margin: 10px;
+  padding: 10px;
 }
 
 .studentDetailContainer {
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
-  width: 73%;
-  margin-left: 1%;
+  width:82%;
 }
 
 .contentWrapper {
-  border: 1px solid skyblue;
+  border: 1px solid white;
   margin: 20px;
   width: 83%;
+  margin-left: 8%;
+  height: 700px;
 }
-.searchTitle{
+
+.searchTitle {
+  width: 35%;
+  text-align: center;
+  border-right: 1px solid rgba(0, 0, 0, .125);
+  background-color: #ECECEC;
+}
+
+.searchTitle div {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.searchTitle div:nth-child(1) {
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+
+.searchContent {
+  width: 65%;
+  text-align: center;
+  position: relative;
+}
+
+.searchContent div {
+  padding-top: 11px;
+  padding-bottom: 9px;
+}
+
+.searchContent div:nth-child(1) {
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+
+.listName {
+  display: flex;
+  width: 34%;
+  text-align: center;
+  border-right: 1px solid rgba(0, 0, 0, .125);
+  flex-direction: column;
+}
+
+.liststate {
+  width: 33%;
+  text-align: center;
+  border-right: 1px solid rgba(0, 0, 0, .125);
+}
+
+.listAttendance {
+  width: 33%;
+  text-align: center;
+}
+
+.profiledetail {
+  display: flex;
+  flex-direction: row;
+}
+
+.profiledetailTitle {
   
 }
-.searchContent{
+
+.profiledetailContent {
   
 }
-.listName{
+
+.detail {
+  border: 1px solid rgba(0, 0, 0, .125);
+  margin: 0 10px 10px 10px;
+}
+
+.detailName {
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
+  padding: 10px;
+}
+
+.detailContent {
+  padding: 10px;
+}
+
+.counseling {
+  border: 1px solid rgba(0, 0, 0, .125);
+  margin: 0 10px 10px 10px;
+}
+
+.counselingName {
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
+  padding: 10px;
+}
+
+.counselingContent {
+  padding: 10px;
+}
+
+.profileimg {
   
 }
-.liststate{
-  
+
+.studentArticle {
+  border: 1px solid rgba(0, 0, 0, .125);
+  margin: 0 10px 10px 10px;
 }
-.listAttendance{
-  
+
+.studentArticleTitle {
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
+  padding: 10px;
 }
-.profiledetail{
-  
+
+.studentArticleContent {
+  padding: 10px;
 }
-.detail{
-  
+
+.selectSize {
+  height: 27%;
+  width: 80%;
 }
-.counseling{
-  
+
+.list div div:nth-child(1) {
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+
+.listSubName {
+  padding: 10px;
+  background-color: #ECECEC;
+}
+
+.selector {
+  word-break: break-all;
+}
+.cardShadow {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
