@@ -44,7 +44,7 @@
         <div class="row">
           <div id="member-list" class="class-member-list">
             <div th:each="student, status : ${memberList}"
-              th:text = "${student.name}"
+              th:text="${student.name}"
               th:id="'student'+${status.count}" class="class-member"
               draggable="true"
               th:attr="data-username=${student.username}"></div>
@@ -239,7 +239,10 @@
           method: "post",
           data: JSON.stringify(project),
           dataType: "json",
-          contentType: "application/json"
+          contentType: "application/json",
+          beforeSend:function(){
+            window.location.href="/myclass/main/home";
+          }
         }).done(function() {
           console.log("성공");
         });
@@ -282,7 +285,7 @@
 		})
 		$("#end-date, #start-date").change(function(){
 		  if($("#end-date").val() !== ""){
-		  if($("#start-date").val() >= $("#end-date").val()){
+		  if($("#end-date").val() < $("#start-date").val()){
 		    $("#end-date").val("");
 		    Swal.fire({
 		      type: 'error',

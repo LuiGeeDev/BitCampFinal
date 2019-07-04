@@ -28,4 +28,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where article_id=#{article_id}
   </select>
   
+  <select id="selectAllHomeworkArticle" resultType="kr.or.bit.model.Article">
+	SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
+	FROM ARTICLE a JOIN BOARD b ON a.board_id = b.id 
+	WHERE LEVEL = 1 AND ENABLE = 1 AND b.board_name = '과제 제출' AND b.course_id = #{course_id};
+  </select>
+  
 </mapper>

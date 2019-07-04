@@ -9,7 +9,7 @@
         <a href="../message.html" th:href="@{/message}">
           <i class="fas fa-envelope fa-lg"></i>
         </a>
-        <span class="count message-count" th:text="${unreadMessage}" th:if="${unreadMessage}">24</span>
+        <span class="count message-count" th:text="${unreadMessages}">24</span>
       </div>
       <a href="../mypage.html" th:href="@{/mypage}">
         <i class="fas fa-user fa-lg"></i>
@@ -18,7 +18,7 @@
         <a data-toggle="popover" data-placement="bottom"
           ><i class="fas fa-bell fa-lg"></i
         ></a>
-        <span class="count noti-count" th:text="${unreadNotice}" th:if="${unreadNotice}">5</span>
+        <span class="count noti-count" th:text="${unreadNotices}">5</span>
       </div>
       <form th:action="@{/logout}" method="post">
         <button type="submit">
@@ -26,22 +26,16 @@
         </button>
       </form>
       <div id="notices">
-        <div class="notice">
-          <h6 class="notice-title">체크리스트</h6>
-          <p class="notice-content">DAO 완성하기</p>
+        <div class="notice no-notice" th:if="${unreadNotices == 0}">
+          <h6 class="notice-title">새 알림이 없습니다</h6>
+          <p class="notice-content">잠시만 기다려보세요.</p>
         </div>
-        <div class="notice">
-          <h6 class="notice-title">체크리스트</h6>
-          <p class="notice-content">DAO 완성하기</p>
-        </div>
-        <div class="notice">
-          <h6 class="notice-title">체크리스트</h6>
-          <p class="notice-content">DAO 완성하기</p>
-        </div>
-        <div class="notice">
-          <h6 class="notice-title">체크리스트</h6>
-          <p class="notice-content">DAO 완성하기</p>
-        </div>
+        <a class="notice-link" href="${notice.link}" th:each="notice : ${allNotices}">
+          <div class="notice">
+            <h6 class="notice-title" th:text="${notice.title}"></h6>
+            <p class="notice-content" th:text="${notice.content}"></p>
+          </div>
+        </a>
       </div>
     </div>
     <div class="toast-wrapper" aria-live="polite" aria-atomic="true" th:fragment="toast">

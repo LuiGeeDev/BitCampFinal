@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.MessageDao;
+import kr.or.bit.dao.NotificationDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.ChatMessage;
 import kr.or.bit.model.Classroom;
@@ -44,7 +46,7 @@ public class AjaxController {
 
   @Autowired
   private ArticleVoteService articleVoteService;
-  
+
   @Autowired
   private ArticleDeleteService articleDeleteService;
 
@@ -84,7 +86,6 @@ public class AjaxController {
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
     messageDao.deleteMessage(id);
     return "redirect:/message";
-
   }
 
   @PostMapping("/message/reply")
@@ -100,7 +101,6 @@ public class AjaxController {
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
     messageDao.updateMessageChecked(id);
     return "redirect:/message";
-
   }
 
   @PostMapping("/classroom")
@@ -121,7 +121,14 @@ public class AjaxController {
     List<Article> list = articleService.selectArticlesOnNextPage(article_id);
     return list;
   }
-  
+
+  @GetMapping("/notification/checked")
+  public void notificationChecked() {
+    NotificationDao notificationDao = sqlSession.getMapper(NotificationDao.class);
+    String username = Helper.userName();
+    notificationDao.checkAllNotification(username);
+  }
+
   @PostMapping("/general/delete")
   public String generalBoardDelete(int articleId) {
     System.out.println("delete 타고있냐?");
@@ -129,9 +136,4 @@ public class AjaxController {
     articleDeleteService.deleteArticle(articleId, boardOption);
     return "redirect:/general/generalBoard";
   }
-  
-  
-  
-  
-  
 }

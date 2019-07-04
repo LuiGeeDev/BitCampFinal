@@ -184,6 +184,14 @@ public class MyClassController {
   public String homework(Model model) {
 //    List<Article> homeworkList = articleService.selectAllArticle("homework", HOMEWORK_BOARD_ID);
 //    model.addAttribute("homeworkList", homeworkList);
+    String username = Helper.userName();
+    
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
+    Member member = memberDao.selectMemberByUsername(username);
+    System.out.println(homeworkDao.selectAllHomeworkArticle(member.getCourse_id()) + "1111111111111");
+    model.addAttribute("homeworkList", homeworkDao.selectAllHomeworkArticle(member.getCourse_id()));
+    
     return "myclass/homework/list";
   }
   
