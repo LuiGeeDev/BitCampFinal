@@ -54,6 +54,30 @@ public class BoardController {
     return null;
   }
 
+  @GetMapping("/write")
+  public String writePage(int board_id, Model model) {
+    model.addAttribute("board_id", board_id);
+    return "myclass/general/write";
+  }
+
+  @PostMapping("/write")
+  public String writeArticle(Article article, List<MultipartFile> files) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
+    GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
+
+    /*
+    Article INSERT
+    파일 INSERT
+    new General(),
+    General에 file ID 삽입
+    General INSERT
+    Article SELECT
+    */
+
+    return "redirect:/myclass/board/read?article_id=" + article.getId();
+  }
+
   @GetMapping("/read")
   public String readArticle(int article_id, Model model) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
@@ -75,8 +99,7 @@ public class BoardController {
   }
 
   @GetMapping("/update")
-  public String updatePage(int article_id, Model model) {
-    
+  public String updatePage(int article_id, Model model) {    
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
     GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
@@ -102,7 +125,7 @@ public class BoardController {
   }
 
   @PostMapping("/update")
-  public String updateArticle(Article article, General general, List<MultipartFile> files) {
+  public String updateArticle(Article article, List<MultipartFile> files) {
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     Board board = boardDao.selectBoardById(article.getBoard_id());
 
