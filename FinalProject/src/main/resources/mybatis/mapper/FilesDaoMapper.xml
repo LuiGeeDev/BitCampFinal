@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     where filename=#{filename}
   </select>
   
-  <select id="selectFileById" resultType="kr.or.bit.model.Files">
+  <select id="selectFilesById" resultType="kr.or.bit.model.Files">
   select filename
   from files
   where id=#{id}
