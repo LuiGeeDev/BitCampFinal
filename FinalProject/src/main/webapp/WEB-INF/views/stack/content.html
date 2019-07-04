@@ -82,17 +82,44 @@
     <td class="td3"><img th:src="@{/css/stack/profile2.png}" class="profileImg"></td>
     <td>
     [[${list.username}]]</span>
-    <a th:href="@{/stack/commentdelete(id=${list.id})}">[삭제]</a><br>
+    <a th:href="@{/stack/commentdelete(id=${list.id})}" id="commentdelete">[삭제]</a><br>
     <span class="commentCalender">[[${list.updated_time}]]</span></td>
     <td class="td7"></td>
     </tr>
     <tr>
     <td colspan="2" class="td6">[[${list.content}]]</span></td>
-    <td></td>
+    <td><input type="hidden" id="hidden" value="${list.id}"></td>
     </tr>
     </table>
 
+
   </div>
+  <script>
+  $("#commentdelete").click(function(event){
+    const commentId = $('#hidden').val();
+    
+    $.ajax({
+      url: "/stack/commentdelete",
+      type: "POST",
+      data: {
+        id: commentId
+      },
+      success: function(data) {
+        Swal.fire({
+          	title: '삭제되었습니다',
+          	type: 'success',
+          	confirmButtonText: '확인',
+          	confirmButtonColor: '#F39B10'
+            
+        }).then(function() {
+            location.href = "/stack/home";
+          });
+        
+      }
+    });
+    
+  });
+  </script>
 <script src="/js/stack/content.js"></script>
 <script src="jquery-3.4.1.min.js"></script>
 </body>

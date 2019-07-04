@@ -1,27 +1,28 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
-<head>
-<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-<link rel="stylesheet" th:href="@{/css/home.css}" />
-<link rel="stylesheet"
-  th:href="@{/css/myclass/general/generalDetail.css}" />
-</head>
-<body>
-  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
-  <div class="main" th:fragment="main">
-    <div class="spinner-border text-warning spin-where" role="status"
-      id="spinner">
-      <span class="sr-only">Loading...</span>
-    </div>
-    <div class="detail-container">
-      <div class="detail-head">
-        <span class="detail-title" th:text="${list.title}"></span>
-        <div class="detail-subtitle">
-          <span th:text="${list.username}"></span>&nbsp;| &nbsp; <span
-            th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd')}"></span>&nbsp;|
-          조회수 &nbsp; <span th:text="${list.view_count}"></span>&nbsp;| <span>댓글수
-            넣어야함</span>&nbsp;|
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+    <link rel="stylesheet" th:href="@{/css/home.css}" />
+    <link rel="stylesheet" th:href="@{/css/myclass/general/generalDetail.css}" />
+  </head>
+  <body>
+    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+    <div class="main" th:fragment="main">
+    <div class="spinner-border text-warning spin-where"
+          role="status" id="spinner">
+          <span class="sr-only">Loading...</span>
+        </div>
+      <div class="detail-container">
+        <div class="detail-head">
+          <span class="detail-title" th:text="${list.title}"></span>
+          <div class="detail-subtitle">
+            <span th:text="${list.username}"></span>&nbsp;| &nbsp;
+            <span th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd')}"></span>&nbsp;| 조회수 &nbsp;
+            <span th:text="${list.view_count}" class="pointOrange"></span>&nbsp;|댓글수&nbsp;
+            <span th:text="${list.commentlist.size()}" class="pointOrange2"></span>&nbsp;|
           <div class="btn-group">
 
             <input type="submit" id="updatebtn"
@@ -32,12 +33,44 @@
               class="btn btn-primary btn-align" value="목록">
 
           </div>
+        
+        </div>
+        <div class="detail-content" th:text="${list.content}">  
+            
         </div>
 
       </div>
-      <div class="detail-content">안녕하세요 오늘도 행복한 하루되세요</div>
-      <div th:text="${list.files[0]}"></div>
-      <div th:text="${list.files[1]}"></div>
+      
+      <div class="detail-comment">
+          
+            <span class="userIcon">
+                <i class="fas fa-user-circle fa-lg"></i>
+            </span>
+            <span class="writerName" th:text="${user.name}"></span>
+          <form th:action="@{/general/commentwrite(id=${list.id})}" method="POST">
+          <input type="text" name="content" id="content" class="comment-text" placeholder="댓글을 입력하세요">
+          <input type="submit" class="btn btn-primary detail-btn" value="등록">
+          </form>
+        </div>
+        
+         <div class="content-reply-form">
+              <div class="content-reply" th:if="${list.commentlist.size()} > 0"
+                                         th:each="comlist : ${list.commentlist}">
+              <div class="content-move">
+                <span class="userIcon"><i class="fas fa-user-circle fa-lg"></i></span>
+                <span class="writerName" th:text="${comlist.username}"></span>
+                <a th:href="@{/general/commentdelete(id=${comlist.id})}">[삭제]</a>
+                <span class="write-date" th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
+                </div>
+            <div class="content-comment" th:text="${comlist.content}"></div>
+            </div>
+             <div th:if="${list.commentlist.size()} == 0" class="noComment">
+               등록된 댓글이 없습니다
+               </div>    
+            
+        </div>
+    
+    
     </div>
 
     <div class="detail-comment">
