@@ -1,5 +1,6 @@
 package kr.or.bit.model;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -18,7 +19,6 @@ public class Article {
   private int enable; // default 1
   private String username;
   private int board_id;
-
   private LocalDateTime timeLocal;
   private LocalDateTime updatedTimeLocal;
   private Member writer;
@@ -28,6 +28,15 @@ public class Article {
   private Map<String, Integer> vote;
   private int votenum;
   private int vote_count;
+  private List<Files> fileslist;
+
+  public List<Files> getFileslist() {
+    return fileslist;
+  }
+
+  public void setFileslist(List<Files> fileslist) {
+    this.fileslist = fileslist;
+  }
 
   public int getId() {
     return id;
