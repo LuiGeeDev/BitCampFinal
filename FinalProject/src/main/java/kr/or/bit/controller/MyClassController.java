@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.GroupDao;
 import kr.or.bit.dao.GroupMemberDao;
+import kr.or.bit.dao.HomeworkDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.ProjectDao;
 import kr.or.bit.model.Article;
@@ -182,6 +183,14 @@ public class MyClassController {
   public String homework(Model model) {
 //    List<Article> homeworkList = articleService.selectAllArticle("homework", HOMEWORK_BOARD_ID);
 //    model.addAttribute("homeworkList", homeworkList);
+    String username = Helper.userName();
+    
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
+    Member member = memberDao.selectMemberByUsername(username);
+    System.out.println(homeworkDao.selectAllHomeworkArticle(member.getCourse_id()) + "1111111111111");
+    model.addAttribute("homeworkList", homeworkDao.selectAllHomeworkArticle(member.getCourse_id()));
+    
     return "myclass/homework/list";
   }
   
