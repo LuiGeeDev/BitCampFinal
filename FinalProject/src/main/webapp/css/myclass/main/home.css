@@ -25,17 +25,17 @@ body {
   display: flex;
   flex-direction: column;
   border: 1px solid rgba(0, 0, 0, .125);
-  border-radius: 10px;
-  width: 50%;
+  border-radius: 8px;
+  width: 51%;
   height: 200px;
   padding: 20px;
 }
 
 .recentHomework {
   border: 1px solid rgba(0, 0, 0, .125);
-  border-radius: 10px;
-  height: 45%;
-  margin-bottom: 20px;
+  border-radius: 8px;
+  height: 46.5%;
+  margin-bottom: 2.7%;
   padding: 10 0 0 20;
   padding: 15px;
 }
@@ -50,8 +50,8 @@ body {
 
 .recentProject {
   border: 1px solid rgba(0, 0, 0, .125);
-  border-radius: 10px;
-  height: 45%;
+  border-radius: 8px;
+  height: 46.5%;
   padding: 15px;
 }
 
@@ -59,14 +59,14 @@ body {
   display: flex;
   flex-direction: row;
   margin-left: 8%;
-  margin-bottom: 20px;
+  margin-bottom: 0.8%;
 }
 
 .recentBoard {
   display: flex;
   flex-direction: column;
   width: 35%;
-  margin-left: 1.6%;
+  margin-left: 0.8%;
 }
 
 .myclassBoard {
@@ -74,6 +74,8 @@ body {
   border-radius: 10px;
   margin-left: 8%;
   width: 80%;
+  padding: 20px;
+  margin-bottom: 0.8%;
 }
 
 .cardshadow {
@@ -85,21 +87,6 @@ body {
   color: gray;
 }
 
-.myclassBoard {
-  padding: 20px;
-}
-
-.recentBoardContent {
-  padding: 10%; 
-}
-
-.recentBoardwrtier {
-  padding: 15%;
-}
-
-.recentBoardTitle {
-  padding: 5%;  
-}
 .progres {
   display: flex;
   flex-direction: row;
@@ -119,3 +106,61 @@ body {
   font-size: 110%;
 }
 
+.myclassBoardTag{
+  display:flex;
+  flex-direction: column;
+  margin: 10px;
+  margin-right: 7%;
+  text-align: center;
+  margin-left: 5%;
+}
+
+.TitleStyle{
+  font-size: 120%;
+  text-decoration: underline;
+}
+
+.myclassBoardTitle{
+  display:flex;
+  flex-direction: column;
+  margin: 10px;
+  margin-right: 12%;
+  text-align: center;
+}
+
+.myclassBoardWriter{
+  display:flex;
+  flex-direction: column;
+  margin: 10px;
+  margin-right: 7%;
+  text-align: center;
+}
+
+.myclassBoardDate{
+  display:flex;
+  flex-direction: column;
+  margin: 10px;
+  margin-right: 7%;
+  text-align: center;
+}
+.myclassBoardVote{
+  display:flex;
+  flex-direction: column;
+  margin: 10px;
+  text-align: center;
+}
+.myclassTitle{
+
+}
+.myclassContent{
+  display: flex;
+  flex-direction: row;
+}
+.CalendarCard{
+  border: 1px solid rgba(0, 0, 0, .125);
+  border-radius: 10px;
+  margin-left: 8%;
+  width: 80%;
+  padding: 20px;
+  background-color: white;
+}
