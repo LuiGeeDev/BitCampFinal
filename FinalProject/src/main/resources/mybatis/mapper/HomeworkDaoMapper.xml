@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	{call CHANGE("troubleshooting", ${id})}
   </update>
   
-  <select id="selectHomeworkByArticleId">
+  <select id="selectHomeworkByArticleId" resultType="kr.or.bit.model.Homework">
   	select id, end_date, file1, file2, article_id
 	from homework
 	where article_id=#{article_id}
