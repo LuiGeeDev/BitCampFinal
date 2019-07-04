@@ -30,7 +30,7 @@
           class="board-count">조회</span>
       </div>
       <th:block th:each="homeworkList : ${homeworkList}">
-      <a href="/myclass/homework/detail?id=${homeworkList.id}"  class="article">
+      <a th:href="@{/myclass/homework/detail(id=${homeworkList.id})}"  class="article">
         <div class="board-content">
           <span class="title" th:text="${homeworkList.title}">주말 개인과제</span> <span class="writer" th:text="${homeworkList.username}">임경균
             강사님</span> <span class="write-time" th:text="${homeworkList.time}">2019.07.01</span> <span
