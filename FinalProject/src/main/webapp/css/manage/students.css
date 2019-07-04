@@ -4,36 +4,213 @@ body {
   font-family: 'Nanum Gothic';
 }
 
+#searchimg {
+  width: auto;
+  height: 28px;
+  margin-left: 8px;
+}
+
+#profileimg {
+  height: auto;
+  border-radius: 20px;
+  width: 180px;
+}
+
 .title {
   font-size: 190%;
   margin: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
-table {
-  margin-left: 10%;
-  margin-right: 10%;
+.searchContainer {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+  margin-left: 20px;
+}
+
+.manageContainer {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+  height: 640px;
+}
+
+.studentSearchContainer {
+  display: flex;
+  flex-direction: column;
+  width: 28%;
+  padding: 10px 0px 10px 10px;
+  margin-right: 10px;
+}
+
+.search {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid rgba(0, 0, 0, .125);
+}
+
+.list {
+  display: flex;
+  flex-direction: row;
+  margin-top: 19px;
+  height: 600px;
+  border: 1px solid rgba(0, 0, 0, .125);
+}
+
+.profile {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid rgba(0, 0, 0, .125);
+  margin: 10px;
+  padding: 10px;
+  margin-bottom: 19px;
+}
+
+.studentDetailContainer {
+  display: flex;
+  flex-direction: column;
+  width:82%;
+}
+
+.contentWrapper {
+  border: 1px solid white;
+  margin: 20px;
+  width: 83%;
+  margin-left: 8%;
+  height: 700px;
+}
+
+.searchTitle {
+  width: 35%;
+  text-align: center;
+  border-right: 1px solid rgba(0, 0, 0, .125);
+  background-color: #ECECEC;
+}
+
+.searchTitle div {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.searchTitle div:nth-child(1) {
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+
+.searchContent {
+  width: 65%;
+  text-align: center;
+  position: relative;
+}
+
+.searchContent div {
+  padding-top: 11px;
+  padding-bottom: 9px;
+}
+
+.searchContent div:nth-child(1) {
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+
+.listName {
+  display: flex;
+  width: 34%;
+  text-align: center;
+  border-right: 1px solid rgba(0, 0, 0, .125);
+  flex-direction: column;
+}
+
+.liststate {
+  width: 33%;
+  text-align: center;
+  border-right: 1px solid rgba(0, 0, 0, .125);
+}
+
+.listAttendance {
+  width: 33%;
+  text-align: center;
+}
+
+.profiledetail {
+  display: flex;
+  flex-direction: row;
+}
+
+.profiledetailTitle {
+  
+}
+
+.profiledetailContent {
+  
+}
+
+.detail {
+  border: 1px solid rgba(0, 0, 0, .125);
+  margin: 0 10px 10px 10px;
+  margin-bottom: 19px;
+}
+
+.detailName {
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
+  padding: 10px;
+}
+
+.detailContent {
+  padding: 10px;
+}
+
+.counseling {
+  border: 1px solid rgba(0, 0, 0, .125);
+  margin: 0 10px 10px 10px;
+  margin-bottom: 19px;
+}
+
+.counselingName {
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
+  padding: 10px;
+}
+
+.counselingContent {
+  padding: 10px;
+}
+
+.profileimg {
+  
+}
+
+.studentArticle {
+  border: 1px solid rgba(0, 0, 0, .125);
+  margin: 0 10px 10px 10px;
+  margin-bottom: 19px;
+}
+
+.studentArticleTitle {
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
+  padding: 10px;
+}
+
+.studentArticleContent {
+  padding: 10px;
+}
+
+.selectSize {
+  height: 27%;
   width: 80%;
-  border: 1px solid white;
-  border-collapse: collapse;
 }
 
-th, td {
-  border: 1px solid white;
+.list div div:nth-child(1) {
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
 }
-.row{
-    display: flex;
-    flex-direction: row;
-  
+
+.listSubName {
+  padding: 10px;
+  background-color: #ECECEC;
 }
-.flex_container1{
-  display: flex;
-  flex-direction: column;
-  
+
+.selector {
+  word-break: break-all;
 }
-.flex_c1_item1{
-  overflow: auto;
-}
-.flex_container2{
-  display: flex;
-  flex-direction: column;
+.cardShadow {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }

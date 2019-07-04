@@ -17,23 +17,23 @@
         </div>
       <div class="detail-container">
         <div class="detail-head">
-          <span class="detail-title">???</span>
+          <span class="detail-title" th:text="${list.title}"></span>
           <div class="detail-subtitle">
-            <span th:text="${list.username}">&nbsp;</span>|
-            <span>&nbsp;2019-07-02&nbsp;</span>| 조회수
-            <span>0&nbsp;</span>| 댓글
-            <span>2&nbsp;</span>|
+            <span th:text="${list.username}"></span>&nbsp;| &nbsp;
+            <span th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd')}"></span>&nbsp;| 조회수 &nbsp;
+            <span th:text="${list.view_count}" class="pointOrange"></span>&nbsp;|댓글수&nbsp;
+            <span th:text="${list.commentlist.size()}" class="pointOrange2"></span>&nbsp;|
           <div class="btn-group">
-          <form action="" method="">
+          
             <input type="submit" id="updatebtn"class="btn btn-primary btn-align" value="수정">
             <input type="submit" id="deletebtn" class="btn btn-primary btn-align" value="삭제">
             <input type="submit" id="listbtn" class="btn btn-primary btn-align" value="목록">
-            </form>
+           
           </div>
           </div>
         </div>
-        <div class="detail-content">  
-            안녕하세요 오늘도 행복한 하루되세요
+        <div class="detail-content" th:text="${list.content}">  
+            
         </div>
       </div>
       
@@ -42,24 +42,28 @@
             <span class="userIcon">
                 <i class="fas fa-user-circle fa-lg"></i>
             </span>
-            <span class="writerName">정성윤</span>
-            
-          <form action="" method="">
-          <input type="text" name="content" id="content" class="comment-text">
+            <span class="writerName" th:text="${user.name}"></span>
+          <form th:action="@{/general/commentwrite(id=${list.id})}" method="POST">
+          <input type="text" name="content" id="content" class="comment-text" placeholder="댓글을 입력하세요">
           <input type="submit" class="btn btn-primary detail-btn" value="등록">
           </form>
         </div>
         
          <div class="content-reply-form">
-              <div class="content-reply">
+              <div class="content-reply" th:if="${list.commentlist.size()} > 0"
+                                         th:each="comlist : ${list.commentlist}">
               <div class="content-move">
                 <span class="userIcon"><i class="fas fa-user-circle fa-lg"></i></span>
-                <span class="writerName">정성윤</span>
-                <a href = "">[삭제]</a>
-                <span class="write-date">2019.10.16</span>
+                <span class="writerName" th:text="${comlist.username}"></span>
+                <a th:href="@{/general/commentdelete(id=${comlist.id})}">[삭제]</a>
+                <span class="write-date" th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
                 </div>
-            <div class="content-comment">이것은 내용입니다</div>
+            <div class="content-comment" th:text="${comlist.content}"></div>
             </div>
+             <div th:if="${list.commentlist.size()} == 0" class="noComment">
+               등록된 댓글이 없습니다
+               </div>    
+            
         </div>
     
     
@@ -77,6 +81,8 @@
       $("#spinner").hide();
     });
     	$("#deletebtn").click(function(event) {
+    	  let articleId = [[${list.id}]];
+    	  console.log(articleId);
     	  event.preventDefault();
         Swal.fire({
           title: '정말 삭제하시겠습니까?',
@@ -88,16 +94,38 @@
           cancelButtonText: '아니요'
         }).then((result) => {
           if (result.value) {
-                Swal.fire({
-                  	title: '삭제되었습니다',
-                  	type: 'success',
-                  	confirmButtonText: '확인',
-                  	confirmButtonColor: '#F39B10'
-                }).then(() => {
+                  $.ajax({
+                    url: "/ajax/general/delete",
+                    type: "POST",
+                    data: {
+                      id: articleId
+                    },
+                    success: function(data) {
+                      Swal.fire({
+                        	title: '삭제되었습니다',
+                        	type: 'success',
+                        	confirmButtonText: '확인',
+                        	confirmButtonColor: '#F39B10'
+                      }).then(function() {
+                        location.href = "/general/generalBoard";
+                      });
+                      
+                    }
+                  });
                   
-                });
+               
           }
         })
+    	});
+    	
+    	$("#listbtn").click(function() {
+    	  location.href = "/general/generalBoard";
+    	});
+    	
+    	$("#updatebtn").click(function() {
+    	  location.href = "/general/edit?id="+[[${list.id}]];
+    	  
+    	  /* th:href="@{/video/edit(id=${article.id},video_id=${article.option.video_id})}" */
     	});
     
     

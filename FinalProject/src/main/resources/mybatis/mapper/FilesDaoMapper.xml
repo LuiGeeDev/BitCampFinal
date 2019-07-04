@@ -36,5 +36,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     from files
     where filename=#{filename}
   </select>
+
 </mapper>
 

@@ -1,7 +1,5 @@
 package kr.or.bit.dao;
 
-import org.apache.ibatis.annotations.Param;
-
 import kr.or.bit.model.ArticleOption;
 import kr.or.bit.model.Video;
 

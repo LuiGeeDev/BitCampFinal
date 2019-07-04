@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
-import kr.or.bit.model.Member;
 
 /*
 *
