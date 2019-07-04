@@ -21,7 +21,7 @@ public class FileUploadService {
     String originalFilename = file.getOriginalFilename();
     String filenameOnServer = Helper.userName() + System.currentTimeMillis() + originalFilename;
     String fileDirectory = "/files/" + LocalDate.now().getYear() + "/" + LocalDate.now().getMonthValue() + "/"
-        + LocalDate.now().getDayOfMonth() + "/";
+        + LocalDate.now().getDayOfMonth();
     String filepath = fileDirectory + filenameOnServer;
     String realPath = request.getServletContext().getRealPath(fileDirectory);
     new File(realPath).mkdirs();
@@ -45,7 +45,7 @@ public class FileUploadService {
         System.out.println(originalFilename.trim());
         String filenameOnServer = Helper.userName() + System.currentTimeMillis() + originalFilename;
         String fileDirectory = "/files/" + LocalDate.now().getYear() + "/" + LocalDate.now().getMonthValue() + "/"
-            + LocalDate.now().getDayOfMonth() + "/";
+            + LocalDate.now().getDayOfMonth();
         String filepath = fileDirectory + filenameOnServer;
         String realPath = request.getServletContext().getRealPath(fileDirectory);
         new File(realPath).mkdirs();

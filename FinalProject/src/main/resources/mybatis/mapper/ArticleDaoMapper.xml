@@ -39,9 +39,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   <select id="selectOneArticle"
     resultType="kr.or.bit.model.Article">
-    SELECT a.id, a.title, a.content, a.time, a.view_count, a.original_id, a.level, a.username,
-    a.board_id, (SELECT COUNT(*) FROM ARTICLE_VOTE WHERE article_id=#{id}) as "vote_Count", a.updated_time, m.name 
-    FROM ARTICLE a JOIN MEMBER m ON a.username = m.username
+    SELECT id, title, content, time, view_count, original_id, level, username,
+    board_id, (SELECT COUNT(*) FROM ARTICLE_VOTE WHERE article_id=#{id}) as "vote_Count", updated_time 
+    FROM ARTICLE
     WHERE ID=#{id};
   </select>
   <insert id="insertArticle">
@@ -91,11 +91,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <update id="updateEnable">
   	{call CHANGESTATUS('ARTICLE',#{id})}
   </update>
-  <select id="selectHomeworkReplies" resultType="kr.or.bit.model.Article">
-	  SELECT * 
-	  FROM article 
-	  WHERE ORIGINAL_ID = #{article_id} AND ID != #{article_id};
-  </select>
 </mapper>
 <!-- public interface ArticleDao { void insertArticle(Article article); void 
   updateArticle(Article article); void deleteArticle(int id); List<Article> 

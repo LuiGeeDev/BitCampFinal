@@ -8,95 +8,93 @@
 <body>
   <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
   <div class="main" th:fragment="main">
-    <div class="Wrapper">
-      <div class="title">
-        <h3>
-          <b>학생관리페이지</b>
-        </h3>
-      </div>
-      <hr>
-      <div class="contentWrapper">
-      <div class="searchContainer">
-        <span> <select size="1" style="height: 27px; width: 100px;">
-            <option value="1" selected>통합검색</option>
-            <option value="2">이름</option>
-            <option value="3">직급</option>
-            <option value="4">나이</option>
-        </select> <input type="text" name="studentsearch"
-          placeholder="검색내용을 적어주세요"><img
-          th:src="@{/css/stack/search.png}" id="searchimg" />
-        </span>
-      </div>
-      <div class="manageContainer">
-        <div class="studentSearchContainer">
-          <div class="search">
-            <div class="searchTitle">
-            <div>수강반</div>
-            <div>학생구분</div>
-            <div>출결상태</div>
-            </div>
-            <div class="searchContent">
-            <div>당일 수업반</div>
-            <div>전체</div>
-            <div>전체</div>
-            </div>
-          </div>
-          <div class="list">
-            <div class="listName">
-            <div>학생명</div>
-            <div>아이유</div>
-            <div>정성윤</div>
-            <div>권순조</div>
-            <div>이힘찬</div>
-            <div>복다빈</div>
-            <div>윤종석</div>
-            <div>피카츄</div>
-            <div>루이지</div>
-            </div>
-            <div class="liststate">
-            <div>학생구분</div>
-            <div>졸업</div>
-            <div>졸업</div>
-            <div>중퇴</div>
-            <div>중퇴</div>
-            <div>수강중</div>
-            <div>수강중</div>
-            <div>중퇴</div>
-            <div>수강중</div>
-            </div>
-            <div class="listAttendance">
-            <div>출결상태</div>
-            <div>미등원</div>
-            <div>미등원</div>
-            <div>미등원</div>
-            <div>미등원</div>
-            <div>등원</div>
-            <div>미등원</div>
-            <div>미등원</div>
-            <div>미등원</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="studentDetailContainer">
-          <div class="profile">
-          <div class="profileimg">
-          <img th:src="@{/css/stack/profile.jpg}" id="profileimg" >
-          </div>
-          <div class="profiledetail">
-            이름,나이 등등 설명하는 페이지입니다~~~
-          </div>
-          </div>
-          <div class="detail">
-            이학생이 무슨글을 썼고 그런걸 보여주는 페이지임
-          </div>
-          <div class="counseling">
-          상담 상황을 보여주는 페이지임
-          </div>
-          </div>
-        </div>
-      </div>
+    <div class="title">
+      <h3>
+        <b>학생관리페이지</b>
+      </h3>
     </div>
+    <hr>
+    <div>
+      <span> <select size="1">
+          <option value="1" selected>이름</option>
+          <option value="2">직급</option>
+          <option value="3">나이</option>
+      </select> <input type="text" name="studentsearch" placeholder="검색내용을 적어주세요">
+        <!-- <img th:src="@{/css/stack/search.png}" /> -->
+      </span>
+    </div>
+    <div class="row">
+    <div class="flex_container1">
+      <div class="flex_c1_item1">
+          <table>
+            <tr>
+              <td>수강반</td>
+              <td>UI/UX 개발자 양성과정</td>
+            </tr>
+            <tr>
+              <td>학생 구분</td>
+              <td>수강중</td>
+            </tr>
+            <tr>
+              <td>당일 출결</td>
+              <td>등원</td>
+            </tr>
+          </table>
+        </div>
+        <div class="flex_c1_item1">
+          <table>
+            <tr>
+              <td>학생명</td>
+              <td>학생 구분</td>
+              <td>출결 상태</td>
+            </tr>
+            <tr>
+              <td>권순조</td>
+              <td>중퇴</td>
+              <td>미등원</td>
+            </tr>
+            <tr>
+              <td>정성윤</td>
+              <td>중퇴</td>
+              <td>미등원</td>
+            </tr>
+            <tr>
+              <td>윤종석</td>
+              <td>수강중</td>
+              <td>등원</td>
+            </tr>
+          </table>
+        </div>
+    </div>
+    
+    
+    <div class="flex_container2">
+        <div class="flex_c1_item1">
+          <table>
+            <tr>
+              <td>학생명</td>
+              <td>학생 구분</td>
+              <td>출결 상태</td>
+            </tr>
+            <tr>
+              <td>권순조</td>
+              <td>중퇴</td>
+              <td>미등원</td>
+            </tr>
+            <tr>
+              <td>정성윤</td>
+              <td>중퇴</td>
+              <td>미등원</td>
+            </tr>
+            <tr>
+              <td>윤종석</td>
+              <td>수강중</td>
+              <td>등원</td>
+            </tr>
+          </table>
+        </div>
+    </div>
+  </div>
   </div>
   <script src="/js/qna/content.js"></script>
   <script src="jquery-3.4.1.min.js"></script>
