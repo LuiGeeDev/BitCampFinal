@@ -24,7 +24,6 @@ import kr.or.bit.model.Files;
 import kr.or.bit.model.General;
 import kr.or.bit.utils.Helper;
 
-@Controller
 @RequestMapping("/myclass/board")
 public class BoardController {
   private final int GENERAL_BOARD = 3;
