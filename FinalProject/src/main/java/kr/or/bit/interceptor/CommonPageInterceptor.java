@@ -23,22 +23,20 @@ public class CommonPageInterceptor extends HandlerInterceptorAdapter {
   
   @Override
   public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-      ModelAndView mav) throws Exception {
-    
+      ModelAndView mav) throws Exception {    
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
     NotificationDao notificationDao = sqlSession.getMapper(NotificationDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     
     String username = Helper.userName();
     
-    List<Message> unreadMessages = messageDao.selectUnreadMessage(username);
-    List<Notification> unreadNotices = notificationDao.selectAllNewNotification(username);
-    
-    int unreadMessage = unreadMessages.size();
-    int unreadNotice = unreadNotices.size();
+    int unreadMessages = messageDao.selectUnreadMessage(username).size();
+    int unreadNotices = notificationDao.selectAllNewNotification(username).size();
+    List<Notification> allNotices = notificationDao.selectAllNotification(username);
     
     request.setAttribute("user", memberDao.selectMemberByUsername(username));
-    request.setAttribute("unreadMessage", unreadMessage);
-    request.setAttribute("unreadNotice", unreadNotice);
+    request.setAttribute("allNotices", allNotices);
+    request.setAttribute("unreadMessages", unreadMessages);
+    request.setAttribute("unreadNotices", unreadNotices);
   }
 }

@@ -13,6 +13,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  -->
  
 <mapper namespace="kr.or.bit.dao.FilesDao">
+  <select id="selectFilesById">
+    SELECT id, filename, original_filename
+    FROM files
+    WHERE id = #{id}
+  </select>
   <insert id="insertFiles">
     insert into files(original_filename, filename)
     values(#{original_filename}, #{filename})

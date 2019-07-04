@@ -16,12 +16,10 @@ import kr.or.bit.utils.Helper;
 
 @Controller
 public class MessageController {
-  
-  
   @Autowired
   private SqlSession SqlSession;
   
-  @GetMapping("message")
+  @GetMapping("/message")
   public String messageIndex(Model model) {
     /*String receiver_username = "teacher";*/
     String username = Helper.userName();
@@ -34,9 +32,6 @@ public class MessageController {
     
     model.addAttribute("selectall", selectall);
     model.addAttribute("countmessage", countmessage);
-    return "myclass/message/message";
+    return "message/message";
   }
-  
- 
-  
 }

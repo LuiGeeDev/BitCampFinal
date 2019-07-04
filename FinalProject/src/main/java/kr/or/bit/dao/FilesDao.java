@@ -11,4 +11,6 @@ public interface FilesDao {
   void deleteFiles(int id);
   
   int selectFilesByFilename(String filename);
+
+  Files selectFilesById(int id);
 }

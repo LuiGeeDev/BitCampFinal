@@ -18,16 +18,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.bit.dao.BoardDao;
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.GroupDao;
 import kr.or.bit.dao.GroupMemberDao;
+import kr.or.bit.dao.HomeworkDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.ProjectDao;
 import kr.or.bit.model.Article;
+import kr.or.bit.model.Board;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.General;
-import kr.or.bit.model.Homework;
 import kr.or.bit.model.Group;
+import kr.or.bit.model.Homework;
 import kr.or.bit.model.Member;
 import kr.or.bit.model.Project;
 import kr.or.bit.model.ProjectMember;
@@ -182,11 +185,22 @@ public class MyClassController {
   public String homework(Model model) {
 //    List<Article> homeworkList = articleService.selectAllArticle("homework", HOMEWORK_BOARD_ID);
 //    model.addAttribute("homeworkList", homeworkList);
+    String username = Helper.userName();
+    
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
+    Member member = memberDao.selectMemberByUsername(username);
+    model.addAttribute("homeworkList", homeworkDao.selectAllHomeworkArticle(member.getCourse_id()));
+    
     return "myclass/homework/list";
   }
   
   @GetMapping("/homework/detail")
-  public String homeworkDetailPage() {
+  public String homeworkDetailPage(Model model) { 
+    Article article = articleService.selectOneArticle("homework", 74);
+    System.out.println(article.toString());
+    model.addAttribute("article", article);
+    
     return "myclass/homework/detail";
   }
   
@@ -194,6 +208,7 @@ public class MyClassController {
   public String submitHomeworkDetail(Article article, MultipartFile file1, MultipartFile file2, HttpServletRequest request) {
     article.setUsername(Helper.userName());
     article.setBoard_id(HOMEWORK_BOARD_ID);
+    article.setTitle("과제제출");
     article.setLevel(2);
     Homework homework = new Homework();
     List<MultipartFile> files = new ArrayList<>();
@@ -210,8 +225,12 @@ public class MyClassController {
   
   @PostMapping("/homework/write")
   public String writeHomeworkArticle(Article article, Date end_date,HttpServletRequest request) {
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    Member member = memberDao.selectMemberByUsername(Helper.userName());
+    int board_id = boardDao.selectBoardByCourseId(member.getCourse_id(), 4).getId();
     article.setUsername(Helper.userName());
-    article.setBoard_id(HOMEWORK_BOARD_ID);
+    article.setBoard_id(board_id);
     Homework homework = new Homework();
     homework.setEnd_date(end_date);
     articleInsertService.writeArticle(article, homework, null, request);

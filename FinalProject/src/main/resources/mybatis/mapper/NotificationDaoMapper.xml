@@ -6,13 +6,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="kr.or.bit.dao.NotificationDao">
   <select id="insertNotification">
     INSERT INTO notification (content, checked,
-    username)
-    VALUES(#{content}, #{checked}, #{username})
+    username, link, title)
+    VALUES(#{content}, 0, #{username}, #{link}, #{title})
   </select>
-  <update id="updateNotification">
+  <update id="checkAllNotification">
     UPDATE notification
     SET checked = 1
-    WHERE id = #{id}
+    WHERE username = #{username}
   </update>
   <delete id="deleteNotification">
     DELETE
@@ -21,19 +21,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </delete>
   <select id="selectAllNotification"
     resultType="kr.or.bit.model.Notification">
-    SELECT id, content, checked, username
+    SELECT id, content, checked, username, link, title
     FROM notification
     WHERE username = #{username}
+    LIMIT 20
   </select>
   <select id="selectAllNewNotification"
     resultType="kr.or.bit.model.Notification">
-    SELECT id, content, checked, username
+    SELECT id, content, checked, username, link, title
     FROM notification
     WHERE username = #{username} AND checked = 0
   </select>
   <select id="selectAllOldNotification"
     resultType="kr.or.bit.model.Notification">
-    SELECT id, content, checked, username
+    SELECT id, content, checked, username, link, title
     FROM notification
     WHERE username = #{username} AND checked = 1
   </select>
