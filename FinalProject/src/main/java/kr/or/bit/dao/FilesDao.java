@@ -10,7 +10,7 @@ public interface FilesDao {
   
   void deleteFiles(int id);
   
-  int selectFilesByFilename(String filename);
+  Files selectFilesByFilename(String filename);
 
   Files selectFilenameById(int id);
   
