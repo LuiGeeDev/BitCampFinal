@@ -44,6 +44,6 @@ public class ProjectController {
   }
   @GetMapping("/main")
   public String manageMain() {
-    return "myclass/teacher/manager/main";
+    return "myclass/teacher/managing/main";
   }
 }

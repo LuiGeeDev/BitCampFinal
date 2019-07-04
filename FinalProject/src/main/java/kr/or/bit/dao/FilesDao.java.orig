@@ -1,0 +1,21 @@
+package kr.or.bit.dao;
+
+import kr.or.bit.model.Files;
+
+public interface FilesDao {
+  
+  void insertFiles(Files files);
+  
+  void updateFiles(Files files);
+  
+  void deleteFiles(int id);
+  
+  int selectFilesByFilename(String filename);
+<<<<<<< HEAD
+  
+  Files selectFileById(int id);
+=======
+
+  Files selectFilesById(int id);
+>>>>>>> c5dbd770a8cf1987f07213a69cc5f4043763df39
+}

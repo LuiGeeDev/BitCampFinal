@@ -130,10 +130,10 @@ public class AjaxController {
   }
 
   @PostMapping("/general/delete")
-  public String generalBoardDelete(int articleId) {
-    System.out.println("delete 타고있냐?");
+  public String generalBoardDelete(int id) {
     String boardOption = "general";
-    articleDeleteService.deleteArticle(articleId, boardOption);
+    articleDeleteService.deleteArticle(id, boardOption);
     return "redirect:/general/generalBoard";
   }
+  
 }
