@@ -82,18 +82,3 @@
   font-size:15px;
   font-weight: bold;
 }
-
-.noComment{
-	padding : 10px 0px 10px 30px;
-	font-weight:bold;
-}
-
-.pointOrange, .pointOrange2 {
-  color: #F39B10;
-}
-
-.spin-where {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-}

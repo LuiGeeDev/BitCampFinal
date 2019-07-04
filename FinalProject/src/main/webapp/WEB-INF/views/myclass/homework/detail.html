@@ -3,11 +3,11 @@
   th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
 <head>
 <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+
 <link rel="stylesheet" th:href="@{/css/myclass/homework/detail.css}" />
 <link
   href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css"
   rel="stylesheet" />
-
 </head>
 <body>
   <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
@@ -17,21 +17,17 @@
     </div>
     <div class="row" th:object="${article}">
       <div class="homework-container">
-        <span class="hw-title">제목</span> <span class="homework-title"
-          th:text="${article.title}">안녕</span> <span class="hw-title">작성자</span>
-        <span class="homework-name" th:text="${article.writer.name}">임경균강사님</span>
+        <span class="hw-title">제목</span> <span class="homework-title">안녕</span>
+        <span class="hw-title">작성자</span> <span class="homework-name">임경균강사님</span>
       </div>
       <div class="homework-container">
         <span class="hw-title">시작일</span> <span
-          class="homework-startDate" th:text="${article.time}">2019-07-01</span>
-        <span class="hw-title">종료일</span> <span
-          class="homework-endDate" th:text="${article.option.end_date}">2019-07-29</span>
+          class="homework-startDate">2019-07-01</span> <span
+          class="hw-title">종료일</span> <span class="homework-endDate">2019-07-29</span>
       </div>
-      <div class="homework-content" th:utext="${article.content}">별찍기
-        10문제를 만들어서 올리세요^^</div>
+      <div class="homework-content">별찍기 10문제를 만들어서 올리세요^^</div>
     </div>
     <form method="post" enctype="multipart/form-data">
-      <input type="hidden" name="original_id" th:value="${article.id}">
       <div class="homework-container">
         <span class="ppt-upload-text">발표자료</span><span
           class="ppt-upload-input"><input type="file"
@@ -48,38 +44,48 @@
         <input type="submit" class="btn btn-primary btn-sm" value="제출">
       </div>
     </form>
-    <div class="row" th:each="reply : ${replies}">
-      <div class="reply-container">
-        <div class="submit-container">
-          <span class="sm-title">이름</span> <span class="submit-name"
-            th:text="${reply.writer.name}">이힘찬</span> <span
-            class="sm-title">제출일</span> <span class="submit-writeDate"
-            th:text="${#temporals.format(reply.timeLocal, 'yyyy-MM-dd')}">2019-07-28</span>
-        </div>
-        <div class="submit-container">
-          <span class="sm-title">조</span> <span class="submit-group">2조</span>
-          <span class="sm-title">첨부파일</span> 
-          <span class="submit-file" th:if="${reply.option.files[0] == null}">등록된 파일이 없습니다.</span>
-          <a th:if="${reply.option.files[0] != null}" th:href="@{{filename}(filename=${reply.option.files[0].filename})}" th:attr="download=${reply.option.files[0].original_filename}">
-            <span class="submit-file" th:text="${reply.option.files[0].original_filename}">javaHomework.jar</span>
-          </a>
-          <a th:if="${reply.option.files[1] != null}" th:href="@{{filename}(filename=${reply.option.files[1].filename})}" th:attr="download=${reply.option.files[1].original_filename}">
-          <span class="submit-file"
-            th:if="${reply.option.files[1] != null}"
-            th:text="${reply.option.files[1].original_filename}">javaHomework.jar</span>
-          </a>
-        </div>
-        <div class="homework-content" th:utext="${reply.content}">감사합니다^^</div>
+    <div class="row">
+      <div class="submit-container">
+        <span class="sm-title">이름</span> <span class="submit-name">이힘찬</span>
+        <span class="sm-title">제출일</span> <span class="submit-writeDate">2019-07-28</span>
       </div>
-      <div id="update-buttons">
-        <input type="button" class="btn btn-primary btn-sm" value="수정">
-        <input type="button" class="btn btn-primary btn-sm" value="삭제">
+      <div class="submit-container">
+        <span class="sm-title">조</span> <span class="submit-group">2조</span>
+        <span class="sm-title">첨부파일</span> <span class="submit-file">javaHomework.jar</span>
       </div>
+      <div class="homework-content">감사합니다^^</div>
+    </div>
+    <div id="update-buttons">
+      <input type="button" class="btn btn-primary btn-sm" value="수정">
+      <input type="button" class="btn btn-primary btn-sm" value="삭제">
+    </div>
+    <div class="row">
+      <div class="submit-container">
+        <span class="sm-title">이름</span> <span class="submit-name">복다빈</span>
+        <span class="sm-title">제출일</span> <span class="submit-writeDate">2019-07-25</span>
+      </div>
+      <div class="submit-container">
+        <span class="sm-title">조</span> <span class="submit-group">1조</span>
+        <span class="sm-title">첨부파일</span> <span class="submit-file">javaHomework.jar</span>
+      </div>
+      <div class="homework-content">제출 완료!</div>
+    </div>
+    <div class="row">
+      <div class="submit-container">
+        <span class="sm-title">이름</span> <span class="submit-name">윤종석</span>
+        <span class="sm-title">제출일</span> <span class="submit-writeDate">2019-07-28</span>
+      </div>
+      <div class="submit-container">
+        <span class="sm-title">조</span> <span class="submit-group">3조</span>
+        <span class="sm-title">첨부파일</span> <span class="submit-file">javaHomework.jar</span>
+      </div>
+      <div class="homework-content">3조 과제제출 합니다~</div>
     </div>
   </div>
 
   <!-- 필요하다면 이 아래에 외부 자바스크립트도 추가 가능 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.min.js"></script>
+  <script
+    src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
   <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
   <script>
   $("#summernote").summernote({

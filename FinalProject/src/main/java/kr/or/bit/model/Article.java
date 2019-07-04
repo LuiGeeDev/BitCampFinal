@@ -2,6 +2,7 @@ package kr.or.bit.model;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,28 +16,9 @@ public class Article {
   private int original_id;
   private int level; // default 1
   private int enable; // default 1
-  
-  private String original_filename;
-  private String filename;
-  public String getOriginal_filename() {
-    return original_filename;
-  }
-
-  public void setOriginal_filename(String original_filename) {
-    this.original_filename = original_filename;
-  }
-
-  public String getFilename() {
-    return filename;
-  }
-
-  public void setFilename(String filename) {
-    this.filename = filename;
-  }
-
   private String username;
   private int board_id;
-  private String name;
+
   private LocalDateTime timeLocal;
   private LocalDateTime updatedTimeLocal;
   private Member writer;
@@ -46,23 +28,6 @@ public class Article {
   private Map<String, Integer> vote;
   private int votenum;
   private int vote_count;
-  private List<Files> files;
-  
-  public List<Files> getFiles() {
-    return files;
-  }
-
-  public void setFiles(List<Files> files) {
-    this.files = files;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
 
   public int getId() {
     return id;
@@ -231,8 +196,6 @@ public class Article {
         + ", enable=" + enable + ", username=" + username + ", board_id=" + board_id + ", timeLocal=" + timeLocal
         + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", tags=" + tags + ", commentlist="
         + commentlist + ", option=" + option + ", vote=" + vote + ", votenum=" + votenum + ", vote_count=" + vote_count
-        + ", files=" + files + "]";
+        + "]";
   }
-
-  
 }
