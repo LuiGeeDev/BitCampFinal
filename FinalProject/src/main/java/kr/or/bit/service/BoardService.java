@@ -22,7 +22,7 @@ public class BoardService {
     return articleList;
   }
 
-  @PostAuthorize("returnObject.username == principal.username")
+  @PostAuthorize("hasAnyRole('TEACHER', 'MANAGER') or returnObject.username == principal.username")
   public Article getArticleForUpdateOrDelete(int id) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     Article article = articleDao.selectOneArticle(id);
