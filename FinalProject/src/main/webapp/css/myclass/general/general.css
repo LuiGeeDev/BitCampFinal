@@ -118,10 +118,6 @@ a {
   flex: 0.15 0.15 0;
 }
 
-.write-btn-right {
-  display:flex;
-}
-
 .board-writeBtn {
-  margin-left: auto;
+  margin-left: 1180px;
 }
