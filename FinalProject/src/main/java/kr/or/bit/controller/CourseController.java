@@ -11,13 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.bit.dao.CourseDao;
-import kr.or.bit.dao.MessageDao;
 import kr.or.bit.model.Course;
-import kr.or.bit.model.Message;
 
 @Controller
 public class CourseController {

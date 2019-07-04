@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
-import kr.or.bit.model.General;
 import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleUpdateService;

@@ -45,7 +45,6 @@ import kr.or.bit.utils.Helper;
 @Controller
 @RequestMapping("/myclass")
 public class MyClassController {
-  private final int HOMEWORK_BOARD_ID = 7;
   @Autowired
   private SqlSession sqlSession;
   
