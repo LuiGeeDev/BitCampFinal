@@ -17,4 +17,6 @@ public interface BoardDao {
   void updateBoard(int id);
   
   List<Board> selectMyClassBoard(int course_id);
+
+  Board selectBoardById(int board_id);
 }
