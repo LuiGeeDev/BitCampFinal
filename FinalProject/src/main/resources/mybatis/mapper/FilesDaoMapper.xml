@@ -2,18 +2,8 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- 
-  void insertFiles(Files files);
-  
-  void updateFiles(Files files);
-  
-  void deleteFiles(int id);
-  
-  int selectFilesByFilename(String originalName);
- -->
- 
 <mapper namespace="kr.or.bit.dao.FilesDao">
-  <select id="selectFilesById">
+  <select id="selectFilesById" resultType="kr.or.bit.model.Files">
     SELECT id, filename, original_filename
     FROM files
     WHERE id = #{id}
@@ -31,11 +21,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     delete from files 
     where id=#{id}
   </delete>
-  <select id="selectFilesByFilename" resultType="Integer">
-    select id
+  <select id="selectFilesByFilename" resultType="kr.or.bit.model.Files">
+    select id, original_filename, filename
     from files
     where filename=#{filename}
   </select>
-
 </mapper>
 
