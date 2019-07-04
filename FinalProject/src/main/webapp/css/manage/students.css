@@ -4,36 +4,94 @@ body {
   font-family: 'Nanum Gothic';
 }
 
+#searchimg {
+  width: auto;
+  height: 28px;
+  margin-left: 8px;
+}
+
+#profileimg {
+  width: 180px;
+  height: auto;
+}
+
 .title {
   font-size: 190%;
   margin: 20px;
-}
-
-table {
-  margin-left: 10%;
-  margin-right: 10%;
-  width: 80%;
-  border: 1px solid white;
-  border-collapse: collapse;
-}
-
-th, td {
-  border: 1px solid white;
-}
-.row{
-    display: flex;
-    flex-direction: row;
-  
-}
-.flex_container1{
   display: flex;
   flex-direction: column;
-  
 }
-.flex_c1_item1{
-  overflow: auto;
+
+.searchContainer {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
 }
-.flex_container2{
+
+.manageContainer {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+}
+
+.studentSearchContainer {
   display: flex;
   flex-direction: column;
+  border: 1px solid black;
+  padding: 10px;
+  width: 28%;
+}
+
+.search {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid black;
+}
+
+.list {
+  display: flex;
+  flex-direction: row;
+}
+
+.profile {
+  display: flex;
+  flex-direction: row;
+}
+
+.studentDetailContainer {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  width: 73%;
+  margin-left: 1%;
+}
+
+.contentWrapper {
+  border: 1px solid skyblue;
+  margin: 20px;
+  width: 83%;
+}
+.searchTitle{
+  
+}
+.searchContent{
+  
+}
+.listName{
+  
+}
+.liststate{
+  
+}
+.listAttendance{
+  
+}
+.profiledetail{
+  
+}
+.detail{
+  
+}
+.counseling{
+  
 }

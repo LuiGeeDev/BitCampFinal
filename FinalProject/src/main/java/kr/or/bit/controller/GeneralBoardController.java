@@ -48,6 +48,7 @@ public class GeneralBoardController {
   public String generalBoardDetail(int id, Model model) {
     String optionName = "general";
     Article article = articleService.selectOneArticle(optionName, id);
+    System.out.println(article);
     model.addAttribute("list", article);
     System.out.println(article.getFiles());
     return "myclass/general/generalBoardDetail";
@@ -61,6 +62,7 @@ public class GeneralBoardController {
   @PostMapping("/generalBoardWrite")
   public String generalBoardWrite(Article article, MultipartFile file1, MultipartFile file2,
       HttpServletRequest request) {
+    System.out.println(article);
     article.setUsername(Helper.userName());
     article.setBoard_id(GENERAL_BOARD_ID);
     List<MultipartFile> list = new ArrayList<>();
@@ -81,6 +83,7 @@ public class GeneralBoardController {
 
   @PostMapping("/commentwrite")
   public String generalComment(int id, Comment comment) {
+    System.out.println("댓글달기 타는지안타는지 궁금해 !");
     comment.setUsername(Helper.userName());
     comment.setArticle_id(id);
     commentService.insertComment(comment);
@@ -89,9 +92,10 @@ public class GeneralBoardController {
 
   @GetMapping("/commentdelete")
   public String generalCommnerDelete(int id) {
+    System.out.println("삭제 탓냐? 안탓냐?");
     Comment comment = commentService.selectOnecomment(id);
     int article_id = comment.getArticle_id();
     commentService.deleteComment(id);
-    return "redirect:/video/detail?id=" + article_id;
+    return "redirect:/general/detail?id=" + article_id;
   }
 }

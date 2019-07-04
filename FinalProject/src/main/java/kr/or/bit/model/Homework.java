@@ -1,14 +1,23 @@
 package kr.or.bit.model;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Homework implements ArticleOption {
-
   private int id;
   private Date end_date;
   private int file1;
   private int file2;
   private int Article_id;
+  private List<Files> files;
+
+  public List<Files> getFiles() {
+    return files;
+  }
+
+  public void setFiles(List<Files> files) {
+    this.files = files;
+  }
 
   public int getId() {
     return id;

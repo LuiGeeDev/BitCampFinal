@@ -8,6 +8,9 @@
     <link rel="stylesheet" th:href="@{/css/myclass/main/home.css}" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
+    <link
+      href=/resources/dist/static/css/app.093b44a44b72c4606a739cad77ca4f84.css
+      rel=stylesheet> 
   </head>
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
@@ -20,37 +23,131 @@
             <h5><b>프론트엔드 및 백엔드 개발자 양성과정</b></h5></span>
             <span class="barDate">2019-01-30 ~ 2019-07-03</span>
             <span class="barPercent">
-            <span id="progressbar"></span><span>70퍼센트 진행</span>
+            <span class="progres">
+            <span>
+              <span class="progress-bar bg-warning progress-bar-striped"
+                style="width: 70%; height: 30px;"></span>
+            </span> 
+            </span>
+            <span class="progressview">70% 진행중</span>
             </span>
             </div>
           <div class="recentBoard"> 
             <span class="recentHomework cardshadow">
-            <span><b>[최근 과제]</b></span><br>
+            <span class="moreRow">
+            <span><h5><b>[최근 과제]</b></h5></span>
+            <span class="moreLotation">더보기</span>
+            </span> 
             <span class="recentHomeworkcontent">7월30일에 칸반 보드 정리할 사람 가위바위보로 정하기</span>
             </span>
-            <span class="recentProject cardshadow"><b>[최근 프로젝트]</b><br>
+            <span class="recentProject cardshadow">
+            <span class="moreRow">
+            <span><h5><b>[최근 프로젝트]</b></h5></span>
+            <span class="moreLotation">더보기</span>
+            </span>
             <span class="recentProjectcontent">파이널 프로젝트 진행중</span>
             </span>
         </div>
      </div> 
         <div class="myclassBoard cardshadow">
-            <h3><b>[최신글]</b></h3>
-            <div><span class="recentBoardTitle">스택게시판</span><span class="recentBoardContent">안내면 진거 가위바위보</span><span class="recentBoardwrtier">이승엽</span></div>
-            <div><span class="recentBoardTitle">일반게시판</span><span class="recentBoardContent">안내면 진거 가위바위보</span><span class="recentBoardwrtier">정성윤</span></div>
-            <div><span class="recentBoardTitle">공지게시판</span><span class="recentBoardContent">안내면 진거 가위바위보</span><span class="recentBoardwrtier">홍진호</span></div>
-            <div><span class="recentBoardTitle">일반게시판</span><span class="recentBoardContent">안내면 진거 가위바위보</span><span class="recentBoardwrtier">나르</span></div>
-        </div>
+            <div class="myclassTitle">
+            <div><h3><b>[최신글]</b></h3></div>
+            </div>
+            <div class="myclassContent">
+            <div class="myclassBoardTag">
+            <span class="TitleStyle">게시판</span>
+            <span>일반게시판</span>
+            <span>QnA게시판</span>
+            <span>스택게시판</span>
+            <span>공지게시판</span>
+            </div>
+            <div class="myclassBoardTitle">
+            <span class="TitleStyle">제목</span>
+            <span>7월13일 호텔델루나 다들 많이 봐주세요^^ㅎ</span>
+            <span>7월13일 호텔델루나 다들 많이 봐주세요!</span>
+            <span>7월13일 호텔델루나 다들 많이 봐주세요?</span>
+            <span>7월13일 호텔델루나 다들 많이 봐주세요~</span>
+            </div>
+            <div class="myclassBoardWriter">
+            <span class="TitleStyle">글쓴이</span>
+            <span>아이유</span>
+            <span>정성윤</span>
+            <span>윤종석</span>
+            <span>권순조</span>
+            </div>      
+            <div class="myclassBoardDate">
+            <span class="TitleStyle">게시일</span>
+            <span>2019.07.13</span>
+            <span>2019.07.13</span>
+            <span>2019.07.13</span>
+            <span>2019.07.13</span>
+            </div>
+            <div class="myclassBoardVote">
+            <span class="TitleStyle">추천</span>
+            <span>200</span>
+            <span>120</span>
+            <span>83</span>
+            <span>51</span>
+            </div>
+            </div>
+          </div>
+          <div class="row">
+          <div id="calendar" class="CalendarCard cardshadow"></div>
+          </div>
         </div>
       </div>
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-    <script th:inline="javascript"></script>
-    <script src="/js/stack/write.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>    <script>
-    $( function() {
-      $( "#progressbar" ).progressbar({
-        value: 70
-      });
-    } );
+    <script>
+    const calendarEl = document.getElementById("calendar");
+    let calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins : [ "dayGrid" ],
+      defaultView : "dayGridMonth",
+      locale : "ko",
+      columnHeaderFormat : {
+        day : "2-digit",
+        weekday : "short"
+      },
+      header : {
+        left : "title",
+        center : "",
+        right : "today prev,next"
+      },
+      events : [ {
+        title : "조 회식",
+        start : "2019-07-05",
+        end : "2019-07-05",
+        color : "tomato",
+        textColor : "white"
+      }, {
+        title : "비트캠프 졸업",
+        start : "2019-07-30",
+        end : "2019-07-30",
+        color : "coral",
+        textColor : "white"
+      }, {
+        title : "호텔 델루나 첫방송",
+        start : "2019-07-13",
+        end : "2019-07-15",
+        color : "purple",
+        textColor : "white"
+      }, {
+        title : "회식",
+        start : "2019-06-24",
+        end : "2019-06-24",
+        textColor : "white"
+      } ]
+    });
+    calendar.render();
+    $('#button-checklist').on('shown.bs.modal', function () {
+      $('#myInput').trigger('focus')
+    })
     </script>
+    <script src="/js/stack/write.js"></script>
+     <script type=text/javascript
+    src=/resources/dist/static/js/manifest.d2e3a334bc98c3b96650.js></script>
+  <script type=text/javascript
+    src=/resources/dist/static/js/vendor.71750e988b55e9735a64.js></script>
+  <script type=text/javascript
+    src=/resources/dist/static/js/app.55e5fc1c8db3bc542a1f.js></script>
   </body>
 </html>

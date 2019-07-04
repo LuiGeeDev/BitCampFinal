@@ -27,6 +27,7 @@ public class ArticleService {
   @Autowired
   private SqlSession sqlSession;
   
+  
   public void updateArticle() {
   }
 
@@ -107,7 +108,7 @@ public class ArticleService {
     case "general":
       GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
       option = generalDao.selectGeneralByArticleId(article.getId());
-      /*General general = (General)option;
+      General general = (General)option;
       List<Integer> list = new ArrayList<>();
       
       if(general.getFile1() != 0) {
@@ -116,18 +117,22 @@ public class ArticleService {
           list.add(general.getFile2());
         }
       }
+      
       FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
-      List<Files> filelist = new ArrayList<>(); 
-      if(general.getFile1() != 0) {
+      List<Files> filelist = new ArrayList<>();
+      Files files = new Files();
+      if(list.size() == 0) {
         break;
       } else if(list.size() > 0 ){
         for(int fileid : list) {
-          files = filesDao.selectFileById(fileid);
+          files = filesDao.selectFilenameById(fileid);
           filelist.add(files);
         }
       }
-      article.setFiles(filelist);*/
+      
+      article.setFiles(filelist);
       break;
+      
     case "qna":
       QnaDao qnaDao = sqlSession.getMapper(QnaDao.class);
       option = qnaDao.selectQnaByArticleId(article.getId());
