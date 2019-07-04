@@ -48,6 +48,7 @@ public class GeneralBoardController {
   public String generalBoardDetail(int id, Model model) {
     String optionName = "general";
     Article article = articleService.selectOneArticle(optionName, id);
+    System.out.println(article);
     model.addAttribute("list", article);
     System.out.println(article.getFiles());
     return "myclass/general/generalBoardDetail";
@@ -61,6 +62,7 @@ public class GeneralBoardController {
   @PostMapping("/generalBoardWrite")
   public String generalBoardWrite(Article article, MultipartFile file1, MultipartFile file2,
       HttpServletRequest request) {
+    System.out.println(article);
     article.setUsername(Helper.userName());
     article.setBoard_id(GENERAL_BOARD_ID);
     List<MultipartFile> list = new ArrayList<>();

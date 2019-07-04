@@ -88,8 +88,8 @@ public class BoardController {
     General general = generalDao.selectGeneralByArticleId(article_id);
 
     List<Files> files = new ArrayList<>();
-    files.add(filesDao.selectFilesById(general.getFile1()));
-    files.add(filesDao.selectFilesById(general.getFile2()));
+    files.add(filesDao.selectFilenameById(general.getFile1()));
+    files.add(filesDao.selectFilenameById(general.getFile2()));
     general.setFiles(files);
     article.setOption(general);
 
@@ -114,8 +114,8 @@ public class BoardController {
 
     General general = generalDao.selectGeneralByArticleId(article_id);
     List<Files> files = new ArrayList<>();
-    files.add(filesDao.selectFilesById(general.getFile1()));
-    files.add(filesDao.selectFilesById(general.getFile2()));
+    files.add(filesDao.selectFilenameById(general.getFile1()));
+    files.add(filesDao.selectFilenameById(general.getFile2()));
     general.setFiles(files);
     article.setOption(general);
     

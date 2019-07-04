@@ -12,5 +12,5 @@ public interface FilesDao {
   
   int selectFilesByFilename(String filename);
 
-  Files selectFilesById(int id);
+  Files selectFilenameById(int id);
 }
