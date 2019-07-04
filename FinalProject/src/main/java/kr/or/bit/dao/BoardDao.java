@@ -21,4 +21,6 @@ public interface BoardDao {
   List<Board> selectMyClassBoard(int course_id);
   
   Board selectBoardByCourseId(@Param("course_id")int course_id,@Param("boardtype") int boardType);
+
+  Board selectBoardById(int board_id);
 }
