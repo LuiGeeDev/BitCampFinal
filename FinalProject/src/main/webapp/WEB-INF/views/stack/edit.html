@@ -14,8 +14,9 @@
     <form method="POST">
       <div id="write-form-wrapper">
         <input type="text" id="input-title" placeholder="제목"
-          name="title" />
-        <textarea name="content" id="summernote">
+          name="title" th:value="${article.title}" />
+        <textarea name="content" id="summernote"
+        class="content">
         [[${article.content}]]
         </textarea>
         <div id ="submitbtn"><button type="submit" class="btn btn-primary">
