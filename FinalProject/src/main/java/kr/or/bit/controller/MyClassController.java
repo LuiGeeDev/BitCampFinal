@@ -217,6 +217,7 @@ public class MyClassController {
     
     article.setBoard_id(board.getId());
     article.setTitle("과제제출");
+    article.setContent("과제제출");
     article.setLevel(2);
     Homework homework = new Homework();
     List<MultipartFile> files = new ArrayList<>();
