@@ -1,6 +1,8 @@
 package kr.or.bit.controller;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -243,8 +245,25 @@ public class MyClassController {
     return "redirect:/myclass/homework";
   }
   
-  @GetMapping("/main/home")
-  public String mainPage() {
-    return "myclass/main/home";
+  @GetMapping("")
+  public String mainPage(Model model) {
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
+    Course course = courseDao.selectCourse(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id());
+    
+    course.setEndDate(course.getEnd_date().toLocalDate());
+    course.setStartDate(course.getStart_date().toLocalDate());
+    
+    Period diff = Period.between(course.getStartDate(), course.getEndDate());
+    Period diff2 = Period.between(course.getStartDate(), LocalDate.now());
+    int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
+    
+    System.out.println(diff2.getDays());
+    System.out.println(diff.getDays());
+    System.out.println(completion);
+    
+    model.addAttribute("completion", completion);
+    
+    return "myclass/home";
   }
 }
