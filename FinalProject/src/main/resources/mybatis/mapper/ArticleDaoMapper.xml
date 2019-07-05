@@ -60,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                   </if>
                 </where>
                 ORDER BY id desc) a ) b
-    WHERE rownum BETWEEN 7 and 17;
+    WHERE rownum BETWEEN #{start} and #{end};
   </select>
   <select id="selectAllArticleByBoardId"
     resultType="kr.or.bit.model.Article">
