@@ -295,6 +295,7 @@ public class MyClassController {
   
   @PostMapping("/homework/delete")
   public String deleteHomeworkArticle(Article article) {
+    System.out.println(article);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     articleDao.deleteArticle(article.getId());
     return "redirect:/myclass/homework";
