@@ -18,6 +18,14 @@
   width:70%;
   margin:8px 150px;
 }
+.homework-submit-container {
+  width:70%;
+  margin:30px 150px;
+}
+.homework-submit-container, .contents {
+  display:flex;
+  margin:8px 150px;
+}
 .homework-content {
   width:70%;
   height:100px;
@@ -120,12 +128,14 @@
 .source-upload-input{
   border:1px solid;
 }
+.reply-container {
+  padding-top:50px;
+}
 
-
-.relpy-container {
+.relpy-article {
   display: flex;
   width:70%;
-  margin:20px 150px;
+  margin:30px 150px;
 }
 .reply-group {
   border:1px solid #bdbdbd;
@@ -165,7 +175,9 @@
   width:10%;
 }
 .reply-update-button {
+  text-align:center;
   width:5%;
+  cursor:pointer;
 
  }
 .button-wrapper{

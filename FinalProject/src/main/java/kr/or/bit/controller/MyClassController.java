@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.ArticleDao;
@@ -33,7 +32,6 @@ import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.Files;
-import kr.or.bit.model.General;
 import kr.or.bit.model.Group;
 import kr.or.bit.model.Homework;
 import kr.or.bit.model.Member;
@@ -182,8 +180,6 @@ public class MyClassController {
     FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     List<Article> replies = articleDao.selectHomeworkReplies(id);
-
-    
     for(Article reply : replies) {
       reply.setTimeLocal(reply.getTime().toLocalDateTime());
       Homework homework = homeworkDao.selectHomeworkByArticleId(reply.getId());
@@ -194,9 +190,7 @@ public class MyClassController {
       homework.setFiles(files);
       
       reply.setOption(homework);
-      
       reply.setWriter(memberDao.selectMemberByUsername(reply.getUsername()));
-      
     }
     
     
@@ -295,6 +289,7 @@ public class MyClassController {
   
   @PostMapping("/homework/delete")
   public String deleteHomeworkArticle(Article article) {
+    System.out.println(article);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     articleDao.deleteArticle(article.getId());
     return "redirect:/myclass/homework";

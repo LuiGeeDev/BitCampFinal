@@ -48,7 +48,7 @@ public class BoardController {
 
   @PostMapping("/write")
   public String writeArticle(Article article, MultipartFile file1, MultipartFile file2, HttpServletRequest request) {
-    return "redirect:/myclass/board/read?article_id=" + boardService.writeArticle(article, file1, file2, request);
+    return "redirect:/myclass/board/read?article_id=" + boardService.writeArticle(article, file1, file2, request) + "&board_id=" + article.getBoard_id();
   }
 
   @GetMapping("/read")
@@ -78,7 +78,6 @@ public class BoardController {
   @GetMapping("/delete")
   public String deleteArticle(int article_id) {
     Article article = boardService.getArticleForUpdateOrDelete(article_id);
-    System.out.println(article.getUsername());
     boardService.deleteArticle(article);
 
     return "redirect:/myclass/board?board_id=" + article.getBoard_id();
