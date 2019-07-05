@@ -20,20 +20,24 @@
       <table>
         <tr>
           <td class="seath">
-            <select name="말머리" size="1" style="height: 30px;">
-              <OPTION VALUE="1" SELECTED>제목</OPTION>
-              <OPTION VALUE="2">내용</OPTION>
-              <OPTION VALUE="3">태그</OPTION>
-              <OPTION VALUE="4">작성자</OPTION>
+          <form method="get">
+            <select size="1" style="height: 30px;"  name="criteria">
+            <option value="titlecontent" selected>제목 + 내용</option>
+            <option value="title">제목</option>
+            <option value="name">글작성자</option>
+            <option value="comment_content">댓글내용</option>
+            <option value="comment_name">댓글작성자</option>
             </select>
+            <input type="hidden" name="board_id" th:value="${board.id}">
             <input
               type="text"
-              name="stacksearch"
+              name="search"
               id="stacksearch"
               size="25"
               placeholder="검색내용을 적어주세요"
             />
             <img th:src="@{/css/stack/search.png}" class="seaimg" />
+            </form>
           </td>
         </tr>
       </table>
