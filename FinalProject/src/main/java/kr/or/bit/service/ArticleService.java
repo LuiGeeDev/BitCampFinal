@@ -65,28 +65,6 @@ public class ArticleService {
       case "general":
         GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
         option = generalDao.selectGeneralByArticleId(article.getId());
-       General general = (General)option;
-        List<Integer> fileidlist = new ArrayList<>();
-        
-        if(general.getFile1() != 0) {
-          fileidlist.add(general.getFile1());
-          if(general.getFile2() != 0) {
-            fileidlist.add(general.getFile2());
-          }
-        }
-        
-        FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
-        List<Files> filelist = new ArrayList<>();
-        Files files = new Files();
-        if(list.size() == 0) {
-          break;
-        } else if(list.size() > 0 ){
-          for(int fileid : fileidlist) {
-            files = filesDao.selectFilesById(fileid);
-            filelist.add(files);
-          }
-        }
-        article.setFileslist(filelist);
         break;
       case "qna":
         QnaDao qnaDao = sqlSession.getMapper(QnaDao.class);
@@ -129,6 +107,32 @@ public class ArticleService {
     case "general":
       GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
       option = generalDao.selectGeneralByArticleId(article.getId());
+      General general = (General) option;
+      List<Integer> fileidlist = new ArrayList<>();
+      
+      if (general.getFile1() != 0) {
+        fileidlist.add(general.getFile1());
+        System.out.println(general.getFile1());
+        if (general.getFile2() != 0) {
+          fileidlist.add(general.getFile2());
+          System.out.println(general.getFile2());
+        }
+      }
+      FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
+      List<Files> filelist = new ArrayList<>();
+      Files files = new Files();
+      if (fileidlist.size() == 0) {
+        break;
+      } else if (fileidlist.size() > 0) {
+        for (int fileid : fileidlist) {
+          files = filesDao.selectFilesById(fileid);
+          System.out.println(files);
+          filelist.add(files);
+        }
+      }
+      System.out.println(article);
+      article.setFileslist(filelist);
+      System.out.println(article);
       break;
     case "qna":
       QnaDao qnaDao = sqlSession.getMapper(QnaDao.class);
