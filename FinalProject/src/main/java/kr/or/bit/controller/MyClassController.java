@@ -158,7 +158,8 @@ public class MyClassController {
     FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     List<Article> replies = articleDao.selectHomeworkReplies(id);
-    for (Article reply : replies) {
+    
+    for(Article reply : replies) {
       reply.setTimeLocal(reply.getTime().toLocalDateTime());
       Homework homework = homeworkDao.selectHomeworkByArticleId(reply.getId());
       List<Files> files = new ArrayList<Files>();
