@@ -133,6 +133,7 @@ public class BoardService {
     files.add(filesDao.selectFilesById(general.getFile1()));
     files.add(filesDao.selectFilesById(general.getFile2()));
     general.setFiles(files);
+    System.out.println(general);
     article.setOption(general);
     article.setTimeLocal(article.getTime().toLocalDateTime());
     List<Comment> commentList = commentDao.selectAllComment(article.getId());

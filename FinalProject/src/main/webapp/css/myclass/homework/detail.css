@@ -4,125 +4,141 @@
   text-align: right;
   margin-bottom: 60px;
 }
+
 #submit-buttons {
   text-align: right;
-  margin:20px 0 20px 0;
 }
+
 #title {
   margin: 30px 0 20px 170px;
   font-size: 32px;
+  font-weight:bold;
 }
+
 .homework-container {
   display: flex;
-  width:70%;
-  margin:8px 150px;
+  width: 70%;
+  margin: 8px 150px;
 }
-.homework-submit-container {
-  width:70%;
-  margin-left:150px;
-}
-.homework-submit-container, .contents {
-  display:flex;
-  
-}
-.homework-content {
-  width:70%;
-  height:100px;
-  margin:13px 150px;
-  border:1px solid #a3a3a3;
-  border-radius: 3px;
-  padding:15px 30px;
-}
-.homework-submit {
-  width:70%;
-  height:100%;
-  margin:10px 150px;
-}
-.hw-title {
-  flex-basis:15%;
-  border:1px solid #ebeced;
-  border-radius: 3px;
-  margin:0 7px;
-  background-color:#ebeced;
-  padding:5px 10px;
-  text-align:center;
-}
-.sm-title {
-  flex-basis:15%;
-  border:1px solid #ebeced;
-  border-radius: 3px;
-  margin:0 7px;
-  background-color:#ebeced;
-  padding:5px 10px;
-  text-align:center;
 
+.homework-submit-container {
+  width: 70%;
 }
-.homework-title {
-  flex-basis:85%;
-  border:1px solid ;
+
+.homework-submit-container, .contents {
+  display: flex;
+}
+
+.homework-content {
+  width: 70%;
+  height: 100px;
+  margin: 13px 150px;
+  border: 1px solid #a3a3a3;
   border-radius: 3px;
-  padding:5px 20px;
+  padding: 15px 30px;
+}
+
+.homework-submit {
+  width: 70%;
+  height: 100%;
+  margin: 10px 150px;
+}
+
+.hw-title {
+  flex-basis: 15%;
+  border: 1px solid #ebeced;
+  border-radius: 3px;
+  margin: 0 7px;
+  background-color: #ebeced;
+  padding: 5px 10px;
+  text-align: center;
+}
+
+.sm-title {
+  flex-basis: 15%;
+  border: 1px solid #ebeced;
+  border-radius: 3px;
+  margin: 0 7px;
+  background-color: #ebeced;
+  padding: 5px 10px;
+  text-align: center;
+}
+
+.homework-title {
+  flex-basis: 85%;
+  border: 1px solid;
+  border-radius: 3px;
+  padding: 5px 20px;
 }
 
 .homework-startDate {
-  flex-basis:35%;
-  border:1px solid;
+  flex-basis: 35%;
+  border: 1px solid;
   border-radius: 3px;
-  padding:5px 20px;
+  padding: 5px 20px;
 }
 
 .homework-endDate {
-  flex-basis:35%;
-  border:1px solid;
+  flex-basis: 35%;
+  border: 1px solid;
   border-radius: 3px;
-  padding:5px 20px;
+  padding: 5px 20px;
 }
 
 .submit-container {
   display: flex;
-  width:70%;
-  margin:8px 150px;
-  
-}
-.submit-name {
-  flex-basis:35%;
-  border:1px solid;
-  border-radius: 3px;
-  padding:5px 20px;
-}
-.submit-writeDate {
-  flex-basis:35%;
-  border:1px solid;
-  border-radius: 3px;
-  padding:5px 20px;
-}
-.submit-group {
-  flex-basis:35%;
-  border:1px solid;
-  border-radius: 3px;
-  padding:5px 20px;
-}
-.submit-file {
-  flex-basis:35%;
-  border:1px solid;
-  border-radius: 3px;
-  padding:5px 20px;
+  width: 70%;
+  margin: 8px 150px;
 }
 
-.ppt-upload-text{
-  margin-left:50px;
-  width:100px;
+.submit-name {
+  flex-basis: 35%;
+  border: 1px solid;
+  border-radius: 3px;
+  padding: 5px 20px;
 }
-.ppt-upload-input{
-  width:200px;
+
+.submit-writeDate {
+  flex-basis: 35%;
+  border: 1px solid;
+  border-radius: 3px;
+  padding: 5px 20px;
 }
-.source-upload-text{
-  width:100px;
+
+.submit-group {
+  flex-basis: 35%;
+  border: 1px solid;
+  border-radius: 3px;
+  padding: 5px 20px;
 }
-.source-upload-input{
-  width:200px;
+
+.submit-file {
+  flex-basis: 35%;
+  border: 1px solid;
+  border-radius: 3px;
+  padding: 5px 20px;
 }
-.ppt-upload-input label{
+
+.ppt-upload-text {
+  margin-left: 50px;
+  width: 100px;
+  padding-top: 10px
+}
+
+.ppt-upload-input {
+  margin-right:25px
+}
+
+.source-upload-text {
+  width: 100px;
+  padding-top: 10px
+}
+
+.source-upload-input {
+  margin-right: 100px;
+}
+
+.ppt-upload-input label {
   display: inline-block;
   padding: .5em .75em;
   color: #fff;
@@ -136,12 +152,15 @@
   -webkit-transition: background-color 0.2s;
   transition: background-color 0.2s;
 }
+
 .ppt-upload-input label:hover {
   background-color: #6ed36e;
 }
+
 .ppt-upload-input label:active {
   background-color: #367c36;
 }
+
 .ppt-upload-input input[type="file"] {
   position: absolute;
   width: 1px;
@@ -152,7 +171,8 @@
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
-.source-upload-input label{
+
+.source-upload-input label {
   display: inline-block;
   padding: .5em .75em;
   color: #fff;
@@ -166,12 +186,15 @@
   -webkit-transition: background-color 0.2s;
   transition: background-color 0.2s;
 }
+
 .source-upload-input label:hover {
   background-color: #6ed36e;
 }
+
 .source-upload-input label:active {
   background-color: #367c36;
 }
+
 .source-upload-input input[type="file"] {
   position: absolute;
   width: 1px;
@@ -182,63 +205,114 @@
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+
 .reply-container {
-  padding-top:50px;
-  margin-bottom:100px;
+  padding-top: 50px;
+  margin-bottom: 100px;
 }
+
 .reply-title {
-  margin-left:170px;
+  margin-left: 170px;
   font-size: 25px;
+  font-weight:bold;
 }
+
 .relpy-article {
   display: flex;
-  width:70%;
-  margin:30px 150px;
+  width: 70%;
+  margin: 30px 150px;
 }
+
 .reply-group {
-  border:1px solid #bdbdbd;
-  border-radius:4px;
-  margin-right:15px;
-  text-align:center;
-  width:7%;
+  border: 1px solid #bdbdbd;
+  border-radius: 4px;
+  margin-right: 15px;
+  text-align: center;
+  width: 7%;
 }
+
 .reply-files {
-  width:60%;
-  display:flex;
+  width: 60%;
+  display: flex;
 }
-.reply-files, .pptFile{
-  flex:1;
+
+.reply-files, .pptFile {
+  flex: 1;
   word-break: unset;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.reply-files, .pptFile, .link{
-  margin-left:3px;
+
+.reply-files, .pptFile, .link {
+  margin-left: 3px;
 }
 
 .reply-files, .sourceFile {
-  margin-left:3px;
-  flex:1;
+  margin-left: 3px;
+  flex: 1;
 }
-.reply-files, .sourceFile, .link {
-  margin-left:3px;
-}
-.relpy-name {
-  text-align:center;
-  width:15%;
-}
-.relpy-writeDate {
-  text-align:center;
-  width:13%;
-}
-.reply-update-button {
-  text-align:center;
-  width:5%;
-  cursor:pointer;
 
- }
-.button-wrapper{
-  margin:10px 150px;
-  width:70%;
+.reply-files, .sourceFile, .link {
+  margin-left: 3px;
+}
+
+.relpy-name {
+  text-align: center;
+  width: 15%;
+}
+
+.relpy-writeDate {
+  text-align: center;
+  width: 13%;
+}
+
+.reply-update-button {
+  text-align: center;
+  width: 5%;
+  cursor: pointer;
+}
+
+.button-wrapper {
+  margin: 10px 150px;
+  width: 70%;
+  text-align:right;
+}
+
+.none-reply-container {
+  padding: 50px 280px;
+}
+
+.contents label {
+  margin: none !important;
+  background-color:#2D3E50;
+  border : 1px #2D3E50 solid;
+}
+
+.contents label:hover{
+  background-color: #212529;
+  border : 1px #212529 solid;
+}
+
+#homework-submit-button {
+  padding: .5em .75em !important;
+  font-size: 16px !important;
+}
+
+.contents {
+  margin-left: 120px;
+  width:100%;
+  padding-left: 110px
+}
+form{
+  width:100%
+}
+.homework-submit-title{
+  font-size:25px;
+  font-weight:bold;
+  margin-left:170px;
+  margin-bottom:20px;
+}
+body{
+  font-family: 'Nanum Gothic';
 }
