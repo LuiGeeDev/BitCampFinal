@@ -30,4 +30,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	WHERE LEVEL = 1 AND ENABLE = 1 AND b.board_name = '과제 제출' AND b.course_id = #{course_id}
 	ORDER BY a.ID DESC
   </select>
+  <update id="updateHomeworkArticle" parameterType="kr.or.bit.model.Article">
+  	UPDATE homework 
+	SET end_date = #{option.end_date}
+	WHERE Article_id=#{id} 
+  </update>
 </mapper>
