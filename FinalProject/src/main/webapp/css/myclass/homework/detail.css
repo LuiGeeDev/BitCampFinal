@@ -158,9 +158,11 @@
 }
 .relpy-writeDate {
   text-align:center;
-  width:15%;
+  width:10%;
 }
 .reply-update-button {
+  width:5%;
+
  }
 .button-wrapper{
   text-align:right;
