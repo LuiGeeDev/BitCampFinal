@@ -18,8 +18,10 @@ import kr.or.bit.dao.BoardDao;
 import kr.or.bit.dao.CommentDao;
 import kr.or.bit.dao.FilesDao;
 import kr.or.bit.dao.GeneralDao;
+import kr.or.bit.dao.MemberDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
+import kr.or.bit.model.Comment;
 import kr.or.bit.model.Files;
 import kr.or.bit.model.General;
 import kr.or.bit.utils.Helper;
@@ -40,6 +42,24 @@ public class BoardService {
   private int end(int page) {
     return page * ARTICLES_IN_PAGE;
   }
+  
+  private void setArticleList(List<Article> articleList) {
+    GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
+    CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+
+    for (Article article : articleList) {
+      List<Comment> commentList = commentDao.selectAllComment(article.getId());
+      for (Comment comment : commentList) {
+        comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
+      }
+      
+      article.setCommentlist(commentList);
+      article.setTimeLocal(article.getTime().toLocalDateTime());
+      article.setOption(generalDao.selectGeneralByArticleId(article.getId()));
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));   
+    }
+  }
 
   public Board getBoardInfo(int board_id) {
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
@@ -49,29 +69,33 @@ public class BoardService {
 
   public List<Article> getArticlesByPage(int boardId, int page) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+
     List<Article> articleList = articleDao.selectArticlesByPage(boardId, start(page), end(page));
-    /*
-    Option
-    첨부파일 이름 가져오고
-    */
+    setArticleList(articleList);
 
     return articleList;
   }
 
   public List<Article> getArticlesSorted(int boardId, int page, String sort) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    
     List<Article> articleList = articleDao.selectArticlesSorted(boardId, start(page), end(page));
+    setArticleList(articleList);
+    
     return articleList;
   }
 
   public List<Article> getArticlesBySearchWord(int boardId, int page, String search, String criteria) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    
     List<Article> articleList = null;
     if (criteria.startsWith("comment")) {
       articleList = articleDao.selectArticlesByComment(boardId, start(page), end(page), criteria, search);
     } else {
       articleList = articleDao.selectArticlesBySearchWord(boardId, start(page), end(page), criteria, search);
     }
+    
+    setArticleList(articleList);
 
     return articleList;
   }
@@ -98,6 +122,7 @@ public class BoardService {
     FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
     GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
 
     Article article = articleDao.selectOneArticle(article_id);
     General general = generalDao.selectGeneralByArticleId(article_id);
@@ -108,7 +133,12 @@ public class BoardService {
     general.setFiles(files);
     article.setOption(general);
     article.setTimeLocal(article.getTime().toLocalDateTime());
-    article.setCommentlist(commentDao.selectAllComment(article.getId()));
+    List<Comment> commentList = commentDao.selectAllComment(article.getId());
+    for (Comment comment : commentList) {
+      comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
+    }
+    article.setCommentlist(commentList);
+    article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
 
     return article;
   }
@@ -149,5 +179,17 @@ public class BoardService {
     }
 
     return articleDao.getMostRecentArticleId();
+  }
+
+  public void writeComment(int article_id, Comment comment) {
+    CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
+    comment.setArticle_id(article_id);
+    comment.setUsername(Helper.userName());
+    commentDao.insertComment(comment);
+  }
+
+  public void deleteComment(int comment_id) {
+    CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
+    commentDao.deleteComment(comment_id);
   }
 }

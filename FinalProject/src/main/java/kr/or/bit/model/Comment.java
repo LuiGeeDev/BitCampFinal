@@ -17,7 +17,16 @@ public class Comment {
   private HashMap<String,Integer> vote;
   private String profile_photo;
   
+  private Member writer;
   
+  public Member getWriter() {
+    return writer;
+  }
+
+  public void setWriter(Member writer) {
+    this.writer = writer;
+  }
+
   public int getId() {
     return id;
   }
