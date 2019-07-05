@@ -15,19 +15,31 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.BoardDao;
+import kr.or.bit.dao.CommentDao;
 import kr.or.bit.dao.FilesDao;
 import kr.or.bit.dao.GeneralDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
 import kr.or.bit.model.Files;
 import kr.or.bit.model.General;
+import kr.or.bit.utils.Helper;
 
 @Service
 public class BoardService {
+  private final int ARTICLES_IN_PAGE = 20;
+
   @Autowired
   private SqlSession sqlSession;
   @Autowired
   private FileUploadService fileUploadService;
+
+  private int start(int page) {
+    return (page - 1) * ARTICLES_IN_PAGE + 1;
+  }
+
+  private int end(int page) {
+    return page * ARTICLES_IN_PAGE;
+  }
 
   public Board getBoardInfo(int board_id) {
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
@@ -37,18 +49,31 @@ public class BoardService {
 
   public List<Article> getArticlesByPage(int boardId, int page) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
-    List<Article> articleList = articleDao.selectArticlesByPage(boardId, (page - 1) * 20, page * 20);
+    List<Article> articleList = articleDao.selectArticlesByPage(boardId, start(page), end(page));
+    /*
+    Option
+    첨부파일 이름 가져오고
+    */
+
     return articleList;
   }
 
   public List<Article> getArticlesSorted(int boardId, int page, String sort) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
-    return null;
+    List<Article> articleList = articleDao.selectArticlesSorted(boardId, start(page), end(page));
+    return articleList;
   }
 
-  public List<Article> getArticlesBySearchWord(int boardId, int page, String search) {
+  public List<Article> getArticlesBySearchWord(int boardId, int page, String search, String criteria) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
-    return null;
+    List<Article> articleList = null;
+    if (criteria.startsWith("comment")) {
+      articleList = articleDao.selectArticlesByComment(boardId, start(page), end(page), criteria, search);
+    } else {
+      articleList = articleDao.selectArticlesBySearchWord(boardId, start(page), end(page), criteria, search);
+    }
+
+    return articleList;
   }
 
   @PostAuthorize("hasAnyRole('TEACHER', 'MANAGER') or returnObject.username == principal.username")
@@ -72,6 +97,7 @@ public class BoardService {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
     GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
+    CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
 
     Article article = articleDao.selectOneArticle(article_id);
     General general = generalDao.selectGeneralByArticleId(article_id);
@@ -81,6 +107,8 @@ public class BoardService {
     files.add(filesDao.selectFilesById(general.getFile2()));
     general.setFiles(files);
     article.setOption(general);
+    article.setTimeLocal(article.getTime().toLocalDateTime());
+    article.setCommentlist(commentDao.selectAllComment(article.getId()));
 
     return article;
   }
@@ -91,6 +119,7 @@ public class BoardService {
     GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
 
     try {
+      article.setUsername(Helper.userName());
       articleDao.insertArticle(article);
 
       List<MultipartFile> files = new ArrayList<>();

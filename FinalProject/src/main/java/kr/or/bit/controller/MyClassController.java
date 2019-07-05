@@ -56,32 +56,7 @@ public class MyClassController {
 
   @Autowired
   private ArticleInsertService articleInsertService;
-
-  @GetMapping("/board")
-  public String boardPage(int boardId, @RequestParam(name = "page", defaultValue = "1") int page, Model model) {
-    List<Article> articleList = boardService.getArticlesByPage(boardId, page);
-    model.addAttribute("articles", articleList);
-    return "myclass/board/list";
-  }
-
-  @GetMapping("/board/read")
-  public String readArticle(int article_id, Model model) {
-    Article article = articleService.selectOneArticle("general", article_id);
-    model.addAttribute("article", article);
-    return "myclass/board/read";
-  }
-
-  @GetMapping("/board/write")
-  public String writePage() {
-    return "myclass/board/write";
-  }
-
-  @PostMapping("/board/write")
-  public String writeArticle(Article article, General general) {
-    articleInsertService.writeArticle(article, general);
-    return "redirect:/myclass/board/list";
-  }
-
+  
   @GetMapping("/project")
   public String projectPage() {
     return "myclass/project/main";
@@ -247,7 +222,7 @@ public class MyClassController {
     files.add(file1);
     files.add(file2);
     articleInsertService.writeReplyArticle(article, homework, files, request);
-    return"redirect:/myclass/homework/detail?id="+article.getId();
+    return "redirect:/myclass/homework/detail?id="+article.getId();
   }
   
   @GetMapping("/homework/write")
@@ -269,6 +244,37 @@ public class MyClassController {
     return "redirect:/myclass/homework";
   }
   
+  @GetMapping("/homework/edit")
+  public String editHomeworkArticle(Model model, int id) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
+    Article article = articleDao.selectOneArticle(id);
+    Homework homework = homeworkDao.selectHomeworkByArticleId(id);
+    article.setOption(homework);
+    model.addAttribute("article", article);
+    
+    return "myclass/homework/edit";
+  }
+  
+  @PostMapping("/homework/edit")
+  public String editOkHomeworkArticle(Article updateArticle) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
+    Homework homework = homeworkDao.selectHomeworkByArticleId(updateArticle.getId());
+    updateArticle.setOption(homework);
+    
+    articleDao.updateArticle(updateArticle);
+    homeworkDao.updateHomeworkArticle(updateArticle);
+    
+    return "redirect:/myclass/homework/detail?id="+updateArticle.getId();
+  }
+  
+  @PostMapping("/homework/delete")
+  public String deleteHomeworkArticle(Article article) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    articleDao.deleteArticle(article.getId());
+    return "redirect:/myclass/homework";
+  }
   @GetMapping("/main/home")
   public String mainPage() {
     return "myclass/main/home";

@@ -161,5 +161,8 @@
   width:15%;
 }
 .reply-update-button {
-  
+ }
+.button-wrapper{
+  text-align:right;
+  width:100%;
 }

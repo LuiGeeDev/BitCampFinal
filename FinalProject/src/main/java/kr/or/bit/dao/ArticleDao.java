@@ -44,5 +44,13 @@ public interface ArticleDao {
 
   List<Article> selectArticlesByPage(@Param("board_id") int board_id, @Param("start") int start, @Param("end") int end);
 
+  List<Article> selectArticlesSorted(@Param("board_id") int board_id, @Param("start") int start, @Param("end") int end);
+
+  List<Article> selectArticlesBySearchWord(@Param("board_id") int board_id, @Param("start") int start,
+      @Param("end") int end, @Param("criteria") String criteria, @Param("search") String search);
+
+  List<Article> selectArticlesByComment(@Param("board_id") int board_id, @Param("start") int start,
+      @Param("end") int end, @Param("criteria") String criteria, @Param("search") String search);
+
   List<Article> selectHomeworkReplies(int article_id);
 }

@@ -12,22 +12,22 @@
   <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
   <div class="main" th:fragment="main">
     <div class="row">
-      <div id="title">과제 작성하기</div>
+      <div id="title">과제 수정하기</div>
     </div>
     <div class="row">
       <form method="post" class="form-edit">
         <div class="homework-container">
-          <span class="hw-title">시작일</span> <input type="date"
-            class="hw-input" id="hw-input" readonly> <span
-            class="hw-title">종료일</span> <input type="date"
-            class="hw-input" name="end_date">
+          <span class="hw-title">시작일</span> <span
+            class="hw-input" id="hw-input" th:text = "${#strings.arraySplit(article.time,' ')[0]}"></span> <span
+            class="hw-title" >종료일</span> <input type="date"
+            class="hw-input" name="end_date" th:value="${article.option.end_date}">
         </div>
         <div class="homework-container">
           <span class="hw-title">제목</span> <input type="text"
-            class="hw-input-title" name="title">
+            class="hw-input-title" name="title" th:value="${article.title}">
         </div>
         <div class="homework-content">
-          <textarea name="content" id="summernote"></textarea>
+          <textarea name="content" id="summernote" th:text="${article.content}"></textarea>
         </div>
         <div id="buttons">
           <a href="/myclass/homework" class="btn btn-primary btn-sm">취소</a>
@@ -45,7 +45,6 @@
         height : 300,
         disableResizeEditor : true
       });
-      document.getElementById('hw-input').value = new Date().toISOString().substring(0,10);
     </script>
 </body>
 </html>
