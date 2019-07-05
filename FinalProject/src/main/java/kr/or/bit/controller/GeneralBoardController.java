@@ -49,7 +49,6 @@ public class GeneralBoardController {
     String optionName = "general";
     Article article = articleService.selectOneArticle(optionName, id);
     model.addAttribute("list", article);
-    System.out.println(article);
     return "myclass/general/generalBoardDetail";
   }
 

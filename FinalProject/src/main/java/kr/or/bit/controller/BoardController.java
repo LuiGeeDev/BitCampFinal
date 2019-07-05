@@ -54,9 +54,9 @@ public class BoardController {
   @GetMapping("/read")
   public String readArticle(int article_id, int board_id, Model model) {
     Article article = boardService.readArticle(article_id);
+    System.out.println(article);
     model.addAttribute("article", article);
     model.addAttribute("board", boardService.getBoardInfo(board_id));
-
     return "myclass/general/generalBoardDetail";
   }
 
