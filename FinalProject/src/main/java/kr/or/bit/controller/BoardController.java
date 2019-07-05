@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.model.Article;
+import kr.or.bit.model.Comment;
 import kr.or.bit.service.BoardService;
 
 @Controller
@@ -81,5 +82,17 @@ public class BoardController {
     boardService.deleteArticle(article);
 
     return "redirect:/myclass/board?board_id=" + article.getBoard_id();
+  }
+
+  @PostMapping("/read/comment")
+  public String writeComment(int article_id, Comment comment) {
+    boardService.writeComment(article_id, comment);
+    return "redirect:/myclass/board/read?article_id=" + article_id;
+  }
+
+  @GetMapping("/read/comment/delete")
+  public String deleteComment(int comment_id, int article_id, int board_id) {
+    boardService.deleteComment(comment_id);
+    return "redirect:/myclass/board/read?article_id=" + article_id + "&board_id=" + board_id;
   }
 }

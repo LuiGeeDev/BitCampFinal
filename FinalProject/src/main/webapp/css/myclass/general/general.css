@@ -21,10 +21,6 @@
   board-bottom: 1px solid #a6a6a6;
 }
 
-span {
-  display: block;
-}
-
 .board-topnav {
   display: flex;
 }
@@ -33,6 +29,10 @@ span {
   flex: 0.15 0.15 0;
   font-weight: 700;
   text-align: center;
+}
+
+span {
+  display: block;
 }
 
 .board-title {
@@ -44,6 +44,7 @@ span {
 
 .board-content {
   display: flex;
+  position: relative;
 }
 
 .writer, .write-time, .write-count {
@@ -51,13 +52,22 @@ span {
   text-align: center;
 }
 
-.title {
+.article-title {
   flex: 1 1 0;
   text-align: center;
   max-width: 550px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.article-title span {
+  display: inline;
+}
+
+.comment-size {
+  font-size: 13px;
+  color: #F29C10;
 }
 
 .board-content {
@@ -125,4 +135,10 @@ a {
 .board-writeBtn {
   margin-top: 10px;
   margin-left: auto;
+}
+
+.file {
+  position: absolute;
+  color: #F29C10;
+  left: 10px;
 }
