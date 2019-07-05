@@ -30,7 +30,7 @@
       <div class="homework-content" th:utext="${article.content}">별찍기
         10문제를 만들어서 올리세요^^</div>
       <div class="button-wrapper" id="buttons">
-        <a href="/myclass/homework" class="btn btn-primary btn-sm">목록</a>
+        <a th:href="@{/myclass/homework(page=${page})}" class="btn btn-primary btn-sm">목록</a>
         <a th:href="@{/myclass/homework/edit(id=${article.id})}"
           class="btn btn-primary btn-sm">수정</a>
         <button class="btn btn-primary btn-sm" id="delete-btn">삭제</button>

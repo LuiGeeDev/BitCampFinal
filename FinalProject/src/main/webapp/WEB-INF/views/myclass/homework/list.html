@@ -30,7 +30,7 @@
           class="board-count">조회</span>
       </div>
       <th:block th:each="homeworkList : ${homeworkList}">
-      <a th:href="@{/myclass/homework/detail(id=${homeworkList.id})}"  class="article">
+      <a th:href="@{/myclass/homework/detail(id=${homeworkList.id}, page=${page})}"  class="article">
         <div class="board-content">
           <span class="title" th:text="${homeworkList.title}">주말 개인과제</span> <span class="writer" th:text="${homeworkList.username}">임경균
             강사님</span> <span class="write-time" th:text="${#strings.arraySplit(homeworkList.time,' ')[0]}">2019.07.01</span> <span
@@ -42,12 +42,17 @@
     <div class="row">
       <!-- 페이지 버튼 -->
       <div class="page-btns">
-        <a href="#" class="btn btn-primary">이전</a> <a href="#"
-          class="btn btn-primary">1</a> <a href="#"
-          class="btn btn-primary">2</a> <a href="#"
-          class="btn btn-primary">3</a> <a href="#"
-          class="btn btn-primary">다음</a>
+        <span th:if="${pageMaker.prev}==true">
+          <a class="btn btn-primary paging" th:href="@{/myclass/homework(page=${pageMaker.startPage}-1, perPageNum=${pageMaker.cri.perPageNum})}">&laquo;</a>
+        </span>
+        <span th:each="idx, iterStat : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}" >
+          <a class="btn btn-primary paging" th:href="@{/myclass/homework(page=${idx})}" th:classappend="${pageMaker.cri.page} == ${idx} ? active : null" th:text="${idx}"></a>          
+        </span>
+        <span th:if="${pageMaker.next} == true and ${pageMaker.endPage > 0}">
+          <a class="btn btn-primary paging" th:href="@{/myclass/homework(page=${pageMaker.endPage}+1 , perPageNum=${pageMaker.cri.perPageNum})}">&raquo;</a>
+        </span>
       </div>
+
       <div class="write-btns">
         <a href="/myclass/homework/write" class="btn btn-primary">글쓰기</a>
       </div>
