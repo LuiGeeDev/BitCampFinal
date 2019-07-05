@@ -1,6 +1,8 @@
 package kr.or.bit.controller;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,32 +58,7 @@ public class MyClassController {
 
   @Autowired
   private ArticleInsertService articleInsertService;
-
-  @GetMapping("/board")
-  public String boardPage(int boardId, @RequestParam(name = "page", defaultValue = "1") int page, Model model) {
-    List<Article> articleList = boardService.getArticlesByPage(boardId, page);
-    model.addAttribute("articles", articleList);
-    return "myclass/board/list";
-  }
-
-  @GetMapping("/board/read")
-  public String readArticle(int article_id, Model model) {
-    Article article = articleService.selectOneArticle("general", article_id);
-    model.addAttribute("article", article);
-    return "myclass/board/read";
-  }
-
-  @GetMapping("/board/write")
-  public String writePage() {
-    return "myclass/board/write";
-  }
-
-  @PostMapping("/board/write")
-  public String writeArticle(Article article, General general) {
-    articleInsertService.writeArticle(article, general);
-    return "redirect:/myclass/board/list";
-  }
-
+  
   @GetMapping("/project")
   public String projectPage() {
     return "myclass/project/main";
@@ -240,13 +217,14 @@ public class MyClassController {
     
     article.setBoard_id(board.getId());
     article.setTitle("과제제출");
+    article.setContent("과제제출");
     article.setLevel(2);
     Homework homework = new Homework();
     List<MultipartFile> files = new ArrayList<>();
     files.add(file1);
     files.add(file2);
     articleInsertService.writeReplyArticle(article, homework, files, request);
-    return"redirect:/myclass/homework/detail?id="+article.getId();
+    return "redirect:/myclass/homework/detail?id="+article.getId();
   }
   
   @GetMapping("/homework/write")
@@ -268,8 +246,58 @@ public class MyClassController {
     return "redirect:/myclass/homework";
   }
   
-  @GetMapping("/main/home")
-  public String mainPage() {
-    return "myclass/main/home";
+  @GetMapping("")
+  public String mainPage(Model model) {
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
+    Course course = courseDao.selectCourse(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id());
+    
+    course.setEndDate(course.getEnd_date().toLocalDate());
+    course.setStartDate(course.getStart_date().toLocalDate());
+    
+    Period diff = Period.between(course.getStartDate(), course.getEndDate());
+    Period diff2 = Period.between(course.getStartDate(), LocalDate.now());
+    int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
+    
+    System.out.println(diff2.getDays());
+    System.out.println(diff.getDays());
+    System.out.println(completion);
+    
+    model.addAttribute("completion", completion);
+    
+    return "myclass/home";
+  }
+  
+  @GetMapping("/homework/edit")
+  public String editHomeworkArticle(Model model, int id) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
+    Article article = articleDao.selectOneArticle(id);
+    Homework homework = homeworkDao.selectHomeworkByArticleId(id);
+    article.setOption(homework);
+    model.addAttribute("article", article);
+    
+    return "myclass/homework/edit";
+  }
+  
+  @PostMapping("/homework/edit")
+  public String editOkHomeworkArticle(Article updateArticle) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
+    Homework homework = homeworkDao.selectHomeworkByArticleId(updateArticle.getId());
+    updateArticle.setOption(homework);
+    
+    articleDao.updateArticle(updateArticle);
+    homeworkDao.updateHomeworkArticle(updateArticle);
+    
+    return "redirect:/myclass/homework/detail?id="+updateArticle.getId();
+  }
+  
+  @PostMapping("/homework/delete")
+  public String deleteHomeworkArticle(Article article) {
+    System.out.println(article);
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    articleDao.deleteArticle(article.getId());
+    return "redirect:/myclass/homework";
   }
 }

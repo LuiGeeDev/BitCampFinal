@@ -51,7 +51,7 @@
 
 }
 .homework-title {
-  flex-basis:35%;
+  flex-basis:85%;
   border:1px solid ;
   border-radius: 3px;
   padding:5px 20px;
@@ -65,13 +65,6 @@
 }
 
 .homework-endDate {
-  flex-basis:35%;
-  border:1px solid;
-  border-radius: 3px;
-  padding:5px 20px;
-}
-
-.homework-name {
   flex-basis:35%;
   border:1px solid;
   border-radius: 3px;
@@ -112,20 +105,70 @@
 .ppt-upload-text{
   margin-right:10px;
   font-weight:bold;
-  border:1px solid; 
   padding:5px
+}
+.ppt-upload-input{
+  border:1px solid;
 }
 .source-upload-text{
   margin-left:20px;
   margin-right:10px;
   font-weight:bold;
-  border:1px solid; 
-  padding:5px
+  padding:5px;
 
-}
-.ppt-upload-input{
-  border:1px solid;
 }
 .source-upload-input{
   border:1px solid;
+}
+
+
+.relpy-container {
+  display: flex;
+  width:70%;
+  margin:20px 150px;
+}
+.reply-group {
+  border:1px solid #bdbdbd;
+  border-radius:4px;
+  margin-right:15px;
+  text-align:center;
+  width:10%;
+}
+.reply-files {
+  width:60%;
+  display:flex;
+}
+.reply-files, .pptFile{
+  flex:1;
+  word-break: unset;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.reply-files, .pptFile, .link{
+  margin-left:3px;
+}
+
+.reply-files, .sourceFile {
+  margin-left:3px;
+  flex:1;
+}
+.reply-files, .sourceFile, .link {
+  margin-left:3px;
+}
+.relpy-name {
+  text-align:center;
+  width:15%;
+}
+.relpy-writeDate {
+  text-align:center;
+  width:10%;
+}
+.reply-update-button {
+  width:5%;
+
+ }
+.button-wrapper{
+  text-align:right;
+  width:100%;
 }

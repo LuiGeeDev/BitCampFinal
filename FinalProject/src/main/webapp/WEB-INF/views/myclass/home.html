@@ -5,12 +5,9 @@
 >
   <head>
     <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-    <link rel="stylesheet" th:href="@{/css/myclass/main/home.css}" />
+    <link rel="stylesheet" th:href="@{/css/myclass/home.css}" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
-    <link
-      href=/resources/dist/static/css/app.093b44a44b72c4606a739cad77ca4f84.css
-      rel=stylesheet> 
   </head>
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
@@ -26,10 +23,10 @@
             <span class="progres">
             <span>
               <span class="progress-bar bg-warning progress-bar-striped"
-                style="width: 70%; height: 30px;"></span>
+                th:style="'width:' + ${completion} + '%; height: 30px;'"></span>
             </span> 
             </span>
-            <span class="progressview">70% 진행중</span>
+            <span class="progressview" th:text="${completion} + '% 진행 중'">70% 진행중</span>
             </span>
             </div>
           <div class="recentBoard"> 

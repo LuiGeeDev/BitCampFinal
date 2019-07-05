@@ -128,12 +128,4 @@ public class AjaxController {
     String username = Helper.userName();
     notificationDao.checkAllNotification(username);
   }
-
-  @PostMapping("/general/delete")
-  public String generalBoardDelete(int id) {
-    System.out.println("delete 타고있냐?");
-    String boardOption = "general";
-    articleDeleteService.deleteArticle(id, boardOption);
-    return "redirect:/general/generalBoard";
-  }
 }

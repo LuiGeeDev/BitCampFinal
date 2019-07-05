@@ -10,11 +10,57 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT * 
     FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
           FROM (SELECT id, title, content, time, updated_time, view_count, original_id, enable, level, username, board_id
-          FROM ARTICLE 
-	      WHERE board_id = #{board_id}
+                FROM ARTICLE 
+	            WHERE board_id = #{board_id}
+          ORDER BY id DESC) a) b
+    WHERE rownum BETWEEN #{start} AND #{end};
+  </select>
+  <select id="selectArticlesSorted" resultType="kr.or.bit.model.Article">
+    SET @rownum:=0;
+    SELECT * 
+    FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
+          FROM (SELECT id, title, content, time, updated_time, view_count, original_id, enable, level, username, board_id
+                FROM ARTICLE 
+	            WHERE board_id = #{board_id}
+                ORDER BY view_count DESC, id DESC) a) b
+    WHERE rownum BETWEEN #{start} AND #{end};
+  </select>
+  <select id="selectArticlesBySearchWord" resultType="kr.or.bit.model.Article">
+    SET @rownum:=0;
+    SELECT * 
+    FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
+          FROM (SELECT id, title, content, time, updated_time, view_count, original_id, enable, level, username, board_id
+                FROM ARTICLE 
+                WHERE board_id = #{board_id}
+                <choose>
+                  <when test="criteria != 'titlecontent'">
+                    AND ${criteria} LIKE '%${search}%'
+                  </when>
+                  <otherwise>
+                    AND (title LIKE '%${search}%' OR content LIKE '%${search}%')
+                  </otherwise>
+                </choose>
           ORDER BY time DESC, id DESC) a) b
-    WHERE rownum BETWEEN #{start} AND #{end}
-    LIMIT 20;
+    WHERE rownum BETWEEN #{start} AND #{end};
+  </select>
+  <select id="selectArticlesByComment" resultType="kr.or.bit.model.Article">
+    SET @rownum:=0;
+    SELECT *
+    FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
+          FROM (SELECT DISTINCT a.*
+                FROM ARTICLE A
+                JOIN COMMENT C
+                ON a.id = c.article_id
+                <where>
+                  <if test="criteria == 'comment_writer'">
+                    c.username like '%${search}%'
+                  </if>
+                  <if test="criteria =='comment_content'">
+                    c.content like '%${search}%'
+                  </if>
+                </where>
+                ORDER BY id desc) a ) b
+    WHERE rownum BETWEEN 7 and 17;
   </select>
   <select id="selectAllArticleByBoardId"
     resultType="kr.or.bit.model.Article">
@@ -93,7 +139,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="selectHomeworkReplies" resultType="kr.or.bit.model.Article">
 	SELECT * 
 	FROM article 
-	WHERE ORIGINAL_ID = #{article_id} AND ID != #{article_id};
+	WHERE ORIGINAL_ID = #{article_id} AND ID != #{article_id} AND ENABLE=1;
   </select>
 </mapper>
 <!-- public interface ArticleDao { void insertArticle(Article article); void 

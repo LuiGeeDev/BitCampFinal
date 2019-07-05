@@ -90,7 +90,7 @@
       $("#spinner").hide();
     });
     	$("#deletebtn").click(function(event) {
-    	  let articleId = [[${list.id}]];
+    	  let articleId = [[${article.id}]];
     	  console.log(articleId);
     	  event.preventDefault();
         Swal.fire({
@@ -125,19 +125,7 @@
                
           }
         })
-    	});
-    	
-    	$("#listbtn").click(function() {
-    	  location.href = "/general/generalBoard";
-    	});
-    	
-    	$("#updatebtn").click(function() {
-    	  location.href = "/general/edit?id="+[[${list.id}]];
-    	  
-    	  /* th:href="@{/video/edit(id=${article.id},video_id=${article.option.video_id})}" */
-    	});
-    
-    
+    	});  
     </script>
 </body>
 </html>
