@@ -204,6 +204,6 @@ public class Article {
         + ", enable=" + enable + ", username=" + username + ", board_id=" + board_id + ", timeLocal=" + timeLocal
         + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", tags=" + tags + ", commentlist="
         + commentlist + ", option=" + option + ", vote=" + vote + ", votenum=" + votenum + ", vote_count=" + vote_count
-        + "]";
+        + ", fileslist=" + fileslist + "]";
   }
 }
