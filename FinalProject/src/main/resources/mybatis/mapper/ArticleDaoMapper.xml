@@ -29,8 +29,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SET @rownum:=0;
     SELECT * 
     FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
-          FROM (SELECT id, title, content, time, updated_time, view_count, original_id, enable, level, username, board_id
-                FROM ARTICLE 
+          FROM (SELECT id, title, content, time, updated_time, view_count, original_id, enable, level, a.username, board_id
+                FROM ARTICLE A
+                LEFT JOIN MEMBER M
+                ON a.username = m.username
                 WHERE board_id = #{board_id}
                 <choose>
                   <when test="criteria != 'titlecontent'">
@@ -51,14 +53,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 FROM ARTICLE A
                 JOIN COMMENT C
                 ON a.id = c.article_id
-                <where>
-                  <if test="criteria == 'comment_writer'">
-                    c.username like '%${search}%'
-                  </if>
-                  <if test="criteria =='comment_content'">
-                    c.content like '%${search}%'
-                  </if>
-                </where>
+                LEFT JOIN MEMBER M
+                ON c.username = m.username
+                WHERE BOARD_ID = #{board_id}
+                <if test="criteria == 'comment_name'">
+                  and m.name like '%${search}%'
+                </if>
+                <if test="criteria =='comment_content'">
+                  and c.content like '%${search}%'
+                </if>
                 ORDER BY id desc) a ) b
     WHERE rownum BETWEEN #{start} and #{end};
   </select>
