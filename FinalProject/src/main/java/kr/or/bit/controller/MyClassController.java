@@ -160,8 +160,6 @@ public class MyClassController {
   
   @GetMapping("/homework")
   public String homework(Model model) {
-//    List<Article> homeworkList = articleService.selectAllArticle("homework", HOMEWORK_BOARD_ID);
-//    model.addAttribute("homeworkList", homeworkList);
     String username = Helper.userName();
     
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
