@@ -34,7 +34,7 @@
           
           <div class="nav-menu">
             <div th:classappend="${#strings.contains(#request.getRequestURI(),'stack')} ? 'active-menu'" class="nav-icon" >
-             <a th:href="@{/stack/home}">
+             <a th:href="@{/stack?board_id=1}">
             
               <i class="far fa-question-circle fa-2x"></i>
              </a>
