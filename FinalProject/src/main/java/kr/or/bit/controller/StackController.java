@@ -54,7 +54,9 @@ public class StackController {
     } else if (search != null) {
       articles = boardService.getArticlesBySearchWord(board_id, page, search, criteria);
     }
-
+    
+    System.out.println(articles);
+    
     model.addAttribute("board", boardService.getBoardInfo(board_id));
     model.addAttribute("stacklist", articles);
 
