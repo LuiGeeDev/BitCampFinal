@@ -16,6 +16,7 @@
     <div class="main" th:fragment="main">
       <form method="POST" enctype="multipart/form-data">
         <div id="write-form-wrapper">
+          <input type="hidden" name="board_id" th:value="${board.id}">
           <input type="text" id="input-title" placeholder="제목" name="title"/>
           <div class="input-file">
           <span>
