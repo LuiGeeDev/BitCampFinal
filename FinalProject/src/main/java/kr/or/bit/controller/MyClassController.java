@@ -193,6 +193,7 @@ public class MyClassController {
   @PostMapping("/homework/detail")
   public String submitHomeworkDetail(Article article, MultipartFile file1, MultipartFile file2,
       HttpServletRequest request) {
+    
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     Member member = memberDao.selectMemberByUsername(Helper.userName());
@@ -207,7 +208,7 @@ public class MyClassController {
     files.add(file1);
     files.add(file2);
     articleInsertService.writeReplyArticle(article, homework, files, request);
-    return "redirect:/myclass/homework/detail?id=" + article.getId();
+    return "redirect:/myclass/homework/detail?id=" + article.getId() +"&page="+request.getParameter("page");
   }
 
   @GetMapping("/homework/write")
@@ -258,14 +259,15 @@ public class MyClassController {
   }
 
   @PostMapping("/homework/edit")
-  public String editOkHomeworkArticle(Article updateArticle) {
+  public String editOkHomeworkArticle(Article updateArticle, HttpServletRequest request) {
+    
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
     Homework homework = homeworkDao.selectHomeworkByArticleId(updateArticle.getId());
     updateArticle.setOption(homework);
     articleDao.updateArticle(updateArticle);
     homeworkDao.updateHomeworkArticle(updateArticle);
-    return "redirect:/myclass/homework/detail?id=" + updateArticle.getId();
+    return "redirect:/myclass/homework/detail?id=" + updateArticle.getId() + "&page="+request.getParameter("page");
   }
 
   @PostMapping("/homework/delete")
