@@ -64,13 +64,13 @@
 	
       <div th:if="${#strings.contains(#request.getRequestURI(),'myclass')}" class="side-nav-menu">
         <!-- 프로젝트 게시판 -->
+        <a th:href="@{/myclass}">메인 페이지</a>
         <a href="#project" data-toggle="collapse" th:if="${projects.size() != 0}">프로젝트 게시판</a>
         <div id="project" class="collapse" th:if="${projects.size() != 0}">
           <a href="#" th:each="project : ${projects}" th:text="'-' + ${project.project_name}"></a>
         </div>
         <a href="#" th:each="board : ${boardList}" th:text="${board.board_name}"></a>
         <a th:href="@{/myclass/create}" sec:authorize="hasRole('TEACHER')">프로젝트 생성</a> 
-        <a th:href="@{/myclass/main/home}">메인 페이지</a>
       </div>
       <div th:if="${#strings.contains(#request.getRequestURI(),'stack')}" class="side-nav-menu">
         <a href="#">스택!!! 게시판</a>
