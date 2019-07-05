@@ -7,7 +7,7 @@
 <link
   href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css"
   rel="stylesheet" />
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
   <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
@@ -17,9 +17,8 @@
     </div>
     <div class="row" th:object="${article}">
       <div class="homework-container">
-        <span class="hw-title">제목</span> <span class="homework-title"
-          th:text="${article.title}">안녕</span> <span class="hw-title">작성자</span>
-        <span class="homework-name" th:text="${article.writer.name}">임경균강사님</span>
+        <span class="hw-title">제목</span> 
+        <span class="homework-title" th:text="${article.title}">안녕</span>
       </div>
       <div class="homework-container">
         <span class="hw-title">시작일</span> <span
@@ -33,55 +32,41 @@
     <form method="post" enctype="multipart/form-data">
       <input type="hidden" name="original_id" th:value="${article.id}">
       <div class="homework-container">
-        <span class="ppt-upload-text">발표자료</span><span
-          class="ppt-upload-input"><input type="file"
-          name="file1"></span> <span class="source-upload-text">소스코드</span><span
-          class="source-upload-input"><input type="file"
-          name="file2"></span>
+        <span class="ppt-upload-text">발표자료</span>
+        <span class="ppt-upload-input"><input type="file" name="file1"></span> 
+        <span class="source-upload-text">소스코드</span>
+        <span class="source-upload-input"><input type="file" name="file2"></span>
       </div>
-      <div class="homework-submit">
-        <textarea name="content" id="summernote"></textarea>
-      </div>
-      <!-- <input type="text" class="homework-submit" placeholder="  내용을 입력하세요"> -->
       <div id="buttons">
-        <a href="/myclass/homework" class="btn btn-primary btn-sm">목록가기</a>
+        <a href="/myclass/homework" class="btn btn-primary btn-sm">목록</a>
         <input type="submit" class="btn btn-primary btn-sm" value="제출">
       </div>
     </form>
-    <div class="row" th:each="reply : ${replies}">
-      <div class="reply-container">
-        <div class="submit-container">
-          <span class="sm-title">이름</span> <span class="submit-name"
-            th:text="${reply.writer.name}">이힘찬</span> <span
-            class="sm-title">제출일</span> <span class="submit-writeDate"
-            th:text="${#temporals.format(reply.timeLocal, 'yyyy-MM-dd')}">2019-07-28</span>
-        </div>
-        <div class="submit-container">
-          <span class="sm-title">조</span> <span class="submit-group">2조</span>
-          <span class="sm-title">첨부파일</span> <span class="submit-file"
-            th:if="${reply.option.files[0] == null}">등록된 파일이
-            없습니다.</span> <a th:if="${reply.option.files[0] != null}"
-            th:href="@{{filename}(filename=${reply.option.files[0].filename})}"
-            th:attr="download=${reply.option.files[0].original_filename}">
-            <span class="submit-file"
-            th:text="${reply.option.files[0].original_filename}">javaHomework.jar</span>
-          </a> <a th:if="${reply.option.files[1] != null}"
-            th:href="@{{filename}(filename=${reply.option.files[1].filename})}"
-            th:attr="download=${reply.option.files[1].original_filename}">
-            <span class="submit-file"
-            th:if="${reply.option.files[1] != null}"
-            th:text="${reply.option.files[1].original_filename}">javaHomework.jar</span>
+    
+    <div class="relpy-container" th:each="reply : ${replies}">
+      <div class="reply-group">2조</div>
+      <!-- <div class="reply-noneFile" th:if="${reply.option.files[0] == null}">등록된 파일이 없습니다.</div> -->
+      <div class="reply-files">
+        <div class="pptFile">
+          <a th:if="${reply.option.files[0] != null}"
+             th:href="@{{filename}(filename=${reply.option.files[0].filename})}"
+             th:attr="download=${reply.option.files[0].original_filename}">
+            <i class="fas fa-save"></i><span class="link" th:text="${reply.option.files[0].original_filename}"></span>
           </a>
         </div>
-        <div class="homework-content" th:utext="${reply.content}">감사합니다^^</div>
+        <div class="sourceFile">
+          <a th:if="${reply.option.files[1] != null}"
+             th:href="@{{filename}(filename=${reply.option.files[1].filename})}"
+             th:attr="download=${reply.option.files[1].original_filename}">
+            <i class="fas fa-save"></i><span class="link" th:if="${reply.option.files[1] != null}" th:text="${reply.option.files[1].original_filename}"></span>
+          </a>
+        </div>
       </div>
-      <div id="update-buttons">
-        <input type="button" class="btn btn-primary btn-sm" value="수정">
-        <input type="button" class="btn btn-primary btn-sm" value="삭제">
-      </div>
+      <div class="relpy-name" th:text="${reply.writer.name}"></div>
+      <div class="relpy-writeDate" th:text="${#temporals.format(reply.timeLocal, 'yyyy-MM-dd')}"></div>
+      <div class="reply-update-button"></div>
     </div>
   </div>
-
   <!-- 필요하다면 이 아래에 외부 자바스크립트도 추가 가능 -->
   <script
     src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
