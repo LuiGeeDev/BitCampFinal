@@ -72,3 +72,12 @@ body {
   right: 10px;
   color: #a6a6a6;
 }
+
+.content{
+  font-family: 'Nanum Gothic'!important;
+  font-size: 17.6px!important;
+}
+.content p {
+  font-family: 'Nanum Gothic'!important;
+  font-size: 17.6px!important;
+}

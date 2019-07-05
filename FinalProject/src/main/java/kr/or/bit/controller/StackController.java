@@ -66,10 +66,10 @@ public class StackController {
   //글쓰기 버튼 누르기..
   @PostMapping("/write")
   public String writeOkStack(Article article) {
-    General general = new General();
+    System.out.println(article.getTitle());
     article.setUsername(Helper.userName());
     article.setBoard_id(STACK_BOARD_ID);
-    articleInsertService.writeArticle(article, general);
+    articleInsertService.writeArticle(article);
     return "redirect:/stack/home";
   }
   
