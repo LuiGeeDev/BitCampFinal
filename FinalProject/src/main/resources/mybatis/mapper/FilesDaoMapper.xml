@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="selectFilesByFilename" resultType="kr.or.bit.model.Files">
     select id, original_filename, filename
     from files
-    where filename=#{filename}
+    where filename=#{filename} AND enable = 1
   </select>
 </mapper>
 

@@ -139,7 +139,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="selectHomeworkReplies" resultType="kr.or.bit.model.Article">
 	SELECT * 
 	FROM article 
-	WHERE ORIGINAL_ID = #{article_id} AND ID != #{article_id};
+	WHERE ORIGINAL_ID = #{article_id} AND ID != #{article_id} AND ENABLE=1;
   </select>
 </mapper>
 <!-- public interface ArticleDao { void insertArticle(Article article); void 
