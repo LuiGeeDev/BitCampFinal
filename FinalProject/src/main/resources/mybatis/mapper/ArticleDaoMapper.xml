@@ -11,8 +11,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
           FROM (SELECT id, title, content, time, updated_time, view_count, original_id, enable, level, username, board_id
                 FROM ARTICLE 
-	            WHERE board_id = #{board_id}
-          ORDER BY id DESC) a) b
+	              WHERE board_id = #{board_id}
+                ORDER BY id DESC) a) b
     WHERE rownum BETWEEN #{start} AND #{end};
   </select>
   <select id="selectArticlesSorted" resultType="kr.or.bit.model.Article">

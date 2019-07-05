@@ -87,7 +87,7 @@ public class MyClassController {
     return "myclass/qna/home";
   }
 
-  @GetMapping("/create")
+  @GetMapping("/create/project")
   public String projectPage(Model model) {
     String teacherName = Helper.userName();
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
@@ -97,10 +97,10 @@ public class MyClassController {
     List<Member> memberList = memberDao.selectAllMembersByMycourse(teacher.getCourse_id()); // 코스에 속한 학생리스트 저장
     model.addAttribute("memberList", memberList);
     model.addAttribute("course", course);
-    return "myclass/create/main";
+    return "myclass/teacher/create/project";
   }
 
-  @PostMapping("/create")
+  @PostMapping("/create/project")
   @Transactional
   public String createProject(@RequestBody Project project) {
     ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
@@ -137,7 +137,7 @@ public class MyClassController {
       newMember.setUsername(username);
       groupMemberDao.insertGroupMember(newMember);
     }
-    return "redirect:/myclass/create";
+    return "redirect:/myclass/teacher/setting";
   }
 
   @GetMapping("/homework")
@@ -274,5 +274,10 @@ public class MyClassController {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     articleDao.deleteArticle(article.getId());
     return "redirect:/myclass/homework";
+  }
+  
+  @GetMapping("/setting")
+  public String manageMain() {
+    return "myclass/teacher/managing";
   }
 }

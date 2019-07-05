@@ -19,8 +19,12 @@ public interface BoardDao {
   void updateBoard(int id);
   
   List<Board> selectMyClassBoard(int course_id);
+
+  void insertBoard(Board board);
   
   Board selectBoardByCourseId(@Param("course_id")int course_id,@Param("boardtype") int boardType);
 
   Board selectBoardById(int board_id);
+
+  Board isBoardExists(@Param("course_id") int course_id, @Param("board_name") String board_name);
 }

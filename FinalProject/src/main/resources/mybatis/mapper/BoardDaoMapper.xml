@@ -46,6 +46,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM BOARD
     WHERE id = #{board_id}
   </select>
+  <select id="isBoardExists" resultType="kr.or.bit.model.Board">
+    SELECT id, board_name, boardtype, course_id
+    FROM BOARD
+    WHERE course_id = #{course_id}
+    AND board_name = #{board_name}
+  </select>
+  <insert id="insertBoard">
+    INSERT INTO BOARD (BOARD_NAME, BOARDTYPE, COURSE_ID)
+    VALUES (#{board_name}, #{boardtype}, #{course_id})
+  </insert>
 </mapper>  
 
 
