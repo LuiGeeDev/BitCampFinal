@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,10 +32,12 @@ import kr.or.bit.dao.ProjectDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
 import kr.or.bit.model.Course;
+import kr.or.bit.model.Criteria;
 import kr.or.bit.model.Files;
 import kr.or.bit.model.Group;
 import kr.or.bit.model.Homework;
 import kr.or.bit.model.Member;
+import kr.or.bit.model.PageMaker;
 import kr.or.bit.model.Project;
 import kr.or.bit.model.ProjectMember;
 import kr.or.bit.service.ArticleInsertService;
@@ -138,17 +141,32 @@ public class MyClassController {
   }
 
   @GetMapping("/homework")
-  public String homework(Model model) {
+  public String homework(@ModelAttribute("cri") Criteria cri, Model model,HttpServletRequest request) {
+    // List<Article> homeworkList = articleService.selectAllArticle("homework",
+    // HOMEWORK_BOARD_ID);
+    // model.addAttribute("homeworkList", homeworkList);
+    String currentPage = request.getParameter("page");
+    if(currentPage == null) {
+      currentPage = "1";
+    }
     String username = Helper.userName();
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
     Member member = memberDao.selectMemberByUsername(username);
-    model.addAttribute("homeworkList", homeworkDao.selectAllHomeworkArticle(member.getCourse_id()));
+    model.addAttribute("homeworkList", homeworkDao.selectAllHomeworkArticle(cri , member.getCourse_id()));
+    
+    PageMaker pageMaker = new PageMaker();
+    pageMaker.setCri(cri);
+    pageMaker.setTotalCount(homeworkDao.countAllHomeworkArticle(member.getCourse_id()));
+    
+    model.addAttribute("pageMaker", pageMaker);
+    model.addAttribute("page", currentPage);
     return "myclass/homework/list";
   }
 
   @GetMapping("/homework/detail")
-  public String homeworkDetailPage(Model model, int id) {
+  public String homeworkDetailPage(Model model, int id, HttpServletRequest request) {
+    
     Article article = articleService.selectOneArticle("homework", id);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
@@ -168,6 +186,7 @@ public class MyClassController {
     }
     model.addAttribute("article", article);
     model.addAttribute("replies", replies);
+    model.addAttribute("page",request.getParameter("page"));
     return "myclass/homework/detail";
   }
 
