@@ -68,7 +68,7 @@
         </span>
         <span class="writerName" th:text="${user.name}"></span>
         <form
-          th:action="@{/myclass/board/read/comment(id=${article.id})}"
+          th:action="@{/myclass/board/read/comment(article_id=${article.id}, board_id=${board.id})}"
           method="POST"
         >
           <input

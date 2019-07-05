@@ -85,9 +85,9 @@ public class BoardController {
   }
 
   @PostMapping("/read/comment")
-  public String writeComment(int article_id, Comment comment) {
+  public String writeComment(int article_id, int board_id, Comment comment) {
     boardService.writeComment(article_id, comment);
-    return "redirect:/myclass/board/read?article_id=" + article_id;
+    return "redirect:/myclass/board/read?article_id=" + article_id + "&board_id=" + board_id;
   }
 
   @GetMapping("/read/comment/delete")
