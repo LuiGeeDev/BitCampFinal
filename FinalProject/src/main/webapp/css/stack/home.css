@@ -45,9 +45,21 @@ td[colspan="2"] {
   text-overflow: ellipsis;
   font-size: 110%
 }
-.tdcontent br { 
-    display: none; 
-} 
+
+.tdcontent br {
+  display: none;
+}
+
+.tdcontent p img {
+  display: none;
+}
+
+.tdcontent p {
+  margin: 0px;
+  display: inline;
+  font-family: 'Nanum Gothic'!important;
+  font-size: 15.6px!important;
+}
 
 .tdst {
   font-size: 130%;
@@ -69,7 +81,8 @@ td[colspan="2"] {
 }
 
 .td4 {
-  width: 30%
+  width: 20%;
+  font-weight: bold;
 }
 
 .tag-name span {
