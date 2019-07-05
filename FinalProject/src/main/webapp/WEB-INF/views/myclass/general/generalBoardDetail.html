@@ -16,13 +16,13 @@
     </div>
     <div class="detail-container">
       <div class="detail-head">
-        <span class="detail-title" th:text="${list.title}"></span>
+        <span class="detail-title" th:text="${article.title}"></span>
         <div class="detail-subtitle">
-          <span th:text="${list.username}"></span>&nbsp;| &nbsp; <span
-            th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd')}"></span>&nbsp;|
-          조회수 &nbsp; <span th:text="${list.view_count}"
+          <span th:text="${article.username}"></span>&nbsp;| &nbsp; <span
+            th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd')}"></span>&nbsp;|
+          조회수 &nbsp; <span th:text="${article.view_count}"
             class="pointOrange"></span>&nbsp;|댓글수&nbsp; <span
-            th:text="${list.commentlist.size()}" class="pointOrange2"></span>&nbsp;|
+            th:text="${article.commentlist.size()}" class="pointOrange2"></span>&nbsp;|
           <div class="btn-group">
 
             <input type="submit" id="updatebtn"
@@ -35,21 +35,21 @@
           </div>
         </div>
       </div>
-      <div th:each="files : ${list.fileslist}">
+      <div th:each="files : ${article.fileslist}">
         <a th:href="@{{filename}(filename=${files.filename})}"
           th:attr="download=${files.original_filename}"> <span
           class="submit-file" th:text="${files.original_filename}">general.zip</span>
         </a>
       </div>
       
-      <div class="detail-content" th:text="${list.content}"></div>
+      <div class="detail-content" th:text="${article.content}"></div>
     </div>
 
     <div class="detail-comment">
 
       <span class="userIcon"> <i class="fas fa-user-circle fa-lg"></i>
       </span> <span class="writerName" th:text="${user.name}"></span>
-      <form th:action="@{/general/commentwrite(id=${list.id})}"
+      <form th:action="@{/general/commentwrite(id=${article.id})}"
         method="POST">
         <input type="text" name="content" id="content"
           class="comment-text" placeholder="댓글을 입력하세요"> <input
@@ -58,8 +58,8 @@
     </div>
 
     <div class="content-reply-form">
-      <div class="content-reply" th:if="${list.commentlist.size()} > 0"
-        th:each="comlist : ${list.commentlist}">
+      <div class="content-reply" th:if="${article.commentlist.size()} > 0"
+        th:each="comlist : ${article.commentlist}">
         <div class="content-move">
           <span class="userIcon"><i
             class="fas fa-user-circle fa-lg"></i></span> <span
