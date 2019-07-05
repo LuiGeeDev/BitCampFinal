@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.model.Article;
@@ -18,6 +19,7 @@ import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleUpdateService;
 import kr.or.bit.service.ArticleVoteService;
+import kr.or.bit.service.BoardService;
 import kr.or.bit.service.CommentService;
 import kr.or.bit.utils.Helper;
 
@@ -38,15 +40,34 @@ public class StackController {
   private ArticleVoteService articleVoteService;
   @Autowired
   private ArticleUpdateService articleUpdateService;
-  
-  //stack 메인으로 이동
+  @Autowired
+  private BoardService boardService;
+
+  @GetMapping("")
+  public String listPage(int board_id, @RequestParam(defaultValue = "1") int page,
+      @RequestParam(required = false) String sort, @RequestParam(required = false) String search, @RequestParam(required = false) String criteria, Model model) {
+    List<Article> articles = null;
+    if (sort == null && search == null) {
+      articles = boardService.getArticlesByPage(board_id, page);
+    } else if (sort != null) {
+      articles = boardService.getArticlesSorted(board_id, page, sort);
+    } else if (search != null) {
+      articles = boardService.getArticlesBySearchWord(board_id, page, search, criteria);
+    }
+
+    model.addAttribute("board", boardService.getBoardInfo(board_id));
+    model.addAttribute("stacklist", articles);
+
+    return "stack/home";
+  }
+/*  //stack 메인으로 이동
   @GetMapping("/home")
   public String getStackList(Model model) {
     List<Article> article = articleService.selectAllArticle("qna",STACK_BOARD_ID);
     model.addAttribute("stacklist",article);
     
     return "stack/home";
-  }
+  }*/
   
   //stack 게시물 상세보기 버튼
   @GetMapping("/content")
