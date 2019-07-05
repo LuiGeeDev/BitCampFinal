@@ -2,7 +2,10 @@ package kr.or.bit.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.or.bit.model.Article;
+import kr.or.bit.model.Criteria;
 import kr.or.bit.model.Homework;
 
 public interface HomeworkDao extends OptionDao {
@@ -13,7 +16,9 @@ public interface HomeworkDao extends OptionDao {
   
   Homework selectHomeworkByArticleId(int article_id);
   
-  List<Homework> selectAllHomeworkArticle(int course_id);
+  List<Homework> selectAllHomeworkArticle(@Param("cri") Criteria cri, @Param("course_id") int course_id);
   
   void updateHomeworkArticle(Article article);
+  
+  int countAllHomeworkArticle(int course_id);
 }
