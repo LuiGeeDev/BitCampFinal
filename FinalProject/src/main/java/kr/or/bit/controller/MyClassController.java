@@ -182,8 +182,6 @@ public class MyClassController {
     FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     List<Article> replies = articleDao.selectHomeworkReplies(id);
-
-    
     for(Article reply : replies) {
       reply.setTimeLocal(reply.getTime().toLocalDateTime());
       Homework homework = homeworkDao.selectHomeworkByArticleId(reply.getId());
@@ -194,9 +192,7 @@ public class MyClassController {
       homework.setFiles(files);
       
       reply.setOption(homework);
-      
       reply.setWriter(memberDao.selectMemberByUsername(reply.getUsername()));
-      
     }
     
     
