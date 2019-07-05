@@ -140,6 +140,10 @@
 }
 .reply-files, .pptFile{
   flex:1;
+  word-break: unset;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .reply-files, .pptFile, .link{
   margin-left:3px;
