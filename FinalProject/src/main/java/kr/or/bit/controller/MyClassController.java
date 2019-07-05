@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.ArticleDao;
@@ -33,7 +32,6 @@ import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.Files;
-import kr.or.bit.model.General;
 import kr.or.bit.model.Group;
 import kr.or.bit.model.Homework;
 import kr.or.bit.model.Member;
