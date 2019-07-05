@@ -7,7 +7,6 @@ public class General implements ArticleOption {
   private int file1;
   private int file2;
   private int Article_id;
-
   private List<Files> files;
 
   public List<Files> getFiles() {
@@ -52,6 +51,7 @@ public class General implements ArticleOption {
 
   @Override
   public String toString() {
-    return "General [id=" + id + ", file1=" + file1 + ", file2=" + file2 + ", Article_id=" + Article_id + "]";
+    return "General [id=" + id + ", file1=" + file1 + ", file2=" + file2 + ", Article_id=" + Article_id + ", files="
+        + files + "]";
   }
 }
