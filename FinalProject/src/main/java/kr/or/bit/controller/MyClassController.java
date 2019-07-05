@@ -56,32 +56,7 @@ public class MyClassController {
 
   @Autowired
   private ArticleInsertService articleInsertService;
-
-  @GetMapping("/board")
-  public String boardPage(int boardId, @RequestParam(name = "page", defaultValue = "1") int page, Model model) {
-    List<Article> articleList = boardService.getArticlesByPage(boardId, page);
-    model.addAttribute("articles", articleList);
-    return "myclass/board/list";
-  }
-
-  @GetMapping("/board/read")
-  public String readArticle(int article_id, Model model) {
-    Article article = articleService.selectOneArticle("general", article_id);
-    model.addAttribute("article", article);
-    return "myclass/board/read";
-  }
-
-  @GetMapping("/board/write")
-  public String writePage() {
-    return "myclass/board/write";
-  }
-
-  @PostMapping("/board/write")
-  public String writeArticle(Article article, General general) {
-    articleInsertService.writeArticle(article, general);
-    return "redirect:/myclass/board/list";
-  }
-
+  
   @GetMapping("/project")
   public String projectPage() {
     return "myclass/project/main";

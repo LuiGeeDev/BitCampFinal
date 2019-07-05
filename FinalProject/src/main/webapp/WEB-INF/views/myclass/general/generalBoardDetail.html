@@ -17,22 +17,20 @@
         </div>
       <div class="detail-container">
         <div class="detail-head">
-          <span class="detail-title" th:text="${list.title}"></span>
+          <span class="detail-title" th:text="${article.title}"></span>
           <div class="detail-subtitle">
-            <span th:text="${list.username}"></span>&nbsp;| &nbsp;
-            <span th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd')}"></span>&nbsp;| 조회수 &nbsp;
-            <span th:text="${list.view_count}" class="pointOrange"></span>&nbsp;|댓글수&nbsp;
-            <span th:text="${list.commentlist.size()}" class="pointOrange2"></span>&nbsp;|
+            <span th:text="${article.username}"></span>&nbsp;| &nbsp;
+            <span th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd')}"></span>&nbsp;| 조회수 &nbsp;
+            <span th:text="${article.view_count}" class="pointOrange"></span>&nbsp;|댓글수&nbsp;
+            <span th:text="${article.commentlist.size()}" class="pointOrange2"></span>&nbsp;|
           <div class="btn-group">
-          
-            <input type="submit" id="updatebtn"class="btn btn-primary btn-align" value="수정">
-            <input type="submit" id="deletebtn" class="btn btn-primary btn-align" value="삭제">
-            <input type="submit" id="listbtn" class="btn btn-primary btn-align" value="목록">
-           
+            <a th:href="@{/myclass/board/edit(article_id=${article.id}, board_id=${board.id})}" id="updatebtn" class="btn btn-primary btn-align">수정</a>
+            <a th:href="@{/myclass/board/delete(article_id=${article.id})}" id="deletebtn" class="btn btn-primary btn-align">삭제</a>
+            <a th:href="@{/myclass/board(board_id=${board.id})}" id="listbtn" class="btn btn-primary btn-align">목록</a>
           </div>
           </div>
         </div>
-        <div class="detail-content" th:text="${list.content}">  
+        <div class="detail-content" th:text="${article.content}">  
             
         </div>
       </div>
@@ -43,24 +41,24 @@
                 <i class="fas fa-user-circle fa-lg"></i>
             </span>
             <span class="writerName" th:text="${user.name}"></span>
-          <form th:action="@{/general/commentwrite(id=${list.id})}" method="POST">
+          <form th:action="@{/general/commentwrite(id=${article.id})}" method="POST">
           <input type="text" name="content" id="content" class="comment-text" placeholder="댓글을 입력하세요">
           <input type="submit" class="btn btn-primary detail-btn" value="등록">
           </form>
         </div>
         
          <div class="content-reply-form">
-              <div class="content-reply" th:if="${list.commentlist.size()} > 0"
-                                         th:each="comlist : ${list.commentlist}">
+              <div class="content-reply" th:if="${article.commentlist.size()} > 0"
+                                         th:each="comment : ${article.commentlist}">
               <div class="content-move">
                 <span class="userIcon"><i class="fas fa-user-circle fa-lg"></i></span>
-                <span class="writerName" th:text="${comlist.username}"></span>
-                <a th:href="@{/general/commentdelete(id=${comlist.id})}">[삭제]</a>
-                <span class="write-date" th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
+                <span class="writerName" th:text="${comment.username}"></span>
+                <a th:href="@{/general/commentdelete(id=${comment.id})}">[삭제]</a>
+                <span class="write-date" th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
                 </div>
-            <div class="content-comment" th:text="${comlist.content}"></div>
+            <div class="content-comment" th:text="${comment.content}"></div>
             </div>
-             <div th:if="${list.commentlist.size()} == 0" class="noComment">
+             <div th:if="${article.commentlist.size()} == 0" class="noComment">
                등록된 댓글이 없습니다
                </div>    
             
@@ -81,7 +79,7 @@
       $("#spinner").hide();
     });
     	$("#deletebtn").click(function(event) {
-    	  let articleId = [[${list.id}]];
+    	  let articleId = [[${article.id}]];
     	  console.log(articleId);
     	  event.preventDefault();
         Swal.fire({
@@ -116,19 +114,7 @@
                
           }
         })
-    	});
-    	
-    	$("#listbtn").click(function() {
-    	  location.href = "/general/generalBoard";
-    	});
-    	
-    	$("#updatebtn").click(function() {
-    	  location.href = "/general/edit?id="+[[${list.id}]];
-    	  
-    	  /* th:href="@{/video/edit(id=${article.id},video_id=${article.option.video_id})}" */
-    	});
-    
-    
+    	});  
     </script>
   </body>
 </html>
