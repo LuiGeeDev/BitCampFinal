@@ -85,6 +85,7 @@
 .date-line {
   border: 1px solid #23262a;
   position: relative;
+  margin-top: 10px;
 }
 
 .date {

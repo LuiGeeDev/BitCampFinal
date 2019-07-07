@@ -108,6 +108,7 @@ button:hover:after {
 
 .fail {
   color: red;
+  font-size: 14px;
 }
 
 .input-label {

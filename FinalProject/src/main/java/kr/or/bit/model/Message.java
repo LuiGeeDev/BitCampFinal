@@ -17,8 +17,6 @@ public class Message {
   
   private String senderName;
   
-  
-  
   public Date getTimeDate() {
     return timeDate;
   }

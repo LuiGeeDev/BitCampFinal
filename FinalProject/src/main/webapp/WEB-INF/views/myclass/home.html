@@ -6,145 +6,190 @@
   <head>
     <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
     <link rel="stylesheet" th:href="@{/css/myclass/home.css}" />
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
+    <link
+      rel="stylesheet"
+      href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
+    <link rel="stylesheet" href="/resources/demos/style.css" />
   </head>
+
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
       <div class="myclassWrapper">
-      <div class="row1">
+        <div class="row">
           <div class="processBar cardshadow">
-            <span class="barTitle">
-            <h3><b>[내 수업]</b></h3>
-            <h5><b>프론트엔드 및 백엔드 개발자 양성과정</b></h5></span>
-            <span class="barDate">2019-01-30 ~ 2019-07-03</span>
+            <h3 class="card-title">내 수업</h3>
+            <h5 th:text="${course.course_name}">
+              프론트엔드 및 백엔드 개발자 양성과정
+            </h5>
+            <span class="barDate">
+              <span
+                class="start-date"
+                th:text="${#temporals.format(course.startDate, 'yyyy-MM-dd')}"
+              >
+                2019-01-30
+              </span>
+              ~
+              <span
+                class="end-date"
+                th:text="${#temporals.format(course.endDate, 'yyyy-MM-dd')}"
+              >
+                2019-01-30
+              </span>
+            </span>
             <span class="barPercent">
-            <span class="progres">
-            <span>
-              <span class="progress-bar bg-warning progress-bar-striped"
-                th:style="'width:' + ${completion} + '%; height: 30px;'"></span>
-            </span> 
+              <span class="progres">
+                <span>
+                  <span
+                    class="progress-bar bg-warning progress-bar-striped"
+                    th:style="'width:' + ${completion} + '%; height: 30px;'"
+                  ></span>
+                </span>
+              </span>
+              <span class="progressview" th:text="${completion} + '% 진행 중'">
+                70% 진행중
+              </span>
             </span>
-            <span class="progressview" th:text="${completion} + '% 진행 중'">70% 진행중</span>
-            </span>
-            </div>
-          <div class="recentBoard"> 
+          </div>
+          <div class="recentBoard">
             <span class="recentHomework cardshadow">
-            <span class="moreRow">
-            <span><h5><b>[최근 과제]</b></h5></span>
-            <span class="moreLotation">더보기</span>
-            </span> 
-            <span class="recentHomeworkcontent">7월30일에 칸반 보드 정리할 사람 가위바위보로 정하기</span>
+              <span class="moreRow">
+                <span class="card-title">최근 과제</span>
+                <span class="moreLotation">더보기</span>
+              </span>
+              <span class="recentHomeworkcontent">
+                7월30일에 칸반 보드 정리할 사람 가위바위보로 정하기
+              </span>
             </span>
             <span class="recentProject cardshadow">
-            <span class="moreRow">
-            <span><h5><b>[최근 프로젝트]</b></h5></span>
-            <span class="moreLotation">더보기</span>
+              <span class="moreRow">
+                <span class="card-title">최근 프로젝트</span>
+                <span class="moreLotation">더보기</span>
+              </span>
+              <span class="recentProjectcontent">파이널 프로젝트 진행중</span>
             </span>
-            <span class="recentProjectcontent">파이널 프로젝트 진행중</span>
-            </span>
+          </div>
         </div>
-     </div> 
-        <div class="myclassBoard cardshadow">
+        <div class="row">
+          <div class="myclassBoard cardshadow">
             <div class="myclassTitle">
-            <div><h3><b>[최신글]</b></h3></div>
+              <h3 class="card-title">최신 글</h3>
             </div>
             <div class="myclassContent">
-            <div class="myclassBoardTag">
-            <span class="TitleStyle">게시판</span>
-            <span>일반게시판</span>
-            <span>QnA게시판</span>
-            <span>스택게시판</span>
-            <span>공지게시판</span>
+              <table id="class-recent-article">
+                <thead>
+                  <tr>
+                    <th>게시판</th>
+                    <th>제목</th>
+                    <th>글쓴이</th>
+                    <th>올린 시간</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>자유게시판</td>
+                    <td>이건 어떻게 하는거죠?</td>
+                    <td>정성윤</td>
+                    <td>07-23 12:23</td>
+                  </tr>
+                  <tr>
+                    <td>자유게시판</td>
+                    <td>이건 어떻게 하는거죠?</td>
+                    <td>정성윤</td>
+                    <td>07-23 12:23</td>
+                  </tr>
+                  <tr>
+                    <td>자유게시판</td>
+                    <td>이건 어떻게 하는거죠?</td>
+                    <td>정성윤</td>
+                    <td>07-23 12:23</td>
+                  </tr>
+                  <tr>
+                    <td>자유게시판</td>
+                    <td>이건 어떻게 하는거죠?</td>
+                    <td>정성윤</td>
+                    <td>07-23 12:23</td>
+                  </tr>
+                  <tr>
+                    <td>자유게시판</td>
+                    <td>이건 어떻게 하는거죠?</td>
+                    <td>정성윤</td>
+                    <td>07-23 12:23</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div class="myclassBoardTitle">
-            <span class="TitleStyle">제목</span>
-            <span>7월13일 호텔델루나 다들 많이 봐주세요^^ㅎ</span>
-            <span>7월13일 호텔델루나 다들 많이 봐주세요!</span>
-            <span>7월13일 호텔델루나 다들 많이 봐주세요?</span>
-            <span>7월13일 호텔델루나 다들 많이 봐주세요~</span>
-            </div>
-            <div class="myclassBoardWriter">
-            <span class="TitleStyle">글쓴이</span>
-            <span>아이유</span>
-            <span>정성윤</span>
-            <span>윤종석</span>
-            <span>권순조</span>
-            </div>      
-            <div class="myclassBoardDate">
-            <span class="TitleStyle">게시일</span>
-            <span>2019.07.13</span>
-            <span>2019.07.13</span>
-            <span>2019.07.13</span>
-            <span>2019.07.13</span>
-            </div>
-            <div class="myclassBoardVote">
-            <span class="TitleStyle">추천</span>
-            <span>200</span>
-            <span>120</span>
-            <span>83</span>
-            <span>51</span>
-            </div>
-            </div>
-          </div>
-          <div class="row">
-          <div id="calendar" class="CalendarCard cardshadow"></div>
           </div>
         </div>
+        <div class="row">
+          <div id="calendar" class="CalendarCard cardshadow"></div>
+        </div>
       </div>
+    </div>
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script>
-    const calendarEl = document.getElementById("calendar");
-    let calendar = new FullCalendar.Calendar(calendarEl, {
-      plugins : [ "dayGrid" ],
-      defaultView : "dayGridMonth",
-      locale : "ko",
-      columnHeaderFormat : {
-        day : "2-digit",
-        weekday : "short"
-      },
-      header : {
-        left : "title",
-        center : "",
-        right : "today prev,next"
-      },
-      events : [ {
-        title : "조 회식",
-        start : "2019-07-05",
-        end : "2019-07-05",
-        color : "tomato",
-        textColor : "white"
-      }, {
-        title : "비트캠프 졸업",
-        start : "2019-07-30",
-        end : "2019-07-30",
-        color : "coral",
-        textColor : "white"
-      }, {
-        title : "호텔 델루나 첫방송",
-        start : "2019-07-13",
-        end : "2019-07-15",
-        color : "purple",
-        textColor : "white"
-      }, {
-        title : "회식",
-        start : "2019-06-24",
-        end : "2019-06-24",
-        textColor : "white"
-      } ]
-    });
-    calendar.render();
-    $('#button-checklist').on('shown.bs.modal', function () {
-      $('#myInput').trigger('focus')
-    })
+      const calendarEl = document.getElementById("calendar");
+      let calendar = new FullCalendar.Calendar(calendarEl, {
+        plugins: ["dayGrid"],
+        defaultView: "dayGridMonth",
+        locale: "ko",
+        columnHeaderFormat: {
+          day: "2-digit",
+          weekday: "short"
+        },
+        header: {
+          left: "title",
+          center: "",
+          right: "today prev,next"
+        },
+        events: [
+          {
+            title: "조 회식",
+            start: "2019-07-05",
+            end: "2019-07-05",
+            color: "tomato",
+            textColor: "white"
+          },
+          {
+            title: "비트캠프 졸업",
+            start: "2019-07-30",
+            end: "2019-07-30",
+            color: "coral",
+            textColor: "white"
+          },
+          {
+            title: "호텔 델루나 첫방송",
+            start: "2019-07-13",
+            end: "2019-07-15",
+            color: "purple",
+            textColor: "white"
+          },
+          {
+            title: "회식",
+            start: "2019-06-24",
+            end: "2019-06-24",
+            textColor: "white"
+          }
+        ]
+      });
+      calendar.render();
+      $("#button-checklist").on("shown.bs.modal", function() {
+        $("#myInput").trigger("focus");
+      });
     </script>
     <script src="/js/stack/write.js"></script>
-     <script type=text/javascript
-    src=/resources/dist/static/js/manifest.d2e3a334bc98c3b96650.js></script>
-  <script type=text/javascript
-    src=/resources/dist/static/js/vendor.71750e988b55e9735a64.js></script>
-  <script type=text/javascript
-    src=/resources/dist/static/js/app.55e5fc1c8db3bc542a1f.js></script>
+    <script
+      type="text/javascript"
+      src="/resources/dist/static/js/manifest.d2e3a334bc98c3b96650.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="/resources/dist/static/js/vendor.71750e988b55e9735a64.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="/resources/dist/static/js/app.55e5fc1c8db3bc542a1f.js"
+    ></script>
   </body>
 </html>
