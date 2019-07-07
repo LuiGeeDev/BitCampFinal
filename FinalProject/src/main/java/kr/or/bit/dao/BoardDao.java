@@ -27,4 +27,6 @@ public interface BoardDao {
   Board selectBoardById(int board_id);
 
   Board isBoardExists(@Param("course_id") int course_id, @Param("board_name") String board_name);
+
+  void deleteBoard(int board_id);
 }

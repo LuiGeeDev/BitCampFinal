@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.ArticleDao;
@@ -25,7 +26,6 @@ import kr.or.bit.model.BoardAddRemove;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Files;
 import kr.or.bit.model.General;
-import kr.or.bit.model.Member;
 import kr.or.bit.utils.Helper;
 
 @Service

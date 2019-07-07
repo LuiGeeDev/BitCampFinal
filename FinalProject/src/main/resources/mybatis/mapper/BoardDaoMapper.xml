@@ -56,6 +56,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     INSERT INTO BOARD (BOARD_NAME, BOARDTYPE, COURSE_ID)
     VALUES (#{board_name}, #{boardtype}, #{course_id})
   </insert>
+  <delete id="deleteBoard">
+    DELETE FROM BOARD
+    WHERE ID = #{board_id}
+  </delete>
 </mapper>  
 
 

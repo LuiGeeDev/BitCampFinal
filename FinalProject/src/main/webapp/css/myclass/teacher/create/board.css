@@ -1,0 +1,120 @@
+.board-management {
+  margin: auto;
+}
+
+h4 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.board-add-remove {
+  display: flex;
+  min-height: 60vh;
+  max-height: 60vh;
+  padding-bottom: 50px;
+  position: relative;
+}
+
+.buttons {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.board-to-add {
+  border: 1px solid black;
+  border-radius: 3px;
+  width: 150px;
+}
+
+.board {
+  display: flex;
+  position: relative;
+  border-bottom: 1px solid black;
+}
+
+.board-name {
+  margin-left: 20px;
+  max-width: 100px;
+  padding: 10px 0;
+}
+
+.board button {
+  position: absolute;
+  right: 3px;
+  top: 9px;
+  color: #F29C20;
+}
+
+.board-to-remove {
+  border: 1px solid black;
+  border-radius: 3px;
+  width: 150px;
+}
+
+.board-remove {
+  min-height: 100%;
+}
+
+.board-nav {
+  display: flex;
+  flex-direction: column;
+  margin: auto 60px;
+}
+
+.board-nav svg {
+  margin: auto;
+  color: #F29C20;
+  margin-top: 15px;
+}
+
+.board-nav svg:active {
+  transform: none;
+}
+
+.new-board * {
+  padding: 0;
+  margin: 0;
+}
+
+.new-board input {
+  border: 1px solid #a6a6a6;
+  border-right: none;
+  border-radius: 3px 0 0 3px;
+  padding: 5px 10px;
+  font-size: 14px;  
+}
+
+.new-board button {
+  border: 1px solid #a6a6a6;
+  font-size: 14px;
+  border-radius: 0 3px 3px 0;
+  border-left: none;
+  padding: 5px 10px;
+  margin-left: -4px;
+}
+
+.new-board button:active {
+  transform: none;
+  font-size: 12px;
+  padding: 7px 14px 6px;
+}
+
+.board-alert {
+  margin: 0 auto 20px;
+  text-align: center;
+}
+
+.my-alert {
+  display: block;
+}
+
+.my-alert * {
+  font-size: 14px;
+  color: black;
+  transition: .7s;
+}
+
+.hide * {
+  color: white;
+}

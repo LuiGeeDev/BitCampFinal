@@ -31,6 +31,7 @@ import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.ProjectDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
+import kr.or.bit.model.BoardAddRemove;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.Criteria;
 import kr.or.bit.model.Files;
@@ -138,6 +139,23 @@ public class MyClassController {
       groupMemberDao.insertGroupMember(newMember);
     }
     return "redirect:/myclass/teacher/setting";
+  }
+  
+  @GetMapping("/create/board")
+  public String boardPage(Model model) {
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    String username = Helper.userName();
+    Member user = memberDao.selectMemberByUsername(username);
+    List<Board> boardlist = boardDao.selectMyClassBoard(user.getCourse_id());
+    
+    model.addAttribute("boardlist", boardlist);
+    return "myclass/teacher/create/board";
+  }
+  
+  @PostMapping("/create/board")
+  public void createBoard(@RequestBody BoardAddRemove boardAddRemove) {
+    boardService.decideBoardAddOrRemove(boardAddRemove);
   }
 
   @GetMapping("/homework")
