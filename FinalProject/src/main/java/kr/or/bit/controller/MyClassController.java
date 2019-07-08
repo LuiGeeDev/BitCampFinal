@@ -63,21 +63,6 @@ public class MyClassController {
     return "myclass/project/main";
   }
 
-  @GetMapping("/troubleshooting")
-  public String troubleshootingPage() {
-    return "myclass/troubleshooting/main";
-  }
-
-  @GetMapping("/troubleshooting/write")
-  public String writeNewIssue() {
-    return "myclass/troubleshooting/write";
-  }
-
-  @GetMapping("/troubleshooting/read")
-  public String readIssue() {
-    return "myclass/troubleshooting/detail";
-  }
-
   @GetMapping("/chat")
   public String chatPage() {
     return "myclass/chat/main";
@@ -111,17 +96,19 @@ public class MyClassController {
     String teacherName = Helper.userName();
     Member teacher = memberDao.selectMemberByUsername(teacherName); // 강사 저장
     int course_id = teacher.getCourse_id();
+    System.out.println("course_id: " + course_id);
     project.setCourse_id(course_id);
     projectDao.insertProject(project);
-    System.out.println("프로젝트 생성 성공");
     Project newProject = projectDao.selectRecentProject(course_id);
     List<ProjectMember> leaderList = new ArrayList<>();
     List<ProjectMember> students = project.getStudents();
+    
     for (ProjectMember pm : students) {
       if (pm.isLeader()) {
         leaderList.add(pm);
       }
     }
+    
     for (ProjectMember leader : leaderList) {
       Group group = new Group();
       group.setGroup_no(leader.getGroup());
@@ -129,6 +116,7 @@ public class MyClassController {
       group.setProject_id(newProject.getId());
       groupDao.insertGroup(group);
     }
+    
     for (ProjectMember member : students) {
       int group_no = member.getGroup();
       String username = member.getUsername();
@@ -138,6 +126,7 @@ public class MyClassController {
       newMember.setUsername(username);
       groupMemberDao.insertGroupMember(newMember);
     }
+    
     return "redirect:/myclass/teacher/setting";
   }
   
@@ -153,6 +142,10 @@ public class MyClassController {
     return "myclass/teacher/create/board";
   }
   
+  @PostMapping("/create/board") 
+  public void createBoard(@RequestBody BoardAddRemove boardAddRemove) { 
+    boardService.decideBoardAddOrRemove(boardAddRemove);  
+  }
 
   @GetMapping("/homework")
   public String homework(@ModelAttribute("cri") Paging cri, Model model,HttpServletRequest request, String boardSearch) {
