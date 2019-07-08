@@ -29,6 +29,7 @@
         <div class="homework-content">
           <textarea name="content" id="summernote" th:text="${article.content}"></textarea>
         </div>
+        <input type="hidden" name="boardSearch" id="boardSearch" th:value="${boardSearch}" th:field="*{boardSearch}">
         <div id="buttons">
           <a href="/myclass/homework" class="btn btn-primary btn-sm">취소</a>
           <input type="submit" class="btn btn-primary btn-sm" value="제출">

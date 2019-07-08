@@ -25,6 +25,9 @@ public class Article {
   private String board_name;
   private List<Tag> tags;
   private List<Comment> commentlist;
+  private int commentSize;
+
+
   private ArticleOption option;
   private Map<String, Integer> vote;
   private int votenum;
@@ -207,6 +210,14 @@ public class Article {
     this.vote_count = vote_count;
   }
 
+  public int getCommentSize() {
+    return commentSize;
+  }
+
+  public void setCommentSize(int commentSize) {
+    this.commentSize = commentSize;
+  }
+  
   @Override
   public String toString() {
     return "Article [id=" + id + ", title=" + title + ", content=" + content + ", time=" + time + ", updated_time="

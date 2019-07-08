@@ -269,7 +269,10 @@
 
 .reply-update-button {
   text-align: center;
-  width: 5%;
+  width: 5%;  
+}  
+  
+#reply-delete-button {
   cursor: pointer;
 }
 
@@ -303,9 +306,6 @@
   margin-left: 120px;
   width:100%;
   padding-left: 110px
-}
-form{
-  width:100%
 }
 .homework-submit-title{
   font-size:25px;
