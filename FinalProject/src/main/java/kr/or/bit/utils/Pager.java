@@ -23,7 +23,7 @@ public class Pager {
     if (currentPage <= pageButtons) {
       this.startPage = 1;
     } else if (currentPage % pageButtons == 0) {
-      this.startPage = currentPage - 4;
+      this.startPage = currentPage - (pageButtons - 1);
     } else {
       this.startPage = (currentPage / pageButtons) * 5 + 1;
     }
@@ -37,7 +37,8 @@ public class Pager {
     } else {
       this.endPage = totalPages;
     }
-    this.prev = (currentPage <= 5) ? false : true;
+    
+    this.prev = (currentPage <= pageButtons) ? false : true;
     this.next = (currentPage / pageButtons + 1) * 5 < totalPages ? true : false;
   }
 
