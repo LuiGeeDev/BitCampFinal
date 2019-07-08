@@ -26,7 +26,9 @@
       <div class="homework-content" th:utext="${article.content}">별찍기
         10문제를 만들어서 올리세요^^</div>
       <div class="button-wrapper" id="buttons">
-        <a th:href="@{/myclass/homework(page=${page})}"
+        <a th:if="${boardSearch != null}" th:href="@{/myclass/homework(page=${page},boardSearch=${boardSearch})}"
+          class="btn btn-primary btn-sm">목록</a> 
+        <a th:if="${boardSearch == null}" th:href="@{/myclass/homework(page=${page})}"
           class="btn btn-primary btn-sm">목록</a> <a
           th:href="@{/myclass/homework/edit(id=${article.id}, page=${page})}"
           class="btn btn-primary btn-sm">수정</a>
@@ -62,8 +64,7 @@
       과제가 없습니다.</div>
     <div class="reply-container" th:if="${replies.size()} != 0">
       <div class="relpy-article" th:each="reply : ${replies}">
-        <!-- <div class="reply-group" th:text="${reply.writer.group_no}"></div> -->
-        <div class="reply-group">2조</div>
+        <div class="reply-group" th:text="${reply.writer.group_no}+'조'"></div>
         <!-- <div class="reply-noneFile" th:if="${reply.option.files[0] == null}">등록된 파일이 없습니다.</div> -->
         <div class="reply-files">
           <div class="pptFile">

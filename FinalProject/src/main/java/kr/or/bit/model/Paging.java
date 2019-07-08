@@ -1,13 +1,13 @@
 package kr.or.bit.model;
 
-public class Criteria {
+public class Paging {
 
   private int page;         // 보여줄 페이지 번호
   private int perPageNum;   // 페이지당 보여줄 게시글의 개수
   
-  public Criteria() {
+  public Paging() {
     this.page = 1;
-    this.perPageNum = 5;
+    this.perPageNum = 10;
   }
 
   public int getPage() {
@@ -30,7 +30,7 @@ public class Criteria {
   public void setPerPageNum(int perPageNum) {
     
     if(perPageNum <= 0 || perPageNum > 100) {
-      this.perPageNum = 5;
+      this.perPageNum = 10;
       return;
     }
     

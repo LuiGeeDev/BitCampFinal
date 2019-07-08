@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	FROM ARTICLE a JOIN BOARD b ON a.board_id = b.id 
 	WHERE LEVEL = 1 AND ENABLE = 1 AND b.board_name = '과제 제출' AND b.course_id = #{course_id}
 	ORDER BY a.ID DESC
-	limit #{cri.pageStart}, #{cri.perPageNum}
+	LIMIT #{cri.pageStart}, #{cri.perPageNum}
   </select>
   <update id="updateHomeworkArticle" parameterType="kr.or.bit.model.Article">
   	UPDATE homework 
@@ -40,5 +40,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	SELECT COUNT(*)
   	FROM ARTICLE a JOIN BOARD b ON a.board_id = b.id
   	WHERE LEVEL = 1 AND ENABLE = 1 AND b.board_name = "과제 제출" AND b.course_id = #{course_id}
+  </select>
+  <select id="selectHomeworkArticleBySearchWord" resultType="kr.or.bit.model.Article">
+  	SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
+	FROM ARTICLE a JOIN BOARD b ON a.board_id = b.id 
+	WHERE LEVEL = 1 AND ENABLE = 1 AND b.board_name = '과제 제출' AND b.course_id = #{course_id} AND a.title LIKE '%${word}%'
+	ORDER BY a.ID DESC
+	LIMIT #{cri.pageStart}, #{cri.perPageNum}
+  </select>
+  <select id="countHomeworkArticleBySearchWorkd" resultType="Integer">
+  	SELECT COUNT(*)
+  	FROM ARTICLE a JOIN BOARD b on a.board_id=b.id
+  	WHERE LEVEL = 1 AND ENABLE = 1 AND b.board_name = '과제 제출' AND b.course_id = #{course_id} AND a.title LIKE '%${word}%'
   </select>
 </mapper>
