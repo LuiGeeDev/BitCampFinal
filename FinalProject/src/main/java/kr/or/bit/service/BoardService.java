@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.ArticleDao;
@@ -111,6 +110,7 @@ public class BoardService {
   public void updateArticle(Article article, List<MultipartFile> files) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     articleDao.updateArticle(article);
+    
   }
 
   @PreAuthorize("hasAnyRole('TEACHER', 'MANAGER') or #article.username == principal.username")
@@ -195,7 +195,7 @@ public class BoardService {
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     commentDao.deleteComment(comment_id);
   }
-
+  
   public void decideBoardAddOrRemove(BoardAddRemove boardAddRemove) {
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);

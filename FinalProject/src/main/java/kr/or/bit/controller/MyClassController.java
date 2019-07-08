@@ -187,6 +187,8 @@ public class MyClassController {
     
     Article article = articleService.selectOneArticle("homework", id);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    GroupMemberDao groupMemberDao = sqlSession.getMapper(GroupMemberDao.class);
+    GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
     FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
@@ -199,8 +201,12 @@ public class MyClassController {
       files.add(filesDao.selectFilesById(homework.getFile1()));
       files.add(filesDao.selectFilesById(homework.getFile2()));
       homework.setFiles(files);
+      Member replyMember = new Member();
+      replyMember = memberDao.selectMemberByUsername(reply.getUsername());
+      int groupId = groupMemberDao.getGroupIdByUsername(reply.getUsername());
+      replyMember.setGroup_no(groupDao.getGroupNoByGroupId(groupId));
+      reply.setWriter(replyMember); 
       reply.setOption(homework);
-      reply.setWriter(memberDao.selectMemberByUsername(reply.getUsername()));
     }
     model.addAttribute("article", article);
     model.addAttribute("replies", replies);

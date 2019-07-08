@@ -10,6 +10,8 @@
 <body>
   <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
   <div class="main" th:fragment="main">
+        <div th:text="${article.option.files}">
+      </div>
     <div class="spinner-border text-warning spin-where" role="status"
       id="spinner">
       <span class="sr-only">Loading...</span>

@@ -38,8 +38,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where group_id=#{group_id}
   </select>
   <select id="getGroupIdByUsername" resultType="int">
-  	select max(group_id)
+  	select MAX(group_id)
   	from group_member
-  	where member_name=#{id}
+  	where member_name=#{username}
   </select>
 </mapper>

@@ -66,4 +66,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	FROM GROUPS
   	WHERE PROJECT_ID=#{project_id} AND GROUP_NO=#{group_no}
   </select>
+  <select id="getGroupNoByGroupId" resultType="int">
+  	SELECT group_no
+  	FROM groups
+  	where id=#{id}
+  </select>
 </mapper>
