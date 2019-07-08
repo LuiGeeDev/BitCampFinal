@@ -55,5 +55,7 @@ public interface ArticleDao {
 
   List<Article> selectHomeworkReplies(int article_id);
   
+  List<Article> selectArticlesForClassMain(int course_id);
+  
   List<Tag> selectTagList(int article_id);
 }

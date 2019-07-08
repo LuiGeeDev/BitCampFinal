@@ -84,7 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT id, title, content, time, updated_time, view_count, original_id,
     level, username, board_id, enable
     FROM ARTICLE
-    WHERE BOARD_ID = #{board_id}
+    WHERE BOARD_ID = 2
     AND id &lt; #{article_id}
     ORDER BY id DESC
     LIMIT 5
@@ -145,18 +145,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="selectHomeworkReplies" resultType="kr.or.bit.model.Article">
 	SELECT * 
 	FROM article 
-	WHERE ORIGINAL_ID = #{article_id} AND ID != #{article_id} AND ENABLE=1;
+	WHERE ORIGINAL_ID = #{article_id} AND ID != #{article_id} AND ENABLE=1
+  </select>
+  <select id="selectArticlesForClassMain" resultType="kr.or.bit.model.Article">
+    select a.title, time, board_name, a.username
+    from article a
+    left join board b
+    on a.board_id = b.id
+    left join member m
+    on m.username = a.username
+    where b.course_id = #{course_id}
+    and b.boardtype not in (1, 2, 4, 6)
+    <!-- and a.id = a.original_id-->
+    order by a.id desc
+    LIMIT 5
   </select>
   <select id="selectTagList" resultType="kr.or.bit.model.Tag">
-	SELECT id, tag
-	FROM article_tag at
-	LEFT JOIN tag a
-	ON a.id = at.tag_id
-	WHERE article_id=#{article_id};
+  	SELECT id, tag
+	  FROM article_tag at
+	  LEFT JOIN tag a
+	  ON a.id = at.tag_id
+	  WHERE article_id=#{article_id};
   </select>
-  
 </mapper>
-<!-- public interface ArticleDao { void insertArticle(Article article); void 
-  updateArticle(Article article); void deleteArticle(int id); List<Article> 
-  selectAllArticle(int board_id); } -->
  

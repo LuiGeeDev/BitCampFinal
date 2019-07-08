@@ -18,9 +18,11 @@ public class Article {
   private int enable; // default 1
   private String username;
   private int board_id;
+
   private LocalDateTime timeLocal;
   private LocalDateTime updatedTimeLocal;
   private Member writer;
+  private String board_name;
   private List<Tag> tags;
   private List<Comment> commentlist;
   private ArticleOption option;
@@ -28,6 +30,14 @@ public class Article {
   private int votenum;
   private int vote_count;
   private List<Files> fileslist;
+
+  public String getBoard_name() {
+    return board_name;
+  }
+
+  public void setBoard_name(String board_name) {
+    this.board_name = board_name;
+  }
 
   public List<Files> getFileslist() {
     return fileslist;

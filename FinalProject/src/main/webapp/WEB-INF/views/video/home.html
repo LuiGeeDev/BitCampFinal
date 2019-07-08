@@ -89,6 +89,7 @@
             },
             method: "post",
             success: function(data) {
+              console.log(data);
               if (data[0]) {
                 changeId(data[data.length - 1].id);
                 addNewPage(data);
@@ -131,6 +132,7 @@
       
       window.addEventListener("scroll", function() {
         if ($(window).scrollTop() + $(window).height() === $(document).height()) {
+          console.log($(window).scrollTop() + $(window).height() === $(document).height());
           ajax();
         }
       });

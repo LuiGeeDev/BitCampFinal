@@ -263,14 +263,22 @@ public class MyClassController {
   public String mainPage(Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    
     Course course = courseDao.selectCourse(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id());
     course.setEndDate(course.getEnd_date().toLocalDate());
     course.setStartDate(course.getStart_date().toLocalDate());
     Period diff = Period.between(course.getStartDate(), course.getEndDate());
     Period diff2 = Period.between(course.getStartDate(), LocalDate.now());
     int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
+    List<Article> recentArticles = articleDao.selectArticlesForClassMain(course.getId());
+    for (Article article : recentArticles) {
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+      article.setTimeLocal(article.getTime().toLocalDateTime());
+    }
 
     model.addAttribute("course", course);
+    model.addAttribute("recentArticles", recentArticles);
     model.addAttribute("completion", completion);
     return "myclass/home";
   }
