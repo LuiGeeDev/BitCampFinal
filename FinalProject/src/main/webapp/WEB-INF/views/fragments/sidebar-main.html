@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="side-nav">
-        <div class="nav-menu">
+        <div class="nav-menu" sec:authorize="!hasRole('MANAGER')">
           <a th:href="@{/myclass}">
             <div class="nav-icon">
               <i class="fas fa-book fa-2x"></i>
@@ -43,7 +43,7 @@
           </a>
         </div>
         <div class="nav-menu">
-          <a href = "/stack?board_id=1">
+          <a href="/stack">
             <div class="nav-icon">
               <i class="far fa-question-circle fa-2x"></i>
             </div>
@@ -51,7 +51,7 @@
           </a>
         </div>
         <div class="nav-menu">
-          <a href = "/video/home">
+          <a href="/video">
             <div class="nav-icon">
               <i class="fas fa-video fa-2x"></i>
             </div>
@@ -68,7 +68,7 @@
         </div>
 
         <div class="nav-menu" sec:authorize="hasRole('MANAGER')">
-          <a href="/manage/home">
+          <a href="/manage/course">
             <div class="nav-icon">
               <i class="fas fa-tasks fa-2x"></i>
             </div>

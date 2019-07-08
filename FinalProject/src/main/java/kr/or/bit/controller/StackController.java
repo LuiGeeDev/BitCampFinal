@@ -44,28 +44,18 @@ public class StackController {
   private BoardService boardService;
 
   @GetMapping("")
-  public String listPage(int board_id, @RequestParam(defaultValue = "1") int page,
+  public String listPage(@RequestParam(defaultValue = "1") int page,
       @RequestParam(required = false) String sort, @RequestParam(required = false) String search, @RequestParam(required = false) String criteria, Model model) {
     List<Article> articles = null;
-/*    ArticleDao articleDao = sqlsession.getMapper(ArticleDao.class);
-*/    if (sort == null && search == null) {
-      articles = boardService.getArticlesByPage(board_id, page);
+    if (sort == null && search == null) {
+      articles = boardService.getArticlesByPage(STACK_BOARD_ID, page);
     } else if (sort != null) {
-      articles = boardService.getArticlesSorted(board_id, page, sort);
+      articles = boardService.getArticlesSorted(STACK_BOARD_ID, page, sort);
     } else if (search != null) {
-      articles = boardService.getArticlesBySearchWord(board_id, page, search, criteria);
-    } 
-/*    articleDao.selectTagList(article_id)
+      articles = boardService.getArticlesBySearchWord(STACK_BOARD_ID, page, search, criteria);
+    }
     
-    if(articles != null) {
-      for(int i = 0; i<articles.size(); i++) {
-        articles
-      }
-    }*/
-    
-    System.out.println(articles);
-    
-    model.addAttribute("board", boardService.getBoardInfo(board_id));
+    model.addAttribute("board", boardService.getBoardInfo(STACK_BOARD_ID));
     model.addAttribute("stacklist", articles);
 
     return "stack/home";

@@ -24,5 +24,6 @@ public interface GroupMemberDao {
 
   List<Member> selectAllGroupMemberByGroup();
   
-  int getGroupIdByUsername(String id);
+  int getGroupIdByUsername(String username);
+  
 }

@@ -203,6 +203,8 @@ public class MyClassController {
     
     Article article = articleService.selectOneArticle("homework", id);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    GroupMemberDao groupMemberDao = sqlSession.getMapper(GroupMemberDao.class);
+    GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
     FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
@@ -217,8 +219,12 @@ public class MyClassController {
       files.add(filesDao.selectFilesById(homework.getFile1()));
       files.add(filesDao.selectFilesById(homework.getFile2()));
       homework.setFiles(files);
+      Member replyMember = new Member();
+      replyMember = memberDao.selectMemberByUsername(reply.getUsername());
+      int groupId = groupMemberDao.getGroupIdByUsername(reply.getUsername());
+      replyMember.setGroup_no(groupDao.getGroupNoByGroupId(groupId));
+      reply.setWriter(replyMember); 
       reply.setOption(homework);
-      reply.setWriter(memberDao.selectMemberByUsername(reply.getUsername()));
     }
     model.addAttribute("article", article);
     model.addAttribute("replies", replies);
@@ -271,14 +277,22 @@ public class MyClassController {
   public String mainPage(Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    
     Course course = courseDao.selectCourse(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id());
     course.setEndDate(course.getEnd_date().toLocalDate());
     course.setStartDate(course.getStart_date().toLocalDate());
     Period diff = Period.between(course.getStartDate(), course.getEndDate());
     Period diff2 = Period.between(course.getStartDate(), LocalDate.now());
     int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
+    List<Article> recentArticles = articleDao.selectArticlesForClassMain(course.getId());
+    for (Article article : recentArticles) {
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+      article.setTimeLocal(article.getTime().toLocalDateTime());
+    }
 
     model.addAttribute("course", course);
+    model.addAttribute("recentArticles", recentArticles);
     model.addAttribute("completion", completion);
     return "myclass/home";
   }

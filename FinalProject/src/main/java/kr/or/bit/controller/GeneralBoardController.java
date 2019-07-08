@@ -79,12 +79,12 @@ public class GeneralBoardController {
   }
 
   @PostMapping("/commentwrite")
-  public String generalComment(int id, Comment comment) {
+  public String generalComment(Article article, int id, Comment comment, int board_id) {
     System.out.println("댓글달기 타는지안타는지 궁금해 !");
     comment.setUsername(Helper.userName());
     comment.setArticle_id(id);
     commentService.insertComment(comment);
-    return "redirect:/general/detail?id=" + id;
+    return "redirect:/myclass/board/read?article_id=" + article.getId() + "&board_id=" + article.getBoard_id();
   }
 
   @GetMapping("/commentdelete")

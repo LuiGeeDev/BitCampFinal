@@ -24,9 +24,9 @@
           </div>
         </div>
         <div class="side-nav">
-          <div class="nav-menu">
+          <div class="nav-menu" sec:authorize="!hasRole('MANAGER')">
             <div th:classappend="${#strings.contains(#request.getRequestURI(),'myclass')} ? 'active-menu'" class="nav-icon">
-	        <a th:href="@{/myclass/project}">
+	        <a th:href="@{/myclass}">
               <i class="fas fa-book fa-2x"></i>
     	    </a>
             </div>
@@ -34,7 +34,7 @@
           
           <div class="nav-menu">
             <div th:classappend="${#strings.contains(#request.getRequestURI(),'stack')} ? 'active-menu'" class="nav-icon" >
-             <a th:href="@{/stack?board_id=1}">
+             <a th:href="@{/stack}">
             
               <i class="far fa-question-circle fa-2x"></i>
              </a>
@@ -42,7 +42,7 @@
           </div>
           <div class="nav-menu">
             <div th:classappend="${#strings.contains(#request.getRequestURI(),'video')} ? 'active-menu'" class="nav-icon">
-             <a th:href="@{/video/home}">
+             <a th:href="@{/video}">
               <i class="fas fa-video fa-2x"></i>
              </a>
             </div>
@@ -54,7 +54,7 @@
           </div>
           <div class="nav-menu" sec:authorize="hasRole('MANAGER')">
             <div th:classappend="${#strings.contains(#request.getRequestURI(),'manage')} ? 'active-menu'" class="nav-icon">
-              <a th:href="@{/manage/home}">
+              <a th:href="@{/manage/course}">
               <i class="fas fa-tasks fa-2x"></i>
              </a>
             </div>
@@ -67,7 +67,7 @@
         <a th:href="@{/myclass}">메인 페이지</a>
         <a href="#project" data-toggle="collapse" th:if="${projects.size() != 0}">프로젝트 게시판</a>
         <div id="project" class="collapse" th:if="${projects.size() != 0}">
-          <a href="#" th:each="project : ${projects}" th:text="'-' + ${project.project_name}"></a>
+          <a th:href="@{/myclass/project(id=${project.id})}" th:each="project : ${projects}" th:text="'-' + ${project.project_name}"></a>
         </div>
         <th:block th:each="board : ${boardList}">
           <a th:if="${board.boardtype == 3}" th:href="@{/myclass/board(board_id=${board.id})}" th:text="${board.board_name}"></a>
@@ -77,16 +77,16 @@
         <a th:href="@{/myclass/setting}" sec:authorize="hasRole('TEACHER')">우리 반 관리</a> 
       </div>
       <div th:if="${#strings.contains(#request.getRequestURI(),'stack')}" class="side-nav-menu">
-        <a href="#">스택!!! 게시판</a>
+        <a th:href="@{/stack}">스택 게시판</a>
         
       </div>
       <div th:if="${#strings.contains(#request.getRequestURI(),'video')}" class="side-nav-menu"> 
-        <a href="#">비디오!!! 게시판</a>
+        <a th:href="@{/video}">비디오 게시판</a>
         
       </div>
       <div th:if="${#strings.contains(#request.getRequestURI(),'manage')}" class="side-nav-menu">
-        <a th:href="@{/manage/home}">매니지!!! 게시판</a>
-        <a th:href="@{/manage/students}">학생관리 게시판</a>
+        <a th:href="@{/manage/course}">수업 관리</a>
+        <a th:href="@{/manage/students}">학생 관리</a>
       </div>
     </div>
   </body>

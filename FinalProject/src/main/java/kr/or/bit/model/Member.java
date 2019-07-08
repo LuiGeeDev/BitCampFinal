@@ -11,9 +11,9 @@ public class Member {
   private int course_id;
   private String profile_photo;
   private int group_id;
-
   private String role;
   private List<String> scrap;
+  private int group_no;
 
   public int getGroup_id() {
     return group_id;
@@ -93,5 +93,13 @@ public class Member {
 
   public void setScrap(List<String> scrap) {
     this.scrap = scrap;
+  }
+
+  public int getGroup_no() {
+    return group_no;
+  }
+
+  public void setGroup_no(int group_no) {
+    this.group_no = group_no;
   }
 }

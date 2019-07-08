@@ -75,43 +75,13 @@
       <!-- 동영상 게시판과 스택 게시판 -->
       <div class="row">
         <div class="videos">
-          <a class="video">
+          <a th:href="@{/video/detail(id=${video.id})}" th:if="${iter.index < 3}" class="video" th:each="video,iter : ${recentVideos}">
             <div class="thumbnail">
-              <img src="https://via.placeholder.com/200x150" alt="썸네일" />
+              <img th:src="'https://img.youtube.com/vi/' + ${video.option.video_id} + '/default.jpg'" alt="썸네일" />
             </div>
             <div class="video-info">
-              <h5 class="video-title">비디오 제목</h5>
-              <p class="video-description">
-                옛날 어린이들은 호환, 마마, 전쟁 등이 가장 무서운 재앙이었으나,
-                현대의 어린이들은 무분별한 불량/불법 비디오를 시청함으로써, 비행
-                청소년이 되는 무서운 결과를 초래하게 됩니다.
-              </p>
-            </div>
-          </a>
-          <a class="video">
-            <div class="thumbnail">
-              <img src="https://via.placeholder.com/200x150" alt="썸네일" />
-            </div>
-            <div class="video-info">
-              <h5 class="video-title">비디오 제목</h5>
-              <p class="video-description">
-                옛날 어린이들은 호환, 마마, 전쟁 등이 가장 무서운 재앙이었으나,
-                현대의 어린이들은 무분별한 불량/불법 비디오를 시청함으로써, 비행
-                청소년이 되는 무서운 결과를 초래하게 됩니다.
-              </p>
-            </div>
-          </a>
-          <a class="video">
-            <div class="thumbnail">
-              <img src="https://via.placeholder.com/200x150" alt="썸네일" />
-            </div>
-            <div class="video-info">
-              <h5 class="video-title">비디오 제목</h5>
-              <p class="video-description">
-                옛날 어린이들은 호환, 마마, 전쟁 등이 가장 무서운 재앙이었으나,
-                현대의 어린이들은 무분별한 불량/불법 비디오를 시청함으로써, 비행
-                청소년이 되는 무서운 결과를 초래하게 됩니다.
-              </p>
+              <h5 class="video-title" th:text="${video.title}"></h5>
+              <div class="video-description" th:utext="${video.content}"></div>
             </div>
           </a>
         </div>
@@ -121,31 +91,11 @@
             <div class="stack-header">
               <p>방금 올라온 질문</p>
             </div>
-            <div class="stack-article">
-              <div class="stack-article-title">
-                질문 제목입니다. 답변 부탁해요.
-              </div>
+            <div class="stack-article" th:each="stack,iter : ${recentStacks}" th:if="${iter.index < 4}">
+              <div class="stack-article-title" th:text="${stack.title}"></div>
               <div class="stack-article-info">
-                <div class="stack-article-writer">권예지</div>
-                <div class="stack-article-time">5분 전</div>
-              </div>
-            </div>
-            <div class="stack-article">
-              <div class="stack-article-title">
-                질문 제목입니다. 답변 부탁해요.
-              </div>
-              <div class="stack-article-info">
-                <div class="stack-article-writer">권예지</div>
-                <div class="stack-article-time">5분 전</div>
-              </div>
-            </div>
-            <div class="stack-article">
-              <div class="stack-article-title">
-                질문 제목입니다. 답변 부탁해요.
-              </div>
-              <div class="stack-article-info">
-                <div class="stack-article-writer">권예지</div>
-                <div class="stack-article-time">5분 전</div>
+                <div class="stack-article-writer" th:text="${stack.writer.name}">권예지</div>
+                <div class="stack-article-time" th:text="${#temporals.format(stack.timeLocal, 'HH:mm')}">5분 전</div>
               </div>
             </div>
           </div>

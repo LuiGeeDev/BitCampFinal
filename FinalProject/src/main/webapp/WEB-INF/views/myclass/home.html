@@ -87,35 +87,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>자유게시판</td>
-                    <td>이건 어떻게 하는거죠?</td>
-                    <td>정성윤</td>
-                    <td>07-23 12:23</td>
-                  </tr>
-                  <tr>
-                    <td>자유게시판</td>
-                    <td>이건 어떻게 하는거죠?</td>
-                    <td>정성윤</td>
-                    <td>07-23 12:23</td>
-                  </tr>
-                  <tr>
-                    <td>자유게시판</td>
-                    <td>이건 어떻게 하는거죠?</td>
-                    <td>정성윤</td>
-                    <td>07-23 12:23</td>
-                  </tr>
-                  <tr>
-                    <td>자유게시판</td>
-                    <td>이건 어떻게 하는거죠?</td>
-                    <td>정성윤</td>
-                    <td>07-23 12:23</td>
-                  </tr>
-                  <tr>
-                    <td>자유게시판</td>
-                    <td>이건 어떻게 하는거죠?</td>
-                    <td>정성윤</td>
-                    <td>07-23 12:23</td>
+                  <tr th:each="article : ${recentArticles}">
+                    <td th:text="${article.board_name}"></td>
+                    <td th:text="${article.title}"></td>
+                    <td th:text="${article.writer.name}"></td>
+                    <td th:text="${#temporals.format(article.timeLocal, 'MM-dd HH:mm')}"></td>
                   </tr>
                 </tbody>
               </table>
