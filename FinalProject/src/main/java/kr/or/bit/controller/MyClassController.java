@@ -187,6 +187,8 @@ public class MyClassController {
     
     Article article = articleService.selectOneArticle("homework", id);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    GroupMemberDao groupMemberDao = sqlSession.getMapper(GroupMemberDao.class);
+    GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
     FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
@@ -195,13 +197,22 @@ public class MyClassController {
     for(Article reply : replies) {
       reply.setTimeLocal(reply.getTime().toLocalDateTime());
       Homework homework = homeworkDao.selectHomeworkByArticleId(reply.getId());
+      
       List<Files> files = new ArrayList<Files>();
       files.add(filesDao.selectFilesById(homework.getFile1()));
       files.add(filesDao.selectFilesById(homework.getFile2()));
       homework.setFiles(files);
+      
+//      Member replyMember = new Member();
+//      System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+//      System.out.println("Username : " + reply.getUsername());
+//      int groupId = groupMemberDao.getGroupIdByUsername(reply.getUsername());
+//      replyMember.setGroup_no(groupDao.getGroupNoByGroupId(groupId));
+//      reply.setWriter(replyMember);
       reply.setOption(homework);
       reply.setWriter(memberDao.selectMemberByUsername(reply.getUsername()));
     }
+    //for(Member groupNoList : )
     model.addAttribute("article", article);
     model.addAttribute("replies", replies);
     model.addAttribute("page",request.getParameter("page"));

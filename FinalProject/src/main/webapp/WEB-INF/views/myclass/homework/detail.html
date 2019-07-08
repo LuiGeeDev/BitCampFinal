@@ -62,6 +62,7 @@
       과제가 없습니다.</div>
     <div class="reply-container" th:if="${replies.size()} != 0">
       <div class="relpy-article" th:each="reply : ${replies}">
+        <!-- <div class="reply-group" th:text="${reply.writer.group_no}"></div> -->
         <div class="reply-group">2조</div>
         <!-- <div class="reply-noneFile" th:if="${reply.option.files[0] == null}">등록된 파일이 없습니다.</div> -->
         <div class="reply-files">

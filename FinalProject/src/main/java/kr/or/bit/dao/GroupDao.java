@@ -32,4 +32,6 @@ public interface GroupDao {
   List<Group> selectAllMyGroup(String username);
   
   Group selectMyNewGroup(@Param("project_id")int project_id, @Param("group_no")int group_no);
+  
+  int getGroupNoByGroupId(int id);
 }
