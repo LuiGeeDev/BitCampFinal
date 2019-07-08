@@ -88,11 +88,11 @@ public class GeneralBoardController {
   }
 
   @GetMapping("/commentdelete")
-  public String generalCommnerDelete(int id) {
+  public String generalCommnerDelete(int id, int articleId, int board_id) {
     System.out.println("삭제 탓냐? 안탓냐?");
     Comment comment = commentService.selectOnecomment(id);
     int article_id = comment.getArticle_id();
     commentService.deleteComment(id);
-    return "redirect:/general/detail?id=" + article_id;
+    return "redirect:/myclass/board/read?article_id=" + articleId + "&board_id=" + board_id;
   }
 }
