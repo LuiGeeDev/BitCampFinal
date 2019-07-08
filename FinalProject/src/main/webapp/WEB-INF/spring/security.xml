@@ -10,11 +10,6 @@
 
   <beans:bean name="bCryptPasswordEncoder"
     class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-
-  <beans:bean id="userDetailsService"
-    class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
-    <beans:property name="dataSource" ref="dataSource" />
-  </beans:bean>
     
   <http use-expressions="true">
     <!-- intercept-url은 위에서부터 검색하기 때문에 특정 페이지에 권한을 걸고 싶으면 가장 아래 /** 보다 위에 
@@ -42,7 +37,7 @@
       token-validity-seconds="604800"
       remember-me-parameter="remember-me"
       remember-me-cookie="remember_cookie"
-      user-service-ref="userDetailsService" />
+    />
     <csrf disabled="true" />
     <session-management invalid-session-url="/login">
       <concurrency-control max-sessions="1"
