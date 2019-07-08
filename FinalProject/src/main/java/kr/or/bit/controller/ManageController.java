@@ -17,16 +17,16 @@ public class ManageController {
 	@Autowired
 	private ClassCreateService classCreateService;
 	
-	@GetMapping("/home")
+	@GetMapping("/course")
 	public String manageHome() {
-		return "manage/home";
+		return "manage/course";
 	}
 	
 	@PostMapping("/createClass")
 	public String createClass(Course course, @RequestParam(required = true) int people, @RequestParam int teacher_id, Model model) {
 		classCreateService.createClass(course, people, teacher_id);
 		
-		return "redirect:/manage/home";
+		return "redirect:/manage/course";
 	}
 	
 	@GetMapping("/students")
