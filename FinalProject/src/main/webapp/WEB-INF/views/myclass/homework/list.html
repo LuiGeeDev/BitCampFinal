@@ -4,7 +4,6 @@
 <head>
 <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
 <link rel="stylesheet" th:href="@{/css/myclass/homework/list.css}" />
--->
 </head>
 <body>
   <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
@@ -12,8 +11,11 @@
     <div class="board-main-title">
       과제제출 게시판
       <div class="search-item">
-        <input type="text" class="inputtext" id="boardSearch" name="boardSearch" placeholder="검색어를 입력해주세요">
-        <input type="button" class="btn btn-primary" value="검색">
+        <form action="" method="get">
+          <input type="text" class="inputtext" id="boardSearch"
+          name="boardSearch" placeholder="검색어를 입력해주세요">
+          <input type="submit" class="btn btn-primary" value="검색">
+        </form> 
       </div>
     </div>
     <div class="board">
@@ -23,7 +25,14 @@
           class="board-count">조회</span>
       </div>
       <th:block th:each="homeworkList : ${homeworkList}">
-      <a th:href="@{/myclass/homework/detail(id=${homeworkList.id}, page=${page})}"  class="article">
+      <a th:if="${boardSearch} != null" th:href="@{/myclass/homework/detail(id=${homeworkList.id}, page=${page}, boardSearch=${boardSearch})}"  class="article">
+        <div class="board-content">
+          <span class="title" th:text="${homeworkList.title}">주말 개인과제</span> <span class="writer" th:text="${homeworkList.username}">임경균
+            강사님</span> <span class="write-time" th:text="${#strings.arraySplit(homeworkList.time,' ')[0]}">2019.07.01</span> <span
+            class="write-count" th:text="${homeworkList.view_count}">16</span>
+        </div>
+      </a>
+      <a th:if="${boardSearch} == null" th:href="@{/myclass/homework/detail(id=${homeworkList.id}, page=${page})}"  class="article">
         <div class="board-content">
           <span class="title" th:text="${homeworkList.title}"></span>
           <span class="writer" th:text="${homeworkList.username}"></span>
@@ -40,7 +49,8 @@
           <a class="btn btn-primary paging" th:href="@{/myclass/homework(page=${pageMaker.startPage}-1, perPageNum=${pageMaker.cri.perPageNum})}">&laquo;</a>
         </span>
         <span th:each="idx, iterStat : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}" >
-          <a class="btn btn-primary paging" th:href="@{/myclass/homework(page=${idx})}" th:classappend="${pageMaker.cri.page} == ${idx} ? active : null" th:text="${idx}"></a>          
+          <a th:if="${boardSearch} != null" class="btn btn-primary paging" th:href="@{/myclass/homework(page=${idx},boardSearch=${boardSearch})}" th:classappend="${pageMaker.cri.page} == ${idx} ? active : null" th:text="${idx}"></a>
+          <a th:if="${boardSearch} == null" class="btn btn-primary paging" th:href="@{/myclass/homework(page=${idx})}" th:classappend="${pageMaker.cri.page} == ${idx} ? active : null" th:text="${idx}"></a>          
         </span>
         <span th:if="${pageMaker.next} == true and ${pageMaker.endPage > 0}">
           <a class="btn btn-primary paging" th:href="@{/myclass/homework(page=${pageMaker.endPage}+1 , perPageNum=${pageMaker.cri.perPageNum})}">&raquo;</a>
