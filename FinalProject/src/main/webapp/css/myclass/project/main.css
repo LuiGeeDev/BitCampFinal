@@ -6,15 +6,23 @@ body {
   border-bottom: 1px solid #F2F4F7 !important;
 }
 
-.links {
-  margin-left: 127px;
+.card-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 25px;
+}
+
+.top-row {
+  margin: 0 auto;
+  display: flex;
+  max-height: 38vh;
 }
 
 .links, .checklist {
-  margin-right: 10px;
-  width: 17vw;
-  height: 38vh;
+  width: 290px;
   padding: 10px 20px;
+  margin-right: 20px;
 }
 
 .edit-link, .edit-checklist {
@@ -34,6 +42,9 @@ body {
 
 .link-address {
   display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin-left: 15px;
   line-height: 30px;
 }
@@ -65,13 +76,13 @@ input[type=checkbox]:checked+label svg {
 }
 
 .item-description {
-  font-size: 17px;
+  font-size: 16px;
   margin-left: 50px;
 }
 
 .timeline {
   width: 70vw;
-  margin: 10px 127px 0;
+  margin: 10px auto 0;
 }
 
 .timeline--horizontal {
@@ -80,19 +91,29 @@ input[type=checkbox]:checked+label svg {
 
 #calendar {
   width: 70vw;
-  margin: 10px 127px;
+  margin: 10px auto;
   padding: 20px;
 }
 
-.recent-issues {
-  flex: 1;
-  margin-right: 127px;
+#calendar h2 {
+  font-size: 20px;
+  font-weight: 400;
+  margin-left: 3px;
+}
+
+.fc-day-header {
+  font-size: 15px;
+  line-height: 40px;
+}
+
+.fc-day-number {
+  font-size: 14px;
 }
 
 .issue {
   display: flex;
   border-bottom: 1px solid #292929;
-  padding: 10px 10px 5px 10px;
+  padding: 10.5px 35px;
 }
 
 .issue:last-child {
@@ -105,7 +126,7 @@ input[type=checkbox]:checked+label svg {
 
 .issue-title h3 {
   margin-left: 15px;
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 700;
   line-height: 27px;
 }
@@ -123,7 +144,7 @@ input[type=checkbox]:checked+label svg {
 }
 
 .issue-tags {
-  margin-left: 10px;
+  margin-left: 3px;
 }
 
 .fa-exclamation-circle {
@@ -134,3 +155,15 @@ input[type=checkbox]:checked+label svg {
   color: #2ecc71;
 }
 
+.issue .closed svg {
+  height: 27px;
+  width: 27px;
+}
+
+.closed {
+  margin-top: 5px;
+}
+
+.issue-writer {
+  margin-left: 5px;
+}

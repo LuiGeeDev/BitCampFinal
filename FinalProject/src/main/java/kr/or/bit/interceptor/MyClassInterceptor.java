@@ -37,7 +37,5 @@ public class MyClassInterceptor extends HandlerInterceptorAdapter {
     
     request.setAttribute("boardList", board);
     request.setAttribute("projects", projects);
-//    modelAndView.addObject("boardList", board);
-//    modelAndView.addObject("projects", projects);
   }
 }
