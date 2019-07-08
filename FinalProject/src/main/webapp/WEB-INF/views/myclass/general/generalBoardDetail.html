@@ -36,14 +36,14 @@
       </div>
       <div class="detail-content-parent">
       <div class="detail-content" th:text="${article.content}"></div>
-      <div class="file-upload">
       <div th:each="files : ${article.option.files}">
-        <a th:href="@{{filename}(filename=${files.filename})}"
-          th:attr="download=${files.original_filename}"> <span
-          class="submit-file" th:text="${files.original_filename}">general.zip</span>
-        </a>
-      </div>
-    </div>
+           <div th:if="${files!=null}">
+             <a th:href="@{{files}(filename=${files.filename})}"
+               th:attr="download=${files.original_filename}"> <span
+               class="submit-file" th:text="${files.original_filename}">general.zip</span>
+             </a>
+           </div>
+         </div>
       </div>
       
     </div>
@@ -52,7 +52,7 @@
 
       <span class="userIcon"> <i class="fas fa-user-circle fa-lg"></i>
       </span> <span class="writerName" th:text="${user.name}"></span>
-      <form th:action="@{/general/commentwrite(id=${article.id})}"
+      <form th:action="@{/general/commentwrite(id=${article.id}, article_id=${article.id}, board_id=${board.id})}"
         method="POST">
         <input type="text" name="content" id="content"
           class="comment-text" placeholder="댓글을 입력하세요"> <input
@@ -68,7 +68,7 @@
           <span class="userIcon"><i
             class="fas fa-user-circle fa-lg"></i></span> <span
             class="writerName" th:text="${comment.username}"></span> <a
-            th:href="@{/general/commentdelete(id=${comment.id})}">[삭제]</a>
+            th:href="@{/myclass/board/commentdelete(comment_id=${comment.id}, article_id=${article.id}, board_id=${board.id})}">[삭제]</a>
           <span class="write-date"
             th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
         </div>

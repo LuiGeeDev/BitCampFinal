@@ -15,7 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
+import kr.or.bit.model.Comment;
 import kr.or.bit.service.BoardService;
+import kr.or.bit.utils.Helper;
 
 @Controller
 @RequestMapping("/myclass/board")
@@ -82,7 +84,27 @@ public class BoardController {
   public String deleteArticle(int article_id) {
     Article article = boardService.getArticleForUpdateOrDelete(article_id);
     boardService.deleteArticle(article);
-
     return "redirect:/myclass/board?board_id=" + article.getBoard_id();
   }
+  
+  @PostMapping("/commentwrite")
+  public String commentWrite(int article_id, Comment comment, int board_id) {
+    boardService.writeComment(article_id, comment);
+    return "redirect:/myclass/board/read?article_id=" + article_id + "&board_id=" + board_id;
+  }
+  
+  @GetMapping("/commentdelete")
+  public String commentDelete(int article_id, int board_id, int comment_id) {
+    boardService.deleteComment(comment_id);
+    return "redirect:/myclass/board/read?article_id=" + article_id + "&board_id=" + board_id;
+  }
+  /*@GetMapping("/commentdelete")
+  public String generalCommnerDelete(int id, int articleId, int board_id) {
+    System.out.println("삭제 탓냐? 안탓냐?");
+    Comment comment = commentService.selectOnecomment(id);
+    int article_id = comment.getArticle_id();
+    commentService.deleteComment(id);
+    return "redirect:/myclass/board/read?article_id=" + articleId + "&board_id=" + board_id;
+  }*/
+ 
 }
