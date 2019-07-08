@@ -16,6 +16,7 @@
   <div class="main" th:fragment="main">
     <div th:replace="myclass/nav :: project-nav(main)"></div>
     <div class="row">
+      <div class="top-row">
       <div class="card links">
         <h3 class="card-title">링크</h3>
         <div class="project-link">
@@ -67,7 +68,7 @@
       <div class="card recent-issues">
         <div class="issue">
           <div class="closed">
-            <i class="fas fa-exclamation-circle fa-2x"></i>
+            <i class="fas fa-exclamation-circle"></i>
           </div>
           <div class="issue-title">
             <h3>오늘 저녁은 배가 고프다</h3>
@@ -77,12 +78,11 @@
           </div>
           <div class="issue-info">
             <p class="issue-writer">윤종석</p>
-            <p class="issue-time">03-21 10:39</p>
           </div>
         </div>
         <div class="issue">
           <div class="closed">
-            <i class="fas fa-exclamation-circle fa-2x"></i>
+            <i class="fas fa-exclamation-circle"></i>
           </div>
           <div class="issue-title">
             <h3>오늘 저녁은 배가 고프다</h3>
@@ -92,12 +92,11 @@
           </div>
           <div class="issue-info">
             <p class="issue-writer">윤종석</p>
-            <p class="issue-time">03-21 10:39</p>
           </div>
         </div>
         <div class="issue">
           <div class="closed">
-            <i class="fas fa-check-circle fa-2x"></i>
+            <i class="fas fa-check-circle"></i>
           </div>
           <div class="issue-title">
             <h3>오늘 저녁은 배가 고프다</h3>
@@ -107,12 +106,11 @@
           </div>
           <div class="issue-info">
             <p class="issue-writer">윤종석</p>
-            <p class="issue-time">03-21 10:39</p>
           </div>
         </div>
         <div class="issue">
           <div class="closed">
-            <i class="fas fa-check-circle fa-2x"></i>
+            <i class="fas fa-check-circle"></i>
           </div>
           <div class="issue-title">
             <h3>오늘 저녁은 배가 고프다</h3>
@@ -122,12 +120,11 @@
           </div>
           <div class="issue-info">
             <p class="issue-writer">윤종석</p>
-            <p class="issue-time">03-21 10:39</p>
           </div>
         </div>
         <div class="issue">
           <div class="closed">
-            <i class="fas fa-exclamation-circle fa-2x"></i>
+            <i class="fas fa-exclamation-circle"></i>
           </div>
           <div class="issue-title">
             <h3>오늘 저녁은 배가 고프다</h3>
@@ -137,9 +134,9 @@
           </div>
           <div class="issue-info">
             <p class="issue-writer">윤종석</p>
-            <p class="issue-time">03-21 10:39</p>
           </div>
         </div>
+      </div>
       </div>
     </div>
     <div class="row">
@@ -241,7 +238,6 @@
         defaultView : "dayGridMonth",
         locale : "ko",
         columnHeaderFormat : {
-          day : "2-digit",
           weekday : "short"
         },
         header : {
