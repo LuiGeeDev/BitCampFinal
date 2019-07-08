@@ -58,8 +58,8 @@ body {
   height: 220px;
 }
 
-.card-content{
-  flex:1;
+.card-content {
+  flex: 1;
 }
 
 .btn-teacher {
@@ -125,7 +125,7 @@ body {
   margin-bottom: 25px;
 }
 
-.homework-content, .issue-content{
+.homework-content, .issue-content {
   font-size: 30px;
 }
 
@@ -135,9 +135,13 @@ body {
 }
 
 .homework-content, .issue-content {
-   text-align: center;
+  text-align: center;
 }
-.homework-content > button, .issue-content > button {
+
+.homework-content>button, .issue-content>button {
   width: 300px;
 }
-  
+
+.active-list {
+  border-bottom: 1px solid #F2F4F7 !important;
+}

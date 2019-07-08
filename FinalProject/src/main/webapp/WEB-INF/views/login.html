@@ -1,56 +1,73 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
->
-<head>
-  <title>Teaming</title>
-  <link rel="stylesheet" href= "" type="text/css" th:href="@{/css/login.css}" />
-  <link rel="stylesheet" href= "" type="text/css" th:href="@{/css/home.css}" />
-
-  <meta charset="UTF-8" />
-</head>
-<body>
-  <div class="main">
-    
-    <div id = "container">
-        <div id = "half-image" 
-        ></div>
-        <div id = "login-wrapper">
-          
-          <form th:action="@{/login}" method="post" id = "login-form">
-            <div id ="login-title-wrapper">
-              <span id = "login-title">Teaming</span>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Teaming</title>
+    <link
+      rel="stylesheet"
+      href=""
+      type="text/css"
+      th:href="@{/css/login.css}"
+    />
+    <meta charset="UTF-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/js/all.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div id="container">
+        <div id="half-image"></div>
+        <div id="login-wrapper">
+          <form th:action="@{/login}" method="post" id="login-form">
+            <div id="login-title-wrapper">
+              <span id="login-title">Teaming</span>
             </div>
             <div id="label-wrapper">
-              <span id = "input-label">유저아이디</span>
+              <span class="input-label">아이디</span>
             </div>
-            <div id = "username-wrapper">
-              <input type="text" name="username" id="username" placeholder="유저아이디를 입력하세요.">
+            <div id="username-wrapper">
+              <input
+                type="text"
+                name="username"
+                id="username"
+                placeholder="아이디"
+              />
             </div>
             <div id="label-wrapper">
-              <span id="input-label">비밀번호</span>
+              <span class="input-label">비밀번호</span>
             </div>
-            <div id = "username-wrapper">
-              <input type="password" name="password" id="password" placeholder="비밀번호를 입력하세요.">
+            <div id="username-wrapper">
+              <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="비밀번호"
+              />
             </div>
             <div id="button-wrapper">
-              <button type="submit" class= "btn btn-warning btn-sm" id="submit-button">로그인</button>
+              <button
+                type="submit"
+                class="btn btn-warning btn-sm"
+                id="submit-button"
+              >
+                로그인
+              </button>
             </div>
             <div class="checkbox-area">
-              <label for="remember-me">자동 로그인</label>
-              <input type="checkbox" id="remember-me" name="remember-me">
-              <span class="checkmark"></span>
+              <label for="remember-me">
+                <input type="checkbox" id="remember-me" name="remember-me" />
+                <i class="far fa-check-square"></i>
+                <span class="remember-me">자동 로그인</span>
+              </label>
             </div>
-            <p th:if="${error}" class="fail">올바른 아이디나 비밀번호가 아닙니다.</p>
+            <p th:if="${error}" class="fail">
+              올바른 아이디나 비밀번호가 아닙니다.
+            </p>
           </form>
         </div>
       </div>
-
     </div>
     <script th:fragment="script">
-        console.log("Hello, world!");
+      console.log("Hello, world!");
     </script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
   </body>
 </html>

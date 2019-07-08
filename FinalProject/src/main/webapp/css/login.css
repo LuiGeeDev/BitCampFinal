@@ -1,89 +1,143 @@
+body {
+  font-family: "Nanum Gothic";
+  background-color: black;
+}
 
-body{
-    font-family: 'Nanum Gothic';
-    background-color: black
+#label-wrapper {
+  font-weight: bold;
 }
-#label-wrapper{
-    font-weight: bold;
-}
-#login-title-wrapper{
-    margin-bottom:30px;
-}
-#login-title{
-    font-size:35px;
-    font-weight: bold;
-}
-#container{
-    background-color: gray;
-    height: 80vh;
-    margin:10px;
-    text-align:right;
-    
 
-    padding: 210px 0px 0px 100px;
-    background-image: url('https://images.unsplash.com/photo-1520085601670-ee14aa5fa3e8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80');
-    background-size:100%;
+#login-title-wrapper {
+  margin-bottom: 30px;
 }
-#login-wrapper{
-    position:fixed;
-    width : 23%;
-    text-align: left;
-    background-color: white;
-    border-radius: 10px;
-    padding : 30px 30px 30px 30px;
-    border:1px solid #eeeeee ;
+
+#login-title {
+  margin-left: 14px;
+  font-size: 28px;
+  font-weight: 100;
 }
-input{
-    margin : 15px;
-    margin-top : 0px;
-    margin-bottom: 20px; 
-    height : 43px;
-    padding-left : 15px;
-    border-radius: 10px;
-    border:solid #eeeeee;
-    outline:none;
-    -moz-outline-radius: 10px;
+
+#container {
+  background-color: gray;
+  height: 80vh;
+  margin: 10px;
+  text-align: right;
+  padding: 210px 0px 0px 100px;
+  background: no-repeat;
+  background-image: url("https://images.unsplash.com/photo-1520085601670-ee14aa5fa3e8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80");
+  background-size: cover;
 }
-#username, #password{
-    width:90%;
+
+#login-wrapper {
+  position: fixed;
+  width: 23%;
+  text-align: left;
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px 30px 30px 30px;
+  border: 1px solid #eeeeee;
 }
-#button-wrapper{
-    text-align: center;
+
+#username, #password {
+  margin: 15px;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  height: 43px;
+  padding-left: 15px;
+  border-radius: 10px;
+  border: solid #eeeeee;
+  outline: none;
+  -moz-outline-radius: 10px;
+  width: 90%;
+  border-radius: 3px;
+  margin-top: 3px;
+  transition: .3s;
 }
-#submit-button{
-    
-    border:solid #F39C20;
-    font-weight: bold;
-    padding: 10px 20px 10px 20px;
-    font-size: 17px;
-    outline:none;
-    border-radius: 93px;
-    cursor:pointer;
+
+#username::placeholder, #password::placeholder {
+  font-size: 12px;
 }
-button{
-    background-color:white;
-    color: #F39C20;
-    background: none;
-    outline:none;
+
+#username:focus, #password:focus {
+  border: 3px solid #F39C20;
 }
+
+#button-wrapper {
+  text-align: center;
+}
+
+#submit-button {
+  border: 2px solid #f39c20;
+  font-weight: 100;
+  padding: 10px 20px 10px 20px;
+  font-size: 15px;
+  outline: none;
+  border-radius: 93px;
+  cursor: pointer;
+}
+
+#submit-button:active {
+  transform: scale(0.99);
+}
+
+button {
+  background-color: white;
+  color: #f39c20;
+  background: none;
+  outline: none;
+}
+
 button:hover {
-    color: white;
-    background-color:#F39C20;
-}
-button::after{
-    height: 0;
-    left: 50%;
-    top: 50%;
-    width: 0;
-}
-button:hover:after{
-    height: 100%;
-    left: 0;
-    top: 0;
-    width: 100%;
-}
-.fail{
-    color:red;
+  color: white;
+  background-color: #f39c20;
 }
 
-  
+button::after {
+  height: 0;
+  left: 50%;
+  top: 50%;
+  width: 0;
+}
+
+button:hover:after {
+  height: 100%;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+.fail {
+  color: red;
+  font-size: 14px;
+}
+
+.input-label {
+  font-size: 13px;
+  font-weight: 400;
+  margin-left: 13px;
+}
+
+#remember-me {
+  display: none;
+}
+
+.remember-me {
+  font-size: 13px;
+  user-select: none;
+}
+
+#remember-me + svg {
+  user-select: none;
+}
+
+#remember-me:checked + svg {
+  color: #F29C20;
+}
+
+#remember-me:active + svg {
+  transform: scale(0.9);
+}
+
+.checkbox-area {
+  margin-left: 16px;
+}

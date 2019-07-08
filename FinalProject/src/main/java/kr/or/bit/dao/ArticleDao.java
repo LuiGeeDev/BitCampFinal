@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import kr.or.bit.model.Article;
+import kr.or.bit.model.Tag;
 
 /*
  *
@@ -53,4 +54,6 @@ public interface ArticleDao {
       @Param("end") int end, @Param("criteria") String criteria, @Param("search") String search);
 
   List<Article> selectHomeworkReplies(int article_id);
+  
+  List<Tag> selectTagList(int article_id);
 }

@@ -28,6 +28,10 @@ public class HomeController {
 
     Member user = memberDao.selectMemberByUsername(username);
     List<Message> mainMessage = messageDao.selectMainMessage(username);
+    for (Message m : mainMessage) {
+      m.setTimeLocal(m.getTime().toLocalDateTime());
+      m.setSenderName(memberDao.selectMemberByUsername(m.getSender_username()).getName());
+    }
 
     model.addAttribute("user", user);
     model.addAttribute("mainMessage", mainMessage);

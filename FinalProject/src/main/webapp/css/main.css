@@ -1,24 +1,24 @@
 @charset "UTF-8";
 
 .carousel {
-    border: 1px solid black;
-    border-radius: 7px;
-    padding: 25px 50px;
-    margin: auto;
-    width: 50%;
-    height: 366px;
+  border: 1px solid black;
+  border-radius: 7px;
+  padding: 25px 50px;
+  margin: auto;
+  width: 50%;
+  height: 366px;
 }
 
 .carousel-indicators li {
-    background-color: #F39B10 !important;
+  background-color: #F39B10 !important;
 }
 
 span[class^="carousel-control"] {
-    color: #F39B10;
+  color: #F39B10;
 }
 
 a[class^="carousel-control"] {
-    width: 5%;
+  width: 5%;
 }
 
 .news a {
@@ -27,7 +27,7 @@ a[class^="carousel-control"] {
 
 .news h6 {
   font-weight: 700;
-  font-size: 18px;.3
+  font-size: 18px; .3
   margin-bottom: 10px;
   white-space: nowrap;
   overflow: hidden;
@@ -56,6 +56,8 @@ a[class^="carousel-control"] {
 .fc-day-header {
   padding: 10px 5px !important;
   color: #2D3E50;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .recent-messages {
@@ -100,8 +102,9 @@ a[class^="carousel-control"] {
 }
 
 .recent-messages h5 {
-  font-weight: 700;
+  font-weight: 600;
   color: #2D3E50;
+  font-size: 17px;
 }
 
 .message-content {
@@ -124,7 +127,6 @@ a[class^="carousel-control"] {
   padding: 30px 20px 20px 25px;
   position: relative;
   width: 350px;
-
 }
 
 .d-day {
@@ -179,14 +181,16 @@ a[class^="carousel-control"] {
 
 .video-title {
   font-weight: 700;
+  font-size: 18px;
   color: #2D3E50;
   line-height: 40px;
 }
 
 .video-description {
-  height: 75px;
+  height: 65px;
   overflow: hidden;
-  margin-top: 20px;
+  margin-top: 30px;
+  font-size: 14px;
 }
 
 .stack {

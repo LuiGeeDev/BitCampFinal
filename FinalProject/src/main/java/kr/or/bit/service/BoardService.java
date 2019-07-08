@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.ArticleDao;
@@ -21,6 +22,7 @@ import kr.or.bit.dao.GeneralDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
+import kr.or.bit.model.BoardAddRemove;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Files;
 import kr.or.bit.model.General;
@@ -192,5 +194,33 @@ public class BoardService {
   public void deleteComment(int comment_id) {
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     commentDao.deleteComment(comment_id);
+  }
+
+  public void decideBoardAddOrRemove(BoardAddRemove boardAddRemove) {
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+
+    List<String> boardToAdd = boardAddRemove.getBoardToAdd();
+    List<String> boardToRemove = boardAddRemove.getBoardToRemove();
+
+    int course_id = memberDao.selectMemberByUsername(Helper.userName()).getCourse_id();
+
+    for (String boardname : boardToAdd) {
+      Board exists = boardDao.isBoardExists(course_id, boardname);
+      if (exists == null) {
+        Board board = new Board();
+        board.setBoard_name(boardname);
+        board.setBoardtype(3);
+        board.setCourse_id(course_id);
+        boardDao.insertBoard(board);
+      }
+    }
+
+    for (String boardname : boardToRemove) {
+      Board exists = boardDao.isBoardExists(course_id, boardname);
+      if (exists != null) {
+        boardDao.deleteBoard(exists.getId());
+      }
+    }
   }
 }
