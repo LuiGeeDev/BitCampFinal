@@ -15,10 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.ArticleDao;
@@ -39,7 +39,6 @@ import kr.or.bit.model.Group;
 import kr.or.bit.model.Homework;
 import kr.or.bit.model.Member;
 import kr.or.bit.model.PageMaker;
-import kr.or.bit.model.Paging;
 import kr.or.bit.model.Project;
 import kr.or.bit.model.ProjectMember;
 import kr.or.bit.model.Schedule;
@@ -47,6 +46,7 @@ import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.BoardService;
 import kr.or.bit.utils.Helper;
+import kr.or.bit.utils.Pager;
 
 @Controller
 @RequestMapping("/myclass")
@@ -157,43 +157,30 @@ public class MyClassController {
   
 
   @GetMapping("/homework")
-  public String homework(@ModelAttribute("cri") Paging cri, Model model,HttpServletRequest request, String boardSearch) {
+  public String homework(@RequestParam(defaultValue = "1") int page, String boardSearch,
+      Model model, HttpServletRequest request) {
     // List<Article> homeworkList = articleService.selectAllArticle("homework",
     // HOMEWORK_BOARD_ID);
     // model.addAttribute("homeworkList", homeworkList);
-    System.out.println(boardSearch);
-    System.out.println(request.getParameter("boardSearch"));
-    if(boardSearch == null) {
-      boardSearch = request.getParameter("boardSearch");
-    }
-    String currentPage = request.getParameter("page");
-    if(currentPage == null) {
-      currentPage = "1";
-    }
     String username = Helper.userName();
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
     Member member = memberDao.selectMemberByUsername(username);
-    
-    PageMaker pageMaker = new PageMaker();
-    pageMaker.setCri(cri);
-    
-    if(boardSearch!=null) {
-      model.addAttribute("boardSearch",boardSearch);
-      model.addAttribute("homeworkList", homeworkDao.selectHomeworkArticleBySearchWord(cri, member.getCourse_id(), boardSearch));
-      if(homeworkDao.countHomeworkArticleBySearchWorkd(member.getCourse_id(), boardSearch) == 0) {
-        pageMaker.setTotalCount(1);
-      }else {
-        pageMaker.setTotalCount(homeworkDao.countHomeworkArticleBySearchWorkd(member.getCourse_id(), boardSearch));
-      }
-      
-    }else {
-      model.addAttribute("homeworkList", homeworkDao.selectAllHomeworkArticle(cri , member.getCourse_id()));
-      pageMaker.setTotalCount(homeworkDao.countAllHomeworkArticle(member.getCourse_id()));
+
+    List<Article> homeworkList = null;
+    Pager pager = null;
+    if(boardSearch != null) {
+      pager = new Pager(page, homeworkDao.countHomeworkArticleBySearchWorkd(member.getCourse_id(), boardSearch));
+      homeworkList = homeworkDao.selectHomeworkArticleBySearchWord(pager, member.getCourse_id(), boardSearch); 
+      model.addAttribute("boardSearch", boardSearch);
+    } else {
+      pager = new Pager(page, homeworkDao.countAllHomeworkArticle(member.getCourse_id())); 
+      homeworkList = homeworkDao.selectAllHomeworkArticle(pager, member.getCourse_id());
     }
     
-    model.addAttribute("pageMaker", pageMaker);
-    model.addAttribute("page", currentPage);
+    model.addAttribute("pager", pager);
+    model.addAttribute("homeworkList", homeworkList);
+    model.addAttribute("page", page);
     return "myclass/homework/list";
   }
 
