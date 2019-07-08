@@ -174,6 +174,7 @@ public class MyClassController {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
     Member member = memberDao.selectMemberByUsername(username);
+    
     PageMaker pageMaker = new PageMaker();
     pageMaker.setCri(cri);
     
@@ -193,6 +194,7 @@ public class MyClassController {
     
     model.addAttribute("pageMaker", pageMaker);
     model.addAttribute("page", currentPage);
+    model.addAttribute("userRole", member.getRole());
     return "myclass/homework/list";
   }
 
@@ -208,7 +210,6 @@ public class MyClassController {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     List<Article> replies = articleDao.selectHomeworkReplies(id);
     
-    
     for(Article reply : replies) {
       reply.setTimeLocal(reply.getTime().toLocalDateTime());
       Homework homework = homeworkDao.selectHomeworkByArticleId(reply.getId());
@@ -223,6 +224,10 @@ public class MyClassController {
       reply.setWriter(replyMember); 
       reply.setOption(homework);
     }
+    
+    String username = Helper.userName();
+    Member member = memberDao.selectMemberByUsername(username);
+    model.addAttribute("userRole", member.getRole());
     model.addAttribute("article", article);
     model.addAttribute("replies", replies);
     model.addAttribute("page",request.getParameter("page"));

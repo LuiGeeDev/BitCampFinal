@@ -26,39 +26,43 @@
       <div class="homework-content" th:utext="${article.content}">별찍기
         10문제를 만들어서 올리세요^^</div>
       <div class="button-wrapper" id="buttons">
+        <span th:if="${userRole}=='TEACHER'"> 
+          <a th:href="@{/myclass/homework/edit(id=${article.id}, page=${page},boardSearch=${boardSearch})}"
+            class="btn btn-primary btn-sm">수정</a>
+          <button class="btn btn-primary btn-sm" id="delete-btn">삭제</button>
+        </span>
         <a th:if="${boardSearch != null}" th:href="@{/myclass/homework(page=${page},boardSearch=${boardSearch})}"
           class="btn btn-primary btn-sm">목록</a> 
         <a th:if="${boardSearch == null}" th:href="@{/myclass/homework(page=${page})}"
-          class="btn btn-primary btn-sm">목록</a> <a
-          th:href="@{/myclass/homework/edit(id=${article.id}, page=${page},boardSearch=${boardSearch})}"
-          class="btn btn-primary btn-sm">수정</a>
-        <button class="btn btn-primary btn-sm" id="delete-btn">삭제</button>
+          class="btn btn-primary btn-sm">목록</a>
       </div>
     </div>
     <hr>
+    <div th:if="${userRole} != 'TEACHER'">
     <div class="homework-submit-title">제출할 과제 등록</div>
-    <div class="homework-submit-container">
-      <form method="post" enctype="multipart/form-data">
-        <div class="contents">
-          <input type="hidden" name="original_id" th:value="${article.id}"> 
-          <span class="ppt-upload-text"><i class="far fa-file-powerpoint"></i> 발표자료</span> 
-          <span class="ppt-upload-input"> 
-            <label for="ex_file" id="buttonLabel1">파일찾기</label>
-            <input type="file" id="ex_file" name="file1" onchange="fileUpload1(this)">
-          </span>
-          <span class="source-upload-text"><i class="far fa-file-archive"></i> 소스코드</span>
-          <span class="source-upload-input">
-            <label for="ex_file2" id="buttonLabel2">파일찾기</label>
-            <input type="file" id="ex_file2" name="file2" onchange="fileUpload2(this)">
-          </span>
-          <div id="submit-buttons">
-            <input type="submit" class="btn btn-primary btn-sm" id="homework-submit-button" value="제출">
+      <div class="homework-submit-container">
+        <form method="post" enctype="multipart/form-data">
+          <div class="contents">
+            <input type="hidden" name="original_id" th:value="${article.id}"> 
+            <span class="ppt-upload-text"><i class="far fa-file-powerpoint"></i> 발표자료</span> 
+            <span class="ppt-upload-input"> 
+              <label for="ex_file" id="buttonLabel1">파일찾기</label>
+              <input type="file" id="ex_file" name="file1" onchange="fileUpload1(this)">
+            </span>
+            <span class="source-upload-text"><i class="far fa-file-archive"></i> 소스코드</span>
+            <span class="source-upload-input">
+              <label for="ex_file2" id="buttonLabel2">파일찾기</label>
+              <input type="file" id="ex_file2" name="file2" onchange="fileUpload2(this)">
+            </span>
+            <div id="submit-buttons">
+              <input type="submit" class="btn btn-primary btn-sm" id="homework-submit-button" value="제출">
+            </div>
+            <input type="hidden" name="page" th:value="${page}">
           </div>
-          <input type="hidden" name="page" th:value="${page}">
-        </div>
-      </form>
-    </div>
-    <hr>
+        </form>
+      </div>
+      <hr>
+      </div>
     <div class="reply-title">과제제출 목록</div>
     <div class="none-reply-container" th:if="${replies.size()} == 0">제출된
       과제가 없습니다.</div>
@@ -89,11 +93,12 @@
         <div class="relpy-writeDate"
           th:text="${#temporals.format(reply.timeLocal, 'yyyy-MM-dd')}"></div>
         <div class="reply-update-button">
-          <button id="reply-delete-button"
-            th:onclick=" 'javascript:replyDelete(' + ${reply.id} +')'"
-            th:value="${reply.id}" name="reply-delete-button">
-            <i class="far fa-trash-alt"></i>
-          </button>
+            <button id="reply-delete-button" 
+              th:if="${userRole}==${reply.writer.role}"
+              th:onclick=" 'javascript:replyDelete(' + ${reply.id} +')'"
+              th:value="${reply.id}" name="reply-delete-button">
+              <i class="far fa-trash-alt"></i>
+            </button>
         </div>
       </div>
     </div>

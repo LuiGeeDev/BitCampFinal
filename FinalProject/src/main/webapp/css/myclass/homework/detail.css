@@ -269,7 +269,10 @@
 
 .reply-update-button {
   text-align: center;
-  width: 5%;
+  width: 5%;  
+}  
+  
+#reply-delete-button {
   cursor: pointer;
 }
 

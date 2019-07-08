@@ -60,7 +60,7 @@
         </span>
       </div>
 
-      <div class="write-btns">
+      <div class="write-btns" th:if="${userRole} == 'TEACHER'">
         <a href="/myclass/homework/write" class="btn btn-primary">글쓰기</a>
       </div>
     </div>
