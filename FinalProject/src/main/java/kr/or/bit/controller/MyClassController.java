@@ -160,9 +160,6 @@ public class MyClassController {
 
   @GetMapping("/homework")
   public String homework(@ModelAttribute("cri") Criteria cri, Model model,HttpServletRequest request) {
-    // List<Article> homeworkList = articleService.selectAllArticle("homework",
-    // HOMEWORK_BOARD_ID);
-    // model.addAttribute("homeworkList", homeworkList);
     String currentPage = request.getParameter("page");
     if(currentPage == null) {
       currentPage = "1";

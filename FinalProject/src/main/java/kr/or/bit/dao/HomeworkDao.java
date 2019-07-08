@@ -16,8 +16,8 @@ public interface HomeworkDao extends OptionDao {
   
   Homework selectHomeworkByArticleId(int article_id);
   
-  List<Homework> selectAllHomeworkArticle(@Param("cri") Criteria cri, @Param("course_id") int course_id);
-  
+  List<Article> selectAllHomeworkArticle(@Param("cri") Criteria cri, @Param("course_id") int course_id);
+      
   void updateHomeworkArticle(Article article);
   
   int countAllHomeworkArticle(int course_id);

@@ -38,19 +38,19 @@
     <div class="homework-submit-container">
       <form method="post" enctype="multipart/form-data">
         <div class="contents">
-          <input type="hidden" name="original_id"
-            th:value="${article.id}"> <span
-            class="ppt-upload-text"><i
-            class="far fa-file-powerpoint"></i> 발표자료</span> <span
-            class="ppt-upload-input"> <label for="ex_file">파일찾기</label>
-            <input type="file" id="ex_file" name="file1">
-          </span> <span class="source-upload-text"><i
-            class="far fa-file-archive"></i> 소스코드</span> <span
-            class="source-upload-input"> <label for="ex_file2">파일찾기</label>
-            <input type="file" id="ex_file2" name="file2"></span>
+          <input type="hidden" name="original_id" th:value="${article.id}"> 
+          <span class="ppt-upload-text"><i class="far fa-file-powerpoint"></i> 발표자료</span> 
+          <span class="ppt-upload-input"> 
+            <label for="ex_file" id="buttonLabel1">파일찾기</label>
+            <input type="file" id="ex_file" name="file1" onchange="fileUpload1(this)">
+          </span>
+          <span class="source-upload-text"><i class="far fa-file-archive"></i> 소스코드</span>
+          <span class="source-upload-input">
+            <label for="ex_file2" id="buttonLabel2">파일찾기</label>
+            <input type="file" id="ex_file2" name="file2" onchange="fileUpload2(this)">
+          </span>
           <div id="submit-buttons">
-            <input type="submit" class="btn btn-primary btn-sm"
-              id="homework-submit-button" value="제출">
+            <input type="submit" class="btn btn-primary btn-sm" id="homework-submit-button" value="제출">
           </div>
           <input type="hidden" name="page" th:value="${page}">
         </div>
@@ -173,6 +173,13 @@
         })
   
       };
+      function fileUpload1(fis) {
+        document.getElementById('buttonLabel1').innerHTML="선택완료"
+      }
+      function fileUpload2(fis) {
+        document.getElementById('buttonLabel2').innerHTML="선택완료"
+      }
+      
     </script>
 </body>
 </html>
