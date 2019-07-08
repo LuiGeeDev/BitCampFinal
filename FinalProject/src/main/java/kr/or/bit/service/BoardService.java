@@ -184,10 +184,11 @@ public class BoardService {
     return articleDao.getMostRecentArticleId();
   }
 
-  public void writeComment(int article_id, Comment comment) {
+  public void writeComment(int article_id, Comment comment, String comment_content) {
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     comment.setArticle_id(article_id);
     comment.setUsername(Helper.userName());
+    comment.setContent(comment_content);
     commentDao.insertComment(comment);
   }
 
