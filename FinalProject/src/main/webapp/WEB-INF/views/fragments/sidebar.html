@@ -34,7 +34,7 @@
           
           <div class="nav-menu">
             <div th:classappend="${#strings.contains(#request.getRequestURI(),'stack')} ? 'active-menu'" class="nav-icon" >
-             <a th:href="@{/stack?board_id=1}">
+             <a th:href="@{/stack}">
             
               <i class="far fa-question-circle fa-2x"></i>
              </a>
@@ -67,7 +67,7 @@
         <a th:href="@{/myclass}">메인 페이지</a>
         <a href="#project" data-toggle="collapse" th:if="${projects.size() != 0}">프로젝트 게시판</a>
         <div id="project" class="collapse" th:if="${projects.size() != 0}">
-          <a href="#" th:each="project : ${projects}" th:text="'-' + ${project.project_name}"></a>
+          <a th:href="@{/myclass/project(id=${project.id})}" th:each="project : ${projects}" th:text="'-' + ${project.project_name}"></a>
         </div>
         <th:block th:each="board : ${boardList}">
           <a th:if="${board.boardtype == 3}" th:href="@{/myclass/board(board_id=${board.id})}" th:text="${board.board_name}"></a>

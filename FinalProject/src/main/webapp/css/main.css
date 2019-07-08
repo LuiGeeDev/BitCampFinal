@@ -7,6 +7,7 @@
   margin: auto;
   width: 50%;
   height: 366px;
+  margin-bottom: 30px;
 }
 
 .carousel-indicators li {
@@ -48,7 +49,7 @@ a[class^="carousel-control"] {
 }
 
 #calendar {
-  width: 75%;
+  width: 771px;
   margin: auto;
   margin-bottom: 20px;
 }
@@ -171,8 +172,8 @@ a[class^="carousel-control"] {
 
 .video {
   display: flex;
-  width: 450px;
-  margin-bottom: 20px;
+  width: 350px;
+  margin-bottom: 60px;
 }
 
 .thumbnail {
@@ -184,18 +185,28 @@ a[class^="carousel-control"] {
   font-size: 18px;
   color: #2D3E50;
   line-height: 40px;
+  margin: 0;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .video-description {
-  height: 65px;
   overflow: hidden;
-  margin-top: 30px;
+  margin-top: 20px;
   font-size: 14px;
+  color: gray;
+}
+
+.video-description * {
+  margin: 0;
 }
 
 .stack {
   margin: auto;
   margin-left: 50px;
+  width: 325px;
 }
 
 .stack-recent, .stack-popular {
@@ -203,6 +214,7 @@ a[class^="carousel-control"] {
   border-radius: 7px;
   padding: 10px 30px;
   margin-bottom: 40px;
+  min-height: 196px;
 }
 
 .stack-header {
@@ -215,6 +227,9 @@ a[class^="carousel-control"] {
 
 .stack-article-title {
   font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .stack-article-time {
