@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.model.Article;
-import kr.or.bit.model.Board;
 import kr.or.bit.model.Comment;
 import kr.or.bit.service.BoardService;
-import kr.or.bit.utils.Helper;
 
 @Controller
 @RequestMapping("/myclass/board")
@@ -57,8 +55,6 @@ public class BoardController {
   @GetMapping("/read")
   public String readArticle(int article_id, int board_id, Model model) {
     Article article = boardService.readArticle(article_id);
-    System.out.println(article);
-    System.out.println();
     model.addAttribute("article", article);
     model.addAttribute("board", boardService.getBoardInfo(board_id));
     return "myclass/general/generalBoardDetail";
@@ -75,7 +71,6 @@ public class BoardController {
 
   @PostMapping("/edit")
   public String updateArticle(Article article, List<MultipartFile> files, int board_id) {
-    System.out.println(files);
     boardService.updateArticle(article, files);
     return "redirect:/myclass/board/read?article_id=" + article.getId() + "&board_id=" + article.getBoard_id(); 
   }
@@ -88,23 +83,16 @@ public class BoardController {
   }
   
   @PostMapping("/commentwrite")
-  public String commentWrite(int article_id, Comment comment, int board_id) {
-    boardService.writeComment(article_id, comment);
-    return "redirect:/myclass/board/read?article_id=" + article_id + "&board_id=" + board_id;
+  public void commentWrite(int article_id, Comment comment, int board_id, String comment_content) {
+    boardService.writeComment(article_id, comment, comment_content);
   }
   
   @GetMapping("/commentdelete")
+  
   public String commentDelete(int article_id, int board_id, int comment_id) {
+    System.out.println("댓글 삭제");
     boardService.deleteComment(comment_id);
     return "redirect:/myclass/board/read?article_id=" + article_id + "&board_id=" + board_id;
   }
-  /*@GetMapping("/commentdelete")
-  public String generalCommnerDelete(int id, int articleId, int board_id) {
-    System.out.println("삭제 탓냐? 안탓냐?");
-    Comment comment = commentService.selectOnecomment(id);
-    int article_id = comment.getArticle_id();
-    commentService.deleteComment(id);
-    return "redirect:/myclass/board/read?article_id=" + articleId + "&board_id=" + board_id;
-  }*/
  
 }

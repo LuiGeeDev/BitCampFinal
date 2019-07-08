@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        		 WHERE board_id = #{board_id}
             		 ORDER BY id DESC) a) b
 		
-			   WHERE rownum BETWEEN #{start} AND #{end}) c;
+			   WHERE rownum BETWEEN #{start} AND #{end} AND enable =1) c 
   </select>
   <select id="selectArticlesSorted" resultType="kr.or.bit.model.Article">
     SET @rownum:=0;
