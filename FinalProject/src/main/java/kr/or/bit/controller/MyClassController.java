@@ -33,7 +33,7 @@ import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
 import kr.or.bit.model.BoardAddRemove;
 import kr.or.bit.model.Course;
-import kr.or.bit.model.Criteria;
+import kr.or.bit.model.Paging;
 import kr.or.bit.model.Files;
 import kr.or.bit.model.Group;
 import kr.or.bit.model.Homework;
@@ -159,10 +159,15 @@ public class MyClassController {
   }
 
   @GetMapping("/homework")
-  public String homework(@ModelAttribute("cri") Criteria cri, Model model,HttpServletRequest request) {
+  public String homework(@ModelAttribute("cri") Paging cri, Model model,HttpServletRequest request, String boardSearch) {
     // List<Article> homeworkList = articleService.selectAllArticle("homework",
     // HOMEWORK_BOARD_ID);
     // model.addAttribute("homeworkList", homeworkList);
+    System.out.println(boardSearch);
+    System.out.println(request.getParameter("boardSearch"));
+    if(boardSearch == null) {
+      boardSearch = request.getParameter("boardSearch");
+    }
     String currentPage = request.getParameter("page");
     if(currentPage == null) {
       currentPage = "1";
@@ -171,11 +176,22 @@ public class MyClassController {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
     Member member = memberDao.selectMemberByUsername(username);
-    model.addAttribute("homeworkList", homeworkDao.selectAllHomeworkArticle(cri , member.getCourse_id()));
-    
     PageMaker pageMaker = new PageMaker();
     pageMaker.setCri(cri);
-    pageMaker.setTotalCount(homeworkDao.countAllHomeworkArticle(member.getCourse_id()));
+    
+    if(boardSearch!=null) {
+      model.addAttribute("boardSearch",boardSearch);
+      model.addAttribute("homeworkList", homeworkDao.selectHomeworkArticleBySearchWord(cri, member.getCourse_id(), boardSearch));
+      if(homeworkDao.countHomeworkArticleBySearchWorkd(member.getCourse_id(), boardSearch) == 0) {
+        pageMaker.setTotalCount(1);
+      }else {
+        pageMaker.setTotalCount(homeworkDao.countHomeworkArticleBySearchWorkd(member.getCourse_id(), boardSearch));
+      }
+      
+    }else {
+      model.addAttribute("homeworkList", homeworkDao.selectAllHomeworkArticle(cri , member.getCourse_id()));
+      pageMaker.setTotalCount(homeworkDao.countAllHomeworkArticle(member.getCourse_id()));
+    }
     
     model.addAttribute("pageMaker", pageMaker);
     model.addAttribute("page", currentPage);
@@ -191,6 +207,8 @@ public class MyClassController {
     FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     List<Article> replies = articleDao.selectHomeworkReplies(id);
+    
+    model.addAttribute("boardSearch", request.getParameter("boardSearch"));
     
     for(Article reply : replies) {
       reply.setTimeLocal(reply.getTime().toLocalDateTime());
@@ -210,7 +228,7 @@ public class MyClassController {
 
   @PostMapping("/homework/detail")
   public String submitHomeworkDetail(Article article, MultipartFile file1, MultipartFile file2,
-      HttpServletRequest request) {
+      HttpServletRequest request,Model model) {
     
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
@@ -226,6 +244,7 @@ public class MyClassController {
     files.add(file1);
     files.add(file2);
     articleInsertService.writeReplyArticle(article, homework, files, request);
+    model.addAttribute("boardSearch", request.getParameter("boardSearch"));
     return "redirect:/myclass/homework/detail?id=" + article.getId() +"&page="+request.getParameter("page");
   }
 
