@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <insert id="insertSchedule">
     INSERT INTO schedule (start_date, end_date, content, color, group_id,
     course_id)
-    VALUES(#{start_date}, #{end_date}, #{content}, #{color}, #{group_id}, #{course_id})
+    VALUES(now(), #{end_date}, #{content}, #{color}, #{group_id}, #{course_id})
   </insert>
   <update id="updateSchedule">
     UPDATE schedule

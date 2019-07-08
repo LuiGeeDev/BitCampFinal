@@ -72,6 +72,7 @@ public class BoardController {
   @PostMapping("/edit")
   public String updateArticle(Article article, List<MultipartFile> files, int board_id) {
     boardService.updateArticle(article, files);
+    System.out.println(article);
     return "redirect:/myclass/board/read?article_id=" + article.getId() + "&board_id=" + article.getBoard_id(); 
   }
 

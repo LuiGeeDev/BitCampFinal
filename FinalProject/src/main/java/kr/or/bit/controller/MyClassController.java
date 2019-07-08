@@ -1,5 +1,6 @@
 package kr.or.bit.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Period;
@@ -29,18 +30,19 @@ import kr.or.bit.dao.GroupMemberDao;
 import kr.or.bit.dao.HomeworkDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.ProjectDao;
+import kr.or.bit.dao.ScheduleDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
-import kr.or.bit.model.BoardAddRemove;
 import kr.or.bit.model.Course;
-import kr.or.bit.model.Paging;
 import kr.or.bit.model.Files;
 import kr.or.bit.model.Group;
 import kr.or.bit.model.Homework;
 import kr.or.bit.model.Member;
 import kr.or.bit.model.PageMaker;
+import kr.or.bit.model.Paging;
 import kr.or.bit.model.Project;
 import kr.or.bit.model.ProjectMember;
+import kr.or.bit.model.Schedule;
 import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.BoardService;
@@ -153,10 +155,6 @@ public class MyClassController {
     return "myclass/teacher/create/board";
   }
   
-  @PostMapping("/create/board")
-  public void createBoard(@RequestBody BoardAddRemove boardAddRemove) {
-    boardService.decideBoardAddOrRemove(boardAddRemove);
-  }
 
   @GetMapping("/homework")
   public String homework(@ModelAttribute("cri") Paging cri, Model model,HttpServletRequest request, String boardSearch) {
@@ -199,7 +197,7 @@ public class MyClassController {
   }
 
   @GetMapping("/homework/detail")
-  public String homeworkDetailPage(Model model, int id, HttpServletRequest request) {
+  public String homeworkDetailPage(Model model, int id, HttpServletRequest request ) {
     
     Article article = articleService.selectOneArticle("homework", id);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
@@ -210,7 +208,6 @@ public class MyClassController {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     List<Article> replies = articleDao.selectHomeworkReplies(id);
     
-    model.addAttribute("boardSearch", request.getParameter("boardSearch"));
     
     for(Article reply : replies) {
       reply.setTimeLocal(reply.getTime().toLocalDateTime());
@@ -229,6 +226,8 @@ public class MyClassController {
     model.addAttribute("article", article);
     model.addAttribute("replies", replies);
     model.addAttribute("page",request.getParameter("page"));
+    model.addAttribute("boardSearch", request.getParameter("boardSearch"));
+
     return "myclass/homework/detail";
   }
 
@@ -260,9 +259,13 @@ public class MyClassController {
   }
 
   @PostMapping("/homework/write")
+  @Transactional
   public String writeHomeworkArticle(Article article, Date end_date, HttpServletRequest request) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
+    
+    
     Member member = memberDao.selectMemberByUsername(Helper.userName());
     int board_id = boardDao.selectBoardByCourseId(member.getCourse_id(), 4).getId();
     article.setUsername(Helper.userName());
@@ -270,6 +273,17 @@ public class MyClassController {
     Homework homework = new Homework();
     homework.setEnd_date(end_date);
     articleInsertService.writeArticle(article, homework, null, request);
+    
+    Schedule schedule = new Schedule();
+
+    schedule.setCourse_id(member.getCourse_id());
+    schedule.setContent(article.getTitle());
+    schedule.setEnd_date(homework.getEnd_date());
+    schedule.setColor("green");
+    schedule.setGroup_id(0);
+    
+    scheduleDao.insertSchedule(schedule);
+    
     return "redirect:/myclass/homework";
   }
 
@@ -298,26 +312,29 @@ public class MyClassController {
   }
 
   @GetMapping("/homework/edit")
-  public String editHomeworkArticle(Model model, int id) {
+  public String editHomeworkArticle(Model model, int id, HttpServletRequest request) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
     Article article = articleDao.selectOneArticle(id);
     Homework homework = homeworkDao.selectHomeworkByArticleId(id);
     article.setOption(homework);
+    
     model.addAttribute("article", article);
+    model.addAttribute("boardSearch", request.getParameter("boardSearch"));
     return "myclass/homework/edit";
   }
 
   @PostMapping("/homework/edit")
-  public String editOkHomeworkArticle(Article updateArticle, HttpServletRequest request) {
-    
+  public String editOkHomeworkArticle(Article updateArticle, HttpServletRequest request, String boardSearch) throws UnsupportedEncodingException {
+    request.setCharacterEncoding("UTF-8");
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
     Homework homework = homeworkDao.selectHomeworkByArticleId(updateArticle.getId());
     updateArticle.setOption(homework);
     articleDao.updateArticle(updateArticle);
     homeworkDao.updateHomeworkArticle(updateArticle);
-    return "redirect:/myclass/homework/detail?id=" + updateArticle.getId() + "&page="+request.getParameter("page");
+    System.out.println("///////////////////////"+boardSearch);
+    return "redirect:/myclass/homework/detail?id=" + updateArticle.getId() + "&page="+request.getParameter("page") +"&boardSearch="+boardSearch;
   }
 
   @PostMapping("/homework/delete")
