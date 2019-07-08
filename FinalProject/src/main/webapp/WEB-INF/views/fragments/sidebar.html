@@ -74,7 +74,7 @@
           <a th:if="${board.boardtype == 4}" th:href="@{/myclass/homework}" th:text="${board.board_name}"></a>
           <a th:if="${board.boardtype == 5}" th:href="@{/myclass/qna}" th:text="${board.board_name}"></a>
         </th:block>
-        <a th:href="@{/myclass/create}" sec:authorize="hasRole('TEACHER')">프로젝트 생성</a> 
+        <a th:href="@{/myclass/setting}" sec:authorize="hasRole('TEACHER')">우리 반 관리</a> 
       </div>
       <div th:if="${#strings.contains(#request.getRequestURI(),'stack')}" class="side-nav-menu">
         <a href="#">스택!!! 게시판</a>

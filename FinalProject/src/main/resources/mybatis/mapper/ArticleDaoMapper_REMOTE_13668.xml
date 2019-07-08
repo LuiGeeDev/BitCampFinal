@@ -6,19 +6,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.bit.dao.ArticleDao"> 
   <select id="selectArticlesByPage" resultType="kr.or.bit.model.Article">
-<<<<<<< HEAD
-   SET @rownum:=0;
-	SELECT rownum, id, title, content, time, updated_time, view_count, original_id, enable, level, username, board_id,
-	(SELECT count(*) FROM article_vote WHERE article_id=c.id) as votenum 
-	FROM(SELECT b.* 
-		 FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
-      		   FROM (SELECT id, title, content, time, updated_time, view_count, original_id, enable, level, username, board_id
-            		 FROM ARTICLE 
-	        		 WHERE board_id = #{board_id}
-            		 ORDER BY id DESC) a) b
-		
-			   WHERE rownum BETWEEN #{start} AND #{end}) c;
-=======
     SET @rownum:=0;
     SELECT * 
     FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
@@ -27,7 +14,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	              WHERE board_id = #{board_id}
                 ORDER BY id DESC) a) b
     WHERE rownum BETWEEN #{start} AND #{end};
->>>>>>> 852d2580d6649ed9d4910bc7d0432d4fe89ed9e0
   </select>
   <select id="selectArticlesSorted" resultType="kr.or.bit.model.Article">
     SET @rownum:=0;
@@ -158,14 +144,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	FROM article 
 	WHERE ORIGINAL_ID = #{article_id} AND ID != #{article_id} AND ENABLE=1;
   </select>
-  <select id="selectTagList" resultType="kr.or.bit.model.Tag">
-	SELECT id, tag
-	FROM article_tag at
-	LEFT JOIN tag a
-	ON a.id = at.tag_id
-	WHERE article_id=#{article_id};
-  </select>
-  
 </mapper>
 <!-- public interface ArticleDao { void insertArticle(Article article); void 
   updateArticle(Article article); void deleteArticle(int id); List<Article> 
