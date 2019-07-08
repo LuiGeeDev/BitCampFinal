@@ -67,6 +67,10 @@
   border-radius: 10px;
 }
 
+#comment-articleID, #comment-boardID, #comment-id {
+  display:none;
+}
+
 .content-reply {
   background-color: white;
   padding: 10px;
@@ -110,4 +114,8 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+#deletebtn {
+  color: white;
 }
