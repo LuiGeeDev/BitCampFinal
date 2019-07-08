@@ -53,4 +53,6 @@ public interface ArticleDao {
       @Param("end") int end, @Param("criteria") String criteria, @Param("search") String search);
 
   List<Article> selectHomeworkReplies(int article_id);
+  
+  List<Article> selectArticlesForClassMain(int course_id);
 }

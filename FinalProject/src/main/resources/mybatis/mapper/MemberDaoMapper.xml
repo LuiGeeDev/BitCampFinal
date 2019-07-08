@@ -44,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   <select id="selectMemberByUsername"
     resultType="kr.or.bit.model.Member">
-    SELECT m.username, password, name, email, profile_photo, course_id, group_id, role
+    SELECT m.username, password, name, email, profile_photo, course_id, max(group_id) as group_id, role
     FROM MEMBER m
     LEFT JOIN GROUP_MEMBER g
     ON m.username = g.member_name
