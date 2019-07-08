@@ -55,8 +55,6 @@ public class StackController {
       articles = boardService.getArticlesBySearchWord(STACK_BOARD_ID, page, search, criteria);
     }
     
-    System.out.println(articles);
-    
     model.addAttribute("board", boardService.getBoardInfo(STACK_BOARD_ID));
     model.addAttribute("stacklist", articles);
 

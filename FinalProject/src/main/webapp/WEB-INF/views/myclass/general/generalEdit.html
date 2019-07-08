@@ -12,15 +12,7 @@
 <body>
   <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
   <div class="main" th:fragment="main">
-  
-          <!--       <div th:each="files : ${list.fileslist}">
-        <a th:href="@{{filename}(filename=${files.filename})}"
-          th:attr="download=${files.original_filename}"> <span
-          class="submit-file" th:text="${files.original_filename}">general.zip</span>
-        </a>
-      </div> -->
-      <div th:text="${article.fileslist[0].original_filename}"></div>
-      <div th:text="${article.fileslist[0].filename}"></div>
+  <div th:text="${article.option.files}"></div>
     <form method="POST" enctype="multipart/form-data">
       <div id="write-form-wrapper" th:object="${article}">
         <input type="text" id="input-title" placeholder="제목"
@@ -28,8 +20,8 @@
         <div class="input-file">
           <span> <i class="fas fa-paperclip"></i> <input
             type="file" id="input-file-btn" name="file1"
-            class="file-btn" th:value="${article.fileslist[0].original_filename}" >
-          </span> 
+            class="file-btn">
+          </span>
           <span> <i class="fas fa-paperclip"></i> <input
             type="file" id="input-file-btn2" name="file2"
             class="file-btn2">
