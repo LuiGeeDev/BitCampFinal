@@ -174,6 +174,7 @@ public class MyClassController {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
     Member member = memberDao.selectMemberByUsername(username);
+    
     PageMaker pageMaker = new PageMaker();
     pageMaker.setCri(cri);
     

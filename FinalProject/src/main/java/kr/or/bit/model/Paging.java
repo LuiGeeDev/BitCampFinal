@@ -7,7 +7,7 @@ public class Paging {
   
   public Paging() {
     this.page = 1;
-    this.perPageNum = 10;
+    this.perPageNum = 2;
   }
 
   public int getPage() {
@@ -30,7 +30,7 @@ public class Paging {
   public void setPerPageNum(int perPageNum) {
     
     if(perPageNum <= 0 || perPageNum > 100) {
-      this.perPageNum = 10;
+      this.perPageNum = 2;
       return;
     }
     
