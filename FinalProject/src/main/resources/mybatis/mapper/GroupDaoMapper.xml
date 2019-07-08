@@ -68,7 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   <select id="getGroupNoByGroupId" resultType="int">
   	SELECT group_no
-  	FROM group
+  	FROM groups
   	where id=#{id}
   </select>
 </mapper>
