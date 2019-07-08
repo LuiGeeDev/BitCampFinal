@@ -161,15 +161,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     LIMIT 5
   </select>
   <select id="selectTagList" resultType="kr.or.bit.model.Tag">
-	SELECT id, tag
-	FROM article_tag at
-	LEFT JOIN tag a
-	ON a.id = at.tag_id
-	WHERE article_id=#{article_id};
+  	SELECT id, tag
+	  FROM article_tag at
+	  LEFT JOIN tag a
+	  ON a.id = at.tag_id
+	  WHERE article_id=#{article_id};
   </select>
-  
 </mapper>
-<!-- public interface ArticleDao { void insertArticle(Article article); void 
-  updateArticle(Article article); void deleteArticle(int id); List<Article> 
-  selectAllArticle(int board_id); } -->
  
