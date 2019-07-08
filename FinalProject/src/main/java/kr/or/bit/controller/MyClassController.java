@@ -153,10 +153,6 @@ public class MyClassController {
     return "myclass/teacher/create/board";
   }
   
-  @PostMapping("/create/board")
-  public void createBoard(@RequestBody BoardAddRemove boardAddRemove) {
-    boardService.decideBoardAddOrRemove(boardAddRemove);
-  }
 
   @GetMapping("/homework")
   public String homework(@ModelAttribute("cri") Criteria cri, Model model,HttpServletRequest request) {

@@ -10,8 +10,6 @@
 <body>
   <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
   <div class="main" th:fragment="main">
-        <div th:text="${article.option.files}">
-      </div>
     <div class="spinner-border text-warning spin-where" role="status"
       id="spinner">
       <span class="sr-only">Loading...</span>
@@ -37,20 +35,22 @@
         </div>
       </div>
       <div class="detail-content-parent">
-      <div class="detail-content" th:text="${article.content}"></div>
-      <div class="file-upload">
+        <div class="detail-content" th:text="${article.content}"></div>
+        <div class="file-upload">
 
-<!--       <div th:each="files : ${article.option.files}">
-        <a th:href="@{{filename}(filename=${files.filename})}"
-          th:attr="download=${files.original_filename}"> <span
-          class="submit-file" th:text="${files.original_filename}">general.zip</span>
-        </a>
-      </div> -->
-    </div>
+          <div th:each="files : ${article.option.files}">
+            <div th:if="${files!=null}">
+              <a th:href="@{{files}(filename=${files.filename})}"
+                th:attr="download=${files.original_filename}"> <span
+                class="submit-file" th:text="${files.original_filename}">general.zip</span>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-      
+
     </div>
-    
+
     <div class="detail-comment">
 
       <span class="userIcon"> <i class="fas fa-user-circle fa-lg"></i>

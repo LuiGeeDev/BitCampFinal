@@ -75,6 +75,7 @@ public class BoardController {
   public String updateArticle(Article article, List<MultipartFile> files, int board_id) {
     System.out.println(files);
     boardService.updateArticle(article, files);
+    System.out.println(article);
     return "redirect:/myclass/board/read?article_id=" + article.getId() + "&board_id=" + article.getBoard_id(); 
   }
 
