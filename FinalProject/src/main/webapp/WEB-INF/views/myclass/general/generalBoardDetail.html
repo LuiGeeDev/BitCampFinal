@@ -26,10 +26,10 @@
           <span class="hidden" id="comment-articleID" th:text = "${article.id}"></span>
           <span class="hidden" id="comment-boardID" th:text = "${board.id}"></span>
           <div class="btn-group">
-            <a
+            <a th:if="${article.username}==${username}"
               th:href="@{/myclass/board/edit(article_id=${article.id}, board_id=${board.id})}"
               id="updatebtn" class="btn btn-primary btn-align">수정</a> 
-              <a id="deletebtn" class="btn btn-primary btn-align">삭제</a> <a
+              <a th:if="${article.username}==${username}" id="deletebtn" class="btn btn-primary btn-align">삭제</a> <a
               th:href="@{/myclass/board(board_id=${board.id})}"
               id="listbtn" class="btn btn-primary btn-align">목록</a>
           </div>
@@ -65,7 +65,8 @@
         <div class="content-move">
           <span class="userIcon"><i
             class="fas fa-user-circle fa-lg"></i></span> <span
-            class="writerName" th:text="${comment.username}"></span> <a
+            class="commentWriterName" th:text="${comment.username}"></span> 
+            <a th:if="${comment.username}==${user.username}"
             th:href="@{/myclass/board/commentdelete(comment_id=${comment.id}, article_id=${article.id}, board_id=${board.id})}">[삭제]</a>
           <span class="write-date"
             th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
@@ -122,13 +123,17 @@
                       
                     }
                   });
-                  
-               
           }
         })
     	});  
     	
     	$("#comment-submit").click(function() {
+    	  	if($("#content").val() === "") {
+    	  	  	event.stopImmediatePropagation();
+    	  	 	alert("제대로 입력해라 임마");
+    	  	}
+    	  
+    	  
     	  	const articleId = $("#comment-articleID").text();
     	 	const commentContent = $("#content").val();
     	 	const username = [[${user.username}]];
@@ -148,39 +153,47 @@
           success: function(data) {
             console.log(data);
             $(".content-reply-form").empty();
-            
-            $(".writerName").append(`${data.writer.username}`);
-            
-            
+           	$("#content").val("");
+           
             
             
             
-            /* $(
-                ".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime"
-              ).empty();
-              $("#message-sender-id").append(`${data.sender_username}`);
-              $(".message-sender-name")
-                .append(`${data.senderName}`)
-                .append(`(${data.sender_username})`);
-              $(".message-sender-time").append(`${data.time}`);
-              const time = Number($(".message-sender-time").text());
+            $.each(data, function(index, item) {
+              const content = item.content;
+              const username = item.writer.name;
+              const time = Number(item.time);
               const date = new Date(time);
+              const commentId = item.id;
+              const articleId = item.article_id;
+              
               let minutes = date.getMinutes();
-              
               minutes = (minutes < 10) ? "0" + minutes : minutes;
-              
               let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
               hours = hours < 10 ? "0" +  hours : hours;
               
-
-              
-               `${time.getHours() <= 12 ? time.getHours() : time.getHours() - 12}:${time.getMinutes() < 10 ? "0" + time.getMinutes() : time.getMinutes()} ${time.getHours() <= 11 ? 'AM' : 'PM'}`;
               const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDay()}일 ` + hours +`:` + minutes;
-              $(".message-realtime").append(timedate);
-              $(".message-sender-content").append(`${data.content}`);
-              $(".sender-message").append(`<h6 class="text-font">받은쪽지</h6>`);
-              $(".fa-paper-plane").css("display", "block");
-              $(".fa-trash").css("display", "block"); */
+              
+			  let equalName = null;           
+              if(item.username == [[${user.username}]]) {
+                equalName = "[삭제]";
+              } else {
+                equalName = "";
+              }
+              console.log(equalName);
+              let html = "<div class='content-reply'>";
+              html += "<div class='content-move'>" +
+                      "<span class='userIcon'><i class='fas fa-user-circle fa-lg'></i></span>" +
+                      "<span class='commentWriterName'>" + username + "</span>" + 
+                      "<a href='/myclass/board/commentdelete?comment_id=" + commentId + "&article_id=" + articleId + "&board_id=" + [[${board.id}]] +"'" + ">" +equalName+"</a>" +  
+                      "<span class='write-date'>" + timedate + "</span></div>";
+              html += "<div class='content-comment'>" + content + "</div></div>";
+              $(".content-reply-form").append(html);
+              
+            /*   class="commentWriterName" th:text="${comment.username}"></span> 
+              <a th:if="${comment.username}==${user.username}"
+              th:href="@{/myclass/board/commentdelete(comment_id=${comment.id}, article_id=${article.id}, board_id=${board.id})}">[삭제]</a> */
+            });
+            
           }
         });
         });
