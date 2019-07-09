@@ -29,8 +29,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(
 		  SELECT count(*)
 		  FROM article
-		  WHERE original_id=a.id AND enable=1
-		) AS commentSize
+		  WHERE original_id=a.id AND enable=1 AND level=2 
+		) AS commentSize 
 	FROM ARTICLE a JOIN BOARD b ON a.board_id = b.id 
 	WHERE LEVEL = 1 AND ENABLE = 1 AND b.board_name = '과제 제출' AND b.course_id = #{course_id}
 	ORDER BY a.ID DESC

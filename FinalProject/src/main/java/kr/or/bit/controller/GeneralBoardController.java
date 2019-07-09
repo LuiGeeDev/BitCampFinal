@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.or.bit.dao.FilesDao;
+import kr.or.bit.dao.ArticleDao;
+import kr.or.bit.dao.ViewCountDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
-import kr.or.bit.model.Files;
 import kr.or.bit.model.General;
 import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
+import kr.or.bit.service.ArticleUpdateService;
 import kr.or.bit.service.CommentService;
 import kr.or.bit.utils.Helper;
 
@@ -36,6 +37,8 @@ public class GeneralBoardController {
   private ArticleService articleService;
   @Autowired
   private CommentService commentService;
+  @Autowired
+  private ArticleUpdateService articleUpdateService;
 
   @GetMapping("/generalBoard")
   public String generalBoard(Model model) {
@@ -48,6 +51,9 @@ public class GeneralBoardController {
   public String generalBoardDetail(int id, Model model) {
     String optionName = "general";
     Article article = articleService.selectOneArticle(optionName, id);
+    
+    articleUpdateService.viewCount(article);
+    
     model.addAttribute("list", article);
     return "myclass/general/generalBoardDetail";
   }
