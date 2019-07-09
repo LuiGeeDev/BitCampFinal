@@ -25,11 +25,13 @@ import kr.or.bit.dao.NotificationDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.ChatMessage;
 import kr.or.bit.model.Classroom;
+import kr.or.bit.model.Comment;
 import kr.or.bit.model.Files;
 import kr.or.bit.model.Message;
 import kr.or.bit.service.ArticleDeleteService;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleVoteService;
+import kr.or.bit.service.BoardService;
 import kr.or.bit.service.FileUploadService;
 import kr.or.bit.service.NewsService;
 import kr.or.bit.utils.Helper;
@@ -49,6 +51,9 @@ public class AjaxController {
 
   @Autowired
   private ArticleDeleteService articleDeleteService;
+  
+  @Autowired
+  private BoardService boardService;
 
   @PostMapping("/chat/file")
   public ChatMessage uploadFile(HttpServletRequest request, int group_id, long time, String name, MultipartFile file)
@@ -128,4 +133,6 @@ public class AjaxController {
     String username = Helper.userName();
     notificationDao.checkAllNotification(username);
   }
+  
+
 }

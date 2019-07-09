@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.model.Article;
@@ -84,8 +85,10 @@ public class BoardController {
   }
   
   @PostMapping("/commentwrite")
-  public void commentWrite(int article_id, Comment comment, int board_id, String comment_content) {
-    boardService.writeComment(article_id, comment, comment_content);
+  public @ResponseBody List<Comment> commentWrite(int article_id, Comment comment) {
+    boardService.writeComment(article_id, comment);
+    List<Comment> commentList = boardService.getCommentList(article_id);
+    return commentList;
   }
   
   @GetMapping("/commentdelete")
