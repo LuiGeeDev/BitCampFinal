@@ -9,6 +9,8 @@ public class Pager {
   private int totalPages;
   private boolean prev;
   private boolean next;
+  private int prevPage;
+  private int nextPage;
   // private int totalArticles;
   private int start;
   private int end;
@@ -27,7 +29,7 @@ public class Pager {
     } else {
       this.startPage = (currentPage / pageButtons) * 5 + 1;
     }
-    
+
     if (totalPages <= pageButtons) {
       this.endPage = totalPages;
     } else if (currentPage % pageButtons == 0) {
@@ -37,9 +39,27 @@ public class Pager {
     } else {
       this.endPage = totalPages;
     }
-    
+
     this.prev = (currentPage <= pageButtons) ? false : true;
     this.next = (currentPage / pageButtons + 1) * 5 < totalPages ? true : false;
+    this.prevPage = (currentPage % 5 == 0) ? (currentPage / 5 - 1) * 5 : (currentPage / 5) * 5;
+    this.nextPage = (currentPage % 5 == 0) ? (currentPage / 5) * 5 + 1 : (currentPage / 5 + 1) * 5 + 1;
+  }
+
+  public int getPrevPage() {
+    return prevPage;
+  }
+
+  public void setPrevPage(int prevPage) {
+    this.prevPage = prevPage;
+  }
+
+  public int getNextPage() {
+    return nextPage;
+  }
+
+  public void setNextPage(int nextPage) {
+    this.nextPage = nextPage;
   }
 
   public int getStartPage() {

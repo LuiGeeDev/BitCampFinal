@@ -50,6 +50,8 @@ public class TroubleShootingController {
     Board ts = boardDao.selectTroubleShootingBoard(user.getCourse_id(), group.getGroup_no());
     Project project = projectDao.selectProject(project_id);
 
+    model.addAttribute("criteria", criteria);
+    model.addAttribute("word", word);
     model.addAttribute("group", group);
     model.addAttribute("ts", ts);
     model.addAttribute("project", project);
@@ -63,13 +65,26 @@ public class TroubleShootingController {
 
   @GetMapping("/write")
   public String writePage(int board_id, int project_id, Model model) {
-    model.addAttribute("board_id", board_id);
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
+    ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+
+    Member user = memberDao.selectMemberByUsername(Helper.userName());
+
+    Group group = groupDao.selectGroupByProjectId(project_id, user.getUsername());
+    Board ts = boardDao.selectTroubleShootingBoard(user.getCourse_id(), group.getGroup_no());
+    Project project = projectDao.selectProject(project_id);
+
+    model.addAttribute("group", group);
+    model.addAttribute("ts", ts);
+    model.addAttribute("project", project);
     return "myclass/troubleshooting/write";
   }
 
   @PostMapping("/write")
-  public String writeNewIssue(Article article) {
-    return "redirect:/myclass/troubleshooting/read?id=" + service.writeIssue(article);
+  public String writeNewIssue(Article article, int group_id, int project_id) {
+    return "redirect:/myclass/project/troubleshooting/read?id=" + service.writeIssue(article, group_id) + "&project_id=" + project_id;
   }
 
   @GetMapping("/read")

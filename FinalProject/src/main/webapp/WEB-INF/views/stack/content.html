@@ -51,7 +51,7 @@
         <td class="td5"><img th:src="@{/css/stack/profile.jpg}"
           class="imgp"></td>
         <td colspan="2" class="td4">
-          <p class="pwriter"><span th:text="${stackcontent.writer.username}"></span></p>
+          <p class="pwriter"><span th:text="${stackcontent.writer.name}"></span></p>
           <p class="pfont">게시일:<span th:text="${stackcontent.updated_time}"></span></p>
           <p class="pfont"><span th:text="${stackcontent.view_count}"></span>view</p>
         </td>
@@ -81,7 +81,7 @@
     <tr>
     <td class="td3"><img th:src="@{/css/stack/profile2.png}" class="profileImg"></td>
     <td>
-    [[${list.username}]]</span>
+    [[${list.writer.name}]]</span>
     <a th:href="@{/stack/commentdelete(id=${list.id})}">[삭제]</a><br>
     <span class="commentCalender">[[${list.updated_time}]]</span></td>
     <td class="td7"></td>
