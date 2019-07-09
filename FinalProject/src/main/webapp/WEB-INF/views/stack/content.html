@@ -17,14 +17,14 @@
     <hr>
     <table>
       <tr>
-        <td colspan="2" class="td1"><span class="tag-name"> <span
-            id="c1">Spring</span> <span id="c2">Java</span> <span
-            id="c3">C++</span>
+        <td colspan="2" class="td1"><span
+          class="tag-name iteration"
+          th:each="tag : ${stackcontent.tags}"> <span
+            th:style="'background-color:'+@{${tag.color}}+';'">[[${tag.tag}]]</span>
         </span></td>
-        <td colspan="2" id="contenteditor">
-        <a th:href="@{/stack/edit(id=${stackcontent.id})}">[수정]</a>
-        <a th:href="@{/stack/delete(id=${stackcontent.id})}">[삭제]</a>
-        </td>
+        <td colspan="2" id="contenteditor"><a
+          th:href="@{/stack/edit(id=${stackcontent.id})}">[수정]</a> <a
+          th:href="@{/stack/delete(id=${stackcontent.id})}">[삭제]</a></td>
       </tr>
       <tr>
         <td colspan="4" class="tdtitle"><span
@@ -37,34 +37,42 @@
           </p>
         </td>
         <td class="td3" rowspan="2" style="vertical-align: top;">
-            <div id="floatMenu">
-              <a th:href="@{/stack/plusvote(id=${stackcontent.id})}">
-              <img th:src="@{/css/stack/like.png}" id="imgp2"></a><br>
-              &nbsp;<span th:text="${stackcontent.vote_count}"></span>
-              <br>
-              <img th:src="@{/css/stack/unlike.png}"
-                id="imgp2">
-            </div>
+          <div id="floatMenu">
+            <a th:href="@{/stack/plusvote(id=${stackcontent.id})}">
+              <img th:src="@{/css/stack/like.png}" id="imgp2">
+            </a><br> &nbsp;<span th:text="${stackcontent.vote_count}"></span>
+            <br> <img th:src="@{/css/stack/unlike.png}" id="imgp2">
+          </div>
         </td>
       </tr>
       <tr>
         <td class="td5"><img th:src="@{/css/stack/profile.jpg}"
           class="imgp"></td>
         <td colspan="2" class="td4">
-          <p class="pwriter"><span th:text="${stackcontent.writer.username}"></span></p>
-          <p class="pfont">게시일:<span th:text="${stackcontent.updated_time}"></span></p>
-          <p class="pfont"><span th:text="${stackcontent.view_count}"></span>view</p>
+          <p class="pwriter">
+            <span th:text="${stackcontent.writer.username}"></span>
+          </p>
+          <p class="pfont">
+            게시일:<span th:text="${stackcontent.updated_time}"></span>
+          </p>
+          <p class="pfont">
+            <span th:text="${stackcontent.view_count}"></span>view
+          </p>
         </td>
       </tr>
     </table>
     <!-- 댓글insert -->
     <table>
       <tr>
-        <td class="comtitle" colspan="4">총 [<span th:text="${stackcontent.commentlist.size()}"></span>]개의 답변</td>
+        <td class="comtitle" colspan="4">총 [<span
+          th:text="${stackcontent.commentlist.size()}"></span>]개의 답변
+        </td>
       </tr>
       <tr>
         <td class="ctd1" colspan="3">
-          <form th:action="@{/stack/commentwrite(id=${stackcontent.id})}" method="post">
+          <form
+            th:action="@{/stack/commentwrite(id=${stackcontent.id})}"
+            method="post">
             <textarea name="content" class="comtext"></textarea>
             <br> <input type="submit"
               class="btn btn-primary btnalign" value="등록">
@@ -74,27 +82,39 @@
       </tr>
     </table>
     <!-- 댓글목록 -->
-    <table class="iteration" th:if="${stackcontent.commentlist.size()==0}">
-    <tr><td>질문에 대한 답변을 달아주세요!</td></tr>
+    <table class="iteration"
+      th:if="${stackcontent.commentlist.size()==0}">
+      <tr>
+        <td>질문에 대한 답변을 달아주세요!</td>
+      </tr>
     </table>
-    <table th:unless="${stackcontent.commentlist.size()==0}" class="iteration" th:each="list : ${stackcontent.commentlist}">
-    <tr>
-    <td class="td3"><img th:src="@{/css/stack/profile2.png}" class="profileImg"></td>
-    <td>
-    [[${list.username}]]</span>
-    <a th:href="@{/stack/commentdelete(id=${list.id})}">[삭제]</a><br>
-    <span class="commentCalender">[[${list.updated_time}]]</span></td>
-    <td class="td7"></td>
-    </tr>
-    <tr>
-    <td colspan="2" class="td6">[[${list.content}]]</span></td>
-    <td></td>
-    </tr>
+    <table th:unless="${stackcontent.commentlist.size()==0}"
+      class="iteration" th:each="list : ${stackcontent.commentlist}">
+      <tr>
+        <td class="td3"><img th:src="@{/css/stack/profile2.png}"
+          class="profileImg"></td>
+        <td>[[${list.writer.name}]] <a
+          th:href="@{/stack/commentdelete(id=${list.id})}">[삭제]</a><br>
+          <span class="commentCalender">[[${list.updated_time}]]</span></td>
+        <td class="td7"></td>
+      </tr>
+      <tr>
+        <td colspan="2" class="td6">[[${list.content}]]</td>
+        <td></td>
+      </tr>
     </table>
 
   </div>
-<script src="/js/stack/content.js"></script>
-<script src="jquery-3.4.1.min.js"></script>
+  <script>
+      var currentPosition = parseInt($("#floatMenu").css("top"));
+      $(window).scroll(function() {
+        var position = $(window).scrollTop();
+        $("#floatMenu").stop().animate({
+          "top" : position + currentPosition + "px"
+        }, 1500);
+      });
+
+    </script>
 </body>
 </html>
 

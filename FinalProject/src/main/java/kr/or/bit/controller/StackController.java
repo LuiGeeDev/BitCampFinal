@@ -111,13 +111,11 @@ public class StackController {
     for (int i = 1; i < splitStr.length; i++) {
       tagList.add(splitStr[i]);
     }
-    List<Tag> tags = tagService.selectTagByName(tagList);
-    
-    
+    List<Tag> tags = tagService.selectTagByName(tagList);   
     article.setTags(tags);
     article.setUsername(Helper.userName());
     article.setBoard_id(STACK_BOARD_ID);
-    articleInsertService.writeArticle(article);
+    articleInsertService.writeStackArticle(article,tagList);
     return "redirect:/stack";
   }
 

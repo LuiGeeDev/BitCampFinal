@@ -23,7 +23,7 @@ public interface StackDao {
   
   Tag selectTagByName(String tag);
   
-  void insertTag(int tag_id, int article_id);
+  void insertTag(@Param("tag_id") int tag_id,@Param("article_id") int article_id);
   
   List<Article> selectStackArticleBySearchWord(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
 
