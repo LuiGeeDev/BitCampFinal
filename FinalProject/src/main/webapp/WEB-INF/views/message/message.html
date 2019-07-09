@@ -172,7 +172,7 @@
 
             
             /* `${time.getHours() <= 12 ? time.getHours() : time.getHours() - 12}:${time.getMinutes() < 10 ? "0" + time.getMinutes() : time.getMinutes()} ${time.getHours() <= 11 ? 'AM' : 'PM'}`; */
-            const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDay()}일 ` + hours +`:` + minutes;
+            const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일 ` + hours +`:` + minutes;
             $(".message-realtime").append(timedate);
             $(".message-sender-content").append(`${data.content}`);
             $(".sender-message").append(`<h6 class="text-font">받은쪽지</h6>`);
