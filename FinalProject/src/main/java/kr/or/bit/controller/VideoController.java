@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.VideoDao;
+import kr.or.bit.dao.ViewCountDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Video;
@@ -51,6 +53,9 @@ public class VideoController {
      * parameter로 받은 아이디 값을 이용, 해당하는 글을 불러와서 페이지에 글을 넘겨준다
      */
     Article article = articleService.selectOneArticle("video", id);
+    
+    articleUpdateService.viewCount(article);
+    
     model.addAttribute("voteStatus", articleVoteService.selectVote(id, Helper.userName()));
     model.addAttribute("article", article);
     return "video/detail";
@@ -72,7 +77,7 @@ public class VideoController {
     int beginIndex = "https://youtu.be/".length();
     video.setVideo_id(url.substring(beginIndex));
     articleInsertService.writeArticle(article, video);
-    return "redirect:/video/home";
+    return "redirect:/video";
   }
 
   @GetMapping("/edit")

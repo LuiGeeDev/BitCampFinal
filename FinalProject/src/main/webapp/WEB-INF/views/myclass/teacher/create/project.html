@@ -237,16 +237,13 @@
         }
         
         $.ajax({
-          url: "/myclass/create",
+          url: "/myclass/create/project",
           method: "post",
           data: JSON.stringify(project),
           dataType: "json",
-          contentType: "application/json",
-          beforeSend:function(){
-            window.location.href="/myclass/main/home";
-          }
+          contentType: "application/json"
         }).done(function() {
-          console.log("성공");
+          location.href = "/myclass/setting";
         });
       });
       

@@ -8,9 +8,11 @@ import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.QnaDao;
 import kr.or.bit.dao.TroubleShootingDao;
 import kr.or.bit.dao.VideoDao;
+import kr.or.bit.dao.ViewCountDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.ArticleOption;
 import kr.or.bit.model.Video;
+import kr.or.bit.utils.Helper;
 
 @Service
 public class ArticleUpdateService{
@@ -42,7 +44,7 @@ public class ArticleUpdateService{
     switch (optionname.toLowerCase()) {
     case "troubleshooting":
       TroubleShootingDao troubleshootingdao = sqlSession.getMapper(TroubleShootingDao.class);
-      troubleshootingdao.updateTroubleShootingByIssueClosed(id);
+      //troubleshootingdao.updateTroubleShootingByIssueClosed(id);
       break;
     case "qna":
       QnaDao qnadao = sqlSession.getMapper(QnaDao.class);
@@ -58,6 +60,16 @@ public class ArticleUpdateService{
       break;
     default:
       break;
+    }
+  }
+  public void viewCount(Article article) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    ViewCountDao viewCountDao = sqlSession.getMapper(ViewCountDao.class);
+    
+    if(viewCountDao.countExistViewCount(article.getId(), Helper.userName()) == 0) {
+      viewCountDao.insertViewCount(article.getId(), Helper.userName());
+      article.setView_count(viewCountDao.countViewCountByArticleId(article.getId()));
+      articleDao.updateArticleViewCount(article);
     }
   }
 }

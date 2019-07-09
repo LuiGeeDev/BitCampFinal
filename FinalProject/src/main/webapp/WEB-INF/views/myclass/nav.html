@@ -3,17 +3,17 @@
   <body>
     <nav th:fragment="project-nav(active)">
       <ul class="project-nav-list">
-        <a href="#" th:href="@{/myclass/project}">
+        <a href="#" th:href="@{/myclass/project(id=${project.id})}">
           <li class="project-nav-link" th:classappend="${active} == 'main' ? active-list : ''">
             첫 화면
           </li>
         </a>
-        <a href="#" th:href="@{/myclass/troubleshooting}">
+        <a href="#" th:href="@{/myclass/project/troubleshooting(id=${ts.id}, project_id=${project.id})}">
           <li class="project-nav-link" th:classappend="${active} == 'ts' ? active-list : ''">
             트러블슈팅
           </li>
         </a>
-        <a href="#" th:href="@{/myclass/chat}">
+        <a href="#" th:href="@{/myclass/project/chat(project_id=${project.id})}">
           <li class="project-nav-link" th:classappend="${active} == 'chat' ? active-list : ''">
             채팅
           </li>

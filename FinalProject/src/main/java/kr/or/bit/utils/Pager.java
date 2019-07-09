@@ -19,7 +19,7 @@ public class Pager {
     this.end = currentPage * articlesOnPage;
     int q = totalArticles / articlesOnPage;
     int r = totalArticles % articlesOnPage;
-    this.totalPages = (r == 0) ? q : (q + 1);
+    this.totalPages = (r == 0 && totalPages != 0) ? q : (q + 1);
     if (currentPage <= pageButtons) {
       this.startPage = 1;
     } else if (currentPage % pageButtons == 0) {
