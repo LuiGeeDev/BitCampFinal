@@ -127,10 +127,15 @@
         })
     	});  
     	
-    	$("#comment-submit").click(function() {
-    	  	if($("#content").val() === "") {
-    	  	  	event.stopImmediatePropagation();
-    	  	 	alert("제대로 입력해라 임마");
+    	$("#comment-submit").click(function(event) {
+          let valueCheck = $("#content").val();         
+          
+    	  	if(valueCheck.trim() === "" || valueCheck === null) {
+    	  	  Swal.fire({
+    	  	    type: 'error',
+    	  	    text: '다시 입력해주세요 !!',
+    	  	  })
+    	  	  	return;
     	  	}
     	  
     	  
