@@ -73,7 +73,6 @@ public class BoardController {
   @PostMapping("/edit")
   public String updateArticle(Article article, List<MultipartFile> files, int board_id) {
     boardService.updateArticle(article, files);
-    System.out.println(article);
     return "redirect:/myclass/board/read?article_id=" + article.getId() + "&board_id=" + article.getBoard_id(); 
   }
 
@@ -94,7 +93,6 @@ public class BoardController {
   @GetMapping("/commentdelete")
   
   public String commentDelete(int article_id, int board_id, int comment_id) {
-    System.out.println("댓글 삭제");
     boardService.deleteComment(comment_id);
     return "redirect:/myclass/board/read?article_id=" + article_id + "&board_id=" + board_id;
   }
