@@ -18,11 +18,8 @@ import kr.or.bit.dao.StackDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.General;
-<<<<<<< HEAD
 import kr.or.bit.model.Tag;
-=======
 import kr.or.bit.model.Member;
->>>>>>> 5c93a0e1e0905b43caad81414f83de3ce4881c06
 import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleUpdateService;

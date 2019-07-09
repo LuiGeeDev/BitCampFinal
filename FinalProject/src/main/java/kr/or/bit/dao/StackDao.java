@@ -19,14 +19,12 @@ public interface StackDao {
   
   List<Article> selectAllStackArticle(Pager pager);
   
-<<<<<<< HEAD
   List<Tag> showTagList();
   
   Tag selectTagByName(String tag);
   
   void insertTag(int tag_id, int article_id);
   
-=======
   List<Article> selectStackArticleBySearchWord(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
->>>>>>> 5c93a0e1e0905b43caad81414f83de3ce4881c06
+
 }
