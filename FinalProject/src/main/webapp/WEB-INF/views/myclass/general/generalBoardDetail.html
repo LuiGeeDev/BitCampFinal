@@ -128,6 +128,12 @@
     	});  
     	
     	$("#comment-submit").click(function() {
+    	  	if($("#content").val() === "") {
+    	  	  	event.stopImmediatePropagation();
+    	  	 	alert("제대로 입력해라 임마");
+    	  	}
+    	  
+    	  
     	  	const articleId = $("#comment-articleID").text();
     	 	const commentContent = $("#content").val();
     	 	const username = [[${user.username}]];
