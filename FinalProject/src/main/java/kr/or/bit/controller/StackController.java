@@ -89,7 +89,7 @@ public class StackController {
       c.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
     }
     model.addAttribute("stackcontent",article);
-    
+    articleUpdateService.viewCount(article);
     return "stack/content";
   }
 
