@@ -35,7 +35,9 @@ public class BoardService {
   private SqlSession sqlSession;
   @Autowired
   private FileUploadService fileUploadService;
-
+  @Autowired
+  private ArticleUpdateService articleUpdateService;
+  
   private int start(int page) {
     return (page - 1) * ARTICLES_IN_PAGE + 1;
   }
@@ -128,7 +130,9 @@ public class BoardService {
 
     Article article = articleDao.selectOneArticle(article_id);
     General general = generalDao.selectGeneralByArticleId(article_id);
-
+    
+    articleUpdateService.viewCount(article);
+    
     List<Files> files = new ArrayList<>();
     files.add(filesDao.selectFilesById(general.getFile1()));
     files.add(filesDao.selectFilesById(general.getFile2()));
