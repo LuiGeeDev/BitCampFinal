@@ -94,7 +94,7 @@
           th:text="${#temporals.format(reply.timeLocal, 'yyyy-MM-dd')}"></div>
         <div class="reply-update-button">
             <button id="reply-delete-button" 
-              th:if="${userRole}==${reply.writer.role}"
+              th:if="${reply.writer.username}==${username}"
               th:onclick=" 'javascript:replyDelete(' + ${reply.id} +')'"
               th:value="${reply.id}" name="reply-delete-button">
               <i class="far fa-trash-alt"></i>

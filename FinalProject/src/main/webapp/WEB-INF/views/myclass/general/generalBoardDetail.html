@@ -26,10 +26,10 @@
           <span class="hidden" id="comment-articleID" th:text = "${article.id}"></span>
           <span class="hidden" id="comment-boardID" th:text = "${board.id}"></span>
           <div class="btn-group">
-            <a
+            <a th:if="${article.username}==${username}"
               th:href="@{/myclass/board/edit(article_id=${article.id}, board_id=${board.id})}"
               id="updatebtn" class="btn btn-primary btn-align">수정</a> 
-              <a id="deletebtn" class="btn btn-primary btn-align">삭제</a> <a
+              <a th:if="${article.username}==${username}" id="deletebtn" class="btn btn-primary btn-align">삭제</a> <a
               th:href="@{/myclass/board(board_id=${board.id})}"
               id="listbtn" class="btn btn-primary btn-align">목록</a>
           </div>
@@ -65,7 +65,8 @@
         <div class="content-move">
           <span class="userIcon"><i
             class="fas fa-user-circle fa-lg"></i></span> <span
-            class="writerName" th:text="${comment.username}"></span> <a
+            class="writerName" th:text="${comment.username}"></span> 
+            <a th:if="${comment.username}==${username}"
             th:href="@{/myclass/board/commentdelete(comment_id=${comment.id}, article_id=${article.id}, board_id=${board.id})}">[삭제]</a>
           <span class="write-date"
             th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
