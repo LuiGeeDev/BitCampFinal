@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Tag;
+import kr.or.bit.utils.Pager;
 
 /*
  *
@@ -58,9 +59,14 @@ public interface ArticleDao {
   List<Article> selectArticlesForClassMain(int course_id);
 
   List<Tag> selectTagList(int article_id);
+  
+  List<Article> selectAllIssuesOpened(@Param("board_id") int board_id, @Param("criteria") String criteria, @Param("word") String word);
+  
+  List<Article> selectAllIssuesClosed(@Param("board_id") int board_id, @Param("criteria") String criteria, @Param("word") String word);
 
-  List<Article> selectIssuesOpened(@Param("board_id") int board_id, @Param("start") int start, @Param("end") int end,
+  List<Article> selectIssuesOpenedByPage(@Param("board_id") int board_id, @Param("pager") Pager pager,
       @Param("criteria") String criteria, @Param("word") String word);
 
-  List<Article> selectIssuesClosed(int board_id);
+  List<Article> selectIssuesClosedByPage(@Param("board_id") int board_id, @Param("pager") Pager pager,
+      @Param("criteria") String criteria, @Param("word") String word);
 }

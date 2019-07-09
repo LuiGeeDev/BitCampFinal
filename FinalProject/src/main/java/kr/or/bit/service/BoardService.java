@@ -110,7 +110,6 @@ public class BoardService {
   public void updateArticle(Article article, List<MultipartFile> files) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     articleDao.updateArticle(article);
-    
   }
 
   @PreAuthorize("hasAnyRole('TEACHER', 'MANAGER') or #article.username == principal.username")
