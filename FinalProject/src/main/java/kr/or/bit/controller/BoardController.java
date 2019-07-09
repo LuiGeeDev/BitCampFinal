@@ -1,5 +1,6 @@
 package kr.or.bit.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ import kr.or.bit.service.BoardService;
 public class BoardController {
   @Autowired
   private BoardService boardService;
-
+  
   @GetMapping("")
   public String listPage(int board_id, @RequestParam(defaultValue = "1") int page,
       @RequestParam(required = false) String sort, @RequestParam(required = false) String search, @RequestParam(required = false) String criteria, Model model) {
@@ -66,13 +67,19 @@ public class BoardController {
     Article article = boardService.getArticleForUpdateOrDelete(article_id);
     model.addAttribute("article", article);
     model.addAttribute("board", boardService.getBoardInfo(board_id));
-
+    System.out.println(article);
     return "myclass/general/generalEdit";
   }
 
   @PostMapping("/edit")
-  public String updateArticle(Article article, List<MultipartFile> files, int board_id) {
-    boardService.updateArticle(article, files);
+  public String updateArticle(Article article, MultipartFile file1, MultipartFile file2, int board_id, HttpServletRequest request) {
+    List<MultipartFile> files = new ArrayList<>();
+    files.add(file1);
+    files.add(file2);
+    System.out.println(article);
+    boardService.updateArticle(article, files, request);
+    
+    System.out.println(article);
     return "redirect:/myclass/board/read?article_id=" + article.getId() + "&board_id=" + article.getBoard_id(); 
   }
 

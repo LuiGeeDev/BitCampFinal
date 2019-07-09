@@ -71,4 +71,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	FROM groups
   	where id=#{id}
   </select>
+  <select id="selectGroupByProjectId" resultType="kr.or.bit.model.Group">
+    SELECT id, group_no, link1, link2, link3, leader_name, project_id
+    FROM groups g
+    LEFT JOIN group_member gm
+    ON gm.group_id = g.id
+    WHERE project_id = #{project_id}
+    AND member_name = #{username}
+  </select>
 </mapper>

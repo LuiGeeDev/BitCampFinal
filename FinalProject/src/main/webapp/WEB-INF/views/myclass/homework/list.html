@@ -52,6 +52,7 @@
           <a class="btn btn-primary paging" th:href="@{/myclass/homework(page=${pager.startPage}-1)}">&laquo;</a>
         </span>
         <span th:each="idx, iterStat : ${#numbers.sequence(pager.startPage,pager.endPage)}" >
+          
           <a th:if="${boardSearch} != null" class="btn btn-primary paging" th:href="@{/myclass/homework(page=${idx},boardSearch=${boardSearch})}" th:classappend="${pager.currentPage} == ${idx} ? active" th:text="${idx}"></a>
           <a th:if="${boardSearch} == null" class="btn btn-primary paging" th:href="@{/myclass/homework(page=${idx})}" th:classappend="${pager.currentPage} == ${idx} ? active" th:text="${idx}"></a>          
         </span>
