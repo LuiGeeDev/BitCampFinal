@@ -27,9 +27,13 @@
       <th:block th:each="homeworkList : ${homeworkList}">
       <a th:if="${boardSearch} != null" th:href="@{/myclass/homework/detail(id=${homeworkList.id}, page=${page}, boardSearch=${boardSearch})}"  class="article">
         <div class="board-content">
-          <span class="title" th:text="${homeworkList.title}">주말 개인과제</span> <span class="writer" th:text="${homeworkList.username}">임경균
-            강사님</span> <span class="write-time" th:text="${#strings.arraySplit(homeworkList.time,' ')[0]}">2019.07.01</span> <span
-            class="write-count" th:text="${homeworkList.view_count}">16</span>
+          <div class="article-title">
+            <span class="title" th:text="${homeworkList.title}"></span>
+            <span class="comment-size" th:if="${homeworkList.commentSize > 0}" th:text="'[' + ${homeworkList.commentSize} + ']'"></span>          
+          </div>
+          <span class="writer" th:text="${homeworkList.writer.name}"></span>
+          <span class="write-time" th:text="${#strings.arraySplit(homeworkList.time,' ')[0]}"></span>
+          <span class="write-count" th:text="${homeworkList.view_count}"></span>
         </div>
       </a>
       <a th:if="${boardSearch} == null" th:href="@{/myclass/homework/detail(id=${homeworkList.id}, page=${page})}"  class="article">
@@ -38,7 +42,7 @@
             <span class="title" th:text="${homeworkList.title}"></span>
             <span class="comment-size" th:if="${homeworkList.commentSize > 0}" th:text="'[' + ${homeworkList.commentSize} + ']'"></span>          
           </div>
-          <span class="writer" th:text="${homeworkList.username}"></span>
+          <span class="writer" th:text="${homeworkList.writer.name}"></span>
           <span class="write-time" th:text="${#strings.arraySplit(homeworkList.time,' ')[0]}"></span>
           <span class="write-count" th:text="${homeworkList.view_count}"></span>
         </div>
