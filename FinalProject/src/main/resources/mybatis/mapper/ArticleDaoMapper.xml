@@ -189,28 +189,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 ORDER BY id DESC) sq1) sq2
     WHERE rownum BETWEEN #{start} AND #{end};
   </select>
-  <select id="selectIssuesOpened" resultType="kr.or.bit.model.Article">
-    SET @rownum:=0;
-    SELECT sq2.* 
-    FROM (SELECT @rownum:=@rownum + 1 as rownum, sq1.*
-          FROM (SELECT id, title, content, time, updated_time, view_count, original_id, enable, level, username, board_id
-                FROM ARTICLE a
-                LEFT JOIN troubleshooting ts
-                ON a.id = ts.article_id
-                WHERE board_id = #{board_id}
-                AND ts.issue_closed = 0
-                <if test="criteria == 'title'">
-                  AND title like '%${word}%'
-                </if>
-                <if test="criteria == 'content'">
-                  AND content like '%${word}%'
-                </if>
-                <if test="criteria == 'titlecontent'">
-                  AND (title like '%${word}%' OR content like '%${word}%') 
-                </if>
-                ORDER BY id DESC) sq1) sq2
-    WHERE rownum BETWEEN #{start} AND #{end};
-  </select>
   <select id="selectIssuesClosed" resultType="kr.or.bit.model.Article">
     SET @rownum:=0;
     SELECT sq2.* 

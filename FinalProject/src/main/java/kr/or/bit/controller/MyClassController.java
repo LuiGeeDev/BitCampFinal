@@ -33,6 +33,7 @@ import kr.or.bit.dao.ProjectDao;
 import kr.or.bit.dao.ScheduleDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
+import kr.or.bit.model.BoardAddRemove;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.Files;
 import kr.or.bit.model.Group;
