@@ -18,7 +18,7 @@
       <div class="detail-head">
         <span class="detail-title" th:text="${article.title}"></span>
         <div class="detail-subtitle">
-          <span th:text="${article.username}"></span>&nbsp;| &nbsp; <span
+          <span th:text="${article.writer.name}"></span>&nbsp;| &nbsp; <span
             th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd')}"></span>&nbsp;|
           조회수 &nbsp; <span th:text="${article.view_count}"
             class="pointOrange"></span>&nbsp;|댓글수&nbsp; <span
@@ -65,7 +65,7 @@
         <div class="content-move">
           <span class="userIcon"><i
             class="fas fa-user-circle fa-lg"></i></span> <span
-            class="commentWriterName" th:text="${comment.username}"></span> 
+            class="commentWriterName" th:text="${comment.writer.name}"></span> 
             <a th:if="${comment.username}==${user.username}"
             th:href="@{/myclass/board/commentdelete(comment_id=${comment.id}, article_id=${article.id}, board_id=${board.id})}">[삭제]</a>
           <span class="write-date"
@@ -127,7 +127,18 @@
         })
     	});  
     	
-    	$("#comment-submit").click(function() {
+    	$("#comment-submit").click(function(event) {
+          let valueCheck = $("#content").val();         
+          
+    	  	if(valueCheck.trim() === "" || valueCheck === null) {
+    	  	  Swal.fire({
+    	  	    type: 'error',
+    	  	    text: '다시 입력해주세요 !!',
+    	  	  })
+    	  	  	return;
+    	  	}
+    	  
+    	  
     	  	const articleId = $("#comment-articleID").text();
     	 	const commentContent = $("#content").val();
     	 	const username = [[${user.username}]];
@@ -164,9 +175,14 @@
               minutes = (minutes < 10) ? "0" + minutes : minutes;
               let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
               hours = hours < 10 ? "0" +  hours : hours;
+              let getdate = date.getDate();
+              getdate = (getdate < 10) ? "0" + getdate : getdate;
+              let getmonth = date.getMonth() + 1;
+              getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
               
-              const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDay()}일 ` + hours +`:` + minutes;
-              
+              console.log(getmonth);
+                  
+              const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ hours +`:` + minutes;
 			  let equalName = null;           
               if(item.username == [[${user.username}]]) {
                 equalName = "[삭제]";

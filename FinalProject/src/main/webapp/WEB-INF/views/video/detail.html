@@ -24,6 +24,7 @@
             | 조회수
             <span id="point" th:text="${article.view_count}">43</span> | 댓글
             <span id="point" th:text="${article.commentlist.size()}">2</span>
+            <span class="hidden" id="comment-articleID" th:text = "${article.id}"></span>
           </div>
         </div>
         <div id="detailContent">
@@ -50,14 +51,13 @@
         <!-- 추가 ) 댓글 insert form -->
       </div>
       <div id="commentInputWrapper">
-        <form th:action="@{/video/commentwrite(id=${article.id})}" method="post">
+        
           <span id="writerIcon">
             <img src="https://via.placeholder.com/32" id="icon" />
           </span>
           <span id="writerName" name="writerName" th:text="${user.name}"></span>
           <input type="text" name="content" class="comtext" id="commentInput" placeholder ="댓글을 입력하세요."/>
           <input type="submit" class="btn btn-primary btnalign" value="등록">
-        </form>
       </div>
         <!-- 추가 ) 댓글 목록 불러오는 기능 -->
       <div id="commentsWrapper">
@@ -70,7 +70,7 @@
           <div id="commentsText">
             <div id="commentsWriter">
               <span id="writerIcon">
-                <img src="https://via.placeholder.com/32" id="icon" />
+                <i class="fas fa-user-circle fa-lg"></i>
               </span>
               <span id="writerName">
                 <span th:text="${list.username}"></span>
@@ -85,7 +85,6 @@
             </div>
           </div>
           <div id="commentsDetail">
-            [[${article.writer.name}]]님 사랑해용 쀼쀼
           </div>
         </div>
         <div th:if="${article.commentlist.size()} == 0" id ="noneComment">
@@ -94,19 +93,21 @@
       </div>
       <div id="buttonWrapper">
         <a
+          th:if="${article.username}==${user.username}"
           class="btn btn-primary btn-sm"
           th:href="@{/video/edit(id=${article.id},video_id=${article.option.video_id})}"
         >
           수정
         </a>
         <a
+          th:if="${article.username}==${user.username}"
           class="btn btn-primary btn-sm"
           th:href="@{/video/delete(id = ${article.id})}"
           id="deletebtn"
         >
           삭제
         </a>
-        <a class="btn btn-primary btn-sm" th:href="@{/video/home}">목록</a>
+        <a class="btn btn-primary btn-sm" th:href="@{/video}">목록</a>
       </div>
     </div>
 
@@ -161,6 +162,133 @@
           }
         });
       });
+      
+      $(".btnalign").click(function() {
+        let valueCheck = $("#commentInput").val();         
+        
+  	  	if(valueCheck.trim() === "" || valueCheck === null) {
+  	  	  Swal.fire({
+  	  	    type: 'error',
+  	  	    text: '다시 입력해주세요 !!',
+  	  	  })
+  	  	  	return;
+  	  	}
+  	  	
+  	  	    const articleId = $("#comment-articleID").text();
+    	 	const commentContent = $("#commentInput").val();
+    	 	const username = [[${user.username}]];
+    	 	
+    	 	const formData = new FormData();
+    	 	formData.append("article_id", articleId);
+    	 	formData.append("content", commentContent);
+    	 	formData.append("username", username);
+  	  	
+  	  	/* <form th:action="@{/video/commentwrite(id=${article.id})}" method="post"> */
+  	  	
+    	  $.ajax({
+          url: "/video/commentwrite",
+          type: "post",
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function(data) {
+            console.log(data);
+            $("#commentsWrapper").empty();
+           	$("#commentInput").val("");
+            
+           	$.each(data, function(index, item) {
+              const content = item.content;
+              const username = item.writer.name;
+              const time = Number(item.time);
+              console.log(new Date(item.time));
+              const date = new Date(time);
+              const commentId = item.id;
+              const articleId = item.article_id;
+              
+              console.log(articleId);
+              let minutes = date.getMinutes();
+              minutes = (minutes < 10) ? "0" + minutes : minutes;
+              let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
+              hours = hours < 10 ? "0" +  hours : hours;
+              let getdate = date.getDate();
+              getdate = (getdate < 10) ? "0" + getdate : getdate;
+              let getmonth = date.getMonth() + 1;
+              getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
+              
+              console.log(getmonth);
+                  
+              const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ hours +`:` + minutes;
+              
+			  let equalName = null;           
+              if(item.username == [[${user.username}]]) {
+                equalName = "[삭제]";
+              } else {
+                equalName = "";
+              }
+              
+              let html = "<div id='commentsContent' class='iteration'><div id='commentsText'>";
+              html += "<div id='commentsWriter'>" +
+              "<span id='writerIcon'><i class='fas fa-user-circle fa-lg'></i></span>" +
+              "<span id='writerName'>" + username + "</span>" +
+              "<a href='/video/commentdelete?id= + " + commentId + "'" + ">" + equalName + "</a>" + 
+              "<span id='writeDate'>" + timedate +"</span></div>" + 
+              "<div id='commentDetail'>"+ content +"</div>" + 
+              "</div></div>";
+              $("#commentsWrapper").append(html);
+             
+              
+              
+            /*   <div id="commentsWrapper">
+              <div
+                id="commentsContent"
+                class="iteration"
+                th:if="${article.commentlist.size()} > 0"
+                th:each="list : ${article.commentlist}"
+              >
+                <div id="commentsText">
+                  <div id="commentsWriter">
+                    <span id="writerIcon">
+                      <img src="https://via.placeholder.com/32" id="icon" />
+                    </span>
+                    <span id="writerName">
+                      <span th:text="${list.username}"></span>
+                      <a th:href="@{/video/commentdelete(id=${list.id})}">[삭제]</a>
+                    </span>
+                    <span id="writeDate">
+                      <span th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
+                    </span>
+                  </div>
+                  <div id="commentsDetail">
+                    <span th:text="${list.content}"></span>
+                  </div>
+                </div>
+                <div id="commentsDetail">
+                </div>
+              </div>
+              <div th:if="${article.commentlist.size()} == 0" id ="noneComment">
+              	등록된 댓글이 없습니다.
+              </div>
+            </div> */
+              
+            });
+           	
+           	
+          }
+        });
+  	  	
+  	  	
+  	  	
+  	  	
+  	  	
+  	  	
+  	  	
+  	  	
+  	  	
+  	  	
+      });
+      
+      
+      
     </script>
   </body>
 </html>

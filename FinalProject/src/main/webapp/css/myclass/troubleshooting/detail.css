@@ -10,6 +10,7 @@
   margin-left: 20px;
   width: 100%;
   border: 1px solid #d1d5da;
+  position: relative;
 }
 
 .issue-title {
@@ -26,6 +27,10 @@
   line-height: 21px;
   color: #24292e;
   padding: 15px;
+}
+
+.issue-content * {
+  all: unset;
 }
 
 .author-badge {
@@ -53,12 +58,6 @@
   margin-bottom: 30px;
 }
 
-.new {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
 .title {
   border: none;
   margin-bottom: 0;
@@ -67,4 +66,19 @@
 .issue-info {
   font-size: 14px;
   color: #24292e;
+}
+
+.button-wrapper {
+  margin-left: auto;
+}
+
+.delete-btn {
+  color: rgba(166, 166, 166, 0.5);
+  position: absolute;
+  right: 10px;
+  top: 60%;
+}
+
+.delete-btn:hover {
+  color: #a6a6a6;
 }

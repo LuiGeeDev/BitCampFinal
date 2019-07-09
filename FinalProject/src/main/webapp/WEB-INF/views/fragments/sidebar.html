@@ -17,7 +17,7 @@
             <a href="/myinfo/profile">
               <img
                 class="user-photo"
-                src="https://via.placeholder.com/64"
+                th:src="@{/resources/images/{pic}(pic=${user.profile_photo})}"
                 alt="프로필 사진"
               /><!-- th:src="*{profile_photo}"-->
             </a>
@@ -67,7 +67,7 @@
         <a th:href="@{/myclass}">메인 페이지</a>
         <a href="#project" data-toggle="collapse" th:if="${projects.size() != 0}">프로젝트 게시판</a>
         <div id="project" class="collapse" th:if="${projects.size() != 0}">
-          <a th:href="@{/myclass/project(id=${project.id})}" th:each="project : ${projects}" th:text="'-' + ${project.project_name}"></a>
+          <a th:href="@{/myclass/project(id=${project.id})}" th:each="project : ${projects}" th:text="'- ' + ${project.project_name}"></a>
         </div>
         <th:block th:each="board : ${boardList}">
           <a th:if="${board.boardtype == 3}" th:href="@{/myclass/board(board_id=${board.id})}" th:text="${board.board_name}"></a>

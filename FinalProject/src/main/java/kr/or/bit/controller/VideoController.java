@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.VideoDao;
@@ -20,6 +21,7 @@ import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleUpdateService;
 import kr.or.bit.service.ArticleVoteService;
+import kr.or.bit.service.BoardService;
 import kr.or.bit.service.CommentService;
 import kr.or.bit.utils.Helper;
 
@@ -39,6 +41,8 @@ public class VideoController {
   private ArticleVoteService articleVoteService;
   @Autowired
   private CommentService commentService;
+  @Autowired
+  private BoardService boardService;
 
   @GetMapping("")
   public String videoHome(Model model) {
@@ -97,24 +101,33 @@ public class VideoController {
     video.setVideo_id(url.substring(beginIndex));
     articleUpdateService.updateArticle(article);
     articleUpdateService.updateArticleOption(article.getId(), video);
-    return "redirect:/video/home";
+    return "redirect:/video";
   }
 
   @GetMapping("/delete")
   public String deleteVideo(int id) {
     VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
     videoDao.deleteVideo(id);
-    return "redirect:/video/home";
+    return "redirect:/video";
   }
 
-  @PostMapping("/commentwrite")
+ /* @PostMapping("/commentwrite")
   public String writeCommentVideo(int id, Comment comment) {
     comment.setUsername(Helper.userName());
     comment.setArticle_id(id);
     commentService.insertComment(comment);
     return "redirect:/video/detail?id=" + id;
-  }
+  }*/
 
+  @PostMapping("/commentwrite")
+  public @ResponseBody List<Comment> commentWrite(int article_id, Comment comment) {
+    boardService.writeComment(article_id, comment);
+    List<Comment> commentList = boardService.getCommentList(article_id);
+    return commentList;
+  }
+  
+  
+  
   @GetMapping("/commentdelete")
   public String deleteCommentVideo(int id) {
     Comment comment = commentService.selectOnecomment(id);

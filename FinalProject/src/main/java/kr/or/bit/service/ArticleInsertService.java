@@ -18,6 +18,7 @@ import kr.or.bit.dao.GeneralDao;
 import kr.or.bit.dao.GroupMemberDao;
 import kr.or.bit.dao.HomeworkDao;
 import kr.or.bit.dao.QnaDao;
+import kr.or.bit.dao.StackDao;
 import kr.or.bit.dao.TroubleShootingDao;
 import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
@@ -35,6 +36,8 @@ public class ArticleInsertService {
   private SqlSession sqlSession;
   @Autowired
   private FileUploadService fileUploadService;
+  @Autowired
+  private TagService tagService;
 
   private ArticleDao wArticle(Article article) {
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
@@ -197,5 +200,16 @@ public class ArticleInsertService {
       homeworkDao.insertHomework(homework);
     }
   }
-
+  
+  
+  //스택 .....
+  public void writeStackArticle(Article article, List<String> tagList) {
+    ArticleDao artidao = wArticle(article);
+    QnaDao qna = sqlSession.getMapper(QnaDao.class);
+    int recentId = artidao.getMostRecentArticleId();
+    qna.insertQna(recentId);
+    tagService.insertTag(tagList, recentId);
+    System.out.println("인서트서비스 잘탔니");
+  }
+  
 }
