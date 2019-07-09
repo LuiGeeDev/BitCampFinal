@@ -37,8 +37,8 @@ public class ProjectController {
     Member user = memberDao.selectMemberByUsername(Helper.userName());
 
     Group group = groupDao.selectGroupByProjectId(project_id, user.getUsername());
-    Board ts = boardDao.selectTroubleShootingBoard(user.getCourse_id(), group.getGroup_no());
     Project project = projectDao.selectProject(project_id);
+    Board ts = boardDao.selectTroubleShootingBoard(user.getCourse_id(), project.getSeason(), group.getGroup_no());
 
     model.addAttribute("group", group);
     model.addAttribute("ts", ts);
@@ -57,8 +57,8 @@ public class ProjectController {
     Member user = memberDao.selectMemberByUsername(Helper.userName());
 
     Group group = groupDao.selectGroupByProjectId(project_id, user.getUsername());
-    Board ts = boardDao.selectTroubleShootingBoard(user.getCourse_id(), group.getGroup_no());
     Project project = projectDao.selectProject(project_id);
+    Board ts = boardDao.selectTroubleShootingBoard(user.getCourse_id(), project.getSeason(), group.getGroup_no());
 
     model.addAttribute("group", group);
     model.addAttribute("ts", ts);

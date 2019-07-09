@@ -1,5 +1,6 @@
 package kr.or.bit.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -10,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.CommentDao;
 import kr.or.bit.dao.MemberDao;
+import kr.or.bit.dao.StackDao;
 import kr.or.bit.dao.TroubleShootingDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Member;
+import kr.or.bit.model.Tag;
 import kr.or.bit.model.TroubleShooting;
 import kr.or.bit.utils.Helper;
 import kr.or.bit.utils.Pager;
@@ -22,6 +25,9 @@ import kr.or.bit.utils.Pager;
 public class TroubleShootingService {
   @Autowired
   private SqlSession sqlSession;
+  
+  @Autowired
+  private TagService tagService;
   
   public Pager getPager(int board_id, int page, String criteria, String word, boolean closed) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
@@ -35,6 +41,7 @@ public class TroubleShootingService {
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     TroubleShootingDao troubleShootingDao = sqlSession.getMapper(TroubleShootingDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    StackDao stackDao = sqlSession.getMapper(StackDao.class);
     
     Pager pager = new Pager(page, articleDao.selectAllIssuesOpened(board_id, criteria, word).size()); 
     List<Article> articleList = articleDao.selectIssuesOpenedByPage(board_id, pager, criteria, word);
@@ -43,6 +50,7 @@ public class TroubleShootingService {
       article.setOption(troubleShootingDao.selectTroubleShootingByArticleId(article.getId()));
       article.setTimeLocal(article.getTime().toLocalDateTime());
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+      article.setTags(stackDao.selectTagList(article.getId()));
     }
     
     return articleList;
@@ -53,6 +61,7 @@ public class TroubleShootingService {
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     TroubleShootingDao troubleShootingDao = sqlSession.getMapper(TroubleShootingDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    StackDao stackDao = sqlSession.getMapper(StackDao.class);
     
     Pager pager = new Pager(page, articleDao.selectAllIssuesClosed(board_id, criteria, word).size()); 
     List<Article> articleList = articleDao.selectIssuesClosedByPage(board_id, pager, criteria, word);
@@ -61,6 +70,7 @@ public class TroubleShootingService {
       article.setOption(troubleShootingDao.selectTroubleShootingByArticleId(article.getId()));
       article.setTimeLocal(article.getTime().toLocalDateTime());
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+      article.setTags(stackDao.selectTagList(article.getId()));
     }
     
     return articleList;
@@ -71,6 +81,7 @@ public class TroubleShootingService {
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     TroubleShootingDao troubleShootingDao = sqlSession.getMapper(TroubleShootingDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    StackDao stackDao = sqlSession.getMapper(StackDao.class);
     
     Article article = articleDao.selectOneArticle(id);
     List<Comment> commentlist = commentDao.selectAllComment(id);
@@ -82,16 +93,25 @@ public class TroubleShootingService {
     article.setOption(troubleShootingDao.selectTroubleShootingByArticleId(id));
     article.setTimeLocal(article.getTime().toLocalDateTime());
     article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+    article.setTags(stackDao.selectTagList(article.getId()));
     
     return article;
   }
   
-  public int writeIssue(Article article, int group_id) {
+  public int writeIssue(Article article, int group_id, String tag) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     TroubleShootingDao troubleShootingDao = sqlSession.getMapper(TroubleShootingDao.class);
-    String username = Helper.userName();
-    article.setUsername(username);
+    List<String> tagList = new ArrayList<>();
+    String[] splitStr = tag.split("#");
+    for (int i = 1; i < splitStr.length; i++) {
+      tagList.add(splitStr[i]);
+    }
+    List<Tag> tags = tagService.selectTagByName(tagList);
+    
+    article.setTags(tags);
+    article.setUsername(Helper.userName());
     articleDao.insertArticle(article);
+    tagService.insertTag(tagList, articleDao.getMostRecentArticleId());
     
     TroubleShooting troubleshooting = new TroubleShooting();
     troubleshooting.setArticle_id(articleDao.getMostRecentArticleId());

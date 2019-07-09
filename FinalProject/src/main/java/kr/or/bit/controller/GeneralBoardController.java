@@ -12,9 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.ArticleDao;
+import kr.or.bit.dao.StackDao;
 import kr.or.bit.dao.ViewCountDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
@@ -24,6 +26,7 @@ import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleUpdateService;
 import kr.or.bit.service.CommentService;
 import kr.or.bit.utils.Helper;
+import kr.or.bit.utils.Pager;
 
 @Controller
 @RequestMapping("/general")
@@ -41,9 +44,18 @@ public class GeneralBoardController {
   private ArticleUpdateService articleUpdateService;
 
   @GetMapping("/generalBoard")
-  public String generalBoard(Model model) {
-    List<Article> article = articleService.selectAllArticle("general", GENERAL_BOARD_ID);
-    model.addAttribute("list", article);
+  public String generalBoard(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model) {
+    List<Article> articleList = articleService.selectAllArticle("general", GENERAL_BOARD_ID);
+    StackDao stackdao = sqlsession.getMapper(StackDao.class);
+//    List<Article> articleList = null;
+    Pager pager = null;
+    if(boardSearch != null) {
+      
+    }else {
+      pager = new Pager(page, stackdao.countStackArticleBySearchWord(boardSearch));
+      articleList = articleService.selectStackArticlesByboardSearch(pager, boardSearch, criteria);
+    }
+    model.addAttribute("list", articleList);
     return "myclass/general/generalBoard";
   }
 

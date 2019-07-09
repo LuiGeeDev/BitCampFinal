@@ -1,49 +1,68 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
->
-  <head>
-    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-    <link
-      rel="stylesheet"
-      th:href="@{/css/myclass/troubleshooting/write.css}"
-    />
-    <link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
-    <link
-      href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
-    <div class="main" th:fragment="main">
-      <div th:replace="myclass/nav :: project-nav(ts)"></div>
-      <div class="row">
-        <div class="new-issue">
-          <img class="profile-photo" th:src="@{/resources/images/{picture}(picture=${user.profile_photo})}" alt="">
-          <form class="write-form" method="post">
-            <input type="hidden" name="group_id" th:value="${group.id}">
-            <input type="hidden" name="project_id" th:value="${project.id}">
-            <div class="title">
-              <input type="text" name="title" id="title" placeholder="제목">
-            </div>
-            <div class="content">
-              <textarea name="content" id="content" placeholder="내용을 적어주세요"></textarea>
-            </div>
-            <div class="form-footer">
-              <button type="submit" class="btn btn-outline-primary">새로 올리기</button>
-            </div>
-          </form>
-        </div>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
+<head>
+<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+<link rel="stylesheet"
+  th:href="@{/css/myclass/troubleshooting/write.css}" />
+<link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
+<link
+  href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css"
+  rel="stylesheet" />
+</head>
+<body>
+  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+  <div class="main" th:fragment="main">
+    <div th:replace="myclass/nav :: project-nav(ts)"></div>
+    <div class="row">
+      <div class="new-issue">
+        <img class="profile-photo"
+          th:src="@{/resources/images/{picture}(picture=${user.profile_photo})}"
+          alt="">
+        <form class="write-form" method="post">
+          <input type="hidden" name="group_id" th:value="${group.id}">
+          <input type="hidden" name="project_id"
+            th:value="${project.id}">
+          <input type="hidden" name="board_id" th:value="${ts.id}">
+          <div class="title">
+            <input type="text" name="title" id="title" placeholder="제목">
+          </div>
+          <div class="content">
+            <textarea name="content" id="content"></textarea>
+          </div>
+          <div id="input-tag">
+            <textarea class="hidden" id="select-result" name="tag"></textarea>
+            <span id="tagWrapper"><b>태그 </b></span>
+            <ol id="selectable">
+              <li class="ui-widget-content" th:each="tag : ${tags}">#[[${tag.tag}]]</li>
+            </ol>
+          </div>
+          <div class="form-footer">
+            <button type="submit" class="btn btn-outline-primary">
+              새로 올리기
+            </button>
+          </div>
+        </form>
       </div>
     </div>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
-    <script>
+  </div>
+  <script
+    src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  
+  <script>
+    $(function() {
+      $("#selectable").selectable({
+        stop : function() {
+          var result=$("#select-result").empty();
+          var index=$("#selectable li").index(this);
+          result.append($(".ui-selected").text());
+        }
+      });
+    });
       $("#content").summernote({
-        placeholder: "내용을 적어주세요",
-        height: 255
+        placeholder : "내용을 적어주세요",
+        height : 255
       });
     </script>
-  </body>
+</body>
 </html>

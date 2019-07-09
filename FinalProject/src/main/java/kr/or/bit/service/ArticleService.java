@@ -141,7 +141,10 @@ public class ArticleService {
       break;
     case "qna":
       QnaDao qnaDao = sqlSession.getMapper(QnaDao.class);
+      StackDao stackDao = sqlSession.getMapper(StackDao.class);
       option = qnaDao.selectQnaByArticleId(article.getId());
+      List<Tag> taglist = stackDao.selectTagList(article.getId());
+      article.setTags(taglist);
       break;
     case "homework":
       HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
@@ -153,9 +156,14 @@ public class ArticleService {
     article.setTimeLocal(article.getTime().toLocalDateTime());
     article.setUpdatedTimeLocal(article.getUpdated_time().toLocalDateTime());
     article.setCommentlist(commentdao.selectAllComment(id));
+    
     for (Comment comment : article.getCommentlist()) {
       System.out.println(comment.getTime());
       comment.setTimeLocal(comment.getTime().toLocalDateTime());
+      System.out.println("댓글이름:"+(memberDao.selectMemberByUsername(comment.getUsername())).getName());
+      comment.setName(
+          (memberDao.selectMemberByUsername(comment.getUsername())).getName()
+          );
     }
     article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
     article.setOption(option);
