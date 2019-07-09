@@ -26,10 +26,10 @@
           <span class="hidden" id="comment-articleID" th:text = "${article.id}"></span>
           <span class="hidden" id="comment-boardID" th:text = "${board.id}"></span>
           <div class="btn-group">
-            <a th:if="${article.username}==${username}"
+            <a th:if="${article.username}==${user.username}"
               th:href="@{/myclass/board/edit(article_id=${article.id}, board_id=${board.id})}"
               id="updatebtn" class="btn btn-primary btn-align">수정</a> 
-              <a th:if="${article.username}==${username}" id="deletebtn" class="btn btn-primary btn-align">삭제</a> <a
+              <a th:if="${article.username}==${user.username}" id="deletebtn" class="btn btn-primary btn-align">삭제</a> <a
               th:href="@{/myclass/board(board_id=${board.id})}"
               id="listbtn" class="btn btn-primary btn-align">목록</a>
           </div>
@@ -175,9 +175,14 @@
               minutes = (minutes < 10) ? "0" + minutes : minutes;
               let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
               hours = hours < 10 ? "0" +  hours : hours;
+              let getdate = date.getDate();
+              getdate = (getdate < 10) ? "0" + getdate : getdate;
+              let getmonth = date.getMonth() + 1;
+              getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
               
-              const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDay()}일 ` + hours +`:` + minutes;
-              
+              console.log(getmonth);
+                  
+              const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ hours +`:` + minutes;
 			  let equalName = null;           
               if(item.username == [[${user.username}]]) {
                 equalName = "[삭제]";
