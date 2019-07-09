@@ -193,6 +193,7 @@ public class BoardService {
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     List<Comment> commentList = commentDao.selectAllComment(article_id);
+    
     for (Comment c : commentList) {
       c.setWriter(memberDao.selectMemberByUsername(c.getUsername()));
     }
