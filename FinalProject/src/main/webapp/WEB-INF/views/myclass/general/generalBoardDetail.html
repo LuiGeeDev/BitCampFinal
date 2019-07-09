@@ -23,12 +23,13 @@
           조회수 &nbsp; <span th:text="${article.view_count}"
             class="pointOrange"></span>&nbsp;|댓글수&nbsp; <span
             th:text="${article.commentlist.size()}" class="pointOrange2"></span>&nbsp;|
+          <span class="hidden" id="comment-articleID" th:text = "${article.id}"></span>
+          <span class="hidden" id="comment-boardID" th:text = "${board.id}"></span>
           <div class="btn-group">
             <a
               th:href="@{/myclass/board/edit(article_id=${article.id}, board_id=${board.id})}"
-              id="updatebtn" class="btn btn-primary btn-align">수정</a> <a
-              th:href="@{/myclass/board/delete(article_id=${article.id})}"
-              id="deletebtn" class="btn btn-primary btn-align">삭제</a> <a
+              id="updatebtn" class="btn btn-primary btn-align">수정</a> 
+              <a id="deletebtn" class="btn btn-primary btn-align">삭제</a> <a
               th:href="@{/myclass/board(board_id=${board.id})}"
               id="listbtn" class="btn btn-primary btn-align">목록</a>
           </div>
@@ -45,19 +46,16 @@
            </div>
          </div>
       </div>
-
+      
     </div>
-
+    
     <div class="detail-comment">
 
       <span class="userIcon"> <i class="fas fa-user-circle fa-lg"></i>
       </span> <span class="writerName" th:text="${user.name}"></span>
-      <form th:action="@{/general/commentwrite(id=${article.id}, article_id=${article.id}, board_id=${board.id})}"
-        method="POST">
         <input type="text" name="content" id="content"
           class="comment-text" placeholder="댓글을 입력하세요"> <input
-          type="submit" class="btn btn-primary detail-btn" value="등록">
-      </form>
+          id="comment-submit" type="submit" class="btn btn-primary detail-btn" value="등록">
     </div>
 
     <div class="content-reply-form">
@@ -85,7 +83,7 @@
 
   <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-  <script>
+  <script th:inline="javascript">
     $(document).ready(function() {
       $("#spinner").hide();
     }).ajaxStart(function() {
@@ -95,7 +93,6 @@
     });
     	$("#deletebtn").click(function(event) {
     	  let articleId = [[${article.id}]];
-    	  console.log(articleId);
     	  event.preventDefault();
         Swal.fire({
           title: '정말 삭제하시겠습니까?',
@@ -108,10 +105,10 @@
         }).then((result) => {
           if (result.value) {
                   $.ajax({
-                    url: "/ajax/general/delete",
-                    type: "POST",
+                    url: "/myclass/board/delete",
+                    type: "GET",
                     data: {
-                      id: articleId
+                      article_id: articleId
                     },
                     success: function(data) {
                       Swal.fire({
@@ -120,7 +117,7 @@
                         	confirmButtonText: '확인',
                         	confirmButtonColor: '#F39B10'
                       }).then(function() {
-                        location.href = "/general/generalBoard";
+                        location.href = "/myclass/board?board_id=" + [[${board.id}]];
                       });
                       
                     }
@@ -130,6 +127,70 @@
           }
         })
     	});  
+    	
+    	$("#comment-submit").click(function() {
+    	  	const articleId = $("#comment-articleID").text();
+    	 	const commentContent = $("#content").val();
+    	 	const username = [[${user.username}]];
+    	 	
+    	 	const formData = new FormData();
+    	 	formData.append("article_id", articleId);
+    	 	formData.append("content", commentContent);
+    	 	formData.append("username", username);
+    	 	
+    	 	
+    	  $.ajax({
+          url: "/myclass/board/commentwrite",
+          type: "post",
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function(data) {
+            console.log(data);
+            $(".content-reply-form").empty();
+            
+            $(".writerName").append(`${data.writer.username}`);
+            
+            
+            
+            
+            
+            /* $(
+                ".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime"
+              ).empty();
+              $("#message-sender-id").append(`${data.sender_username}`);
+              $(".message-sender-name")
+                .append(`${data.senderName}`)
+                .append(`(${data.sender_username})`);
+              $(".message-sender-time").append(`${data.time}`);
+              const time = Number($(".message-sender-time").text());
+              const date = new Date(time);
+              let minutes = date.getMinutes();
+              
+              minutes = (minutes < 10) ? "0" + minutes : minutes;
+              
+              let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
+              hours = hours < 10 ? "0" +  hours : hours;
+              
+
+              
+               `${time.getHours() <= 12 ? time.getHours() : time.getHours() - 12}:${time.getMinutes() < 10 ? "0" + time.getMinutes() : time.getMinutes()} ${time.getHours() <= 11 ? 'AM' : 'PM'}`;
+              const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDay()}일 ` + hours +`:` + minutes;
+              $(".message-realtime").append(timedate);
+              $(".message-sender-content").append(`${data.content}`);
+              $(".sender-message").append(`<h6 class="text-font">받은쪽지</h6>`);
+              $(".fa-paper-plane").css("display", "block");
+              $(".fa-trash").css("display", "block"); */
+          }
+        });
+        });
+    	  
+    	
+    	
+    	
+    	
+    
+    	
     </script>
 </body>
 </html>
