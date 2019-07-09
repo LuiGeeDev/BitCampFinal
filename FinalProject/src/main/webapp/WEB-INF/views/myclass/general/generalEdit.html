@@ -12,24 +12,24 @@
 <body>
   <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
   <div class="main" th:fragment="main">
-  <div th:text="${article.option.files}"></div>
     <form method="POST" enctype="multipart/form-data">
       <div id="write-form-wrapper" th:object="${article}">
         <input type="text" id="input-title" placeholder="제목"
           name="title" th:value="*{title}" />
-        <div class="input-file">
-          <span> <i class="fas fa-paperclip"></i> <input
-            type="file" id="input-file-btn" name="file1"
-            class="file-btn">
-          </span>
-          <span> <i class="fas fa-paperclip"></i> <input
-            type="file" id="input-file-btn2" name="file2"
-            class="file-btn2">
-          </span>
-        </div>
         <textarea class="summernote-parent" name="content"
           id="summernote" th:text="*{content}">
           </textarea>
+        <div class="downloadbox">
+          <div th:each="fi : ${article.option.files}">
+            <div class="download-content" th:if="${fi!=null}">
+              <div class="filename" th:text="${fi.original_filename}">오리지날파일네임</div>
+              <div class="filebutton">
+                <button type="button" onclick="updatefile()">수정</button>
+                <button type="button" onclick="deletefile(event)" formaction="#" >삭제</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <button type="submit" class="btn btn-primary" id="submit-button">
           올리기</button>
       </div>
@@ -56,6 +56,16 @@
           });
         });
       });
+      function deletefile(event) {
+        console.log($(event.target).parent().parent());
+        const div = $(event.target).parent().parent();
+        div.empty();
+      }
+      function updatefile() {
+        const div = $(".updatefile");
+        
+        
+      }
     </script>
 </body>
 </html>
