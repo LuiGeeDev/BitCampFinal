@@ -160,13 +160,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     order by a.id desc
     LIMIT 5
   </select>
-  <select id="selectTagList" resultType="kr.or.bit.model.Tag">
-  	SELECT id, tag
-	  FROM article_tag at
-	  LEFT JOIN tag a
-	  ON a.id = at.tag_id
-	  WHERE article_id=#{article_id};
-  </select>
   <select id="selectIssuesOpened" resultType="kr.or.bit.model.Article">
     SET @rownum:=0;
     SELECT sq2.* 
