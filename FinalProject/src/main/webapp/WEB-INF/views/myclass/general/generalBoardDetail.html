@@ -18,7 +18,7 @@
       <div class="detail-head">
         <span class="detail-title" th:text="${article.title}"></span>
         <div class="detail-subtitle">
-          <span th:text="${article.username}"></span>&nbsp;| &nbsp; <span
+          <span th:text="${article.writer.name}"></span>&nbsp;| &nbsp; <span
             th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd')}"></span>&nbsp;|
           조회수 &nbsp; <span th:text="${article.view_count}"
             class="pointOrange"></span>&nbsp;|댓글수&nbsp; <span
@@ -65,7 +65,7 @@
         <div class="content-move">
           <span class="userIcon"><i
             class="fas fa-user-circle fa-lg"></i></span> <span
-            class="commentWriterName" th:text="${comment.username}"></span> 
+            class="commentWriterName" th:text="${comment.writer.name}"></span> 
             <a th:if="${comment.username}==${user.username}"
             th:href="@{/myclass/board/commentdelete(comment_id=${comment.id}, article_id=${article.id}, board_id=${board.id})}">[삭제]</a>
           <span class="write-date"
@@ -127,10 +127,15 @@
         })
     	});  
     	
-    	$("#comment-submit").click(function() {
-    	  	if($("#content").val() === "") {
-    	  	  	event.stopImmediatePropagation();
-    	  	 	alert("제대로 입력해라 임마");
+    	$("#comment-submit").click(function(event) {
+          let valueCheck = $("#content").val();         
+          
+    	  	if(valueCheck.trim() === "" || valueCheck === null) {
+    	  	  Swal.fire({
+    	  	    type: 'error',
+    	  	    text: '다시 입력해주세요 !!',
+    	  	  })
+    	  	  	return;
     	  	}
     	  
     	  

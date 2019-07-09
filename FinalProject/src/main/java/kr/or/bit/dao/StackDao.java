@@ -19,5 +19,15 @@ public interface StackDao {
   
   List<Article> selectAllStackArticle(Pager pager);
   
-  List<Article> selectStackArticleBySearchWord(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
+  List<Tag> showTagList();
+  
+  Tag selectTagByName(String tag);
+  
+  void insertTag(int tag_id, int article_id);
+  
+  List<Article> selectStackArticleByTitleOrContent(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
+  
+  List<Article> selectStackArticleByTitle(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
+  
+  List<Article> selectStackArticleByWriter(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
 }

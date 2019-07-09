@@ -97,14 +97,14 @@ public class VideoController {
     video.setVideo_id(url.substring(beginIndex));
     articleUpdateService.updateArticle(article);
     articleUpdateService.updateArticleOption(article.getId(), video);
-    return "redirect:/video/home";
+    return "redirect:/video";
   }
 
   @GetMapping("/delete")
   public String deleteVideo(int id) {
     VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
     videoDao.deleteVideo(id);
-    return "redirect:/video/home";
+    return "redirect:/video";
   }
 
   @PostMapping("/commentwrite")
