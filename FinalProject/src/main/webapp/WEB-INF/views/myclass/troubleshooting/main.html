@@ -55,8 +55,12 @@
               <span class="closed">해결 문제 <span th:if="${articlesClosed == null}">0</span><span th:if="${articlesClosed != null}" th:text="${articlesClosed.size()}">32</span>개</span>
             </a>
           </div>
-          <div class="board-articles" th:each="article : ${articleList}">
-            <a th:href="@{/myclass/project/troubleshooting/read(id=${article.id}, project_id=${project.id})}">
+          <div class="board-articles">
+            <div class="board-issue" th:if="${articleList.size() == 0}">
+              <span class="no-issue">아직 글이 없습니다. 첫 글을 남겨 조원들과 이야기해보세요.</span>
+            </div>
+            <a th:href="@{/myclass/project/troubleshooting/read(id=${article.id}, project_id=${project.id})}" th:each="article : ${articleList}">
+             <div class="board-issue">
               <div class="closed">
                 <i th:if="${article.option.issue_closed == 0}" class="fas fa-exclamation-circle"></i>
                 <i th:if="${article.option.issue_closed == 1}" class="fas fa-check-circle"></i>
@@ -73,7 +77,8 @@
                 <span class="tag">Java</span>
               </div>
               <div class="issue-comment">
-                <i class="far fa-comment-alt"></i><span th:text="${article.commentlist.size()}">5</span>
+                <i class="far fa-comment-alt"></i><span class="comment-size" th:text="${article.commentlist.size()}">5</span>
+              </div>
               </div>
             </a>
           </div>
