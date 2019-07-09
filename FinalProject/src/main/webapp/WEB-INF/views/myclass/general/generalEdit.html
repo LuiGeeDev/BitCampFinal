@@ -30,21 +30,27 @@
         <textarea class="summernote-parent" name="content"
           id="summernote" th:text="*{content}">
          </textarea>
-        <div class="downloadbox">
-          <div th:each="fi : ${article.option.files}">
-            <div class="download-content" th:if="${fi!=null}">
-              <div class="filename" th:text="${fi.original_filename}">오리지날파일네임</div>
-              <div class="filebutton">
-                <button type="button" onclick="deletefile(event)"
-                  formaction="#">삭제</button>
-              </div>
-            </div>
-          </div>
-        </div>
+
         <button type="submit" class="btn btn-primary" id="submit-button">
           올리기</button>
       </div>
     </form>
+    <div>
+    <form method="GET" th:action="@{/myclass/board/deletefile}">
+      <div class="downloadbox">
+        <div th:each="fi : ${article.option.files}">
+          <div class="download-content" th:if="${fi!=null}">
+            <div class="filename" id="filename"
+              th:text="${fi.original_filename}"
+              th:name="${fi.original_filename}">오리지날파일네임</div>
+            <div class="filebutton">
+              <button type="submit" onclick="deletefile(event)" >삭제</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    </div>
   </div>
   <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
   <script
@@ -66,6 +72,9 @@
             timer : 1500
           });
         });
+        $("#input-file-btn").change(function() {
+          $("#filename").text($("#input-file-btn")[0].files[0].name);
+        })
       });
       function deletefile(event) {
         const div = $(event.target).parent().parent();
