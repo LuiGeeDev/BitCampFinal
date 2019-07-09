@@ -107,7 +107,8 @@ public class BoardService {
       articleDao.updateArticle(article);
       article.setUsername(Helper.userName());
       List<Files> uploadedFiles = fileUploadService.uploadFile(files, request);
-      General general = (General)(article.getOption());
+      General general = generalDao.selectGeneralByArticleId(article.getId());
+      System.out.println(general);
       for (Files file : uploadedFiles) {
           filesDao.insertFiles(file);
           Files insertedFile = filesDao.selectFilesByFilename(file.getFilename());
@@ -199,6 +200,7 @@ public class BoardService {
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     List<Comment> commentList = commentDao.selectAllComment(article_id);
+    
     for (Comment c : commentList) {
       c.setWriter(memberDao.selectMemberByUsername(c.getUsername()));
     }

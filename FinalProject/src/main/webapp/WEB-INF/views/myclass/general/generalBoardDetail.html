@@ -66,7 +66,7 @@
           <span class="userIcon"><i
             class="fas fa-user-circle fa-lg"></i></span> <span
             class="commentWriterName" th:text="${comment.username}"></span> 
-            <a th:if="${comment.username}==${username}"
+            <a th:if="${comment.username}==${user.username}"
             th:href="@{/myclass/board/commentdelete(comment_id=${comment.id}, article_id=${article.id}, board_id=${board.id})}">[삭제]</a>
           <span class="write-date"
             th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
@@ -123,13 +123,17 @@
                       
                     }
                   });
-                  
-               
           }
         })
     	});  
     	
     	$("#comment-submit").click(function() {
+    	  	if($("#content").val() === "") {
+    	  	  	event.stopImmediatePropagation();
+    	  	 	alert("제대로 입력해라 임마");
+    	  	}
+    	  
+    	  
     	  	const articleId = $("#comment-articleID").text();
     	 	const commentContent = $("#content").val();
     	 	const username = [[${user.username}]];
@@ -149,14 +153,14 @@
           success: function(data) {
             console.log(data);
             $(".content-reply-form").empty();
-           
+           	$("#content").val("");
            
             
             
             
             $.each(data, function(index, item) {
               const content = item.content;
-              const username = item.writer.username;
+              const username = item.writer.name;
               const time = Number(item.time);
               const date = new Date(time);
               const commentId = item.id;
@@ -169,39 +173,27 @@
               
               const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDay()}일 ` + hours +`:` + minutes;
               
-              /* $(".commentWriterName").append(username);
-              $(".content-comment").append(content);
-              $(".write-date").append(timedate); */
-              
+			  let equalName = null;           
+              if(item.username == [[${user.username}]]) {
+                equalName = "[삭제]";
+              } else {
+                equalName = "";
+              }
+              console.log(equalName);
               let html = "<div class='content-reply'>";
               html += "<div class='content-move'>" +
                       "<span class='userIcon'><i class='fas fa-user-circle fa-lg'></i></span>" +
                       "<span class='commentWriterName'>" + username + "</span>" + 
-                      "<a href='/myclass/board/commentdelete?comment_id=" + commentId + "&article_id=" + articleId + "'" + ">[삭제]</a>" + 
+                      "<a href='/myclass/board/commentdelete?comment_id=" + commentId + "&article_id=" + articleId + "&board_id=" + [[${board.id}]] +"'" + ">" +equalName+"</a>" +  
                       "<span class='write-date'>" + timedate + "</span></div>";
               html += "<div class='content-comment'>" + content + "</div></div>";
               $(".content-reply-form").append(html);
+              
+            /*   class="commentWriterName" th:text="${comment.username}"></span> 
+              <a th:if="${comment.username}==${user.username}"
+              th:href="@{/myclass/board/commentdelete(comment_id=${comment.id}, article_id=${article.id}, board_id=${board.id})}">[삭제]</a> */
             });
             
-            
-            /* <div class="content-reply-form">
-            <div class="content-reply"
-              th:if="${article.commentlist.size()} > 0"
-              th:each="comment : ${article.commentlist}">
-              <div class="content-move">
-                <span class="userIcon"><i
-                  class="fas fa-user-circle fa-lg"></i></span> 
-                  <span class="commentWriterName" th:text="${comment.username}"></span> 
-                  <a th:href="@{/myclass/board/commentdelete(comment_id=${comment.id}, article_id=${article.id}, board_id=${board.id})}">[삭제]</a>
-                <span class="write-date"
-                  th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
-              </div>
-              <div class="content-comment" th:text="${comment.content}"></div>
-            </div>
-            <div th:if="${article.commentlist.size()} == 0" class="noComment">
-              등록된 댓글이 없습니다</div>
-
-          </div> */
           }
         });
         });

@@ -22,7 +22,10 @@ import kr.or.bit.model.ArticleOption;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Files;
 import kr.or.bit.model.General;
+import kr.or.bit.model.Member;
 import kr.or.bit.model.Tag;
+import kr.or.bit.utils.Helper;
+import kr.or.bit.utils.Pager;
 
 @Service
 public class ArticleService {
@@ -159,12 +162,34 @@ public class ArticleService {
     return article;
   }
   
-  public List<Article> selectAllStackArticle() {
+  public List<Article> selectAllStackArticles(Pager pager) {
     StackDao stackdao = sqlSession.getMapper(StackDao.class);
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     
-    List<Article> articlelist = stackdao.selectStackArticles();
+    List<Article> articlelist = stackdao.selectAllStackArticle(pager);
+    for (Article article : articlelist) {
+      List<Comment> commentList = commentdao.selectAllComment(article.getId());
+      List<Tag> taglist = stackdao.selectTagList(article.getId());
+      
+      for (Comment comment : commentList) {
+        comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
+      }
+      
+      article.setTags(taglist);
+      article.setCommentlist(commentList);
+      article.setTimeLocal(article.getTime().toLocalDateTime());
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));   
+    }
+    return articlelist;
+  }
+  
+  public List<Article> selectStackArticlesByboardSearch(Pager pager,String boardSearch) {
+    StackDao stackdao = sqlSession.getMapper(StackDao.class);
+    CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    
+    List<Article> articlelist = stackdao.selectStackArticleBySearchWord(pager,boardSearch);
     for (Article article : articlelist) {
       List<Comment> commentList = commentdao.selectAllComment(article.getId());
       List<Tag> taglist = stackdao.selectTagList(article.getId());

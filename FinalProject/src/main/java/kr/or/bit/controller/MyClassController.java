@@ -170,7 +170,9 @@ public class MyClassController {
       pager = new Pager(page, homeworkDao.countAllHomeworkArticle(member.getCourse_id())); 
       homeworkList = homeworkDao.selectAllHomeworkArticle(pager, member.getCourse_id());
     }
-    
+    for(Article article : homeworkList) {
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+    }
     model.addAttribute("userRole", member.getRole());
     model.addAttribute("pager", pager);
     model.addAttribute("homeworkList", homeworkList);
