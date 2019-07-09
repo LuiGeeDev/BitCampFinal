@@ -57,6 +57,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON a.id = at.tag_id
 		WHERE article_id=#{article_id};
 	</select>
+	<select id="showTagList" resultType="kr.or.bit.model.Tag">
+		SELECT id, tag, color
+		FROM tag;
+	</select>
+	<select id="selectTagByName" resultType="kr.or.bit.model.Tag">
+		SELECT id, tag, color
+		FROM tag
+		WHERE tag=#{tag};
+	</select>
+	<insert id="insertTag">
+		INSERT INTO article_tag (tag_id, article_id)
+		VALUES (#{tag_id},#{article_id});
+	</insert>
 	<select id="countArticle" resultType="Integer">
 		SELECT count(*)
 		FROM article

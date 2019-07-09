@@ -12,4 +12,10 @@ public interface StackDao {
   
   int countArticle();
   
+  List<Tag> showTagList();
+  
+  Tag selectTagByName(String tag);
+  
+  void insertTag(int tag_id, int article_id);
+  
 }

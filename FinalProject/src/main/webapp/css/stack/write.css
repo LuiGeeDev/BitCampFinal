@@ -3,6 +3,7 @@
 body {
   font-family: 'Nanum Gothic';
 }
+
 .title {
   font-size: 190%;
   margin: 20px;
@@ -33,6 +34,18 @@ body {
   margin: 0 5px 10px;
 }
 
+#input-tag {
+  border: 1px solid white;
+  width: 98%;
+  border-radius: 5px;
+  outline: none;
+  margin-left: 5px;
+  margin: 10px 5px 10px;
+  float: left;
+  display:flex;
+  flex-direction: row;
+}
+
 #input-title::placeholder {
   color: #c2c2c2;
 }
@@ -50,9 +63,7 @@ body {
 #submitbtn {
   float: right;
   text-align: right;
-  margin-top: 10px;
   margin-right: 5px;
-  margin-left: auto;
 }
 
 .note-editor {
@@ -73,11 +84,60 @@ body {
   color: #a6a6a6;
 }
 
-.content{
-  font-family: 'Nanum Gothic'!important;
-  font-size: 17.6px!important;
+.content {
+  font-family: 'Nanum Gothic' !important;
+  font-size: 17.6px !important;
 }
+
 .content p {
-  font-family: 'Nanum Gothic'!important;
-  font-size: 17.6px!important;
+  font-family: 'Nanum Gothic' !important;
+  font-size: 17.6px !important;
+}
+
+#feedback {
+  font-size: 1.4em;
+}
+
+#selectable .ui-selecting {
+  background: #EEEEEE;
+}
+
+#selectable .ui-selected {
+  background: #2D3E50;
+  color: white;
+}
+
+#selectable {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 80%;
+}
+
+#selectable li {
+  margin: 1px;
+  padding: 0.3em;
+  font-size: 16px;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#tagWrapper {
+  margin: 1px;
+  padding: 0.4em;
+  font-size: 16px;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #EEEEEE; !important;
+  margin-right: 4px;
+}
+
+.submit-btn {
+  margin-left: auto;
+}
+
+#select-result {
+  display:none 
 }
