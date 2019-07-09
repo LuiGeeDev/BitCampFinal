@@ -58,19 +58,13 @@ public class StackController {
     List<Article> stackList = null;
     Pager pager = null;
     if(boardSearch != null) {
-      System.out.println("여기 타겠지 : "+ boardSearch);
       pager = new Pager(page, stackDao.countStackArticleBySearchWord(boardSearch));
-      System.out.println("여기는 1");
       stackList = articleService.selectStackArticlesByboardSearch(pager,boardSearch);
-      System.out.println("여기는 2");
       model.addAttribute("boardSearch", boardSearch);
-      System.out.println("여기는 3");
     } else {
       pager = new Pager(page, stackDao.countAllStackArticle());
       stackList = articleService.selectAllStackArticles(pager);
     }
-    System.out.println("시이작");
-    System.out.println("### : "+ stackList.get(0).getWriter().getUsername());
     model.addAttribute("stacklist", stackList);
     model.addAttribute("pager", pager);
     model.addAttribute("page", page);

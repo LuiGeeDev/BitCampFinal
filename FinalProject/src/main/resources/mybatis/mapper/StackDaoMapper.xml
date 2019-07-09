@@ -91,10 +91,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY id DESC
 		LIMIT #{start}, #{articlesOnPage}
 	</select>
-	<select id="selectStackArticleBySearchWord" resultType="kr.or.bit.model.Article">
+	<select id="selectStackArticleByTitleOrContent" resultType="kr.or.bit.model.Article">
 		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
 		FROM ARTICLE a JOIN BOARD b ON a.board_id = b.id 
-		WHERE BOARD_ID=1 AND ENABLE = 1 AND a.title LIKE '%${boardSearch}%'
+		WHERE BOARD_ID=1 AND ENABLE = 1 AND a.title LIKE '%${boardSearch}%' OR a.content LIKE '%${boardSearch}%'
 		ORDER BY a.ID DESC
 		LIMIT #{pager.start}, #{pager.articlesOnPage}
 	</select>

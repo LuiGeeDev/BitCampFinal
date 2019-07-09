@@ -189,7 +189,7 @@ public class ArticleService {
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     
-    List<Article> articlelist = stackdao.selectStackArticleBySearchWord(pager,boardSearch);
+    List<Article> articlelist = stackdao.selectStackArticleByTitleOrContent(pager,boardSearch);
     for (Article article : articlelist) {
       List<Comment> commentList = commentdao.selectAllComment(article.getId());
       List<Tag> taglist = stackdao.selectTagList(article.getId());
