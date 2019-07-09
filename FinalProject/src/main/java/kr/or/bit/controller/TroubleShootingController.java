@@ -15,6 +15,7 @@ import kr.or.bit.dao.BoardDao;
 import kr.or.bit.dao.GroupDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.ProjectDao;
+import kr.or.bit.dao.StackDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
 import kr.or.bit.model.Comment;
@@ -35,7 +36,7 @@ public class TroubleShootingController {
 
   @GetMapping("")
   public String troubleshootingPage(@RequestParam("id") int board_id,
-      @RequestParam(defaultValue = "1", name = "p") int page, @RequestParam(required = false) String criteria,
+      @RequestParam(defaultValue = "1") int page, @RequestParam(required = false) String criteria,
       @RequestParam(required = false) String word, int project_id, String q, Model model) {
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
@@ -48,8 +49,8 @@ public class TroubleShootingController {
     Member user = memberDao.selectMemberByUsername(Helper.userName());
 
     Group group = groupDao.selectGroupByProjectId(project_id, user.getUsername());
-    Board ts = boardDao.selectTroubleShootingBoard(user.getCourse_id(), group.getGroup_no());
     Project project = projectDao.selectProject(project_id);
+    Board ts = boardDao.selectTroubleShootingBoard(user.getCourse_id(), project.getSeason(), group.getGroup_no());
 
     model.addAttribute("criteria", criteria);
     model.addAttribute("word", word);
@@ -70,13 +71,15 @@ public class TroubleShootingController {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
     ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    StackDao stackDao = sqlSession.getMapper(StackDao.class);
 
     Member user = memberDao.selectMemberByUsername(Helper.userName());
 
     Group group = groupDao.selectGroupByProjectId(project_id, user.getUsername());
-    Board ts = boardDao.selectTroubleShootingBoard(user.getCourse_id(), group.getGroup_no());
     Project project = projectDao.selectProject(project_id);
-
+    Board ts = boardDao.selectTroubleShootingBoard(user.getCourse_id(), project.getSeason(), group.getGroup_no());
+    
+    model.addAttribute("tags", stackDao.showTagList());
     model.addAttribute("group", group);
     model.addAttribute("ts", ts);
     model.addAttribute("project", project);
@@ -84,8 +87,8 @@ public class TroubleShootingController {
   }
 
   @PostMapping("/write")
-  public String writeNewIssue(Article article, int group_id, int project_id) {
-    return "redirect:/myclass/project/troubleshooting/read?id=" + service.writeIssue(article, group_id) + "&project_id=" + project_id;
+  public String writeNewIssue(Article article, int group_id, int project_id, String tag) {
+    return "redirect:/myclass/project/troubleshooting/read?id=" + service.writeIssue(article, group_id, tag) + "&project_id=" + project_id;
   }
 
   @GetMapping("/read")
@@ -98,8 +101,8 @@ public class TroubleShootingController {
     Member user = memberDao.selectMemberByUsername(Helper.userName());
 
     Group group = groupDao.selectGroupByProjectId(project_id, user.getUsername());
-    Board ts = boardDao.selectTroubleShootingBoard(user.getCourse_id(), group.getGroup_no());
     Project project = projectDao.selectProject(project_id);
+    Board ts = boardDao.selectTroubleShootingBoard(user.getCourse_id(), project.getSeason(), group.getGroup_no());
 
     Article article = service.getIssue(id);
 

@@ -91,6 +91,7 @@ input:active, input:focus, select:active, select:focus {
   padding: 2px 8px;
   font-size: 14px;
   color: white;
+  margin-left: 3px;
 }
 
 .issue-tags {
