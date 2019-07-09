@@ -198,6 +198,7 @@
               const content = item.content;
               const username = item.writer.name;
               const time = Number(item.time);
+              console.log(new Date(item.time));
               const date = new Date(time);
               const commentId = item.id;
               const articleId = item.article_id;
@@ -208,7 +209,7 @@
               let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
               hours = hours < 10 ? "0" +  hours : hours;
               
-              const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDay()}일 ` + hours +`:` + minutes;
+              const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일 ` + hours +`:` + minutes;
               
 			  let equalName = null;           
               if(item.username == [[${user.username}]]) {
