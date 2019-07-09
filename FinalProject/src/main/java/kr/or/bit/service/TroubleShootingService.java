@@ -12,6 +12,8 @@ import kr.or.bit.dao.CommentDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.TroubleShootingDao;
 import kr.or.bit.model.Article;
+import kr.or.bit.model.Member;
+import kr.or.bit.model.TroubleShooting;
 import kr.or.bit.utils.Helper;
 import kr.or.bit.utils.Pager;
 
@@ -75,11 +77,19 @@ public class TroubleShootingService {
     return article;
   }
   
-  public int writeIssue(Article article) {
+  public int writeIssue(Article article, int group_id) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    TroubleShootingDao troubleShootingDao = sqlSession.getMapper(TroubleShootingDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     String username = Helper.userName();
+    Member user = memberDao.selectMemberByUsername(username);
     article.setUsername(username);
     articleDao.insertArticle(article);
+    
+    TroubleShooting troubleshooting = new TroubleShooting();
+    troubleshooting.setArticle_id(articleDao.getMostRecentArticleId());
+    troubleshooting.setGroup_id(group_id);
+    troubleShootingDao.insertTroubleShooting(troubleshooting);
     return articleDao.getMostRecentArticleId();
   }
   
