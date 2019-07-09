@@ -28,6 +28,10 @@
   padding: 15px;
 }
 
+.issue-content * {
+  all: unset;
+}
+
 .author-badge {
   float: right;
   border: 1px solid rgba(27, 31, 35, .1);

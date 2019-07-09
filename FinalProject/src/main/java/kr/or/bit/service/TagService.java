@@ -25,7 +25,19 @@ public class TagService {
     Tag onetag = stackdao.selectTagByName(tag);
     tags.add(onetag);
     }
-    return tags;
-    
+    return tags;   
   }
+  
+  public void insertTag(List<String> tagList, int article_id) {
+    StackDao stackdao = sqlSession.getMapper(StackDao.class);
+    List<Tag> tags = new ArrayList<>();
+    for(int i=0; i<tagList.size(); i++) {
+    String tag = tagList.get(i);
+    Tag onetag = stackdao.selectTagByName(tag);
+    tags.add(onetag);
+    int tag_id=onetag.getId();
+    stackdao.insertTag(tag_id,article_id);
+    }  
+  }
+
 }
