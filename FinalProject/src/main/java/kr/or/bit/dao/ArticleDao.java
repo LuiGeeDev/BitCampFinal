@@ -69,4 +69,6 @@ public interface ArticleDao {
 
   List<Article> selectIssuesClosedByPage(@Param("board_id") int board_id, @Param("pager") Pager pager,
       @Param("criteria") String criteria, @Param("word") String word);
+  
+  void updateArticleViewCount(Article article);
 }

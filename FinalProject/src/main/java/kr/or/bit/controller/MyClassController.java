@@ -31,6 +31,7 @@ import kr.or.bit.dao.HomeworkDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.ProjectDao;
 import kr.or.bit.dao.ScheduleDao;
+import kr.or.bit.dao.ViewCountDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
 import kr.or.bit.model.BoardAddRemove;
@@ -44,6 +45,7 @@ import kr.or.bit.model.ProjectMember;
 import kr.or.bit.model.Schedule;
 import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
+import kr.or.bit.service.ArticleUpdateService;
 import kr.or.bit.service.BoardService;
 import kr.or.bit.utils.Helper;
 import kr.or.bit.utils.Pager;
@@ -59,6 +61,8 @@ public class MyClassController {
   private ArticleService articleService;
   @Autowired
   private ArticleInsertService articleInsertService;
+  @Autowired
+  private ArticleUpdateService articleUpdateService;
 
   @GetMapping("/qna")
   public String qnaPage() {
@@ -166,7 +170,7 @@ public class MyClassController {
       pager = new Pager(page, homeworkDao.countAllHomeworkArticle(member.getCourse_id())); 
       homeworkList = homeworkDao.selectAllHomeworkArticle(pager, member.getCourse_id());
     }
-
+    
     model.addAttribute("userRole", member.getRole());
     model.addAttribute("pager", pager);
     model.addAttribute("homeworkList", homeworkList);
@@ -184,6 +188,9 @@ public class MyClassController {
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
     FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    
+    articleUpdateService.viewCount(article);
+    
     List<Article> replies = articleDao.selectHomeworkReplies(id);
     
     for(Article reply : replies) {
@@ -203,6 +210,7 @@ public class MyClassController {
     
     String username = Helper.userName();
     Member member = memberDao.selectMemberByUsername(username);
+    model.addAttribute("username", username);
     model.addAttribute("userRole", member.getRole());
     model.addAttribute("article", article);
     model.addAttribute("replies", replies);
@@ -215,9 +223,9 @@ public class MyClassController {
   @PostMapping("/homework/detail")
   public String submitHomeworkDetail(Article article, MultipartFile file1, MultipartFile file2,
       HttpServletRequest request,Model model) {
-    
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    
     Member member = memberDao.selectMemberByUsername(Helper.userName());
     Board board = boardDao.selectBoardByCourseId(member.getCourse_id(), 4);
     article.setUsername(Helper.userName());
@@ -314,7 +322,6 @@ public class MyClassController {
     updateArticle.setOption(homework);
     articleDao.updateArticle(updateArticle);
     homeworkDao.updateHomeworkArticle(updateArticle);
-    System.out.println("///////////////////////"+boardSearch);
     return "redirect:/myclass/homework/detail?id=" + updateArticle.getId() + "&page="+request.getParameter("page") +"&boardSearch="+boardSearch;
   }
 

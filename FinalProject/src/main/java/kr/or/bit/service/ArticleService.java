@@ -14,6 +14,7 @@ import kr.or.bit.dao.GeneralDao;
 import kr.or.bit.dao.HomeworkDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.QnaDao;
+import kr.or.bit.dao.StackDao;
 import kr.or.bit.dao.TroubleShootingDao;
 import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
@@ -21,6 +22,7 @@ import kr.or.bit.model.ArticleOption;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Files;
 import kr.or.bit.model.General;
+import kr.or.bit.model.Tag;
 
 @Service
 public class ArticleService {
@@ -156,4 +158,27 @@ public class ArticleService {
     article.setOption(option);
     return article;
   }
+  
+  public List<Article> selectAllStackArticle() {
+    StackDao stackdao = sqlSession.getMapper(StackDao.class);
+    CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    
+    List<Article> articlelist = stackdao.selectStackArticles();
+    for (Article article : articlelist) {
+      List<Comment> commentList = commentdao.selectAllComment(article.getId());
+      List<Tag> taglist = stackdao.selectTagList(article.getId());
+      
+      for (Comment comment : commentList) {
+        comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
+      }
+      
+      article.setTags(taglist);
+      article.setCommentlist(commentList);
+      article.setTimeLocal(article.getTime().toLocalDateTime());
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));   
+    }
+    return articlelist;
+  }
+
 }
