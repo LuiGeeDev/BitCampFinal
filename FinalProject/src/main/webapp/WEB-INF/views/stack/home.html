@@ -28,7 +28,7 @@
             <option value="comment_content">댓글내용</option>
             <option value="comment_name">댓글작성자</option>
             </select>
-            <input type="hidden" name="board_id" th:value="${board.id}">
+            <input type="hidden" name="board_id">
             <input
               type="text"
               name="search"
@@ -69,9 +69,8 @@
           <tr>
             <td class="td2"><span th:text="${list.view_count}"></span>view</td>
             <td class="td3">
-              <span class="tag-name">
-                <span id="c1">Spring</span> <span id="c2">Java</span>
-                <span id="c3">C++</span>
+              <span class="tag-name iteration" th:each="tag : ${list.tags}">
+                <span th:style="'background-color:'+@{${tag.color}}+';'">[[${tag.tag}]]</span>
               </span>
             </td>
             <td class="td4"><span th:text="${list.writer.username}"></span></td>

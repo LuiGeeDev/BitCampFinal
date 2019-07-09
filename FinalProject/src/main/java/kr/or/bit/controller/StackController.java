@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.bit.dao.ArticleDao;
+import kr.or.bit.dao.StackDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.General;
@@ -44,22 +45,12 @@ public class StackController {
   private BoardService boardService;
 
   @GetMapping("")
-  public String listPage(@RequestParam(defaultValue = "1") int page,
-      @RequestParam(required = false) String sort, @RequestParam(required = false) String search, @RequestParam(required = false) String criteria, Model model) {
-    List<Article> articles = null;
-    if (sort == null && search == null) {
-      articles = boardService.getArticlesByPage(STACK_BOARD_ID, page);
-    } else if (sort != null) {
-      articles = boardService.getArticlesSorted(STACK_BOARD_ID, page, sort);
-    } else if (search != null) {
-      articles = boardService.getArticlesBySearchWord(STACK_BOARD_ID, page, search, criteria);
-    }
-    
-    model.addAttribute("board", boardService.getBoardInfo(STACK_BOARD_ID));
-    model.addAttribute("stacklist", articles);
-
+  public String listPage(Model model) throws Exception{
+    List<Article> article = articleService.selectAllStackArticle();
+    model.addAttribute("stacklist", article);
     return "stack/home";
   }
+
 /*  //stack 메인으로 이동
   @GetMapping("/home")
   public String getStackList(Model model) {
@@ -91,7 +82,7 @@ public class StackController {
     article.setUsername(Helper.userName());
     article.setBoard_id(STACK_BOARD_ID);
     articleInsertService.writeArticle(article);
-    return "redirect:/stack/home";
+    return "redirect:/stack";
   }
   
   @GetMapping("/edit")
@@ -108,7 +99,7 @@ public class StackController {
     General general = new General();
     articleUpdateService.updateArticle(article);
     articleUpdateService.updateArticleOption(article.getId(), general);
-    return "redirect:/stack/home";
+    return "redirect:/stack";
   }
   
   @GetMapping("/delete")
@@ -116,7 +107,7 @@ public class StackController {
     ArticleDao articleDao = sqlsession.getMapper(ArticleDao.class);
     articleDao.deleteArticle(id);
     
-    return "redirect:/stack/home";
+    return "redirect:/stack";
   }
   
   @PostMapping("/commentwrite")

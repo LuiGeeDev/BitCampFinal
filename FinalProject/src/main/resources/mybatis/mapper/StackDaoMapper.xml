@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- /* * * @date: 2019. 06. 28. * * @author: 권예지 * * @description: ArticleDaMapper로 
+	DAO의 parameter에 들어갈 값을 매핑해서 쿼리문을 보낸다 * */ -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.bit.dao.StackDao">
+	<select id="selectStackArticles"
+		resultType="kr.or.bit.model.Article">
+		SELECT id, title, content, time, updated_time, view_count, original_id,
+		enable,
+		level, username, board_id,
+		(SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum
+		FROM ARTICLE as a
+		WHERE BOARD_ID=1 AND ENABLE=1
+		ORDER BY id DESC
+	</select>
+<!-- 	<select id="searchByWord"
+		resultType="kr.or.bit.model.Article">
+		SELECT id, title, content, time, updated_time, view_count,
+		original_id, enable, level, a.username, board_id
+		FROM ARTICLE a
+		LEFT JOIN MEMBER m
+		ON a.username = m.username
+		WHERE board_id = '1' and enable=1
+		<choose>
+			<when test="criteria != 'titlecontent'">
+				AND ${criteria} LIKE '%${search}%'
+			</when>
+			<otherwise>
+				AND (title LIKE '%${search}%' OR content LIKE '%${search}%')
+			</otherwise>
+		</choose>
+		ORDER BY id DESC;
+	</select>
+	<select id="searchByComment"
+		resultType="kr.or.bit.model.Article">
+		SELECT DISTINCT a.*
+		FROM ARTICLE A
+		JOIN COMMENT C
+		ON a.id = c.article_id
+		LEFT JOIN MEMBER M
+		ON c.username = m.username
+		WHERE BOARD_ID = #{board_id} and enable=1
+		<if test="criteria == 'comment_name'">
+			and c.username like '%${search}%'
+		</if>
+		<if test="criteria =='comment_content'">
+			and c.content like '%${search}%'
+		</if>
+		ORDER BY id desc;
+	</select> -->
+	<select id="selectTagList" resultType="kr.or.bit.model.Tag">
+		SELECT id, tag, a.color as color
+		FROM article_tag at
+		LEFT JOIN tag a
+		ON a.id = at.tag_id
+		WHERE article_id=#{article_id};
+	</select>
+	<select id="countArticle" resultType="Integer">
+		SELECT count(*)
+		FROM article
+		WHERE BOARD_ID=1 AND ENABLE=1
+	</select>
+</mapper>
