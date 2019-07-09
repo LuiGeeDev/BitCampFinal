@@ -150,6 +150,7 @@ public class StackController {
     comment.setArticle_id(id);
     commentService.insertComment(comment);
     comment.setWriter(memberDao.selectMemberByUsername(articleDao.selectOneArticle(id).getWriter().getUsername()));
+   
     return "redirect:/stack/content?id="+id;
   }
 

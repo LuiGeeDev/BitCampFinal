@@ -30,5 +30,5 @@ public interface BoardDao {
 
   void deleteBoard(int board_id);
   
-  Board selectTroubleShootingBoard(@Param("course_id") int course_id, @Param("group_no") int group_no);
+  Board selectTroubleShootingBoard(@Param("course_id") int course_id, @Param("season") int season, @Param("group_no") int group_no);
 }
