@@ -204,6 +204,7 @@ public class MyClassController {
     
     String username = Helper.userName();
     Member member = memberDao.selectMemberByUsername(username);
+    model.addAttribute("username", username);
     model.addAttribute("userRole", member.getRole());
     model.addAttribute("article", article);
     model.addAttribute("replies", replies);
