@@ -11,7 +11,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	            	   FROM member
 			           WHERE username = #{username})    
   </select>
-  
+  <select id="selectProject" resultType="kr.or.bit.model.Project">
+    SELECT id, project_name, start_date, end_date, season, course_id
+    FROM project
+    WHERE id = #{id}
+  </select>
   <insert id="insertProject">
   	INSERT INTO PROJECT(PROJECT_NAME, START_DATE, END_DATE, SEASON, COURSE_ID)
   	VALUES (#{project_name}, 
