@@ -73,8 +73,7 @@
                 </p>
               </div>
               <div class="issue-tags">
-                <span class="tag">DB</span>
-                <span class="tag">Java</span>
+                <span class="tag" th:each="tag : ${article.tags}" th:text="${tag.tag}">DB</span>
               </div>
               <div class="issue-comment">
                 <i class="far fa-comment-alt"></i><span class="comment-size" th:text="${article.commentlist.size()}">5</span>
