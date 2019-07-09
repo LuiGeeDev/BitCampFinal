@@ -79,7 +79,6 @@ public class BoardController {
     List<MultipartFile> files = new ArrayList<>();
     files.add(file1);
     files.add(file2);
-    System.out.println(article);
     boardService.updateArticle(article, files, request);
     
     System.out.println(article);

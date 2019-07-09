@@ -105,7 +105,8 @@ public class BoardService {
       articleDao.updateArticle(article);
       article.setUsername(Helper.userName());
       List<Files> uploadedFiles = fileUploadService.uploadFile(files, request);
-      General general = (General)(article.getOption());
+      General general = generalDao.selectGeneralByArticleId(article.getId());
+      System.out.println(general);
       for (Files file : uploadedFiles) {
           filesDao.insertFiles(file);
           Files insertedFile = filesDao.selectFilesByFilename(file.getFilename());

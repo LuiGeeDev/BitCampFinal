@@ -23,8 +23,9 @@
           </span> <span> <i class="fas fa-paperclip"></i> <input
             type="file" id="input-file-btn2" name="file2"
             class="file-btn2">
-          </span>
-          <input  type="hidden" th:value="${username}">
+          </span> <input type="hidden" th:value="${article.username}"
+            name="username"> <input type="hidden"
+            th:value="${article.id}" name="id">
         </div>
         <textarea class="summernote-parent" name="content"
           id="summernote" th:text="*{content}">
