@@ -21,7 +21,7 @@ public class Pager {
     this.end = currentPage * articlesOnPage;
     int q = totalArticles / articlesOnPage;
     int r = totalArticles % articlesOnPage;
-    this.totalPages = (r == 0 && totalPages != 0) ? q : (q + 1);
+    this.totalPages = (r == 0 && totalArticles != 0) ? q : (q + 1);
     if (currentPage <= pageButtons) {
       this.startPage = 1;
     } else if (currentPage % pageButtons == 0) {
@@ -41,7 +41,7 @@ public class Pager {
     }
 
     this.prev = (currentPage <= pageButtons) ? false : true;
-    this.next = (currentPage / pageButtons + 1) * 5 < totalPages ? true : false;
+    this.next = ((currentPage - 1) / pageButtons + 1) * 5 < totalPages ? true : false;
     this.prevPage = (currentPage % 5 == 0) ? (currentPage / 5 - 1) * 5 : (currentPage / 5) * 5;
     this.nextPage = (currentPage % 5 == 0) ? (currentPage / 5) * 5 + 1 : (currentPage / 5 + 1) * 5 + 1;
   }

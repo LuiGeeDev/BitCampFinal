@@ -163,16 +163,16 @@
             const time = Number($(".message-sender-time").text());
             const date = new Date(time);
             let minutes = date.getMinutes();
-            
             minutes = (minutes < 10) ? "0" + minutes : minutes;
-            
             let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
             hours = hours < 10 ? "0" +  hours : hours;
+            let getdate = date.getDate();
+            getdate = (getdate < 10) ? "0" + getdate : getdate;
             
-
+            
             
             /* `${time.getHours() <= 12 ? time.getHours() : time.getHours() - 12}:${time.getMinutes() < 10 ? "0" + time.getMinutes() : time.getMinutes()} ${time.getHours() <= 11 ? 'AM' : 'PM'}`; */
-            const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDay()}일 ` + hours +`:` + minutes;
+            const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 `+ getdate + `일 ` + hours +`:` + minutes;
             $(".message-realtime").append(timedate);
             $(".message-sender-content").append(`${data.content}`);
             $(".sender-message").append(`<h6 class="text-font">받은쪽지</h6>`);
