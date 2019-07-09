@@ -87,7 +87,11 @@ public class StackController {
   //stack 게시물 상세보기 버튼
   @GetMapping("/content")
   public String GetStackContent(int id, Model model) {
+    MemberDao memberDao = sqlsession.getMapper(MemberDao.class);
     Article article = articleService.selectOneArticle("qna",id);
+    for(Comment c : article.getCommentlist()) {
+      c.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+    }
     model.addAttribute("stackcontent",article);
     
     return "stack/content";
@@ -136,9 +140,12 @@ public class StackController {
   
   @PostMapping("/commentwrite")
   public String stackCommentWrite(int id, Comment comment) {
+    MemberDao memberDao = sqlsession.getMapper(MemberDao.class);
+    ArticleDao articleDao = sqlsession.getMapper(ArticleDao.class);
     comment.setUsername(Helper.userName());
     comment.setArticle_id(id);
-    commentService.insertComment(comment);   
+    commentService.insertComment(comment);
+    comment.setWriter(memberDao.selectMemberByUsername(articleDao.selectOneArticle(id).getWriter().getUsername()));
     return "redirect:/stack/content?id="+id;
   }
   
