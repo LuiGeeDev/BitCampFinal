@@ -21,8 +21,10 @@
       <div th:replace="myclass/nav :: project-nav(ts)"></div>
       <div class="row">
         <div class="new-issue">
-          <img class="profile-photo" src="https://via.placeholder.com/44" alt="">
+          <img class="profile-photo" th:src="@{/resources/images/{picture}(picture=${user.profile_photo})}" alt="">
           <form class="write-form" method="post">
+            <input type="hidden" name="group_id" th:value="${group.id}">
+            <input type="hidden" name="project_id" th:value="${project.id}">
             <div class="title">
               <input type="text" name="title" id="title" placeholder="제목">
             </div>
