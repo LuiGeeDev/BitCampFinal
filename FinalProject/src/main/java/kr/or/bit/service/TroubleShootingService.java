@@ -149,4 +149,9 @@ public class TroubleShootingService {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     articleDao.deleteArticle(article.getId());
   }
+  
+  public void deleteComment(Comment comment) {
+    CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
+    commentDao.deleteComment(comment.getId());
+  }
 }

@@ -83,6 +83,9 @@
             <div class="issue-content" th:utext="${comment.content}">
               잘되네요. @권예지 도 되나요?
             </div>
+            <a th:if="${comment.username == user.username}" th:href="@{/myclass/project/troubleshooting/delete/comment(id=${comment.id}, article_id=${article.id}, project_id=${project.id})}" class="delete-btn">
+              <i class="far fa-times-circle"></i>
+            </a>
           </div>
         </div>
         <div class="timeline"></div>
