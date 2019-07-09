@@ -4,6 +4,9 @@
 <head>
 <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
 <link rel="stylesheet" th:href="@{/css/stack/write.css}" />
+<link rel="stylesheet"
+  href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
 <link
   href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css"
   rel="stylesheet" />
@@ -16,15 +19,40 @@
         <input type="text" id="input-title" placeholder="제목"
           name="title" />
         <textarea name="content" id="summernote"></textarea>
-        <div id ="submitbtn"><button type="submit" class="btn btn-primary">
-          올리기</button></div>
+        <div id="input-tag">
+          <textarea class="hidden" id="select-result" name="tag"></textarea>
+          <span id="tagWrapper"><b>TAG </b></span>
+          <ol id="selectable">
+            <li class="ui-widget-content" th:each="tag : ${tags}">#[[${tag.tag}]]</li>
+          </ol>
+           <div class=submit-btn>
+          <button type="submit" id="submitbtn" class="btn btn-primary">올리기</button>
+          </div>
+        </div>
       </div>
     </form>
   </div>
   <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
   <script
-  src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
-<script src="/js/stack/write.js"></script>
+    src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script type="text/javascript">
+      $(function() {
+        $("#selectable").selectable({
+          stop : function() {
+            var result=$("#select-result").empty();
+            var index=$("#selectable li").index(this);
+            result.append($(".ui-selected").text());
+          }
+        });
+      });
+      $('#summernote').summernote({
+        placeholder : 'Hello bootstrap 4',
+        tabsize : 2,
+        height : 500
+      });
+      
+    </script>
 </body>
 </html>
 
