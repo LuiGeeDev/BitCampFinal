@@ -96,8 +96,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE ID=#{id};
   </select>
   <insert id="insertArticle">
-    INSERT INTO article(time, updated_time, title, content, username, board_id)
-    VALUES (now(), now(), #{title}, #{content}, #{username}, #{board_id})
+    INSERT INTO article(time, updated_time, title, content, username, board_id, original_id)
+    VALUES (now(), now(), #{title}, #{content}, #{username}, #{board_id}, (select max(id)+1 from (select * from article )as temp))
   </insert>
   <insert id="insertReplyArticle">
   	INSERT INTO article(time, updated_time, title, content, username, board_id, level, original_id)
@@ -160,13 +160,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     order by a.id desc
     LIMIT 5
   </select>
-  <select id="selectTagList" resultType="kr.or.bit.model.Tag">
-  	SELECT id, tag
-	  FROM article_tag at
-	  LEFT JOIN tag a
-	  ON a.id = at.tag_id
-	  WHERE article_id=#{article_id};
-  </select>
   <select id="selectIssuesOpened" resultType="kr.or.bit.model.Article">
     SET @rownum:=0;
     SELECT sq2.* 
@@ -211,5 +204,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 ORDER BY id DESC) sq1) sq2
     WHERE rownum BETWEEN #{start} AND #{end};
   </select>
+  <update id="updateArticleViewCount">
+  	UPDATE Article
+  	SET view_count=view_count+1
+  	WHERE ID=#{id}
+  </update>
 </mapper>
  

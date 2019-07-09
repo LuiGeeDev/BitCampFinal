@@ -63,4 +63,6 @@ public interface ArticleDao {
       @Param("criteria") String criteria, @Param("word") String word);
 
   List<Article> selectIssuesClosed(int board_id);
+  
+  void updateArticleViewCount(Article article);
 }
