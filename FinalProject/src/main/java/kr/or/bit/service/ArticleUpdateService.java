@@ -44,7 +44,7 @@ public class ArticleUpdateService{
     switch (optionname.toLowerCase()) {
     case "troubleshooting":
       TroubleShootingDao troubleshootingdao = sqlSession.getMapper(TroubleShootingDao.class);
-      troubleshootingdao.updateTroubleShootingByIssueClosed(id);
+      //troubleshootingdao.updateTroubleShootingByIssueClosed(id);
       break;
     case "qna":
       QnaDao qnadao = sqlSession.getMapper(QnaDao.class);

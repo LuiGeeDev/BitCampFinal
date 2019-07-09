@@ -60,6 +60,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     DELETE FROM BOARD
     WHERE ID = #{board_id}
   </delete>
+  <select id="selectTroubleShootingBoard" resultType="kr.or.bit.model.Board">
+    select id, board_name, boardtype, course_id
+    FROM board
+    WHERE course_id = #{course_id}
+    AND board_name = '트러블슈팅${group_no}'
+  </select>
 </mapper>  
 
 

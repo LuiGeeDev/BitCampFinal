@@ -64,16 +64,6 @@ public class MyClassController {
   @Autowired
   private ArticleUpdateService articleUpdateService;
 
-  @GetMapping("/project")
-  public String projectPage() {
-    return "myclass/project/main";
-  }
-
-  @GetMapping("/chat")
-  public String chatPage() {
-    return "myclass/chat/main";
-  }
-
   @GetMapping("/qna")
   public String qnaPage() {
     return "myclass/qna/home";
@@ -99,6 +89,8 @@ public class MyClassController {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
     GroupMemberDao groupMemberDao = sqlSession.getMapper(GroupMemberDao.class);
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    
     String teacherName = Helper.userName();
     Member teacher = memberDao.selectMemberByUsername(teacherName); // 강사 저장
     int course_id = teacher.getCourse_id();
@@ -133,7 +125,15 @@ public class MyClassController {
       groupMemberDao.insertGroupMember(newMember);
     }
     
-    return "redirect:/myclass/teacher/setting";
+    for (int i = 1; i <= leaderList.size(); i++) {
+      Board board = new Board();
+      board.setBoard_name("트러블슈팅" + i);
+      board.setBoardtype(6);
+      board.setCourse_id(course_id);
+      boardDao.insertBoard(board);
+    }
+    
+    return "redirect:/myclass/setting";
   }
   
   @GetMapping("/create/board")
@@ -170,7 +170,9 @@ public class MyClassController {
       pager = new Pager(page, homeworkDao.countAllHomeworkArticle(member.getCourse_id())); 
       homeworkList = homeworkDao.selectAllHomeworkArticle(pager, member.getCourse_id());
     }
-    
+    for(Article article : homeworkList) {
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+    }
     model.addAttribute("userRole", member.getRole());
     model.addAttribute("pager", pager);
     model.addAttribute("homeworkList", homeworkList);

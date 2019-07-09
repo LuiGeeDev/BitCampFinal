@@ -34,4 +34,6 @@ public interface GroupDao {
   Group selectMyNewGroup(@Param("project_id")int project_id, @Param("group_no")int group_no);
   
   int getGroupNoByGroupId(int id);
+  
+  Group selectGroupByProjectId(@Param("project_id") int project_id, @Param("username") String username);
 }

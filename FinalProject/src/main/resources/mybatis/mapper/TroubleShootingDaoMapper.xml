@@ -2,25 +2,18 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- 
-  void insertTroubleShooting(ArticleOption troubleshooting);
-  
-  void updateTroubleShootingByIssueClosed(int issueclosed);
-  
-  Member selectGroupIdByUsername(String id);
- -->
-
- <mapper namespace="kr.or.bit.TroubleShootingDao">
+<mapper namespace="kr.or.bit.dao.TroubleShootingDao">
   <insert id="insertTroubleShooting">
-  	insert into TroubleShooting(Article_id, Group_id)
-	values (#{article_id}, #{group_id})
+    insert into TroubleShooting(Article_id, Group_id)
+    values (#{article_id}, #{group_id})
   </insert>
-  <update id="updateTroubleShootingByIssueClosed">
-	{call CHANGESTATUS("TROUBLESHOOTING",#{id})}
+  <update id="changeTroubleShootingStatus">
+    {call CHANGESTATUS("TROUBLESHOOTING",#{id})}
   </update>
-  <select id="selectTroubleShootingByArticleId" resultType="kr.or.bit.model.TroubleShooting">
-  	select id, video_id article_id 
-  	from video 
-  	where article_id=${article_id};
+  <select id="selectTroubleShootingByArticleId"
+    resultType="kr.or.bit.model.TroubleShooting">
+    select id, issue_closed, article_id, group_id
+    from troubleshooting
+    where article_id=${article_id}
   </select>
- </mapper>
+</mapper>
