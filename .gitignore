@@ -80,3 +80,4 @@ Servers/
 # End of https://www.gitignore.io/api/eclipse,java-web
 FinalProject/src/main/webapp/css/myclass/.DS_Store
 FinalProject/src/main/webapp/css/.DS_Store
+*.orig

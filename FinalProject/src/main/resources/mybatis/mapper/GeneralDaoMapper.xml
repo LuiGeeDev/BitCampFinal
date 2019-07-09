@@ -22,8 +22,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <update id="updateGeneral">
 	update general
-	set file = #{file1}
-	where id=0;
+	set file1 = #{file1}, file2=#{file2}
+	where id=#{id};
   </update>
   
   <select id="selectGeneralByArticleId" resultType="kr.or.bit.model.General">
