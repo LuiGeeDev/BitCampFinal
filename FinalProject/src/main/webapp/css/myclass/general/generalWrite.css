@@ -64,11 +64,25 @@
 }
 
 input[type=file] {
-  background-color:#EEEEEE;
+  background-color: #EEEEEE;
   border-radius: 3px;
 }
 
 .input-file {
   margin-bottom: 10px;
+}
+
+.downloadbox {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.download-content {
+  display: flex;
+}
+
+.download-content, .download-button {
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
 }
 

@@ -109,6 +109,8 @@ button:active {
 
 .popover-body {
   padding: 5px;
+  max-height: 186px;
+  overflow-y: scroll;
 }
 
 .toast-wrapper {

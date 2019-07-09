@@ -186,9 +186,18 @@ public class BoardService {
 
   public void writeComment(int article_id, Comment comment) {
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
-    comment.setArticle_id(article_id);
-    comment.setUsername(Helper.userName());
     commentDao.insertComment(comment);
+  }
+  
+  public List<Comment> getCommentList(int article_id) {
+    CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    List<Comment> commentList = commentDao.selectAllComment(article_id);
+    for (Comment c : commentList) {
+      System.out.println(c.getUsername());
+      c.setWriter(memberDao.selectMemberByUsername(c.getUsername()));
+    }
+    return commentList;
   }
 
   public void deleteComment(int comment_id) {

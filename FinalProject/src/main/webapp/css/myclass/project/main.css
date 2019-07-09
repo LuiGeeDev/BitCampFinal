@@ -20,7 +20,7 @@ body {
 }
 
 .links, .checklist {
-  width: 290px;
+  width: 250px;
   padding: 10px 20px;
   margin-right: 20px;
 }
@@ -81,7 +81,7 @@ input[type=checkbox]:checked+label svg {
 }
 
 .timeline {
-  width: 70vw;
+  width: 968px;
   margin: 10px auto 0;
 }
 
@@ -90,7 +90,7 @@ input[type=checkbox]:checked+label svg {
 }
 
 #calendar {
-  width: 70vw;
+  width: 968px;
   margin: 10px auto;
   padding: 20px;
 }
