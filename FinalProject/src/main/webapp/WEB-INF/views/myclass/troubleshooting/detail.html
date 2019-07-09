@@ -22,70 +22,80 @@
       <div class="row">
         <div class="page-title">
         <div class="issue-main-title">
-          <h2 class="title">테스트 해보는 중입니다.</h2>
+          <h2 class="title" th:text="${article.title}">테스트 해보는 중입니다.</h2>
           <p class="issue-info">
-            <span class="badge badge-danger">
+            <span class="badge badge-danger" th:if="${article.option.issue_closed == 0}">
               <i class="fas fa-exclamation-circle fa-xs"></i>
               미해결
             </span>
-            <strong>윤종석님</strong>이 2019년 7월 1일에 올림
-            <span class="comments">댓글 4개</span>
+            <span class="badge badge-success" th:if="${article.option.issue_closed == 1}">
+              <i class="fas fa-check-circle fa-xs"></i>
+              해결
+            </span>
+            <strong><span th:text="${article.writer.name}">윤종석</span>님</strong>이 
+            <span th:text="${#temporals.format(article.timeLocal, 'yyyy년 M월 d일')}">2019년 7월 1일</span>에 올림
+            <span class="comments">댓글 <span th:text="${article.commentlist.size()}">4</span>개</span>
           </p>
         </div>
         
-        <a th:href="@{/myclass/troubleshooting/write}" class="btn btn-outline-primary btn-sm new">새로 올리기</a>
+        <a th:href="@{/myclass/project/troubleshooting/write(board_id=${ts.id}, project_id=${project.id})}" class="btn btn-outline-primary btn-sm new">새로 올리기</a>
         </div>
       </div>
       <div class="row">
         <div class="issue">
           <img
             class="profile-photo"
-            src="https://via.placeholder.com/44"
+            th:src="@{/resources/images/{picture}(picture=${article.writer.profile_photo})}"
             alt=""
           />
           <div class="issue-main">
             <div class="issue-title">
               <span class="writer">
-                <strong>윤종석님</strong>이 2019년 7월 1일에 작성
+                <strong><span th:text="${article.writer.name}">윤종석</span>님</strong>이 
+                <span th:text="${#temporals.format(article.timeLocal, 'yyyy년 M월 d일')}">2019년 7월 1일</span>에 올림
               </span>
               <span class="author-badge">작성자</span>
             </div>
-            <div class="issue-content">
+            <div class="issue-content" th:utext="${article.content}">
               테스트를 해보는 중입니다. @이힘찬 이런것도 되나요?
             </div>
           </div>
         </div>
+        <div class="timeline"></div>
       </div>
-      <div class="timeline"></div>
-      <div class="row">
+      <div class="row" th:each="comment : ${article.commentlist}">
         <div class="issue">
           <img
             class="profile-photo"
-            src="https://via.placeholder.com/44"
+            th:src="@{/resources/images/{picture}(picture=${comment.writer.profile_photo})}"
             alt=""
           />
           <div class="issue-main">
             <div class="issue-title">
               <span class="writer">
-                <strong>이힘찬님</strong>이 2019년 7월 2일에 작성
+                <strong><span th:text="${comment.writer.name}">윤종석</span>님</strong>이 
+                <span th:text="${#temporals.format(comment.timeLocal, 'yyyy년 M월 d일')}">2019년 7월 1일</span>에 올림
               </span>
+              <span th:if="${comment.username == article.username}" class="author-badge">작성자</span>
             </div>
-            <div class="issue-content">
+            <div class="issue-content" th:utext="${comment.content}">
               잘되네요. @권예지 도 되나요?
             </div>
           </div>
         </div>
+        <div class="timeline"></div>
       </div>
-      <div class="timeline"></div>
       <div class="row">
         <div class="new-issue">
           <img
             class="profile-photo"
-            src="https://via.placeholder.com/44"
+            th:src="@{/resources/images/{picture}(picture=${user.profile_photo})}"
             alt=""
           />
-          <form class="write-form" method="post">
+          <form class="write-form" method="post" th:action="@{/myclass/project/troubleshooting/comment}">
             <div class="content">
+              <input type="hidden" name="article_id" th:value="${article.id}">
+              <input type="hidden" name="project_id" th:value="${project.id}">
               <textarea
                 name="content"
                 id="content"
@@ -93,9 +103,26 @@
               ></textarea>
             </div>
             <div class="form-footer">
-              <button type="submit" class="btn btn-outline-success">
-                해결됨 표시
-              </button>
+              <a
+                th:href="@{/myclass/project/troubleshooting/change(id=${article.id}, project_id=${project.id})}"
+                class="btn btn-outline-success" 
+                th:if="${user.username == article.username and article.option.issue_closed == 0}"
+                data-toggle="tooltip" 
+                data-placement="top" 
+                title="해결된 문제로 표시됩니다"
+              >
+                해결됨
+              </a>
+              <a 
+                th:href="@{/myclass/project/troubleshooting/change(id=${article.id}, project_id=${project.id})}" 
+                class="btn btn-outline-danger" 
+                th:if="${user.username == article.username and article.option.issue_closed == 1}"
+                data-toggle="tooltip" 
+                data-placement="top" 
+                title="해결되지 않은 문제로 표시됩니다"
+              >
+                다시 미해결
+              </a>
               <button type="submit" class="btn btn-outline-primary">
                 댓글 달기
               </button>
@@ -105,7 +132,9 @@
       </div>
     </div>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
-    <script>
+    <script th:inline="javascript">
+      $(".btn").tooltip();
+    
       $("#content").summernote({
         placeholder: "댓글을 남겨주세요",
         height: 100,
