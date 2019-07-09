@@ -57,8 +57,8 @@ public class TroubleShootingController {
     model.addAttribute("group", group);
     model.addAttribute("ts", ts);
     model.addAttribute("project", project);
-    model.addAttribute("articlesOpened", articlesOpened);
-    model.addAttribute("articlesClosed", articlesClosed);
+    model.addAttribute("articlesOpened", service.numberOfIssueOpened(board_id, criteria, word));
+    model.addAttribute("articlesClosed", service.numberOfIssueClosed(board_id, criteria, word));
     model.addAttribute("closed", (q == null) ? false : true);
     model.addAttribute("articleList", (q == null) ? articlesOpened : articlesClosed);
     model.addAttribute("pager", (q == null) ? service.getPager(board_id, page, criteria, word, false) : service.getPager(board_id, page, criteria, word, true));
