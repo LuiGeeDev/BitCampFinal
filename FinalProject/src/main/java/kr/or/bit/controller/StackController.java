@@ -50,7 +50,7 @@ public class StackController {
   private TagService tagService;
 
   @GetMapping("")
-  public String listPage(@RequestParam(defaultValue = "1") int page, String boardSearch, Model model) throws Exception{
+  public String listPage(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model) throws Exception{
     StackDao stackDao = sqlsession.getMapper(StackDao.class);
     MemberDao memberDao = sqlsession.getMapper(MemberDao.class);
     String username = Helper.userName();
@@ -59,7 +59,7 @@ public class StackController {
     Pager pager = null;
     if(boardSearch != null) {
       pager = new Pager(page, stackDao.countStackArticleBySearchWord(boardSearch));
-      stackList = articleService.selectStackArticlesByboardSearch(pager,boardSearch);
+      stackList = articleService.selectStackArticlesByboardSearch(pager,boardSearch,criteria);
       model.addAttribute("boardSearch", boardSearch);
     } else {
       pager = new Pager(page, stackDao.countAllStackArticle());

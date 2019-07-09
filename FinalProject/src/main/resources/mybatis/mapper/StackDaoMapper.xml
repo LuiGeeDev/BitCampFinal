@@ -98,4 +98,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY a.ID DESC
 		LIMIT #{pager.start}, #{pager.articlesOnPage}
 	</select>
+	<select id="selectStackArticleByTitle" resultType="kr.or.bit.model.Article">
+		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
+		FROM ARTICLE a JOIN BOARD b ON a.board_id = b.id 
+		WHERE BOARD_ID=1 AND ENABLE = 1 AND a.title LIKE '%${boardSearch}%'
+		ORDER BY a.ID DESC
+		LIMIT #{pager.start}, #{pager.articlesOnPage}
+	</select>
+	<select id="selectStackArticleByWriter" resultType="kr.or.bit.model.Article">
+		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
+		FROM ARTICLE a 
+		JOIN BOARD b ON a.board_id = b.id
+		JOIN MEMBER m ON a.username = m.username
+		WHERE BOARD_ID=1 AND ENABLE = 1 AND m.name= #{boardSearch}
+		ORDER BY a.ID DESC
+		LIMIT #{pager.start}, #{pager.articlesOnPage}
+	</select>
 </mapper>
