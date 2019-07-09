@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
 import kr.or.bit.service.BoardService;
+import kr.or.bit.utils.Helper;
 
 @Controller
 @RequestMapping("/myclass/board")
@@ -56,6 +57,8 @@ public class BoardController {
   @GetMapping("/read")
   public String readArticle(int article_id, int board_id, Model model) {
     Article article = boardService.readArticle(article_id);
+    String username = Helper.userName();
+    model.addAttribute("username", username);
     model.addAttribute("article", article);
     model.addAttribute("board", boardService.getBoardInfo(board_id));
     return "myclass/general/generalBoardDetail";
@@ -73,7 +76,6 @@ public class BoardController {
   @PostMapping("/edit")
   public String updateArticle(Article article, List<MultipartFile> files, int board_id) {
     boardService.updateArticle(article, files);
-    System.out.println(article);
     return "redirect:/myclass/board/read?article_id=" + article.getId() + "&board_id=" + article.getBoard_id(); 
   }
 
@@ -94,7 +96,6 @@ public class BoardController {
   @GetMapping("/commentdelete")
   
   public String commentDelete(int article_id, int board_id, int comment_id) {
-    System.out.println("댓글 삭제");
     boardService.deleteComment(comment_id);
     return "redirect:/myclass/board/read?article_id=" + article_id + "&board_id=" + board_id;
   }
