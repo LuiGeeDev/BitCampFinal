@@ -189,12 +189,20 @@ public class ArticleService {
     return articlelist;
   }
   
-  public List<Article> selectStackArticlesByboardSearch(Pager pager,String boardSearch) {
+  public List<Article> selectStackArticlesByboardSearch(Pager pager,String boardSearch,String criteria) {
     StackDao stackdao = sqlSession.getMapper(StackDao.class);
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    List<Article> articlelist = null;
     
-    List<Article> articlelist = stackdao.selectStackArticleBySearchWord(pager,boardSearch);
+    if(criteria.equals("titleOrContent")) {
+      articlelist = stackdao.selectStackArticleByTitleOrContent(pager,boardSearch);
+    }else if(criteria.equals("title")) {
+      articlelist = stackdao.selectStackArticleByTitle(pager,boardSearch);
+    }else {
+      articlelist = stackdao.selectStackArticleByWriter(pager,boardSearch);
+    }
+    
     for (Article article : articlelist) {
       List<Comment> commentList = commentdao.selectAllComment(article.getId());
       List<Tag> taglist = stackdao.selectTagList(article.getId());

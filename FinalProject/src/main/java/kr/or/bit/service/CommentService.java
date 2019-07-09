@@ -18,6 +18,7 @@ public class CommentService {
   public List<Comment> selectAllComment(int article_id) {
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
     List<Comment> list = commentdao.selectAllComment(article_id);    
+    
     return list;
   }
   

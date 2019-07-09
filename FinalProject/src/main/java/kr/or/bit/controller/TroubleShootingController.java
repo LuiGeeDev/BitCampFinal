@@ -17,6 +17,7 @@ import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.ProjectDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
+import kr.or.bit.model.Comment;
 import kr.or.bit.model.Group;
 import kr.or.bit.model.Member;
 import kr.or.bit.model.Project;
@@ -55,7 +56,7 @@ public class TroubleShootingController {
     model.addAttribute("group", group);
     model.addAttribute("ts", ts);
     model.addAttribute("project", project);
-    model.addAttribute("articleOpened", articlesOpened);
+    model.addAttribute("articlesOpened", articlesOpened);
     model.addAttribute("articlesClosed", articlesClosed);
     model.addAttribute("closed", (q == null) ? false : true);
     model.addAttribute("articleList", (q == null) ? articlesOpened : articlesClosed);
@@ -89,14 +90,35 @@ public class TroubleShootingController {
 
   @GetMapping("/read")
   public String readIssue(int id, int project_id, Model model) {
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
+    ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+
+    Member user = memberDao.selectMemberByUsername(Helper.userName());
+
+    Group group = groupDao.selectGroupByProjectId(project_id, user.getUsername());
+    Board ts = boardDao.selectTroubleShootingBoard(user.getCourse_id(), group.getGroup_no());
+    Project project = projectDao.selectProject(project_id);
+
     Article article = service.getIssue(id);
+
+    model.addAttribute("group", group);
+    model.addAttribute("ts", ts);
+    model.addAttribute("project", project);
     model.addAttribute("article", article);
     return "myclass/troubleshooting/detail";
   }
 
   @GetMapping("/change")
-  public String changeIssueStatus(int id) {
+  public String changeIssueStatus(int id, int project_id) {
     service.changeIssueStatus(id);
-    return "redirect:/myclass/troubleshooting/read?id=" + id;
+    return "redirect:/myclass/project/troubleshooting/read?id=" + id + "&project_id=" + project_id;
+  }
+  
+  @PostMapping("/comment")
+  public String writeComment(Comment comment, int project_id) {
+    service.writeComment(comment);
+    return "redirect:/myclass/project/troubleshooting/read?id=" + comment.getArticle_id() + "&project_id=" + project_id;
   }
 }

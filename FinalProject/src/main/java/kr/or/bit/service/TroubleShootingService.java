@@ -12,6 +12,7 @@ import kr.or.bit.dao.CommentDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.TroubleShootingDao;
 import kr.or.bit.model.Article;
+import kr.or.bit.model.Comment;
 import kr.or.bit.model.Member;
 import kr.or.bit.model.TroubleShooting;
 import kr.or.bit.utils.Helper;
@@ -47,11 +48,11 @@ public class TroubleShootingService {
     return articleList;
   }
   
-  public List<Article> getIssueClosed(int board_id, @RequestParam(defaultValue = "1", name = "p") int page,
-      @RequestParam(required = false) String criteria, @RequestParam(required = false) String word) {
+  public List<Article> getIssueClosed(int board_id, int page, String criteria, String word) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     TroubleShootingDao troubleShootingDao = sqlSession.getMapper(TroubleShootingDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     
     Pager pager = new Pager(page, articleDao.selectAllIssuesClosed(board_id, criteria, word).size()); 
     List<Article> articleList = articleDao.selectIssuesClosedByPage(board_id, pager, criteria, word);
@@ -59,6 +60,7 @@ public class TroubleShootingService {
       article.setCommentlist(commentDao.selectAllComment(article.getId()));
       article.setOption(troubleShootingDao.selectTroubleShootingByArticleId(article.getId()));
       article.setTimeLocal(article.getTime().toLocalDateTime());
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
     }
     
     return articleList;
@@ -68,11 +70,18 @@ public class TroubleShootingService {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     TroubleShootingDao troubleShootingDao = sqlSession.getMapper(TroubleShootingDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     
     Article article = articleDao.selectOneArticle(id);
-    article.setCommentlist(commentDao.selectAllComment(id));
+    List<Comment> commentlist = commentDao.selectAllComment(id);
+    for (Comment comment : commentlist) {
+      comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
+      comment.setTimeLocal(comment.getTime().toLocalDateTime());
+    }
+    article.setCommentlist(commentlist);
     article.setOption(troubleShootingDao.selectTroubleShootingByArticleId(id));
     article.setTimeLocal(article.getTime().toLocalDateTime());
+    article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
     
     return article;
   }
@@ -80,9 +89,7 @@ public class TroubleShootingService {
   public int writeIssue(Article article, int group_id) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     TroubleShootingDao troubleShootingDao = sqlSession.getMapper(TroubleShootingDao.class);
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     String username = Helper.userName();
-    Member user = memberDao.selectMemberByUsername(username);
     article.setUsername(username);
     articleDao.insertArticle(article);
     
@@ -96,5 +103,11 @@ public class TroubleShootingService {
   public void changeIssueStatus(int id) {
     TroubleShootingDao troubleShootingDao = sqlSession.getMapper(TroubleShootingDao.class);
     troubleShootingDao.changeTroubleShootingStatus(id);
+  }
+  
+  public void writeComment(Comment comment) {
+    CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
+    comment.setUsername(Helper.userName());
+    commentDao.insertComment(comment);
   }
 }

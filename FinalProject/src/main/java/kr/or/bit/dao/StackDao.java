@@ -25,6 +25,9 @@ public interface StackDao {
   
   void insertTag(@Param("tag_id") int tag_id,@Param("article_id") int article_id);
   
-  List<Article> selectStackArticleBySearchWord(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
-
+  List<Article> selectStackArticleByTitleOrContent(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
+  
+  List<Article> selectStackArticleByTitle(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
+  
+  List<Article> selectStackArticleByWriter(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
 }
