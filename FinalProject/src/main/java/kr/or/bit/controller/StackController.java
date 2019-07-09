@@ -144,13 +144,9 @@ public class StackController {
 
   @PostMapping("/commentwrite")
   public String stackCommentWrite(int id, Comment comment) {
-    MemberDao memberDao = sqlsession.getMapper(MemberDao.class);
-    ArticleDao articleDao = sqlsession.getMapper(ArticleDao.class);
     comment.setUsername(Helper.userName());
     comment.setArticle_id(id);
-    commentService.insertComment(comment);
-    comment.setWriter(memberDao.selectMemberByUsername(articleDao.selectOneArticle(id).getWriter().getUsername()));
-   
+    commentService.insertComment(comment);   
     return "redirect:/stack/content?id="+id;
   }
 

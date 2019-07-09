@@ -210,8 +210,14 @@
               minutes = (minutes < 10) ? "0" + minutes : minutes;
               let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
               hours = hours < 10 ? "0" +  hours : hours;
+              let getdate = date.getDate();
+              getdate = (getdate < 10) ? "0" + getdate : getdate;
+              let getmonth = date.getMonth() + 1;
+              getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
               
-              const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일 ` + hours +`:` + minutes;
+              console.log(getmonth);
+                  
+              const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ hours +`:` + minutes;
               
 			  let equalName = null;           
               if(item.username == [[${user.username}]]) {

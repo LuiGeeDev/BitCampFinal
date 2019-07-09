@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.BoardDao;
+import kr.or.bit.dao.CommentDao;
 import kr.or.bit.dao.GroupDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.ProjectDao;
@@ -57,8 +59,8 @@ public class TroubleShootingController {
     model.addAttribute("group", group);
     model.addAttribute("ts", ts);
     model.addAttribute("project", project);
-    model.addAttribute("articlesOpened", articlesOpened);
-    model.addAttribute("articlesClosed", articlesClosed);
+    model.addAttribute("articlesOpened", service.numberOfIssueOpened(board_id, criteria, word));
+    model.addAttribute("articlesClosed", service.numberOfIssueClosed(board_id, criteria, word));
     model.addAttribute("closed", (q == null) ? false : true);
     model.addAttribute("articleList", (q == null) ? articlesOpened : articlesClosed);
     model.addAttribute("pager", (q == null) ? service.getPager(board_id, page, criteria, word, false) : service.getPager(board_id, page, criteria, word, true));
@@ -122,6 +124,22 @@ public class TroubleShootingController {
   @PostMapping("/comment")
   public String writeComment(Comment comment, int project_id) {
     service.writeComment(comment);
+    return "redirect:/myclass/project/troubleshooting/read?id=" + comment.getArticle_id() + "&project_id=" + project_id;
+  }
+  
+  @GetMapping("/delete")
+  public String deleteArticle(int board_id, int project_id, Article article) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    article = articleDao.selectOneArticle(article.getId());
+    service.deleteIssue(article);
+    return "redirect:/myclass/project/troubleshooting?id=" + board_id + "&project_id=" + project_id;
+  }
+  
+  @GetMapping("/delete/comment")
+  public String deleteComment(int project_id, Comment comment) {
+    CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
+    comment = commentDao.selectOneComment(comment.getId());
+    service.deleteComment(comment);
     return "redirect:/myclass/project/troubleshooting/read?id=" + comment.getArticle_id() + "&project_id=" + project_id;
   }
 }

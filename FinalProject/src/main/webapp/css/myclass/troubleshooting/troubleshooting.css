@@ -135,6 +135,7 @@ input:active, input:focus, select:active, select:focus {
 
 .page-btns {
   margin: auto;
+  margin-bottom: 30px;
 }
 
 .comment-size {

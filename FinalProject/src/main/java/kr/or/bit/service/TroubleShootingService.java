@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.bit.dao.ArticleDao;
@@ -34,6 +36,16 @@ public class TroubleShootingService {
     int totalArticles = closed ? articleDao.selectAllIssuesClosed(board_id, criteria, word).size() : articleDao.selectAllIssuesOpened(board_id, criteria, word).size();
     Pager pager = new Pager(page, totalArticles);
     return pager;
+  }
+  
+  public int numberOfIssueOpened(int board_id, String criteria, String word) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    return articleDao.selectAllIssuesOpened(board_id, criteria, word).size();
+  }
+  
+  public int numberOfIssueClosed(int board_id, String criteria, String word) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    return articleDao.selectAllIssuesClosed(board_id, criteria, word).size();
   }
   
   public List<Article> getIssueOpened(int board_id, int page, String criteria, String word) {
@@ -98,6 +110,7 @@ public class TroubleShootingService {
     return article;
   }
   
+  @Transactional
   public int writeIssue(Article article, int group_id, String tag) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     TroubleShootingDao troubleShootingDao = sqlSession.getMapper(TroubleShootingDao.class);
@@ -129,5 +142,16 @@ public class TroubleShootingService {
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     comment.setUsername(Helper.userName());
     commentDao.insertComment(comment);
+  }
+  
+  @PreAuthorize("#article.username == principal.username")
+  public void deleteIssue(Article article) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    articleDao.deleteArticle(article.getId());
+  }
+  
+  public void deleteComment(Comment comment) {
+    CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
+    commentDao.deleteComment(comment.getId());
   }
 }
