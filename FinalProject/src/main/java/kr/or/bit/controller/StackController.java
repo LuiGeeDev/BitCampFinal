@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.bit.dao.ArticleDao;
+import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.StackDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.General;
+import kr.or.bit.model.Member;
 import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleUpdateService;
@@ -23,6 +25,7 @@ import kr.or.bit.service.ArticleVoteService;
 import kr.or.bit.service.BoardService;
 import kr.or.bit.service.CommentService;
 import kr.or.bit.utils.Helper;
+import kr.or.bit.utils.Pager;
 
 @Controller
 @RequestMapping("/stack")
@@ -45,9 +48,30 @@ public class StackController {
   private BoardService boardService;
 
   @GetMapping("")
-  public String listPage(Model model) throws Exception{
-    List<Article> article = articleService.selectAllStackArticle();
-    model.addAttribute("stacklist", article);
+  public String listPage(@RequestParam(defaultValue = "1") int page, String boardSearch, Model model) throws Exception{
+    StackDao stackDao = sqlsession.getMapper(StackDao.class);
+    MemberDao memberDao = sqlsession.getMapper(MemberDao.class);
+    String username = Helper.userName();
+    Member member = memberDao.selectMemberByUsername(username);
+    List<Article> stackList = null;
+    Pager pager = null;
+    if(boardSearch != null) {
+      System.out.println("여기 타겠지 : "+ boardSearch);
+      pager = new Pager(page, stackDao.countStackArticleBySearchWord(boardSearch));
+      System.out.println("여기는 1");
+      stackList = articleService.selectStackArticlesByboardSearch(pager,boardSearch);
+      System.out.println("여기는 2");
+      model.addAttribute("boardSearch", boardSearch);
+      System.out.println("여기는 3");
+    } else {
+      pager = new Pager(page, stackDao.countAllStackArticle());
+      stackList = articleService.selectAllStackArticles(pager);
+    }
+    System.out.println("시이작");
+    System.out.println("### : "+ stackList.get(0).getWriter().getUsername());
+    model.addAttribute("stacklist", stackList);
+    model.addAttribute("pager", pager);
+    model.addAttribute("page", page);
     return "stack/home";
   }
 
