@@ -57,12 +57,6 @@
   margin-bottom: 30px;
 }
 
-.new {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
 .title {
   border: none;
   margin-bottom: 0;
@@ -71,4 +65,8 @@
 .issue-info {
   font-size: 14px;
   color: #24292e;
+}
+
+.button-wrapper {
+  margin-left: auto;
 }

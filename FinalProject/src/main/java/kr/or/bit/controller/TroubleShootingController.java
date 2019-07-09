@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.BoardDao;
 import kr.or.bit.dao.GroupDao;
 import kr.or.bit.dao.MemberDao;
@@ -123,5 +124,13 @@ public class TroubleShootingController {
   public String writeComment(Comment comment, int project_id) {
     service.writeComment(comment);
     return "redirect:/myclass/project/troubleshooting/read?id=" + comment.getArticle_id() + "&project_id=" + project_id;
+  }
+  
+  @GetMapping("/delete")
+  public String deleteArticle(int board_id, int project_id, Article article) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    article = articleDao.selectOneArticle(article.getId());
+    service.deleteIssue(article);
+    return "redirect:/myclass/project/troubleshooting?id=" + board_id + "&project_id=" + project_id;
   }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -141,5 +142,11 @@ public class TroubleShootingService {
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     comment.setUsername(Helper.userName());
     commentDao.insertComment(comment);
+  }
+  
+  @PreAuthorize("#article.username == principal.username")
+  public void deleteIssue(Article article) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    articleDao.deleteArticle(article.getId());
   }
 }

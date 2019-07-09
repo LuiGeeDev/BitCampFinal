@@ -37,8 +37,10 @@
             <span class="comments">댓글 <span th:text="${article.commentlist.size()}">4</span>개</span>
           </p>
         </div>
-        
-        <a th:href="@{/myclass/project/troubleshooting/write(board_id=${ts.id}, project_id=${project.id})}" class="btn btn-outline-primary btn-sm new">새로 올리기</a>
+        <div class="button-wrapper">
+          <a th:if="${user.username == article.username}" th:href="@{/myclass/project/troubleshooting/delete(board_id=${ts.id}, project_id=${project.id}, id=${article.id})}" class="btn btn-outline-primary btn-sm">삭제</a>
+          <a th:href="@{/myclass/project/troubleshooting/write(board_id=${ts.id}, project_id=${project.id})}" class="btn btn-outline-primary btn-sm">새로 올리기</a>
+        </div>
         </div>
       </div>
       <div class="row">
