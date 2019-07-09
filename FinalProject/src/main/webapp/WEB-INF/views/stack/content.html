@@ -50,7 +50,7 @@
           class="imgp"></td>
         <td colspan="2" class="td4">
           <p class="pwriter">
-            <span th:text="${stackcontent.writer.username}"></span>
+            <span th:text="${stackcontent.writer.name}"></span>
           </p>
           <p class="pfont">
             게시일:<span th:text="${stackcontent.updated_time}"></span>
@@ -93,7 +93,7 @@
       <tr>
         <td class="td3"><img th:src="@{/css/stack/profile2.png}"
           class="profileImg"></td>
-        <td>[[${list.writer.name}]] <a
+        <td>[[${list.name}]] <a
           th:href="@{/stack/commentdelete(id=${list.id})}">[삭제]</a><br>
           <span class="commentCalender">[[${list.updated_time}]]</span></td>
         <td class="td7"></td>

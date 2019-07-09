@@ -145,3 +145,25 @@ a {
   color: #F29C10;
   left: 10px;
 }
+
+.page-btns {
+  margin: auto;
+  margin-bottom:200px;
+}
+
+.write-btns {
+  margin-right: 17%;
+}
+
+.btn.btn-primary.paging {
+  background-color: white;
+  color: #EA8A02;
+  border: 2px #EA8A02 solid;
+  font-weight: bold;
+}
+
+.btn.btn-primary.paging.active {
+  background-color: #EA8A02;
+  border: 2px #EA8A02 solid;
+  font-weight: bold;
+}

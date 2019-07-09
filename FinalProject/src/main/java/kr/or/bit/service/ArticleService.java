@@ -160,7 +160,10 @@ public class ArticleService {
     for (Comment comment : article.getCommentlist()) {
       System.out.println(comment.getTime());
       comment.setTimeLocal(comment.getTime().toLocalDateTime());
-      comment.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+      System.out.println("댓글이름:"+(memberDao.selectMemberByUsername(comment.getUsername())).getName());
+      comment.setName(
+          (memberDao.selectMemberByUsername(comment.getUsername())).getName()
+          );
     }
     article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
     article.setOption(option);
