@@ -48,19 +48,19 @@
     <div class="row">
       <!-- 페이지 버튼 -->
       <div class="page-btns">
-        <span th:if="${pageMaker.prev}==true">
-          <a class="btn btn-primary paging" th:href="@{/myclass/homework(page=${pageMaker.startPage}-1, perPageNum=${pageMaker.cri.perPageNum})}">&laquo;</a>
+        <span th:if="${pager.prev}">
+          <a class="btn btn-primary paging" th:href="@{/myclass/homework(page=${pager.startPage}-1)}">&laquo;</a>
         </span>
-        <span th:each="idx, iterStat : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}" >
-          <a th:if="${boardSearch} != null" class="btn btn-primary paging" th:href="@{/myclass/homework(page=${idx},boardSearch=${boardSearch})}" th:classappend="${pageMaker.cri.page} == ${idx} ? active : null" th:text="${idx}"></a>
-          <a th:if="${boardSearch} == null" class="btn btn-primary paging" th:href="@{/myclass/homework(page=${idx})}" th:classappend="${pageMaker.cri.page} == ${idx} ? active : null" th:text="${idx}"></a>          
+        <span th:each="idx, iterStat : ${#numbers.sequence(pager.startPage,pager.endPage)}" >
+          <a th:if="${boardSearch} != null" class="btn btn-primary paging" th:href="@{/myclass/homework(page=${idx},boardSearch=${boardSearch})}" th:classappend="${pager.currentPage} == ${idx} ? active" th:text="${idx}"></a>
+          <a th:if="${boardSearch} == null" class="btn btn-primary paging" th:href="@{/myclass/homework(page=${idx})}" th:classappend="${pager.currentPage} == ${idx} ? active" th:text="${idx}"></a>          
         </span>
-        <span th:if="${pageMaker.next} == true and ${pageMaker.endPage > 0}">
-          <a class="btn btn-primary paging" th:href="@{/myclass/homework(page=${pageMaker.endPage}+1 , perPageNum=${pageMaker.cri.perPageNum})}">&raquo;</a>
+        <span th:if="${pager.next} and ${pager.endPage > 0}">
+          <a class="btn btn-primary paging" th:href="@{/myclass/homework(page=${pager.endPage}+1)}">&raquo;</a>
         </span>
       </div>
 
-      <div class="write-btns">
+      <div class="write-btns" th:if="${userRole} == 'TEACHER'">
         <a href="/myclass/homework/write" class="btn btn-primary">글쓰기</a>
       </div>
     </div>

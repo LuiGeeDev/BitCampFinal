@@ -3,7 +3,7 @@ package kr.or.bit.model;
 public class PageMaker {
 
   private int totalCount;     // 게시판 전체 데이터 개수
-  private int displayPageNum = 10;   // 게시판 화면에서 한번에 보여질 페이지 번호의 개수 ( 1,2,3,4,5,6,7,9,10)
+  private int displayPageNum = 5;   // 게시판 화면에서 한번에 보여질 페이지 번호의 개수 ( 1,2,3,4,5,6,7,9,10)
   
   private int startPage;      // 현재 화면에서 보이는 startPage 번호
   private int endPage;        // 현재 화면에 보이는 endPage 번호
