@@ -46,9 +46,9 @@
            </div>
          </div>
       </div>
-
+      
     </div>
-
+    
     <div class="detail-comment">
 
       <span class="userIcon"> <i class="fas fa-user-circle fa-lg"></i>
@@ -83,7 +83,7 @@
 
   <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-  <script>
+  <script th:inline="javascript">
     $(document).ready(function() {
       $("#spinner").hide();
     }).ajaxStart(function() {
@@ -129,32 +129,58 @@
     	});  
     	
     	$("#comment-submit").click(function() {
-    	  	let articleId = $("#comment-articleID").text();
-    	 	let boardId = $("#comment-boardID").text();
-    	 	let commentContent = $("#content").val();
+    	  	const articleId = $("#comment-articleID").text();
+    	 	const commentContent = $("#content").val();
+    	 	const username = [[${user.username}]];
     	 	
-    	 	console.log(articleId);
-    	 	console.log(boardId);
-    	 	console.log(commentContent);
+    	 	const formData = new FormData();
+    	 	formData.append("article_id", articleId);
+    	 	formData.append("content", commentContent);
+    	 	formData.append("username", username);
+    	 	
+    	 	
     	  $.ajax({
           url: "/myclass/board/commentwrite",
-          type: "POST",
-          data: {
-          	article_id : articleId,
-          	board_id : boardId,
-          	comment_content : commentContent
-          	
-          },
+          type: "post",
+          data: formData,
+          contentType: false,
+          processData: false,
           success: function(data) {
+            console.log(data);
+            $(".content-reply-form").empty();
             
-            location.href = "redirect:/myclass/board/read?article_id=" + articleId + "&board_id=" + boardId;
+            $(".writerName").append(`${data.writer.username}`);
             
             
-         /*    $(".message-realtime").append(timedate);
-            $(".message-sender-content").append(`${data.content}`);
-            $(".sender-message").append(`<h6 class="text-font">받은쪽지</h6>`);
-            $(".fa-paper-plane").css("display", "block");
-            $(".fa-trash").css("display", "block"); */
+            
+            
+            
+            /* $(
+                ".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime"
+              ).empty();
+              $("#message-sender-id").append(`${data.sender_username}`);
+              $(".message-sender-name")
+                .append(`${data.senderName}`)
+                .append(`(${data.sender_username})`);
+              $(".message-sender-time").append(`${data.time}`);
+              const time = Number($(".message-sender-time").text());
+              const date = new Date(time);
+              let minutes = date.getMinutes();
+              
+              minutes = (minutes < 10) ? "0" + minutes : minutes;
+              
+              let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
+              hours = hours < 10 ? "0" +  hours : hours;
+              
+
+              
+               `${time.getHours() <= 12 ? time.getHours() : time.getHours() - 12}:${time.getMinutes() < 10 ? "0" + time.getMinutes() : time.getMinutes()} ${time.getHours() <= 11 ? 'AM' : 'PM'}`;
+              const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDay()}일 ` + hours +`:` + minutes;
+              $(".message-realtime").append(timedate);
+              $(".message-sender-content").append(`${data.content}`);
+              $(".sender-message").append(`<h6 class="text-font">받은쪽지</h6>`);
+              $(".fa-paper-plane").css("display", "block");
+              $(".fa-trash").css("display", "block"); */
           }
         });
         });
