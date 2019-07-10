@@ -17,12 +17,12 @@
     <hr>
     <table>
       <tr>
-        <td colspan="2" class="td1"><span
+        <td colspan="3" class="td1"><span
           class="tag-name iteration"
           th:each="tag : ${stackcontent.tags}"> <span
             th:style="'background-color:'+@{${tag.color}}+';'">[[${tag.tag}]]</span>
         </span></td>
-        <td colspan="2" id="contenteditor"><a
+        <td colspan="1" id="contenteditor"><a
           th:href="@{/stack/edit(id=${stackcontent.id})}">[수정]</a> <a
           th:href="@{/stack/delete(id=${stackcontent.id})}">[삭제]</a></td>
       </tr>
@@ -64,19 +64,15 @@
     <!-- 댓글insert -->
     <table>
       <tr>
-        <td class="comtitle" colspan="4">총 [<span
+        <td class="comtitle" colspan="4">총 [<span class="commentPlus"
           th:text="${stackcontent.commentlist.size()}"></span>]개의 답변
         </td>
       </tr>
       <tr>
         <td class="ctd1" colspan="3">
-          <form
-            th:action="@{/stack/commentwrite(id=${stackcontent.id})}"
-            method="post">
             <textarea name="content" class="comtext"></textarea>
             <br> <input type="submit"
               class="btn btn-primary btnalign" value="등록">
-          </form>
         </td>
         <td class="ctd2"></td>
       </tr>
@@ -88,12 +84,15 @@
         <td>질문에 대한 답변을 달아주세요!</td>
       </tr>
     </table>
+    
+    <div class="stack-wrapper">
     <table th:unless="${stackcontent.commentlist.size()==0}"
       class="iteration" th:each="list : ${stackcontent.commentlist}">
       <tr>
-        <td class="td3"><i
+        <td class="td8"><i
             class="fas fa-user-circle fa-lg fa-2x"></i></td>
         <td>[[${list.name}]] <a
+          th:if="${list.username}==${user.username}"
           th:href="@{/stack/commentdelete(id=${list.id})}">[삭제]</a><br>
           <span class="commentCalender" th:text = "${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span></td>
         <td class="td7"></td>
@@ -103,8 +102,9 @@
         <td></td>
       </tr>
     </table>
-
+    </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <script th:inline="javascript">
       var currentPosition = parseInt($("#floatMenu").css("top"));
       $(window).scroll(function() {
@@ -114,6 +114,80 @@
         }, 1500);
       });
 
+      $(".btnalign").click(function() {
+        let valueCheck = $(".comtext").val();         
+        
+  	  	if(valueCheck.trim() === "" || valueCheck === null) {
+  	  	  Swal.fire({
+  	  	    type: 'error',
+  	  	    text: '다시 입력해주세요 !!',
+  	  	  })
+  	  	  	return;
+  	  	}
+        	const articleId = [[${stackcontent.id}]];
+    	 	const commentContent = $(".comtext").val();
+    	 	const username = [[${user.username}]];
+    	 	
+    	 	
+    	 	console.log(commentContent);
+    	 	
+    	 	const formData = new FormData();
+    	 	formData.append("article_id", articleId);
+    	 	formData.append("content", commentContent);
+    	 	formData.append("username", username);
+  	  	
+    	 	$.ajax({
+          url: "/stack/commentwrite",
+          type: "post",
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function(data) {
+            console.log(data);
+            $(".stack-wrapper").empty();
+           	$(".comtext").val("");
+            $.each(data, function(index, item) {
+              const content = item.content;
+              const username = item.writer.name;
+              const time = Number(item.time);
+              const date = new Date(time);
+              const commentId = item.id;
+              const articleId = item.article_id;
+              
+              let minutes = date.getMinutes();
+              minutes = (minutes < 10) ? "0" + minutes : minutes;
+              let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
+              hours = hours < 10 ? "0" +  hours : hours;
+              let getdate = date.getDate();
+              getdate = (getdate < 10) ? "0" + getdate : getdate;
+              let getmonth = date.getMonth() + 1;
+              getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
+              
+              const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ hours +`:` + minutes;
+			  let equalName = null;           
+              if(item.username == [[${user.username}]]) {
+                equalName = "[삭제]";
+              } else {
+                equalName = "";
+              }
+              
+              let html = "<table class='iteration'><tbody>"+
+                         "<tr><td class='td8'><i class='fas fa-user-circle fa-lg fa-2x'></i></td>" +
+                         "<td>" + username + "<a href='/stack/commentdelete?id=" + commentId + "'" + ">" + equalName +"</a>" + 
+                         "<br>" +
+                         "<span class='commentCalender'>" + timedate + "</span></td>" +
+                         "<td class='td7'></td></tr>" + 
+                         "<tr><td colspan='2' class='td6'>" + content + "</td><td></td></tr></tbody></table>";
+              $(".stack-wrapper").append(html);
+            });
+            
+            const count = $(".commentPlus");
+            count.text(Number(count.text()) +1);
+            
+          }
+        });
+      });
+      
     </script>
 </body>
 </html>

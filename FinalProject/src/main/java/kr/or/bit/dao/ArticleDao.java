@@ -28,7 +28,9 @@ public interface ArticleDao {
 
   void deleteArticle(int id);
 
-  List<Article> selectAllArticleByBoardId(int board_id);
+  List<Article> selectAllArticleByBoardId(@Param("board_id") int board_id);
+  
+  List<Article> selectAllPagingArticlesByBoardId(@Param("board_id") int board_id, @Param("pager") Pager pager);
 
   Article selectOneArticle(@Param("id") int id);
 

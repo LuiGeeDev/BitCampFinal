@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.ArticleDao;
+import kr.or.bit.dao.BoardDao;
+import kr.or.bit.dao.GeneralDao;
 import kr.or.bit.dao.StackDao;
 import kr.or.bit.dao.ViewCountDao;
 import kr.or.bit.model.Article;
@@ -45,17 +47,26 @@ public class GeneralBoardController {
 
   @GetMapping("/generalBoard")
   public String generalBoard(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model) {
-    List<Article> articleList = articleService.selectAllArticle("general", GENERAL_BOARD_ID);
-    StackDao stackdao = sqlsession.getMapper(StackDao.class);
-//    List<Article> articleList = null;
+    GeneralDao generalDao = sqlsession.getMapper(GeneralDao.class);
+    List<Article> articleList = null;
     Pager pager = null;
     if(boardSearch != null) {
-      
+      if(criteria.equals("titleOrContent")) {
+        pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardIdAndTitleOrContent(GENERAL_BOARD_ID, boardSearch));
+      }else if(criteria.equals("title")) {
+        pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardIdAndTitle(GENERAL_BOARD_ID, boardSearch));
+      }else {
+        pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardIdAndWriter(GENERAL_BOARD_ID, boardSearch));
+      }
+      articleList = articleService.selectAllArticlesByBoardSearch(GENERAL_BOARD_ID, pager, boardSearch,criteria);
+      model.addAttribute("boardSearch", boardSearch);
     }else {
-      pager = new Pager(page, stackdao.countStackArticleBySearchWord(boardSearch));
-      articleList = articleService.selectStackArticlesByboardSearch(pager, boardSearch, criteria);
+      pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardId(GENERAL_BOARD_ID));
+      articleList = articleService.selectAllArticle("general", GENERAL_BOARD_ID, pager);
     }
     model.addAttribute("list", articleList);
+    model.addAttribute("pager", pager);
+    model.addAttribute("page", page);
     return "myclass/general/generalBoard";
   }
 
