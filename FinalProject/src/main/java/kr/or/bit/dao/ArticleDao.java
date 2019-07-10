@@ -21,6 +21,8 @@ public interface ArticleDao {
   void insertArticle(Article article);
   
   void insertTroubleShootingArticle(@Param("article") Article article, @Param("group_id") int group_id);
+  
+  void updateTroubleShootingArticle(Article article);
 
   void insertReplyArticle(Article article);
 

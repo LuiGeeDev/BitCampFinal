@@ -124,6 +124,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             (select max(id)+1 from (select * from article) as temp))
             
   </insert>
+  <update id="updateTroubleShootingArticle">
+  	UPDATE article
+  	SET title=#{title}, content=#{content}
+  	WHERE id=#{id}
+  </update>
   <insert id="insertReplyArticle">
   	INSERT INTO article(time, updated_time, title, content, username, board_id, level, original_id)
   	VALUES (now(), now(), #{title}, #{content}, #{username}, #{board_id}, #{level}, #{original_id})
