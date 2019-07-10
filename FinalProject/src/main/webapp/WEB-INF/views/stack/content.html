@@ -70,13 +70,9 @@
       </tr>
       <tr>
         <td class="ctd1" colspan="3">
-          <form
-            th:action="@{/stack/commentwrite(id=${stackcontent.id})}"
-            method="post">
             <textarea name="content" class="comtext"></textarea>
             <br> <input type="submit"
               class="btn btn-primary btnalign" value="등록">
-          </form>
         </td>
         <td class="ctd2"></td>
       </tr>
@@ -102,9 +98,11 @@
         <td colspan="2" class="td6">[[${list.content}]]</td>
         <td></td>
       </tr>
+      <span class="hidden" th:text="${list.id}"></span>
     </table>
 
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <script th:inline="javascript">
       var currentPosition = parseInt($("#floatMenu").css("top"));
       $(window).scroll(function() {
@@ -114,6 +112,36 @@
         }, 1500);
       });
 
+      $(".btnalign").click(function() {
+        let valueCheck = $(".comtext").val();         
+        
+  	  	if(valueCheck.trim() === "" || valueCheck === null) {
+  	  	  Swal.fire({
+  	  	    type: 'error',
+  	  	    text: '다시 입력해주세요 !!',
+  	  	  })
+  	  	  	return;
+  	  	}
+        
+    	 	const commentContent = $(".comtext").val();
+    	 	const username = [[${user.username}]];
+    	 	
+    	 	
+    	 	console.log(commentContent);
+    	 	
+    	 	const formData = new FormData();
+    	 	formData.append("article_id", articleId);
+    	 	formData.append("content", commentContent);
+    	 	formData.append("username", username);
+  	  	
+  	  	
+  	  	
+  	  	
+      });
+      
+      /* <form
+      th:action="@{/stack/commentwrite(id=${stackcontent.id})}"
+      method="post"> */
     </script>
 </body>
 </html>
