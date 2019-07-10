@@ -27,7 +27,6 @@ public class Article {
   private List<Comment> commentlist;
   private int commentSize;
 
-
   private ArticleOption option;
   private Map<String, Integer> vote;
   private int votenum;

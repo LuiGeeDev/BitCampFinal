@@ -36,6 +36,7 @@
   <script
     src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <script type="text/javascript">
       $(function() {
         $("#selectable").selectable({
@@ -50,6 +51,16 @@
         placeholder : '질문할 내용을 적어주세요',
         tabsize : 2,
         height : 500
+      });
+      
+      $("#submitbtn").click(function() {
+          Swal.fire({
+            type: 'success',
+            title: '글작성이 완료되었습니다',
+            showConfirmButton: false,
+            timer: 1500
+          });
+         
       });
       
     </script>

@@ -53,10 +53,6 @@ public class BoardController {
   @GetMapping("")
   public String listPage(int board_id, @RequestParam(defaultValue = "1") int page,
       @RequestParam(required = false) String boardSearch, @RequestParam(required = false) String criteria, Model model) {
-    System.out.println("board_id : "+ board_id);
-    System.out.println("page : "+ page);
-    System.out.println("boardSearch : "+ boardSearch);
-    System.out.println("criteria : "+ criteria);
     GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
     List<Article> articles = null;
     Pager pager = null;
@@ -68,15 +64,12 @@ public class BoardController {
       }else {
         pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardIdAndWriter(board_id, boardSearch));
       }
-      articles = articleService.selectAllArticlesByBoardSearch(board_id, pager, boardSearch,criteria);
+      articles = articleService.selectAllArticlesByBoardSearch(board_id, pager, boardSearch, criteria);
       model.addAttribute("boardSearch", boardSearch);
-    }else {
-      System.out.println("countAllArticle : "+generalDao.countAllGeneralArticlesByBoardId(board_id));
+    } else {
       pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardId(board_id));
-      System.out.println("자보자 8");
       articles = articleService.selectAllArticle("general", board_id, pager);
     }
-    System.out.println("자보자 9 : "+articles.toString());
     model.addAttribute("articles", articles);
     model.addAttribute("pager", pager);
     model.addAttribute("page", page);
@@ -140,8 +133,12 @@ public class BoardController {
     return "redirect:/myclass/board/read?article_id=" + article_id + "&board_id=" + board_id;
   }
   
-  @GetMapping("/deletefile")
-  public void fileDelete() {
-      System.out.println("타요!");
+  @PostMapping("/deletefile1")
+  public void fileDelete1(int count1) {
+      System.out.println(count1);
+  }
+  @PostMapping("/deletefile2")
+  public void fileDelete2(int count2) {
+    System.out.println(count2);
   }
 }
