@@ -64,7 +64,7 @@
     <!-- 댓글insert -->
     <table>
       <tr>
-        <td class="comtitle" colspan="4">총 [<span
+        <td class="comtitle" colspan="4">총 [<span class="commentPlus"
           th:text="${stackcontent.commentlist.size()}"></span>]개의 답변
         </td>
       </tr>
@@ -92,6 +92,7 @@
         <td class="td8"><i
             class="fas fa-user-circle fa-lg fa-2x"></i></td>
         <td>[[${list.name}]] <a
+          th:if="${list.username}==${user.username}"
           th:href="@{/stack/commentdelete(id=${list.id})}">[삭제]</a><br>
           <span class="commentCalender" th:text = "${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span></td>
         <td class="td7"></td>
@@ -171,24 +172,22 @@
               }
               
               let html = "<table class='iteration'><tbody>"+
-                         "<tr><td class='td3'><i class='fas fa-user-circle fa-lg fa-2x'></i></td>" +
+                         "<tr><td class='td8'><i class='fas fa-user-circle fa-lg fa-2x'></i></td>" +
                          "<td>" + username + "<a href='/stack/commentdelete?id=" + commentId + "'" + ">" + equalName +"</a>" + 
                          "<br>" +
                          "<span class='commentCalender'>" + timedate + "</span></td>" +
                          "<td class='td7'></td></tr>" + 
                          "<tr><td colspan='2' class='td6'>" + content + "</td><td></td></tr></tbody></table>";
-                         
               $(".stack-wrapper").append(html);
             });
+            
+            const count = $(".commentPlus");
+            count.text(Number(count.text()) +1);
+            
           }
         });
-  	  	
-  	  	
       });
       
-      /* <form
-      th:action="@{/stack/commentwrite(id=${stackcontent.id})}"
-      method="post"> */
     </script>
 </body>
 </html>
