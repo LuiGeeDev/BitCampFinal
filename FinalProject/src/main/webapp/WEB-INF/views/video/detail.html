@@ -73,7 +73,7 @@
                 <i class="fas fa-user-circle fa-lg"></i>
               </span>
               <span id="writerName">
-                <span th:text="${list.username}"></span>
+                <span th:text="${list.writer.name}"></span>
                 <a th:href="@{/video/commentdelete(id=${list.id})}">[삭제]</a>
               </span>
               <span id="writeDate">

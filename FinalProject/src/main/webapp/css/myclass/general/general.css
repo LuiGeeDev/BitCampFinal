@@ -147,6 +147,7 @@ a {
 }
 
 .page-btns {
+  display:flex;
   margin: auto;
   margin-bottom:200px;
 }

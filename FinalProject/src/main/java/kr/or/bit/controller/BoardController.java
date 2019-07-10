@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,16 +16,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.bit.dao.GeneralDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
+import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.BoardService;
+import kr.or.bit.utils.Pager;
 
 @Controller
 @RequestMapping("/myclass/board")
 public class BoardController {
   @Autowired
   private BoardService boardService;
-  
+  @Autowired
+  private ArticleService articleService;
+  @Autowired
+  private SqlSession sqlSession;
+  /*
   @GetMapping("")
   public String listPage(int board_id, @RequestParam(defaultValue = "1") int page,
       @RequestParam(required = false) String sort, @RequestParam(required = false) String search, @RequestParam(required = false) String criteria, Model model) {
@@ -42,7 +50,41 @@ public class BoardController {
 
     return "myclass/general/generalBoard";
   }
-
+  */
+  @GetMapping("")
+  public String listPage(int board_id, @RequestParam(defaultValue = "1") int page,
+      @RequestParam(required = false) String boardSearch, @RequestParam(required = false) String criteria, Model model) {
+    System.out.println("board_id : "+ board_id);
+    System.out.println("page : "+ page);
+    System.out.println("boardSearch : "+ boardSearch);
+    System.out.println("criteria : "+ criteria);
+    GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
+    List<Article> articles = null;
+    Pager pager = null;
+    if(boardSearch != null) {
+      if(criteria.equals("titleOrContent")) {
+        pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardIdAndTitleOrContent(board_id, boardSearch));
+      }else if(criteria.equals("title")) {
+        pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardIdAndTitle(board_id, boardSearch));
+      }else {
+        pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardIdAndWriter(board_id, boardSearch));
+      }
+      articles = articleService.selectAllArticlesByBoardSearch(board_id, pager, boardSearch,criteria);
+      model.addAttribute("boardSearch", boardSearch);
+    }else {
+      System.out.println("countAllArticle : "+generalDao.countAllGeneralArticlesByBoardId(board_id));
+      pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardId(board_id));
+      System.out.println("자보자 8");
+      articles = articleService.selectAllArticle("general", board_id, pager);
+    }
+    System.out.println("자보자 9 : "+articles.toString());
+    model.addAttribute("articles", articles);
+    model.addAttribute("pager", pager);
+    model.addAttribute("page", page);
+    model.addAttribute("board", boardService.getBoardInfo(board_id));
+    return "myclass/general/generalBoard";
+  }
+  
   @GetMapping("/write")
   public String writePage(int board_id, Model model) {
     model.addAttribute("board", boardService.getBoardInfo(board_id));
