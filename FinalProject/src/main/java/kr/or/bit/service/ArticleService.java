@@ -51,11 +51,17 @@ public class ArticleService {
     return articleList;
   }
 
-  public List<Article> selectAllArticle(String optionName, int boardId) {// 게시판아이디를 기준으로 게시글을 전부 불러오는 함수
+  public List<Article> selectAllArticle(String optionName, int boardId, Pager pager) {// 게시판아이디를 기준으로 게시글을 전부 불러오는 함수
+    System.out.println("여기타나?");
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-    List<Article> list = articledao.selectAllArticleByBoardId(boardId);
+    List<Article> list = null;
+    if(optionName.equals("general")) {
+      list = articledao.selectAllPagingArticlesByBoardId(boardId, pager);
+    }else {
+      list = articledao.selectAllArticleByBoardId(boardId); 
+    }
     for (Article article : list) {
       ArticleOption option = null;
       switch (optionName.toLowerCase()) {
@@ -68,8 +74,10 @@ public class ArticleService {
         option = troubleShootingDao.selectTroubleShootingByArticleId(article.getId());
         break;
       case "general":
+        System.out.println("여기 2");
         GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
         option = generalDao.selectGeneralByArticleId(article.getId());
+        System.out.println("여기 3");
         break;
       case "qna":
         QnaDao qnaDao = sqlSession.getMapper(QnaDao.class);
@@ -196,17 +204,17 @@ public class ArticleService {
     StackDao stackdao = sqlSession.getMapper(StackDao.class);
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-    List<Article> articlelist = null;
+    List<Article> articleList = null;
     
     if(criteria.equals("titleOrContent")) {
-      articlelist = stackdao.selectStackArticleByTitleOrContent(pager,boardSearch);
+      articleList = stackdao.selectStackArticleByTitleOrContent(pager,boardSearch);
     }else if(criteria.equals("title")) {
-      articlelist = stackdao.selectStackArticleByTitle(pager,boardSearch);
+      articleList = stackdao.selectStackArticleByTitle(pager,boardSearch);
     }else {
-      articlelist = stackdao.selectStackArticleByWriter(pager,boardSearch);
+      articleList = stackdao.selectStackArticleByWriter(pager,boardSearch);
     }
     
-    for (Article article : articlelist) {
+    for (Article article : articleList) {
       List<Comment> commentList = commentdao.selectAllComment(article.getId());
       List<Tag> taglist = stackdao.selectTagList(article.getId());
       
@@ -219,7 +227,40 @@ public class ArticleService {
       article.setTimeLocal(article.getTime().toLocalDateTime());
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));   
     }
-    return articlelist;
+    return articleList;
+  }
+  
+  public List<Article> selectAllArticlesByBoardSearch(int boardId, Pager pager, String boardSearch, String criteria) {
+    ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
+    CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
+    List<Article> articleList = null;
+    
+    if(criteria.equals("titleOrContent")) {
+      articleList = generalDao.selectGeneralArticlesByTitleOrContent(boardId, pager, boardSearch);
+    }else if(criteria.equals("title")) {
+      articleList = generalDao.selectGeneralArticlesByTitle(boardId, pager,boardSearch);
+    }else {
+      articleList = generalDao.selectGeneralArticlesByWriter(boardId, pager,boardSearch);
+    }
+    
+    for (Article article : articleList) {
+      ArticleOption option = null;
+      
+      articleList = articledao.selectAllPagingArticlesByBoardId(boardId, pager);
+      option = generalDao.selectGeneralByArticleId(article.getId());
+        
+      article.setTimeLocal(article.getTime().toLocalDateTime());
+      article.setUpdatedTimeLocal(article.getUpdated_time().toLocalDateTime());
+      article.setCommentlist(commentdao.selectAllComment(article.getId()));
+      for (Comment comment : article.getCommentlist()) {
+        comment.setTimeLocal(comment.getTime().toLocalDateTime());
+      }
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+      article.setOption(option);
+    }
+    return articleList;
   }
 
 }

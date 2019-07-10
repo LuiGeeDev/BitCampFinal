@@ -17,12 +17,12 @@
     <hr>
     <table>
       <tr>
-        <td colspan="2" class="td1"><span
+        <td colspan="3" class="td1"><span
           class="tag-name iteration"
           th:each="tag : ${stackcontent.tags}"> <span
             th:style="'background-color:'+@{${tag.color}}+';'">[[${tag.tag}]]</span>
         </span></td>
-        <td colspan="2" id="contenteditor"><a
+        <td colspan="1" id="contenteditor"><a
           th:href="@{/stack/edit(id=${stackcontent.id})}">[수정]</a> <a
           th:href="@{/stack/delete(id=${stackcontent.id})}">[삭제]</a></td>
       </tr>
@@ -89,7 +89,7 @@
     <table th:unless="${stackcontent.commentlist.size()==0}"
       class="iteration" th:each="list : ${stackcontent.commentlist}">
       <tr>
-        <td class="td3"><i
+        <td class="td8"><i
             class="fas fa-user-circle fa-lg fa-2x"></i></td>
         <td>[[${list.name}]] <a
           th:href="@{/stack/commentdelete(id=${list.id})}">[삭제]</a><br>

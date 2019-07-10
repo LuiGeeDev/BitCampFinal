@@ -51,28 +51,24 @@
           <span class="write-count" th:text="${article.view_count}"></span>
         </div>
       </a>
-      <div class="write-btn-right">
-        <a th:href="@{/myclass/board/write(board_id=${board.id})}"
-           class="btn btn-primary board-writeBtn" id="board-write-btn">글쓰기</a>
-      </div>
     </div>
     <!-- 페이지 버튼 -->
      <div class="row">
       <div class="page-btns">
         <span th:if="${pager.prev}">
-          <a class="btn btn-primary paging" th:href="@{/myclass/homework(page=${pager.startPage}-1)}">&laquo;</a>
+          <a class="btn btn-primary paging" th:href="@{/myclass/board(page=${pager.startPage}-1,board_id=${board.id})}">&laquo;</a>
         </span>
         <span th:each="idx, iterStat : ${#numbers.sequence(pager.startPage,pager.endPage)}" >
-          <a th:if="${boardSearch} != null" class="btn btn-primary paging" th:href="@{/stack(page=${idx},boardSearch=${boardSearch})}" th:classappend="${pager.currentPage} == ${idx} ? active" th:text="${idx}"></a>
-          <a th:if="${boardSearch} == null" class="btn btn-primary paging" th:href="@{/stack(page=${idx})}" th:classappend="${pager.currentPage} == ${idx} ? active" th:text="${idx}"></a>          
+          <a th:if="${boardSearch} != null" class="btn btn-primary paging" th:href="@{/myclass/board(page=${idx},boardSearch=${boardSearch},board_id=${board.id})}" th:classappend="${pager.currentPage} == ${idx} ? active" th:text="${idx}"></a>
+          <a th:if="${boardSearch} == null" class="btn btn-primary paging" th:href="@{/myclass/board(page=${idx},board_id=${board.id})}" th:classappend="${pager.currentPage} == ${idx} ? active" th:text="${idx}"></a>          
         </span>
         <span th:if="${pager.next} and ${pager.endPage > 0}">
-          <a class="btn btn-primary paging" th:href="@{/myclass/homework(page=${pager.endPage}+1)}">&raquo;</a>
+          <a class="btn btn-primary paging" th:href="@{/myclass/board(page=${pager.endPage}+1,board_id=${board.id})}">&raquo;</a>
         </span>
       </div>
 
       <div class="write-btns">
-        <a th:href="@{/stack/write}" class="btn btn-primary">글쓰기</a>
+        <a th:href="@{/myclass/board/write(board_id=${board.id})}" class="btn btn-primary" id="board-write-btn">글쓰기</a>
       </div>
     </div>
   </div>

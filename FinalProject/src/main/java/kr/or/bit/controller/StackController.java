@@ -61,7 +61,13 @@ public class StackController {
     List<Article> stackList = null;
     Pager pager = null;
     if(boardSearch != null) {
-      pager = new Pager(page, stackDao.countStackArticleBySearchWord(boardSearch));
+      if(criteria.equals("titleOrContent")) {
+        pager = new Pager(page, stackDao.countStackArticleByTitleOrContent(boardSearch));
+      }else if(criteria.equals("title")) {
+        pager = new Pager(page, stackDao.countStackArticleByTitle(boardSearch));
+      }else {
+        pager = new Pager(page, stackDao.countStackArticleByWriter(boardSearch));
+      }
       stackList = articleService.selectStackArticlesByboardSearch(pager,boardSearch,criteria);
       model.addAttribute("boardSearch", boardSearch);
     } else {
