@@ -30,6 +30,7 @@ public class ScheduleController {
   }
   @PostMapping("/update")
   public String updateSchedule() {
+    
     return "myclass";
   }
   @PostMapping("/delete")
