@@ -140,8 +140,12 @@ public class BoardController {
     return "redirect:/myclass/board/read?article_id=" + article_id + "&board_id=" + board_id;
   }
   
-  @GetMapping("/deletefile")
-  public void fileDelete() {
-      System.out.println("타요!");
+  @PostMapping("/deletefile1")
+  public void fileDelete1(int count1) {
+      System.out.println(count1);
+  }
+  @PostMapping("/deletefile2")
+  public void fileDelete2(int count2) {
+    System.out.println(count2);
   }
 }

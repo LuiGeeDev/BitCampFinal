@@ -97,7 +97,7 @@
             th:src="@{/resources/images/{picture}(picture=${user.profile_photo})}"
             alt=""
           />
-          <form class="write-form" method="post" th:action="@{/myclass/project/troubleshooting/comment}">
+          <form class="write-form" method="post" th:action="@{/myclass/project/troubleshooting/comment}" id="comment-submit">
             <div class="content">
               <input type="hidden" name="article_id" th:value="${article.id}">
               <input type="hidden" name="group_id" th:value="${group.id}">
@@ -144,6 +144,12 @@
         placeholder: "댓글을 남겨주세요",
         height: 100,
         width: 700
+      });
+
+      $("#comment-submit").submit(function() {
+        if ([[${user.username}]] !== [[${article.username}]]) {
+          sendCommentNotice([[${user.name}]], [[${article.username}]], window.location.href);
+        }
       });
     </script>
   </body>
