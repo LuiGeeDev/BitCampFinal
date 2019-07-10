@@ -7,7 +7,7 @@ public class Schedule {
   private int id;
   private Date start_date;
   private Date end_date;
-  private String content;
+  private String title;
   private String color;
   private int group_id;
   private int course_id;
@@ -55,12 +55,12 @@ public class Schedule {
     this.endDateLocal = endDateLocal;
   }
 
-  public String getContent() {
-    return content;
+  public String getTitle() {
+    return title;
   }
 
-  public void setContent(String content) {
-    this.content = content;
+  public void setTitle(String title) {
+    this.title = title;
   }
 
   public String getColor() {
