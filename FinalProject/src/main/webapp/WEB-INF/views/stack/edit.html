@@ -27,7 +27,7 @@
             <li class="ui-widget-content" th:each="tag : ${tags}">#[[${tag.tag}]]</li>
           </ol>
           <div class="submit-btn">
-            <button type="submit" id="submitbtn" class="btn btn-primary">올리기</button>
+            <button type="submit" id="submitbtn" class="btn btn-primary updateBtn">올리기</button>
           </div>
         </div>
       </div>
@@ -35,16 +35,27 @@
   </div>
   <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
   <script
-    src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script type="text/javascript">
-      $('#summernote').summernote({
+  src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+<script src="/js/stack/write.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+<script th:inline="javascript">
+     $('#summernote').summernote({
         placeholder : '질문할 내용을 적어주세요',
         tabsize : 2,
         height : 500
       });
-      
-    </script>
+$(".updateBtn").click(function() {
+  Swal.fire({
+    type: 'success',
+    title: '수정되었습니다',
+    showConfirmButton: false,
+    timer: 1500
+  });
+});
+
+
+</script>
 </body>
 </html>
 
