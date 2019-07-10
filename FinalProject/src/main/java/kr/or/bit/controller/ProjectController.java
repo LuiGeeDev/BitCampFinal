@@ -23,47 +23,23 @@ import kr.or.bit.utils.Helper;
 @RequestMapping("myclass/project")
 public class ProjectController {
   @Autowired
-  private MemberService memberService;
-  @Autowired
   private SqlSession sqlSession;
 
   @GetMapping("")
-  public String projectPage(@RequestParam("id") int project_id, Model model) {
-    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+  public String projectPage(int group_id, Model model) {
     GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
-    ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-    
-    Member user = memberDao.selectMemberByUsername(Helper.userName());
-
-    Group group = groupDao.selectGroupByProjectId(project_id, user.getUsername());
-    Project project = projectDao.selectProject(project_id);
-    Board ts = boardDao.selectTroubleShootingBoard(user.getCourse_id(), project.getSeason(), group.getGroup_no());
+    Group group = groupDao.selectGroupById(group_id);
 
     model.addAttribute("group", group);
-    model.addAttribute("ts", ts);
-    model.addAttribute("project", project);
-    // 스케줄, 타임라인, 체크리스트, 트러블슈팅 글
     return "myclass/project/main";
   }
 
   @GetMapping("/chat")
-  public String chatPage(int project_id, Model model) {
-    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+  public String chatPage(int group_id, Model model) {
     GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
-    ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-    
-    Member user = memberDao.selectMemberByUsername(Helper.userName());
-
-    Group group = groupDao.selectGroupByProjectId(project_id, user.getUsername());
-    Project project = projectDao.selectProject(project_id);
-    Board ts = boardDao.selectTroubleShootingBoard(user.getCourse_id(), project.getSeason(), group.getGroup_no());
+    Group group = groupDao.selectGroupById(group_id);
 
     model.addAttribute("group", group);
-    model.addAttribute("ts", ts);
-    model.addAttribute("project", project);
-    
     return "myclass/chat/main";
   }
 }

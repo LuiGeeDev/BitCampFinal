@@ -117,7 +117,7 @@ public class StackController {
     List<String> tagList = new ArrayList<>();
     String[] splitStr = tag.split("#");
     for (int i = 1; i < splitStr.length; i++) {
-      tagList.add(splitStr[i]);
+      tagList.add(splitStr[i].trim());
     }
     List<Tag> tags = tagService.selectTagByName(tagList);   
     article.setTags(tags);
@@ -129,7 +129,10 @@ public class StackController {
 
   @GetMapping("/edit")
   public String editStack(int id, Model model) {
+    StackDao stackdao = sqlsession.getMapper(StackDao.class);
+    List<Tag> tags = stackdao.selectTagList(id);
     Article article = articleService.selectOneArticle("qna", id);
+    model.addAttribute("tags", tags);
     model.addAttribute("article", article);
     return "stack/edit";
   }

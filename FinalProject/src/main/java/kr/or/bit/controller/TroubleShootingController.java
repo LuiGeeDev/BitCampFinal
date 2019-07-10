@@ -12,20 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.bit.dao.ArticleDao;
-import kr.or.bit.dao.BoardDao;
 import kr.or.bit.dao.CommentDao;
 import kr.or.bit.dao.GroupDao;
-import kr.or.bit.dao.MemberDao;
-import kr.or.bit.dao.ProjectDao;
 import kr.or.bit.dao.StackDao;
 import kr.or.bit.model.Article;
-import kr.or.bit.model.Board;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Group;
-import kr.or.bit.model.Member;
-import kr.or.bit.model.Project;
 import kr.or.bit.service.TroubleShootingService;
-import kr.or.bit.utils.Helper;
 
 @Controller
 @RequestMapping("/myclass/project/troubleshooting")
@@ -37,109 +30,81 @@ public class TroubleShootingController {
   private TroubleShootingService service;
 
   @GetMapping("")
-  public String troubleshootingPage(@RequestParam("id") int board_id,
+  public String troubleshootingPage(int group_id,
       @RequestParam(defaultValue = "1") int page, @RequestParam(required = false) String criteria,
-      @RequestParam(required = false) String word, int project_id, String q, Model model) {
-    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+      @RequestParam(required = false) String word, String q, Model model) {
     GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
-    ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
 
-    List<Article> articlesOpened = service.getIssueOpened(board_id, page, criteria, word);
-    List<Article> articlesClosed = service.getIssueClosed(board_id, page, criteria, word);
+    Group group = groupDao.selectGroupById(group_id);
 
-    Member user = memberDao.selectMemberByUsername(Helper.userName());
-
-    Group group = groupDao.selectGroupByProjectId(project_id, user.getUsername());
-    Project project = projectDao.selectProject(project_id);
-    Board ts = boardDao.selectTroubleShootingBoard(user.getCourse_id(), project.getSeason(), group.getGroup_no());
+    List<Article> articlesOpened = service.getIssueOpened(group_id, page, criteria, word);
+    List<Article> articlesClosed = service.getIssueClosed(group_id, page, criteria, word);
 
     model.addAttribute("criteria", criteria);
     model.addAttribute("word", word);
     model.addAttribute("group", group);
-    model.addAttribute("ts", ts);
-    model.addAttribute("project", project);
-    model.addAttribute("articlesOpened", service.numberOfIssueOpened(board_id, criteria, word));
-    model.addAttribute("articlesClosed", service.numberOfIssueClosed(board_id, criteria, word));
+    model.addAttribute("articlesOpened", service.numberOfIssueOpened(group_id, criteria, word));
+    model.addAttribute("articlesClosed", service.numberOfIssueClosed(group_id, criteria, word));
     model.addAttribute("closed", (q == null) ? false : true);
     model.addAttribute("articleList", (q == null) ? articlesOpened : articlesClosed);
-    model.addAttribute("pager", (q == null) ? service.getPager(board_id, page, criteria, word, false) : service.getPager(board_id, page, criteria, word, true));
+    model.addAttribute("pager", (q == null) ? service.getPager(group_id, page, criteria, word, false) : service.getPager(group_id, page, criteria, word, true));
     return "myclass/troubleshooting/main";
   }
 
   @GetMapping("/write")
-  public String writePage(int board_id, int project_id, Model model) {
-    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+  public String writePage(int group_id, Model model) {
     GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
-    ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     StackDao stackDao = sqlSession.getMapper(StackDao.class);
 
-    Member user = memberDao.selectMemberByUsername(Helper.userName());
-
-    Group group = groupDao.selectGroupByProjectId(project_id, user.getUsername());
-    Project project = projectDao.selectProject(project_id);
-    Board ts = boardDao.selectTroubleShootingBoard(user.getCourse_id(), project.getSeason(), group.getGroup_no());
+    Group group = groupDao.selectGroupById(group_id);
     
     model.addAttribute("tags", stackDao.showTagList());
     model.addAttribute("group", group);
-    model.addAttribute("ts", ts);
-    model.addAttribute("project", project);
     return "myclass/troubleshooting/write";
   }
 
   @PostMapping("/write")
-  public String writeNewIssue(Article article, int group_id, int project_id, String tag) {
-    return "redirect:/myclass/project/troubleshooting/read?id=" + service.writeIssue(article, group_id, tag) + "&project_id=" + project_id;
+  public String writeNewIssue(Article article, int group_id, String tag) {
+    return "redirect:/myclass/project/troubleshooting/read?id=" + service.writeIssue(article, group_id, tag) + "&group_id=" + group_id;
   }
 
   @GetMapping("/read")
-  public String readIssue(int id, int project_id, Model model) {
-    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+  public String readIssue(int id, int group_id, Model model) {
     GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
-    ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-
-    Member user = memberDao.selectMemberByUsername(Helper.userName());
-
-    Group group = groupDao.selectGroupByProjectId(project_id, user.getUsername());
-    Project project = projectDao.selectProject(project_id);
-    Board ts = boardDao.selectTroubleShootingBoard(user.getCourse_id(), project.getSeason(), group.getGroup_no());
+    Group group = groupDao.selectGroupById(group_id);
 
     Article article = service.getIssue(id);
 
     model.addAttribute("group", group);
-    model.addAttribute("ts", ts);
-    model.addAttribute("project", project);
     model.addAttribute("article", article);
     return "myclass/troubleshooting/detail";
   }
 
   @GetMapping("/change")
-  public String changeIssueStatus(int id, int project_id) {
+  public String changeIssueStatus(int id, int group_id) {
     service.changeIssueStatus(id);
-    return "redirect:/myclass/project/troubleshooting/read?id=" + id + "&project_id=" + project_id;
+    return "redirect:/myclass/project/troubleshooting/read?id=" + id + "&group_id=" + group_id;
   }
   
   @PostMapping("/comment")
-  public String writeComment(Comment comment, int project_id) {
+  public String writeComment(Comment comment, int group_id) {
     service.writeComment(comment);
-    return "redirect:/myclass/project/troubleshooting/read?id=" + comment.getArticle_id() + "&project_id=" + project_id;
+    return "redirect:/myclass/project/troubleshooting/read?id=" + comment.getArticle_id() + "&group_id=" + group_id;
   }
   
   @GetMapping("/delete")
-  public String deleteArticle(int board_id, int project_id, Article article) {
+  public String deleteArticle(int group_id, Article article) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     article = articleDao.selectOneArticle(article.getId());
     service.deleteIssue(article);
-    return "redirect:/myclass/project/troubleshooting?id=" + board_id + "&project_id=" + project_id;
+    return "redirect:/myclass/project/troubleshooting?group_id=" + group_id;
   }
   
   @GetMapping("/delete/comment")
-  public String deleteComment(int project_id, Comment comment) {
+  public String deleteComment(int group_id, Comment comment) {
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     comment = commentDao.selectOneComment(comment.getId());
     service.deleteComment(comment);
-    return "redirect:/myclass/project/troubleshooting/read?id=" + comment.getArticle_id() + "&project_id=" + project_id;
+    return "redirect:/myclass/project/troubleshooting/read?id=" + comment.getArticle_id() + "&group_id=" + group_id;
   }
 }

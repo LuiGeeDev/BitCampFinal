@@ -34,4 +34,6 @@ public interface StackDao {
   List<Article> selectStackArticleByTitle(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
   
   List<Article> selectStackArticleByWriter(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
+
+  List<Article> selectStackArticleByTag(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
 }

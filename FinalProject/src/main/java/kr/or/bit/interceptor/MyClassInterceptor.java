@@ -11,13 +11,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import kr.or.bit.dao.BoardDao;
-import kr.or.bit.dao.GroupDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.ProjectDao;
 import kr.or.bit.model.Board;
 import kr.or.bit.model.Group;
 import kr.or.bit.model.Member;
-import kr.or.bit.model.Project;
 import kr.or.bit.utils.Helper;
 
 public class MyClassInterceptor extends HandlerInterceptorAdapter {
@@ -33,7 +31,7 @@ public class MyClassInterceptor extends HandlerInterceptorAdapter {
     String username = Helper.userName();
     Member user = memberDao.selectMemberByUsername(username);
     List<Board> board = boardDao.selectMyClassBoard(user.getCourse_id());
-    List<Project> projects = projectDao.selectMyProject(username);
+    List<Group> projects = projectDao.selectMyProject(username);
     
     request.setAttribute("boardList", board);
     request.setAttribute("projects", projects);
