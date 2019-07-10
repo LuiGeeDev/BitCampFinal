@@ -11,10 +11,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </insert>
   <update id="updateSchedule">
     UPDATE schedule
-    SET start_date = #{schedule.start_date},
-    end_date = #{schedule.end_date},
-    title = #{schedule.title},
-    color = #{schedule.color},
+    SET start_date = #{start_date},
+    end_date = #{end_date},
+    title = #{title},
+    color = #{color}
     WHERE id = #{id}
   </update>
   <delete id="deleteSchedule">
@@ -22,11 +22,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM schedule
     WHERE id = #{id}
   </delete>
-  <select id="selectAllSchedule"
-    resultType="kr.or.bit.model.Schedule">
-    SELECT id, start_date, end_date, content, color, group_id, course_id
+  <select id="selectSchedule" resultType="kr.or.bit.model.Schedule">
+    SELECT id, start_date, end_date, title, color, group_id, course_id
     FROM schedule
-    WHERE course_id = ${param1} AND group_id = ${param2}
+    WHERE id = #{id}
+  </select>
+  <select id="selectScheduleForClass" resultType="kr.or.bit.model.Schedule">
+    SELECT id, start_date, end_date, title, color, group_id, course_id
+    FROM schedule
+    WHERE course_id = #{course_id}
+    AND group_id = 0
+  </select>
+  <select id="selectScheduleForGroup" resultType="kr.or.bit.model.Schedule">
+    SELECT id, start_date, end_date, title, color, group_id, course_id
+    FROM schedule
+    WHERE course_id = #{course_id}
+    AND group_id IN (0, #{group_id})
   </select>
 </mapper>
   

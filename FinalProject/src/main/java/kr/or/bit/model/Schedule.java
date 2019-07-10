@@ -11,9 +11,25 @@ public class Schedule {
   private String color;
   private int group_id;
   private int course_id;
-  
-  private LocalDate startDateLocal;
-  private LocalDate endDateLocal;
+
+  private LocalDate startLocal;
+  private LocalDate endLocal;
+
+  public LocalDate getStartLocal() {
+    return startLocal;
+  }
+
+  public void setStartLocal(LocalDate startLocal) {
+    this.startLocal = startLocal;
+  }
+
+  public LocalDate getEndLocal() {
+    return endLocal;
+  }
+
+  public void setEndLocal(LocalDate endLocal) {
+    this.endLocal = endLocal;
+  }
 
   public int getId() {
     return id;
@@ -37,22 +53,6 @@ public class Schedule {
 
   public void setEnd_date(Date end_date) {
     this.end_date = end_date;
-  }
-
-  public LocalDate getStartDateLocal() {
-    return startDateLocal;
-  }
-
-  public void setStartDateLocal(LocalDate startDateLocal) {
-    this.startDateLocal = startDateLocal;
-  }
-
-  public LocalDate getEndDateLocal() {
-    return endDateLocal;
-  }
-
-  public void setEndDateLocal(LocalDate endDateLocal) {
-    this.endDateLocal = endDateLocal;
   }
 
   public String getTitle() {

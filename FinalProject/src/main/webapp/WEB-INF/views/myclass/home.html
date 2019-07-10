@@ -124,7 +124,7 @@
                 <input type="date" id="new-end-display" readonly />
                 <div class="calendar-color">
                   <label>색상: </label>
-                  <div class="color red"></div>
+                  <div class="color red active-color"></div>
                   <div class="color coral"></div>
                   <div class="color orange"></div>
                   <div class="color green"></div>
@@ -143,7 +143,7 @@
                 >
                   취소
                 </button>
-                <button type="button" class="btn btn-primary btn-sm">
+                <button id="submit-new-schedule" type="button" class="btn btn-primary btn-sm">
                   생성
                 </button>
               </div>
@@ -178,8 +178,9 @@
                   <div class="color indigo"></div>
                   <div class="color purple"></div>
                 </div>
-                <input type="hidden" value="#FF3B30" name="color" />
+                <input type="hidden" value="rgb(255, 59, 48)" name="color" />
                 <input type="hidden" name="end_date" id="end" />
+                <input type="hidden" name="id" id="id">
               </form>
               <div class="modal-footer">
                 <button
@@ -189,10 +190,10 @@
                 >
                   취소
                 </button>
-                <a th:href="@{/myclass/schedule/delete?id=}" id="delete" class="btn btn-danger btn-sm">
+                <button id="delete" class="btn btn-danger btn-sm">
                   삭제
-                </a>
-                <button type="button" class="btn btn-primary btn-sm">
+                </button>
+                <button id="submit-schedule" type="button" class="btn btn-primary btn-sm">
                   변경
                 </button>
               </div>
@@ -202,7 +203,7 @@
       </div>
     </div>
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-    <script>
+    <script th:inline="javascript">
       const calendarEl = document.getElementById("calendar");
       let calendar = new FullCalendar.Calendar(calendarEl, {
         plugins: ["dayGrid", "interaction"],
@@ -218,34 +219,13 @@
           right: "today prev,next"
         },
         eventTextColor: "white",
-        events: [
+        eventSources: [
           {
-            id: "1",
-            title: "조 회식",
-            start: "2019-07-05",
-            color: "rgb(255, 111, 97)"
-          },
-          { 
-            id: "2",
-            title: "비트캠프 졸업",
-            start: "2019-07-30",
-            color: "coral",
-            textColor: "white"
-          },
-          {
-            id: "3",
-            title: "호텔 델루나 첫방송",
-            start: "2019-07-13",
-            end: "2019-07-15",
-            color: "rgb(255, 111, 97)",
-            textColor: "white"
-          },
-          {
-            id: "4",
-            title: "회식",
-            start: "2019-06-24",
-            end: "2019-06-24",
-            textColor: "white"
+            url: "/myclass/schedule/get/class",
+            method: "post",
+            extraParams: {
+              course_id: [[${user.course_id}]]
+            }
           }
         ]
       });
@@ -293,12 +273,7 @@
           $("#end").val(formatDate(event.start));
         }
         
-        const href = $("#delete").prop("href");
-        if (href.charAt(href.length - 1) !== "=") {
-          $("#delete").prop("href", href.slice(0, -1) + event.id);
-        } else {
-          $("#delete").prop("href", href + event.id);
-        }
+        $("#id").val(event.id);
         
         $("#schedule-modal").modal("show");
       });
@@ -307,6 +282,51 @@
         $(".color").removeClass("active-color");
         $(event.target).addClass("active-color");
         $("input[name='color']").val($(event.target).css("backgroundColor"));
+      });
+      
+      $("#submit-new-schedule").click(function() {
+        const formData = new FormData($("#new-schedule")[0]);
+        $.ajax({
+          url: "/myclass/schedule/insert/class",
+          method: "post",
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function(data) {
+            console.log(data);
+          }
+        }).then(function() {
+          $("#new-schedule-modal").modal("hide");
+        });
+      });
+      
+      $("#submit-schedule").click(function() {
+        const formData = new FormData($("#schedule")[0]);
+        $.ajax({
+          url: "/myclass/schedule/update/class",
+          method: "post",
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function(data) {
+            console.log(data);
+          }
+        }).then(function() {
+          $("#schedule-modal").modal("hide");
+        });
+      });
+      
+      $("#delete").click(function() {
+        $.ajax({
+          url: "/myclass/schedule/delete/class",
+          data: {id : $("#id").val()},
+          method: "post",
+          success: function(data) {
+            console.log(data);
+          }
+        }).then(function() {
+          $("#schedule-modal").modal("hide");
+        });
       });
     </script>
     <script
