@@ -43,7 +43,7 @@ public class QnaController {
   //메인으로 이동
   @GetMapping("/qna/home")
   public String selectAllQna(Model model) {
-    List<Article> article = articleService.selectAllArticle("qna",QNA_BOARD_ID);
+    List<Article> article = articleService.selectAllArticle("qna",QNA_BOARD_ID, null);
     model.addAttribute("qnalist",article);
     
     return "myclass/qna/home";
