@@ -22,6 +22,7 @@ import kr.or.bit.model.Comment;
 import kr.or.bit.model.General;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.BoardService;
+import kr.or.bit.utils.Helper;
 import kr.or.bit.utils.Pager;
 
 @Controller
@@ -157,15 +158,16 @@ public class BoardController {
   public String replyWrite(Model model, int board_id, int article_id) {
     model.addAttribute("article", articleService.selectOneArticle("general", article_id));
     model.addAttribute("board", boardService.getBoardInfo(board_id));
-    return "myclass/board/generalEdit";
+    return "myclass/general/generalBoardrWriteReply";
   }
 
   @PostMapping("/replyWrite")
   public String replyWrite(Article article, MultipartFile file1, MultipartFile file2, HttpServletRequest request) {
-    
+    System.out.println(article);
     article.setLevel(article.getLevel()+1);
-    
-    return "redirect:/myclass/board/read?article_id=" + boardService.writeArticle(article, file1, file2, request)
+    System.out.println(article.getLevel());
+    System.out.println("after :" +article);
+    return "redirect:/myclass/board/read?article_id=" + boardService.writeReplyArticle(article, file1, file2, request)
         + "&board_id=" + article.getBoard_id();
   }
 }
