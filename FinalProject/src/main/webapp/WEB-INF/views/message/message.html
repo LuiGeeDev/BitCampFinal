@@ -103,7 +103,7 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary"
               data-dismiss="modal" id="modal-close-btn">닫기</button>
-            <button type="button" class="btn btn-primary"
+            <button type="button" class="btn btn-primary message-submitBtn"
               id="modal-submitbtn">전송</button>
           </div>
         </div>
@@ -126,6 +126,15 @@
     $("#modal-submitbtn").click(function() {
       const messageText = $("#message-text").val();
       const messageSenderId = $("#message-sender-id").text();
+      let valueCheck = messageText;         
+      
+	  	if(valueCheck.trim() === "" || valueCheck === null) {
+	  	  Swal.fire({
+	  	    type: 'error',
+	  	    text: '다시 입력해주세요 !!',
+	  	  })
+	  	  	return;
+	  	}
       $.ajax({
         url: "/ajax/message/reply",
         type: "POST",
@@ -270,6 +279,7 @@
         $(".receiver").remove();
         $(".modal").css("display", "none");
       });
+
     </script>
 </body>
 </html>

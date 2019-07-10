@@ -28,6 +28,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	delete from groups 
 	where id=#{id}
   </delete>
+  <select id="selectGroupById" resultType="kr.or.bit.model.Group">
+    SELECT id, group_no, link1, link2, link3, leader_name, project_id
+    FROM GROUPS
+    WHERE id = #{id}
+  </select>
   <update id="updateGrouplink">
 	update groups
 	set #{link} = #{content}

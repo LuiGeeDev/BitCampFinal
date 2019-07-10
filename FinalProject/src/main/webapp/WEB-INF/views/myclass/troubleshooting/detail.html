@@ -38,8 +38,9 @@
           </p>
         </div>
         <div class="button-wrapper">
-          <a th:if="${user.username == article.username}" th:href="@{/myclass/project/troubleshooting/delete(board_id=${ts.id}, project_id=${project.id}, id=${article.id})}" class="btn btn-outline-primary btn-sm">삭제</a>
-          <a th:href="@{/myclass/project/troubleshooting/write(board_id=${ts.id}, project_id=${project.id})}" class="btn btn-outline-primary btn-sm">새로 올리기</a>
+          <a th:if="${user.username == article.username}" th:href="@{/myclass/project/troubleshooting/edit(group_id=${group.id}, id=${article.id})}" class="btn btn-outline-primary btn-sm">수정</a>
+          <a th:if="${user.username == article.username}" th:href="@{/myclass/project/troubleshooting/delete(group_id=${group.id}, id=${article.id})}" class="btn btn-outline-primary btn-sm">삭제</a>
+          <a th:href="@{/myclass/project/troubleshooting/write(group_id=${group.id})}" class="btn btn-outline-primary btn-sm">새로 올리기</a>
         </div>
         </div>
       </div>
@@ -83,7 +84,7 @@
             <div class="issue-content" th:utext="${comment.content}">
               잘되네요. @권예지 도 되나요?
             </div>
-            <a th:if="${comment.username == user.username}" th:href="@{/myclass/project/troubleshooting/delete/comment(id=${comment.id}, article_id=${article.id}, project_id=${project.id})}" class="delete-btn">
+            <a th:if="${comment.username == user.username}" th:href="@{/myclass/project/troubleshooting/delete/comment(id=${comment.id}, article_id=${article.id}, group_id=${group.id})}" class="delete-btn">
               <i class="far fa-times-circle"></i>
             </a>
           </div>
@@ -97,10 +98,10 @@
             th:src="@{/resources/images/{picture}(picture=${user.profile_photo})}"
             alt=""
           />
-          <form class="write-form" method="post" th:action="@{/myclass/project/troubleshooting/comment}">
+          <form class="write-form" method="post" th:action="@{/myclass/project/troubleshooting/comment}" id="comment-submit">
             <div class="content">
               <input type="hidden" name="article_id" th:value="${article.id}">
-              <input type="hidden" name="project_id" th:value="${project.id}">
+              <input type="hidden" name="group_id" th:value="${group.id}">
               <textarea
                 name="content"
                 id="content"
@@ -109,7 +110,7 @@
             </div>
             <div class="form-footer">
               <a
-                th:href="@{/myclass/project/troubleshooting/change(id=${article.id}, project_id=${project.id})}"
+                th:href="@{/myclass/project/troubleshooting/change(id=${article.id}, group_id=${group.id})}"
                 class="btn btn-outline-success" 
                 th:if="${user.username == article.username and article.option.issue_closed == 0}"
                 data-toggle="tooltip" 
@@ -119,7 +120,7 @@
                 해결됨
               </a>
               <a 
-                th:href="@{/myclass/project/troubleshooting/change(id=${article.id}, project_id=${project.id})}" 
+                th:href="@{/myclass/project/troubleshooting/change(id=${article.id}, group_id=${group.id})}" 
                 class="btn btn-outline-danger" 
                 th:if="${user.username == article.username and article.option.issue_closed == 1}"
                 data-toggle="tooltip" 
@@ -144,6 +145,12 @@
         placeholder: "댓글을 남겨주세요",
         height: 100,
         width: 700
+      });
+
+      $("#comment-submit").submit(function() {
+        if ([[${user.username}]] !== [[${article.username}]]) {
+          sendCommentNotice([[${user.name}]], [[${article.username}]], window.location.href);
+        }
       });
     </script>
   </body>

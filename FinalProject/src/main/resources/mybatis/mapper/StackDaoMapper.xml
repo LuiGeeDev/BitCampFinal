@@ -139,4 +139,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM comment
 		WHERE id=#{id};
 	</select>
+	<delete id="deleteTag">
+		DELETE 
+		FROM ARTICLE_TAG
+		WHERE article_id = #{article_id}
+	</delete>
 </mapper>

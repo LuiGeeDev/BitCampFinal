@@ -19,6 +19,10 @@ import kr.or.bit.utils.Pager;
  */
 public interface ArticleDao {
   void insertArticle(Article article);
+  
+  void insertTroubleShootingArticle(@Param("article") Article article, @Param("group_id") int group_id);
+  
+  void updateTroubleShootingArticle(Article article);
 
   void insertReplyArticle(Article article);
 
@@ -62,14 +66,14 @@ public interface ArticleDao {
 
   List<Tag> selectTagList(int article_id);
   
-  List<Article> selectAllIssuesOpened(@Param("board_id") int board_id, @Param("criteria") String criteria, @Param("word") String word);
+  List<Article> selectAllIssuesOpened(@Param("group_id") int group_id, @Param("criteria") String criteria, @Param("word") String word);
   
-  List<Article> selectAllIssuesClosed(@Param("board_id") int board_id, @Param("criteria") String criteria, @Param("word") String word);
+  List<Article> selectAllIssuesClosed(@Param("group_id") int group_id, @Param("criteria") String criteria, @Param("word") String word);
 
-  List<Article> selectIssuesOpenedByPage(@Param("board_id") int board_id, @Param("pager") Pager pager,
+  List<Article> selectIssuesOpenedByPage(@Param("group_id") int group_id, @Param("pager") Pager pager,
       @Param("criteria") String criteria, @Param("word") String word);
 
-  List<Article> selectIssuesClosedByPage(@Param("board_id") int board_id, @Param("pager") Pager pager,
+  List<Article> selectIssuesClosedByPage(@Param("group_id") int group_id, @Param("pager") Pager pager,
       @Param("criteria") String criteria, @Param("word") String word);
   
   void updateArticleViewCount(Article article);

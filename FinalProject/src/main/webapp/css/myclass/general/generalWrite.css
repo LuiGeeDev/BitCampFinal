@@ -81,8 +81,6 @@ input[type=file] {
   display: flex;
 }
 
-.download-content, .download-button {
-  -webkit-justify-content: space-between;
-  justify-content: space-between;
+.filebutton {
+  margin-left:auto;
 }
-

@@ -12,6 +12,10 @@
       <h3>
         <b>스택게시판</b>
       </h3>
+       <div class="spinner-border text-warning spin-where"
+          role="status" id="spinner">
+          <span class="sr-only">Loading...</span>
+        </div>
     </div>
     <!-- 게시물컨텐트 -->
     <hr>
@@ -23,8 +27,8 @@
             th:style="'background-color:'+@{${tag.color}}+';'">[[${tag.tag}]]</span>
         </span></td>
         <td colspan="1" id="contenteditor"><a
-          th:href="@{/stack/edit(id=${stackcontent.id})}">[수정]</a> <a
-          th:href="@{/stack/delete(id=${stackcontent.id})}">[삭제]</a></td>
+          th:href="@{/stack/edit(id=${stackcontent.id})}" class="updateBtn">[수정]</a> 
+          <span class="deleteBtn" id="deleteCheck">[삭제]</span></td>
       </tr>
       <tr>
         <td colspan="4" class="tdtitle"><span
@@ -122,6 +126,14 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <script th:inline="javascript">
+  $(document).ready(function() {
+    $("#spinner").hide();
+  }).ajaxStart(function() {
+    $("#spinner").show();
+  }).ajaxStop(function() {
+    $("#spinner").hide();
+  });
+
       var currentPosition = parseInt($("#floatMenu").css("top"));
       $(window).scroll(function() {
         var position = $(window).scrollTop();
@@ -139,7 +151,7 @@
   	  	    text: '다시 입력해주세요 !!',
   	  	  })
   	  	  	return;
-  	  	}
+  	  	} 
         	const articleId = [[${stackcontent.id}]];
     	 	const commentContent = $(".comtext").val();
     	 	const username = [[${user.username}]];
@@ -204,7 +216,36 @@
         });
       });
       
-    </script>
+      
+      $(".deleteBtn").unbind("click");
+      $(".deleteBtn").click(function(event) {
+        Swal.fire({
+          title: '정말 삭제하시겠습니까?',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#F39B10',
+          cancelButtonColor: '#A6A6A6',
+          confirmButtonText: '네',
+          cancelButtonText: '아니요'
+        }).then((result) => {
+          if (result.value) {
+            Swal.fire({
+            	title: '삭제되었습니다',
+            	type: 'success',
+            	confirmButtonText: '확인',
+            	confirmButtonColor: '#F39B10'
+          }).then(function() {
+            location.href="/stack/delete?id=" + [[${stackcontent.id}]];
+          });
+          }
+        })
+      });
+      
+      
+    
+      
+      
+      </script>
 </body>
 </html>
 

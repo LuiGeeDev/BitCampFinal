@@ -10,8 +10,17 @@ public class Group {
   private String link3;
   private String leader_name;
   private int project_id;
-  
+
+  private String project_name;
   private List<Member> groupMember;
+
+  public String getProject_name() {
+    return project_name;
+  }
+
+  public void setProject_name(String project_name) {
+    this.project_name = project_name;
+  }
 
   public int getId() {
     return id;

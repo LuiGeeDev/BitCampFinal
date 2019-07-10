@@ -29,16 +29,18 @@
           <form class="write-form" method="post">
             <input type="hidden" name="group_id" th:value="${group.id}" />
             <div class="title">
-              <input type="text" name="title" id="title" placeholder="제목" />
+              <input type="text" name="title" id="title" placeholder="제목" th:value="${article.title}"/>
             </div>
             <div class="content">
-              <textarea name="content" id="content"></textarea>
+              <textarea name="content" id="content" th:field="*{article.content}"></textarea>
             </div>
             <div id="input-tag">
-              <textarea class="hidden" id="select-result" name="tag"></textarea>
+              <textarea class="hidden" id="select-result" name="tag">
+                <th:block th:each="tag : ${articleTags}" th:text="'#' + ${tag}"></th:block>
+              </textarea>
               <span id="tagWrapper"><b>태그 </b></span>
               <ol id="selectable">
-                <li class="ui-widget-content" th:each="tag : ${tags}">
+                <li class="ui-widget-content" th:each="tag : ${tags}" th:classappend="${#lists.contains(articleTags, tag.tag)} ? 'ui-selected'">
                   #[[${tag.tag}]]
                 </li>
               </ol>

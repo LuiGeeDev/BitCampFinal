@@ -31,32 +31,32 @@ public class TroubleShootingService {
   @Autowired
   private TagService tagService;
   
-  public Pager getPager(int board_id, int page, String criteria, String word, boolean closed) {
+  public Pager getPager(int group_id, int page, String criteria, String word, boolean closed) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
-    int totalArticles = closed ? articleDao.selectAllIssuesClosed(board_id, criteria, word).size() : articleDao.selectAllIssuesOpened(board_id, criteria, word).size();
+    int totalArticles = closed ? articleDao.selectAllIssuesClosed(group_id, criteria, word).size() : articleDao.selectAllIssuesOpened(group_id, criteria, word).size();
     Pager pager = new Pager(page, totalArticles);
     return pager;
   }
   
-  public int numberOfIssueOpened(int board_id, String criteria, String word) {
+  public int numberOfIssueOpened(int group_id, String criteria, String word) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
-    return articleDao.selectAllIssuesOpened(board_id, criteria, word).size();
+    return articleDao.selectAllIssuesOpened(group_id, criteria, word).size();
   }
   
-  public int numberOfIssueClosed(int board_id, String criteria, String word) {
+  public int numberOfIssueClosed(int group_id, String criteria, String word) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
-    return articleDao.selectAllIssuesClosed(board_id, criteria, word).size();
+    return articleDao.selectAllIssuesClosed(group_id, criteria, word).size();
   }
   
-  public List<Article> getIssueOpened(int board_id, int page, String criteria, String word) {
+  public List<Article> getIssueOpened(int group_id, int page, String criteria, String word) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     TroubleShootingDao troubleShootingDao = sqlSession.getMapper(TroubleShootingDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     StackDao stackDao = sqlSession.getMapper(StackDao.class);
     
-    Pager pager = new Pager(page, articleDao.selectAllIssuesOpened(board_id, criteria, word).size()); 
-    List<Article> articleList = articleDao.selectIssuesOpenedByPage(board_id, pager, criteria, word);
+    Pager pager = new Pager(page, articleDao.selectAllIssuesOpened(group_id, criteria, word).size()); 
+    List<Article> articleList = articleDao.selectIssuesOpenedByPage(group_id, pager, criteria, word);
     for (Article article : articleList) {
       article.setCommentlist(commentDao.selectAllComment(article.getId()));
       article.setOption(troubleShootingDao.selectTroubleShootingByArticleId(article.getId()));
@@ -68,15 +68,15 @@ public class TroubleShootingService {
     return articleList;
   }
   
-  public List<Article> getIssueClosed(int board_id, int page, String criteria, String word) {
+  public List<Article> getIssueClosed(int group_id, int page, String criteria, String word) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     TroubleShootingDao troubleShootingDao = sqlSession.getMapper(TroubleShootingDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     StackDao stackDao = sqlSession.getMapper(StackDao.class);
     
-    Pager pager = new Pager(page, articleDao.selectAllIssuesClosed(board_id, criteria, word).size()); 
-    List<Article> articleList = articleDao.selectIssuesClosedByPage(board_id, pager, criteria, word);
+    Pager pager = new Pager(page, articleDao.selectAllIssuesClosed(group_id, criteria, word).size()); 
+    List<Article> articleList = articleDao.selectIssuesClosedByPage(group_id, pager, criteria, word);
     for (Article article : articleList) {
       article.setCommentlist(commentDao.selectAllComment(article.getId()));
       article.setOption(troubleShootingDao.selectTroubleShootingByArticleId(article.getId()));
@@ -117,13 +117,15 @@ public class TroubleShootingService {
     List<String> tagList = new ArrayList<>();
     String[] splitStr = tag.split("#");
     for (int i = 1; i < splitStr.length; i++) {
-      tagList.add(splitStr[i]);
+      tagList.add(splitStr[i].trim());
     }
     List<Tag> tags = tagService.selectTagByName(tagList);
     
     article.setTags(tags);
     article.setUsername(Helper.userName());
-    articleDao.insertArticle(article);
+    articleDao.insertTroubleShootingArticle(article, group_id);
+    System.out.println(tagList);
+    System.out.println(articleDao.getMostRecentArticleId());
     tagService.insertTag(tagList, articleDao.getMostRecentArticleId());
     
     TroubleShooting troubleshooting = new TroubleShooting();
@@ -153,5 +155,23 @@ public class TroubleShootingService {
   public void deleteComment(Comment comment) {
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     commentDao.deleteComment(comment.getId());
+  }
+  
+  @Transactional
+  public void updateIssue(Article article, int group_id, String tag) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    List<String> tagList = new ArrayList<>();
+    String[] splitStr = tag.split("#");
+    for (int i = 1; i < splitStr.length; i++) {
+      tagList.add(splitStr[i].trim());
+    }
+    List<Tag> tags = tagService.selectTagByName(tagList);
+    article.setTags(tags);
+    article.setUsername(Helper.userName());
+    articleDao.updateTroubleShootingArticle(article);
+    
+    tagService.deleteTag(article.getId());
+    tagService.insertTag(tagList, article.getId());
+    
   }
 }

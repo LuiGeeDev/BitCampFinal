@@ -2,6 +2,7 @@ package kr.or.bit.dao;
 
 import java.util.List;
 
+import kr.or.bit.model.Group;
 import kr.or.bit.model.Project;
 
 /*
@@ -22,7 +23,7 @@ public interface ProjectDao {
 
   List<Project> selectAllProject(int course_id);
   
-  List<Project> selectMyProject(String username);
+  List<Group> selectMyProject(String username);
   
   Project selectRecentProject(int course_id);
   
