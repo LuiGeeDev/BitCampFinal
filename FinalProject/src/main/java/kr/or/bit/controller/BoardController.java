@@ -1,6 +1,6 @@
 package kr.or.bit.controller;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +35,8 @@ public class BoardController {
   /*
   @GetMapping("")
   public String listPage(int board_id, @RequestParam(defaultValue = "1") int page,
-      @RequestParam(required = false) String sort, @RequestParam(required = false) String search, @RequestParam(required = false) String criteria, Model model) {
+      @RequestParam(required = false) String sort, @RequestParam(required = false) String search,
+      @RequestParam(required = false) String criteria, Model model) {
     List<Article> articles = null;
     if (sort == null && search == null) {
       articles = boardService.getArticlesByPage(board_id, page);
@@ -44,10 +45,8 @@ public class BoardController {
     } else if (search != null) {
       articles = boardService.getArticlesBySearchWord(board_id, page, search, criteria);
     }
-
     model.addAttribute("board", boardService.getBoardInfo(board_id));
     model.addAttribute("articles", articles);
-
     return "myclass/general/generalBoard";
   }
   */
@@ -93,7 +92,8 @@ public class BoardController {
 
   @PostMapping("/write")
   public String writeArticle(Article article, MultipartFile file1, MultipartFile file2, HttpServletRequest request) {
-    return "redirect:/myclass/board/read?article_id=" + boardService.writeArticle(article, file1, file2, request) + "&board_id=" + article.getBoard_id();
+    return "redirect:/myclass/board/read?article_id=" + boardService.writeArticle(article, file1, file2, request)
+        + "&board_id=" + article.getBoard_id();
   }
 
   @GetMapping("/read")
@@ -109,18 +109,14 @@ public class BoardController {
     Article article = boardService.getArticleForUpdateOrDelete(article_id);
     model.addAttribute("article", article);
     model.addAttribute("board", boardService.getBoardInfo(board_id));
-    System.out.println(article);
     return "myclass/general/generalEdit";
   }
 
   @PostMapping("/edit")
-  public String updateArticle(Article article, MultipartFile file1, MultipartFile file2, int board_id, HttpServletRequest request) {
-    List<MultipartFile> files = new ArrayList<>();
-    files.add(file1);
-    files.add(file2);
-    boardService.updateArticle(article, files, request);
+  public String updateArticle(Article article, MultipartFile file1, MultipartFile file2, int board_id, HttpServletRequest request) throws IllegalStateException, IOException {
+    boardService.updateArticle(article, file1, file2, request);
     
-    System.out.println(article);
+   
     return "redirect:/myclass/board/read?article_id=" + article.getId() + "&board_id=" + article.getBoard_id(); 
   }
 
@@ -130,19 +126,22 @@ public class BoardController {
     boardService.deleteArticle(article);
     return "redirect:/myclass/board?board_id=" + article.getBoard_id();
   }
-  
+
   @PostMapping("/commentwrite")
   public @ResponseBody List<Comment> commentWrite(int article_id, Comment comment) {
     boardService.writeComment(article_id, comment);
     List<Comment> commentList = boardService.getCommentList(article_id);
     return commentList;
   }
-  
+
   @GetMapping("/commentdelete")
-  
   public String commentDelete(int article_id, int board_id, int comment_id) {
     boardService.deleteComment(comment_id);
     return "redirect:/myclass/board/read?article_id=" + article_id + "&board_id=" + board_id;
   }
- 
+  
+  @GetMapping("/deletefile")
+  public void fileDelete() {
+      System.out.println("타요!");
+  }
 }

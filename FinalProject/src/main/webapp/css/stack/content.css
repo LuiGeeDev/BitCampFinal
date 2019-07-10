@@ -82,12 +82,14 @@ th, td {
 .td7 {
   width:15%;
 }
-
+.td8 {
+  width: 3%;
+}
 .tag-name span {
   border-radius: 5px;
-  background-color: green;
   color: white;
   padding: 5px;
+  line-height: 2.0em;
 }
 
 #c1 {
@@ -208,7 +210,7 @@ th, td {
   
 }
 #contenteditor{
-  width: 40%;
+  width: 10%;
   text-align: right;
 }
 

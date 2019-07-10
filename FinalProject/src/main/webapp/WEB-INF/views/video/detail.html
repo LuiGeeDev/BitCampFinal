@@ -93,12 +93,14 @@
       </div>
       <div id="buttonWrapper">
         <a
+          th:if="${article.username}==${user.username}"
           class="btn btn-primary btn-sm"
           th:href="@{/video/edit(id=${article.id},video_id=${article.option.video_id})}"
         >
           수정
         </a>
         <a
+          th:if="${article.username}==${user.username}"
           class="btn btn-primary btn-sm"
           th:href="@{/video/delete(id = ${article.id})}"
           id="deletebtn"
@@ -198,6 +200,7 @@
               const content = item.content;
               const username = item.writer.name;
               const time = Number(item.time);
+              console.log(new Date(item.time));
               const date = new Date(time);
               const commentId = item.id;
               const articleId = item.article_id;
@@ -207,8 +210,14 @@
               minutes = (minutes < 10) ? "0" + minutes : minutes;
               let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
               hours = hours < 10 ? "0" +  hours : hours;
+              let getdate = date.getDate();
+              getdate = (getdate < 10) ? "0" + getdate : getdate;
+              let getmonth = date.getMonth() + 1;
+              getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
               
-              const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDay()}일 ` + hours +`:` + minutes;
+              console.log(getmonth);
+                  
+              const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ hours +`:` + minutes;
               
 			  let equalName = null;           
               if(item.username == [[${user.username}]]) {

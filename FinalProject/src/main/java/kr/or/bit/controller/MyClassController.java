@@ -94,7 +94,6 @@ public class MyClassController {
     String teacherName = Helper.userName();
     Member teacher = memberDao.selectMemberByUsername(teacherName); // 강사 저장
     int course_id = teacher.getCourse_id();
-    System.out.println("course_id: " + course_id);
     project.setCourse_id(course_id);
     projectDao.insertProject(project);
     Project newProject = projectDao.selectRecentProject(course_id);
@@ -127,7 +126,7 @@ public class MyClassController {
     
     for (int i = 1; i <= leaderList.size(); i++) {
       Board board = new Board();
-      board.setBoard_name("트러블슈팅" + i);
+      board.setBoard_name("트러블슈팅" + newProject.getSeason() + i);
       board.setBoardtype(6);
       board.setCourse_id(course_id);
       boardDao.insertBoard(board);

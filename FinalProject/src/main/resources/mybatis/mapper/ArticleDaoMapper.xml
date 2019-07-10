@@ -178,6 +178,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ON a.id = ts.article_id
     WHERE board_id = #{board_id}
     AND ts.issue_closed = 0
+    AND a.enable = 1
     <if test="criteria == 'title'">
       AND title like '%${word}%'
     </if>
@@ -196,6 +197,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ON a.id = ts.article_id
     WHERE board_id = #{board_id}
     AND ts.issue_closed = 1
+    AND a.enable = 1
     <if test="criteria == 'title'">
       AND title like '%${word}%'
     </if>
@@ -214,6 +216,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ON a.id = ts.article_id
     WHERE board_id = #{board_id}
     AND ts.issue_closed = 0
+    AND a.enable = 1
     <if test="criteria == 'title'">
       AND title like '%${word}%'
     </if>
@@ -233,6 +236,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ON a.id = ts.article_id
     WHERE board_id = #{board_id}
     AND ts.issue_closed = 1
+    AND a.enable = 1
     <if test="criteria == 'title'">
       AND title like '%${word}%'
     </if>

@@ -25,8 +25,8 @@
           <ol id="selectable">
             <li class="ui-widget-content" th:each="tag : ${tags}">#[[${tag.tag}]]</li>
           </ol>
-           <div class=submit-btn>
-          <button type="submit" id="submitbtn" class="btn btn-primary">올리기</button>
+          <div class="submit-btn">
+            <button type="submit" id="submitbtn" class="btn btn-primary">올리기</button>
           </div>
         </div>
       </div>
@@ -47,7 +47,7 @@
         });
       });
       $('#summernote').summernote({
-        placeholder : 'Hello bootstrap 4',
+        placeholder : '질문할 내용을 적어주세요',
         tabsize : 2,
         height : 500
       });

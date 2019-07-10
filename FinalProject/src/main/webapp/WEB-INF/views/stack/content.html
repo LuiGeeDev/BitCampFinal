@@ -17,12 +17,12 @@
     <hr>
     <table>
       <tr>
-        <td colspan="2" class="td1"><span
+        <td colspan="3" class="td1"><span
           class="tag-name iteration"
           th:each="tag : ${stackcontent.tags}"> <span
             th:style="'background-color:'+@{${tag.color}}+';'">[[${tag.tag}]]</span>
         </span></td>
-        <td colspan="2" id="contenteditor"><a
+        <td colspan="1" id="contenteditor"><a
           th:href="@{/stack/edit(id=${stackcontent.id})}">[수정]</a> <a
           th:href="@{/stack/delete(id=${stackcontent.id})}">[삭제]</a></td>
       </tr>
@@ -41,7 +41,7 @@
             <a th:href="@{/stack/plusvote(id=${stackcontent.id})}">
               <img th:src="@{/css/stack/like.png}" id="imgp2">
             </a><br> &nbsp;<span th:text="${stackcontent.vote_count}"></span>
-            <br> <img th:src="@{/css/stack/unlike.png}" id="imgp2">
+            <br> <img th:src="@{/css/stack/bookmark.png}" id="imgp2">
           </div>
         </td>
       </tr>
@@ -50,7 +50,7 @@
           class="imgp"></td>
         <td colspan="2" class="td4">
           <p class="pwriter">
-            <span th:text="${stackcontent.writer.username}"></span>
+            <span th:text="${stackcontent.writer.name}"></span>
           </p>
           <p class="pfont">
             게시일:<span th:text="${stackcontent.updated_time}"></span>
@@ -70,13 +70,9 @@
       </tr>
       <tr>
         <td class="ctd1" colspan="3">
-          <form
-            th:action="@{/stack/commentwrite(id=${stackcontent.id})}"
-            method="post">
             <textarea name="content" class="comtext"></textarea>
             <br> <input type="submit"
               class="btn btn-primary btnalign" value="등록">
-          </form>
         </td>
         <td class="ctd2"></td>
       </tr>
@@ -91,21 +87,23 @@
     <table th:unless="${stackcontent.commentlist.size()==0}"
       class="iteration" th:each="list : ${stackcontent.commentlist}">
       <tr>
-        <td class="td3"><img th:src="@{/css/stack/profile2.png}"
-          class="profileImg"></td>
-        <td>[[${list.writer.name}]] <a
+        <td class="td8"><i
+            class="fas fa-user-circle fa-lg fa-2x"></i></td>
+        <td>[[${list.name}]] <a
           th:href="@{/stack/commentdelete(id=${list.id})}">[삭제]</a><br>
-          <span class="commentCalender">[[${list.updated_time}]]</span></td>
+          <span class="commentCalender" th:text = "${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span></td>
         <td class="td7"></td>
       </tr>
       <tr>
         <td colspan="2" class="td6">[[${list.content}]]</td>
         <td></td>
       </tr>
+      <span class="hidden" th:text="${list.id}"></span>
     </table>
 
   </div>
-  <script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+  <script th:inline="javascript">
       var currentPosition = parseInt($("#floatMenu").css("top"));
       $(window).scroll(function() {
         var position = $(window).scrollTop();
@@ -114,6 +112,36 @@
         }, 1500);
       });
 
+      $(".btnalign").click(function() {
+        let valueCheck = $(".comtext").val();         
+        
+  	  	if(valueCheck.trim() === "" || valueCheck === null) {
+  	  	  Swal.fire({
+  	  	    type: 'error',
+  	  	    text: '다시 입력해주세요 !!',
+  	  	  })
+  	  	  	return;
+  	  	}
+        
+    	 	const commentContent = $(".comtext").val();
+    	 	const username = [[${user.username}]];
+    	 	
+    	 	
+    	 	console.log(commentContent);
+    	 	
+    	 	const formData = new FormData();
+    	 	formData.append("article_id", articleId);
+    	 	formData.append("content", commentContent);
+    	 	formData.append("username", username);
+  	  	
+  	  	
+  	  	
+  	  	
+      });
+      
+      /* <form
+      th:action="@{/stack/commentwrite(id=${stackcontent.id})}"
+      method="post"> */
     </script>
 </body>
 </html>

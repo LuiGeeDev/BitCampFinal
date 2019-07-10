@@ -18,7 +18,18 @@ public class Comment {
   private String profile_photo;
   
   private Member writer;
+  private String name;
   
+  
+  
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
   public Member getWriter() {
     return writer;
   }

@@ -242,7 +242,7 @@
           data: JSON.stringify(project),
           dataType: "json",
           contentType: "application/json"
-        }).done(function() {
+        }).catch(function() {
           location.href = "/myclass/setting";
         });
       });
