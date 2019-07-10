@@ -12,6 +12,10 @@
       <h3>
         <b>스택게시판</b>
       </h3>
+       <div class="spinner-border text-warning spin-where"
+          role="status" id="spinner">
+          <span class="sr-only">Loading...</span>
+        </div>
     </div>
     <!-- 게시물컨텐트 -->
     <hr>
@@ -23,8 +27,8 @@
             th:style="'background-color:'+@{${tag.color}}+';'">[[${tag.tag}]]</span>
         </span></td>
         <td colspan="1" id="contenteditor"><a
-          th:href="@{/stack/edit(id=${stackcontent.id})}" class="btn btn-primary updateBtn">수정</a> <a
-          th:href="@{/stack/delete(id=${stackcontent.id})}" class="btn btn-primary deleteBtn">삭제</a></td>
+          th:href="@{/stack/edit(id=${stackcontent.id})}" class="updateBtn">[수정]</a> 
+          <span class="deleteBtn" id="deleteCheck">[삭제]</span></td>
       </tr>
       <tr>
         <td colspan="4" class="tdtitle"><span
@@ -106,6 +110,14 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <script th:inline="javascript">
+  $(document).ready(function() {
+    $("#spinner").hide();
+  }).ajaxStart(function() {
+    $("#spinner").show();
+  }).ajaxStop(function() {
+    $("#spinner").hide();
+  });
+
       var currentPosition = parseInt($("#floatMenu").css("top"));
       $(window).scroll(function() {
         var position = $(window).scrollTop();
@@ -188,9 +200,9 @@
         });
       });
       
+      
       $(".deleteBtn").unbind("click");
       $(".deleteBtn").click(function(event) {
-        event.preventDefault();
         Swal.fire({
           title: '정말 삭제하시겠습니까?',
           type: 'warning',
@@ -206,7 +218,9 @@
             	type: 'success',
             	confirmButtonText: '확인',
             	confirmButtonColor: '#F39B10'
-          })
+          }).then(function() {
+            location.href="/stack/delete?id=" + [[${stackcontent.id}]];
+          });
           }
         })
       });

@@ -38,6 +38,7 @@
           </p>
         </div>
         <div class="button-wrapper">
+          <a th:if="${user.username == article.username}" th:href="@{/myclass/project/troubleshooting/edit(group_id=${group.id}, id=${article.id})}" class="btn btn-outline-primary btn-sm">수정</a>
           <a th:if="${user.username == article.username}" th:href="@{/myclass/project/troubleshooting/delete(group_id=${group.id}, id=${article.id})}" class="btn btn-outline-primary btn-sm">삭제</a>
           <a th:href="@{/myclass/project/troubleshooting/write(group_id=${group.id})}" class="btn btn-outline-primary btn-sm">새로 올리기</a>
         </div>

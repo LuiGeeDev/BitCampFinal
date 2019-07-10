@@ -74,10 +74,8 @@ public class ArticleService {
         option = troubleShootingDao.selectTroubleShootingByArticleId(article.getId());
         break;
       case "general":
-        System.out.println("여기 2");
         GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
         option = generalDao.selectGeneralByArticleId(article.getId());
-        System.out.println("여기 3");
         break;
       case "qna":
         QnaDao qnaDao = sqlSession.getMapper(QnaDao.class);
@@ -234,12 +232,10 @@ public class ArticleService {
   }
   
   public List<Article> selectAllArticlesByBoardSearch(int boardId, Pager pager, String boardSearch, String criteria) {
-    ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
     List<Article> articleList = null;
-    
     if(criteria.equals("titleOrContent")) {
       articleList = generalDao.selectGeneralArticlesByTitleOrContent(boardId, pager, boardSearch);
     }else if(criteria.equals("title")) {
@@ -247,13 +243,10 @@ public class ArticleService {
     }else {
       articleList = generalDao.selectGeneralArticlesByWriter(boardId, pager,boardSearch);
     }
-    
     for (Article article : articleList) {
       ArticleOption option = null;
-      
-      articleList = articledao.selectAllPagingArticlesByBoardId(boardId, pager);
       option = generalDao.selectGeneralByArticleId(article.getId());
-        
+      
       article.setTimeLocal(article.getTime().toLocalDateTime());
       article.setUpdatedTimeLocal(article.getUpdated_time().toLocalDateTime());
       article.setCommentlist(commentdao.selectAllComment(article.getId()));
