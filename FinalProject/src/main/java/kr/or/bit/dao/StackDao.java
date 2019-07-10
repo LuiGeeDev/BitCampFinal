@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import kr.or.bit.model.Article;
+import kr.or.bit.model.Comment;
 import kr.or.bit.model.Tag;
 import kr.or.bit.utils.Pager;
 
@@ -36,4 +37,7 @@ public interface StackDao {
   List<Article> selectStackArticleByWriter(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
 
   List<Article> selectStackArticleByTag(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
+
+  Comment selectAdoptedAnswer(int id);
+
 }

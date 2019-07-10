@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectStackArticles"
 		resultType="kr.or.bit.model.Article">
 		SELECT id, title, content, time, updated_time, view_count, original_id,
-		enable,
+		enable, adopted_answer,
 		level, username, board_id,
 		(SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum
 		FROM ARTICLE as a
@@ -93,7 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="selectAllStackArticle" resultType="kr.or.bit.model.Article">
 		SELECT id, title, content, time, updated_time, view_count, original_id,
-		enable,
+		enable, adopted_answer,
 		level, username, board_id,
 		(SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum
 		FROM ARTICLE as a
@@ -102,21 +102,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{start}, #{articlesOnPage}
 	</select>
 	<select id="selectStackArticleByTitleOrContent" resultType="kr.or.bit.model.Article">
-		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
+		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, a.adopted_answer, b.boardtype
 		FROM ARTICLE a JOIN BOARD b ON a.board_id = b.id 
 		WHERE BOARD_ID=1 AND ENABLE = 1 AND a.title LIKE '%${boardSearch}%' OR a.content LIKE '%${boardSearch}%'
 		ORDER BY a.ID DESC
 		LIMIT #{pager.start}, #{pager.articlesOnPage}
 	</select>
 	<select id="selectStackArticleByTitle" resultType="kr.or.bit.model.Article">
-		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
+		SELECT a.ID, a.adopted_answer, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
 		FROM ARTICLE a JOIN BOARD b ON a.board_id = b.id 
 		WHERE BOARD_ID=1 AND ENABLE = 1 AND a.title LIKE '%${boardSearch}%'
 		ORDER BY a.ID DESC
 		LIMIT #{pager.start}, #{pager.articlesOnPage}
 	</select>
 	<select id="selectStackArticleByWriter" resultType="kr.or.bit.model.Article">
-		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
+		SELECT a.ID, a.adopted_answer, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
 		FROM ARTICLE a 
 		JOIN BOARD b ON a.board_id = b.id
 		JOIN MEMBER m ON a.username = m.username
@@ -125,7 +125,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{pager.start}, #{pager.articlesOnPage}
 	</select>
 	<select id="selectStackArticleByTag" resultType="kr.or.bit.model.Article">
-		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
+		SELECT a.ID, a.adopted_answer, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
 		FROM ARTICLE a 
 		JOIN BOARD b ON a.board_id = b.id
 		JOIN ARTICLE_TAG at ON a.id = at.article_id
@@ -133,5 +133,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE BOARD_ID=1 AND ENABLE = 1 AND t.tag=#{boardSearch}
 		ORDER BY a.ID DESC
 		LIMIT #{pager.start}, #{pager.articlesOnPage}
+	</select>
+	<select id="selectAdoptedAnswer" resultType="kr.or.bit.model.Comment">
+		SELECT id, content, time, updated_time, article_id, username
+		FROM comment
+		WHERE id=#{id};
 	</select>
 </mapper>
