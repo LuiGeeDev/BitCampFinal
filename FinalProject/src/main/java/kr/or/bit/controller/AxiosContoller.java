@@ -13,9 +13,6 @@ public class AxiosContoller {
 	@GetMapping("/addTodo")
 	public CommentVote addTodo() {
 		System.out.println("애드투두");
-		CommentVote vote = new CommentVote();
-		vote.setComment_id(1);
-		vote.setUsername("권순조");
-		return vote;
+		return null;
 	}
 }
