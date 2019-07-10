@@ -217,3 +217,15 @@ th, td {
 #deleteCheck {
   cursor: pointer;
 }
+
+.spin-where {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+}
+
+.spinner-border {
+  width: 3rem; 
+  height: 3rem;
+}

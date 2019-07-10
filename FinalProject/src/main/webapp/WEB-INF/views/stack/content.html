@@ -12,6 +12,10 @@
       <h3>
         <b>스택게시판</b>
       </h3>
+       <div class="spinner-border text-warning spin-where"
+          role="status" id="spinner">
+          <span class="sr-only">Loading...</span>
+        </div>
     </div>
     <!-- 게시물컨텐트 -->
     <hr>
@@ -106,6 +110,14 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <script th:inline="javascript">
+  $(document).ready(function() {
+    $("#spinner").hide();
+  }).ajaxStart(function() {
+    $("#spinner").show();
+  }).ajaxStop(function() {
+    $("#spinner").hide();
+  });
+
       var currentPosition = parseInt($("#floatMenu").css("top"));
       $(window).scroll(function() {
         var position = $(window).scrollTop();
