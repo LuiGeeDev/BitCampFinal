@@ -97,6 +97,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     INSERT INTO article(time, updated_time, title, content, username, board_id, original_id)
     VALUES (now(), now(), #{title}, #{content}, #{username}, #{board_id}, (select max(id)+1 from (select * from article )as temp))
   </insert>
+  <insert id="insertTroubleShootingArticle">
+    INSERT INTO article(time, updated_time, title, content, username, board_id, original_id)
+    VALUES (now(), 
+            now(), 
+            #{article.title}, 
+            #{article.content}, 
+            #{article.username}, 
+            (SELECT id
+             FROM board
+             WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, g.group_no)
+                                 FROM groups g
+                                 LEFT JOIN project p
+                                 ON g.project_id = p.id
+                                 WHERE g.id = #{group_id})), 
+            (select max(id)+1 from (select * from article) as temp))
+            
+  </insert>
   <insert id="insertReplyArticle">
   	INSERT INTO article(time, updated_time, title, content, username, board_id, level, original_id)
   	VALUES (now(), now(), #{title}, #{content}, #{username}, #{board_id}, #{level}, #{original_id})
@@ -150,7 +167,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     on m.username = a.username
     where b.course_id = #{course_id}
     and b.boardtype not in (1, 2, 4, 6)
-        <!-- and a.id = a.original_id-->
+                    <!-- and a.id = a.original_id-->
     order by a.id desc
     LIMIT 5
   </select>
@@ -166,7 +183,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM ARTICLE a
     LEFT JOIN troubleshooting ts
     ON a.id = ts.article_id
-    WHERE board_id = #{board_id}
+    WHERE board_id = (SELECT id
+                      FROM board
+					            WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, g.group_no)
+                                          FROM groups g
+                                          LEFT JOIN project p
+                                          ON g.project_id = p.id
+                                          WHERE g.id = #{group_id})
+					            )
     AND ts.issue_closed = 0
     AND a.enable = 1
     <if test="criteria == 'title'">
@@ -185,7 +209,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM ARTICLE a
     LEFT JOIN troubleshooting ts
     ON a.id = ts.article_id
-    WHERE board_id = #{board_id}
+    WHERE board_id = (SELECT id
+                      FROM board
+					            WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, g.group_no)
+                                          FROM groups g
+                                          LEFT JOIN project p
+                                          ON g.project_id = p.id
+                                          WHERE g.id = #{group_id})
+					            )
     AND ts.issue_closed = 1
     AND a.enable = 1
     <if test="criteria == 'title'">
@@ -204,7 +235,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM ARTICLE a
     LEFT JOIN troubleshooting ts
     ON a.id = ts.article_id
-    WHERE board_id = #{board_id}
+    WHERE board_id = (SELECT id
+                      FROM board
+					            WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, g.group_no)
+                                          FROM groups g
+                                          LEFT JOIN project p
+                                          ON g.project_id = p.id
+                                          WHERE g.id = #{group_id})
+					            )
     AND ts.issue_closed = 0
     AND a.enable = 1
     <if test="criteria == 'title'">
@@ -224,7 +262,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM ARTICLE a
     LEFT JOIN troubleshooting ts
     ON a.id = ts.article_id
-    WHERE board_id = #{board_id}
+    WHERE board_id = (SELECT id
+                      FROM board
+					            WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, g.group_no)
+                                          FROM groups g
+                                          LEFT JOIN project p
+                                          ON g.project_id = p.id
+                                          WHERE g.id = #{group_id})
+					            )
     AND ts.issue_closed = 1
     AND a.enable = 1
     <if test="criteria == 'title'">
