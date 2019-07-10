@@ -41,38 +41,38 @@
         </tr>
       </table>
       <!-- 스택글목록 -->
-      <table class="iteration" th:each="list : ${stacklist}">
+      <table class="iteration" th:each="stack : ${stacklist}">
         <tbody>
           <tr
-            th:onclick="'window.location.href = \'' + @{/stack/content(id=${list.id})} + '\''"
+            th:onclick="'window.location.href = \'' + @{/stack/content(id=${stack.id})} + '\''"
           >
             <td class="td1">
               <span class="tdst">
-                <span th:text="${list.votenum}"></span>
+                <span th:text="${stack.votenum}"></span>
                 <br />
               </span>
               <span class="td2">추천</span><br />
               <span class="tdst">
-                <span th:text="${list.commentlist.size()}"></span>
+                <span th:text="${stack.commentlist.size()}"></span>
                 <br />
               </span>
               <span class="td2">답변</span>
             </td>
             <td colspan="2">
-              <p class="tdtitle"><span th:text="${list.title}"></span></p>
+              <p class="tdtitle"><span th:text="${stack.title}"></span></p>
               <div class="tdcontent">
-                <th:block th:utext="${list.content}" />
+                <th:block th:utext="${stack.content}" />
               </div>
             </td>
           </tr>
           <tr>
-            <td class="td2"><span th:text="${list.view_count}"></span>view</td>
+            <td class="td2"><span th:text="${stack.view_count}"></span>view</td>
             <td class="td3">
-              <span class="tag-name iteration" th:each="tag : ${list.tags}">
+              <span class="tag-name iteration" th:each="tag : ${stack.tags}">
                 <span th:style="'background-color:'+@{${tag.color}}+';'">[[${tag.tag}]]</span>
               </span>
             </td>
-            <td class="td4"><span th:text="${list.writer.name}"></span></td>
+            <td class="td4"><span th:text="${stack.writer.name}"></span></td>
           </tr>
           <tr>
             <td colspan="3">
