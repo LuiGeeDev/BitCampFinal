@@ -18,7 +18,6 @@ public class Article {
   private int enable; // default 1
   private String username;
   private int board_id;
-
   private LocalDateTime timeLocal;
   private LocalDateTime updatedTimeLocal;
   private Member writer;
@@ -26,12 +25,20 @@ public class Article {
   private List<Tag> tags;
   private List<Comment> commentlist;
   private int commentSize;
-
   private ArticleOption option;
   private Map<String, Integer> vote;
   private int votenum;
   private int vote_count;
   private List<Files> fileslist;
+  private int layer;
+
+  public int getLayer() {
+    return layer;
+  }
+
+  public void setLayer(int layer) {
+    this.layer = layer;
+  }
 
   public String getBoard_name() {
     return board_name;
@@ -216,14 +223,15 @@ public class Article {
   public void setCommentSize(int commentSize) {
     this.commentSize = commentSize;
   }
-  
+
   @Override
   public String toString() {
     return "Article [id=" + id + ", title=" + title + ", content=" + content + ", time=" + time + ", updated_time="
         + updated_time + ", view_count=" + view_count + ", original_id=" + original_id + ", level=" + level
         + ", enable=" + enable + ", username=" + username + ", board_id=" + board_id + ", timeLocal=" + timeLocal
-        + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", tags=" + tags + ", commentlist="
-        + commentlist + ", option=" + option + ", vote=" + vote + ", votenum=" + votenum + ", vote_count=" + vote_count
-        + ", fileslist=" + fileslist + "]";
+        + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", board_name=" + board_name + ", tags="
+        + tags + ", commentlist=" + commentlist + ", commentSize=" + commentSize + ", option=" + option + ", vote="
+        + vote + ", votenum=" + votenum + ", vote_count=" + vote_count + ", fileslist=" + fileslist + ", layer=" + layer
+        + "]";
   }
 }
