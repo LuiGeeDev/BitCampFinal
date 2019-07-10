@@ -97,12 +97,14 @@ public class StackController {
     Article article = articleService.selectOneArticle("qna",id);
     int adopted = article.getAdopted_answer();
     Comment comment = stackdao.selectAdoptedAnswer(adopted);
+    
+    System.out.println("채택숫자:"+adopted);
+    System.out.println("닉네임:"+comment.getUsername());
+    comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
     for(Comment c : article.getCommentlist()) {
       c.setWriter(memberDao.selectMemberByUsername(c.getUsername()));
     }
-/*    System.out.println("답변뽑힌사람"+comment.getUsername());
-    comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
-*/      
+   
     model.addAttribute("stackcontent",article);
     model.addAttribute("adoptedanswer",comment);
     articleUpdateService.viewCount(article);

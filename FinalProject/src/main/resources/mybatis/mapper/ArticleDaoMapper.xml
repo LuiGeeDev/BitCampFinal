@@ -98,7 +98,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     LIMIT 5
   </select>
   <select id="selectOneArticle" resultType="kr.or.bit.model.Article">
-    SELECT a.id, a.adopted_answer, a.title, a.content, a.time, a.view_count, a.original_id, a.level, a.username,
+    SELECT a.id, a.adopted_answer as adopted_answer, a.title, a.content, a.time, a.view_count, a.original_id, a.level, a.username,
     a.board_id, (SELECT COUNT(*) FROM ARTICLE_VOTE WHERE article_id=#{id}) as "vote_Count", a.updated_time, m.name 
     FROM ARTICLE a JOIN MEMBER m ON a.username = m.username
     WHERE ID=#{id};

@@ -33,7 +33,10 @@ public class Article {
   private int votenum;
   private int vote_count;
   private List<Files> fileslist;
-
+  
+  
+  
+  
   public String getBoard_name() {
     return board_name;
   }
