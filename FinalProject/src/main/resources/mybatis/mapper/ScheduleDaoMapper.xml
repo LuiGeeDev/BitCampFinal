@@ -5,20 +5,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="kr.or.bit.dao.ScheduleDao">
   <insert id="insertSchedule">
-    INSERT INTO schedule (start_date, end_date, content, color, group_id,
+    INSERT INTO schedule (start_date, end_date, title, color, group_id,
     course_id)
-    VALUES(now(), #{end_date}, #{content}, #{color}, #{group_id}, #{course_id})
+    VALUES(now(), #{end_date}, #{title}, #{color}, #{group_id}, #{course_id})
   </insert>
   <update id="updateSchedule">
     UPDATE schedule
     SET start_date = #{start_date},
     end_date = #{end_date},
-    content =
-    #{content},
+    title = #{title},
     color = #{color},
-    group_id = #{group_id},
-    course_id =
-    #{group_id}
     WHERE id = #{id}
   </update>
   <delete id="deleteSchedule">
