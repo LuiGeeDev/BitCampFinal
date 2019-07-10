@@ -36,7 +36,7 @@ public class BoardService {
   private FileUploadService fileUploadService;
   @Autowired
   private ArticleUpdateService articleUpdateService;
-  
+
   private int start(int page) {
     return (page - 1) * ARTICLES_IN_PAGE + 1;
   }
@@ -99,33 +99,50 @@ public class BoardService {
   }
 
   @PreAuthorize("hasAnyRole('TEACHER', 'MANAGER') or #article.username == principal.username")
-  public void updateArticle(Article article, List<MultipartFile> files, HttpServletRequest request) {
+  public void updateArticle(Article article, MultipartFile file1, MultipartFile file2, HttpServletRequest request) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
     GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
+    articleDao.updateArticle(article);
+    article.setUsername(Helper.userName());
+    General general = generalDao.selectGeneralByArticleId(article.getId());
+    String fileOneName = file1.getOriginalFilename().trim();
+    String fileTwoName = file2.getOriginalFilename().trim();
     try {
-      articleDao.updateArticle(article);
-      article.setUsername(Helper.userName());
-      List<Files> uploadedFiles = fileUploadService.uploadFile(files, request);
-      General general = generalDao.selectGeneralByArticleId(article.getId());
-      System.out.println(general);
-      for (Files file : uploadedFiles) {
+      if (fileOneName != "" && fileTwoName != "") {
+        List<MultipartFile> uploadlist = new ArrayList<>();
+        uploadlist.add(file1);
+        uploadlist.add(file2);
+        List<Files> filelist = new ArrayList<>();
+        filelist = fileUploadService.uploadFile(uploadlist, request);
+        int count = 0;
+        for (Files file : filelist) {
           filesDao.insertFiles(file);
-          Files insertedFile = filesDao.selectFilesByFilename(file.getFilename());
-          if (general.getFile1() == 0) {
-            general.setFile1(insertedFile.getId());
-          } else {
-            general.setFile2(insertedFile.getId());
+          if (count == 0) {
+            general.setFile1(filesDao.selectFilesByFilename(file.getFilename()).getId());
+            count++;
+          } else if (count == 1) {
+            general.setFile2(filesDao.selectFilesByFilename(file.getFilename()).getId());
           }
+        }
+      } else if(fileOneName != "" && fileTwoName == "") {
+        Files files = fileUploadService.uploadFile(file1, request);
+        filesDao.insertFiles(files);
+        general.setFile1(filesDao.selectFilesByFilename(files.getFilename()).getId());
+        
+      } else if(fileOneName == "" && fileTwoName != "") {
+        Files files = fileUploadService.uploadFile(file2, request);
+        filesDao.insertFiles(files);
+        general.setFile2(filesDao.selectFilesByFilename(files.getFilename()).getId());
       }
-      generalDao.updateGeneral(general);
     } catch (IllegalStateException e) {
-      System.out.println("WriteArticle: " + e.getMessage());
+      e.printStackTrace();
     } catch (IOException e) {
-      System.out.println("WriteArticle: " + e.getMessage());
+      e.printStackTrace();
     }
+    generalDao.updateGeneral(general);
   }
-
+  
   @PreAuthorize("hasAnyRole('TEACHER', 'MANAGER') or #article.username == principal.username")
   public void deleteArticle(Article article) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
@@ -140,9 +157,7 @@ public class BoardService {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     Article article = articleDao.selectOneArticle(article_id);
     General general = generalDao.selectGeneralByArticleId(article_id);
-    
     articleUpdateService.viewCount(article);
-    
     List<Files> files = new ArrayList<>();
     files.add(filesDao.selectFilesById(general.getFile1()));
     files.add(filesDao.selectFilesById(general.getFile2()));
@@ -200,7 +215,6 @@ public class BoardService {
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     List<Comment> commentList = commentDao.selectAllComment(article_id);
-    
     for (Comment c : commentList) {
       c.setWriter(memberDao.selectMemberByUsername(c.getUsername()));
     }

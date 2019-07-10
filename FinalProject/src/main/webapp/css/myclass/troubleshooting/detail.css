@@ -10,6 +10,7 @@
   margin-left: 20px;
   width: 100%;
   border: 1px solid #d1d5da;
+  position: relative;
 }
 
 .issue-title {
@@ -69,4 +70,15 @@
 
 .button-wrapper {
   margin-left: auto;
+}
+
+.delete-btn {
+  color: rgba(166, 166, 166, 0.5);
+  position: absolute;
+  right: 10px;
+  top: 60%;
+}
+
+.delete-btn:hover {
+  color: #a6a6a6;
 }
