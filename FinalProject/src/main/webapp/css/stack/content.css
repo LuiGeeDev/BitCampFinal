@@ -214,3 +214,6 @@ th, td {
   text-align: right;
 }
 
+#deleteCheck {
+  cursor: pointer;
+}

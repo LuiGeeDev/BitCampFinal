@@ -23,8 +23,8 @@
             th:style="'background-color:'+@{${tag.color}}+';'">[[${tag.tag}]]</span>
         </span></td>
         <td colspan="1" id="contenteditor"><a
-          th:href="@{/stack/edit(id=${stackcontent.id})}" class="btn btn-primary updateBtn">수정</a> <a
-          th:href="@{/stack/delete(id=${stackcontent.id})}" class="btn btn-primary deleteBtn">삭제</a></td>
+          th:href="@{/stack/edit(id=${stackcontent.id})}" class="btn btn-primary updateBtn">수정</a> 
+          <span class="btn btn-primary deleteBtn" id="deleteCheck">삭제</span></td>
       </tr>
       <tr>
         <td colspan="4" class="tdtitle"><span
@@ -188,9 +188,9 @@
         });
       });
       
+      
       $(".deleteBtn").unbind("click");
       $(".deleteBtn").click(function(event) {
-        event.preventDefault();
         Swal.fire({
           title: '정말 삭제하시겠습니까?',
           type: 'warning',
@@ -206,7 +206,9 @@
             	type: 'success',
             	confirmButtonText: '확인',
             	confirmButtonColor: '#F39B10'
-          })
+          }).then(function() {
+            location.href="/stack/delete?id=" + [[${stackcontent.id}]];
+          });
           }
         })
       });
