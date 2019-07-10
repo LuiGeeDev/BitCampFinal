@@ -119,7 +119,7 @@
                 <label for="new-title">이름: </label>
                 <input type="text" name="title" id="new-title" />
                 <label for="new-start">시작: </label>
-                <input type="date" name="start_date" id="new-start" readonly />
+                <input type="date" name="start" id="new-start" readonly />
                 <label for="new-end">종료: </label>
                 <input type="date" id="new-end-display" readonly />
                 <div class="calendar-color">
@@ -133,7 +133,7 @@
                   <div class="color purple"></div>
                 </div>
                 <input type="hidden" value="#FF3B30" name="color" />
-                <input type="hidden" name="end_date" id="new-end" />
+                <input type="hidden" name="end" id="new-end" />
               </form>
               <div class="modal-footer">
                 <button
@@ -165,7 +165,7 @@
                 <label for="title">이름: </label>
                 <input type="text" name="title" id="title" />
                 <label for="start">시작: </label>
-                <input type="date" name="start_date" id="start" readonly />
+                <input type="date" name="start" id="start" readonly />
                 <label for="new-end">종료: </label>
                 <input type="date" id="end-display" readonly />
                 <div class="calendar-color">
@@ -179,7 +179,7 @@
                   <div class="color purple"></div>
                 </div>
                 <input type="hidden" value="rgb(255, 59, 48)" name="color" />
-                <input type="hidden" name="end_date" id="end" />
+                <input type="hidden" name="end" id="end" />
                 <input type="hidden" name="id" id="id">
               </form>
               <div class="modal-footer">
@@ -218,16 +218,16 @@
           center: "",
           right: "today prev,next"
         },
+        displayEventTime: false,
         eventTextColor: "white",
-        eventSources: [
+        events: 
           {
             url: "/myclass/schedule/get/class",
-            method: "post",
+            method: "POST",
             extraParams: {
               course_id: [[${user.course_id}]]
             }
           }
-        ]
       });
       calendar.render();
 
@@ -287,15 +287,16 @@
       $("#submit-new-schedule").click(function() {
         const formData = new FormData($("#new-schedule")[0]);
         $.ajax({
-          url: "/myclass/schedule/insert/class",
+          url: "/myclass/schedule/insert",
           method: "post",
           data: formData,
           contentType: false,
           processData: false,
-          success: function(data) {
-            console.log(data);
+          error: function() {
+        	  console.clear();
           }
-        }).then(function() {
+        }).always(function() {
+          calendar.refetchEvents();
           $("#new-schedule-modal").modal("hide");
         });
       });
@@ -303,43 +304,27 @@
       $("#submit-schedule").click(function() {
         const formData = new FormData($("#schedule")[0]);
         $.ajax({
-          url: "/myclass/schedule/update/class",
+          url: "/myclass/schedule/update",
           method: "post",
           data: formData,
           contentType: false,
-          processData: false,
-          success: function(data) {
-            console.log(data);
-          }
-        }).then(function() {
+          processData: false
+        }).always(function() {
+          calendar.refetchEvents();
           $("#schedule-modal").modal("hide");
         });
       });
       
       $("#delete").click(function() {
         $.ajax({
-          url: "/myclass/schedule/delete/class",
+          url: "/myclass/schedule/delete",
           data: {id : $("#id").val()},
-          method: "post",
-          success: function(data) {
-            console.log(data);
-          }
-        }).then(function() {
+          method: "post"
+        }).always(function() {
+          calendar.refetchEvents();
           $("#schedule-modal").modal("hide");
         });
       });
     </script>
-    <script
-      type="text/javascript"
-      src="/resources/dist/static/js/manifest.d2e3a334bc98c3b96650.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="/resources/dist/static/js/vendor.71750e988b55e9735a64.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="/resources/dist/static/js/app.55e5fc1c8db3bc542a1f.js"
-    ></script>
   </body>
 </html>

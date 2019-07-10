@@ -5,14 +5,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="kr.or.bit.dao.ScheduleDao">
   <insert id="insertSchedule">
-    INSERT INTO schedule (start_date, end_date, title, color, group_id,
+    INSERT INTO schedule (start, end, title, color, group_id,
     course_id)
-    VALUES(#{start_date}, #{end_date}, #{title}, #{color}, #{group_id}, #{course_id})
+    VALUES(#{start}, #{end}, #{title}, #{color}, #{group_id}, #{course_id})
   </insert>
   <update id="updateSchedule">
     UPDATE schedule
-    SET start_date = #{start_date},
-    end_date = #{end_date},
+    SET start = #{start},
+    end = #{end},
     title = #{title},
     color = #{color}
     WHERE id = #{id}
@@ -23,18 +23,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE id = #{id}
   </delete>
   <select id="selectSchedule" resultType="kr.or.bit.model.Schedule">
-    SELECT id, start_date, end_date, title, color, group_id, course_id
+    SELECT id, start, end, title, color, group_id, course_id
     FROM schedule
     WHERE id = #{id}
   </select>
   <select id="selectScheduleForClass" resultType="kr.or.bit.model.Schedule">
-    SELECT id, start_date, end_date, title, color, group_id, course_id
+    SELECT id, start, end, title, color, group_id, course_id
     FROM schedule
     WHERE course_id = #{course_id}
     AND group_id = 0
   </select>
   <select id="selectScheduleForGroup" resultType="kr.or.bit.model.Schedule">
-    SELECT id, start_date, end_date, title, color, group_id, course_id
+    SELECT id, start, end, title, color, group_id, course_id
     FROM schedule
     WHERE course_id = #{course_id}
     AND group_id IN (0, #{group_id})

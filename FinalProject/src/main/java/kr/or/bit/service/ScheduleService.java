@@ -18,7 +18,7 @@ public class ScheduleService {
   @Autowired
   private SqlSession sqlSession;
 
-  public List<Schedule> insertScheduleForClass(Schedule schedule) {
+  public void insertSchedule(Schedule schedule) {
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
 
@@ -26,69 +26,26 @@ public class ScheduleService {
     Member user = memberDao.selectMemberByUsername(username);
     schedule.setCourse_id(user.getCourse_id());
     scheduleDao.insertSchedule(schedule);
-    return getScheduleForClass(user.getCourse_id());
-  }
-
-  public List<Schedule> insertScheduleForGroup(Schedule schedule) {
-    ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-
-    String username = Helper.userName();
-    Member user = memberDao.selectMemberByUsername(username);
-    schedule.setCourse_id(user.getCourse_id());
-    scheduleDao.insertSchedule(schedule);
-    return getScheduleForGroup(user.getCourse_id(), schedule.getGroup_id());
   }
 
   @PreAuthorize("hasRole('TEACHER')")
-  public List<Schedule> updateScheduleForClass(Schedule schedule) {
-    ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-
+  public void updateSchedule(Schedule schedule) {
+    ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);    
     scheduleDao.updateSchedule(schedule);
-    String username = Helper.userName();
-    Member user = memberDao.selectMemberByUsername(username);
-    return getScheduleForClass(user.getCourse_id());
-  }
-
-  public List<Schedule> updateScheduleForGroup(Schedule schedule) {
-    ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-
-    scheduleDao.updateSchedule(schedule);
-    String username = Helper.userName();
-    Member user = memberDao.selectMemberByUsername(username);
-    return getScheduleForGroup(user.getCourse_id(), schedule.getGroup_id());
   }
 
   @PreAuthorize("hasRole('TEACHER')")
-  public List<Schedule> deleteScheduleForClass(Schedule schedule) {
+  public void deleteSchedule(int id) {
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-
-    scheduleDao.deleteSchedule(schedule.getId());
-    String username = Helper.userName();
-    Member user = memberDao.selectMemberByUsername(username);
-    return getScheduleForClass(user.getCourse_id());
+    scheduleDao.deleteSchedule(id);
   }
-
-  public List<Schedule> deleteScheduleForGroup(Schedule schedule) {
-    ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-
-    scheduleDao.deleteSchedule(schedule.getId());
-    String username = Helper.userName();
-    Member user = memberDao.selectMemberByUsername(username);
-    return getScheduleForGroup(user.getCourse_id(), schedule.getGroup_id());
-  }
-
 
   public List<Schedule> getScheduleForClass(int course_id) {
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
     List<Schedule> schedules = scheduleDao.selectScheduleForClass(course_id);
     for (Schedule sc : schedules) {
-      sc.setStartLocal(sc.getStart_date().toLocalDate());
-      sc.setEndLocal(sc.getEnd_date().toLocalDate());
+      sc.setStartLocal(sc.getStart().toLocalDate());
+      sc.setEndLocal(sc.getEnd().toLocalDate());
     }
     return schedules;
   }
@@ -97,8 +54,8 @@ public class ScheduleService {
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
     List<Schedule> schedules = scheduleDao.selectScheduleForGroup(course_id, group_id);
     for (Schedule sc : schedules) {
-      sc.setStartLocal(sc.getStart_date().toLocalDate());
-      sc.setEndLocal(sc.getEnd_date().toLocalDate());
+      sc.setStartLocal(sc.getStart().toLocalDate());
+      sc.setEndLocal(sc.getEnd().toLocalDate());
     }
     return schedules;
   }
