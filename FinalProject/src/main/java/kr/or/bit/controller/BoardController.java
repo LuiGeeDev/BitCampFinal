@@ -165,8 +165,8 @@ public class BoardController {
   public String replyWrite(Article article, MultipartFile file1, MultipartFile file2, HttpServletRequest request) {
     System.out.println(article);
     article.setLevel(article.getLevel()+1);
+    article.setLayer(article.getLayer()+1);
     System.out.println(article.getLevel());
-    System.out.println("after :" +article);
     return "redirect:/myclass/board/read?article_id=" + boardService.writeReplyArticle(article, file1, file2, request)
         + "&board_id=" + article.getBoard_id();
   }
