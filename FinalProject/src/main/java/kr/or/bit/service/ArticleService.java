@@ -209,12 +209,12 @@ public class ArticleService {
     if(criteria.equals("titleOrContent")) {
       articleList = stackdao.selectStackArticleByTitleOrContent(pager,boardSearch);
     }else if(criteria.equals("title")) {
-      articlelist = stackdao.selectStackArticleByTitle(pager,boardSearch);
+      articleList = stackdao.selectStackArticleByTitle(pager,boardSearch);
     }else if(criteria.equals("Tag")) {
-      articlelist = stackdao.selectStackArticleByTag(pager, boardSearch);
+      articleList = stackdao.selectStackArticleByTag(pager, boardSearch);
     }
     else {
-      articlelist = stackdao.selectStackArticleByWriter(pager,boardSearch);
+      articleList = stackdao.selectStackArticleByWriter(pager,boardSearch);
     }
     
     for (Article article : articleList) {
