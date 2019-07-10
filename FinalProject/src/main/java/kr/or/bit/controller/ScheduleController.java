@@ -34,9 +34,9 @@ public class ScheduleController {
     return "myclass";
   }
   @PostMapping("/delete")
-  public String deleteSchedule(int id, int course_id) {
+  public String deleteSchedule(int id) {
     ScheduleDao scheduledao = sqlSession.getMapper(ScheduleDao.class);
-    scheduledao.deleteSchedule(id, course_id);
+    scheduledao.deleteSchedule(id);
     return "myclass";
   }
 }

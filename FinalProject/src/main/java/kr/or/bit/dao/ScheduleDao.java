@@ -22,7 +22,7 @@ public interface ScheduleDao {
 
   void updateSchedule(Schedule schedule);
 
-  void deleteSchedule(@Param("id") int id, @Param("course_id") int course_id);
+  void deleteSchedule(int id);
 
   List<Schedule> selectAllSchedule(Course course, Group group);
 }
