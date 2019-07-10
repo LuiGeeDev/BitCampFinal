@@ -40,4 +40,9 @@ public class TagService {
     }  
   }
 
+  public void deleteTag(int article_id) {
+    StackDao stackDao = sqlSession.getMapper(StackDao.class);
+    stackDao.deleteTag(article_id);
+  }
+  
 }

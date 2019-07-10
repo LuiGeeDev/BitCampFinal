@@ -125,12 +125,11 @@ public class BoardService {
             general.setFile2(filesDao.selectFilesByFilename(file.getFilename()).getId());
           }
         }
-      } else if(fileOneName != "" && fileTwoName == "") {
+      } else if (fileOneName != "" && fileTwoName == "") {
         Files files = fileUploadService.uploadFile(file1, request);
         filesDao.insertFiles(files);
         general.setFile1(filesDao.selectFilesByFilename(files.getFilename()).getId());
-        
-      } else if(fileOneName == "" && fileTwoName != "") {
+      } else if (fileOneName == "" && fileTwoName != "") {
         Files files = fileUploadService.uploadFile(file2, request);
         filesDao.insertFiles(files);
         general.setFile2(filesDao.selectFilesByFilename(files.getFilename()).getId());
@@ -142,7 +141,7 @@ public class BoardService {
     }
     generalDao.updateGeneral(general);
   }
-  
+
   @PreAuthorize("hasAnyRole('TEACHER', 'MANAGER') or #article.username == principal.username")
   public void deleteArticle(Article article) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
@@ -178,6 +177,7 @@ public class BoardService {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
     GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
+    System.out.println("writeArticle: " + article);
     try {
       article.setUsername(Helper.userName());
       articleDao.insertArticle(article);
@@ -206,6 +206,39 @@ public class BoardService {
     return articleDao.getMostRecentArticleId();
   }
 
+  public int writeReplyArticle(Article article, MultipartFile file1, MultipartFile file2, HttpServletRequest request) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
+    GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
+    System.out.println("writeArticle: " + article);
+    try {
+      article.setUsername(Helper.userName());
+      articleDao.insertReplyArticle(article);
+      List<MultipartFile> files = new ArrayList<>();
+      files.add(file1);
+      files.add(file2);
+      List<Files> uploadedFiles = fileUploadService.uploadFile(files, request);
+      General general = new General();
+      for (Files file : uploadedFiles) {
+        filesDao.insertFiles(file);
+        Files insertedFile = filesDao.selectFilesByFilename(file.getFilename());
+        if (general.getFile1() == 0) {
+          general.setFile1(insertedFile.getId());
+        } else {
+          general.setFile2(insertedFile.getId());
+        }
+      }
+      int insertedArticleId = articleDao.getMostRecentArticleId();
+      general.setArticle_id(insertedArticleId);
+      generalDao.insertGeneral(general);
+    } catch (IllegalStateException e) {
+      System.out.println("WriteArticle: " + e.getMessage());
+    } catch (IOException e) {
+      System.out.println("WriteArticle: " + e.getMessage());
+    }
+    return articleDao.getMostRecentArticleId();
+  }
+  
   public void writeComment(int article_id, Comment comment) {
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     commentDao.insertComment(comment);

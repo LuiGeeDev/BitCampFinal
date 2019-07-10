@@ -12,6 +12,10 @@ public interface GeneralDao extends OptionDao {
   void insertGeneral(General general);
 
   void updateGeneral(General general);
+  
+  void updateFileOneGeneral(General general);
+  
+  void updateFileTwoGeneral(General general);
 
   General selectGeneralByArticleId(int article_id);
   

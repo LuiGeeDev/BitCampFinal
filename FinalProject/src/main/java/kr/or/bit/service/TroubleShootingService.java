@@ -156,4 +156,22 @@ public class TroubleShootingService {
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     commentDao.deleteComment(comment.getId());
   }
+  
+  @Transactional
+  public void updateIssue(Article article, int group_id, String tag) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    List<String> tagList = new ArrayList<>();
+    String[] splitStr = tag.split("#");
+    for (int i = 1; i < splitStr.length; i++) {
+      tagList.add(splitStr[i].trim());
+    }
+    List<Tag> tags = tagService.selectTagByName(tagList);
+    article.setTags(tags);
+    article.setUsername(Helper.userName());
+    articleDao.updateTroubleShootingArticle(article);
+    
+    tagService.deleteTag(article.getId());
+    tagService.insertTag(tagList, article.getId());
+    
+  }
 }
