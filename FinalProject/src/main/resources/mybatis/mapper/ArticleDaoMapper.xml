@@ -1,308 +1,348 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- /* * * @date: 2019. 06. 28. * * @author: 권예지 * * @description: ArticleDaMapper로 
-  DAO의 parameter에 들어갈 값을 매핑해서 쿼리문을 보낸다 * */ -->
+	DAO의 parameter에 들어갈 값을 매핑해서 쿼리문을 보낸다 * */ -->
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.bit.dao.ArticleDao">
-  <select id="selectArticlesByPage" resultType="kr.or.bit.model.Article">
-    SET @rownum:=0;
-	SELECT rownum, id, title, content, time, updated_time, view_count, original_id, enable, level, username, board_id,
-	(SELECT count(*) FROM article_vote WHERE article_id=c.id) as votenum 
-	FROM(SELECT b.* 
-		 FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
-      		   FROM (SELECT id, title, content, time, updated_time, view_count, original_id, enable, level, username, board_id
-            		 FROM ARTICLE 
-	        		 WHERE board_id = #{board_id}
-            		 ORDER BY id DESC) a) b
-		
-			   WHERE rownum BETWEEN #{start} AND #{end} AND enable =1) c 
-  </select>
-  <select id="selectArticlesSorted" resultType="kr.or.bit.model.Article">
-    SET @rownum:=0;
-    SELECT * 
-    FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
-          FROM (SELECT id, title, content, time, updated_time, view_count, original_id, enable, level, username, board_id
-                FROM ARTICLE 
-	            WHERE board_id = #{board_id}
-                ORDER BY view_count DESC, id DESC) a) b
-    WHERE rownum BETWEEN #{start} AND #{end};
-  </select>
-  <select id="selectArticlesBySearchWord" resultType="kr.or.bit.model.Article">
-    SET @rownum:=0;
-    SELECT * 
-    FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
-          FROM (SELECT id, title, content, time, updated_time, view_count, original_id, enable, level, a.username, board_id
-                FROM ARTICLE A
-                LEFT JOIN MEMBER M
-                ON a.username = m.username
-                WHERE board_id = #{board_id}
-    <choose>
-      <when test="criteria != 'titlecontent'">
-                    AND ${criteria} LIKE '%${search}%'
-      </when>
-      <otherwise>
-                    AND (title LIKE '%${search}%' OR content LIKE '%${search}%')
-      </otherwise>
-    </choose>
-          ORDER BY time DESC, id DESC) a) b
-    WHERE rownum BETWEEN #{start} AND #{end};
-  </select>
-  <select id="selectArticlesByComment" resultType="kr.or.bit.model.Article">
-    SET @rownum:=0;
-    SELECT *
-    FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
-          FROM (SELECT DISTINCT a.*
-                FROM ARTICLE A
-                JOIN COMMENT C
-                ON a.id = c.article_id
-                LEFT JOIN MEMBER M
-                ON c.username = m.username
-                WHERE BOARD_ID = #{board_id}
-    <if test="criteria == 'comment_name'">
-                  and m.name like '%${search}%'
-    </if>
-    <if test="criteria =='comment_content'">
-                  and c.content like '%${search}%'
-    </if>
-                ORDER BY id desc) a ) b
-    WHERE rownum BETWEEN #{start} and #{end};
-  </select>
-  <select id="selectAllArticleByBoardId" resultType="kr.or.bit.model.Article">
-    SELECT id, title, content, time, updated_time, view_count, original_id, enable,
-    level, username, board_id,
-    (SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum,
-    (SELECT count(*) FROM comment WHERE article_id=a.id) as commentnum
-    FROM ARTICLE as a
-    WHERE BOARD_ID=#{board_id} AND ENABLE=1
-    ORDER BY id DESC
-    LIMIT 5
-  </select>
-  <select id="selectAllPagingArticlesByBoardId" resultType="kr.or.bit.model.Article">
-  	SELECT id, title, content, time, updated_time, view_count, original_id, enable,
-    level, username, board_id,
-    (SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum,
-    (SELECT count(*) FROM comment WHERE article_id=a.id) as commentnum
-    FROM ARTICLE as a
-    WHERE BOARD_ID=#{board_id} AND ENABLE=1
-    ORDER BY level asc, id DESC 
-    LIMIT #{pager.start}, #{pager.articlesOnPage}
-  </select>
-  <select id="selectArticlesOnNextPage" resultType="kr.or.bit.model.Article">
-    SELECT id, title, content, time, updated_time, view_count, original_id,
-    level, username, board_id, enable
-    FROM ARTICLE
-    WHERE BOARD_ID = 2
-    AND id &lt; #{article_id}
-    ORDER BY id DESC
-    LIMIT 5
-  </select>
-  <select id="selectOneArticle" resultType="kr.or.bit.model.Article">
-    SELECT a.id, a.title, a.content, a.time, a.view_count, a.original_id, a.level, a.username,
-    a.board_id, (SELECT COUNT(*) FROM ARTICLE_VOTE WHERE article_id=#{id}) as "vote_Count", a.updated_time, m.name 
-    FROM ARTICLE a JOIN MEMBER m ON a.username = m.username
-    WHERE ID=#{id};
-  </select>
-  <insert id="insertArticle">
-    INSERT INTO article(time, updated_time, title, content, username, board_id, original_id)
-    VALUES (now(), now(), #{title}, #{content}, #{username}, #{board_id}, (select max(id)+1 from (select * from article )as temp))
-  </insert>
-  <insert id="insertTroubleShootingArticle">
-    INSERT INTO article(time, updated_time, title, content, username, board_id, original_id)
-    VALUES (now(), 
-            now(), 
-            #{article.title}, 
-            #{article.content}, 
-            #{article.username}, 
-            (SELECT id
-             FROM board
-             WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, g.group_no)
-                                 FROM groups g
-                                 LEFT JOIN project p
-                                 ON g.project_id = p.id
-                                 WHERE g.id = #{group_id})), 
-            (select max(id)+1 from (select * from article) as temp))
-            
-  </insert>
-  <update id="updateTroubleShootingArticle">
-  	UPDATE article
-  	SET title=#{title}, content=#{content}
-  	WHERE id=#{id}
-  </update>
-  <insert id="insertReplyArticle">
-  	INSERT INTO article(time, updated_time, title, content, username, board_id, level, original_id)
-  	VALUES (now(), now(), #{title}, #{content}, #{username}, #{board_id}, #{level}, #{original_id})
-  </insert>
-  <update id="deleteArticle" parameterType="Integer">
-    UPDATE article
-    SET enable=0
-    WHERE id=#{id}
-  </update>
-  <update id="updateArticle" parameterType="kr.or.bit.model.Article">
-    UPDATE article
-    SET updated_time=now(), title=#{title}, content=#{content}
-    WHERE id=#{id}
-  </update>
-  <insert id="insertVote">
-    INSERT INTO article_vote(article_id, username)
-    VALUES (#{id}, #{username})
-  </insert>
-  <delete id="deleteVote">
-    DELETE FROM article_vote
-    WHERE article_id=#{id} and username=#{username}
-  </delete>
-  <select id="countVote" resultType="int">
-    SELECT count(*)
-    FROM article_vote
-    WHERE article_id=#{id}
-  </select>
-  <select id="getMostRecentArticleId" resultType="int">
-    SELECT MAX(id)
-    FROM ARTICLE
-  </select>
-  <select id="selectVote" resultType = "int">
-  	SELECT COUNT(*)
-  	FROM ARTICLE_VOTE
-  	WHERE article_id=#{id} AND username=#{username}
-  </select>
-  <update id="updateEnable">
-  	{call CHANGESTATUS('ARTICLE',#{id})}
-  </update>
-  <select id="selectHomeworkReplies" resultType="kr.or.bit.model.Article">
-	SELECT * 
-	FROM article 
-	WHERE ORIGINAL_ID = #{article_id} AND ID != #{article_id} AND ENABLE=1
-  </select>
-  <select id="selectArticlesForClassMain" resultType="kr.or.bit.model.Article">
-    select a.title, time, board_name, a.username
-    from article a
-    left join board b
-    on a.board_id = b.id
-    left join member m
-    on m.username = a.username
-    where b.course_id = #{course_id}
-    and b.boardtype not in (1, 2, 4, 6)
-                    <!-- and a.id = a.original_id-->
-    order by a.id desc
-    LIMIT 5
-  </select>
-  <select id="selectTagList" resultType="kr.or.bit.model.Tag">
-  	SELECT id, tag
-	  FROM article_tag at
-	  LEFT JOIN tag a
-	  ON a.id = at.tag_id
-	  WHERE article_id=#{article_id};
-  </select>
-  <select id="selectAllIssuesOpened" resultType="kr.or.bit.model.Article">
-    SELECT a.id, title, content, time, updated_time, view_count, original_id, enable, level, username, board_id
-    FROM ARTICLE a
-    LEFT JOIN troubleshooting ts
-    ON a.id = ts.article_id
-    WHERE board_id = (SELECT id
-                      FROM board
-					            WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, g.group_no)
-                                          FROM groups g
-                                          LEFT JOIN project p
-                                          ON g.project_id = p.id
-                                          WHERE g.id = #{group_id})
-					            )
-    AND ts.issue_closed = 0
-    AND a.enable = 1
-    <if test="criteria == 'title'">
-      AND title like '%${word}%'
-    </if>
-    <if test="criteria == 'content'">
-      AND content like '%${word}%'
-    </if>
-    <if test="criteria == 'titlecontent'">
-      AND (title like '%${word}%' OR content like '%${word}%') 
-    </if>
-    ORDER BY a.id DESC
-  </select>
-  <select id="selectAllIssuesClosed" resultType="kr.or.bit.model.Article">
-    SELECT a.id, title, content, time, updated_time, view_count, original_id, enable, level, username, board_id
-    FROM ARTICLE a
-    LEFT JOIN troubleshooting ts
-    ON a.id = ts.article_id
-    WHERE board_id = (SELECT id
-                      FROM board
-					            WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, g.group_no)
-                                          FROM groups g
-                                          LEFT JOIN project p
-                                          ON g.project_id = p.id
-                                          WHERE g.id = #{group_id})
-					            )
-    AND ts.issue_closed = 1
-    AND a.enable = 1
-    <if test="criteria == 'title'">
-      AND title like '%${word}%'
-    </if>
-    <if test="criteria == 'content'">
-      AND content like '%${word}%'
-    </if>
-    <if test="criteria == 'titlecontent'">
-      AND (title like '%${word}%' OR content like '%${word}%') 
-    </if>
-    ORDER BY a.id DESC
-  </select>
-  <select id="selectIssuesOpenedByPage" resultType="kr.or.bit.model.Article">
-    SELECT a.id, title, content, time, updated_time, view_count, original_id, enable, level, username, board_id
-    FROM ARTICLE a
-    LEFT JOIN troubleshooting ts
-    ON a.id = ts.article_id
-    WHERE board_id = (SELECT id
-                      FROM board
-					            WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, g.group_no)
-                                          FROM groups g
-                                          LEFT JOIN project p
-                                          ON g.project_id = p.id
-                                          WHERE g.id = #{group_id})
-					            )
-    AND ts.issue_closed = 0
-    AND a.enable = 1
-    <if test="criteria == 'title'">
-      AND title like '%${word}%'
-    </if>
-    <if test="criteria == 'content'">
-      AND content like '%${word}%'
-    </if>
-    <if test="criteria == 'titlecontent'">
-      AND (title like '%${word}%' OR content like '%${word}%') 
-    </if>
-    ORDER BY a.id DESC
-    LIMIT #{pager.start}, #{pager.articlesOnPage}
-  </select>
-  <select id="selectIssuesClosedByPage" resultType="kr.or.bit.model.Article">
-    SELECT a.id, title, content, time, updated_time, view_count, original_id, enable, level, username, board_id
-    FROM ARTICLE a
-    LEFT JOIN troubleshooting ts
-    ON a.id = ts.article_id
-    WHERE board_id = (SELECT id
-                      FROM board
-					            WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, g.group_no)
-                                          FROM groups g
-                                          LEFT JOIN project p
-                                          ON g.project_id = p.id
-                                          WHERE g.id = #{group_id})
-					            )
-    AND ts.issue_closed = 1
-    AND a.enable = 1
-    <if test="criteria == 'title'">
-      AND title like '%${word}%'
-    </if>
-    <if test="criteria == 'content'">
-      AND content like '%${word}%'
-    </if>
-    <if test="criteria == 'titlecontent'">
-      AND (title like '%${word}%' OR content like '%${word}%') 
-    </if>
-    ORDER BY a.id DESC
-    LIMIT #{pager.start}, #{pager.articlesOnPage}
-  </select>
-  <update id="updateArticleViewCount">
-  	UPDATE Article
-  	SET view_count=view_count+1
-  	WHERE ID=#{id}
-  </update>
+	<select id="selectArticlesByPage"
+		resultType="kr.or.bit.model.Article">
+		SET @rownum:=0;
+		SELECT rownum, id, title, content, time, updated_time, view_count,
+		original_id, enable, level, username, board_id,
+		(SELECT count(*) FROM article_vote WHERE article_id=c.id) as votenum
+		FROM(SELECT b.*
+		FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
+		FROM (SELECT id, title, content, time, updated_time, view_count,
+		original_id, enable, level, username, board_id
+		FROM ARTICLE
+		WHERE board_id = #{board_id}
+		ORDER BY id DESC) a) b
+
+		WHERE rownum BETWEEN #{start} AND #{end} AND enable =1) c
+	</select>
+	<select id="selectArticlesSorted"
+		resultType="kr.or.bit.model.Article">
+		SET @rownum:=0;
+		SELECT *
+		FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
+		FROM (SELECT id, title, content, time, updated_time, view_count,
+		original_id, enable, level, username, board_id
+		FROM ARTICLE
+		WHERE board_id = #{board_id}
+		ORDER BY view_count DESC, id DESC) a) b
+		WHERE rownum BETWEEN #{start} AND #{end};
+	</select>
+	<select id="selectArticlesBySearchWord"
+		resultType="kr.or.bit.model.Article">
+		SET @rownum:=0;
+		SELECT *
+		FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
+		FROM (SELECT id, title, content, time, updated_time, view_count,
+		original_id, enable, level, a.username, board_id
+		FROM ARTICLE A
+		LEFT JOIN MEMBER M
+		ON a.username = m.username
+		WHERE board_id = #{board_id}
+		<choose>
+			<when test="criteria != 'titlecontent'">
+				AND ${criteria} LIKE '%${search}%'
+			</when>
+			<otherwise>
+				AND (title LIKE '%${search}%' OR content LIKE '%${search}%')
+			</otherwise>
+		</choose>
+		ORDER BY time DESC, id DESC) a) b
+		WHERE rownum BETWEEN #{start} AND #{end};
+	</select>
+	<select id="selectArticlesByComment"
+		resultType="kr.or.bit.model.Article">
+		SET @rownum:=0;
+		SELECT *
+		FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
+		FROM (SELECT DISTINCT a.*
+		FROM ARTICLE A
+		JOIN COMMENT C
+		ON a.id = c.article_id
+		LEFT JOIN MEMBER M
+		ON c.username = m.username
+		WHERE BOARD_ID = #{board_id}
+		<if test="criteria == 'comment_name'">
+			and m.name like '%${search}%'
+		</if>
+		<if test="criteria =='comment_content'">
+			and c.content like '%${search}%'
+		</if>
+		ORDER BY id desc) a ) b
+		WHERE rownum BETWEEN #{start} and #{end};
+	</select>
+	<select id="selectAllArticleByBoardId"
+		resultType="kr.or.bit.model.Article">
+		SELECT id, title, content, time, updated_time, view_count, original_id,
+		enable,
+		level, username, board_id,
+		(SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum,
+		(SELECT count(*) FROM comment WHERE article_id=a.id) as commentnum
+		FROM ARTICLE as a
+		WHERE BOARD_ID=#{board_id} AND ENABLE=1
+		ORDER BY id DESC
+		LIMIT 5
+	</select>
+	<select id="selectAllPagingArticlesByBoardId"
+		resultType="kr.or.bit.model.Article">
+		SELECT id, title, content, time, updated_time, view_count, original_id,
+		enable,
+		level, username, board_id,
+		(SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum,
+		(SELECT count(*) FROM comment WHERE article_id=a.id) as commentnum
+		FROM ARTICLE as a
+		WHERE BOARD_ID=#{board_id} AND ENABLE=1
+		ORDER BY original_id DESC, level asc
+		LIMIT #{pager.start}, #{pager.articlesOnPage}
+	</select>
+	<select id="selectArticlesOnNextPage"
+		resultType="kr.or.bit.model.Article">
+		SELECT id, title, content, time, updated_time, view_count, original_id,
+		level, username, board_id, enable
+		FROM ARTICLE
+		WHERE BOARD_ID = 2
+		AND id &lt; #{article_id}
+		ORDER BY id DESC
+		LIMIT 5
+	</select>
+	<select id="selectOneArticle"
+		resultType="kr.or.bit.model.Article">
+		SELECT a.id, a.title, a.content, a.time, a.view_count, a.original_id,
+		a.level, a.username,
+		a.board_id, (SELECT COUNT(*) FROM ARTICLE_VOTE WHERE article_id=#{id}) as
+		"vote_Count", a.updated_time, m.name
+		FROM ARTICLE a JOIN MEMBER m ON a.username = m.username
+		WHERE ID=#{id};
+	</select>
+	<insert id="insertArticle">
+		INSERT INTO article(time, updated_time, title, content, username, board_id,
+		original_id)
+		VALUES (now(), now(), #{title}, #{content}, #{username}, #{board_id},
+		(select max(id)+1 from (select * from article )as temp))
+	</insert>
+	<insert id="insertTroubleShootingArticle">
+		INSERT INTO article(time, updated_time, title, content, username, board_id,
+		original_id)
+		VALUES (now(),
+		now(),
+		#{article.title},
+		#{article.content},
+		#{article.username},
+		(SELECT id
+		FROM board
+		WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, g.group_no)
+		FROM groups g
+		LEFT JOIN project p
+		ON g.project_id = p.id
+		WHERE g.id = #{group_id})),
+		(select max(id)+1 from (select * from article) as temp))
+
+	</insert>
+	<update id="updateTroubleShootingArticle">
+		UPDATE article
+		SET title=#{title}, content=#{content}
+		WHERE id=#{id}
+	</update>
+	<insert id="insertReplyArticle">
+		INSERT INTO article(time, updated_time, title, content, username, board_id,
+		level, original_id)
+		VALUES (now(), now(), #{title}, #{content}, #{username}, #{board_id},
+		#{level}, #{original_id})
+	</insert>
+	<update id="deleteArticle" parameterType="Integer">
+		UPDATE article
+		SET enable=0
+		WHERE id=#{id}
+	</update>
+	<update id="updateArticle"
+		parameterType="kr.or.bit.model.Article">
+		UPDATE article
+		SET updated_time=now(), title=#{title}, content=#{content}
+		WHERE id=#{id}
+	</update>
+	<insert id="insertVote">
+		INSERT INTO article_vote(article_id, username)
+		VALUES (#{id}, #{username})
+	</insert>
+	<delete id="deleteVote">
+		DELETE FROM article_vote
+		WHERE article_id=#{id} and username=#{username}
+	</delete>
+	<select id="countVote" resultType="int">
+		SELECT count(*)
+		FROM article_vote
+		WHERE article_id=#{id}
+	</select>
+	<select id="getMostRecentArticleId" resultType="int">
+		SELECT MAX(id)
+		FROM ARTICLE
+	</select>
+	<select id="selectVote" resultType="int">
+		SELECT COUNT(*)
+		FROM ARTICLE_VOTE
+		WHERE article_id=#{id} AND username=#{username}
+	</select>
+	<update id="updateEnable">
+		{call CHANGESTATUS('ARTICLE',#{id})}
+	</update>
+	<select id="selectHomeworkReplies"
+		resultType="kr.or.bit.model.Article">
+		SELECT *
+		FROM article
+		WHERE ORIGINAL_ID = #{article_id} AND ID != #{article_id} AND ENABLE=1
+	</select>
+	<select id="selectArticlesForClassMain"
+		resultType="kr.or.bit.model.Article">
+		select a.title, time, board_name, a.username
+		from article a
+		left join board b
+		on a.board_id = b.id
+		left join member m
+		on m.username = a.username
+		where b.course_id = #{course_id}
+		and b.boardtype not in (1, 2, 4, 6)
+		<!-- and a.id = a.original_id -->
+		order by a.id desc
+		LIMIT 5
+	</select>
+	<select id="selectTagList" resultType="kr.or.bit.model.Tag">
+		SELECT id, tag
+		FROM article_tag at
+		LEFT JOIN tag a
+		ON a.id = at.tag_id
+		WHERE article_id=#{article_id};
+	</select>
+	<select id="selectAllIssuesOpened"
+		resultType="kr.or.bit.model.Article">
+		SELECT a.id, title, content, time, updated_time, view_count,
+		original_id, enable, level, username, board_id
+		FROM ARTICLE a
+		LEFT JOIN troubleshooting ts
+		ON a.id = ts.article_id
+		WHERE board_id = (SELECT id
+		FROM board
+		WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, g.group_no)
+		FROM groups g
+		LEFT JOIN project p
+		ON g.project_id = p.id
+		WHERE g.id = #{group_id})
+		)
+		AND ts.issue_closed = 0
+		AND a.enable = 1
+		<if test="criteria == 'title'">
+			AND title like '%${word}%'
+		</if>
+		<if test="criteria == 'content'">
+			AND content like '%${word}%'
+		</if>
+		<if test="criteria == 'titlecontent'">
+			AND (title like '%${word}%' OR content like '%${word}%')
+		</if>
+		ORDER BY a.id DESC
+	</select>
+	<select id="selectAllIssuesClosed"
+		resultType="kr.or.bit.model.Article">
+		SELECT a.id, title, content, time, updated_time, view_count,
+		original_id, enable, level, username, board_id
+		FROM ARTICLE a
+		LEFT JOIN troubleshooting ts
+		ON a.id = ts.article_id
+		WHERE board_id = (SELECT id
+		FROM board
+		WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, g.group_no)
+		FROM groups g
+		LEFT JOIN project p
+		ON g.project_id = p.id
+		WHERE g.id = #{group_id})
+		)
+		AND ts.issue_closed = 1
+		AND a.enable = 1
+		<if test="criteria == 'title'">
+			AND title like '%${word}%'
+		</if>
+		<if test="criteria == 'content'">
+			AND content like '%${word}%'
+		</if>
+		<if test="criteria == 'titlecontent'">
+			AND (title like '%${word}%' OR content like '%${word}%')
+		</if>
+		ORDER BY a.id DESC
+	</select>
+	<select id="selectIssuesOpenedByPage"
+		resultType="kr.or.bit.model.Article">
+		SELECT a.id, title, content, time, updated_time, view_count,
+		original_id, enable, level, username, board_id
+		FROM ARTICLE a
+		LEFT JOIN troubleshooting ts
+		ON a.id = ts.article_id
+		WHERE board_id = (SELECT id
+		FROM board
+		WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, g.group_no)
+		FROM groups g
+		LEFT JOIN project p
+		ON g.project_id = p.id
+		WHERE g.id = #{group_id})
+		)
+		AND ts.issue_closed = 0
+		AND a.enable = 1
+		<if test="criteria == 'title'">
+			AND title like '%${word}%'
+		</if>
+		<if test="criteria == 'content'">
+			AND content like '%${word}%'
+		</if>
+		<if test="criteria == 'titlecontent'">
+			AND (title like '%${word}%' OR content like '%${word}%')
+		</if>
+		ORDER BY a.id DESC
+		LIMIT #{pager.start}, #{pager.articlesOnPage}
+	</select>
+	<select id="selectIssuesClosedByPage"
+		resultType="kr.or.bit.model.Article">
+		SELECT a.id, title, content, time, updated_time, view_count,
+		original_id, enable, level, username, board_id
+		FROM ARTICLE a
+		LEFT JOIN troubleshooting ts
+		ON a.id = ts.article_id
+		WHERE board_id = (SELECT id
+		FROM board
+		WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, g.group_no)
+		FROM groups g
+		LEFT JOIN project p
+		ON g.project_id = p.id
+		WHERE g.id = #{group_id})
+		)
+		AND ts.issue_closed = 1
+		AND a.enable = 1
+		<if test="criteria == 'title'">
+			AND title like '%${word}%'
+		</if>
+		<if test="criteria == 'content'">
+			AND content like '%${word}%'
+		</if>
+		<if test="criteria == 'titlecontent'">
+			AND (title like '%${word}%' OR content like '%${word}%')
+		</if>
+		ORDER BY a.id DESC
+		LIMIT #{pager.start}, #{pager.articlesOnPage}
+	</select>
+	<update id="updateArticleViewCount">
+		UPDATE Article
+		SET view_count=view_count+1
+		WHERE ID=#{id}
+	</update>
+
+	<update id="updateArticleLevel">
+		UPDATE ARTICLE
+		SET LEVEL = LEVEL + 1
+		WHERE ORIGINAL_ID = ${ORIGINAL_ID} AND LEVEL > ${LEVEL}
+	</update>
+
+
 </mapper>
  
