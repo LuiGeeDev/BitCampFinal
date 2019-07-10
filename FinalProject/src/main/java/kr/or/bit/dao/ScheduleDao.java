@@ -2,6 +2,8 @@ package kr.or.bit.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.or.bit.model.Course;
 import kr.or.bit.model.Group;
 import kr.or.bit.model.Schedule;
@@ -20,7 +22,7 @@ public interface ScheduleDao {
 
   void updateSchedule(Schedule schedule);
 
-  void deleteSchedule(int id);
+  void deleteSchedule(@Param("id") int id, @Param("course_id") int course_id);
 
   List<Schedule> selectAllSchedule(Course course, Group group);
 }
