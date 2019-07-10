@@ -16,4 +16,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     from troubleshooting
     where article_id = #{article_id}
   </select>
+
 </mapper>

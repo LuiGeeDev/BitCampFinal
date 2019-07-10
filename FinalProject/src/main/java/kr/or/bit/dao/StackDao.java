@@ -36,4 +36,6 @@ public interface StackDao {
   List<Article> selectStackArticleByWriter(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
 
   List<Article> selectStackArticleByTag(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
+  
+  void deleteTag(int article_id);
 }

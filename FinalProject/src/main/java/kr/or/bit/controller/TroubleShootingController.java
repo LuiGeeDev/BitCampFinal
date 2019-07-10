@@ -1,5 +1,6 @@
 package kr.or.bit.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -18,6 +19,7 @@ import kr.or.bit.dao.StackDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Group;
+import kr.or.bit.model.Tag;
 import kr.or.bit.service.TroubleShootingService;
 
 @Controller
@@ -106,5 +108,33 @@ public class TroubleShootingController {
     comment = commentDao.selectOneComment(comment.getId());
     service.deleteComment(comment);
     return "redirect:/myclass/project/troubleshooting/read?id=" + comment.getArticle_id() + "&group_id=" + group_id;
+  }
+  
+  @GetMapping("/edit")
+  public String updatePage(Article article, int group_id, Model model) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
+    StackDao stackDao = sqlSession.getMapper(StackDao.class);
+
+    Group group = groupDao.selectGroupById(group_id);
+    Article targetArticle = articleDao.selectOneArticle(article.getId());
+    targetArticle.setTags(stackDao.selectTagList(targetArticle.getId()));
+    System.out.println(targetArticle);
+
+    List<String> articleTags = new ArrayList<String>();
+    for(Tag tagName : targetArticle.getTags()) {
+      articleTags.add(tagName.getTag());
+    }
+    
+    model.addAttribute("tags", stackDao.showTagList());
+    model.addAttribute("group", group);
+    model.addAttribute("article", targetArticle);
+    model.addAttribute("articleTags", articleTags);
+    return "myclass/troubleshooting/edit";
+  }
+  @PostMapping("/edit")
+  public String updateArticle(Article article, int group_id, String tag) {
+    service.updateIssue(article, group_id, tag);
+    return "redirect:/myclass/project/troubleshooting/read?id="+article.getId()+"&group_id="+group_id; 
   }
 }
