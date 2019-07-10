@@ -35,7 +35,7 @@ public class TagService {
     String tag = tagList.get(i);
     Tag onetag = stackdao.selectTagByName(tag);
     tags.add(onetag);
-    int tag_id=onetag.getId();
+    int tag_id = onetag.getId();
     stackdao.insertTag(tag_id,article_id);
     }  
   }

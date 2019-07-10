@@ -18,7 +18,7 @@ table {
 
 th, td {
   color: #2d3436;
-  padding: 10px;
+  padding: 8px;
 }
 
 td[colspan="2"] {
@@ -89,6 +89,7 @@ td[colspan="2"] {
   color: white;
   padding: 5px;
   line-height: 2.0em;
+  cursor: pointer;
 }
 
 #c1 {
