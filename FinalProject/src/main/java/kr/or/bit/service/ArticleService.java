@@ -202,7 +202,10 @@ public class ArticleService {
       articlelist = stackdao.selectStackArticleByTitleOrContent(pager,boardSearch);
     }else if(criteria.equals("title")) {
       articlelist = stackdao.selectStackArticleByTitle(pager,boardSearch);
-    }else {
+    }else if(criteria.equals("Tag")) {
+      articlelist = stackdao.selectStackArticleByTag(pager, boardSearch);
+    }
+    else {
       articlelist = stackdao.selectStackArticleByWriter(pager,boardSearch);
     }
     

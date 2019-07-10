@@ -114,4 +114,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY a.ID DESC
 		LIMIT #{pager.start}, #{pager.articlesOnPage}
 	</select>
+	<select id="selectStackArticleByTag" resultType="kr.or.bit.model.Article">
+		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
+		FROM ARTICLE a 
+		JOIN BOARD b ON a.board_id = b.id
+		JOIN ARTICLE_TAG at ON a.id = at.article_id
+		JOIN TAG t ON t.id = at.tag_id
+		WHERE BOARD_ID=1 AND ENABLE = 1 AND t.tag=#{boardSearch}
+		ORDER BY a.ID DESC
+		LIMIT #{pager.start}, #{pager.articlesOnPage}
+	</select>
 </mapper>
