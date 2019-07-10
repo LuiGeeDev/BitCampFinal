@@ -126,6 +126,15 @@
     $("#modal-submitbtn").click(function() {
       const messageText = $("#message-text").val();
       const messageSenderId = $("#message-sender-id").text();
+      let valueCheck = messageText;         
+      
+	  	if(valueCheck.trim() === "" || valueCheck === null) {
+	  	  Swal.fire({
+	  	    type: 'error',
+	  	    text: '다시 입력해주세요 !!',
+	  	  })
+	  	  	return;
+	  	}
       $.ajax({
         url: "/ajax/message/reply",
         type: "POST",
