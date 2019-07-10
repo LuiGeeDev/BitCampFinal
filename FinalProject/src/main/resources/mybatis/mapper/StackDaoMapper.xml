@@ -76,10 +76,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM article
 		WHERE BOARD_ID=1 AND ENABLE=1
 	</select>
-	<select id="countStackArticleBySearchWord" resultType="Integer">
+	<select id="countStackArticleByTitleOrContent" resultType="Integer">
+		SELECT COUNT(*)
+  		FROM article
+  		WHERE board_id = 1 AND enable =  1 AND title LIKE '%${boardSearch}%' OR content LIKE '%${boardSearch}%'
+	</select>
+	<select id="countStackArticleByTitle" resultType="Integer">
 		SELECT COUNT(*)
   		FROM article
   		WHERE board_id = 1 AND enable =  1 AND title LIKE '%${boardSearch}%'
+	</select>
+	<select id="countStackArticleByWriter" resultType="Integer">
+		SELECT COUNT(*)
+  		FROM article a JOIN member m ON a.username = m.username
+  		WHERE board_id = 1 AND enable =  1 AND m.name LIKE '%${boardSearch}%'
 	</select>
 	<select id="selectAllStackArticle" resultType="kr.or.bit.model.Article">
 		SELECT id, title, content, time, updated_time, view_count, original_id,

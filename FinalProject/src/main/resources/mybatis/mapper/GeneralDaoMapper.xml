@@ -31,5 +31,54 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	from general
 	where article_id=#{article_id}
   </select>
-  
+  <select id="countAllGeneralArticlesByBoardId" resultType="Integer">
+  	SELECT count(*)
+	FROM article
+	WHERE board_id = #{board_id} AND enable = 1
+  </select>
+  <select id="countAllGeneralArticlesByBoardIdAndTitleOrContent" resultType="Integer">
+  	SELECT count(*)
+	FROM article
+	WHERE board_id = #{board_id} AND enable = 1 AND title LIKE '%${boardSearch}%' OR content LIKE '%${boardSearch}%'
+  </select>
+  <select id="countAllGeneralArticlesByBoardIdAndTitle" resultType="Integer">
+  	SELECT count(*)
+	FROM article
+	WHERE board_id = #{board_id} AND enable = 1 AND title LIKE '%${boardSearch}%'
+  </select>
+  <select id="countAllGeneralArticlesByBoardIdAndWriter" resultType="Integer">
+  	SELECT count(*)
+	FROM article a JOIN member m ON a.username = m.username
+	WHERE board_id = #{board_id} AND enable = 1 AND m.name LIKE '%${boardSearch}%'
+  </select>
+  <select id="selectGeneralArticlesByTitleOrContent" resultType="kr.or.bit.model.Article">
+  	SELECT id, title, content, time, updated_time, view_count, original_id, enable,
+    level, username, board_id,
+    (SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum,
+    (SELECT count(*) FROM comment WHERE article_id=a.id) as commentnum
+    FROM ARTICLE as a
+    WHERE BOARD_ID = #{board_id} AND ENABLE=1 AND a.title LIKE '%${boardSearch}%' OR a.content LIKE '%${boardSearch}%'
+    ORDER BY id DESC
+    LIMIT #{pager.start}, #{pager.articlesOnPage}
+  </select>
+  <select id="selectGeneralArticlesByTitle" resultType="kr.or.bit.model.Article">
+  	SELECT id, title, content, time, updated_time, view_count, original_id, enable,
+    level, username, board_id,
+    (SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum,
+    (SELECT count(*) FROM comment WHERE article_id=a.id) as commentnum
+    FROM ARTICLE as a
+    WHERE BOARD_ID = #{board_id} AND ENABLE=1 AND a.title LIKE '%${boardSearch}%'
+    ORDER BY id DESC
+    LIMIT #{pager.start}, #{pager.articlesOnPage}
+  </select>
+  <select id="selectGeneralArticlesByWriter" resultType="kr.or.bit.model.Article">
+  	SELECT a.id, a.title, a.content, a.time, a.updated_time, a.view_count, a.original_id, a.enable,
+    a.level, a.username, a.board_id,
+    (SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum,
+    (SELECT count(*) FROM comment WHERE article_id=a.id) as commentnum
+    FROM article a JOIN member m ON a.username = m.username
+    WHERE BOARD_ID = #{board_id} AND ENABLE=1 AND m.name LIKE '%${boardSearch}%'
+    ORDER BY id DESC
+	LIMIT #{pager.start}, #{pager.articlesOnPage}
+  </select>
 </mapper>

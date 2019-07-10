@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.MemberDao;
@@ -48,6 +49,8 @@ public class StackController {
   private ArticleUpdateService articleUpdateService;
   @Autowired
   private TagService tagService;
+  @Autowired
+  private BoardService boardService;
 
   @GetMapping("")
   public String listPage(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model) throws Exception{
@@ -58,7 +61,13 @@ public class StackController {
     List<Article> stackList = null;
     Pager pager = null;
     if(boardSearch != null) {
-      pager = new Pager(page, stackDao.countStackArticleBySearchWord(boardSearch));
+      if(criteria.equals("titleOrContent")) {
+        pager = new Pager(page, stackDao.countStackArticleByTitleOrContent(boardSearch));
+      }else if(criteria.equals("title")) {
+        pager = new Pager(page, stackDao.countStackArticleByTitle(boardSearch));
+      }else {
+        pager = new Pager(page, stackDao.countStackArticleByWriter(boardSearch));
+      }
       stackList = articleService.selectStackArticlesByboardSearch(pager,boardSearch,criteria);
       model.addAttribute("boardSearch", boardSearch);
     } else {
@@ -146,11 +155,11 @@ public class StackController {
   }
 
   @PostMapping("/commentwrite")
-  public String stackCommentWrite(int id, Comment comment) {
+  public @ResponseBody List<Comment> stackCommentWrite(int article_id, Comment comment) {
     comment.setUsername(Helper.userName());
-    comment.setArticle_id(id);
-    commentService.insertComment(comment);   
-    return "redirect:/stack/content?id="+id;
+    boardService.writeComment(article_id, comment);
+    List<Comment> commentList = boardService.getCommentList(article_id);
+    return commentList;
   }
 
   @GetMapping("/commentdelete")

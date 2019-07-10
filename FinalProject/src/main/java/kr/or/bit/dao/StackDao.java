@@ -15,7 +15,11 @@ public interface StackDao {
   
   int countAllStackArticle();
   
-  int countStackArticleBySearchWord(@Param("boardSearch") String boardSearch);
+  int countStackArticleByTitleOrContent(@Param("boardSearch") String boardSearch);
+  
+  int countStackArticleByTitle(@Param("boardSearch") String boardSearch);
+  
+  int countStackArticleByWriter(@Param("boardSearch") String boardSearch);
   
   List<Article> selectAllStackArticle(Pager pager);
   

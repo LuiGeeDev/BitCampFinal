@@ -46,7 +46,7 @@ public class VideoController {
 
   @GetMapping("")
   public String videoHome(Model model) {
-    List<Article> videoList = articleService.selectAllArticle("video", VIDEO_BOARD_ID);
+    List<Article> videoList = articleService.selectAllArticle("video", VIDEO_BOARD_ID, null);
     model.addAttribute("videoList", videoList);
     return "video/home";
   }
