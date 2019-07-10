@@ -125,12 +125,11 @@ public class BoardService {
             general.setFile2(filesDao.selectFilesByFilename(file.getFilename()).getId());
           }
         }
-      } else if(fileOneName != "" && fileTwoName == "") {
+      } else if (fileOneName != "" && fileTwoName == "") {
         Files files = fileUploadService.uploadFile(file1, request);
         filesDao.insertFiles(files);
         general.setFile1(filesDao.selectFilesByFilename(files.getFilename()).getId());
-        
-      } else if(fileOneName == "" && fileTwoName != "") {
+      } else if (fileOneName == "" && fileTwoName != "") {
         Files files = fileUploadService.uploadFile(file2, request);
         filesDao.insertFiles(files);
         general.setFile2(filesDao.selectFilesByFilename(files.getFilename()).getId());
@@ -142,7 +141,7 @@ public class BoardService {
     }
     generalDao.updateGeneral(general);
   }
-  
+
   @PreAuthorize("hasAnyRole('TEACHER', 'MANAGER') or #article.username == principal.username")
   public void deleteArticle(Article article) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
