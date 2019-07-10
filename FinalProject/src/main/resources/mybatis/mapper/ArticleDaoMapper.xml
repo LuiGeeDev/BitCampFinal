@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- /* * * @date: 2019. 06. 28. * * @author: 권예지 * * @description: ArticleDaMapper로 
-  DAO의 parameter에 들어갈 값을 매핑해서 쿼리문을 보낸다 * */ -->
+	DAO의 parameter에 들어갈 값을 매핑해서 쿼리문을 보낸다 * */ -->
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -98,7 +98,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     LIMIT 5
   </select>
   <select id="selectOneArticle" resultType="kr.or.bit.model.Article">
-    SELECT a.id, a.title, a.content, a.time, a.view_count, a.original_id, a.level, a.username,
+    SELECT a.id, a.adopted_answer, a.title, a.content, a.time, a.view_count, a.original_id, a.level, a.username,
     a.board_id, (SELECT COUNT(*) FROM ARTICLE_VOTE WHERE article_id=#{id}) as "vote_Count", a.updated_time, m.name 
     FROM ARTICLE a JOIN MEMBER m ON a.username = m.username
     WHERE ID=#{id};
@@ -304,5 +304,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	SET view_count=view_count+1
   	WHERE ID=#{id}
   </update>
+
+  <update id="updateArticleLevel">
+		UPDATE ARTICLE
+		SET LEVEL = LEVEL + 1
+		WHERE ORIGINAL_ID = ${ORIGINAL_ID} AND LEVEL > ${LEVEL}
+	</update>
 </mapper>
  

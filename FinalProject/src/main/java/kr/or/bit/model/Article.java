@@ -18,6 +18,8 @@ public class Article {
   private int enable; // default 1
   private String username;
   private int board_id;
+  private int adopted_answer;
+
   private LocalDateTime timeLocal;
   private LocalDateTime updatedTimeLocal;
   private Member writer;
@@ -222,6 +224,14 @@ public class Article {
 
   public void setCommentSize(int commentSize) {
     this.commentSize = commentSize;
+  }
+  
+  public int getAdopted_answer() {
+    return adopted_answer;
+  }
+
+  public void setAdopted_answer(int adopted_answer) {
+    this.adopted_answer = adopted_answer;
   }
 
   @Override

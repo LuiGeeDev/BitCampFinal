@@ -77,4 +77,6 @@ public interface ArticleDao {
       @Param("criteria") String criteria, @Param("word") String word);
   
   void updateArticleViewCount(Article article);
+  
+  void updateArticleLevel(Article article);
 }
