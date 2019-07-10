@@ -49,13 +49,16 @@
       </div>
     </form>
     <div th:each="fi, iter : ${article.option.files}">
-      <form th:method="POST" th:action="@{/myclass/board/deletefile{K}(K=${iter.count})}">
+      <form th:method="POST"
+        th:action="@{/myclass/board/deletefile{K}(K=${iter.count})}"
+        th:id="'count'+${iter.count}">
         <div class="download-content" th:if="${fi!=null}">
-          <input type="text" th:value="${fi.id}"
+          <input type="hidden" th:value="${fi.id}"
             th:name="'count'+${iter.count}" />
+          <input type="hidden" th:value="${article.id}" name="id">
+          <input type="hidden" th:value="${article.board_id}" name="board_id">
         </div>
-        <input type="submit" th:id="'submitbutton'+${iter.count}" />
-    </form>
+      </form>
     </div>
   </div>
   <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
@@ -83,9 +86,14 @@
         })
       });
       function deletefile(event) {
+        console.log('이건된다');
         const div = $(event.target).parent().parent();
         div.empty();
-       	const id = $(submitbutton1).submit();
+        if (div.prop('id') == 'par1') {
+          $('#count1').submit();
+        } else if (div.prop('id') == 'par2') {
+          $('#count2').submit();
+        }
       }
       function updatefile(event) {
         const i = $(event.target).parent().parent().children('.filename');

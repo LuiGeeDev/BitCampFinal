@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.or.bit.dao.GeneralDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
+import kr.or.bit.model.General;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.BoardService;
 import kr.or.bit.utils.Pager;
@@ -134,11 +135,26 @@ public class BoardController {
   }
   
   @PostMapping("/deletefile1")
-  public void fileDelete1(int count1) {
+  public String fileDelete1(int count1, Article article) {
       System.out.println(count1);
+      System.out.println(article);
+      
+      GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
+      General general = new General();
+      
+      general.setArticle_id(article.getId());
+      generalDao.updateFileOneGeneral(general);
+      return "redirect:/myclass/board/edit?article_id=" + article.getId() + "&board_id=" + article.getBoard_id();
   }
   @PostMapping("/deletefile2")
-  public void fileDelete2(int count2) {
-    System.out.println(count2);
+  public String fileDelete2(int count2, Article article) {
+    
+    GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
+    General general = new General();
+    
+    general.setArticle_id(article.getId());
+    generalDao.updateFileTwoGeneral(general);
+    
+    return "redirect:/myclass/board/edit?article_id=" + article.getId() + "&board_id=" + article.getBoard_id();
   }
 }
