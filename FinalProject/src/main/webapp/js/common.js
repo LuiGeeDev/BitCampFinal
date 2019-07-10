@@ -47,10 +47,10 @@ function showToast(notification) {
 }
 
 // 추천 알림
-function sendVoteNotice(senderUsername, receiverUsername, link) {
+function sendVoteNotice(senderName, receiverUsername, link) {
   const notification = {
     title: "추천",
-    content: `${senderUsername}님에게 추천받았습니다.`,
+    content: `${senderName}님에게 추천받았습니다.`,
     username: receiverUsername,
     link
   };
@@ -59,10 +59,10 @@ function sendVoteNotice(senderUsername, receiverUsername, link) {
 }
 
 // 댓글 알림
-function sendCommentNotice(senderUsername, receiverUsername, link) {
+function sendCommentNotice(senderName, receiverUsername, link) {
   const notification = {
     title: "댓글",
-    content: `${senderUsername}님이 댓글을 달았습니다.`,
+    content: `${senderName}님이 댓글을 달았습니다.`,
     username: receiverUsername,
     link
   };
@@ -71,10 +71,10 @@ function sendCommentNotice(senderUsername, receiverUsername, link) {
 }
 
 // 
-function sendReplyNotice(senderUsername, receiverUsername, link) {
+function sendReplyNotice(senderName, receiverUsername, link) {
   const notification = {
     title: "답글",
-    content: `${senderUsername}님이 답글을 달았습니다.`,
+    content: `${senderName}님이 답글을 달았습니다.`,
     username: receiverUsername,
     link
   };
@@ -82,10 +82,10 @@ function sendReplyNotice(senderUsername, receiverUsername, link) {
   client.send("/app/notice/reply", {}, JSON.stringify(notification));
 }
 
-function sendAssembleNotice(senderUsername, receiverUsername, link) {
+function sendAssembleNotice(senderName, receiverUsername, link) {
   const notification = {
     title: "모여라",
-    content: `${senderUsername} 강사님이 모여라를 외칩니다.`,
+    content: `${senderName} 강사님이 모여라를 외칩니다.`,
     username: receiverUsername,
     link
   };
@@ -93,10 +93,9 @@ function sendAssembleNotice(senderUsername, receiverUsername, link) {
   client.send("/app/notice/assemble", {}, JSON.stringify(notification));
 }
 
-function sendMessageNotice(senderUsername, receiverUsername) {
+function sendMessageNotice(senderName, receiverUsername) {
   const notification = {
       title: "쪽지",
-      content: `${senderUsername}님이 쪽지를 보냈습니다.`,
       username: receiverUsername,
       link: "/message"
   }

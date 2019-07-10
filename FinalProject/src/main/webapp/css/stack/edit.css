@@ -1,0 +1,135 @@
+@charset "UTF-8";
+
+body {
+  font-family: 'Nanum Gothic';
+}
+
+.title {
+  font-size: 190%;
+  margin: 20px;
+}
+
+#write-form-wrapper {
+  margin: 50px 50px 10px 50px;
+  padding: 20px 10px 20px 10px;
+  border: 1px solid #eeeeee;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+#input-url::placeholder {
+  color: #c2c2c2;
+}
+
+#input-title {
+  width: 98%;
+  height: 31.6px;
+  border: 1px solid #c2c2c2;
+  border-radius: 5px;
+  outline: none;
+  padding: 20px 10px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+  margin: 0 5px 10px;
+}
+
+#input-tag {
+  border: 1px solid white;
+  width: 98%;
+  border-radius: 5px;
+  outline: none;
+  margin-left: 5px;
+  margin: 10px 5px 10px;
+  float: left;
+  display:flex;
+  flex-direction: row;
+}
+
+#input-title::placeholder {
+  color: #c2c2c2;
+}
+
+#input-url {
+  width: 100%;
+  margin-left: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #c2c2c2;
+  border-radius: 5px;
+  padding: 5px 10px;
+  outline: none;
+}
+
+#submitbtn {
+  float: right;
+  text-align: right;
+  margin-right: 5px;
+}
+
+.note-editor {
+  margin: 0 5px;
+  border-radius: 5px;
+  width: 98%;
+}
+
+.url {
+  position: relative;
+  width: 98%;
+}
+
+.info {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #a6a6a6;
+}
+
+.content {
+  font-family: 'Nanum Gothic' !important;
+  font-size: 17.6px !important;
+}
+
+.content p {
+  font-family: 'Nanum Gothic' !important;
+  font-size: 17.6px !important;
+}
+
+#feedback {
+  font-size: 1.4em;
+}
+
+#selectable {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 80%;
+}
+
+#selectable li {
+  margin: 1px;
+  padding: 0.3em;
+  font-size: 16px;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 5px;
+  background: #EEEEEE;
+}
+
+#tagWrapper {
+  margin: 1px;
+  padding: 0.4em;
+  font-size: 16px;
+  display: table;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #EEEEEE; !important;
+  margin-right: 4px;
+}
+
+.submit-btn {
+  margin-left: auto;
+}
+
+#select-result {
+  display:none 
+}
