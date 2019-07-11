@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectStackArticles"
 		resultType="kr.or.bit.model.Article">
 		SELECT id, title, content, time, updated_time, view_count, original_id,
-		enable, adopted_answer,
+		enable,
 		level, username, board_id,
 		(SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum
 		FROM ARTICLE as a

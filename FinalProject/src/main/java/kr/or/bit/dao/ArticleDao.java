@@ -81,4 +81,9 @@ public interface ArticleDao {
   void updateArticleLevel(Article article);
   
   int selectMostRecentArticleId(Article article);
+
+  Integer selectMaxLevel(Article article);
+  
+  Integer selectMaxLevelBySibling(Article article);
+  
 }

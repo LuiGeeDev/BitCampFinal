@@ -78,8 +78,6 @@ public class StackController {
       pager = new Pager(page, stackDao.countAllStackArticle());
       stackList = articleService.selectAllStackArticles(pager);
     }
-    
-
     model.addAttribute("stacklist", stackList);
     model.addAttribute("pager", pager);
     model.addAttribute("page", page);
@@ -105,7 +103,7 @@ public class StackController {
     int adopted = qna.getAdopted_answer();
     for (Comment c : article.getCommentlist()) {
       c.setWriter(memberDao.selectMemberByUsername(c.getUsername()));
-    }    
+    }
     if (adopted != 0) {
       Comment comment = stackdao.selectAdoptedAnswer(adopted);
       comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
@@ -189,11 +187,11 @@ public class StackController {
     articleVoteService.insertVote(id, Helper.userName());
     return "redirect:/stack/content?id=" + id;
   }
-  
+
   @GetMapping("/chooseanswer")
   public String stackChooseAnswer(int comment_id, int article_id) {
     QnaDao qnaDao = sqlsession.getMapper(QnaDao.class);
     qnaDao.chooseAnswer(comment_id, article_id);
-    return "redirect:/stack/content?id="+article_id;
+    return "redirect:/stack/content?id=" + article_id;
   }
 }

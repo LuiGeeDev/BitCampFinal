@@ -31,7 +31,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM ARTICLE
 		WHERE board_id = #{board_id}
 		ORDER BY view_count DESC, id DESC) a) b
-		WHERE rownum BETWEEN #{start} AND #{end};
+		WHERE rownum BETWEEN #{start} AND
+		#{end};
 	</select>
 	<select id="selectArticlesBySearchWord"
 		resultType="kr.or.bit.model.Article">
@@ -53,13 +54,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</otherwise>
 		</choose>
 		ORDER BY time DESC, id DESC) a) b
-		WHERE rownum BETWEEN #{start} AND #{end};
+		WHERE rownum BETWEEN #{start} AND
+		#{end};
 	</select>
 	<select id="selectArticlesByComment"
 		resultType="kr.or.bit.model.Article">
 		SET @rownum:=0;
 		SELECT *
-		FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
+		FROM (SELECT @rownum:=@rownum + 1 as rownum,
+		a.*
 		FROM (SELECT DISTINCT a.*
 		FROM ARTICLE A
 		JOIN COMMENT C
@@ -78,14 +81,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="selectAllArticleByBoardId"
 		resultType="kr.or.bit.model.Article">
-		SELECT id, title, content, time, updated_time, view_count, original_id,
-		enable,
+		SELECT id, title, content, time, updated_time,
+		view_count, original_id, enable,
 		level, username, board_id,
-		(SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum,
+		(SELECT
+		count(*) FROM article_vote WHERE article_id=a.id) as votenum,
 		(SELECT count(*) FROM comment WHERE article_id=a.id) as commentnum
 		FROM ARTICLE as a
 		WHERE BOARD_ID=#{board_id} AND ENABLE=1
-		ORDER BY id DESC
+		ORDER BY id
+		DESC
 		LIMIT 5
 	</select>
 	<select id="selectAllPagingArticlesByBoardId"
@@ -93,18 +98,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT id, title, content, time, updated_time, view_count, original_id,
 		enable,
 		level, username, board_id,
-		(SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum,
-		(SELECT count(*) FROM comment WHERE article_id=a.id) as commentnum
+		(SELECT count(*) FROM article_vote
+		WHERE article_id=a.id) as votenum,
+		(SELECT count(*) FROM comment
+		WHERE article_id=a.id) as commentnum
 		FROM ARTICLE as a
-		WHERE BOARD_ID=#{board_id} AND ENABLE=1
-		ORDER BY original_id DESC, level ASC
+		WHERE
+		BOARD_ID=#{board_id} AND ENABLE=1
+		ORDER BY original_id DESC, level
+		ASC
 		LIMIT #{pager.start}, #{pager.articlesOnPage}
 	</select>
 	<select id="selectArticlesOnNextPage"
 		resultType="kr.or.bit.model.Article">
-		SELECT id, title, content, time, updated_time, view_count, original_id,
+		SELECT id, title, content, time, updated_time,
+		view_count, original_id,
 		level, username, board_id, enable
-		FROM ARTICLE
+		FROM
+		ARTICLE
 		WHERE BOARD_ID = 2
 		AND id &lt; #{article_id}
 		ORDER BY id DESC
@@ -112,22 +123,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="selectOneArticle"
 		resultType="kr.or.bit.model.Article">
-		SELECT a.id, a.title, a.content, a.time, a.view_count, a.original_id,
-		a.level, a.username, a.layer,
-		a.board_id, (SELECT COUNT(*) FROM ARTICLE_VOTE WHERE article_id=#{id}) as
-		"vote_Count", a.updated_time, m.name
+		SELECT a.id, a.title, a.content,
+		a.time, a.view_count, a.original_id, a.level, a.username, a.layer, a.sibling,
+		a.board_id, (SELECT COUNT(*) FROM ARTICLE_VOTE WHERE
+		article_id=#{id}) as "vote_Count", a.updated_time, m.name
 		FROM ARTICLE a JOIN MEMBER m ON a.username = m.username
 		WHERE ID=#{id};
 	</select>
 	<insert id="insertArticle">
-		INSERT INTO article(time, updated_time, title, content, username, board_id,
-		original_id)
-		VALUES (now(), now(), #{title}, #{content}, #{username}, #{board_id},
-		(select max(id)+1 from (select * from article )as temp))
+		INSERT INTO article(time, updated_time, title,
+		content, username, board_id, original_id)
+		VALUES (now(), now(),
+		#{title}, #{content}, #{username}, #{board_id}, (select max(id)+1
+		from (select * from article )as temp))
 	</insert>
 	<insert id="insertTroubleShootingArticle">
-		INSERT INTO article(time, updated_time, title, content, username, board_id,
-		original_id)
+		INSERT INTO article(time, updated_time, title,
+		content, username, board_id, original_id)
 		VALUES (now(),
 		now(),
 		#{article.title},
@@ -150,19 +162,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	<insert id="insertReplyArticle">
 		INSERT INTO article(time, updated_time, title, content, username, board_id,
-		level, original_id, layer)
+		level, original_id, layer, sibling)
 		VALUES (now(), now(), #{title}, #{content}, #{username}, #{board_id},
-		#{level}, #{original_id}, #{layer})
+		#{level}, #{original_id}, #{layer}, #{sibling})
 	</insert>
 	<update id="deleteArticle" parameterType="Integer">
 		UPDATE article
-		SET enable=0
+		SET
+		enable=0
 		WHERE id=#{id}
 	</update>
 	<update id="updateArticle"
 		parameterType="kr.or.bit.model.Article">
 		UPDATE article
-		SET updated_time=now(), title=#{title}, content=#{content}
+		SET updated_time=now(), title=#{title},
+		content=#{content}
 		WHERE id=#{id}
 	</update>
 	<insert id="insertVote">
@@ -171,11 +185,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	<delete id="deleteVote">
 		DELETE FROM article_vote
-		WHERE article_id=#{id} and username=#{username}
+		WHERE article_id=#{id} and
+		username=#{username}
 	</delete>
 	<select id="countVote" resultType="int">
 		SELECT count(*)
-		FROM article_vote
+		FROM
+		article_vote
 		WHERE article_id=#{id}
 	</select>
 	<select id="getMostRecentArticleId" resultType="int">
@@ -200,12 +216,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultType="kr.or.bit.model.Article">
 		select a.title, time, board_name, a.username
 		from article a
-		left join board b
+		left join
+		board b
 		on a.board_id = b.id
 		left join member m
-		on m.username = a.username
+		on m.username =
+		a.username
 		where b.course_id = #{course_id}
-		and b.boardtype not in (1, 2, 4, 6)
+		and b.boardtype not in (1,
+		2, 4, 6)
 		<!-- and a.id = a.original_id -->
 		order by a.id desc
 		LIMIT 5
@@ -222,9 +241,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT a.id, title, content, time, updated_time, view_count,
 		original_id, enable, level, username, board_id
 		FROM ARTICLE a
-		LEFT JOIN troubleshooting ts
+		LEFT
+		JOIN troubleshooting ts
 		ON a.id = ts.article_id
-		WHERE board_id = (SELECT id
+		WHERE board_id =
+		(SELECT id
 		FROM board
 		WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, g.group_no)
 		FROM groups g
@@ -250,9 +271,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT a.id, title, content, time, updated_time, view_count,
 		original_id, enable, level, username, board_id
 		FROM ARTICLE a
-		LEFT JOIN troubleshooting ts
+		LEFT
+		JOIN troubleshooting ts
 		ON a.id = ts.article_id
-		WHERE board_id = (SELECT id
+		WHERE board_id =
+		(SELECT id
 		FROM board
 		WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, g.group_no)
 		FROM groups g
@@ -278,9 +301,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT a.id, title, content, time, updated_time, view_count,
 		original_id, enable, level, username, board_id
 		FROM ARTICLE a
-		LEFT JOIN troubleshooting ts
+		LEFT
+		JOIN troubleshooting ts
 		ON a.id = ts.article_id
-		WHERE board_id = (SELECT id
+		WHERE board_id =
+		(SELECT id
 		FROM board
 		WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, g.group_no)
 		FROM groups g
@@ -307,9 +332,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT a.id, title, content, time, updated_time, view_count,
 		original_id, enable, level, username, board_id
 		FROM ARTICLE a
-		LEFT JOIN troubleshooting ts
+		LEFT
+		JOIN troubleshooting ts
 		ON a.id = ts.article_id
-		WHERE board_id = (SELECT id
+		WHERE board_id =
+		(SELECT id
 		FROM board
 		WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, g.group_no)
 		FROM groups g
@@ -337,17 +364,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ID=#{id}
 	</update>
 
-	<update id="updateArticleLevel">
-		UPDATE ARTICLE
-		SET LEVEL = LEVEL + 1
-		WHERE LEVEL >
-		${level} AND ORIGINAL_ID = ${original_id}
-	</update>
-	<select id="selectMostRecentArticleId" resultType ="Integer">
+	<select id="selectMostRecentArticleId" resultType="Integer">
 		SELECT MAX(ID)
 		FROM ARTICLE
 		WHERE BOARD_ID = #{board_id} AND username=#{username}
 	</select>
-	
+
+	<update id="updateArticleLevel">
+		UPDATE ARTICLE
+		SET LEVEL = LEVEL + 1
+		WHERE LEVEL &gt; ${level} AND ORIGINAL_ID = ${original_id} and sibling &gt;
+		${sibling}
+	</update>
+
+	<select id="selectMaxLevel" resultType="Integer">
+		select max(level)
+		from article
+		where original_id = ${original_id}
+	</select>
+
+	<select id="selectMaxLevelBySibling" resultType="Integer">
+		select max(level)
+		from article
+		where original_id = ${original_id} and sibling = ${sibling}+1
+	</select>
 </mapper>
  
