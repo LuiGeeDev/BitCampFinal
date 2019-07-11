@@ -11,13 +11,25 @@ public class Schedule {
   private String color;
   private int group_id;
   private int course_id;
-
+  private int article_id;
+  
   private LocalDate startLocal;
   private LocalDate endLocal;
 
   public Date getStart() {
     return start;
   }
+
+  
+  public int getArticle_id() {
+    return article_id;
+  }
+
+
+  public void setArticle_id(int article_id) {
+    this.article_id = article_id;
+  }
+
 
   public void setStart(Date start) {
     this.start = start;

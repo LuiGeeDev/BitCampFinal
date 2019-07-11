@@ -208,7 +208,15 @@ public class ArticleInsertService {
     int recentId = artidao.getMostRecentArticleId();
     qna.insertQna(recentId);
     tagService.insertTag(tagList, recentId);
-    System.out.println("인서트서비스 잘탔니");
+  }
+  
+  //Qna .......
+  public void writeQnaArticle(Article article, List<String> tagList) {
+    ArticleDao artidao = wArticle(article);
+    QnaDao qna = sqlSession.getMapper(QnaDao.class);
+    int recentId = artidao.getMostRecentArticleId();
+    qna.insertQna(recentId);
+    tagService.insertTag(tagList, recentId);
   }
   
 }

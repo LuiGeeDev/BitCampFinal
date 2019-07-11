@@ -237,6 +237,70 @@ public class ArticleService {
     return articleList;
   }
   
+  
+  public List<Article> selectAllQnaArticles(Pager pager) {
+    StackDao stackdao = sqlSession.getMapper(StackDao.class);
+    CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    QnaDao qnaDao = sqlSession.getMapper(QnaDao.class);
+    List<Article> articlelist = qnaDao.selectAllQnaArticle(pager);
+    
+    for (Article article : articlelist) {
+      ArticleOption option = null;
+      option = qnaDao.selectQnaByArticleId(article.getId());
+      List<Comment> commentList = commentdao.selectAllComment(article.getId());
+      List<Tag> taglist = stackdao.selectTagList(article.getId()); 
+      for (Comment comment : commentList) {
+        comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
+      }
+      article.setOption(option);
+      article.setTags(taglist);
+      article.setCommentlist(commentList);
+      article.setTimeLocal(article.getTime().toLocalDateTime());
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));   
+    }
+    return articlelist;
+  }
+  
+  public List<Article> selectQnaArticlesByboardSearch(Pager pager,String boardSearch,String criteria) {
+    StackDao stackdao = sqlSession.getMapper(StackDao.class);
+    CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    QnaDao qnaDao = sqlSession.getMapper(QnaDao.class);
+    List<Article> articleList = null;
+    
+    if(criteria.equals("titleOrContent")) {
+      articleList = qnaDao.selectQnaArticleByTitleOrContent(pager,boardSearch);
+    }else if(criteria.equals("title")) {
+      articleList = qnaDao.selectQnaArticleByTitle(pager,boardSearch);
+    }else if(criteria.equals("Tag")) {
+      articleList = qnaDao.selectQnaArticleByTag(pager, boardSearch);
+    }
+    else {
+      articleList = qnaDao.selectQnaArticleByWriter(pager,boardSearch);
+    }
+    
+    for (Article article : articleList) {
+      ArticleOption option = null;
+      option = qnaDao.selectQnaByArticleId(article.getId());
+      List<Comment> commentList = commentdao.selectAllComment(article.getId());
+      List<Tag> taglist = stackdao.selectTagList(article.getId());
+      
+      for (Comment comment : commentList) {
+        comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
+      }
+      
+      
+      article.setOption(option);
+      article.setTags(taglist);
+      article.setCommentlist(commentList);
+      article.setTimeLocal(article.getTime().toLocalDateTime());
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));   
+    }
+    return articleList;
+  }
+  
+  
   public List<Article> selectAllArticlesByBoardSearch(int boardId, Pager pager, String boardSearch, String criteria) {
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);

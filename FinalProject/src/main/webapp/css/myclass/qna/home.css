@@ -24,15 +24,16 @@ th, td {
 .tr1 {
   color: black;
 }
-.tr2{
+
+.tr2 {
   border-bottom: 1px solid lightgray;
   padding-bottom: 20px;
+  width: 8%
 }
-.tr3{
+
+.tr3 {
   padding-top: 20px;
 }
-
-
 
 .qsel {
   height: 30px;
@@ -77,6 +78,10 @@ th, td {
   cursor: pointer;
 }
 
+.td6 {
+  
+}
+
 .td5:hover {
   color: #20cdff;
 }
@@ -111,12 +116,15 @@ th, td {
 #c6 {
   background-color: #353b48 /* 어두운파란 */
 }
+
 #c7 {
   background-color: pink;
 }
-.btnalign{
- text-align: right;
+
+.btnalign {
+  text-align: right;
 }
-.btnpa{
+
+.btnpa {
   padding: 20px;
 }

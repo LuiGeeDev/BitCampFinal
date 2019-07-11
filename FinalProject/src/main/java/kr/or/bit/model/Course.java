@@ -2,6 +2,7 @@ package kr.or.bit.model;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Course {
   private int id;
@@ -17,6 +18,16 @@ public class Course {
 
   private LocalDate startDate;
   private LocalDate endDate;
+  
+  private List<Board> boards;
+  
+  public List<Board> getBoards() {
+    return boards;
+  }
+
+  public void setBoards(List<Board> boards) {
+    this.boards = boards;
+  }
 
   public int getPeople() {
     return people;

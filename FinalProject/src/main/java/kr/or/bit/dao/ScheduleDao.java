@@ -29,4 +29,8 @@ public interface ScheduleDao {
   List<Schedule> selectScheduleForClass(int course_id);
 
   List<Schedule> selectScheduleForGroup(@Param("course_id") int course_id, @Param("group_id") int group_id);
+  
+  void insertScheduleByBoard(Schedule schedule);
+  
+  Schedule selectScheduleByArticleId(int article_id);
 }

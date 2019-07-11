@@ -65,5 +65,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     classroom_id=#{classroom_id}
     WHERE id=#{id}
   </update>
+  <select id="selectAllTeacherCourse" resultType="kr.or.bit.model.Course">
+    SELECT id, course_name, start_date, end_date, subject, classroom_id
+    FROM COURSE
+    WHERE ID IN (SELECT course_id
+                 FROM TEACHER_COURSE
+                 WHERE TEACHER_USERNAME = #{username})
+    ORDER BY id DESC;                 
+  </select>
 </mapper>
   
