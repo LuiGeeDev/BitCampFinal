@@ -31,13 +31,15 @@ public class HomeController {
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
-
+    
     String username = Helper.userName();
 
     Member user = memberDao.selectMemberByUsername(username);
     List<Message> mainMessage = messageDao.selectMainMessage(username);
     List<Article> recentVideos = articleDao.selectAllArticleByBoardId(VIDEO_BOARD_ID);
     List<Article> recentStacks = articleDao.selectAllArticleByBoardId(STACK_BOARD_ID);
+    
+    System.out.println();
     for (Article video : recentVideos) {
       video.setOption(videoDao.selectVideoByArticleId(video.getId()));
     }
