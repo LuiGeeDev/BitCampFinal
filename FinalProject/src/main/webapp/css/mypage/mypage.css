@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .main-container {
-  margin: 20px 30px 10px 200px;
+  margin: 50px 50px 10px 200px;
   padding: 5px;
   border-radius: 10px;
   widht: 100%;
@@ -62,9 +62,14 @@ input[type=text], input[type=password], input[type=email] {
 
 .idCheck {
   color:red;
+  /* font-weight: bold; */
 }
 
 .updateBtn {
   position:absolute;
   right: 0
+}
+
+.idCheck, span[class="hidden"] {
+  font-weight:600;
 }
