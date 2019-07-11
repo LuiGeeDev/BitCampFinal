@@ -12,10 +12,10 @@
       <h3>
         <b>스택게시판</b>
       </h3>
-       <div class="spinner-border text-warning spin-where"
-          role="status" id="spinner">
-          <span class="sr-only">Loading...</span>
-        </div>
+      <div class="spinner-border text-warning spin-where" role="status"
+        id="spinner">
+        <span class="sr-only">Loading...</span>
+      </div>
     </div>
     <!-- 게시물컨텐트 -->
     <hr>
@@ -27,8 +27,9 @@
             th:style="'background-color:'+@{${tag.color}}+';'">[[${tag.tag}]]</span>
         </span></td>
         <td colspan="1" id="contenteditor"><a
-          th:href="@{/stack/edit(id=${stackcontent.id})}" class="updateBtn">[수정]</a> 
-          <span class="deleteBtn" id="deleteCheck">[삭제]</span></td>
+          th:href="@{/stack/edit(id=${stackcontent.id})}"
+          class="updateBtn">[수정]</a> <span class="deleteBtn"
+          id="deleteCheck">[삭제]</span></td>
       </tr>
       <tr>
         <td colspan="4" class="tdtitle"><span
@@ -45,7 +46,8 @@
             <a th:href="@{/stack/plusvote(id=${stackcontent.id})}">
               <img th:src="@{/css/stack/like.png}" id="imgp2">
             </a><br> &nbsp;<span th:text="${stackcontent.vote_count}"></span>
-            <br> <img th:src="@{/css/stack/bookmark.png}" id="imgp2">
+            <br> <img th:src="@{/css/stack/bookmark.png}"
+              id="imgp2">
           </div>
         </td>
       </tr>
@@ -68,33 +70,31 @@
     <!-- 댓글insert -->
     <table>
       <tr>
-        <td class="comtitle" colspan="4">총 [<span class="commentPlus"
+        <td class="comtitle" colspan="4">총 [<span
+          class="commentPlus"
           th:text="${stackcontent.commentlist.size()}"></span>]개의 답변
         </td>
       </tr>
       <tr>
-        <td class="ctd1" colspan="3">
-            <textarea name="content" class="comtext"></textarea>
-            <br> <input type="submit"
-              class="btn btn-primary btnalign" value="등록">
-        </td>
+        <td class="ctd1" colspan="3"><textarea name="content"
+            class="comtext"></textarea> <br> <input type="submit"
+          class="btn btn-primary btnalign" value="등록"></td>
         <td class="ctd2"></td>
       </tr>
     </table>
     <!-- 댓글목록 -->
     <!-- 채택된 답변 -->
-    <table class="iteration"
-      th:if="${stackcontent.adopted_answer==0}">
+
+
+    <table th:unless="${stackcontent.adopted_answer==0}"
+      class="answerWrapper">
       <tr>
-        <td>채택된 답변이 없습니당...</td>
-      </tr>
-    </table>
-    <table th:unless="${stackcontent.adopted_answer==0}">
-      <tr>
-        <td class="td8"><i
-            class="fas fa-user-circle fa-lg fa-2x"></i></td>
-        <td><!-- [[${adoptedanswer.writer.name}]] -->
-          <span class="commentCalender" th:text = "${#temporals.format(adoptedanswer.timeLocal, 'yyyy-MM-dd HH:mm')}"></span></td>
+        <td class="td8"><i class="fas fa-user-circle fa-lg fa-2x"></i></td>
+        <td class="td10"><span class="answer-name"> <b>[[${adoptedanswer.writer.name}]]
+              [채택된 답변] </b><i class="fas fa-crown answer-icon"></i>
+
+        </span> <br> <span class="commentCalender" id="answertime">[[${adoptedanswer.time}]]</span>
+        </td>
         <td class="td7"></td>
       </tr>
       <tr>
@@ -102,26 +102,37 @@
         <td></td>
       </tr>
     </table>
-    
+
 
     <!-- 일반 답변 -->
     <div class="stack-wrapper">
-    <table th:unless="${stackcontent.commentlist.size()==0}"
-      class="iteration" th:each="list : ${stackcontent.commentlist}">
-      <tr>
-        <td class="td8"><i
-            class="fas fa-user-circle fa-lg fa-2x"></i></td>
-        <td>[[${list.writer.name}]] <a
-          th:if="${list.username}==${user.username}"
-          th:href="@{/stack/commentdelete(id=${list.id})}">[삭제]</a><br>
-          <span class="commentCalender" th:text = "${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span></td>
-        <td class="td7"></td>
-      </tr>
-      <tr>
-        <td colspan="2" class="td6">[[${list.content}]]</td>
-        <td></td>
-      </tr>
-    </table>
+      <table th:unless="${stackcontent.commentlist.size()==0}"
+        class="iteration" th:each="list : ${stackcontent.commentlist}">
+        <tr>
+          <td class="td8"><i class="fas fa-user-circle fa-lg fa-2x"></i></td>
+          <td>[[${list.writer.name}]] 
+            <a th:if="${list.username}==${user.username} and ${list.id}!=${stackcontent.adopted_answer}"
+            th:href="@{/stack/commentdelete(id=${list.id})}">[삭제]</a><br>
+            <span class="commentCalender"
+            th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
+            </td>
+          
+          <td class="td7"></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="td11">[[${list.content}]]</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="td6">
+          <span th:if="${stackcontent.username}==${user.username} and ${stackcontent.adopted_answer==0}"
+          class="checkButton"><a th:href="@{/stack/chooseanswer(article_id=${stackcontent.id},comment_id=${list.id})}"
+          style="color:black;">
+          채택 <i class="far fa-check-circle"></i></a></span>
+          </td>
+          <td></td>
+        </tr>
+      </table>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
@@ -200,12 +211,12 @@
               }
               
               let html = "<table class='iteration'><tbody>"+
-                         "<tr><td class='td8'><i class='fas fa-user-circle fa-lg fa-2x'></i></td>" +
+              			 "<tr><td class='td8'><i class='fas fa-user-circle fa-lg fa-2x'></i></td>" +
                          "<td>" + username + "<a href='/stack/commentdelete?id=" + commentId + "'" + ">" + equalName +"</a>" + 
                          "<br>" +
                          "<span class='commentCalender'>" + timedate + "</span></td>" +
                          "<td class='td7'></td></tr>" + 
-                         "<tr><td colspan='2' class='td6'>" + content + "</td><td></td></tr></tbody></table>";
+                         "<tr><td colspan='2' class='td11'>" + content + "</td><td></td></tr><tr><td colspan='2' class='td6'></td><td></td></tr> </table>";
               $(".stack-wrapper").append(html);
             });
             
@@ -240,10 +251,7 @@
           }
         })
       });
-      
-      
-    
-      
+       
       
       </script>
 </body>

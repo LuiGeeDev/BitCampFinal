@@ -98,7 +98,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     LIMIT 5
   </select>
   <select id="selectOneArticle" resultType="kr.or.bit.model.Article">
-    SELECT a.id, a.adopted_answer, a.title, a.content, a.time, a.view_count, a.original_id, a.level, a.username,
+    SELECT a.id, a.adopted_answer, a.title, a.content, a.time, a.view_count, a.original_id, a.level, a.username, a.layer,
     a.board_id, (SELECT COUNT(*) FROM ARTICLE_VOTE WHERE article_id=#{id}) as "vote_Count", a.updated_time, m.name 
     FROM ARTICLE a JOIN MEMBER m ON a.username = m.username
     WHERE ID=#{id};
@@ -130,8 +130,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	WHERE id=#{id}
   </update>
   <insert id="insertReplyArticle">
-  	INSERT INTO article(time, updated_time, title, content, username, board_id, level, original_id)
-  	VALUES (now(), now(), #{title}, #{content}, #{username}, #{board_id}, #{level}, #{original_id})
+  	INSERT INTO article(time, updated_time, title, content, username, board_id, level, original_id, layer)
+  	VALUES (now(), now(), #{title}, #{content}, #{username}, #{board_id}, #{level}, #{original_id}, #{layer})
   </insert>
   <update id="deleteArticle" parameterType="Integer">
     UPDATE article
@@ -308,7 +308,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <update id="updateArticleLevel">
 		UPDATE ARTICLE
 		SET LEVEL = LEVEL + 1
-		WHERE ORIGINAL_ID = ${ORIGINAL_ID} AND LEVEL > ${LEVEL}
+		WHERE LEVEL > ${level} AND ORIGINAL_ID = ${original_id}
 	</update>
 </mapper>
  

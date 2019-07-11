@@ -6,11 +6,11 @@
   <head>
     <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
     <link rel="stylesheet" th:href="@{/css/myclass/home.css}" />
+    <link rel="stylesheet" th:href="@{/css/myclass/calendar-modal.css}" />
     <link
       rel="stylesheet"
       href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
     />
-    <link rel="stylesheet" href="/resources/demos/style.css" />
   </head>
 
   <body>
@@ -143,7 +143,11 @@
                 >
                   취소
                 </button>
-                <button id="submit-new-schedule" type="button" class="btn btn-primary btn-sm">
+                <button
+                  id="submit-new-schedule"
+                  type="button"
+                  class="btn btn-primary btn-sm"
+                >
                   생성
                 </button>
               </div>
@@ -180,7 +184,7 @@
                 </div>
                 <input type="hidden" value="rgb(255, 59, 48)" name="color" />
                 <input type="hidden" name="end" id="end" />
-                <input type="hidden" name="id" id="id">
+                <input type="hidden" name="id" id="id" />
               </form>
               <div class="modal-footer">
                 <button
@@ -193,7 +197,11 @@
                 <button id="delete" class="btn btn-danger btn-sm">
                   삭제
                 </button>
-                <button id="submit-schedule" type="button" class="btn btn-primary btn-sm">
+                <button
+                  id="submit-schedule"
+                  type="button"
+                  class="btn btn-primary btn-sm"
+                >
                   변경
                 </button>
               </div>
@@ -204,41 +212,6 @@
     </div>
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script th:inline="javascript">
-      const calendarEl = document.getElementById("calendar");
-      let calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins: ["dayGrid", "interaction"],
-        defaultView: "dayGridMonth",
-        locale: "ko",
-        columnHeaderFormat: {
-          day: "2-digit",
-          weekday: "short"
-        },
-        header: {
-          left: "title",
-          center: "",
-          right: "today prev,next"
-        },
-        displayEventTime: false,
-        eventTextColor: "white",
-        events: 
-          {
-            url: "/myclass/schedule/get/class",
-            method: "POST",
-            extraParams: {
-              course_id: [[${user.course_id}]]
-            }
-          }
-      });
-      calendar.render();
-
-      $("#button-checklist").on("shown.bs.modal", function() {
-        $("#myInput").trigger("focus");
-      });
-    </script>
-    <script sec:authorize="hasRole('TEACHER')">
-      calendar.setOption("selectable", true);
-      calendar.setOption("editable", true);
-
       function formatDate(date) {
         const dateStr = `${date.getFullYear()}-${
           date.getMonth() + 1 >= 10
@@ -248,83 +221,47 @@
         return dateStr;
       }
 
-      calendar.on("select", function(info) {
-        $("#new-title").val("");
-        $("#new-start").val(info.startStr);
-        const endDate = new Date(info.end);
-        endDate.setDate(endDate.getDate() - 1);
-        $("#new-end-display").val(formatDate(endDate));
-        $("#new-end").val(info.endStr);
-        $("#new-schedule-modal").modal("show");
-      });
-
-      calendar.on("eventClick", function(info) {
-        const event = info.event;
-
-        $("#title").val(event.title);
-        $("#start").val(formatDate(event.start));
-        if (event.end) {
-          const endDate = info.event.end;
-          endDate.setDate(endDate.getDate() - 1);
-          $("#end-display").val(formatDate(endDate));
-          $("#end").val(formatDate(event.end));
-        } else {
-          $("#end-display").val(formatDate(event.start));
-          $("#end").val(formatDate(event.start));
-        }
-        
-        $("#id").val(event.id);
-        
-        $("#schedule-modal").modal("show");
-      });
-
-      $(".color").click(function(event) {
-        $(".color").removeClass("active-color");
-        $(event.target).addClass("active-color");
-        $("input[name='color']").val($(event.target).css("backgroundColor"));
-      });
-      
-      $("#submit-new-schedule").click(function() {
-        const formData = new FormData($("#new-schedule")[0]);
-        $.ajax({
-          url: "/myclass/schedule/insert",
-          method: "post",
-          data: formData,
-          contentType: false,
-          processData: false,
-          error: function() {
-        	  console.clear();
-          }
-        }).always(function() {
-          calendar.refetchEvents();
-          $("#new-schedule-modal").modal("hide");
+        const calendarEl = document.getElementById("calendar");
+        let calendar = new FullCalendar.Calendar(calendarEl, {
+          plugins: ["dayGrid", "interaction"],
+          defaultView: "dayGridMonth",
+          locale: "ko",
+          columnHeaderFormat: {
+            weekday: "short"
+          },
+          header: {
+            left: "title",
+            center: "",
+            right: "today prev,next"
+          },
+          displayEventTime: false,
+          eventTextColor: "white",
+          events:
+            {
+              url: "/myclass/schedule/get/class",
+              method: "POST",
+              extraParams: {
+                course_id: [[${user.course_id}]]
+              },
+              success: function(data) {
+                console.log(data);
+              },
+              eventDataTransform: function(data) {
+                const start = new Date(data.start);
+                const end = new Date(data.end);
+                const startStr = formatDate(start);
+                const endStr = formatDate(end);
+                data.start = startStr;
+                data.end = endStr;
+                return data;
+              }
+            }
         });
-      });
-      
-      $("#submit-schedule").click(function() {
-        const formData = new FormData($("#schedule")[0]);
-        $.ajax({
-          url: "/myclass/schedule/update",
-          method: "post",
-          data: formData,
-          contentType: false,
-          processData: false
-        }).always(function() {
-          calendar.refetchEvents();
-          $("#schedule-modal").modal("hide");
-        });
-      });
-      
-      $("#delete").click(function() {
-        $.ajax({
-          url: "/myclass/schedule/delete",
-          data: {id : $("#id").val()},
-          method: "post"
-        }).always(function() {
-          calendar.refetchEvents();
-          $("#schedule-modal").modal("hide");
-        });
-      });
+        calendar.render();
     </script>
+    <script
+      th:src="@{/js/calendar-interaction.js}"
+      sec:authorize="hasRole('TEACHER')"
+    ></script>
   </body>
 </html>
