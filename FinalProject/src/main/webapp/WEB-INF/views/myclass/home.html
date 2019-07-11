@@ -143,7 +143,11 @@
                 >
                   취소
                 </button>
-                <button id="submit-new-schedule" type="button" class="btn btn-primary btn-sm">
+                <button
+                  id="submit-new-schedule"
+                  type="button"
+                  class="btn btn-primary btn-sm"
+                >
                   생성
                 </button>
               </div>
@@ -180,7 +184,7 @@
                 </div>
                 <input type="hidden" value="rgb(255, 59, 48)" name="color" />
                 <input type="hidden" name="end" id="end" />
-                <input type="hidden" name="id" id="id">
+                <input type="hidden" name="id" id="id" />
               </form>
               <div class="modal-footer">
                 <button
@@ -193,7 +197,11 @@
                 <button id="delete" class="btn btn-danger btn-sm">
                   삭제
                 </button>
-                <button id="submit-schedule" type="button" class="btn btn-primary btn-sm">
+                <button
+                  id="submit-schedule"
+                  type="button"
+                  class="btn btn-primary btn-sm"
+                >
                   변경
                 </button>
               </div>
@@ -220,7 +228,7 @@
         },
         displayEventTime: false,
         eventTextColor: "white",
-        events: 
+        events:
           {
             url: "/myclass/schedule/get/class",
             method: "POST",
@@ -272,9 +280,37 @@
           $("#end-display").val(formatDate(event.start));
           $("#end").val(formatDate(event.start));
         }
-        
+
         $("#id").val(event.id);
-        
+
+        const colors = $("#schedule .calendar-color");
+        colors.children(".color").removeClass("active-color");
+        switch (event.backgroundColor) {
+          case "rgb(255, 59, 48)":
+            colors.children(".red").addClass("active-color");
+            break;
+          case "rgb(255, 149, 0)":
+            colors.children(".orange").addClass("active-color");
+            break;
+          case "rgb(255, 111, 97)":
+            colors.children(".coral").addClass("active-color");
+            break;
+          case "rgb(15, 127, 0)":
+            colors.children(".green").addClass("active-color");
+            break;
+          case "rgb(90, 200, 250)":
+            colors.children(".blue").addClass("active-color");
+            break;
+          case "rgb(5, 121, 255)":
+            colors.children(".indigo").addClass("active-color");
+            break;
+          case "rgb(88, 86, 214)":
+            colors.children(".purple").addClass("active-color");
+            break;
+        }
+
+        $("input[name='color']").val(event.backgroundColor);
+
         $("#schedule-modal").modal("show");
       });
 
@@ -283,7 +319,7 @@
         $(event.target).addClass("active-color");
         $("input[name='color']").val($(event.target).css("backgroundColor"));
       });
-      
+
       $("#submit-new-schedule").click(function() {
         const formData = new FormData($("#new-schedule")[0]);
         $.ajax({
@@ -291,16 +327,13 @@
           method: "post",
           data: formData,
           contentType: false,
-          processData: false,
-          error: function() {
-        	  console.clear();
-          }
-        }).always(function() {
+          processData: false
+        }).done(function() {
           calendar.refetchEvents();
           $("#new-schedule-modal").modal("hide");
         });
       });
-      
+
       $("#submit-schedule").click(function() {
         const formData = new FormData($("#schedule")[0]);
         $.ajax({
@@ -309,18 +342,18 @@
           data: formData,
           contentType: false,
           processData: false
-        }).always(function() {
+        }).done(function() {
           calendar.refetchEvents();
           $("#schedule-modal").modal("hide");
         });
       });
-      
+
       $("#delete").click(function() {
         $.ajax({
           url: "/myclass/schedule/delete",
-          data: {id : $("#id").val()},
+          data: { id: $("#id").val() },
           method: "post"
-        }).always(function() {
+        }).done(function() {
           calendar.refetchEvents();
           $("#schedule-modal").modal("hide");
         });
