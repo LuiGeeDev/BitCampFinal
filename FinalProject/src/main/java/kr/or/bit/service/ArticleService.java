@@ -52,7 +52,6 @@ public class ArticleService {
   }
 
   public List<Article> selectAllArticle(String optionName, int boardId, Pager pager) {// 게시판아이디를 기준으로 게시글을 전부 불러오는 함수
-    System.out.println("여기타나?");
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);

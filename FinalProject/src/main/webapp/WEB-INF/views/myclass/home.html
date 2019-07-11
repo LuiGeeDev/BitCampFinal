@@ -10,7 +10,6 @@
       rel="stylesheet"
       href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
     />
-    <link rel="stylesheet" href="/resources/demos/style.css" />
   </head>
 
   <body>
@@ -91,7 +90,9 @@
                     <td th:text="${article.board_name}"></td>
                     <td th:text="${article.title}"></td>
                     <td th:text="${article.writer.name}"></td>
-                    <td th:text="${#temporals.format(article.timeLocal, 'MM-dd HH:mm')}"></td>
+                    <td
+                      th:text="${#temporals.format(article.timeLocal, 'MM-dd HH:mm')}"
+                    ></td>
                   </tr>
                 </tbody>
               </table>
@@ -101,17 +102,121 @@
         <div class="row">
           <div id="calendar" class="CalendarCard cardshadow"></div>
         </div>
+
+        <div
+          id="new-schedule-modal"
+          class="modal fade bd-example-modal-sm"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="mySmallModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+              <h6 class="modal-title">일정 추가</h6>
+              <form id="new-schedule" class="schedule-form" method="post">
+                <label for="new-title">이름: </label>
+                <input type="text" name="title" id="new-title" />
+                <label for="new-start">시작: </label>
+                <input type="date" name="start" id="new-start" readonly />
+                <label for="new-end">종료: </label>
+                <input type="date" id="new-end-display" readonly />
+                <div class="calendar-color">
+                  <label>색상: </label>
+                  <div class="color red active-color"></div>
+                  <div class="color coral"></div>
+                  <div class="color orange"></div>
+                  <div class="color green"></div>
+                  <div class="color blue"></div>
+                  <div class="color indigo"></div>
+                  <div class="color purple"></div>
+                </div>
+                <input type="hidden" value="#FF3B30" name="color" />
+                <input type="hidden" name="end" id="new-end" />
+              </form>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-sm"
+                  data-dismiss="modal"
+                >
+                  취소
+                </button>
+                <button
+                  id="submit-new-schedule"
+                  type="button"
+                  class="btn btn-primary btn-sm"
+                >
+                  생성
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          id="schedule-modal"
+          class="modal fade bd-example-modal-sm"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="mySmallModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+              <h6 class="modal-title">일정 변경</h6>
+              <form id="schedule" class="schedule-form" method="post">
+                <label for="title">이름: </label>
+                <input type="text" name="title" id="title" />
+                <label for="start">시작: </label>
+                <input type="date" name="start" id="start" readonly />
+                <label for="new-end">종료: </label>
+                <input type="date" id="end-display" readonly />
+                <div class="calendar-color">
+                  <label>색상: </label>
+                  <div class="color red active-color"></div>
+                  <div class="color coral"></div>
+                  <div class="color orange"></div>
+                  <div class="color green"></div>
+                  <div class="color blue"></div>
+                  <div class="color indigo"></div>
+                  <div class="color purple"></div>
+                </div>
+                <input type="hidden" value="rgb(255, 59, 48)" name="color" />
+                <input type="hidden" name="end" id="end" />
+                <input type="hidden" name="id" id="id" />
+              </form>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-sm"
+                  data-dismiss="modal"
+                >
+                  취소
+                </button>
+                <button id="delete" class="btn btn-danger btn-sm">
+                  삭제
+                </button>
+                <button
+                  id="submit-schedule"
+                  type="button"
+                  class="btn btn-primary btn-sm"
+                >
+                  변경
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-    <script>
+    <script th:inline="javascript">
       const calendarEl = document.getElementById("calendar");
       let calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins: ["dayGrid"],
+        plugins: ["dayGrid", "interaction"],
         defaultView: "dayGridMonth",
         locale: "ko",
         columnHeaderFormat: {
-          day: "2-digit",
           weekday: "short"
         },
         header: {
@@ -119,53 +224,32 @@
           center: "",
           right: "today prev,next"
         },
-        events: [
+        displayEventTime: false,
+        eventTextColor: "white",
+        events:
           {
-            title: "조 회식",
-            start: "2019-07-05",
-            end: "2019-07-05",
-            color: "tomato",
-            textColor: "white"
-          },
-          {
-            title: "비트캠프 졸업",
-            start: "2019-07-30",
-            end: "2019-07-30",
-            color: "coral",
-            textColor: "white"
-          },
-          {
-            title: "호텔 델루나 첫방송",
-            start: "2019-07-13",
-            end: "2019-07-15",
-            color: "purple",
-            textColor: "white"
-          },
-          {
-            title: "회식",
-            start: "2019-06-24",
-            end: "2019-06-24",
-            textColor: "white"
+            url: "/myclass/schedule/get/class",
+            method: "POST",            
+            extraParams: {
+              course_id: [[${user.course_id}]]
+            },
+            eventDataTransform: function(data) {              
+              const start = new Date(data.start);
+              const end = new Date(data.end);
+              const startStr = formatDate(start);
+              const endStr = formatDate(end);
+              data.start = startStr;
+              data.end = endStr
+              return data;
+            }
           }
-        ]
       });
       calendar.render();
+
       $("#button-checklist").on("shown.bs.modal", function() {
         $("#myInput").trigger("focus");
       });
     </script>
-    <script src="/js/stack/write.js"></script>
-    <script
-      type="text/javascript"
-      src="/resources/dist/static/js/manifest.d2e3a334bc98c3b96650.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="/resources/dist/static/js/vendor.71750e988b55e9735a64.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="/resources/dist/static/js/app.55e5fc1c8db3bc542a1f.js"
-    ></script>
+    <script th:src="@{/js/calendar-interaction.js}" sec:authorize="hasRole('TEACHER')"></script>
   </body>
 </html>

@@ -13,14 +13,12 @@ table {
   margin-left: 10%;
   margin-right: 10%;
   width: 80%;
-  border: 1px solid white;
   border-collapse: collapse;
 }
 
 th, td {
   color: #2d3436;
-  border: 1px solid white;
-  padding: 10px;
+  padding: 12px;
 }
 
 .tdtitle {
@@ -39,11 +37,13 @@ th, td {
   padding-bottom: 30px;
   padding-top: 20px;
 }
+
 .tdcontent p {
   font-family: 'Nanum Gothic' !important;
   font-size: 17.6px !important;
 }
-.tdcontent span{
+
+.tdcontent span {
   font-family: 'Nanum Gothic' !important;
   font-size: 17.6px !important;
 }
@@ -76,15 +76,34 @@ th, td {
 
 .td6 {
   border-bottom: 1.5px solid #eaebec;
-  padding-bottom: 35px;
-  padding-top: 25px;   
+  padding-bottom: 15px;
+  text-align: right;
+  font-size: 20px;
 }
+
 .td7 {
-  width:15%;
+  width: 15%;
 }
+
 .td8 {
-  width: 3%;
+  width: 2%;
+  padding: 12px 8px;
 }
+
+.td9 {
+  padding-bottom: 35px;
+  padding-top: 25px;
+}
+
+.td10 {
+  padding: 20px 0px 10px 0px;
+}
+
+.td11 {
+    padding-bottom: 28px;
+    padding-top: 25px;
+}
+
 .tag-name span {
   border-radius: 5px;
   color: white;
@@ -207,9 +226,9 @@ th, td {
 .commentCalender {
   font-size: 90%;
   color: gray;
-  
 }
-#contenteditor{
+
+#contenteditor {
   width: 10%;
   text-align: right;
 }
@@ -226,6 +245,28 @@ th, td {
 }
 
 .spinner-border {
-  width: 3rem; 
+  width: 3rem;
   height: 3rem;
 }
+
+.answerWrapper {
+  border-radius: 30px;
+  border-collapse: collapse;
+  background-color: #f7f7f7;
+  width: 70%;
+  margin-bottom: 20px;
+}
+
+.answer-icon {
+  color: red;
+}
+
+.checkButton{
+  cursor: pointer;
+  color: black;
+}
+
+.deleteBtn{
+  color:#007bff;
+}
+

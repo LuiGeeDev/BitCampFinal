@@ -35,6 +35,7 @@
 
 .detail-comment {
   margin: 20px 0px 20px 90px;
+  margin-right: 25px;
 }
 
 .writerName {
@@ -132,4 +133,21 @@
   width: 3rem; 
   height: 3rem;
  font-size: 300%;
+}
+
+.group-parent {
+  display:flex;
+  width: 96%;
+}
+
+.btn-group {
+  margin-left:auto;
+}
+
+.reply-board-btn {
+  cursor: pointer;
+}
+
+.file-parent {
+  margin-left: 50px
 }

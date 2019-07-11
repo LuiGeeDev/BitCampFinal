@@ -25,30 +25,36 @@
             th:text="${article.commentlist.size()}" class="pointOrange2"></span>&nbsp;|
           <span class="hidden" id="comment-articleID" th:text = "${article.id}"></span>
           <span class="hidden" id="comment-boardID" th:text = "${board.id}"></span>
-          <div class="btn-group">
+        
+        </div>
+      </div>
+      <div class="detail-content-parent">
+      <div class="detail-content" th:text="${article.content}"></div>
+     
+      </div>
+    </div>
+    <div class="file-parent">
+     <div th:each="files : ${article.option.files}">
+           <div th:if="${files!=null}">
+             <a th:href="@{{files}(filename=${files.filename})}"
+               th:attr="download=${files.original_filename}"> 
+               <i class="fas fa-paperclip"></i>
+               <span class="submit-file" th:text="${files.original_filename}">general.zip</span>
+             </a>
+           </div>
+         </div>
+         </div>
+    <div class="group-parent">
+      <div class="btn-group">
             <a th:if="${article.username == user.username}"
               th:href="@{/myclass/board/edit(article_id=${article.id}, board_id=${board.id})}"
               id="updatebtn" class="btn btn-primary btn-align">수정</a> 
               <a th:if="${article.username == user.username}" id="deletebtn" class="btn btn-primary btn-align">삭제</a> <a
               th:href="@{/myclass/board(board_id=${board.id})}"
               id="listbtn" class="btn btn-primary btn-align">목록</a>
+              <a th:href="@{/myclass/board/replyWrite(article_id=${article.id}, board_id=${board.id})}" class="btn btn-primary reply-board-btn">답글</a>
           </div>
-        </div>
-      </div>
-      <div class="detail-content-parent">
-      <div class="detail-content" th:text="${article.content}"></div>
-      <div th:each="files : ${article.option.files}">
-           <div th:if="${files!=null}">
-             <a th:href="@{{files}(filename=${files.filename})}"
-               th:attr="download=${files.original_filename}"> <span
-               class="submit-file" th:text="${files.original_filename}">general.zip</span>
-             </a>
-           </div>
-         </div>
-      </div>
-      
     </div>
-    
     <div class="detail-comment">
 
       <span class="userIcon"> <i class="fas fa-user-circle fa-lg"></i>
