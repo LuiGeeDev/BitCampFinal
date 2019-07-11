@@ -1,17 +1,132 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
->
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      .modal-content {
+        flex-direction: row;
+      }
+
+      .modal-content div {
+        border: 1px solid black;
+      }
+      
+      .board-list {
+        padding-left: 30px;
+      }
+      
+      .board-list li {
+        cursor: pointer;
+        font-size: 14px;
+      }
+      
+      .board-list li:hover {
+        text-decoration: underline;
+      }
+      
+      .board-list li:active {
+        font-weight: bold;
+      }
+
+      .lecture-tree {
+        padding-left: 5px;
+      }
+      .lecture-tree, .board-list {
+        list-style-type: none;
+      }
+
+      .lecture-tree input[type="checkbox"] {
+        display: none;
+      }
+
+      .lecture-tree input[type="checkbox"]:checked ~ ul {
+        display: none;
+      }
+
+      .lecture-tree input[type="checkbox"] + label {
+        user-select: none;
+        margin-bottom: 0;
+        cursor: pointer;
+      }
+
+      .lecture-tree input[type="checkbox"] + label::before {
+        display: inline-block;
+        width: 30px;
+        height: 20px;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f518";
+      }
+      
+      .lecture-tree input[type="checkbox"]:checked + label::before {
+        display: inline-block;
+        width: 30px;
+        height: 20px;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f02d";
+      }
+      
+      .board-list li::before {
+        display: inline-block;
+        width: 30px;
+        height: 20px;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f5ad";
+      }
+      
+      
+    </style>
   </head>
   <body>
-    <div th:each="i : ${#numbers.sequence(1, 5)}">
-      <span>first loop</span>
-      <span th:text="${i}"></span>
-      <div th:each="j : ${#numbers.sequence(1, 5)}">
-        <span>second loop</span>
-        <span th:text="${i + j}"></span>
+    <div
+      class="modal fade bd-example-modal-xl"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myExtraLargeModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="lecture-list">
+            <ul class="lecture-tree">
+              <li th:each="course : ${courses}">
+                <input type="checkbox" th:id="'c' + ${course.id}" checked />
+                <label
+                  class="icon label"
+                  th:for="'c' + ${course.id}"
+                  th:text="${course.course_name}"
+                ></label>
+                <ul class="board-list">
+                  <li
+                    th:each="board : ${course.boards}"
+                    th:text="${board.board_name}"
+                  ></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="article-list"></div>
+          <div class="article-preview"></div>
+        </div>
       </div>
     </div>
+    <script>
+      $(".modal").modal("show");
+    </script>
   </body>
 </html>
