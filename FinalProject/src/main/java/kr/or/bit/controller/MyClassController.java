@@ -301,7 +301,7 @@ public class MyClassController {
     schedule.setColor("green");
     schedule.setGroup_id(0);
     
-    scheduleDao.insertSchedule(schedule);
+    scheduleDao.insertScheduleByBoard(schedule);
     
     return "redirect:/myclass/homework";
   }
@@ -360,9 +360,9 @@ public class MyClassController {
     System.out.println(article);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
-    
+    article = articleDao.selectOneArticle(article.getId());
     articleDao.deleteArticle(article.getId());
-    //scheduleDao.deleteSchedule(scheduleDao.selectSchedule());
+    scheduleDao.deleteSchedule(scheduleDao.selectScheduleByArticleId(article.getId()).getId());
     
     return "redirect:/myclass/homework";
   }
