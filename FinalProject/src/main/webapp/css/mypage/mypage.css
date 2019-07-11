@@ -1,0 +1,69 @@
+@charset "UTF-8";
+
+.main-container {
+  margin: 50px 50px 10px 200px;
+  padding: 5px;
+  border-radius: 10px;
+  widht: 100%;
+  /* height: 100%; */
+  display: flex;
+  position: relative;
+}
+
+.mypageIdForm-sub {
+  background-color: #e8e8e8;
+  display: flex;
+  flex-direction: column;
+  /* width: 20%; */
+  height: 10%;
+  border-radius: 3px;
+}
+
+.mypagePhoto, .mypageId, .mypagePwd, .mypageName, .mypageEmail {
+  margin: 30px;
+  padding: 15px;
+}
+.mypagePhoto {
+  height:100px;
+}
+
+.photo-file {
+  height:100px;
+}
+input[type=text], input[type=password], input[type=email] {
+  margin: 30px;
+  padding: 15px;
+  width: 600px;
+ 
+}
+
+.main-title {
+  margin: 10px 0 0 80px;
+}
+
+.photo-parent {
+  margin-left: 50px;
+  height: 150px;
+  margin-top: 10px;
+}
+
+.submit-btn {
+  display:flex;
+}
+
+.updateBtn {
+  margin-left: auto;
+}
+
+.mypage-name:hover {
+  border-color: #e8e8e8;
+}
+
+.idCheck {
+  color:red;
+}
+
+.updateBtn {
+  position:absolute;
+  right: 0
+}

@@ -9,6 +9,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     course_id)
     VALUES(#{start}, #{end}, #{title}, #{color}, #{group_id}, #{course_id})
   </insert>
+  <insert id="insertScheduleByBoard">
+    INSERT INTO schedule (start, end, title, color, group_id,
+    course_id, article_id)
+    VALUES(#{start}, #{end}, #{title}, #{color}, #{group_id}, #{course_id}, #{article_id})
+  </insert>
   <update id="updateSchedule">
     UPDATE schedule
     SET start = #{start},
@@ -44,6 +49,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM schedule
     WHERE course_id = #{course_id}
     AND group_id = #{group_id}
+  </select>
+  <select id="selectScheduleByArticleId" resultType="kr.or.bit.model.Schedule">
+  	SELECT ID, START, END, TITLE, COLOR, GROUP_ID, COURSE_ID
+  	FROM SCHEDULE
+  	WHERE ARTICLE_ID = #{article_id}
   </select>
 </mapper>
   
