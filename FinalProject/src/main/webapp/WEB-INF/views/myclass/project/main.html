@@ -5,6 +5,7 @@
 <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
 <link rel="stylesheet" th:href="@{/css/myclass/project/main.css}" />
 <link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
+<link rel="stylesheet" th:href="@{/css/myclass/calendar-modal.css}" />
 <link rel="stylesheet"
   th:href="@{/css/myclass/project/timeline.min.css}" />
 <link
@@ -221,6 +222,112 @@
         </div>
       </div>
     </div>
+            <div
+          id="new-schedule-modal"
+          class="modal fade bd-example-modal-sm"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="mySmallModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+              <h6 class="modal-title">일정 추가</h6>
+              <form id="new-schedule" class="schedule-form" method="post">
+                <label for="new-title">이름: </label>
+                <input type="text" name="title" id="new-title" />
+                <label for="new-start">시작: </label>
+                <input type="date" name="start" id="new-start" readonly />
+                <label for="new-end">종료: </label>
+                <input type="date" id="new-end-display" readonly />
+                <div class="calendar-color">
+                  <label>색상: </label>
+                  <div class="color red active-color"></div>
+                  <div class="color coral"></div>
+                  <div class="color orange"></div>
+                  <div class="color green"></div>
+                  <div class="color blue"></div>
+                  <div class="color indigo"></div>
+                  <div class="color purple"></div>
+                </div>
+                <input type="hidden" value="#FF3B30" name="color" />
+                <input type="hidden" name="end" id="new-end" />
+                <input type="hidden" name="group_id" th:value="${group.id}" /> 
+              </form>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-sm"
+                  data-dismiss="modal"
+                >
+                  취소
+                </button>
+                <button
+                  id="submit-new-schedule"
+                  type="button"
+                  class="btn btn-primary btn-sm"
+                >
+                  생성
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          id="schedule-modal"
+          class="modal fade bd-example-modal-sm"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="mySmallModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+              <h6 class="modal-title">일정 변경</h6>
+              <form id="schedule" class="schedule-form" method="post">
+                <label for="title">이름: </label>
+                <input type="text" name="title" id="title" />
+                <label for="start">시작: </label>
+                <input type="date" name="start" id="start" readonly />
+                <label for="new-end">종료: </label>
+                <input type="date" id="end-display" readonly />
+                <div class="calendar-color">
+                  <label>색상: </label>
+                  <div class="color red active-color"></div>
+                  <div class="color coral"></div>
+                  <div class="color orange"></div>
+                  <div class="color green"></div>
+                  <div class="color blue"></div>
+                  <div class="color indigo"></div>
+                  <div class="color purple"></div>
+                </div>
+                <input type="hidden" value="rgb(255, 59, 48)" name="color" />
+                <input type="hidden" name="end" id="end" />
+                <input type="hidden" name="id" id="id" />
+                <input type="hidden" name="group_id" th:value="${group.id}" /> 
+              </form>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-sm"
+                  data-dismiss="modal"
+                >
+                  취소
+                </button>
+                <button id="delete" class="btn btn-danger btn-sm">
+                  삭제
+                </button>
+                <button
+                  id="submit-schedule"
+                  type="button"
+                  class="btn btn-primary btn-sm"
+                >
+                  변경
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
   </div>
   <script type=text/javascript
     src=/resources/dist/static/js/manifest.d2e3a334bc98c3b96650.js></script>
@@ -235,48 +342,79 @@
         mode : "horizontal",
         visibleItems : 6
       });
+      
+      function formatDate(date) {
+        const dateStr = `${date.getFullYear()}-${
+          date.getMonth() + 1 >= 10
+            ? date.getMonth() + 1
+            : "0" + (date.getMonth() + 1)
+        }-${date.getDate() >= 10 ? date.getDate() : "0" + date.getDate()}`;
+        return dateStr;
+      }
+      
       const calendarEl = document.getElementById("calendar");
       let calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins : [ "dayGrid" ],
-        defaultView : "dayGridMonth",
-        locale : "ko",
-        columnHeaderFormat : {
-          weekday : "short"
+        plugins: ["dayGrid", "interaction"],
+        defaultView: "dayGridMonth",
+        locale: "ko",
+        columnHeaderFormat: {
+          weekday: "short"
         },
-        header : {
-          left : "title",
-          center : "",
-          right : "today prev,next"
+        header: {
+          left: "title",
+          center: "",
+          right: "today prev,next"
         },
-        events : [ {
-          title : "프로젝트 시작",
-          start : "2019-06-21",
-          end : "2019-06-21",
-          color : "tomato",
-          textColor : "white"
-        }, {
-          title : "프로젝트 종료",
-          start : "2019-06-26",
-          end : "2019-06-26",
-          color : "coral",
-          textColor : "white"
-        }, {
-          title : "프로젝트 진행",
-          start : "2019-06-22",
-          end : "2019-06-25",
-          color : "purple",
-          textColor : "white"
-        }, {
-          title : "회식",
-          start : "2019-06-24",
-          end : "2019-06-24",
-          textColor : "white"
-        } ]
+        displayEventTime: false,
+        eventTextColor: "white",
+        eventSources:[
+          {
+            url: "/myclass/schedule/get/group",
+            method: "POST",            
+            extraParams: {
+              course_id: [[${user.course_id}]],
+              group_id: [[${group.id}]]
+            },
+            eventDataTransform: function(data) {              
+              const start = new Date(data.start);
+              const end = new Date(data.end);
+              const startStr = formatDate(start);
+              const endStr = formatDate(end);
+              data.start = startStr;
+              data.end = endStr
+              return data;
+            },
+            editable: true
+          },
+          {
+            url: "/myclass/schedule/get/class",
+            method: "POST",            
+            extraParams: {
+              course_id: [[${user.course_id}]],
+              group_id: [[${group.id}]]
+            },
+            eventDataTransform: function(data) {              
+              const start = new Date(data.start);
+              const end = new Date(data.end);
+              const startStr = formatDate(start);
+              const endStr = formatDate(end);
+              data.start = startStr;
+              data.end = endStr;
+              return data;
+            },
+            classNames: "disabled",
+            editable: false,
+            selectable: false
+          }
+        ]
       });
+      
       calendar.render();
+      
       $('#button-checklist').on('shown.bs.modal', function () {
         $('#myInput').trigger('focus')
       })
     </script>
+    <script th:src="@{/js/calendar-interaction.js}"></script>
 </body>
 </html>

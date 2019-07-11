@@ -1,12 +1,3 @@
-function formatDate(date) {
-  const dateStr = `${date.getFullYear()}-${
-    date.getMonth() + 1 >= 10
-      ? date.getMonth() + 1
-      : "0" + (date.getMonth() + 1)
-  }-${date.getDate() >= 10 ? date.getDate() : "0" + date.getDate()}`;
-  return dateStr;
-}
-
 calendar.setOption("selectable", true);
 calendar.setOption("editable", true);
 
@@ -21,6 +12,10 @@ calendar.on("select", function(info) {
 });
 
 calendar.on("eventClick", function(info) {
+  if (info.el.classList.contains("disabled")) {
+    return;
+  }
+  
   const event = info.event;
 
   $("#title").val(event.title);

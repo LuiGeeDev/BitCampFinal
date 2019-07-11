@@ -22,13 +22,13 @@ public class ScheduleController {
   
   @PostMapping("/insert")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void insertScheduleForClass(Schedule schedule) {
+  public void insertSchedule(Schedule schedule) {
     service.insertSchedule(schedule);
   }
   
   @PostMapping("/update")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void updateScheduleForClass(Schedule schedule) {
+  public void updateSchedule(Schedule schedule) {
     service.updateSchedule(schedule);
   }
 
@@ -40,7 +40,7 @@ public class ScheduleController {
 
   @PostMapping("/delete")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void deleteScheduleForClass(int id) {
+  public void deleteSchedule(int id) {
     service.deleteSchedule(id);
   }
 
