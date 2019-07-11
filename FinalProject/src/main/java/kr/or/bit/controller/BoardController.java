@@ -165,13 +165,11 @@ public class BoardController {
 
   @PostMapping("/replyWrite")
   public String replyWrite(Article article, MultipartFile file1, MultipartFile file2, HttpServletRequest request) {
-    System.out.println(article);
+    ArticleDao arti = sqlSession.getMapper(ArticleDao.class);
+    arti.updateArticleLevel(article);
     article.setLevel(article.getLevel()+1);
     article.setLayer(article.getLayer()+1);
-    if(article.getLayer() > 1) {
-      ArticleDao arti = sqlSession.getMapper(ArticleDao.class);
-      arti.updateArticleLevel(article);
-    }
+    
     return "redirect:/myclass/board/read?article_id=" + boardService.writeReplyArticle(article, file1, file2, request)
         + "&board_id=" + article.getBoard_id();
   }
