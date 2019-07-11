@@ -2,6 +2,7 @@ package kr.or.bit.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -250,7 +252,6 @@ public class MyClassController {
       HttpServletRequest request,Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-    
     Member member = memberDao.selectMemberByUsername(Helper.userName());
     Board board = boardDao.selectBoardByCourseId(member.getCourse_id(), 4);
     article.setUsername(Helper.userName());
@@ -275,21 +276,23 @@ public class MyClassController {
   @PostMapping("/homework/write")
   @Transactional
   public String writeHomeworkArticle(Article article, Date end_date, HttpServletRequest request) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
-    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+
     
     Member member = memberDao.selectMemberByUsername(Helper.userName());
     int board_id = boardDao.selectBoardByCourseId(member.getCourse_id(), 4).getId();
     article.setUsername(Helper.userName());
     article.setBoard_id(board_id);
+    
     Homework homework = new Homework();
     homework.setEnd_date(end_date);
     articleInsertService.writeArticle(article, homework, null, request);
+
     Schedule schedule = new Schedule();
     article = articleDao.selectOneArticle(articleDao.selectMostRecentArticleId(article));
-    
     
     schedule.setCourse_id(member.getCourse_id());
     schedule.setTitle(article.getTitle());
