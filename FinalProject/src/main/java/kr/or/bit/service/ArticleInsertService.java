@@ -86,7 +86,6 @@ public class ArticleInsertService {
       HttpServletRequest request) {
     
     String optionname = option.getClass().getName().toLowerCase().trim().substring("kr.or.bit.model.".length());
-    
     if (file != null) {
       try {
         List<Integer> fileIds = new ArrayList<Integer>();

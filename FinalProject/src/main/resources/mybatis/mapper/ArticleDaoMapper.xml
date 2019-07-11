@@ -216,16 +216,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     resultType="kr.or.bit.model.Article">
     select a.title, time, board_name, a.username
     from article a
-    left join
-    board b
+    left join board b
     on a.board_id = b.id
     left join member m
-    on m.username =
-    a.username
+    on m.username = a.username
     where b.course_id = #{course_id}
-    and b.boardtype not in (1,
-    2, 4, 6)
-    <!-- and a.id = a.original_id -->
+    and
+    b.boardtype not in (1, 2, 4, 6)
+    and level = 1
     order by a.id desc
     LIMIT 5
   </select>
@@ -363,12 +361,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SET view_count=view_count+1
     WHERE ID=#{id}
   </update>
-
   <update id="updateArticleLevel">
     UPDATE ARTICLE
     SET LEVEL = LEVEL + 1
-    WHERE LEVEL &gt; ${level} AND ORIGINAL_ID = ${original_id} and sibling &gt; ${sibling}
+    WHERE LEVEL > ${level} AND ORIGINAL_ID = ${original_id}
   </update>
+  <select id="selectRecentlyCommentedArticle" resultType="kr.or.bit.model.Article">
+    SELECT DISTINCT a.id, a.title, a.content, a.time, a.view_count, a.original_id, a.level, a.updated_time, a.enable, a.username, a.board_id
+    FROM article a
+    JOIN comment c
+    ON a.id = c.article_id
+    WHERE board_id = 1
+    ORDER BY c.time desc
+    LIMIT 3
+    WHERE LEVEL &gt; ${level} AND ORIGINAL_ID = ${original_id} and sibling &gt; ${sibling}
+  </select>
 
   <select id="selectMaxLevel" resultType="Integer">
     select max(level)

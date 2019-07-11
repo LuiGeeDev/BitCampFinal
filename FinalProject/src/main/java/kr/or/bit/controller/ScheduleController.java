@@ -51,6 +51,10 @@ public class ScheduleController {
 
   @PostMapping("/get/group")
   public @ResponseBody List<Schedule> getGroupSchedule(int course_id, int group_id) {
+    if (group_id == 0) {
+      return null;
+    }
+    
     return service.getScheduleForGroup(course_id, group_id);
   }
 }
