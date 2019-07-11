@@ -12,8 +12,20 @@ public class Checklist {
   private String writer_username;
   private String checker_username;
   private int group_id;
+  private String name;
+  
   
   private LocalDateTime timeLocal;
+
+  
+  
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 
   public int getId() {
     return id;
