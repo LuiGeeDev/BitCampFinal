@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.GeneralDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.General;
 import kr.or.bit.service.ArticleService;
+import kr.or.bit.service.ArticleUpdateService;
 import kr.or.bit.service.BoardService;
 import kr.or.bit.utils.Helper;
 import kr.or.bit.utils.Pager;
@@ -166,7 +168,10 @@ public class BoardController {
     System.out.println(article);
     article.setLevel(article.getLevel()+1);
     article.setLayer(article.getLayer()+1);
-    System.out.println(article.getLevel());
+    if(article.getLayer() > 1) {
+      ArticleDao arti = sqlSession.getMapper(ArticleDao.class);
+      arti.updateArticleLevel(article);
+    }
     return "redirect:/myclass/board/read?article_id=" + boardService.writeReplyArticle(article, file1, file2, request)
         + "&board_id=" + article.getBoard_id();
   }
