@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import kr.or.bit.model.Course;
-import kr.or.bit.model.Group;
 import kr.or.bit.model.Schedule;
 
 /*
@@ -20,9 +18,15 @@ import kr.or.bit.model.Schedule;
 public interface ScheduleDao {
   void insertSchedule(Schedule schedule);
 
-  void updateSchedule(@Param("schedule") Schedule schedule, @Param("id") int id);
+  void updateSchedule(Schedule schedule);
+
+  void changeDates(Schedule schedule);
 
   void deleteSchedule(int id);
 
-  List<Schedule> selectAllSchedule(Course course, Group group);
+  Schedule selectSchedule(int id);
+
+  List<Schedule> selectScheduleForClass(int course_id);
+
+  List<Schedule> selectScheduleForGroup(@Param("course_id") int course_id, @Param("group_id") int group_id);
 }

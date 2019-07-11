@@ -29,8 +29,9 @@
         <textarea class="summernote-parent" name="content"
           id="summernote" th:field="*{article.content}">
           </textarea>
-          <input type="hidden" th:value="${article.id}" name="original_id">
+          <input type="hidden" th:value="${article.original_id}" name="original_id">
           <input type="hidden" th:value="${article.level}" name="level">
+          <input type="hidden" th:value="${article.layer}" name="layer">
         <button type="submit" class="btn btn-primary" id="submit-button">
           올리기</button>
       </div>

@@ -12,6 +12,7 @@
 
 .sidebar {
   display: flex;
+  padding-right: 0px !important;
 }
 
 .side-nav {
