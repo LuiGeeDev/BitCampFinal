@@ -79,4 +79,6 @@ public interface ArticleDao {
   void updateArticleViewCount(Article article);
   
   void updateArticleLevel(Article article);
+  
+  List<Article> selectRecentlyCommentedArticle();
 }
