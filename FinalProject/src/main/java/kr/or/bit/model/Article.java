@@ -233,15 +233,15 @@ public class Article {
   public void setCommentSize(int commentSize) {
     this.commentSize = commentSize;
   }
-  
+
   @Override
   public String toString() {
     return "Article [id=" + id + ", title=" + title + ", content=" + content + ", time=" + time + ", updated_time="
         + updated_time + ", view_count=" + view_count + ", original_id=" + original_id + ", level=" + level
-        + ", enable=" + enable + ", username=" + username + ", board_id=" + board_id + ", adopted_answer="
-        + adopted_answer + ", timeLocal=" + timeLocal + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer
-        + ", board_name=" + board_name + ", tags=" + tags + ", commentlist=" + commentlist + ", commentSize="
-        + commentSize + ", option=" + option + ", vote=" + vote + ", votenum=" + votenum + ", vote_count=" + vote_count
-        + ", fileslist=" + fileslist + ", layer=" + layer + ", sibling=" + sibling + "]";
+        + ", enable=" + enable + ", username=" + username + ", board_id=" + board_id + ", timeLocal=" + timeLocal
+        + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", board_name=" + board_name + ", tags="
+        + tags + ", commentlist=" + commentlist + ", commentSize=" + commentSize + ", option=" + option + ", vote="
+        + vote + ", votenum=" + votenum + ", vote_count=" + vote_count + ", fileslist=" + fileslist + ", layer=" + layer
+        + ", sibling=" + sibling + "]";
   }
 }

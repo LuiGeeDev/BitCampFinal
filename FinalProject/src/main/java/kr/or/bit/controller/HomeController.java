@@ -81,9 +81,9 @@ public class HomeController {
     return "main";
   }
 
-  @GetMapping("/menu")
-  public String menu() {
-    return "menu";
+  @GetMapping("/test")
+  public String test() {
+    return "test";
   }
 }
 

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+>
+  <head>
+  </head>
+  <body>
+    <div th:each="i : ${#numbers.sequence(1, 5)}">
+      <span>first loop</span>
+      <span th:text="${i}"></span>
+      <div th:each="j : ${#numbers.sequence(1, 5)}">
+        <span>second loop</span>
+        <span th:text="${i + j}"></span>
+      </div>
+    </div>
+  </body>
+</html>
