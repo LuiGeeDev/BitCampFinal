@@ -11,11 +11,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import kr.or.bit.dao.ArticleDao;
+import kr.or.bit.dao.BoardDao;
+import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.MessageDao;
 import kr.or.bit.dao.ProjectDao;
 import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
+import kr.or.bit.model.Board;
+import kr.or.bit.model.Course;
 import kr.or.bit.model.Member;
 import kr.or.bit.model.Message;
 import kr.or.bit.model.Project;
@@ -82,8 +86,24 @@ public class HomeController {
   }
 
   @GetMapping("/test")
-  public String test() {
+  public String test(Model model) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    
+    String username = Helper.userName();
+    Member user = memberDao.selectMemberByUsername(username);
+    
+    List<Course> courses = courseDao.selectAllTeacherCourse(username);
+    for (Course course : courses) {
+      List<Board> boards = boardDao.selectBoardInCourse(course.getId(), 3);
+      course.setBoards(boards);
+    }
+    
+    model.addAttribute("courses", courses);
     return "test";
   }
 }
+
 
