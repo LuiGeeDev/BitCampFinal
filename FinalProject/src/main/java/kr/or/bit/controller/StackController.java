@@ -15,12 +15,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.MemberDao;
+import kr.or.bit.dao.QnaDao;
 import kr.or.bit.dao.StackDao;
 import kr.or.bit.model.Article;
+import kr.or.bit.model.ArticleOption;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.General;
 import kr.or.bit.model.Tag;
 import kr.or.bit.model.Member;
+import kr.or.bit.model.Qna;
 import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleUpdateService;
@@ -75,6 +78,8 @@ public class StackController {
       pager = new Pager(page, stackDao.countAllStackArticle());
       stackList = articleService.selectAllStackArticles(pager);
     }
+    
+
     model.addAttribute("stacklist", stackList);
     model.addAttribute("pager", pager);
     model.addAttribute("page", page);
@@ -96,14 +101,13 @@ public class StackController {
     MemberDao memberDao = sqlsession.getMapper(MemberDao.class);
     StackDao stackdao = sqlsession.getMapper(StackDao.class);
     Article article = articleService.selectOneArticle("qna", id);
+    Qna qna = (Qna) article.getOption();
+    int adopted = qna.getAdopted_answer();
     for (Comment c : article.getCommentlist()) {
       c.setWriter(memberDao.selectMemberByUsername(c.getUsername()));
-    }
-    int adopted = article.getAdopted_answer();
+    }    
     if (adopted != 0) {
       Comment comment = stackdao.selectAdoptedAnswer(adopted);
-      System.out.println("채택숫자:" + adopted);
-      System.out.println("닉네임:" + comment.getUsername());
       comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
       model.addAttribute("adoptedanswer", comment);
     }
@@ -188,8 +192,8 @@ public class StackController {
   
   @GetMapping("/chooseanswer")
   public String stackChooseAnswer(int comment_id, int article_id) {
-    StackDao stackDao = sqlsession.getMapper(StackDao.class);
-    stackDao.chooseAnswer(comment_id, article_id);
+    QnaDao qnaDao = sqlsession.getMapper(QnaDao.class);
+    qnaDao.chooseAnswer(comment_id, article_id);
     return "redirect:/stack/content?id="+article_id;
   }
 }

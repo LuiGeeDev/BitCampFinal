@@ -86,7 +86,7 @@
     <!-- 채택된 답변 -->
 
 
-    <table th:unless="${stackcontent.adopted_answer==0}"
+    <table th:unless="${stackcontent.option.adopted_answer==0}"
       class="answerWrapper">
       <tr>
         <td class="td8"><i class="fas fa-user-circle fa-lg fa-2x"></i></td>
@@ -111,7 +111,7 @@
         <tr>
           <td class="td8"><i class="fas fa-user-circle fa-lg fa-2x"></i></td>
           <td>[[${list.writer.name}]] 
-            <a th:if="${list.username}==${user.username} and ${list.id}!=${stackcontent.adopted_answer}"
+            <a th:if="${list.username}==${user.username} and ${list.id}!=${stackcontent.option.adopted_answer}"
             th:href="@{/stack/commentdelete(id=${list.id})}">[삭제]</a><br>
             <span class="commentCalender"
             th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
@@ -125,7 +125,7 @@
         </tr>
         <tr>
           <td colspan="2" class="td6">
-          <span th:if="${stackcontent.username}==${user.username} and ${stackcontent.adopted_answer==0}"
+          <span th:if="${stackcontent.username}==${user.username} and ${stackcontent.option.adopted_answer==0}"
           class="checkButton"><a th:href="@{/stack/chooseanswer(article_id=${stackcontent.id},comment_id=${list.id})}"
           style="color:black;">
           채택 <i class="far fa-check-circle"></i></a></span>
