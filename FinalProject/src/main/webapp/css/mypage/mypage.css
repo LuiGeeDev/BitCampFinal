@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .main-container {
-  margin: 50px 50px 10px 200px;
+  margin: 20px 50px 10px 200px;
   padding: 5px;
   border-radius: 10px;
   widht: 100%;
@@ -35,7 +35,15 @@ input[type=text], input[type=password], input[type=email] {
   margin: 30px;
   padding: 15px;
   width: 600px;
- 
+  border-radius: 5px;
+  outline: none !important;
+  
+  
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
+  border-color:#808080;
+  
 }
 
 .main-title {
@@ -53,7 +61,8 @@ input[type=text], input[type=password], input[type=email] {
 }
 
 .updateBtn {
-  margin-left: auto;
+  position:absolute;
+  right: 330px;
 }
 
 .mypage-name:hover {
@@ -66,8 +75,7 @@ input[type=text], input[type=password], input[type=email] {
 }
 
 .updateBtn {
-  position:absolute;
-  right: 0
+  
 }
 
 .idCheck, span[class="hidden"] {
