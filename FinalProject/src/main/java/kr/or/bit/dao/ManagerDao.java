@@ -39,12 +39,6 @@ public interface ManagerDao {
   
   
   
-  
-  
-  
-  
-  
-  
   List<Member> selectMembersByName(String name);
   
   List<Member> selectMembersByUserame(String username);
