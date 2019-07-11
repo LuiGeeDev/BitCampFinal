@@ -27,15 +27,18 @@
           <div><input type="file" value="사진변경" id="photoBtn"></div>
           </div>
           <!-- <div class="photo-file"><input type="text" name="profile_photo" th:value="*{profile_photo}" placeholder="프로필 사진"></div> -->
-          <div><input type="text" class="mypage-name" name="username" th:value="*{username}" readonly>
+          <div class="idParent">
+          <input type="text" class="mypage-name" name="username" th:value="*{username}" readonly>
           <span class="idCheck"><i class="far fa-times-circle"></i> 아이디 문의는 메타몽에게 ^^</span>
           </div>
           
-          <div><input type="password" name="password" placeholder="비밀번호는 8글자 이상의 영문자,숫자,특수문자 조합을 입력해야 합니다" maxlength="16" id="mypage-password">
+          <div class=passwordParent>
+          <input type="password" name="password" placeholder="비밀번호는 8글자 이상의 영문자,숫자,특수문자 조합을 입력해야 합니다" maxlength="16" id="mypage-password">
           <span class="hidden" id="pwdCheck" name="pwdCheck"></span>
           </div>
           <div><input type="text" name="name" th:value="*{name}" placeholder="이름을 입력해주세요" id="mypage-name" maxlength="6"></div>
-          <div><input type="text" name="email" th:value="*{email}" placeholder="이메일을 입력해주세요" id="mypage-email">
+          <div class="emailParent">
+          <input type="text" name="email" th:value="*{email}" placeholder="이메일을 입력해주세요" id="mypage-email">
           <span class="hidden" id="emailCheck" name="emailCheck"></span>
           </div>
           <div class="submit-btn">

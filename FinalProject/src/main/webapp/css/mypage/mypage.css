@@ -73,3 +73,13 @@ input[type=text], input[type=password], input[type=email] {
 .idCheck, span[class="hidden"] {
   font-weight:600;
 }
+
+.idParent, .passwordParent, .emailParent {
+  position:relative;
+}
+
+.idCheck, #pwdCheck, #emailCheck {
+  position:absolute;
+  right:40px;
+  bottom:50px;
+}
