@@ -7,9 +7,9 @@
             <span class = "addbutton" v-on:click="addTodo">추가하기</span>
         </div>
         <ul id = "todolist">
-            <li v-for="(a,index) in todolist" :key="a" v-bind:class = "checked(a.done)"
+            <li v-for="(a,index) in todolist" :key="a" v-bind:class = "checked(a.checked)"
                 v-on:click="doneToggle(index)">
-                <span>{{a.todo}}</span>
+                <span>{{a.content}}</span>
                 <span class="close" v-on:click.stop="deleteTodo(index)">&#x00D7;</span>
             </li>
         </ul>
@@ -21,28 +21,34 @@ export default {
   data() {
     return {
       todo : "",
-      todolist : []
+      todolist : [],
     };
   },
+  mounted(){
+    this.todolist=checklist;
+  },
   methods: {
+      select : function(e){
+        axios.get('/axios/select')
+        .then((response) => {
+          this.todolist = response;
+        });
+      },
       checked : function(done){
-        axios.get('/axios/checked')
-        .then((response)=>{
-            if(done) return{checked:true};
-            else return {checked:false};
-        })
-        .catch((err)=>{
-          console.log(err);
-        })
+          var cri = false;
+          if(done == 1){cri=true;}
+          return {checked:cri};
       },
       addTodo : function(e){
-        axios.get('/axios/addTodo')
+        axios.get('/axios/addTodo',{
+          params: {
+            todo : this.todo,
+            group_id : getParameterByName("group_id"),
+          },
+        })
         .then((response)=>{
-          if(this.todo !=""){
-              console.log(response.data.vote.username);
-              this.todolist.push({todo:this.todo, done:false});
-              this.todo="";
-          }
+          this.todolist.push(response.data.checklist);
+          this.todo="";
         })
         .catch((err)=>{
           console.log(err);
@@ -50,20 +56,40 @@ export default {
 
       },
       deleteTodo : function(index){
-          axios.get('/axios/deleteTodo')
+          axios.get('/axios/deleteTodo',{
+            params: {
+              todo : this.todo,
+              group_id : getParameterByName("group_id"),
+              index : index,
+            }
+          })
           .then((response)=>{
-            this.todolist.splice(index,1);
+            this.todolist.splice(response.data.index,1);
           })
           .catch((err)=>{
             console.log(err);
           })
       },
       doneToggle : function(index){
-        axios.get('/axios/doneToggle')
-        .then((response)=>{
-          this.todolist[index].done = !this.todolist[index].done;
+        axios.get('/axios/doneToggle',{
+          params : {
+            todolist : this.todolist[index],
+            group_id : getParameterByName("group_id"),
+            index : index,
+          },
         })
-      }
+        .then((response)=>{
+          var resTodo = response.data.checklist;
+          var resIndex = response.data.index;
+          if(resTodo[resIndex].checked == 0){
+            resTodo[resIndex].checked == 1
+          }else{
+            resTodo[resIndex].checked == 0
+          }
+          this.todolist[resIndex].checked = resTodo[resIndex].checked;
+        })
+      },
+
   },
 }
 </script>

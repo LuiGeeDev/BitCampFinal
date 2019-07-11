@@ -90,6 +90,8 @@ public class MyClassController {
     GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
     GroupMemberDao groupMemberDao = sqlSession.getMapper(GroupMemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
+    
     
     String teacherName = Helper.userName();
     Member teacher = memberDao.selectMemberByUsername(teacherName); // 강사 저장
@@ -131,6 +133,14 @@ public class MyClassController {
       board.setCourse_id(course_id);
       boardDao.insertBoard(board);
     }
+    Schedule schedule = new Schedule();
+    schedule.setStart_date(newProject.getStart_date());
+    schedule.setEnd_date(newProject.getEnd_date());
+    schedule.setContent(newProject.getProject_name());
+    schedule.setColor("tomato");
+    schedule.setGroup_id(0);
+    schedule.setCourse_id(teacher.getCourse_id());
+    scheduleDao.insertSchedule(schedule);
     
     return "redirect:/myclass/setting";
   }
