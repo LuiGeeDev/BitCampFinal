@@ -79,4 +79,9 @@ public interface ArticleDao {
   void updateArticleViewCount(Article article);
   
   void updateArticleLevel(Article article);
+  
+  Integer selectMaxLevel(Article article);
+  
+  Integer selectMaxLevelBySibling(Article article);
+  
 }
