@@ -29,7 +29,7 @@
           <!-- <div class="photo-file"><input type="text" name="profile_photo" th:value="*{profile_photo}" placeholder="프로필 사진"></div> -->
           <div class="idParent">
           <input type="text" class="mypage-name" name="username" th:value="*{username}" readonly>
-          <span class="idCheck"><i class="far fa-times-circle"></i> 아이디 문의는 메타몽에게 ^^</span>
+          <span class="idCheck"><i class="far fa-times-circle"></i></span>
           </div>
           
           <div class=passwordParent>
@@ -60,19 +60,6 @@
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <script th:inline="javascript">
-	$(function() {
-	  var regExp = /^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{1,5}$/;
-      var emailVal = $("#mypage-email").val();
-    
-    if(emailVal.match(regExp) === null) {
-      $("#emailCheck").html("<i class='far fa-times-circle'></i>이메일 형식이 올바르지 않습니다");
-      $("#emailCheck").css("color", "red");
-	  } else {
-	    $("#emailCheck").html("<i class='far fa-check-circle'></i></i>이메일 형식이 맞습니다");
-	    $("#emailCheck").css("color", "blue");
-	  }
-	});
-  
   
   $(".updateBtn").click(function() {
    	var password = $("#mypage-password").val();
