@@ -85,11 +85,6 @@
     <!-- 댓글목록 -->
     <!-- 채택된 답변 -->
 
-    <table class="iteration" th:if="${stackcontent.adopted_answer==0}">
-      <tr>
-        <td>채택된 답변이 없습니당...</td>
-      </tr>
-    </table>
 
     <table th:unless="${stackcontent.adopted_answer==0}"
       class="answerWrapper">
@@ -216,12 +211,12 @@
               }
               
               let html = "<table class='iteration'><tbody>"+
-                         "<tr><td class='td8'><i class='fas fa-user-circle fa-lg fa-2x'></i></td>" +
+              			 "<tr><td class='td8'><i class='fas fa-user-circle fa-lg fa-2x'></i></td>" +
                          "<td>" + username + "<a href='/stack/commentdelete?id=" + commentId + "'" + ">" + equalName +"</a>" + 
                          "<br>" +
                          "<span class='commentCalender'>" + timedate + "</span></td>" +
                          "<td class='td7'></td></tr>" + 
-                         "<tr><td colspan='2' class='td6'>" + content + "</td><td></td></tr></tbody></table>";
+                         "<tr><td colspan='2' class='td11'>" + content + "</td><td></td></tr><tr><td colspan='2' class='td6'></td><td></td></tr> </table>";
               $(".stack-wrapper").append(html);
             });
             
