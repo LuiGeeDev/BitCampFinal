@@ -123,7 +123,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   <select id="selectOneArticle"
     resultType="kr.or.bit.model.Article">
-    SELECT a.id, a.adopted_answer, a.title, a.content,
+    SELECT a.id, a.title, a.content,
     a.time, a.view_count, a.original_id, a.level, a.username, a.layer, a.sibling,
     a.board_id, (SELECT COUNT(*) FROM ARTICLE_VOTE WHERE
     article_id=#{id}) as "vote_Count", a.updated_time, m.name
@@ -364,7 +364,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <update id="updateArticleLevel">
     UPDATE ARTICLE
     SET LEVEL = LEVEL + 1
-    WHERE LEVEL > ${level} AND ORIGINAL_ID = ${original_id}
+    WHERE LEVEL &gt; ${level} AND ORIGINAL_ID = ${original_id} and sibling = ${sibling}
   </update>
   <select id="selectRecentlyCommentedArticle" resultType="kr.or.bit.model.Article">
     SELECT DISTINCT a.id, a.title, a.content, a.time, a.view_count, a.original_id, a.level, a.updated_time, a.enable, a.username, a.board_id
@@ -374,7 +374,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE board_id = 1
     ORDER BY c.time desc
     LIMIT 3
-    WHERE LEVEL &gt; ${level} AND ORIGINAL_ID = ${original_id} and sibling &gt; ${sibling}
   </select>
 
   <select id="selectMaxLevel" resultType="Integer">
