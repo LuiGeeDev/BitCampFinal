@@ -5,15 +5,47 @@ import java.time.LocalDate;
 
 public class Schedule {
   private int id;
-  private Date start_date;
-  private Date end_date;
+  private Date start;
+  private Date end;
   private String title;
   private String color;
   private int group_id;
   private int course_id;
-  
-  private LocalDate startDateLocal;
-  private LocalDate endDateLocal;
+
+  private LocalDate startLocal;
+  private LocalDate endLocal;
+
+  public Date getStart() {
+    return start;
+  }
+
+  public void setStart(Date start) {
+    this.start = start;
+  }
+
+  public Date getEnd() {
+    return end;
+  }
+
+  public void setEnd(Date end) {
+    this.end = end;
+  }
+
+  public LocalDate getStartLocal() {
+    return startLocal;
+  }
+
+  public void setStartLocal(LocalDate startLocal) {
+    this.startLocal = startLocal;
+  }
+
+  public LocalDate getEndLocal() {
+    return endLocal;
+  }
+
+  public void setEndLocal(LocalDate endLocal) {
+    this.endLocal = endLocal;
+  }
 
   public int getId() {
     return id;
@@ -21,38 +53,6 @@ public class Schedule {
 
   public void setId(int id) {
     this.id = id;
-  }
-
-  public Date getStart_date() {
-    return start_date;
-  }
-
-  public void setStart_date(Date start_date) {
-    this.start_date = start_date;
-  }
-
-  public Date getEnd_date() {
-    return end_date;
-  }
-
-  public void setEnd_date(Date end_date) {
-    this.end_date = end_date;
-  }
-
-  public LocalDate getStartDateLocal() {
-    return startDateLocal;
-  }
-
-  public void setStartDateLocal(LocalDate startDateLocal) {
-    this.startDateLocal = startDateLocal;
-  }
-
-  public LocalDate getEndDateLocal() {
-    return endDateLocal;
-  }
-
-  public void setEndDateLocal(LocalDate endDateLocal) {
-    this.endDateLocal = endDateLocal;
   }
 
   public String getTitle() {

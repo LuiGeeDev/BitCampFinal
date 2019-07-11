@@ -119,12 +119,12 @@
                 <label for="new-title">이름: </label>
                 <input type="text" name="title" id="new-title" />
                 <label for="new-start">시작: </label>
-                <input type="date" name="start_date" id="new-start" readonly />
+                <input type="date" name="start" id="new-start" readonly />
                 <label for="new-end">종료: </label>
                 <input type="date" id="new-end-display" readonly />
                 <div class="calendar-color">
                   <label>색상: </label>
-                  <div class="color red"></div>
+                  <div class="color red active-color"></div>
                   <div class="color coral"></div>
                   <div class="color orange"></div>
                   <div class="color green"></div>
@@ -133,7 +133,7 @@
                   <div class="color purple"></div>
                 </div>
                 <input type="hidden" value="#FF3B30" name="color" />
-                <input type="hidden" name="end_date" id="new-end" />
+                <input type="hidden" name="end" id="new-end" />
               </form>
               <div class="modal-footer">
                 <button
@@ -143,7 +143,7 @@
                 >
                   취소
                 </button>
-                <button type="button" class="btn btn-primary btn-sm">
+                <button id="submit-new-schedule" type="button" class="btn btn-primary btn-sm">
                   생성
                 </button>
               </div>
@@ -165,7 +165,7 @@
                 <label for="title">이름: </label>
                 <input type="text" name="title" id="title" />
                 <label for="start">시작: </label>
-                <input type="date" name="start_date" id="start" readonly />
+                <input type="date" name="start" id="start" readonly />
                 <label for="new-end">종료: </label>
                 <input type="date" id="end-display" readonly />
                 <div class="calendar-color">
@@ -178,8 +178,9 @@
                   <div class="color indigo"></div>
                   <div class="color purple"></div>
                 </div>
-                <input type="hidden" value="#FF3B30" name="color" />
-                <input type="hidden" name="end_date" id="end" />
+                <input type="hidden" value="rgb(255, 59, 48)" name="color" />
+                <input type="hidden" name="end" id="end" />
+                <input type="hidden" name="id" id="id">
               </form>
               <div class="modal-footer">
                 <button
@@ -189,10 +190,10 @@
                 >
                   취소
                 </button>
-                <a th:href="@{/myclass/schedule/delete?id=}" id="delete" class="btn btn-danger btn-sm">
+                <button id="delete" class="btn btn-danger btn-sm">
                   삭제
-                </a>
-                <button type="button" class="btn btn-primary btn-sm">
+                </button>
+                <button id="submit-schedule" type="button" class="btn btn-primary btn-sm">
                   변경
                 </button>
               </div>
@@ -202,7 +203,7 @@
       </div>
     </div>
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-    <script>
+    <script th:inline="javascript">
       const calendarEl = document.getElementById("calendar");
       let calendar = new FullCalendar.Calendar(calendarEl, {
         plugins: ["dayGrid", "interaction"],
@@ -217,37 +218,16 @@
           center: "",
           right: "today prev,next"
         },
+        displayEventTime: false,
         eventTextColor: "white",
-        events: [
+        events: 
           {
-            id: "1",
-            title: "조 회식",
-            start: "2019-07-05",
-            color: "rgb(255, 111, 97)"
-          },
-          { 
-            id: "2",
-            title: "비트캠프 졸업",
-            start: "2019-07-30",
-            color: "coral",
-            textColor: "white"
-          },
-          {
-            id: "3",
-            title: "호텔 델루나 첫방송",
-            start: "2019-07-13",
-            end: "2019-07-15",
-            color: "rgb(255, 111, 97)",
-            textColor: "white"
-          },
-          {
-            id: "4",
-            title: "회식",
-            start: "2019-06-24",
-            end: "2019-06-24",
-            textColor: "white"
+            url: "/myclass/schedule/get/class",
+            method: "POST",
+            extraParams: {
+              course_id: [[${user.course_id}]]
+            }
           }
-        ]
       });
       calendar.render();
 
@@ -293,12 +273,7 @@
           $("#end").val(formatDate(event.start));
         }
         
-        const href = $("#delete").prop("href");
-        if (href.charAt(href.length - 1) !== "=") {
-          $("#delete").prop("href", href.slice(0, -1) + event.id);
-        } else {
-          $("#delete").prop("href", href + event.id);
-        }
+        $("#id").val(event.id);
         
         $("#schedule-modal").modal("show");
       });
@@ -308,18 +283,48 @@
         $(event.target).addClass("active-color");
         $("input[name='color']").val($(event.target).css("backgroundColor"));
       });
+      
+      $("#submit-new-schedule").click(function() {
+        const formData = new FormData($("#new-schedule")[0]);
+        $.ajax({
+          url: "/myclass/schedule/insert",
+          method: "post",
+          data: formData,
+          contentType: false,
+          processData: false,
+          error: function() {
+        	  console.clear();
+          }
+        }).always(function() {
+          calendar.refetchEvents();
+          $("#new-schedule-modal").modal("hide");
+        });
+      });
+      
+      $("#submit-schedule").click(function() {
+        const formData = new FormData($("#schedule")[0]);
+        $.ajax({
+          url: "/myclass/schedule/update",
+          method: "post",
+          data: formData,
+          contentType: false,
+          processData: false
+        }).always(function() {
+          calendar.refetchEvents();
+          $("#schedule-modal").modal("hide");
+        });
+      });
+      
+      $("#delete").click(function() {
+        $.ajax({
+          url: "/myclass/schedule/delete",
+          data: {id : $("#id").val()},
+          method: "post"
+        }).always(function() {
+          calendar.refetchEvents();
+          $("#schedule-modal").modal("hide");
+        });
+      });
     </script>
-    <script
-      type="text/javascript"
-      src="/resources/dist/static/js/manifest.d2e3a334bc98c3b96650.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="/resources/dist/static/js/vendor.71750e988b55e9735a64.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="/resources/dist/static/js/app.55e5fc1c8db3bc542a1f.js"
-    ></script>
   </body>
 </html>

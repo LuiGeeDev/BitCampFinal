@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="kr.or.bit.dao.ProjectDao">
   <select id="selectMyProject" resultType="kr.or.bit.model.Group">
     SELECT g.id, project_name
-    FROM groups g
+    FROM `groups` g
     LEFT JOIN group_member gm
     ON g.id = gm.group_id
     LEFT JOIN project p

@@ -268,7 +268,7 @@ public class MyClassController {
 
     schedule.setCourse_id(member.getCourse_id());
     schedule.setTitle(article.getTitle());
-    schedule.setEnd_date(homework.getEnd_date());
+    schedule.setEnd(homework.getEnd_date());
     schedule.setColor("green");
     schedule.setGroup_id(0);
     
