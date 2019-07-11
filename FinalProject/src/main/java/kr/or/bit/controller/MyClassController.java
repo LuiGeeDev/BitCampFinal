@@ -278,7 +278,7 @@ public class MyClassController {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
-    
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     
     Member member = memberDao.selectMemberByUsername(Helper.userName());
     int board_id = boardDao.selectBoardByCourseId(member.getCourse_id(), 4).getId();
@@ -287,11 +287,13 @@ public class MyClassController {
     Homework homework = new Homework();
     homework.setEnd_date(end_date);
     articleInsertService.writeArticle(article, homework, null, request);
-    
     Schedule schedule = new Schedule();
-
+    article = articleDao.selectOneArticle(articleDao.selectMostRecentArticleId(article));
+    
+    
     schedule.setCourse_id(member.getCourse_id());
     schedule.setTitle(article.getTitle());
+    schedule.setStart(Date.valueOf(article.getTime().toLocalDateTime().toLocalDate()));
     schedule.setEnd(homework.getEnd_date());
     schedule.setColor("green");
     schedule.setGroup_id(0);

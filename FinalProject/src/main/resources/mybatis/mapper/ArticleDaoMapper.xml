@@ -343,5 +343,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE LEVEL >
 		${level} AND ORIGINAL_ID = ${original_id}
 	</update>
+	<select id="selectMostRecentArticleId" resultType ="Integer">
+		SELECT MAX(ID)
+		FROM ARTICLE
+		WHERE BOARD_ID = #{board_id} AND username=#{username}
+	</select>
+	
 </mapper>
  
