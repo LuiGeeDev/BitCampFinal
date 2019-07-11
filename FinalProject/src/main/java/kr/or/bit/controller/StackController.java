@@ -53,22 +53,23 @@ public class StackController {
   private BoardService boardService;
 
   @GetMapping("")
-  public String listPage(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model) throws Exception{
+  public String listPage(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model)
+      throws Exception {
     StackDao stackDao = sqlsession.getMapper(StackDao.class);
     MemberDao memberDao = sqlsession.getMapper(MemberDao.class);
     String username = Helper.userName();
     Member member = memberDao.selectMemberByUsername(username);
     List<Article> stackList = null;
     Pager pager = null;
-    if(boardSearch != null) {
-      if(criteria.equals("titleOrContent")) {
+    if (boardSearch != null) {
+      if (criteria.equals("titleOrContent")) {
         pager = new Pager(page, stackDao.countStackArticleByTitleOrContent(boardSearch));
-      }else if(criteria.equals("title")) {
+      } else if (criteria.equals("title")) {
         pager = new Pager(page, stackDao.countStackArticleByTitle(boardSearch));
-      }else {
+      } else {
         pager = new Pager(page, stackDao.countStackArticleByWriter(boardSearch));
       }
-      stackList = articleService.selectStackArticlesByboardSearch(pager,boardSearch,criteria);
+      stackList = articleService.selectStackArticlesByboardSearch(pager, boardSearch, criteria);
       model.addAttribute("boardSearch", boardSearch);
     } else {
       pager = new Pager(page, stackDao.countAllStackArticle());
@@ -94,19 +95,19 @@ public class StackController {
   public String GetStackContent(int id, Model model) {
     MemberDao memberDao = sqlsession.getMapper(MemberDao.class);
     StackDao stackdao = sqlsession.getMapper(StackDao.class);
-    Article article = articleService.selectOneArticle("qna",id);
-    int adopted = article.getAdopted_answer();
-    Comment comment = stackdao.selectAdoptedAnswer(adopted);
-    
-    System.out.println("채택숫자:"+adopted);
-    System.out.println("닉네임:"+comment.getUsername());
-    comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
-    for(Comment c : article.getCommentlist()) {
+    Article article = articleService.selectOneArticle("qna", id);
+    for (Comment c : article.getCommentlist()) {
       c.setWriter(memberDao.selectMemberByUsername(c.getUsername()));
     }
-   
-    model.addAttribute("stackcontent",article);
-    model.addAttribute("adoptedanswer",comment);
+    int adopted = article.getAdopted_answer();
+    if (adopted != 0) {
+      Comment comment = stackdao.selectAdoptedAnswer(adopted);
+      System.out.println("채택숫자:" + adopted);
+      System.out.println("닉네임:" + comment.getUsername());
+      comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
+      model.addAttribute("adoptedanswer", comment);
+    }
+    model.addAttribute("stackcontent", article);
     articleUpdateService.viewCount(article);
     return "stack/content";
   }
@@ -128,11 +129,11 @@ public class StackController {
     for (int i = 1; i < splitStr.length; i++) {
       tagList.add(splitStr[i].trim());
     }
-    List<Tag> tags = tagService.selectTagByName(tagList);   
+    List<Tag> tags = tagService.selectTagByName(tagList);
     article.setTags(tags);
     article.setUsername(Helper.userName());
     article.setBoard_id(STACK_BOARD_ID);
-    articleInsertService.writeStackArticle(article,tagList);
+    articleInsertService.writeStackArticle(article, tagList);
     return "redirect:/stack";
   }
 
@@ -183,5 +184,12 @@ public class StackController {
   public String stackplustVote(int id) {
     articleVoteService.insertVote(id, Helper.userName());
     return "redirect:/stack/content?id=" + id;
+  }
+  
+  @GetMapping("/chooseanswer")
+  public String stackChooseAnswer(int comment_id, int article_id) {
+    StackDao stackDao = sqlsession.getMapper(StackDao.class);
+    stackDao.chooseAnswer(comment_id, article_id);
+    return "redirect:/stack/content?id="+article_id;
   }
 }
