@@ -32,7 +32,9 @@ import kr.or.bit.dao.GroupMemberDao;
 import kr.or.bit.dao.HomeworkDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.ProjectDao;
+import kr.or.bit.dao.QnaDao;
 import kr.or.bit.dao.ScheduleDao;
+import kr.or.bit.dao.StackDao;
 import kr.or.bit.dao.TimelineDao;
 import kr.or.bit.dao.ViewCountDao;
 import kr.or.bit.model.Article;
@@ -69,7 +71,32 @@ public class MyClassController {
   private ArticleUpdateService articleUpdateService;
 
   @GetMapping("/qna")
-  public String qnaPage() {
+  public String qnaPage(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model)
+      throws Exception {
+    QnaDao qnaDao = sqlSession.getMapper(QnaDao.class);
+    StackDao stackDao = sqlSession.getMapper(StackDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    String username = Helper.userName();
+    Member member = memberDao.selectMemberByUsername(username);
+    List<Article> qnaList = null;
+    Pager pager = null;
+    if (boardSearch != null) {
+      if (criteria.equals("titleOrContent")) {
+        pager = new Pager(page, qnaDao.countQnaArticleByTitleOrContent(boardSearch));
+      } else if (criteria.equals("title")) {
+        pager = new Pager(page, qnaDao.countQnaArticleByTitle(boardSearch));
+      } else {
+        pager = new Pager(page, qnaDao.countQnaArticleByWriter(boardSearch));
+      }
+      qnaList = articleService.selectQnaArticlesByboardSearch(pager, boardSearch, criteria);
+      model.addAttribute("boardSearch", boardSearch);
+    } else {
+      pager = new Pager(page, stackDao.countAllStackArticle());
+      qnaList = articleService.selectAllQnaArticles(pager);
+    }
+    model.addAttribute("qnaList", qnaList);
+    model.addAttribute("pager", pager);
+    model.addAttribute("page", page);
     return "myclass/qna/home";
   }
 
