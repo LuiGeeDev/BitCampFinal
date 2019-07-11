@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .main-container {
-  margin: 50px 50px 10px 200px;
+  margin: 20px 30px 10px 200px;
   padding: 5px;
   border-radius: 10px;
   widht: 100%;
@@ -17,6 +17,7 @@
   /* width: 20%; */
   height: 10%;
   border-radius: 3px;
+  font-weight: bold;
 }
 
 .mypagePhoto, .mypageId, .mypagePwd, .mypageName, .mypageEmail {
