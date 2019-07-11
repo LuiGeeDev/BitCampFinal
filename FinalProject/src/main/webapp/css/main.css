@@ -230,6 +230,11 @@ a[class^="carousel-control"] {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #292929;
+}
+
+.stack-article-title:hover {
+  color: gray;
 }
 
 .stack-article-time {

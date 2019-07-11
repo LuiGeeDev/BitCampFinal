@@ -5,6 +5,15 @@ public class Qna implements ArticleOption {
   private int answerd;
   private int teacher_answered;
   private int article_id;
+  private int adopted_answer;
+  
+  
+  public int getAdopted_answer() {
+    return adopted_answer;
+  }
+  public void setAdopted_answer(int adopted_answer) {
+    this.adopted_answer = adopted_answer;
+  }
   public int getId() {
     return id;
   }

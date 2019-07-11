@@ -39,7 +39,11 @@
           </div>
         </div>
         <div class="my-project">
-          <div class="d-day">D-3</div>
+          <div class="d-day">
+            <span th:if="${dDay > 0}" th:text="${'D-' + dDay}"></span>
+            <span th:if="${dDay == 0}">D-DAY</span>
+            <span th:if="${dDay < 0}">종료</span>
+          </div>
           <h4>내 프로젝트</h4>
           <a href="#">
             <p class="project-new-content">
@@ -91,45 +95,25 @@
             <div class="stack-header">
               <p>방금 올라온 질문</p>
             </div>
-            <div class="stack-article" th:each="stack,iter : ${recentStacks}" th:if="${iter.index < 4}">
+            <a th:href="@{/stack/content(id=${stack.id})}" class="stack-article" th:each="stack,iter : ${recentStacks}" th:if="${iter.index < 3}">
               <div class="stack-article-title" th:text="${stack.title}"></div>
               <div class="stack-article-info">
                 <div class="stack-article-writer" th:text="${stack.writer.name}">권예지</div>
                 <div class="stack-article-time" th:text="${#temporals.format(stack.timeLocal, 'HH:mm')}">5분 전</div>
               </div>
-            </div>
+            </a>
           </div>
           <div class="stack-popular">
             <div class="stack-header">
               <p>최근 답변된 질문</p>
             </div>
-            <div class="stack-article">
-              <div class="stack-article-title">
-                질문 제목입니다. 답변이 되었습니다.
-              </div>
+            <a th:href="@{/stack/content(id=${stack.id})}" class="stack-article" th:each="stack : ${recentlyCommented}">
+              <div class="stack-article-title" th:text="${stack.title}"></div>
               <div class="stack-article-info">
-                <div class="stack-article-writer">이힘찬</div>
-                <div class="stack-article-time">1분 전</div>
+                <div class="stack-article-writer" th:text="${stack.writer.name}">권예지</div>
+                <div class="stack-article-time" th:text="${#temporals.format(stack.timeLocal, 'HH:mm')}">5분 전</div>
               </div>
-            </div>
-            <div class="stack-article">
-              <div class="stack-article-title">
-                질문 제목입니다. 답변이 되었습니다.
-              </div>
-              <div class="stack-article-info">
-                <div class="stack-article-writer">이힘찬</div>
-                <div class="stack-article-time">1분 전</div>
-              </div>
-            </div>
-            <div class="stack-article">
-              <div class="stack-article-title">
-                질문 제목입니다. 답변이 되었습니다.
-              </div>
-              <div class="stack-article-info">
-                <div class="stack-article-writer">이힘찬</div>
-                <div class="stack-article-time">1분 전</div>
-              </div>
-            </div>
+            </a>
           </div>
         </div>
       </div>
@@ -196,6 +180,7 @@
         locale: "ko",
         height: 160,
         columnHeaderFormat: {
+          day: "numeric",
           weekday: "short"
         },
         header: {
@@ -203,27 +188,56 @@
           center: "",
           right: ""
         },
-        events:
-        {
-          url: "/myclass/schedule/get/group",
-          method: "POST",            
-          extraParams: {
-            course_id: [[${user.course_id}]],
-            group_id: [[${user.group_id}]]
+        eventTextColor: "white",
+        eventSources: [
+          {
+            url: "/myclass/schedule/get/group",
+            method: "POST",            
+            extraParams: {
+              course_id: [[${user.course_id}]],
+              group_id: [[${user.group_id}]]
+            },
+            eventDataTransform: function(data) {              
+              const start = new Date(data.start);
+              const end = new Date(data.end);
+              const startStr = formatDate(start);
+              const endStr = formatDate(end);
+              data.start = startStr;
+              data.end = endStr
+              return data;
+            },
           },
-          eventDataTransform: function(data) {              
-            const start = new Date(data.start);
-            const end = new Date(data.end);
-            const startStr = formatDate(start);
-            const endStr = formatDate(end);
-            data.start = startStr;
-            data.end = endStr
-            return data;
+          {
+            url: "/myclass/schedule/get/class",
+            method: "POST",            
+            extraParams: {
+              course_id: [[${user.course_id}]],
+              group_id: [[${user.group_id}]]
+            },
+            eventDataTransform: function(data) {              
+              const start = new Date(data.start);
+              const end = new Date(data.end);
+              const startStr = formatDate(start);
+              const endStr = formatDate(end);
+              data.start = startStr;
+              data.end = endStr;
+              return data;
+            },
+            classNames: "disabled", 
           }
-        }
+        ]
       });
 
       calendar.render();
+      
+      function formatDate(date) {
+        const dateStr = `${date.getFullYear()}-${
+          date.getMonth() + 1 >= 10
+            ? date.getMonth() + 1
+            : "0" + (date.getMonth() + 1)
+        }-${date.getDate() >= 10 ? date.getDate() : "0" + date.getDate()}`;
+        return dateStr;
+      }
     </script>
   </body>
 </html>

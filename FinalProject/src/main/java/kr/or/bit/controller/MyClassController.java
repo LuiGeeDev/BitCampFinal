@@ -2,6 +2,7 @@ package kr.or.bit.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -31,6 +33,7 @@ import kr.or.bit.dao.HomeworkDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.ProjectDao;
 import kr.or.bit.dao.ScheduleDao;
+import kr.or.bit.dao.TimelineDao;
 import kr.or.bit.dao.ViewCountDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
@@ -43,6 +46,7 @@ import kr.or.bit.model.Member;
 import kr.or.bit.model.Project;
 import kr.or.bit.model.ProjectMember;
 import kr.or.bit.model.Schedule;
+import kr.or.bit.model.Timeline;
 import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleUpdateService;
@@ -91,7 +95,7 @@ public class MyClassController {
     GroupMemberDao groupMemberDao = sqlSession.getMapper(GroupMemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
-    
+    TimelineDao timelineDao = sqlSession.getMapper(TimelineDao.class);
     
     String teacherName = Helper.userName();
     Member teacher = memberDao.selectMemberByUsername(teacherName); // 강사 저장
@@ -134,13 +138,25 @@ public class MyClassController {
       boardDao.insertBoard(board);
     }
     Schedule schedule = new Schedule();
-    schedule.setStart_date(newProject.getStart_date());
-    schedule.setEnd_date(newProject.getEnd_date());
-    schedule.setContent(newProject.getProject_name());
+    schedule.setStart(newProject.getStart_date());
+    schedule.setEnd(newProject.getEnd_date());
+    schedule.setTitle(newProject.getProject_name());
     schedule.setColor("tomato");
     schedule.setGroup_id(0);
     schedule.setCourse_id(teacher.getCourse_id());
     scheduleDao.insertSchedule(schedule);
+
+    
+    for(int i = 0 ; i < leaderList.size() ; i++) {
+      
+      Timeline timeline = new Timeline();
+      timeline.setTitle("프로젝트 시작");
+      timeline.setContent(newProject.getProject_name());
+      timeline.setGroup_id(memberDao.selectMemberByUsername(leaderList.get(i).getUsername()).getGroup_id());
+      timeline.setUsername(Helper.userName());
+      timelineDao.insertTimeline(timeline);
+      
+    }
     
     return "redirect:/myclass/setting";
   }
@@ -236,7 +252,6 @@ public class MyClassController {
       HttpServletRequest request,Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-    
     Member member = memberDao.selectMemberByUsername(Helper.userName());
     Board board = boardDao.selectBoardByCourseId(member.getCourse_id(), 4);
     article.setUsername(Helper.userName());
@@ -261,28 +276,32 @@ public class MyClassController {
   @PostMapping("/homework/write")
   @Transactional
   public String writeHomeworkArticle(Article article, Date end_date, HttpServletRequest request) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
-    
+
     
     Member member = memberDao.selectMemberByUsername(Helper.userName());
     int board_id = boardDao.selectBoardByCourseId(member.getCourse_id(), 4).getId();
     article.setUsername(Helper.userName());
     article.setBoard_id(board_id);
+    
     Homework homework = new Homework();
     homework.setEnd_date(end_date);
     articleInsertService.writeArticle(article, homework, null, request);
-    
-    Schedule schedule = new Schedule();
 
+    Schedule schedule = new Schedule();
+    article = articleDao.selectOneArticle(articleDao.selectMostRecentArticleId(article));
+    schedule.setArticle_id(articleDao.selectMostRecentArticleId(article));
     schedule.setCourse_id(member.getCourse_id());
     schedule.setTitle(article.getTitle());
+    schedule.setStart(Date.valueOf(article.getTime().toLocalDateTime().toLocalDate()));
     schedule.setEnd(homework.getEnd_date());
     schedule.setColor("green");
     schedule.setGroup_id(0);
     
-    scheduleDao.insertSchedule(schedule);
+    scheduleDao.insertScheduleByBoard(schedule);
     
     return "redirect:/myclass/homework";
   }
@@ -340,7 +359,11 @@ public class MyClassController {
   public String deleteHomeworkArticle(Article article) {
     System.out.println(article);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
+    article = articleDao.selectOneArticle(article.getId());
     articleDao.deleteArticle(article.getId());
+    scheduleDao.deleteSchedule(scheduleDao.selectScheduleByArticleId(article.getId()).getId());
+    
     return "redirect:/myclass/homework";
   }
   

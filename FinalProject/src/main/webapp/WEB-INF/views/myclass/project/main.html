@@ -9,7 +9,7 @@
 <link rel="stylesheet"
   th:href="@{/css/myclass/project/timeline.min.css}" />
 <link
-  href=/resources/dist/static/css/app.cda145d3c0f9213607c958df5fe49699.css
+  href=/resources/dist/static/css/app.fdb6c9691f4d0733a4c1b430b105ca1e.css
   rel=stylesheet>
 </head>
 <body>
@@ -46,30 +46,14 @@
             data-toggle="modal" data-target="#modal-checklist">
             <i class="fas fa-pen-square fa-2x"></i>
           </button>
-          <div class="checklist-item">
-            <input type="checkbox" name="" id="1" /> <label for="1">
+          <div class="checklist-item" th:each="check:${checklist}">
+            <input type="checkbox" name="" th:id="${check.id}" th:checked="${check.checked}==1 ? 'checked'" /> 
+            <label class="checkbox" th:for="${check.id}">
               <i class="fas fa-check-square"></i> <span
-              class="item-description">퇴실하기</span>
+              class="item-description" th:text="${check.content}"></span>
             </label>
           </div>
-          <div class="checklist-item">
-            <input type="checkbox" name="" id="2" /> <label for="2">
-              <i class="fas fa-check-square"></i> <span
-              class="item-description">입실하기</span>
-            </label>
-          </div>
-          <div class="checklist-item">
-            <input type="checkbox" name="" id="3" /> <label for="3">
-              <i class="fas fa-check-square"></i> <span
-              class="item-description">퇴실하기</span>
-            </label>
-          </div>
-          <div class="checklist-item">
-            <input type="checkbox" name="" id="4" /> <label for="4">
-              <i class="fas fa-check-square"></i> <span
-              class="item-description">입실하기</span>
-            </label>
-          </div>
+
         </div>
         <div class="card recent-issues">
           <div class="issue">
@@ -221,7 +205,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary"
-              data-dismiss="modal">Close</button>
+              data-dismiss="modal" th:onclick="location.href='/myclass/project?group_id=[[${group.id}]]'">저장</button>
           </div>
         </div>
       </div>
@@ -314,6 +298,7 @@
   });
   	  var checklist = [[${checklist}]];
   	  
+  	  
       function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex
@@ -351,6 +336,7 @@
         },
         displayEventTime: false,
         eventTextColor: "white",
+        eventLimit: 5,
         eventSources:[
           {
             url: "/myclass/schedule/get/group",
@@ -397,13 +383,27 @@
       $('#button-checklist').on('shown.bs.modal', function() {
         $('#myInput').trigger('focus')
       })
+      
+      $('.checkbox').click(function(event){
+        const id = $(this).prop("for");
+        console.log(id);
+        
+        $.ajax({
+          url:'/myclass/project/checkUpdate',
+          data : { 
+            id:id,
+            group_id:[[${group.id}]]
+            },
+          method: 'post',
+        })
+      })
     </script>
   <script type=text/javascript
     src=/resources/dist/static/js/manifest.d2e3a334bc98c3b96650.js></script>
   <script type=text/javascript
     src=/resources/dist/static/js/vendor.71750e988b55e9735a64.js></script>
   <script type=text/javascript
-    src=/resources/dist/static/js/app.0833a258c83fba3e6908.js></script>
+    src=/resources/dist/static/js/app.1559d8d20ccaa816138e.js></script>
   <script th:src="@{/js/calendar-interaction.js}"></script>
 </body>
 </html>
