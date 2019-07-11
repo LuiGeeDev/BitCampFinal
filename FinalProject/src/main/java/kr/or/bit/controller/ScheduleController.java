@@ -1,5 +1,6 @@
 package kr.or.bit.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,12 @@ public class ScheduleController {
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void updateScheduleForClass(Schedule schedule) {
     service.updateSchedule(schedule);
+  }
+
+  @PostMapping("/change-date")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void changeDates(Schedule schedule) {
+    service.changeDates(schedule);
   }
 
   @PostMapping("/delete")

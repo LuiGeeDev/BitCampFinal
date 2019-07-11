@@ -17,6 +17,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     color = #{color}
     WHERE id = #{id}
   </update>
+  <update id="changeDates">
+    UPDATE schedule
+    SET start = #{start},
+    end = #{end}
+    WHERE id = #{id}
+  </update>
   <delete id="deleteSchedule">
     DELETE
     FROM schedule
