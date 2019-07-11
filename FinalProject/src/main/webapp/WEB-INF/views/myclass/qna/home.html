@@ -17,81 +17,78 @@
     <hr>
     <table>
       <tr>
-        <td colspan="6" class="td1"><span class="qspan"> 
-          <select name="말머리" size=1 class="qsel" style="height: 30px;">
-              <OPTION VALUE=1 SELECTED>최신순</OPTION>
-              <OPTION VALUE=2>추천순</OPTION>
-              <OPTION VALUE=3>조회순</OPTION>
-          </select> <input type="text" name="stacksearch" id="stacksearch"
-            size="35" placeholder="검색내용을 적어주세요"
-            style="border: 1.5px solid lightgray;"> <img
-            src="/css/myclass/qna/search.png" class="seaimg">
-        </span></td>
-      </tr>
-     </table> 
-     
-     <!-- 테스트용 게시물 -->
-     <table> 
-      <tr class="tr1">
-        <td class="td2 tr3">#03</td>
-        <td class="td3 tr3">
-          <span class="tag-name">
-            <span id="c4">Spring</span>
-            <span id="c5">Java</span>
-            <span id="c6">C++</span>
-          </span>
+        <td class="seath">
+          <form method="get">
+            <select size="1" style="height: 30px;" name="criteria">
+              <option value="titleOrContent" selected>제목 + 내용</option>
+              <option value="title">제목</option>
+              <option value="name">글작성자</option>
+            </select><input
+              type="text" name="boardSearch" id="boardSearch" size="25"
+              placeholder="검색내용을 적어주세요" /> <input
+              type="submit" class="btn btn-outline-primary" value="검색">
+          </form>
         </td>
-        <td colspan="4" class="td4"></td>
-      </tr>
-      <tr onClick="location.href='/myclass/qna/content'">
-        <td colspan="3" class="td5 tr2">롤 그거? 개껌이지</td>
-        <td class="tr2">68View</td>
-        <td class="tr2">0Like</td>
-        <td class="td3 tr2">권순조</td>
       </tr>
     </table>
-    
-    
+
     <!-- 목록불러오기 -->
-     <table class="iteration" th:each="list,count : ${qnaList}"> 
+    <table class="iteration" th:each="list,count : ${qnaList}">
       <tr class="tr1">
-        <td class="td2 tr3">#[[${count.count}]]</td>
-        <td class="td3 tr3">
-          <span class="tag-name">
-            <span id="c4">Spring</span>
-            <span id="c5">Java</span>
-            <span id="c6">C++</span>
-          </span>
-        </td>
-        <td colspan="4" class="td4"></td>
+        <td class="td2 tr3">#[[${list.id}]]</td>
+        <td colspan="2" class="td6 tr3"><span class="tag-name iteration"
+            th:each="tag : ${list.tags}"> <span
+              th:style="'background-color:'+@{${tag.color}}+';'"
+              th:onclick="'window.location.href = \'' + @{/stack?criteria=Tag(boardSearch=${tag.tag})} + '\''">[[${tag.tag}]]</span>
+          </span></td>
+        <td colspan="2" class="td4"></td>
       </tr>
-      <tr 
-      th:onclick="'window.location.href = \'' + @{/myclass/qna/content(id=${list.id})} + '\''">
-        <td colspan="3" class="td5 tr2">
-        <sapn th:text="${list.title}"></sapn>
-        [<span th:text="${list.commentlist.size()}"></span>]
-        </td>
-        <td class="tr2">[[${list.view_count}]]View</td>
-        <td class="tr2">[[${list.votenum}]]Like</td>
-        <td class="td3 tr2">[[${list.writer.username}]]</td>
-      </tr>
-     </table>
-    
-    
-    <table>
-      <tr>
-        <td colspan="6" class="btnalign btnpa">
-        <a th:href="@{/myclass/qna/write}">
-        <button class="btn btn-primary">글쓰기</button>
-        </a>
-        </td>
+      <tr
+        th:onclick="'window.location.href = \'' + @{/myclass/qna/content(id=${list.id})} + '\''">
+        <td colspan="3" class="td5 tr2"><span
+            th:text="${list.title}"></span> [<span
+          th:text="${list.commentlist.size()}"></span>]</td>
+        <td class="tr2"><i class="fas fa-eye"></i> [[${list.view_count}]]</td>
+        <td class="tr2"><i class="far fa-heart"></i> [[${list.votenum}]]</td>
+        <td class="td3 tr2">[[${list.writer.name}]]</td>
       </tr>
     </table>
+
+
+
+
+
+    <div class="row">
+      <div class="page-btns">
+        <span th:if="${pager.prev}"> <a
+          class="btn btn-primary paging"
+          th:href="@{/myclass/homework(page=${pager.startPage}-1)}">&laquo;</a>
+        </span> <span
+          th:each="idx, iterStat : ${#numbers.sequence(pager.startPage,pager.endPage)}">
+          <a th:if="${boardSearch} != null"
+          class="btn btn-primary paging"
+          th:href="@{/stack(page=${idx},boardSearch=${boardSearch})}"
+          th:classappend="${pager.currentPage} == ${idx} ? active"
+          th:text="${idx}"></a> <a th:if="${boardSearch} == null"
+          class="btn btn-primary paging"
+          th:href="@{/stack(page=${idx})}"
+          th:classappend="${pager.currentPage} == ${idx} ? active"
+          th:text="${idx}"></a>
+        </span> <span th:if="${pager.next} and ${pager.endPage > 0}"> <a
+          class="btn btn-primary paging"
+          th:href="@{/myclass/homework(page=${pager.endPage}+1)}">&raquo;</a>
+        </span>
+      </div>
+      <div>
+        <a th:href="@{/myclass/qna/write}">
+          <button class="btn btn-primary">글쓰기</button>
+        </a>
+      </div>
+    </div>
+
   </div>
   <script>
       console.log("Hello, world!");
-
-      
     </script>
 </body>
 </html>

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.ArticleDao;
@@ -40,19 +41,26 @@ import kr.or.bit.dao.ViewCountDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
 import kr.or.bit.model.BoardAddRemove;
+import kr.or.bit.model.Comment;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.Files;
+import kr.or.bit.model.General;
 import kr.or.bit.model.Group;
 import kr.or.bit.model.Homework;
 import kr.or.bit.model.Member;
 import kr.or.bit.model.Project;
 import kr.or.bit.model.ProjectMember;
+import kr.or.bit.model.Qna;
 import kr.or.bit.model.Schedule;
+import kr.or.bit.model.Tag;
 import kr.or.bit.model.Timeline;
 import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleUpdateService;
+import kr.or.bit.service.ArticleVoteService;
 import kr.or.bit.service.BoardService;
+import kr.or.bit.service.CommentService;
+import kr.or.bit.service.TagService;
 import kr.or.bit.utils.Helper;
 import kr.or.bit.utils.Pager;
 
@@ -69,6 +77,12 @@ public class MyClassController {
   private ArticleInsertService articleInsertService;
   @Autowired
   private ArticleUpdateService articleUpdateService;
+  @Autowired
+  private TagService tagService;
+  @Autowired
+  private CommentService commentService;
+  @Autowired
+  private ArticleVoteService articleVoteService;
 
   @GetMapping("/qna")
   public String qnaPage(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model)
@@ -98,6 +112,103 @@ public class MyClassController {
     model.addAttribute("pager", pager);
     model.addAttribute("page", page);
     return "myclass/qna/home";
+  }
+  
+  @GetMapping("/qna/write")
+  public String writeQna(Model model) {
+    StackDao stackdao = sqlSession.getMapper(StackDao.class);
+    List<Tag> tags = stackdao.showTagList();
+    model.addAttribute("tags", tags);
+    return "myclass/qna/write";
+  }
+  
+  @PostMapping("/qna/write")
+  public String writeOkQna(Article article, String tag) {
+    List<String> tagList = new ArrayList<>();
+    String[] splitStr = tag.split("#");
+    for (int i = 1; i < splitStr.length; i++) {
+      tagList.add(splitStr[i].trim());
+    }
+    List<Tag> tags = tagService.selectTagByName(tagList);
+    article.setTags(tags);
+    article.setUsername(Helper.userName());
+    article.setBoard_id(6);
+    articleInsertService.writeQnaArticle(article, tagList);
+    return "redirect:/myclass/qna";
+  }
+  
+  @GetMapping("/qna/content")
+  public String GetQnaContent(int id, Model model) {
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    StackDao stackdao = sqlSession.getMapper(StackDao.class);
+    Article article = articleService.selectOneArticle("qna", id);
+    Qna qna = (Qna) article.getOption();
+    int adopted = qna.getAdopted_answer();
+    for (Comment c : article.getCommentlist()) {
+      c.setWriter(memberDao.selectMemberByUsername(c.getUsername()));
+    }
+    if (adopted != 0) {
+      Comment comment = stackdao.selectAdoptedAnswer(adopted);
+      comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
+      model.addAttribute("adoptedanswer", comment);
+    }
+    model.addAttribute("qnacontent", article);
+    articleUpdateService.viewCount(article);
+    return "myclass/qna/content";
+  }
+  
+  @GetMapping("/qna/edit")
+  public String editQna(int id, Model model) {
+    StackDao stackdao = sqlSession.getMapper(StackDao.class);
+    List<Tag> tags = stackdao.selectTagList(id);
+    Article article = articleService.selectOneArticle("qna", id);
+    model.addAttribute("tags", tags);
+    model.addAttribute("article", article);
+    return "myclass/qna/edit";
+  }
+  
+  @PostMapping("/qna/edit")
+  public String editQnaArticle(Article article) {
+    article.setUsername(Helper.userName());
+    article.setBoard_id(6);
+    articleUpdateService.updateArticle(article);
+    return "redirect:/myclass/qna";
+  }
+  
+  @GetMapping("/qna/delete")
+  public String deleteQna(int id) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    articleDao.deleteArticle(id);
+    return "redirect:/myclass/qna";
+  }
+  
+  @PostMapping("/qna/commentwrite")
+  public @ResponseBody List<Comment> QnaCommentWrite(int article_id, Comment comment) {
+    comment.setUsername(Helper.userName());
+    boardService.writeComment(article_id, comment);
+    List<Comment> commentList = boardService.getCommentList(article_id);
+    return commentList;
+  }
+
+  @GetMapping("/qna/commentdelete")
+  public String QnaCommentDelete(int id) {
+    Comment comment = commentService.selectOnecomment(id);
+    int article_id = comment.getArticle_id();
+    commentService.deleteComment(id);
+    return "redirect:/myclass/qna/content?id=" + article_id;
+  }
+
+  @GetMapping("/qna/plusvote")
+  public String QnaplustVote(int id) {
+    articleVoteService.insertVote(id, Helper.userName());
+    return "redirect:/myclass/qna/content?id=" + id;
+  }
+
+  @GetMapping("/qna/chooseanswer")
+  public String QnaChooseAnswer(int comment_id, int article_id) {
+    QnaDao qnaDao = sqlSession.getMapper(QnaDao.class);
+    qnaDao.chooseAnswer(comment_id, article_id);
+    return "redirect:/myclass/qna/content?id=" + article_id;
   }
 
   @GetMapping("/create/project")
