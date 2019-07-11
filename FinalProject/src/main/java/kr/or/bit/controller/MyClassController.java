@@ -280,22 +280,20 @@ public class MyClassController {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
-    
-    System.out.println("야 야 야 Article : "+ article.toString());
-    System.out.println("야 야 야 end_date : "+ end_date);
-    System.out.println( "article board id : "+ article.getBoard_id());
-    
+
     
     Member member = memberDao.selectMemberByUsername(Helper.userName());
+    int board_id = boardDao.selectBoardByCourseId(member.getCourse_id(), 4).getId();
     article.setUsername(Helper.userName());
+    article.setBoard_id(board_id);
+    
     Homework homework = new Homework();
     homework.setEnd_date(end_date);
     articleInsertService.writeArticle(article, homework, null, request);
-    
-    
+
     Schedule schedule = new Schedule();
-    System.out.println(" time : "+article.getTime());
-        
+    article = articleDao.selectOneArticle(articleDao.selectMostRecentArticleId(article));
+    
     schedule.setCourse_id(member.getCourse_id());
     schedule.setTitle(article.getTitle());
     schedule.setStart(Date.valueOf(article.getTime().toLocalDateTime().toLocalDate()));
@@ -305,7 +303,7 @@ public class MyClassController {
     
     scheduleDao.insertSchedule(schedule);
     
-    return "myclass/homework";
+    return "redirect:/myclass/homework";
   }
 
   @GetMapping("")

@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- /* * * @date: 2019. 06. 28. * * @author: 권예지 * * @description: ArticleDaMapper로 
-  DAO의 parameter에 들어갈 값을 매핑해서 쿼리문을 보낸다 * */ -->
+	DAO의 parameter에 들어갈 값을 매핑해서 쿼리문을 보낸다 * */ -->
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.bit.dao.ArticleDao">
-  <select id="selectArticlesByPage"
-    resultType="kr.or.bit.model.Article">
-    SET @rownum:=0;
-    SELECT rownum, id, title, content, time, updated_time, view_count,
-    original_id, enable, level, username, board_id,
-    (SELECT count(*) FROM article_vote WHERE article_id=c.id) as votenum
-    FROM(SELECT b.*
-    FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
-    FROM (SELECT id, title, content, time, updated_time, view_count,
-    original_id, enable, level, username, board_id
-    FROM ARTICLE
-    WHERE board_id = #{board_id}
-    ORDER BY id DESC) a) b
+	<select id="selectArticlesByPage"
+		resultType="kr.or.bit.model.Article">
+		SET @rownum:=0;
+		SELECT rownum, id, title, content, time,
+		updated_time, view_count,
+		original_id, enable, level, username,
+		board_id,
+		(SELECT count(*) FROM article_vote WHERE article_id=c.id) as
+		votenum
+		FROM(SELECT b.*
+		FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
+		FROM (SELECT id, title, content, time, updated_time, view_count,
+		original_id, enable, level, username, board_id
+		FROM ARTICLE
+		WHERE
+		board_id = #{board_id}
+		ORDER BY id DESC) a) b
 
     WHERE rownum BETWEEN #{start} AND #{end} AND enable =1) c
   </select>
@@ -123,7 +127,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   <select id="selectOneArticle"
     resultType="kr.or.bit.model.Article">
-    SELECT a.id, a.adopted_answer, a.title, a.content,
+    SELECT a.id, a.title, a.content,
     a.time, a.view_count, a.original_id, a.level, a.username, a.layer, a.sibling,
     a.board_id, (SELECT COUNT(*) FROM ARTICLE_VOTE WHERE
     article_id=#{id}) as "vote_Count", a.updated_time, m.name
@@ -364,7 +368,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <update id="updateArticleLevel">
     UPDATE ARTICLE
     SET LEVEL = LEVEL + 1
-    WHERE LEVEL > ${level} AND ORIGINAL_ID = ${original_id}
+    WHERE LEVEL &gt; ${level} AND ORIGINAL_ID = ${original_id} and sibling = ${sibling}
   </update>
   <select id="selectRecentlyCommentedArticle" resultType="kr.or.bit.model.Article">
     SELECT DISTINCT a.id, a.title, a.content, a.time, a.view_count, a.original_id, a.level, a.updated_time, a.enable, a.username, a.board_id
@@ -374,19 +378,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE board_id = 1
     ORDER BY c.time desc
     LIMIT 3
-    WHERE LEVEL &gt; ${level} AND ORIGINAL_ID = ${original_id} and sibling &gt; ${sibling}
   </select>
 
-  <select id="selectMaxLevel" resultType="Integer">
-    select max(level)
-    from article
-    where original_id = ${original_id}
-  </select>
-  
-  <select id="selectMaxLevelBySibling" resultType="Integer">
-    select max(level)
-    from article
-    where original_id = ${original_id} and sibling = ${sibling}+1
-  </select>
+	<select id="selectMostRecentArticleId" resultType="Integer">
+		SELECT MAX(ID)
+		FROM ARTICLE
+		WHERE BOARD_ID = #{board_id} AND username=#{username}
+	</select>
+
+	<select id="selectRecentlyCommentedArticle"
+		resultType="kr.or.bit.model.Article">
+		SELECT DISTINCT a.id, a.title, a.content, a.time, a.view_count,
+		a.original_id, a.level, a.updated_time, a.enable, a.username,
+		a.board_id
+		FROM article a
+		JOIN comment c
+		ON a.id = c.article_id
+		WHERE board_id = 1
+		ORDER BY c.time desc
+		LIMIT 3
+		WHERE LEVEL &gt; ${level} AND ORIGINAL_ID = ${original_id} and sibling &gt;
+		${sibling}
+	</select>
+
+	<update id="updateArticleLevel">
+		UPDATE ARTICLE
+		SET LEVEL = LEVEL + 1
+		WHERE LEVEL &gt;
+		${level} AND ORIGINAL_ID = ${original_id} and sibling &gt;
+		${sibling}
+	</update>
+
+	<select id="selectMaxLevel" resultType="Integer">
+		select max(level)
+		from
+		article
+		where original_id = ${original_id}
+	</select>
+
+	<select id="selectMaxLevelBySibling" resultType="Integer">
+		select
+		max(level)
+		from article
+		where original_id = ${original_id} and sibling =
+		${sibling}+1
+	</select>
 </mapper>
  

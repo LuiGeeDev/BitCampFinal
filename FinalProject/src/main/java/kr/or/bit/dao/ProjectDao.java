@@ -28,4 +28,6 @@ public interface ProjectDao {
   Project selectRecentProject(int course_id);
   
   Project selectProject(int id);
+  
+  Project selectRecentProjectByUsername(int username);
 }
