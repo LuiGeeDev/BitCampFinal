@@ -124,7 +124,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="selectOneArticle"
     resultType="kr.or.bit.model.Article">
     SELECT a.id, a.adopted_answer, a.title, a.content,
-    a.time, a.view_count, a.original_id, a.level, a.username, a.layer,
+    a.time, a.view_count, a.original_id, a.level, a.username, a.layer, a.sibling,
     a.board_id, (SELECT COUNT(*) FROM ARTICLE_VOTE WHERE
     article_id=#{id}) as "vote_Count", a.updated_time, m.name
     FROM ARTICLE a JOIN MEMBER m ON a.username = m.username
@@ -162,9 +162,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </update>
   <insert id="insertReplyArticle">
     INSERT INTO article(time, updated_time, title, content, username, board_id,
-    level, original_id, layer)
+    level, original_id, layer, sibling)
     VALUES (now(), now(), #{title}, #{content}, #{username}, #{board_id},
-    #{level}, #{original_id}, #{layer})
+    #{level}, #{original_id}, #{layer}, #{sibling})
   </insert>
   <update id="deleteArticle" parameterType="Integer">
     UPDATE article
@@ -215,20 +215,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="selectArticlesForClassMain"
     resultType="kr.or.bit.model.Article">
     select a.title, time, board_name, a.username
-    from article
-    a
+    from article a
     left join board b
     on a.board_id = b.id
     left join member m
-    on
-    m.username = a.username
+    on m.username = a.username
     where b.course_id = #{course_id}
     and
     b.boardtype not in (1, 2, 4, 6)
     and level = 1
     order by a.id desc
-    LIMIT
-    5
+    LIMIT 5
   </select>
   <select id="selectTagList" resultType="kr.or.bit.model.Tag">
     SELECT id, tag
@@ -377,6 +374,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE board_id = 1
     ORDER BY c.time desc
     LIMIT 3
+    WHERE LEVEL &gt; ${level} AND ORIGINAL_ID = ${original_id} and sibling &gt; ${sibling}
+  </select>
+
+  <select id="selectMaxLevel" resultType="Integer">
+    select max(level)
+    from article
+    where original_id = ${original_id}
+  </select>
+  
+  <select id="selectMaxLevelBySibling" resultType="Integer">
+    select max(level)
+    from article
+    where original_id = ${original_id} and sibling = ${sibling}+1
   </select>
 </mapper>
  

@@ -21,7 +21,7 @@ public class TestController {
   @GetMapping("/checklist")
   public String showChecklist(Model model) {
     ChecklistDao checklistdao = sqlSession.getMapper(ChecklistDao.class);
-    List<Checklist> checklist = checklistdao.selectAllChecklist();
+    List<Checklist> checklist = checklistdao.selectAllChecklist(1);
     System.out.println(checklist);
     model.addAttribute("checklist", checklist);
     return "checklist";

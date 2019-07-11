@@ -137,3 +137,7 @@ $("#delete").click(function() {
     $("#schedule-modal").modal("hide");
   });
 });
+
+$("#new-schedule, #schedule").submit(function(event) {
+  event.preventDefault();
+});

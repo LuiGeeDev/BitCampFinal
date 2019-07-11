@@ -39,8 +39,6 @@ public interface StackDao {
   List<Article> selectStackArticleByTag(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
 
   Comment selectAdoptedAnswer(int id);
-  
-  void chooseAnswer(@Param("comment_id") int comment_id, @Param("article_id") int article_id);
-  
+
   void deleteTag(int article_id);
 }

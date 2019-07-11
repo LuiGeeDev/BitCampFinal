@@ -25,7 +25,7 @@
             th:text="${article.commentlist.size()}" class="pointOrange2"></span>&nbsp;|
           <span class="hidden" id="comment-articleID" th:text = "${article.id}"></span>
           <span class="hidden" id="comment-boardID" th:text = "${board.id}"></span>
-        
+          <input type="text" th:value="${article.sibling}" name = "sibling"/>
         </div>
       </div>
       <div class="detail-content-parent">
