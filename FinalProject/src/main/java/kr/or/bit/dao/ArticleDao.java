@@ -19,9 +19,9 @@ import kr.or.bit.utils.Pager;
  */
 public interface ArticleDao {
   void insertArticle(Article article);
-  
+
   void insertTroubleShootingArticle(@Param("article") Article article, @Param("group_id") int group_id);
-  
+
   void updateTroubleShootingArticle(Article article);
 
   void insertReplyArticle(Article article);
@@ -31,7 +31,7 @@ public interface ArticleDao {
   void deleteArticle(int id);
 
   List<Article> selectAllArticleByBoardId(@Param("board_id") int board_id);
-  
+
   List<Article> selectAllPagingArticlesByBoardId(@Param("board_id") int board_id, @Param("pager") Pager pager);
 
   Article selectOneArticle(@Param("id") int id);
@@ -65,25 +65,28 @@ public interface ArticleDao {
   List<Article> selectArticlesForClassMain(int course_id);
 
   List<Tag> selectTagList(int article_id);
-  
-  List<Article> selectAllIssuesOpened(@Param("group_id") int group_id, @Param("criteria") String criteria, @Param("word") String word);
-  
-  List<Article> selectAllIssuesClosed(@Param("group_id") int group_id, @Param("criteria") String criteria, @Param("word") String word);
+
+  List<Article> selectAllIssuesOpened(@Param("group_id") int group_id, @Param("criteria") String criteria,
+      @Param("word") String word);
+
+  List<Article> selectAllIssuesClosed(@Param("group_id") int group_id, @Param("criteria") String criteria,
+      @Param("word") String word);
 
   List<Article> selectIssuesOpenedByPage(@Param("group_id") int group_id, @Param("pager") Pager pager,
       @Param("criteria") String criteria, @Param("word") String word);
 
   List<Article> selectIssuesClosedByPage(@Param("group_id") int group_id, @Param("pager") Pager pager,
       @Param("criteria") String criteria, @Param("word") String word);
-  
+
   void updateArticleViewCount(Article article);
-  
+
   void updateArticleLevel(Article article);
   
   int selectMostRecentArticleId(Article article);
 
+  List<Article> selectRecentlyCommentedArticle();
+
   Integer selectMaxLevel(Article article);
-  
+
   Integer selectMaxLevelBySibling(Article article);
-  
 }
