@@ -144,4 +144,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM ARTICLE_TAG
 		WHERE article_id = #{article_id}
 	</delete>
+	<update id="chooseAnswer" parameterType="kr.or.bit.model.Article">
+	UPDATE article
+  	SET adopted_answer=#{comment_id}
+  	WHERE id=#{article_id}
+	</update>
 </mapper>

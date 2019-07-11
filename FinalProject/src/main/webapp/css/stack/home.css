@@ -160,3 +160,7 @@ td[colspan="2"] {
   border: 2px #EA8A02 solid;
   font-weight: bold;
 }
+
+.titleanswer{
+  color:red;
+}

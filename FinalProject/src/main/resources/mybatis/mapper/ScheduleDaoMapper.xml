@@ -17,6 +17,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     color = #{color}
     WHERE id = #{id}
   </update>
+  <update id="changeDates">
+    UPDATE schedule
+    SET start = #{start},
+    end = #{end}
+    WHERE id = #{id}
+  </update>
   <delete id="deleteSchedule">
     DELETE
     FROM schedule
@@ -37,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT id, start, end, title, color, group_id, course_id
     FROM schedule
     WHERE course_id = #{course_id}
-    AND group_id IN (0, #{group_id})
+    AND group_id = #{group_id}
   </select>
 </mapper>
   

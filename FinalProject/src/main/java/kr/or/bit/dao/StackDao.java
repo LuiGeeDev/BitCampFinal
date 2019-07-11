@@ -40,5 +40,7 @@ public interface StackDao {
 
   Comment selectAdoptedAnswer(int id);
   
+  void chooseAnswer(@Param("comment_id") int comment_id, @Param("article_id") int article_id);
+  
   void deleteTag(int article_id);
 }
