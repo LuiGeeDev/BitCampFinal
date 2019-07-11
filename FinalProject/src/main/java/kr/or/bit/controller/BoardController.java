@@ -160,16 +160,34 @@ public class BoardController {
   public String replyWrite(Model model, int board_id, int article_id) {
     model.addAttribute("article", articleService.selectOneArticle("general", article_id));
     model.addAttribute("board", boardService.getBoardInfo(board_id));
+    System.out.println(articleService.selectOneArticle("general", article_id));
     return "myclass/general/generalBoardrWriteReply";
   }
 
   @PostMapping("/replyWrite")
   public String replyWrite(Article article, MultipartFile file1, MultipartFile file2, HttpServletRequest request) {
+    System.out.println("reply start" + article);
     ArticleDao arti = sqlSession.getMapper(ArticleDao.class);
-    arti.updateArticleLevel(article);
-    article.setLevel(article.getLevel()+1);
-    article.setLayer(article.getLayer()+1);
+    article.setLevel(article.getLevel() + 1);
+    article.setLayer(article.getLayer() + 1);
+    article.setSibling(article.getSibling() + 1);
     
+    if (article.getLayer() == 1) {
+      int maxlevel = arti.selectMaxLevel(article);
+      System.out.println(maxlevel);
+      article.setLevel(maxlevel + 1);
+    } else if (article.getLayer() > 1) {
+      int maxlevelbysibling = 0;
+      if( arti.selectMaxLevelBySibling(article) == null) {
+        maxlevelbysibling = article.getLevel();
+      } else {
+        maxlevelbysibling = arti.selectMaxLevelBySibling(article);
+      }
+      System.out.println("maxlevel" +maxlevelbysibling );
+      arti.updateArticleLevel(article);
+      article.setLevel(maxlevelbysibling);
+      
+    }
     return "redirect:/myclass/board/read?article_id=" + boardService.writeReplyArticle(article, file1, file2, request)
         + "&board_id=" + article.getBoard_id();
   }

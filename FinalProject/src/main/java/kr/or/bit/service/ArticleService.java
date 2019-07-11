@@ -179,16 +179,18 @@ public class ArticleService {
     StackDao stackdao = sqlSession.getMapper(StackDao.class);
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-    
+    QnaDao qnaDao = sqlSession.getMapper(QnaDao.class);
     List<Article> articlelist = stackdao.selectAllStackArticle(pager);
+    
     for (Article article : articlelist) {
+      ArticleOption option = null;
+      option = qnaDao.selectQnaByArticleId(article.getId());
       List<Comment> commentList = commentdao.selectAllComment(article.getId());
-      List<Tag> taglist = stackdao.selectTagList(article.getId());
-      
+      List<Tag> taglist = stackdao.selectTagList(article.getId()); 
       for (Comment comment : commentList) {
         comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
       }
-      
+      article.setOption(option);
       article.setTags(taglist);
       article.setCommentlist(commentList);
       article.setTimeLocal(article.getTime().toLocalDateTime());
@@ -201,6 +203,7 @@ public class ArticleService {
     StackDao stackdao = sqlSession.getMapper(StackDao.class);
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    QnaDao qnaDao = sqlSession.getMapper(QnaDao.class);
     List<Article> articleList = null;
     
     if(criteria.equals("titleOrContent")) {
@@ -215,6 +218,8 @@ public class ArticleService {
     }
     
     for (Article article : articleList) {
+      ArticleOption option = null;
+      option = qnaDao.selectQnaByArticleId(article.getId());
       List<Comment> commentList = commentdao.selectAllComment(article.getId());
       List<Tag> taglist = stackdao.selectTagList(article.getId());
       
@@ -222,6 +227,8 @@ public class ArticleService {
         comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
       }
       
+      
+      article.setOption(option);
       article.setTags(taglist);
       article.setCommentlist(commentList);
       article.setTimeLocal(article.getTime().toLocalDateTime());

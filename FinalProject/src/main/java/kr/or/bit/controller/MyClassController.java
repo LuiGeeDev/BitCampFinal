@@ -33,6 +33,7 @@ import kr.or.bit.dao.HomeworkDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.ProjectDao;
 import kr.or.bit.dao.ScheduleDao;
+import kr.or.bit.dao.TimelineDao;
 import kr.or.bit.dao.ViewCountDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
@@ -45,6 +46,7 @@ import kr.or.bit.model.Member;
 import kr.or.bit.model.Project;
 import kr.or.bit.model.ProjectMember;
 import kr.or.bit.model.Schedule;
+import kr.or.bit.model.Timeline;
 import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleUpdateService;
@@ -92,6 +94,8 @@ public class MyClassController {
     GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
     GroupMemberDao groupMemberDao = sqlSession.getMapper(GroupMemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
+    TimelineDao timelineDao = sqlSession.getMapper(TimelineDao.class);
     
     String teacherName = Helper.userName();
     Member teacher = memberDao.selectMemberByUsername(teacherName); // 강사 저장
@@ -132,6 +136,26 @@ public class MyClassController {
       board.setBoardtype(6);
       board.setCourse_id(course_id);
       boardDao.insertBoard(board);
+    }
+    Schedule schedule = new Schedule();
+    schedule.setStart(newProject.getStart_date());
+    schedule.setEnd(newProject.getEnd_date());
+    schedule.setTitle(newProject.getProject_name());
+    schedule.setColor("tomato");
+    schedule.setGroup_id(0);
+    schedule.setCourse_id(teacher.getCourse_id());
+    scheduleDao.insertSchedule(schedule);
+
+    
+    for(int i = 0 ; i < leaderList.size() ; i++) {
+      
+      Timeline timeline = new Timeline();
+      timeline.setTitle("프로젝트 시작");
+      timeline.setContent(newProject.getProject_name());
+      timeline.setGroup_id(memberDao.selectMemberByUsername(leaderList.get(i).getUsername()).getGroup_id());
+      timeline.setUsername(Helper.userName());
+      timelineDao.insertTimeline(timeline);
+      
     }
     
     return "redirect:/myclass/setting";

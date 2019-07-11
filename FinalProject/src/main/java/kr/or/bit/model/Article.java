@@ -18,7 +18,6 @@ public class Article {
   private int enable; // default 1
   private String username;
   private int board_id;
-  private int adopted_answer;
 
   private LocalDateTime timeLocal;
   private LocalDateTime updatedTimeLocal;
@@ -33,6 +32,15 @@ public class Article {
   private int vote_count;
   private List<Files> fileslist;
   private int layer;
+  private int sibling;
+
+  public int getSibling() {
+    return sibling;
+  }
+
+  public void setSibling(int sibling) {
+    this.sibling = sibling;
+  }
 
   public int getLayer() {
     return layer;
@@ -226,22 +234,14 @@ public class Article {
     this.commentSize = commentSize;
   }
   
-  public int getAdopted_answer() {
-    return adopted_answer;
-  }
-
-  public void setAdopted_answer(int adopted_answer) {
-    this.adopted_answer = adopted_answer;
-  }
-
   @Override
   public String toString() {
     return "Article [id=" + id + ", title=" + title + ", content=" + content + ", time=" + time + ", updated_time="
         + updated_time + ", view_count=" + view_count + ", original_id=" + original_id + ", level=" + level
-        + ", enable=" + enable + ", username=" + username + ", board_id=" + board_id + ", timeLocal=" + timeLocal
-        + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", board_name=" + board_name + ", tags="
-        + tags + ", commentlist=" + commentlist + ", commentSize=" + commentSize + ", option=" + option + ", vote="
-        + vote + ", votenum=" + votenum + ", vote_count=" + vote_count + ", fileslist=" + fileslist + ", layer=" + layer
-        + "]";
+        + ", enable=" + enable + ", username=" + username + ", board_id=" + board_id + ", adopted_answer="
+        + adopted_answer + ", timeLocal=" + timeLocal + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer
+        + ", board_name=" + board_name + ", tags=" + tags + ", commentlist=" + commentlist + ", commentSize="
+        + commentSize + ", option=" + option + ", vote=" + vote + ", votenum=" + votenum + ", vote_count=" + vote_count
+        + ", fileslist=" + fileslist + ", layer=" + layer + ", sibling=" + sibling + "]";
   }
 }
