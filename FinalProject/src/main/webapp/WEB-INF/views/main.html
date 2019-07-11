@@ -203,36 +203,24 @@
           center: "",
           right: ""
         },
-
-        events: [
-          {
-            title: "프로젝트 시작",
-            start: "2019-06-21",
-            end: "2019-06-21",
-            color: "tomato",
-            textColor: "white"
+        events:
+        {
+          url: "/myclass/schedule/get/group",
+          method: "POST",            
+          extraParams: {
+            course_id: [[${user.course_id}]],
+            group_id: [[${user.group_id}]]
           },
-          {
-            title: "프로젝트 종료",
-            start: "2019-06-26",
-            end: "2019-06-26",
-            color: "coral",
-            textColor: "white"
-          },
-          {
-            title: "프로젝트 진행",
-            start: "2019-06-22",
-            end: "2019-06-25",
-            color: "purple",
-            textColor: "white"
-          },
-          {
-            title: "회식",
-            start: "2019-06-24",
-            end: "2019-06-24",
-            textColor: "white"
+          eventDataTransform: function(data) {              
+            const start = new Date(data.start);
+            const end = new Date(data.end);
+            const startStr = formatDate(start);
+            const endStr = formatDate(end);
+            data.start = startStr;
+            data.end = endStr
+            return data;
           }
-        ]
+        }
       });
 
       calendar.render();

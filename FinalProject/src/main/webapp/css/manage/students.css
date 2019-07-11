@@ -49,6 +49,7 @@ body {
   display: flex;
   flex-direction: row;
   border: 1px solid rgba(0, 0, 0, .125);
+  border-radius: 10px;
 }
 
 .list {
@@ -57,6 +58,13 @@ body {
   margin-top: 19px;
   height: 600px;
   border: 1px solid rgba(0, 0, 0, .125);
+  border-radius: 10px;
+}
+
+.searchBtn{
+  height: 33px;
+  padding: 5px 11px 10px 9px;
+  margin-left: 3px;
 }
 
 .profile {
@@ -66,6 +74,7 @@ body {
   margin: 10px;
   padding: 10px;
   margin-bottom: 19px;
+  border-radius: 10px;
 }
 
 .studentDetailContainer {
@@ -117,20 +126,9 @@ body {
   display: flex;
   width: 34%;
   text-align: center;
-  border-right: 1px solid rgba(0, 0, 0, .125);
-  flex-direction: column;
+  flex-direction: row;
 }
 
-.liststate {
-  width: 33%;
-  text-align: center;
-  border-right: 1px solid rgba(0, 0, 0, .125);
-}
-
-.listAttendance {
-  width: 33%;
-  text-align: center;
-}
 
 .profiledetail {
   display: flex;
@@ -149,6 +147,7 @@ body {
   border: 1px solid rgba(0, 0, 0, .125);
   margin: 0 10px 10px 10px;
   margin-bottom: 19px;
+  border-radius: 10px;
 }
 
 .detailName {
@@ -164,6 +163,7 @@ body {
   border: 1px solid rgba(0, 0, 0, .125);
   margin: 0 10px 10px 10px;
   margin-bottom: 19px;
+  border-radius: 10px;
 }
 
 .counselingName {
@@ -183,6 +183,7 @@ body {
   border: 1px solid rgba(0, 0, 0, .125);
   margin: 0 10px 10px 10px;
   margin-bottom: 19px;
+  border-radius: 10px;
 }
 
 .studentArticleTitle {
@@ -199,18 +200,13 @@ body {
   width: 80%;
 }
 
-.list div div:nth-child(1) {
-  border-bottom: 1px solid rgba(0, 0, 0, .125);
-}
-
-.listSubName {
-  padding: 10px;
-  background-color: #ECECEC;
-}
-
 .selector {
   word-break: break-all;
 }
 .cardShadow {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+.searchIcon{
+  
+font-size: 21px;
 }

@@ -28,13 +28,16 @@ public class ScheduleService {
     scheduleDao.insertSchedule(schedule);
   }
 
-  @PreAuthorize("hasRole('TEACHER')")
   public void updateSchedule(Schedule schedule) {
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);    
     scheduleDao.updateSchedule(schedule);
   }
 
-  @PreAuthorize("hasRole('TEACHER')")
+  public void changeDates(Schedule schedule) {
+    ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
+    scheduleDao.changeDates(schedule);
+  }
+
   public void deleteSchedule(int id) {
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
     scheduleDao.deleteSchedule(id);

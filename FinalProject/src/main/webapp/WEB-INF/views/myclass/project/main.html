@@ -5,10 +5,11 @@
 <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
 <link rel="stylesheet" th:href="@{/css/myclass/project/main.css}" />
 <link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
+<link rel="stylesheet" th:href="@{/css/myclass/calendar-modal.css}" />
 <link rel="stylesheet"
   th:href="@{/css/myclass/project/timeline.min.css}" />
 <link
-  href=/resources/dist/static/css/app.093b44a44b72c4606a739cad77ca4f84.css
+  href=/resources/dist/static/css/app.fdb6c9691f4d0733a4c1b430b105ca1e.css
   rel=stylesheet>
 </head>
 <body>
@@ -17,129 +18,111 @@
     <div th:replace="myclass/nav :: project-nav(main)"></div>
     <div class="row">
       <div class="top-row">
-      <div class="card links">
-        <h3 class="card-title">링크</h3>
-        <div class="project-link">
-          <button class="edit-link">
+        <div class="card links">
+          <h3 class="card-title">링크</h3>
+          <div class="project-link">
+            <button class="edit-link">
+              <i class="fas fa-pen-square fa-2x"></i>
+            </button>
+            <i class="fab fa-github fa-2x"></i> <a class="link-address"
+              href="#">github.com/project</a>
+          </div>
+          <div class="project-link">
+            <i class="fab fa-google-drive fa-2x"></i> <a
+              class="link-address" href="#">drive.google.com/project</a>
+          </div>
+          <div class="project-link">
+            <i class="fas fa-inbox fa-2x"></i> <a class="link-address"
+              href="#">project@gmail.com</a>
+          </div>
+        </div>
+        <div class="card checklist">
+          <h3 class="card-title">체크리스트</h3>
+          <button class="edit-checklist" id="button-checklist"
+            data-toggle="modal" data-target="#modal-checklist">
             <i class="fas fa-pen-square fa-2x"></i>
           </button>
-          <i class="fab fa-github fa-2x"></i> 
-          <a th:if="${group.link1}" class="link-address" th:href="${group.link1}" th:text="${group.link1}">github.com/project</a>
-          <span th:unless="${group.link1}" class="link-address">Github 주소</span>
+          <div class="checklist-item" th:each="check:${checklist}">
+            <input type="checkbox" name="" th:id="${check.id}" th:checked="${check.checked}==1 ? 'checked'" /> 
+            <label class="checkbox" th:for="${check.id}">
+              <i class="fas fa-check-square"></i> <span
+              class="item-description" th:text="${check.content}"></span>
+            </label>
+          </div>
+
         </div>
-        <div class="project-link">
-          <i class="fab fa-google-drive fa-2x"></i> 
-          <a th:if="${group.link1}" class="link-address" th:href="${group.link2}" th:text="${group.link2}">github.com/project</a>
-          <span th:unless="${group.link2}" class="link-address">Google 드라이브 주소</span>
-        </div>
-        <div class="project-link">
-          <i class="fas fa-inbox fa-2x"></i> 
-          <a th:if="${group.link1}" class="link-address" th:href="${group.link3}" th:text="${group.link3}">github.com/project</a>
-          <span th:unless="${group.link3}" class="link-address">이메일 주소</span>
-        </div>
-      </div>
-      <div class="card checklist">
-        <h3 class="card-title">체크리스트</h3>
-        <button class="edit-checklist" id ="button-checklist" data-toggle="modal" data-target="#modal-checklist">
-          <i class="fas fa-pen-square fa-2x"></i>
-        </button>
-        <div class="checklist-item">
-          <input type="checkbox" name="" id="1" /> <label for="1">
-            <i class="fas fa-check-square"></i> <span
-            class="item-description">퇴실하기</span>
-          </label>
-        </div>
-        <div class="checklist-item">
-          <input type="checkbox" name="" id="2" /> <label for="2">
-            <i class="fas fa-check-square"></i> <span
-            class="item-description">입실하기</span>
-          </label>
-        </div>
-        <div class="checklist-item">
-          <input type="checkbox" name="" id="3" /> <label for="3">
-            <i class="fas fa-check-square"></i> <span
-            class="item-description">퇴실하기</span>
-          </label>
-        </div>
-        <div class="checklist-item">
-          <input type="checkbox" name="" id="4" /> <label for="4">
-            <i class="fas fa-check-square"></i> <span
-            class="item-description">입실하기</span>
-          </label>
-        </div>
-      </div>
-      <div class="card recent-issues">
-        <div class="issue">
-          <div class="closed">
-            <i class="fas fa-exclamation-circle"></i>
+        <div class="card recent-issues">
+          <div class="issue">
+            <div class="closed">
+              <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <div class="issue-title">
+              <h3>오늘 저녁은 배가 고프다</h3>
+            </div>
+            <div class="issue-tags">
+              <span class="tag">DB</span> <span class="tag">Java</span>
+            </div>
+            <div class="issue-info">
+              <p class="issue-writer">윤종석</p>
+            </div>
           </div>
-          <div class="issue-title">
-            <h3>오늘 저녁은 배가 고프다</h3>
+          <div class="issue">
+            <div class="closed">
+              <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <div class="issue-title">
+              <h3>오늘 저녁은 배가 고프다</h3>
+            </div>
+            <div class="issue-tags">
+              <span class="tag">DB</span> <span class="tag">Java</span>
+            </div>
+            <div class="issue-info">
+              <p class="issue-writer">윤종석</p>
+            </div>
           </div>
-          <div class="issue-tags">
-            <span class="tag">DB</span> <span class="tag">Java</span>
+          <div class="issue">
+            <div class="closed">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="issue-title">
+              <h3>오늘 저녁은 배가 고프다</h3>
+            </div>
+            <div class="issue-tags">
+              <span class="tag">DB</span> <span class="tag">Java</span>
+            </div>
+            <div class="issue-info">
+              <p class="issue-writer">윤종석</p>
+            </div>
           </div>
-          <div class="issue-info">
-            <p class="issue-writer">윤종석</p>
+          <div class="issue">
+            <div class="closed">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="issue-title">
+              <h3>오늘 저녁은 배가 고프다</h3>
+            </div>
+            <div class="issue-tags">
+              <span class="tag">DB</span> <span class="tag">Java</span>
+            </div>
+            <div class="issue-info">
+              <p class="issue-writer">윤종석</p>
+            </div>
           </div>
-        </div>
-        <div class="issue">
-          <div class="closed">
-            <i class="fas fa-exclamation-circle"></i>
-          </div>
-          <div class="issue-title">
-            <h3>오늘 저녁은 배가 고프다</h3>
-          </div>
-          <div class="issue-tags">
-            <span class="tag">DB</span> <span class="tag">Java</span>
-          </div>
-          <div class="issue-info">
-            <p class="issue-writer">윤종석</p>
-          </div>
-        </div>
-        <div class="issue">
-          <div class="closed">
-            <i class="fas fa-check-circle"></i>
-          </div>
-          <div class="issue-title">
-            <h3>오늘 저녁은 배가 고프다</h3>
-          </div>
-          <div class="issue-tags">
-            <span class="tag">DB</span> <span class="tag">Java</span>
-          </div>
-          <div class="issue-info">
-            <p class="issue-writer">윤종석</p>
+          <div class="issue">
+            <div class="closed">
+              <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <div class="issue-title">
+              <h3>오늘 저녁은 배가 고프다</h3>
+            </div>
+            <div class="issue-tags">
+              <span class="tag">DB</span> <span class="tag">Java</span>
+            </div>
+            <div class="issue-info">
+              <p class="issue-writer">윤종석</p>
+            </div>
           </div>
         </div>
-        <div class="issue">
-          <div class="closed">
-            <i class="fas fa-check-circle"></i>
-          </div>
-          <div class="issue-title">
-            <h3>오늘 저녁은 배가 고프다</h3>
-          </div>
-          <div class="issue-tags">
-            <span class="tag">DB</span> <span class="tag">Java</span>
-          </div>
-          <div class="issue-info">
-            <p class="issue-writer">윤종석</p>
-          </div>
-        </div>
-        <div class="issue">
-          <div class="closed">
-            <i class="fas fa-exclamation-circle"></i>
-          </div>
-          <div class="issue-title">
-            <h3>오늘 저녁은 배가 고프다</h3>
-          </div>
-          <div class="issue-tags">
-            <span class="tag">DB</span> <span class="tag">Java</span>
-          </div>
-          <div class="issue-info">
-            <p class="issue-writer">윤종석</p>
-          </div>
-        </div>
-      </div>
       </div>
     </div>
     <div class="row">
@@ -201,7 +184,9 @@
     <div class="row">
       <div id="calendar" class="card"></div>
     </div>
-    <div class="modal fade" id="modal-checklist" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal-checklist" tabindex="-1"
+      role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -216,67 +201,197 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary"
-              data-dismiss="modal">Close</button>
+              data-dismiss="modal" th:onclick="location.href='/myclass/project?group_id=[[${group.id}]]'">저장</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="new-schedule-modal" class="modal fade bd-example-modal-sm"
+      tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+          <h6 class="modal-title">일정 추가</h6>
+          <form id="new-schedule" class="schedule-form" method="post">
+            <label for="new-title">이름: </label> <input type="text"
+              name="title" id="new-title" /> <label for="new-start">시작:
+            </label> <input type="date" name="start" id="new-start" readonly />
+            <label for="new-end">종료: </label> <input type="date"
+              id="new-end-display" readonly />
+            <div class="calendar-color">
+              <label>색상: </label>
+              <div class="color red active-color"></div>
+              <div class="color coral"></div>
+              <div class="color orange"></div>
+              <div class="color green"></div>
+              <div class="color blue"></div>
+              <div class="color indigo"></div>
+              <div class="color purple"></div>
+            </div>
+            <input type="hidden" value="#FF3B30" name="color" /> <input
+              type="hidden" name="end" id="new-end" /> <input
+              type="hidden" name="group_id" th:value="${group.id}" />
+          </form>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-sm"
+              data-dismiss="modal">취소</button>
+            <button id="submit-new-schedule" type="button"
+              class="btn btn-primary btn-sm">
+              생성</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="schedule-modal" class="modal fade bd-example-modal-sm"
+      tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+          <h6 class="modal-title">일정 변경</h6>
+          <form id="schedule" class="schedule-form" method="post">
+            <label for="title">이름: </label> <input type="text"
+              name="title" id="title" /> <label for="start">시작:
+            </label> <input type="date" name="start" id="start" readonly /> <label
+              for="new-end">종료: </label> <input type="date"
+              id="end-display" readonly />
+            <div class="calendar-color">
+              <label>색상: </label>
+              <div class="color red active-color"></div>
+              <div class="color coral"></div>
+              <div class="color orange"></div>
+              <div class="color green"></div>
+              <div class="color blue"></div>
+              <div class="color indigo"></div>
+              <div class="color purple"></div>
+            </div>
+            <input type="hidden" value="rgb(255, 59, 48)" name="color" />
+            <input type="hidden" name="end" id="end" /> <input
+              type="hidden" name="id" id="id" /> <input type="hidden"
+              name="group_id" th:value="${group.id}" />
+          </form>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-sm"
+              data-dismiss="modal">취소</button>
+            <button id="delete" class="btn btn-danger btn-sm">
+              삭제</button>
+            <button id="submit-schedule" type="button"
+              class="btn btn-primary btn-sm">
+              변경</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <script type=text/javascript
-    src=/resources/dist/static/js/manifest.d2e3a334bc98c3b96650.js></script>
-  <script type=text/javascript
-    src=/resources/dist/static/js/vendor.71750e988b55e9735a64.js></script>
-  <script type=text/javascript
-    src=/resources/dist/static/js/app.55e5fc1c8db3bc542a1f.js></script>
+
   <script th:src="@{/js/timeline.js}"></script>
-  <script>
+  <script th:inline="javascript">
+  	  var checklist = [[${checklist}]];
+  	  
+  	  
+      function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex
+            .exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(
+            /\+/g, " "));
+      }
       $(".timeline").timeline({
         forceVerticalMode : 700,
         mode : "horizontal",
         visibleItems : 6
       });
+      
+      function formatDate(date) {
+        const dateStr = `${date.getFullYear()}-${
+          date.getMonth() + 1 >= 10
+            ? date.getMonth() + 1
+            : "0" + (date.getMonth() + 1)
+        }-${date.getDate() >= 10 ? date.getDate() : "0" + date.getDate()}`;
+        return dateStr;
+      }
+      
       const calendarEl = document.getElementById("calendar");
       let calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins : [ "dayGrid" ],
-        defaultView : "dayGridMonth",
-        locale : "ko",
-        columnHeaderFormat : {
-          weekday : "short"
+        plugins: ["dayGrid", "interaction"],
+        defaultView: "dayGridMonth",
+        locale: "ko",
+        columnHeaderFormat: {
+          weekday: "short"
         },
-        header : {
-          left : "title",
-          center : "",
-          right : "today prev,next"
+        header: {
+          left: "title",
+          center: "",
+          right: "today prev,next"
         },
-        events : [ {
-          title : "프로젝트 시작",
-          start : "2019-06-21",
-          end : "2019-06-21",
-          color : "tomato",
-          textColor : "white"
-        }, {
-          title : "프로젝트 종료",
-          start : "2019-06-26",
-          end : "2019-06-26",
-          color : "coral",
-          textColor : "white"
-        }, {
-          title : "프로젝트 진행",
-          start : "2019-06-22",
-          end : "2019-06-25",
-          color : "purple",
-          textColor : "white"
-        }, {
-          title : "회식",
-          start : "2019-06-24",
-          end : "2019-06-24",
-          textColor : "white"
-        } ]
+        displayEventTime: false,
+        eventTextColor: "white",
+        eventSources:[
+          {
+            url: "/myclass/schedule/get/group",
+            method: "POST",            
+            extraParams: {
+              course_id: [[${user.course_id}]],
+              group_id: [[${group.id}]]
+            },
+            eventDataTransform: function(data) {              
+              const start = new Date(data.start);
+              const end = new Date(data.end);
+              const startStr = formatDate(start);
+              const endStr = formatDate(end);
+              data.start = startStr;
+              data.end = endStr
+              return data;
+            },
+            editable: true
+          },
+          {
+            url: "/myclass/schedule/get/class",
+            method: "POST",            
+            extraParams: {
+              course_id: [[${user.course_id}]],
+              group_id: [[${group.id}]]
+            },
+            eventDataTransform: function(data) {              
+              const start = new Date(data.start);
+              const end = new Date(data.end);
+              const startStr = formatDate(start);
+              const endStr = formatDate(end);
+              data.start = startStr;
+              data.end = endStr;
+              return data;
+            },
+            classNames: "disabled",
+            editable: false,
+            selectable: false
+          }
+        ]
       });
+      
       calendar.render();
-      $('#button-checklist').on('shown.bs.modal', function () {
+      $('#button-checklist').on('shown.bs.modal', function() {
         $('#myInput').trigger('focus')
       })
+      
+      $('.checkbox').click(function(event){
+        const id = $(this).prop("for");
+        console.log(id);
+        
+        $.ajax({
+          url:'/myclass/project/checkUpdate',
+          data : { 
+            id:id,
+            group_id:[[${group.id}]]
+            },
+          method: 'post',
+        })
+      })
     </script>
+  <script type=text/javascript
+    src=/resources/dist/static/js/manifest.d2e3a334bc98c3b96650.js></script>
+  <script type=text/javascript
+    src=/resources/dist/static/js/vendor.71750e988b55e9735a64.js></script>
+  <script type=text/javascript
+    src=/resources/dist/static/js/app.1559d8d20ccaa816138e.js></script>
+  <script th:src="@{/js/calendar-interaction.js}"></script>
 </body>
 </html>

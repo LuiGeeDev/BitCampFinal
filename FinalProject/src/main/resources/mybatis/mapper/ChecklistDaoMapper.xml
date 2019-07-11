@@ -26,17 +26,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="kr.or.bit.dao.ChecklistDao">
   <insert id="insertChecklist">     
-	insert into checklist(id, content, checked, time, checker_username, writer_username, group_id)
-	values(0, #{content}, 0, now(), #{checker_username}, #{writer_username}, #{group_id});
+	insert into checklist(content, checked, time, checker_username, writer_username, group_id)
+	values(#{content}, 0, now(), #{checker_username}, #{writer_username}, #{group_id});
   </insert> 
   <update id="updateChecklist" parameterType="kr.or.bit.model.Checklist">
- 	update checklist set checked = 1 where checked = 0;
- 	update checklist set checked = 0 where checked = 1; 
+ 	update checklist 
+ 	set checker_username=#{checker_username}, checked=#{checked}, time=now() 
+ 	where id=#{id}
   </update>
   <delete id="deleteChecklist">
-    delete checklist where id=#{id};
+    delete from checklist where id=#{id};
   </delete>
   <select id="selectAllChecklist" resultType="kr.or.bit.model.Checklist">
-    select id, content, checked, time, checker_username, writer_username, group_id from checklist where group_id=1;
+    select id, content, checked, time, checker_username, writer_username, group_id 
+    from checklist 
+    where group_id=#{group_id};
+  </select>
+  
+  <update id="checkUpdate">
+  	{call CHANGESTATUS('CHECKLIST',#{id})};
+  	UPDATE CHECKLIST SET checker_username = #{username} where id = #{id};
+  </update>
+  
+  <select id="selectOneChecklist" resultType="kr.or.bit.model.Checklist">
+  	SELECT ID, CONTENT, CHECKED, TIME, CHECKER_USERNAME, WRITER_USERNAME, GROUP_ID, NAME
+  	FROM CHECKLIST c JOIN MEMBER m ON c.checker_username = m.username
+  	WHERE ID = #{id}
   </select>
 </mapper>

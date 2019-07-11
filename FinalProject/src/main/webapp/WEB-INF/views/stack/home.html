@@ -45,6 +45,7 @@
           <td colspan="2">
             <p class="tdtitle">
               <span th:text="${list.title}"></span>
+              <span th:unless="${list.option.adopted_answer}==0" class="titleanswer">완료<i class="far fa-check-circle"></i></span>
             </p>
             <div class="tdcontent">
               <th:block th:utext="${list.content}" />
