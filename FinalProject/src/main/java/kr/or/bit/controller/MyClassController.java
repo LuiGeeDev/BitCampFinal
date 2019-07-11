@@ -293,7 +293,7 @@ public class MyClassController {
 
     Schedule schedule = new Schedule();
     article = articleDao.selectOneArticle(articleDao.selectMostRecentArticleId(article));
-    
+    schedule.setArticle_id(articleDao.selectMostRecentArticleId(article));
     schedule.setCourse_id(member.getCourse_id());
     schedule.setTitle(article.getTitle());
     schedule.setStart(Date.valueOf(article.getTime().toLocalDateTime().toLocalDate()));
@@ -359,7 +359,11 @@ public class MyClassController {
   public String deleteHomeworkArticle(Article article) {
     System.out.println(article);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
+    
     articleDao.deleteArticle(article.getId());
+    //scheduleDao.deleteSchedule(scheduleDao.selectSchedule());
+    
     return "redirect:/myclass/homework";
   }
   
