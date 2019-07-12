@@ -1,156 +1,144 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout-main :: layout(~{:: main}, ~{:: script}, ~{:: link})"
->
-  <head>
-    <link rel="stylesheet" th:href="@{/css/main.css}" />
-    <link
-      rel="stylesheet"
-      href="/css/common.css"
-      th:href="@{/css/sidebar-main.css}"
-    />
-  </head>
-  <body>
-    <div class="main" th:fragment="main">
-      <div class="row">
-        <div class="recent-messages">
-          <h5>최근 쪽지</h5>
-          <div class="recent-message" th:each="message : ${mainMessage}">
-            <div class="message-sender-photo">
-              <img src="https://via.placeholder.com/40" alt="" />
-            </div>
-            <div class="message-main">
-              <p class="message-content" th:text="${message.content}"></p>
-              <p class="message-info">
-                <span
-                  class="message-sender"
-                  th:text="${message.senderName}"
-                  >강기훈</span
-                >
-                <span class="message-time" th:text="${#temporals.format(message.timeLocal, 'yyyy-MM-dd HH:mm')}"
-                  >05/12 10:50pm</span
-                >
-              </p>
-            </div>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout-main :: layout(~{:: main}, ~{:: script}, ~{:: link})">
+<head>
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+<link rel="stylesheet" href="/css/common.css"
+  th:href="@{/css/sidebar-main.css}" />
+</head>
+<body>
+  <div class="main" th:fragment="main">
+    <div class="row">
+      <div class="recent-messages">
+        <h5>최근 쪽지</h5>
+        <div class="recent-message" th:each="message : ${mainMessage}">
+          <div class="message-sender-photo">
+            <img src="https://via.placeholder.com/40" alt="" />
           </div>
-          <div th:if="${mainMessage.isEmpty()}">
-            쪽지가 없습니다
+          <div class="message-main">
+            <p class="message-content" th:text="${message.content}"></p>
+            <p class="message-info">
+              <span class="message-sender"
+                th:text="${message.senderName}">강기훈</span>
+              <span class="message-time"
+                th:text="${#temporals.format(message.timeLocal, 'yyyy-MM-dd HH:mm')}">05/12
+                10:50pm</span>
+            </p>
           </div>
         </div>
-        <div class="my-project">
-          <div class="d-day">
-            <span th:if="${dDay > 0}" th:text="${'D-' + dDay}"></span>
-            <span th:if="${dDay == 0}">D-DAY</span>
-            <span th:if="${dDay < 0}">종료</span>
-          </div>
-          <h4>내 프로젝트</h4>
-          <a href="#">
-            <p class="project-new-content">
-              메인 페이지 CSS 이 부분 어떻게?
-              <span class="project-new-from">트러블 슈팅</span>
-            </p>
-          </a>
-          <a href="#">
-            <p class="project-new-content">
-              pom.xml 완성하기 <span class="project-new-from">체크리스트</span>
-            </p>
-          </a>
-          <a href="#">
-            <p class="project-new-content">
-              스프링 버전 맞추기
-              <span class="project-new-from">트러블 슈팅</span>
-            </p>
-          </a>
-          <a href="#">
-            <p class="project-new-content">
-              스프링 버전 맞추기
-              <span class="project-new-from">트러블 슈팅</span>
-            </p>
-          </a>
-        </div>
+        <div th:if="${mainMessage.isEmpty()}">쪽지가 없습니다</div>
       </div>
-
-      <!-- 캘린더 -->
-      <div class="row">
-        <div id="calendar"></div>
-      </div>
-
-      <!-- 동영상 게시판과 스택 게시판 -->
-      <div class="row">
-        <div class="videos">
-          <a th:href="@{/video/detail(id=${video.id})}" th:if="${iter.index < 3}" class="video" th:each="video,iter : ${recentVideos}">
-            <div class="thumbnail">
-              <img th:src="'https://img.youtube.com/vi/' + ${video.option.video_id} + '/default.jpg'" alt="썸네일" />
-            </div>
-            <div class="video-info">
-              <h5 class="video-title" th:text="${video.title}"></h5>
-              <div class="video-description" th:utext="${video.content}"></div>
-            </div>
-          </a>
+      <div class="my-project">
+        <div class="d-day">
+          <span th:if="${dDay > 0}" th:text="${'D-' + dDay}"></span> <span
+            th:if="${dDay == 0}">D-DAY</span> <span th:if="${dDay < 0}">종료</span>
         </div>
-        <!-- 스택 -->
-        <div class="stack">
-          <div class="stack-recent">
-            <div class="stack-header">
-              <p>방금 올라온 질문</p>
-            </div>
-            <a th:href="@{/stack/content(id=${stack.id})}" class="stack-article" th:each="stack,iter : ${recentStacks}" th:if="${iter.index < 3}">
-              <div class="stack-article-title" th:text="${stack.title}"></div>
-              <div class="stack-article-info">
-                <div class="stack-article-writer" th:text="${stack.writer.name}">권예지</div>
-                <div class="stack-article-time" th:text="${#temporals.format(stack.timeLocal, 'HH:mm')}">5분 전</div>
-              </div>
-            </a>
-          </div>
-          <div class="stack-popular">
-            <div class="stack-header">
-              <p>최근 답변된 질문</p>
-            </div>
-            <a th:href="@{/stack/content(id=${stack.id})}" class="stack-article" th:each="stack : ${recentlyCommented}">
-              <div class="stack-article-title" th:text="${stack.title}"></div>
-              <div class="stack-article-info">
-                <div class="stack-article-writer" th:text="${stack.writer.name}">권예지</div>
-                <div class="stack-article-time" th:text="${#temporals.format(stack.timeLocal, 'HH:mm')}">5분 전</div>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- 하단 carousel -->
-      <div class="row">
-        <div id="carousel" class="carousel slide" data-ride="carousel">
-          <!-- Indicators -->
-          <ul class="carousel-indicators">
-            <li data-target="#carousel" data-slide-to="0" class="active"></li>
-            <li data-target="#carousel" data-slide-to="1"></li>
-            <li data-target="#carousel" data-slide-to="2"></li>
-          </ul>
-
-          <!-- The slideshow -->
-          <div class="carousel-inner">
-            <div class="news carousel-item active"></div>
-            <div class="news carousel-item"></div>
-            <div class="news carousel-item"></div>
-          </div>
-
-          <!-- Left and right controls -->
-          <a class="carousel-control-prev" href="#carousel" data-slide="prev">
-            <span class="carousel-control-prev-icon">
-              <i class="fas fa-chevron-left fa-lg"></i>
-            </span>
-          </a>
-          <a class="carousel-control-next" href="#carousel" data-slide="next">
-            <span class="carousel-control-next-icon">
-              <i class="fas fa-chevron-right fa-lg"></i>
-            </span>
+        <h4>내 프로젝트</h4>
+        <div class=troublelist>
+          <a href="#">
+            <p class="project-new-content">
+              메인 페이지 CSS 이 부분 어떻게? <span class="project-new-from">트러블
+                슈팅</span>
+            </p>
           </a>
         </div>
       </div>
     </div>
 
-    <script>
+    <!-- 캘린더 -->
+    <div class="row">
+      <div id="calendar"></div>
+    </div>
+
+    <!-- 동영상 게시판과 스택 게시판 -->
+    <div class="row">
+      <div class="videos">
+        <a th:href="@{/video/detail(id=${video.id})}"
+          th:if="${iter.index < 3}" class="video"
+          th:each="video,iter : ${recentVideos}">
+          <div class="thumbnail">
+            <img
+              th:src="'https://img.youtube.com/vi/' + ${video.option.video_id} + '/default.jpg'"
+              alt="썸네일" />
+          </div>
+          <div class="video-info">
+            <h5 class="video-title" th:text="${video.title}"></h5>
+            <div class="video-description" th:utext="${video.content}"></div>
+          </div>
+        </a>
+      </div>
+      <!-- 스택 -->
+      <div class="stack">
+        <div class="stack-recent">
+          <div class="stack-header">
+            <p>방금 올라온 질문</p>
+          </div>
+          <a th:href="@{/stack/content(id=${stack.id})}"
+            class="stack-article" th:each="stack,iter : ${recentStacks}"
+            th:if="${iter.index < 3}">
+            <div class="stack-article-title" th:text="${stack.title}"></div>
+            <div class="stack-article-info">
+              <div class="stack-article-writer"
+                th:text="${stack.writer.name}">권예지</div>
+              <div class="stack-article-time"
+                th:text="${#temporals.format(stack.timeLocal, 'HH:mm')}">5분
+                전</div>
+            </div>
+          </a>
+        </div>
+        <div class="stack-popular">
+          <div class="stack-header">
+            <p>최근 답변된 질문</p>
+          </div>
+          <a th:href="@{/stack/content(id=${stack.id})}"
+            class="stack-article" th:each="stack : ${recentlyCommented}">
+            <div class="stack-article-title" th:text="${stack.title}"></div>
+            <div class="stack-article-info">
+              <div class="stack-article-writer"
+                th:text="${stack.writer.name}">권예지</div>
+              <div class="stack-article-time"
+                th:text="${#temporals.format(stack.timeLocal, 'HH:mm')}">5분
+                전</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 하단 carousel -->
+    <div class="row">
+      <div id="carousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ul class="carousel-indicators">
+          <li data-target="#carousel" data-slide-to="0" class="active"></li>
+          <li data-target="#carousel" data-slide-to="1"></li>
+          <li data-target="#carousel" data-slide-to="2"></li>
+        </ul>
+
+        <!-- The slideshow -->
+        <div class="carousel-inner">
+          <div class="news carousel-item active"></div>
+          <div class="news carousel-item"></div>
+          <div class="news carousel-item"></div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#carousel"
+          data-slide="prev"> <span
+          class="carousel-control-prev-icon"> <i
+            class="fas fa-chevron-left fa-lg"></i>
+        </span>
+        </a> <a class="carousel-control-next" href="#carousel"
+          data-slide="next"> <span
+          class="carousel-control-next-icon"> <i
+            class="fas fa-chevron-right fa-lg"></i>
+        </span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
       $.ajax({
         method: "post",
         url: "/ajax/news",
@@ -239,5 +227,5 @@
         return dateStr;
       }
     </script>
-  </body>
+</body>
 </html>
