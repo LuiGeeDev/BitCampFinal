@@ -108,7 +108,20 @@ public class HomeController {
   public @ResponseBody List<Article> getArticles(int id) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-    List<Article> articles = articleDao.selectFirstArticlesByBoardId(id);
+    List<Article> articles = articleDao.selectFirstArticlesToCopyByBoardId(id);
+    for (Article article : articles) {
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+      article.setTimeLocal(article.getTime().toLocalDateTime());
+    }
+    
+    return articles;
+  }
+  
+  @PostMapping("/test/more")
+  public @ResponseBody List<Article> getMoreArticles(int board_id, int id) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    List<Article> articles = articleDao.selectNextArticlesToCopyByBoardId(board_id, id);
     for (Article article : articles) {
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
       article.setTimeLocal(article.getTime().toLocalDateTime());
