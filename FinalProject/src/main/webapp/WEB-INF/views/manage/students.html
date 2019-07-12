@@ -11,51 +11,95 @@
     <div class="Wrapper">
       <div class="title">
         <h3>
-          <b>학생관리페이지</b>
+          <b>회원관리페이지</b>
         </h3>
       </div>
       <hr>
       <div class="contentWrapper">
-      <div class="searchContainer">
-        <span> <select size="1" style="height: 27px; width: 100px;">
-            <option value="1" selected>통합검색</option>
-            <option value="2">이름</option>
-            <option value="3">직급</option>
-            <option value="4">나이</option>
-        </select> <input type="text" name="studentsearch"
-          placeholder="검색내용을 적어주세요"><button class="btn btn-outline-primary searchBtn">검색</button>
+      <div class="manageContainer">
+        <div class="memberContainer">
+        <form method="post" class="member-SearchContainer">
+          <div class="search cardShadow">
+          <div class="search-container">
+              <div class="searchTitle">
+                <div>직책</div>
+              </div>
+              <div class="searchContent">
+                <div>
+                  <select size="1" class="selectSize" name="role">
+                    <option value="STUDENT" selected>학생</option>
+                    <option value="TEACHER">강사</option>
+                    <option value="GRADUATE">졸업자</option>
+                  </select>
+                </div>
+              </div>
+             </div>
+             <div class="search-container">
+              <div class="searchTitle">
+                <div>비활성계정</div>
+              </div>
+              <div class="searchContent">
+                <div>
+                  <select size="1" class="selectSize" name="enabled">
+                    <option value="999" selected>전체</option>
+                    <option value="1">활성</option>
+                    <option value="0">비활성</option>
+                  </select>
+                </div>
+              </div>
+             </div>
+             <div class="search-container">
+              <div class="searchTitle">
+                <div>클래스</div>
+              </div>
+              <div class="searchContent">
+                <div>
+                  <select class="selectSize" name="course_id">
+                  <option value="0" selected>전체</option>
+                  <div th:each="courseList : ${courseList}">
+                  <option th:value="${courseList.id}" th:text="${courseList.course_name}"></option>
+                  </div>
+                  </select>
+                </div>
+              </div>
+             </div>
+            </div>
+            
+            <div class="searchContainer">
+        <span> <select class="search-select-box"name="stringColumn">
+            <option value="name" selected>이름</option>
+            <option value="username">아이디</option>
+        </select> <input class="search-input-text" type="text" name="stringValue"
+          placeholder="검색내용을 적어주세요"><input type="submit" class="btn btn-outline-primary searchBtn" value="검색">
         </span>
       </div>
-      <div class="manageContainer">
-        <div class="studentSearchContainer">
-          <div class="search cardShadow">
-            <div class="searchTitle">
-            <div>학생구분</div>
+        </form>
+        <div class="member-list-board">
+              <div class="member-list-username">ID</div>
+              <div class="member-list-name">이름</div>
+              <div class="member-list-role">직책</div>
+              <div class="member-list-enabled">비활성</div>
             </div>
-            <div class="searchContent">
-            <div>
-            <select size="1" class="selectSize">
-            <option value="1" selected>수강중</option>
-            <option value="2">졸업</option>
-            <option value="3">중퇴</option></select>
-            </div>
-            </div>
-          </div>
           <div class="list cardShadow">
-            <div class="listName">
-            <div class="listSubName selector">
-                      
+            <div th:each="memberList : ${memberList}" class="member-list-container">
+            <div class="member-list">
+              <div class="member-list-username" th:text=${memberList.username}></div>
+              <div class="member-list-name" th:text=${memberList.name}></div>
+              <div class="member-list-role" th:text=${memberList.role}></div>
+              <div class="member-list-enabled" th:if="${memberList.enabled == 1}"><i class="fas fa-circle"></i></div>
+              <!-- <div class="member-list-enabled" th:if="${memberList.enabled == 0}"><i class="fas fa-circle"></i></div> -->
             </div>
             </div>
           </div>
+          <div class="select-list-count" th:text="'검색결과 : '+${memberList.size()}+'명'"></div>
         </div>
 
         <div class="studentDetailContainer">
           <div class="profile cardShadow">
-          <div class="profileimg">
-          <img th:src="@{/css/stack/profile.jpg}" id="profileimg" >
+          <div class="profile-img">
+          <!-- <img th:src="@{/css/stack/profile.jpg}" id="profileimg" > -->
           </div>
-          <div class="profiledetail">
+          <div class="profile-detail">
            	<div class="profiledetailTitle">
             <div>이름</div>
             <div>생년월일</div>
@@ -90,14 +134,7 @@
           <span>진로를 바꾸고 싶어용</span>
           </div>
           </div>
-          <div class="studentArticle cardShadow">
-          <div class="studentArticleTitle">
-          <span>등록한 게시글</span>
-          </div>
-          <div class="studentArticleContent">
-          <span>이 밤 그 날의 반딧불을 당신의 창 가까이 보낼게요</span>
-          </div>
-          </div>
+         
           </div>
         </div>
       </div>
