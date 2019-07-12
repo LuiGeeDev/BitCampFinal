@@ -28,8 +28,12 @@
         </span></td>
         <td colspan="1" id="contenteditor"><a
           th:href="@{/stack/edit(id=${stackcontent.id})}"
-          class="updateBtn">[수정]</a> <span class="deleteBtn"
-          id="deleteCheck">[삭제]</span></td>
+          th:if="${user.username == stackcontent.username}"
+          class="updateBtn">[수정]</a> 
+          <span th:if="${user.username == stackcontent.username or user.role == 'MANAGER'}"
+                class="deleteBtn" id="deleteCheck">[삭제]
+          </span>
+          </td>
       </tr>
       <tr>
         <td colspan="4" class="tdtitle"><span
@@ -92,7 +96,6 @@
         <td class="td8"><i class="fas fa-user-circle fa-lg fa-2x"></i></td>
         <td class="td10"><span class="answer-name"> <b>[[${adoptedanswer.writer.name}]]
               [채택된 답변] </b><i class="fas fa-crown answer-icon"></i>
-
         </span> <br> <span class="commentCalender" id="answertime">[[${adoptedanswer.time}]]</span>
         </td>
         <td class="td7"></td>
@@ -111,7 +114,7 @@
         <tr>
           <td class="td8"><i class="fas fa-user-circle fa-lg fa-2x"></i></td>
           <td>[[${list.writer.name}]] 
-            <a th:if="${list.username}==${user.username} and ${list.id}!=${stackcontent.option.adopted_answer}"
+            <a th:if="${list.id != stackcontent.option.adopted_answer and list.username == user.username }"
             th:href="@{/stack/commentdelete(id=${list.id})}">[삭제]</a><br>
             <span class="commentCalender"
             th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
@@ -204,21 +207,44 @@
               
               const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ hours +`:` + minutes;
 			  let equalName = null;           
-              if(item.username == [[${user.username}]]) {
+              if(item.username == [[${user.username}]] || [[${user.role}]] == 'MANAGER') {
                 equalName = "[삭제]";
               } else {
                 equalName = "";
               }
               
+              let createText = null;
+              
+              if(item.username == [[${user.username}]]) {
+                createText = "채택";
+              } else {
+                createText = "";
+              }
+              
+                /* <tr>
+                <td colspan="2" class="td6">
+                <span th:if="${stackcontent.username}==${user.username} and ${stackcontent.option.adopted_answer==0}"
+                class="checkButton"><a th:href="@{/stack/chooseanswer(article_id=${stackcontent.id},comment_id=${list.id})}"
+                style="color:black;">
+                채택 <i class="far fa-check-circle"></i></a></span>
+                </td>
+                <td></td>
+              </tr> */
               let html = "<table class='iteration'><tbody>"+
               			 "<tr><td class='td8'><i class='fas fa-user-circle fa-lg fa-2x'></i></td>" +
                          "<td>" + username + "<a href='/stack/commentdelete?id=" + commentId + "'" + ">" + equalName +"</a>" + 
                          "<br>" +
                          "<span class='commentCalender'>" + timedate + "</span></td>" +
                          "<td class='td7'></td></tr>" + 
-                         "<tr><td colspan='2' class='td11'>" + content + "</td><td></td></tr><tr><td colspan='2' class='td6'></td><td></td></tr> </table>";
+                         "<tr><td colspan='2' class='td11'>" + content + "</td><td></td></tr>" +
+                         "<tr><td colspan='2' class='td6'>" +
+                         "<span class='checkButton'><a href='/stack/chooseanswer?article_id=" + articleId + "&comment_id=" + commentId + "' style='color:black;'>" +
+                         "</span>" + createText +"&nbsp;<i class='far fa-check-circle'></i></a>" +
+                         "</td><td></td></tr></tbody></table>";
               $(".stack-wrapper").append(html);
             });
+            
+         
             
             const count = $(".commentPlus");
             count.text(Number(count.text()) +1);
