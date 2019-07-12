@@ -1,4 +1,4 @@
-package kr.or.bit.controller;
+/*package kr.or.bit.controller;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -59,3 +59,4 @@ public class MemberController {
     return "redirect:/";
   }
 }
+*/
