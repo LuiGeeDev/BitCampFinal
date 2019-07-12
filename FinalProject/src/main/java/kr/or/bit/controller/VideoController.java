@@ -59,6 +59,7 @@ public class VideoController {
     Article article = articleService.selectOneArticle("video", id);
     
     articleUpdateService.viewCount(article);
+    System.out.println("비디오의 아티클 : " + article);
     
     model.addAttribute("voteStatus", articleVoteService.selectVote(id, Helper.userName()));
     model.addAttribute("article", article);
@@ -134,5 +135,19 @@ public class VideoController {
     int article_id = comment.getArticle_id();
     commentService.deleteComment(id);
     return "redirect:/video/detail?id=" + article_id;
+  }
+  
+  @GetMapping("/realDelete")
+  public String readDeleteVideo(int id) {
+    VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
+    videoDao.readDeleteVideo(id);
+    return "redirect:/video";
+  }
+  
+  @GetMapping("/activation")
+  public String videoActivation(int id) {
+    VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
+    videoDao.deleteVideo(id);
+    return "redirect:/video";
   }
 }

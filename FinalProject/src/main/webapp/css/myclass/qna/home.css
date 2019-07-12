@@ -19,6 +19,7 @@ table {
 
 th, td {
   border: 1px solid white;
+  padding: 10px;
 }
 
 .tr1 {
@@ -91,6 +92,7 @@ th, td {
   color: white;
   padding: 3px;
   font-size: 70%;
+  cursor: pointer;
 }
 
 #c1 {
@@ -127,4 +129,21 @@ th, td {
 
 .btnpa {
   padding: 20px;
+}
+
+.btn.btn-primary.paging {
+  background-color: white !important;
+  color: #EA8A02 !important;
+  border: 2px #EA8A02 solid !important;
+  font-weight: bold;
+}
+
+.align{
+  margin-left:45%;
+  margin-top:18px;
+  margin-bottom: 20px;
+}
+
+.writeBtnAlign{
+  text-align: right;
 }
