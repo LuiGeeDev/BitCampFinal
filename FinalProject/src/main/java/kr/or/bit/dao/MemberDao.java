@@ -22,6 +22,10 @@ public interface MemberDao {
   void updateMember(Member member);
 
   void deleteMember(String username);
+  
+  void updateMemberWithoutFile(Member member);
+  
+  void updateMemberOnlyFile(Member member);
 
   List<Member> selectAllMembers();
 
