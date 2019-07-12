@@ -23,4 +23,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <update id="deleteVideo" parameterType="Integer">
   {call CHANGESTATUS("ARTICLE",#{id})}
   </update>
+  
+  <delete id="readDeleteVideo" parameterType="Integer">
+  	delete 
+  	from article 
+  	where id = #{id};
+  </delete>
 </mapper>

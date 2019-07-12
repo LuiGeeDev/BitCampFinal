@@ -29,6 +29,7 @@ public class MessageController {
       message.setTimeDate(new Date(message.getTime().getTime()));
     }
     
+    
     model.addAttribute("selectall", selectall);
     model.addAttribute("countmessage", countmessage);
     return "message/message";
