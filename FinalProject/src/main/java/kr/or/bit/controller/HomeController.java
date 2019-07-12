@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.BoardDao;
@@ -87,13 +89,10 @@ public class HomeController {
 
   @GetMapping("/test")
   public String test(Model model) {
-    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     
     String username = Helper.userName();
-    Member user = memberDao.selectMemberByUsername(username);
     
     List<Course> courses = courseDao.selectAllTeacherCourse(username);
     for (Course course : courses) {
@@ -103,6 +102,30 @@ public class HomeController {
     
     model.addAttribute("courses", courses);
     return "test";
+  }
+  
+  @PostMapping("/test/articles")
+  public @ResponseBody List<Article> getArticles(int id) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    List<Article> articles = articleDao.selectFirstArticlesByBoardId(id);
+    for (Article article : articles) {
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+      article.setTimeLocal(article.getTime().toLocalDateTime());
+    }
+    
+    return articles;
+  }
+  
+  @PostMapping("/test/article")
+  public @ResponseBody Article getArticle(int id) {
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    Article article = articleDao.selectOneArticle(id);
+    article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+    article.setTimeLocal(article.getTime().toLocalDateTime());
+    
+    return article;
   }
 }
 

@@ -84,6 +84,37 @@ public class MyClassController {
   @Autowired
   private ArticleVoteService articleVoteService;
 
+  
+  
+  @GetMapping("")
+  public String mainPage(Model model) {
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
+    
+    Course course = courseDao.selectCourse(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id());
+    course.setEndDate(course.getEnd_date().toLocalDate());
+    course.setStartDate(course.getStart_date().toLocalDate());
+    List<Article> recentHomework = homeworkDao.selectRecentHomeworkArticle(course.getId());
+    Period diff = Period.between(course.getStartDate(), course.getEndDate());
+    Period diff2 = Period.between(course.getStartDate(), LocalDate.now());
+    int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
+    List<Article> recentArticles = articleDao.selectArticlesForClassMain(course.getId());
+    for (Article article : recentArticles) {
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+      article.setTimeLocal(article.getTime().toLocalDateTime());
+    }
+      
+    
+    model.addAttribute("recentHomework",recentHomework);
+    model.addAttribute("course", course);
+    model.addAttribute("recentArticles", recentArticles);
+    model.addAttribute("completion", completion);
+    return "myclass/home";
+  }
+  
+  
   @GetMapping("/qna")
   public String qnaPage(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model)
       throws Exception {
@@ -152,6 +183,7 @@ public class MyClassController {
       comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
       model.addAttribute("adoptedanswer", comment);
     }
+    System.out.println("채택답변"+qna.getAdopted_answer());
     model.addAttribute("qnacontent", article);
     articleUpdateService.viewCount(article);
     return "myclass/qna/content";
@@ -444,29 +476,6 @@ public class MyClassController {
     return "redirect:/myclass/homework";
   }
 
-  @GetMapping("")
-  public String mainPage(Model model) {
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-    CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
-    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
-    
-    Course course = courseDao.selectCourse(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id());
-    course.setEndDate(course.getEnd_date().toLocalDate());
-    course.setStartDate(course.getStart_date().toLocalDate());
-    Period diff = Period.between(course.getStartDate(), course.getEndDate());
-    Period diff2 = Period.between(course.getStartDate(), LocalDate.now());
-    int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
-    List<Article> recentArticles = articleDao.selectArticlesForClassMain(course.getId());
-    for (Article article : recentArticles) {
-      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
-      article.setTimeLocal(article.getTime().toLocalDateTime());
-    }
-
-    model.addAttribute("course", course);
-    model.addAttribute("recentArticles", recentArticles);
-    model.addAttribute("completion", completion);
-    return "myclass/home";
-  }
 
   @GetMapping("/homework/edit")
   public String editHomeworkArticle(Model model, int id, HttpServletRequest request) {

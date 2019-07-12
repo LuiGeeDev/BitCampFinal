@@ -37,7 +37,7 @@
 
 .user-info {
   margin: auto;
-  justify-content: center;
+  justify-content: centhttp://localhost:8090/myclasser;
   align-items: center;
   padding: 20px 0 20px 0;
   border-bottom: 1px solid white;
@@ -86,4 +86,8 @@
   width:50px;
   height:50px;
   border-radius:50%;
+}
+
+.side-nav a:active i {
+  transform: scale(0.95);
 }
