@@ -48,9 +48,11 @@
       th:href="@{/css/main.min.css}"
     />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" />
+    <link rel="stylesheet" th:href="@{/css/simple-scrollbar.css}">
 
     <th:block th:replace="${links}"></th:block>
 
+    <script th:src="@{/js/simple-scrollbar.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"

@@ -46,7 +46,8 @@
          </div>
     <div class="group-parent">
       <div class="btn-group">
-            <a th:if="${article.username == user.username}"
+      <!--th:if="${article.username == user.username}"  -->
+            <a th:if="${article.username == user.username or user.role == 'MANAGER' or user.role == 'TEACHER'}"
               th:href="@{/myclass/board/edit(article_id=${article.id}, board_id=${board.id})}"
               id="updatebtn" class="btn btn-primary btn-align">수정</a> 
               <a th:if="${article.username == user.username}" id="deletebtn" class="btn btn-primary btn-align">삭제</a> <a

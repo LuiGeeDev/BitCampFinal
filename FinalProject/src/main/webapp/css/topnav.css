@@ -14,9 +14,6 @@
 
 .top-nav a {
   margin: 0 8px;
-}
-
-.top-nav svg {
   color: #2D3E50;
 }
 
@@ -67,16 +64,17 @@ svg:active {
   border-right: 1px solid #d6d6d6;
 }
 
-button {
+.top-nav button {
   border: none;
   background: none;
 }
 
-button:active, button:focus {
+.top-nav button:active, button:focus {
   outline: none;
 }
 
-button:active {
+.top-nav button:active,
+.top-nav i:active {
   transform: scale(0.92);
 }
 
@@ -122,4 +120,8 @@ button:active {
 .toast-content {
   margin: 0;
   color: black;
+}
+
+.message-color, .mypage-color {
+  color:black;
 }

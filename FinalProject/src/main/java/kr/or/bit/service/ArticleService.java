@@ -35,12 +35,12 @@ public class ArticleService {
   public void updateArticle() {
   }
 
-  public List<Article> selectArticlesOnNextPage(int article_id) {
+  public List<Article> selectArticlesOnNextPage(int board_id, int article_id) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
-    List<Article> articleList = articleDao.selectArticlesOnNextPage(article_id);
+    List<Article> articleList = articleDao.selectArticlesOnNextPage(board_id, article_id);
     for (Article article : articleList) {
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
       article.setCommentlist(commentdao.selectAllComment(article.getId()));
@@ -59,7 +59,7 @@ public class ArticleService {
     if(optionName.equals("general")) {
       list = articledao.selectAllPagingArticlesByBoardId(boardId, pager);
     }else {
-      list = articledao.selectAllArticleByBoardId(boardId); 
+      list = articledao.selectFirstArticlesByBoardId(boardId); 
     }
     for (Article article : list) {
       ArticleOption option = null;

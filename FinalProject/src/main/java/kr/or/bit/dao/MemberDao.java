@@ -22,6 +22,10 @@ public interface MemberDao {
   void updateMember(Member member);
 
   void deleteMember(String username);
+  
+  void updateMemberWithoutFile(Member member);
+  
+  void updateMemberOnlyFile(Member member);
 
   List<Member> selectAllMembers();
 
@@ -32,4 +36,8 @@ public interface MemberDao {
   void insertNewCourseMembers(@Param("people") int people, @Param("teacher_id") int teacher_id, @Param("course_id") int course_id, @Param("start_date") Date start_date, @Param("password") String password);
   
   List<Member> selectAllMembersByMycourse(int course_id);
+  
+  List<Member> selectStudent();
+  
+  void updateMemberGraduate(Member member);
 }
