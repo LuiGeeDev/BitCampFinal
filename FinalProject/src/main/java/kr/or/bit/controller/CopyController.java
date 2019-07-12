@@ -86,8 +86,7 @@ public class CopyController {
       articleDao.insertArticle(oldArticle);
       
       General general = generalDao.selectGeneralByArticleId(id);
-      int newId = articleDao.getMostRecentArticleId();
-      general.setArticle_id(newId);
+      general.setArticle_id(oldArticle.getId());
       generalDao.insertGeneral(general);
     }
     

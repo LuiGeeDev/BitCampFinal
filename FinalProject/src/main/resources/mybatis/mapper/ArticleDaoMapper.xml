@@ -197,7 +197,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     a.username = m.username
     WHERE ID=#{id};
   </select>
-  <insert id="insertArticle">
+  <insert id="insertArticle" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO article(time, updated_time, title,
     content, username, board_id, original_id)
     VALUES (now(), now(),
