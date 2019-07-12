@@ -17,9 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.ArticleDao;
+import kr.or.bit.dao.BoardDao;
+import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.GeneralDao;
 import kr.or.bit.model.Article;
+import kr.or.bit.model.Board;
 import kr.or.bit.model.Comment;
+import kr.or.bit.model.Course;
 import kr.or.bit.model.General;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleUpdateService;
@@ -57,6 +61,8 @@ public class BoardController {
   public String listPage(int board_id, @RequestParam(defaultValue = "1") int page,
       @RequestParam(required = false) String boardSearch, @RequestParam(required = false) String criteria,
       Model model) {
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
     List<Article> articles = null;
     Pager pager = null;
@@ -74,10 +80,18 @@ public class BoardController {
       pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardId(board_id));
       articles = articleService.selectAllArticle("general", board_id, pager);
     }
+    
+    List<Course> courses = courseDao.selectAllTeacherCourse(Helper.userName());
+    for (Course course : courses) {
+      List<Board> boards = boardDao.selectBoardInCourse(course.getId(), 3);
+      course.setBoards(boards);
+    }
+    
     model.addAttribute("articles", articles);
     model.addAttribute("pager", pager);
     model.addAttribute("page", page);
     model.addAttribute("board", boardService.getBoardInfo(board_id));
+    model.addAttribute("courses", courses);
     return "myclass/general/generalBoard";
   }
 
