@@ -1,1 +1,174 @@
 @charset "UTF-8";
+
+body {
+  font-family: 'Nanum Gothic';
+}
+
+.flexContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+}
+
+.title {
+  font-size: 170%;
+  margin: 20px;
+}
+
+#h3align {
+  margin-bottom: 11px;
+}
+
+.profileWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-left: 12%;
+  margin-right: 12%;
+}
+
+.profileTopWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.profileimg {
+  
+}
+
+#profileimg {
+  width: 200px;
+  border-radius: 50%;
+}
+
+.profileContent {
+  margin-top: 12px;
+  margin-left: 12px;
+}
+
+.profileProgressBar {
+  margin-top: 17px;
+  margin-bottom: 16px;
+}
+
+.processBar {
+  display: flex;
+  margin: 0 0 10px auto;
+  flex-direction: column;
+  border: 1px solid rgba(0, 0, 0, .125);
+  border-radius: 8px;
+  width: 500px;
+  height: 206.8px;
+  padding: 20px;
+  padding-top: 30px;
+}
+
+.progres {
+  display: flex;
+  flex-direction: row;
+  width: 96%;
+  height: 51px;
+  position: relative;
+}
+
+.progres>span {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 5px;
+  border: 1px solid #D8D8D8;
+  border-radius: 5px;
+  background-color: #D8D8D8;
+}
+
+#progress {
+  width: 70%;
+  height: 44px;
+  border-radius: 4px;
+}
+
+.bg-warning {
+  background-color: #2ECC71 !important;
+}
+
+.profileName {
+  font-size: 27px;
+  font-weight: 600;
+}
+
+.profileRole {
+  margin-top: 2px;
+}
+
+.profileDetail {
+  margin-top: 3px;
+  display: flex;
+  flex-direction: row;
+}
+
+.progresPercent {
+  top: 26%;
+  position: absolute;
+  left: 40%;
+}
+
+.pdArticleNum {
+  color: #CA4E37;
+  font-weight: bold;
+}
+
+.pdCommentNum {
+  color: #CA4E37;
+  font-weight: bold;
+}
+
+.tabsWrapper {
+  margin-left: 12%;
+  margin-right: 15%;
+}
+
+.profileProgressBarTitle {
+  margin-bottom: 5px;
+}
+
+.profileCourse {
+  margin-top: 8px;
+}
+
+.boardNav {
+  display: flex;
+  flex-direction: row;
+}
+
+.boardContent {
+  display: flex;
+  flex-direction: row;
+}
+
+.nav-style {
+  text-align: center;
+  font-weight: 600;
+}
+
+.cont-style {
+  text-align: center;
+}
+
+.boardTitle {
+  width: 46%;
+}
+
+.boardDate {
+  width: 20%;
+}
+
+.boardView {
+  width: 10%;
+}
+
+.boardVote {
+  width: 10%;
+}
+
+.boardId {
+  width: 14%;
+}

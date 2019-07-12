@@ -1,4 +1,4 @@
-/*package kr.or.bit.controller;
+package kr.or.bit.controller;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.FilesDao;
@@ -23,17 +24,27 @@ import kr.or.bit.service.MemberService;
 import kr.or.bit.utils.Helper;
 
 @Controller
-public class MemberController {
+@RequestMapping("/mypage")
+public class MypageController {
+  
+  @Autowired
+  private SqlSession sqlSession;
   @Autowired
   private MemberService service;
   @Autowired
   private BCryptPasswordEncoder bCryptPasswordEncoder;
   @Autowired
   private FileUploadService fileUploadService;
-  @Autowired
-  private SqlSession sqlSession;
 
-  @GetMapping("/mypage")
+
+  @GetMapping("/home")
+  public String mainPage(Model model) {
+    
+    return "mypage/mypage";
+  }
+  
+  
+  @GetMapping("")
   public String updateMember(Model model, Principal principal) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     String username = Helper.userName();
@@ -43,7 +54,7 @@ public class MemberController {
     return "mypage/mypageForm";
   }
 
-  @PostMapping("/mypage")
+  @PostMapping("")
   public String updateMember(Member member, Principal principal, MultipartFile files1, HttpServletRequest request)
       throws IllegalStateException, IOException {
     if (files1 != null) {
@@ -58,5 +69,5 @@ public class MemberController {
     }
     return "redirect:/";
   }
+  
 }
-*/

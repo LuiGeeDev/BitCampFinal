@@ -11,51 +11,98 @@
     <div class="Wrapper">
       <div class="title">
         <h3>
-          <b>학생관리페이지</b>
+          <b>회원관리페이지</b>
         </h3>
       </div>
       <hr>
       <div class="contentWrapper">
-      <div class="searchContainer">
-        <span> <select size="1" style="height: 27px; width: 100px;">
-            <option value="1" selected>통합검색</option>
-            <option value="2">이름</option>
-            <option value="3">직급</option>
-            <option value="4">나이</option>
-        </select> <input type="text" name="studentsearch"
-          placeholder="검색내용을 적어주세요"><button class="btn btn-outline-primary searchBtn">검색</button>
+      <div class="manageContainer">
+        <div class="memberContainer">
+        <form method="post" class="member-SearchContainer">
+          <div class="search cardShadow">
+          <div class="search-container">
+              <div class="searchTitle">
+                <div>직책</div>
+              </div>
+              <div class="searchContent">
+                <div>
+                  <select size="1" class="selectSize" name="role">
+                    <option value="STUDENT" selected>학생</option>
+                    <option value="TEACHER">강사</option>
+                    <option value="GRADUATE">졸업자</option>
+                  </select>
+                </div>
+              </div>
+             </div>
+             <div class="search-container">
+              <div class="searchTitle">
+                <div>비활성계정</div>
+              </div>
+              <div class="searchContent">
+                <div>
+                  <select size="1" class="selectSize" name="enabled">
+                    <option value="999" selected>전체</option>
+                    <option value="1">활성</option>
+                    <option value="0">비활성</option>
+                  </select>
+                </div>
+              </div>
+             </div>
+             <div class="search-container">
+              <div class="searchTitle">
+                <div>클래스</div>
+              </div>
+              <div class="searchContent">
+                <div>
+                  <select class="selectSize" name="course_id">
+                  <option value="0" selected>전체</option>
+                  <div th:each="courseList : ${courseList}">
+                  <option th:value="${courseList.id}" th:text="${courseList.course_name}"></option>
+                  </div>
+                  </select>
+                </div>
+              </div>
+             </div>
+            </div>
+            
+            <div class="searchContainer">
+        <span> <select class="search-select-box"name="stringColumn">
+            <option value="name" selected>이름</option>
+            <option value="username">아이디</option>
+        </select> <input class="search-input-text" type="text" name="stringValue"
+          placeholder="검색내용을 적어주세요"><input type="submit" class="btn btn-outline-primary searchBtn" value="검색">
         </span>
       </div>
-      <div class="manageContainer">
-        <div class="studentSearchContainer">
-          <div class="search cardShadow">
-            <div class="searchTitle">
-            <div>학생구분</div>
+        </form>
+        <div class="member-list-board">
+              <div class="member-list-username">ID</div>
+              <div class="member-list-name">이름</div>
+              <div class="member-list-role">직책</div>
+              <div class="member-list-enabled">비활성</div>
             </div>
-            <div class="searchContent">
-            <div>
-            <select size="1" class="selectSize">
-            <option value="1" selected>수강중</option>
-            <option value="2">졸업</option>
-            <option value="3">중퇴</option></select>
-            </div>
-            </div>
-          </div>
           <div class="list cardShadow">
-            <div class="listName">
-            <div class="listSubName selector">
-                      
+            <div th:each="memberList : ${memberList}" class="member-list-container">
+            <div class="member-list">
+              <div class="member-list-username" th:text=${memberList.username}></div>
+              <div class="member-list-name" th:text=${memberList.name}></div>
+              <div class="member-list-role" th:text=${memberList.role}></div>
+              <div class="member-list-enabled" th:switch="${memberList.enabled}">
+                <i class="fas fa-circle on" th:case="0"></i>
+                <i class="fas fa-circle off" th:case="1"></i>
+              </div>
+              <!-- <div class="member-list-enabled" th:if="${memberList.enabled == 0}"><i class="fas fa-circle"></i></div> -->
             </div>
             </div>
           </div>
+          <div class="select-list-count" th:text="'검색결과 : '+${memberList.size()}+'명'"></div>
         </div>
 
         <div class="studentDetailContainer">
           <div class="profile cardShadow">
-          <div class="profileimg">
-          <img th:src="@{/css/stack/profile.jpg}" id="profileimg" >
+          <div class="profile-img">
+          <!-- <img th:src="@{/css/stack/profile.jpg}" id="profileimg" > -->
           </div>
-          <div class="profiledetail">
+          <div class="profile-detail">
            	<div class="profiledetailTitle">
             <div>이름</div>
             <div>생년월일</div>
@@ -90,21 +137,184 @@
           <span>진로를 바꾸고 싶어용</span>
           </div>
           </div>
-          <div class="studentArticle cardShadow">
-          <div class="studentArticleTitle">
-          <span>등록한 게시글</span>
-          </div>
-          <div class="studentArticleContent">
-          <span>이 밤 그 날의 반딧불을 당신의 창 가까이 보낼게요</span>
-          </div>
-          </div>
+         
           </div>
         </div>
       </div>
     </div>
   </div>
   <script src="/js/qna/content.js"></script>
-  <script src="jquery-3.4.1.min.js"></script>
+  <script th:inline="javascript">
+  $(document).ready(function() {
+    $("#spinner").hide();
+  }).ajaxStart(function() {
+    $("#spinner").show();
+  }).ajaxStop(function() {
+    $("#spinner").hide();
+  });
+  
+  $("#modal-submitbtn").click(function() {
+    const messageText = $("#message-text").val();
+    const messageSenderId = $("#message-sender-id").text();
+    let valueCheck = messageText;         
+    
+  	if(valueCheck.trim() === "" || valueCheck === null) {
+  	  Swal.fire({
+  	    type: 'error',
+  	    text: '다시 입력해주세요 !!',
+  	  })
+  	  	return;
+  	}
+    $.ajax({
+      url: "/ajax/message/reply",
+      type: "POST",
+      data: {
+        content: messageText,
+        receiver_username: messageSenderId
+      }
+    }).done(function() {
+      $(".modal").modal("hide");
+      Swal.fire({
+        type: 'success',
+        title: '전송되었습니다',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      sendMessageNotice([[${user.name}]], messageSenderId);
+    });
+  });
+  
+    function getMessage(messageId) {
+      $.ajax({
+        url: "/ajax/message",
+        type: "POST",
+        data: {
+          id: messageId
+        },
+        success: function(data) {
+         /*  console.log("new Date : " + new Date(${data.time})); */
+          $(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime").empty();
+          $("#message-sender-id").append(`${data.sender_username}`);
+          $(".message-sender-name")
+            .append(`${data.senderName}`)
+            .append(`(${data.sender_username})`);
+          $(".message-sender-time").append(`${data.time}`);
+          const time = Number($(".message-sender-time").text());
+          const date = new Date(time);
+          let minutes = date.getMinutes();
+          minutes = (minutes < 10) ? "0" + minutes : minutes;
+          let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
+          hours = hours < 10 ? "0" +  hours : hours;
+          let getdate = date.getDate();
+          getdate = (getdate < 10) ? "0" + getdate : getdate;
+          
+          
+          
+          /* `${time.getHours() <= 12 ? time.getHours() : time.getHours() - 12}:${time.getMinutes() < 10 ? "0" + time.getMinutes() : time.getMinutes()} ${time.getHours() <= 11 ? 'AM' : 'PM'}`; */
+          const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 `+ getdate + `일 ` + hours +`:` + minutes;
+          $(".message-realtime").append(timedate);
+          $(".message-sender-content").append(`${data.content}`);
+          $(".sender-message").append(`<h6 class="text-font">받은쪽지</h6>`);
+          $(".fa-paper-plane").css("display", "block");
+          $(".fa-trash").css("display", "block");
+        },
+        error: function(xhr) {
+          alert("쪽지를 불러오지 못했습니다.");
+        }
+      }).done(function() {
+        if ($("#reply")) {
+          $("#reply").click(function() {
+            $(".modal").modal("show");
+            $("#message-text").val("");
+          });
+        }
+        
+        $("#delete").unbind("click");
+        $("#delete").click(function(event) {
+          
+          Swal.fire({
+            title: '정말 삭제하시겠습니까?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#F39B10',
+            cancelButtonColor: '#A6A6A6',
+            confirmButtonText: '네',
+            cancelButtonText: '아니요'
+          }).then((result) => {
+            if (result.value) {
+             
+              $.ajax({
+                url: "/ajax/message/delete",
+                type: "POST",
+                data: {
+                  id: messageId
+                },
+                success: function(data) {
+                  Swal.fire({
+                    	title: '삭제되었습니다',
+                    	type: 'success',
+                    	confirmButtonText: '확인',
+                    	confirmButtonColor: '#F39B10'
+                      
+                  }).then(function() {
+                      location.href = "/message";
+                    });
+                  
+                }
+              });
+              
+            }
+          })
+    
+        });
+      });
+    }
+
+    $(".message2").click(function(event) {
+      const removeIcon = $(event.currentTarget).children(".message-sender2");
+      const removeNotification = removeIcon
+        .children()
+        .siblings(".removenoti");
+
+      const count = $(".message-count");
+      const count2 = $(".countM");
+      if (removeNotification.text() == 0) {
+        count.text(count.text() - 1);
+        count2.text(count2.text() - 1);
+        removeNotification.text(1);
+      }
+      
+      
+      const messageId = $(this)
+        .children(".hidden")
+        .text();
+      getMessage(messageId);
+      console.log("messageId : " + messageId);
+
+      $.ajax({
+        url: "/ajax/message/update",
+        type: "POST",
+        data: {
+          id: messageId
+        },
+        success: function(data) {
+          removeIcon
+            .children()
+            .siblings(".unread")
+            .remove();
+        }
+      });
+    });
+    $(".close-btn").click(function() {
+      $(".receiver").remove();
+      $(".modal").css("display", "none");
+    });
+  
+
+  
+  
+  
+  </script>
 </body>
 </html>
 

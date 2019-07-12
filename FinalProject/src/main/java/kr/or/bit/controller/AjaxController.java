@@ -116,7 +116,7 @@ public class AjaxController {
   }
 
   @PostMapping("/video/scroll")
-  public List<Article> getNextVideoArticles(int board_id, int article_id) {
+  public List<Article> getNextVideoArticles(int article_id) {
     List<Article> list = articleService.selectArticlesOnNextPage(2, article_id);
     return list;
   }
