@@ -74,7 +74,7 @@
               </span>
               <span id="writerName">
                 <span th:text="${list.name}"></span>
-                <a th:if="${list.username}==${user.username} or user.role == 'MANAGER'"
+                <a th:if="${list.username==user.username or user.role == 'MANAGER'}"
                    th:href="@{/video/commentdelete(id=${list.id})}">[삭제]</a>
               </span>
               <span id="writeDate">
@@ -94,14 +94,14 @@
       </div>
       <div id="buttonWrapper">
         <a
-          th:if="${article.username==user.username and enable==1}"
+          th:if="${article.username==user.username and article.enable==1}"
           class="btn btn-primary btn-sm"
           th:href="@{/video/edit(id=${article.id},video_id=${article.option.video_id})}"
         >
           수정
         </a>
         <a
-          th:if="${article.username==user.username and enable==1}"
+          th:if="${article.username==user.username and article.enable==1}"
           class="btn btn-primary btn-sm"
           th:href="@{/video/delete(id = ${article.id})}"
           id="deletebtn"
@@ -238,7 +238,7 @@
               const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ hours +`:` + minutes;
               
 			  let equalName = null;           
-              if(item.username == [[${user.username}]] || [[${user.username}]] == 'manager') {
+              if(item.username == [[${user.username}]] || [[${user.role}]] == 'MANAGER') {
                 equalName = "[삭제]";
               } else {
                 equalName = "";
@@ -246,9 +246,9 @@
               
               let html = "<div id='commentsContent' class='iteration'><div id='commentsText'>";
               html += "<div id='commentsWriter'>" +
-              "<span id='writerIcon'><i class='fas fa-user-circle fa-lg'></i></span>" +
-              "<span id='writerName'>" + username + "</span>" +
-              "<a href='/video/commentdelete?id= + " + commentId + "'" + ">" + equalName + "</a>" + 
+              "<span id='writerIcon'><i class='fas fa-user-circle fa-lg'></i></span>&nbsp;" +
+              "<span id='writerName'>" + username + 
+              "<a href='/video/commentdelete?id= + " + commentId + "'" + ">&nbsp" + equalName + "</a></span>" + 
               "<span id='writeDate'>" + timedate +"</span></div>" + 
               "<div id='commentDetail'>"+ content +"</div>" + 
               "</div></div>";
