@@ -2,8 +2,17 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- /* * * @date: 2019. 06. 24. * * @author: 이힘찬 * * @description: MemberDaoMapper 
-  * */ -->
+<!-- 
+/*
+ * 
+ * @date: 2019. 06. 24. 
+ *
+ * @author: 이힘찬 
+ * 
+ * @description: MemberDaoMapper 
+ * 
+ */ 
+ -->
 <mapper namespace="kr.or.bit.dao.MemberDao">
   <insert id="insertMember"
     parameterType="kr.or.bit.model.Member">
