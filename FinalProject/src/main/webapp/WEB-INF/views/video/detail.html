@@ -110,8 +110,14 @@
         </a>
         <a 
         th:if="${user.role=='MANAGER' and article.enable==0}"
-        th:href="@{/video/activation(id= ${article.id})}"
+        th:href="@{/video/activation(id = ${article.id})}"
         class="btn btn-primary btn-sm">활성화</a>
+        
+        <a 
+        th:if="${user.role=='MANAGER' and article.enable==1}"
+        th:href="@{/video/activation(id = ${article.id})}"
+        class="btn btn-primary btn-sm">비활성화</a>
+        
         
         <a class="btn btn-primary btn-sm" th:href="@{/video}">목록</a>
         <a 
