@@ -12,10 +12,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     updated_time, view_count,
     original_id, enable, level, username,
     board_id,
-    (SELECT count(*) FROM article_vote WHERE article_id=c.id) as
+    (SELECT count(*) FROM article_vote WHERE article_id=c.id)
+    as
     votenum
     FROM(SELECT b.*
-    FROM (SELECT @rownum:=@rownum + 1 as rownum, a.*
+    FROM (SELECT @rownum:=@rownum + 1 as rownum,
+    a.*
     FROM (SELECT id, title, content, time, updated_time, view_count,
     original_id, enable, level, username, board_id
     FROM ARTICLE
@@ -23,7 +25,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     board_id = #{board_id}
     ORDER BY id DESC) a) b
 
-    WHERE rownum BETWEEN #{start} AND #{end} AND enable
+    WHERE rownum BETWEEN
+    #{start} AND #{end} AND enable
     =1) c
   </select>
   <select id="selectArticlesSorted"
@@ -98,7 +101,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT id, title, content, time, updated_time,
     view_count, original_id, enable,
     level, username, board_id
-    FROM ARTICLE as a
+    FROM
+    ARTICLE as a
     WHERE BOARD_ID=#{board_id} AND ENABLE=1
     ORDER BY id DESC
   </select>
@@ -112,14 +116,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     (SELECT count(*) FROM comment WHERE article_id=a.id) as commentnum
     FROM ARTICLE as a
     WHERE BOARD_ID=#{board_id} AND ENABLE=1
-    ORDER BY id DESC
+    ORDER BY id
+    DESC
     LIMIT 10
   </select>
   <select id="selectFirstArticlesToCopyByBoardId"
     resultType="kr.or.bit.model.Article">
     SELECT id, title, time, username
     FROM ARTICLE
-    WHERE BOARD_ID=#{board_id} AND ENABLE=1
+    WHERE
+    BOARD_ID=#{board_id} AND ENABLE=1
     ORDER BY id DESC
     LIMIT 15
   </select>
@@ -127,10 +133,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     resultType="kr.or.bit.model.Article">
     SELECT id, title, time, username
     FROM ARTICLE
-    WHERE BOARD_ID=#{board_id} AND ENABLE=1
+    WHERE
+    BOARD_ID=#{board_id} AND ENABLE=1
     AND id &lt; #{id}
     ORDER BY id DESC
     LIMIT 15
+  </select>
+  <select id="selectSearchTitleByBoardId"
+    resultType="kr.or.bit.model.Article">
+    SELECT id, title, time, username
+    FROM ARTICLE
+    WHERE
+    BOARD_ID=#{board_id} AND ENABLE=1
+    AND title LIKE '%${title}%'
+    ORDER BY id DESC
   </select>
   <select id="selectAllPagingArticlesByBoardId"
     resultType="kr.or.bit.model.Article">
@@ -148,8 +164,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ARTICLE as a
     WHERE
     BOARD_ID=#{board_id} AND ENABLE=1
-    ORDER BY original_id DESC, level ASC
-    LIMIT #{pager.start}, #{pager.articlesOnPage}
+    ORDER BY
+    original_id DESC, level ASC
+    LIMIT #{pager.start},
+    #{pager.articlesOnPage}
   </select>
   <select id="selectArticlesOnNextPage"
     resultType="kr.or.bit.model.Article">
@@ -160,19 +178,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ARTICLE
     WHERE BOARD_ID = #{board_id}
     AND id &lt; #{article_id}
-    ORDER BY id DESC
+    ORDER BY
+    id DESC
     LIMIT 10
   </select>
   <select id="selectOneArticle"
     resultType="kr.or.bit.model.Article">
     SELECT a.id, a.title, a.content,
-    a.time, a.view_count, a.enable,
+    a.time, a.view_count,
+    a.enable,
     a.original_id, a.level, a.username, a.layer, a.sibling,
     a.board_id,
     (SELECT COUNT(*) FROM ARTICLE_VOTE WHERE
     article_id=#{id}) as
     "vote_Count", a.updated_time, m.name
-    FROM ARTICLE a JOIN MEMBER m ON
+    FROM ARTICLE
+    a JOIN MEMBER m ON
     a.username = m.username
     WHERE ID=#{id};
   </select>
@@ -445,9 +466,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     LIMIT 3
   </select>
   <select id="selectMostRecentArticleId" resultType="Integer">
-    SELECT MAX(ID)
+    SELECT
+    MAX(ID)
     FROM ARTICLE
-    WHERE BOARD_ID = #{board_id} AND username=#{username}
+    WHERE BOARD_ID = #{board_id} AND
+    username=#{username}
   </select>
   <update id="updateArticleLevel">
     UPDATE ARTICLE
@@ -468,7 +491,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     select
     max(level)
     from article
-    where original_id = #{original_id} and sibling =
+    where original_id = #{original_id} and sibling
+    =
     #{sibling}+1
   </select>
 </mapper>

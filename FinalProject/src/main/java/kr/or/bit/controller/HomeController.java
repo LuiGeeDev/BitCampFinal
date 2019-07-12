@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.bit.dao.ArticleDao;
@@ -139,6 +140,28 @@ public class HomeController {
     article.setTimeLocal(article.getTime().toLocalDateTime());
     
     return article;
+  }
+  
+  @PostMapping("/test/search")
+  public @ResponseBody List<Article> searchArticle(int board_id, String title){
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    
+    List<Article> searchArticleList = articleDao.selectSearchTitleByBoardId(board_id, title);
+    for (Article article : searchArticleList) {
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+      article.setTimeLocal(article.getTime().toLocalDateTime());
+    }
+    return searchArticleList;
+  }
+  
+  @GetMapping("/test/copy")
+  public String copyArticle(@RequestParam(name = "ids", required=false) List<Integer> ids) {
+    for (int id : ids) {
+      System.out.println(id);
+    }
+    
+    return "redirect:/test";
   }
 }
 

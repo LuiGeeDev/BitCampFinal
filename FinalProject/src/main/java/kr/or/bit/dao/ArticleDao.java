@@ -95,4 +95,6 @@ public interface ArticleDao {
   Integer selectMaxLevel(Article article);
 
   Integer selectMaxLevelBySibling(Article article);
+  
+  List<Article> selectSearchTitleByBoardId(@Param("board_id")int board_id,@Param("title") String title);
 }
