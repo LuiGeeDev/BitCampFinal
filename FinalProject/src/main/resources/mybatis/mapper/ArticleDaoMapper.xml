@@ -115,6 +115,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ORDER BY id DESC
     LIMIT 10
   </select>
+  <select id="selectFirstArticlesToCopyByBoardId"
+    resultType="kr.or.bit.model.Article">
+    SELECT id, title, time, username
+    FROM ARTICLE
+    WHERE BOARD_ID=#{board_id} AND ENABLE=1
+    ORDER BY id DESC
+    LIMIT 15
+  </select>
+  <select id="selectNextArticlesToCopyByBoardId"
+    resultType="kr.or.bit.model.Article">
+    SELECT id, title, time, username
+    FROM ARTICLE
+    WHERE BOARD_ID=#{board_id} AND ENABLE=1
+    AND id &lt; #{id}
+    ORDER BY id DESC
+    LIMIT 15
+  </select>
   <select id="selectAllPagingArticlesByBoardId"
     resultType="kr.or.bit.model.Article">
     SELECT id, title, content, time, updated_time,
@@ -131,11 +148,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ARTICLE as a
     WHERE
     BOARD_ID=#{board_id} AND ENABLE=1
-    ORDER BY
-    original_id DESC, level
-    ASC
-    LIMIT #{pager.start},
-    #{pager.articlesOnPage}
+    ORDER BY original_id DESC, level ASC
+    LIMIT #{pager.start}, #{pager.articlesOnPage}
   </select>
   <select id="selectArticlesOnNextPage"
     resultType="kr.or.bit.model.Article">

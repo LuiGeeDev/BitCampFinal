@@ -17,9 +17,10 @@
 }
 
 .user-photo {
-  height: 50px;
-  border-radius: 32px;
   margin: 10px 0 10px 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 
 .user-profile {
@@ -38,10 +39,13 @@
 
 .nav-icon a {
   color: white;
+<<<<<<< HEAD
+=======
 }
 
 .nav-icon:active i {
   transform: scale(0.97);
+>>>>>>> 39cfce7085c394dc0da0aa76fb5dfc890ed4c5ff
 }
 
 .active-menu {

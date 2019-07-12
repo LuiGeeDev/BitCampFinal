@@ -13,7 +13,7 @@
     />
     <link rel="stylesheet" th:href="@{/css/simple-scrollbar.css}" />
     <link rel="stylesheet" th:href="@{/css/test.css}" />
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script
@@ -59,7 +59,13 @@
             </div>
             <div class="list">
               <h5>글 목록</h5>
+              <input type="text" id="search" placeholder="제목으로 검색" />
               <div class="copy-article-list" ss-container></div>
+              <div
+                class="spinner-border text-warning"
+                role="status"
+                id="spinner1"
+              ></div>
             </div>
             <div class="preview">
               <h5>미리 보기</h5>
@@ -70,29 +76,109 @@
                 </div>
                 <div class="copy-article-preview-content"></div>
               </div>
+              <div
+                class="spinner-border text-warning"
+                role="status"
+                id="spinner2"
+              ></div>
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-outline-primary">옮기기</button>
+            <input type="hidden" value="" id="article_id" />
+            <button class="btn btn-outline-primary btn-sm">옮기기</button>
           </div>
         </div>
       </div>
     </div>
-    <script>
+    <script th:inline="javascript">
+      $(".spinner-border").hide();
+      $("#search").hide();
       $(".modal").modal("show");
+
+      $(".modal").on("hidden.bs.modal", function() {
+        $("div").remove(".copy-article");
+        $(
+          ".copy-article-preview-title, .copy-article-preview-writer, .copy-article-preview-content"
+        ).empty();
+        $("#article_id").val("");
+      });
+
+      function callNextArticles(id, board_id) {
+        let lastId = id;
+
+        function changeLastId(new_id) {
+          lastId = new_id;
+        }
+
+        return function() {
+          $.ajax({
+            url: "/test/more",
+            type: "post",
+            data: { id: lastId, board_id: board_id },
+            beforeSend: function() {
+              $("#spinner1").show();
+            },
+            success: function(data) {
+              console.log(data);
+              if (data[0]) {
+                $(data).each(function(index, article) {
+                  const time = article.timeLocal;
+                  const timeStr = `${time.year.toString().slice(2)}-${
+                    time.monthValue >= 10
+                      ? time.monthValue
+                      : "0" + time.monthValue
+                  }-${
+                    time.dayOfMonth >= 10
+                      ? time.dayOfMonth
+                      : "0" + time.dayOfMonth
+                  }`;
+                  $(".copy-article-list .ss-content").append(
+                    `<div class="copy-article" id="a${
+                      article.id
+                    }"><span class="copy-article-title">${
+                      article.title
+                    }</span><span class="copy-writer">${
+                      article.writer.name
+                    }</span><span class="copy-time">${timeStr}</span></div>`
+                  );
+                });
+
+                changeLastId(data[data.length - 1].id);
+              }
+            }
+          }).done(function() {
+            addEventToArticle();
+            $("#spinner1").hide();
+          });
+        };
+      }
+
       $(".copy-board").click(function() {
         $(".copy-board").removeClass("active-board");
         $(this).addClass("active-board");
+        const id = this.id;
         $.ajax({
           url: "/test/articles",
           type: "post",
-          data: { id: this.id.slice(1) },
-          success: function(data) {
+          data: { id: id.slice(1) },
+          beforeSend: function() {
             $("div").remove(".copy-article");
+            $(
+              ".copy-article-preview-title, .copy-article-preview-writer, .copy-article-preview-content"
+            ).empty();
+            $("#article_id").val("");
+            $("#spinner1").show();
+          },
+          success: function(data) {
+            const list = $(".copy-article-list .ss-content");
             if (data.length === 0) {
-              $(".copy-article-list .ss-content").append(`<div class="copy-article">글이 없습니다</div>`);
+              list.append(`<div class="copy-article">글이 없습니다</div>`);
               return;
             }
+
+            $("#search").val("");
+            $("#search").show();
+
             $(data).each(function(index, article) {
               const time = article.timeLocal;
               const timeStr = `${time.year.toString().slice(2)}-${
@@ -100,7 +186,7 @@
               }-${
                 time.dayOfMonth >= 10 ? time.dayOfMonth : "0" + time.dayOfMonth
               }`;
-              $(".copy-article-list .ss-content").append(
+              list.append(
                 `<div class="copy-article" id="a${
                   article.id
                 }"><span class="copy-article-title">${
@@ -110,9 +196,19 @@
                 }</span><span class="copy-time">${timeStr}</span></div>`
               );
             });
+
+            const callByScroll = callNextArticles(data[data.length - 1].id, id.slice(1));
+            list.scroll(function() {
+              console.log(list.scrollTop(), list.height(), list[0].scrollHeight);
+              if (list.height() + list.scrollTop() > list[0].scrollHeight) {
+                console.log(true);
+                callByScroll();
+              }
+            });
           }
         }).done(function() {
           addEventToArticle();
+          $("#spinner1").hide();
         });
       });
 
@@ -124,19 +220,24 @@
             url: "/test/article",
             type: "post",
             data: { id: this.id.slice(1) },
-            success: function(article) {
+            beforeSend: function() {
               $(
                 ".copy-article-preview-title, .copy-article-preview-writer, .copy-article-preview-content"
               ).empty();
+              $("#article_id").val("");
+              $("#spinner2").show();
+            },
+            success: function(article) {
               $(".copy-article-preview-title").text(article.title);
               $(".copy-article-preview-writer").text(article.writer.name);
               $(".copy-article-preview-content").html(article.content);
+              $("#article_id").val(article.id);
             }
+          }).done(function() {
+            $("#spinner2").hide();
           });
         });
       }
-      
-      SimpleScrollbar.initAll();
     </script>
   </body>
 </html>

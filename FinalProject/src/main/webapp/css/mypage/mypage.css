@@ -24,26 +24,26 @@
   margin: 30px;
   padding: 15px;
 }
+
 .mypagePhoto {
-  height:100px;
+  height: 100px;
 }
 
 .photo-file {
-  height:100px;
+  height: 100px;
 }
+
 input[type=text], input[type=password], input[type=email] {
   margin: 30px;
   padding: 15px;
   width: 600px;
   border-radius: 5px;
   outline: none !important;
-  
-  
 }
 
-input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
-  border-color:#808080;
-  
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus
+  {
+  border-color: #808080;
 }
 
 .main-title {
@@ -57,11 +57,11 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
 }
 
 .submit-btn {
-  display:flex;
+  display: flex;
 }
 
 .updateBtn {
-  position:absolute;
+  position: absolute;
   right: 330px;
 }
 
@@ -70,7 +70,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
 }
 
 .idCheck {
-  color:red;
+  color: red;
   /* font-weight: bold; */
 }
 
@@ -79,15 +79,34 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
 }
 
 .idCheck, span[class="hidden"] {
-  font-weight:600;
+  font-weight: 600;
 }
 
 .idParent, .passwordParent, .emailParent {
-  position:relative;
+  position: relative;
 }
 
 .idCheck, #pwdCheck, #emailCheck {
-  position:absolute;
-  right:40px;
-  bottom:50px;
+  position: absolute;
+  right: 40px;
+  bottom: 50px;
+}
+
+.user-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 5px;
+}
+
+.btn-change {
+  margin-top: 5px
+}
+
+#files1{
+  width:100%;
+}
+body{
+  font-family: 'Nanum-Gothic';
+  font-weight: bold;
 }
