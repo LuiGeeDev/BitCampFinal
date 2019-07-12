@@ -11,4 +11,6 @@ public interface VideoDao {
   Video selectVideoByArticleId(int article_id);
 
   void deleteVideo(int id);
+  
+  void readDeleteVideo(int id);
 }
