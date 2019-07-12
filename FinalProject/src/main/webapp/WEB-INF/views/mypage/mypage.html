@@ -2,30 +2,93 @@
 <html xmlns:th="http://www.thymeleaf.org"
   th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
 <head>
-<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-<link rel="stylesheet" th:href="@{/css/stack/home.css}" />
+<!-- 이페이지에서만별도로사용하는CSS가있다면여기다link 태그로삽입-->
+<link rel="stylesheet" th:href="@{/css/mypage/mypage-home.css}" />
+<link rel="stylesheet"
+  href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
-  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+  <!-- 이페이지의내용은main 클래스div 태그안에작성-->
   <div class="main" th:fragment="main">
 
     <div class="Wrapper">
-    <div class="flexContainer">
-    <div class="profileWrapper">
-    <div class="profileTopWrapper">
-    <div class="profileimg"></div><div class="profileContent"></div>
-    </div>
-    <div class="profileProgressBar"></div>
-    </div>
-    <div class="articleWrapper">
-
-
-
-    </div>
+      <div class="flexContainer">
+        <div class="profileWrapper">
+          <div class="profileTopWrapper">
+            <div class="profileimg">
+              <img th:src="@{/css/stack/profile.jpg}" id="profileimg">
+            </div>
+            <div class="profileContent">
+              <div class="profileName">권예돌(19010101)</div>
+              <div class="profileCourse">UI/UX 개발자 양성과정 수강중</div>
+              <div class="profileRole">고양이등급</div>
+              <div class="profileDetail">
+                <span class="pdArticle">총게시물 <span
+                  class="pdArticleNum">9999</span>회 |&nbsp
+                </span> <span class="pdComment">총댓글 <span
+                  class="pdCommentNum">50000</span>개 |&nbsp
+                </span> <span class="pdProject">1차 프로젝트 진행중</span>
+              </div>
+            </div>
+          </div>
+          <div class="profileProgressBar">
+            <span class="progres"> <span> <span
+                class="progress-bar bg-warning progress-bar-striped"
+                id="progress"> </span> <span class="progresPercent">
+                  70.0% (70/100일) </span>
+            </span>
+            </span>
+          </div>
+        </div>
+        <div class="articleWrapper">
+        <div class="tabsWrapper">
+          <div id="tabs">
+            <ul>
+              <li><a href="#tabs-1">등록한 게시글</a></li>
+              <li><a href="#tabs-2">댓글 단 게시글</a></li>
+              <li><a href="#tabs-3">등록한 댓글</a></li>
+            </ul>
+            <div id="tabs-1">
+              <div class="board">
+              <div class="boardNav">
+              <div class="boardId nav-style">글번호</div>
+              <div class="boardTitle nav-style">제목</div>
+              <div class="boardDate nav-style">작성일</div>
+              <div class="boardView nav-style">조회</div>
+              <div class="boardVote nav-style">추천</div>
+              </div>
+              <div class="boardContent">
+              <div class="boardId cont-style">#122</div>
+              <div class="boardTitle cont-style">다들 밥 드셨나요</div>
+              <div class="boardDate cont-style">2019.01.03</div>
+              <div class="boardView cont-style">23</div>
+              <div class="boardVote cont-style">7</div>
+              </div>
+              </div>
+            </div>
+            <div id="tabs-2">
+              <div>
+              <span>머행</span>
+              </div>
+            </div>
+            <div id="tabs-3">
+              <div>
+              <span>머행</span>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  </div>
-  <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-  <script th:inline="javascript"></script>
+  <!-- 이페이지에서사용하는자바스크립트는이script 태그안에작성-->
+  <script th:inline="javascript">
+      $(function() {
+        $("#tabs").tabs();
+      });
+    </script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </body>
 </html>
+

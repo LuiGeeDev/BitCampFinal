@@ -1,4 +1,4 @@
-package kr.or.bit.controller;
+/*package kr.or.bit.controller;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,3 +22,4 @@ public class MypageController {
   
   
 }
+*/

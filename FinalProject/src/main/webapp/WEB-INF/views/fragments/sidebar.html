@@ -84,10 +84,18 @@
         <a th:href="@{/video}">비디오 게시판</a>
         
       </div>
+      
+            <div th:if="${#strings.contains(#request.getRequestURI(),'mypage')}" class="side-nav-menu">
+        <a th:href="@{/mypage}">마이 페이지</a>
+        <a th:href="@{/mypage}">정보 수정</a>
+      </div>
+      
       <div th:if="${#strings.contains(#request.getRequestURI(),'manage')}" class="side-nav-menu">
         <a th:href="@{/manage/course}">수업 관리</a>
         <a th:href="@{/manage/students}">학생 관리</a>
       </div>
+      
+
     </div>
   </body>
 </html>
