@@ -29,8 +29,10 @@ public interface ArticleDao {
   void updateArticle(Article article);
 
   void deleteArticle(int id);
-
+  
   List<Article> selectAllArticleByBoardId(@Param("board_id") int board_id);
+
+  List<Article> selectFirstArticlesByBoardId(@Param("board_id") int board_id);
 
   List<Article> selectAllPagingArticlesByBoardId(@Param("board_id") int board_id, @Param("pager") Pager pager);
 
@@ -44,7 +46,7 @@ public interface ArticleDao {
 
   int getMostRecentArticleId();
 
-  List<Article> selectArticlesOnNextPage(int article_id);
+  List<Article> selectArticlesOnNextPage(@Param("board_id") int board_id, @Param("article_id") int article_id);
 
   int selectVote(@Param("id") int articleId, @Param("username") String username);
 
