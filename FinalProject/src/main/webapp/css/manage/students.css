@@ -264,21 +264,26 @@ font-size: 21px;
 .member-list-enabled {
   width:20%;
 }
-.member-list-enabled i {
-  font-size:3px;
-  color:#0dd13b;
-}
+
 .selectSize {
   size:1;
 }
+
 .select-list-count {
  text-align: right; 
  margin-top:10px;
  margin-right:20px;
 }
 
+.on {
+  font-size:3px;
+  color:#0dd13b;
+}
 
-
+.off {
+  font-size:3px;
+  color:#bababa;
+}
 
 
 
