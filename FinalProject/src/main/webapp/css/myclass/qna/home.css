@@ -92,6 +92,7 @@ th, td {
   color: white;
   padding: 3px;
   font-size: 70%;
+  cursor: pointer;
 }
 
 #c1 {

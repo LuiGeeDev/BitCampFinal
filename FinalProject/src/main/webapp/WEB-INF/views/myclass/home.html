@@ -56,10 +56,14 @@
             <span class="recentHomework cardshadow">
               <span class="moreRow">
                 <span class="card-title">최근 과제</span>
-                <span class="moreLotation">더보기</span>
+                <span class="moreLotation"
+               th:onclick="'window.location.href = \'' + @{/myclass/homework} + '\''"
+                >더보기</span>
               </span>
               <span class="recentHomeworkcontent">
-                7월30일에 칸반 보드 정리할 사람 가위바위보로 정하기
+              <span th:each="homework : ${recentHomework}">
+              <span th:utext="${homework.title}"></span>
+               </span>
               </span>
             </span>
             <span class="recentProject cardshadow">

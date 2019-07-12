@@ -25,4 +25,7 @@ public interface HomeworkDao extends OptionDao {
   int countHomeworkArticleBySearchWorkd(@Param("course_id")int course_id, @Param("word") String word);
   
   List<Article> selectHomeworkArticleBySearchWord(@Param("pager") Pager pager, @Param("course_id") int coursed_id, @Param("word") String word);
+  
+  List<Article> selectRecentHomeworkArticle(@Param("course_id") int course_id);
+
 }
