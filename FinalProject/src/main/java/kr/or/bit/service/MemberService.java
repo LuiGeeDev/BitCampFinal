@@ -27,7 +27,14 @@ public class MemberService {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     memberDao.updateMember(member);
   }
-
+  public void updateMemberWithoutFile(Member member) {
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    memberDao.updateMemberWithoutFile(member);
+  }
+  public void updateMemberOnlyFile(Member member) {
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    memberDao.updateMemberOnlyFile(member);
+  }
   public List<Member> getStudentsList() {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     

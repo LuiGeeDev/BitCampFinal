@@ -10,10 +10,24 @@ body {
   margin-left: 8px;
 }
 
-#profileimg {
+#profile-img {
   height: auto;
-  border-radius: 20px;
+  border-radius: 90px;
   width: 180px;
+}
+
+
+.profiledetail {
+  display: flex;
+  flex-direction: row;
+}
+
+.profiledetailTitle {
+  
+}
+
+.profiledetailContent {
+  
 }
 
 .title {
@@ -26,28 +40,40 @@ body {
 .searchContainer {
   display: flex;
   flex-direction: row;
-  margin: 10px;
-  margin-left: 20px;
+  margin-top: 30px;
+  margin-left: 10px;
 }
-
+.search-select-box {
+  height: 27px; 
+  width: 100px;
+}
+.search-input-text {
+  margin-left:10px;
+  margin-right:10px;
+  width: 300px;
+}
 .manageContainer {
   display: flex;
   flex-direction: row;
   margin: 10px;
-  height: 640px;
+  height: 780px;
+  margin-bottom:200px;
 }
 
-.studentSearchContainer {
+.memberContainer {
   display: flex;
   flex-direction: column;
-  width: 28%;
+  width: 60%;
   padding: 10px 0px 10px 10px;
-  margin-right: 10px;
+  margin-right: 25px;
+}
+.search-container{
+  display: flex;
 }
 
 .search {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   border: 1px solid rgba(0, 0, 0, .125);
   border-radius: 10px;
 }
@@ -55,10 +81,11 @@ body {
 .list {
   display: flex;
   flex-direction: row;
-  margin-top: 19px;
-  height: 600px;
-  border: 1px solid rgba(0, 0, 0, .125);
-  border-radius: 10px;
+  margin-top: 7px;
+  height: 800px;
+  overflow-y:scroll;
+  border: 1px solid #cfcfcf;
+  border-radius: 3px;
 }
 
 .searchBtn{
@@ -75,16 +102,16 @@ body {
   padding: 10px;
   margin-bottom: 19px;
   border-radius: 10px;
+  text-align:center;
 }
 
 .studentDetailContainer {
   display: flex;
   flex-direction: column;
-  width:82%;
+  width:40%;
 }
 
 .contentWrapper {
-  border: 1px solid white;
   margin: 20px;
   width: 83%;
   margin-left: 8%;
@@ -127,20 +154,6 @@ body {
   width: 34%;
   text-align: center;
   flex-direction: row;
-}
-
-
-.profiledetail {
-  display: flex;
-  flex-direction: row;
-}
-
-.profiledetailTitle {
-  
-}
-
-.profiledetailContent {
-  
 }
 
 .detail {
@@ -205,8 +218,69 @@ body {
 }
 .cardShadow {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  display:flex;
+  flex-direction:column;
 }
 .searchIcon{
-  
 font-size: 21px;
 }
+
+
+.member-list-container {
+  display:flex;
+  flex-direction: column;
+  cursor:pointer;
+}
+.member-list-container:hover {
+  background:#f7f7f7;
+  
+}
+.member-list-board {
+  border:1px solid #a3a3a3;
+  border-radius:3px;
+  display:flex;
+  flex-direction: row;
+  text-align: center;
+  margin-top: 30px;
+  padding-right:19px;
+}
+.member-list {
+  display:flex;
+  flex-direction: row;
+  text-align: center;
+  padding-top:6px;
+  padding-bottom:6px;
+  border-bottom:1px solid #e3e3e3;
+}
+.member-list-username {
+  width:30%;
+}
+.member-list-name {
+  width:30%;
+}
+.member-list-role {
+  width:20%;
+}
+.member-list-enabled {
+  width:20%;
+}
+.member-list-enabled i {
+  font-size:3px;
+  color:#0dd13b;
+}
+.selectSize {
+  size:1;
+}
+.select-list-count {
+ text-align: right; 
+ margin-top:10px;
+ margin-right:20px;
+}
+
+
+
+
+
+
+
+

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.bit.dao.CourseDao;
+import kr.or.bit.dao.ManagerDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.Member;
@@ -39,10 +40,58 @@ public class ManageController {
 	
 	@GetMapping("/students")
 	public String manageStudentHome(Model model) {
-	  MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+	  ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
 	  CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
-	  List<Member> allMemberList = memberDao.selectAllMembers();
-	  model.addAttribute("allMemberList", allMemberList);
+	  List<Member> memberList = managerDao.selectMembersByRole("STUDENT");
+	  List<Course> courseList = managerDao.selectCourseList();
+	  System.out.println(courseList.get(0).getCourse_name());
+	  System.out.println(courseList.get(1).getCourse_name());
+	  System.out.println(courseList.get(2).getCourse_name());
+	  System.out.println(courseList.get(3).getCourse_name());
+    model.addAttribute("courseList", courseList);
+	  model.addAttribute("memberList", memberList);
 	  return "manage/students";
+	}
+	
+	@PostMapping("/students")
+	public String manageStudentSearch(String role, int enabled, int course_id, String stringColumn, @RequestParam(defaultValue="null") String stringValue, Model model) {
+	  ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
+	  List<Member> memberList = null;
+	  
+	  System.out.println(role+"/"+enabled+"/"+course_id+"/"+stringColumn+"/"+stringValue);
+	  
+	  if(enabled == 999 & course_id ==0 & stringValue.equals("null")) {
+	    System.out.println("role?");
+	    memberList = managerDao.selectMembersByRole(role);
+	  } else if (enabled==999 & course_id==0) {
+      System.out.println("searchColumn 탐?");
+      memberList = managerDao.selectMembersByRoleAndOneStringColumn(role, stringColumn, stringValue);
+    } else if (enabled==999 & stringValue.equals("null")) {
+      System.out.println("course_id");
+      memberList = managerDao.selectMembersByRoleAndOneIntColumn(role, "course_id", course_id);
+    } else if (course_id==0 & stringValue.equals("null")) {
+      System.out.println("enabled");
+      memberList = managerDao.selectMembersByRoleAndOneIntColumn(role, "enabled", enabled);
+    } else if (stringValue.equals("null")) {
+      memberList = managerDao.selectMembersByRoleAndEnableAndCourseId(role, enabled, course_id);
+    } else if (enabled==999) {
+      memberList = managerDao.selectMembersByRoleAndStringColumnAndIntColumn(role, stringColumn, stringValue, "course_id", course_id);
+    } else if (course_id==0) {
+      memberList = managerDao.selectMembersByRoleAndStringColumnAndIntColumn(role, stringColumn, stringValue, "enabled", enabled);
+    } else {
+      memberList = managerDao.selectMemberByRoleAndEnableAndCourseIdAndSearch(role, enabled, course_id, stringColumn, stringValue);
+    }
+	  
+	  System.out.println("--------------------");
+	  System.out.println(memberList.toString());
+	  
+	  List<Course> courseList = managerDao.selectCourseList();
+	  System.out.println(courseList.get(0).getCourse_name());
+	  System.out.println(courseList.get(1).getCourse_name());
+	  System.out.println(courseList.get(2).getCourse_name());
+	  System.out.println(courseList.get(3).getCourse_name());
+	  model.addAttribute("courseList", courseList);
+	  model.addAttribute("memberList", memberList);
+	  return"manage/students";
 	}
 }
