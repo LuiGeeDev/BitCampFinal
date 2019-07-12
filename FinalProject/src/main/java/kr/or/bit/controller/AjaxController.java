@@ -49,12 +49,6 @@ public class AjaxController {
   @Autowired
   private ArticleVoteService articleVoteService;
 
-  @Autowired
-  private ArticleDeleteService articleDeleteService;
-  
-  @Autowired
-  private BoardService boardService;
-
   @PostMapping("/chat/file")
   public ChatMessage uploadFile(HttpServletRequest request, int group_id, long time, String name, MultipartFile file)
       throws IllegalStateException, IOException {
@@ -122,8 +116,8 @@ public class AjaxController {
   }
 
   @PostMapping("/video/scroll")
-  public List<Article> getNextVideoArticles(int article_id) {
-    List<Article> list = articleService.selectArticlesOnNextPage(article_id);
+  public List<Article> getNextVideoArticles(int board_id, int article_id) {
+    List<Article> list = articleService.selectArticlesOnNextPage(2, article_id);
     return list;
   }
 

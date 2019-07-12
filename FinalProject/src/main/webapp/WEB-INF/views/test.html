@@ -7,7 +7,13 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+    />
+    <link rel="stylesheet" th:href="@{/css/simple-scrollbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/test.css}" />
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script
@@ -15,82 +21,7 @@
       integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
       crossorigin="anonymous"
     ></script>
-    <style>
-      .modal-content {
-        flex-direction: row;
-      }
-
-      .modal-content div {
-        border: 1px solid black;
-      }
-      
-      .board-list {
-        padding-left: 30px;
-      }
-      
-      .board-list li {
-        cursor: pointer;
-        font-size: 14px;
-      }
-      
-      .board-list li:hover {
-        text-decoration: underline;
-      }
-      
-      .board-list li:active {
-        font-weight: bold;
-      }
-
-      .lecture-tree {
-        padding-left: 5px;
-      }
-      .lecture-tree, .board-list {
-        list-style-type: none;
-      }
-
-      .lecture-tree input[type="checkbox"] {
-        display: none;
-      }
-
-      .lecture-tree input[type="checkbox"]:checked ~ ul {
-        display: none;
-      }
-
-      .lecture-tree input[type="checkbox"] + label {
-        user-select: none;
-        margin-bottom: 0;
-        cursor: pointer;
-      }
-
-      .lecture-tree input[type="checkbox"] + label::before {
-        display: inline-block;
-        width: 30px;
-        height: 20px;
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-        content: "\f518";
-      }
-      
-      .lecture-tree input[type="checkbox"]:checked + label::before {
-        display: inline-block;
-        width: 30px;
-        height: 20px;
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-        content: "\f02d";
-      }
-      
-      .board-list li::before {
-        display: inline-block;
-        width: 30px;
-        height: 20px;
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-        content: "\f5ad";
-      }
-      
-      
-    </style>
+    <script th:src="@{/js/simple-scrollbar.js}"></script>
   </head>
   <body>
     <div
@@ -100,33 +31,112 @@
       aria-labelledby="myExtraLargeModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-xl">
+      <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
-          <div class="lecture-list">
-            <ul class="lecture-tree">
-              <li th:each="course : ${courses}">
-                <input type="checkbox" th:id="'c' + ${course.id}" checked />
-                <label
-                  class="icon label"
-                  th:for="'c' + ${course.id}"
-                  th:text="${course.course_name}"
-                ></label>
-                <ul class="board-list">
-                  <li
-                    th:each="board : ${course.boards}"
-                    th:text="${board.board_name}"
-                  ></li>
+          <div class="modal-body">
+            <div class="tree">
+              <h5>강의 목록</h5>
+              <div class="lecture-list" ss-container>
+                <ul class="lecture-tree">
+                  <li th:each="course : ${courses}">
+                    <input type="checkbox" th:id="'c' + ${course.id}" checked />
+                    <label
+                      class="icon label"
+                      th:for="'c' + ${course.id}"
+                      th:text="${course.course_name}"
+                    ></label>
+                    <ul class="copy-board-list">
+                      <li
+                        class="copy-board"
+                        th:each="board : ${course.boards}"
+                        th:text="${board.board_name}"
+                        th:id="'b' + ${board.id}"
+                      ></li>
+                    </ul>
+                  </li>
                 </ul>
-              </li>
-            </ul>
+              </div>
+            </div>
+            <div class="list">
+              <h5>글 목록</h5>
+              <div class="copy-article-list" ss-container></div>
+            </div>
+            <div class="preview">
+              <h5>미리 보기</h5>
+              <div class="copy-article-preview" ss-container>
+                <div class="copy-article-preview-header">
+                  <h6 class="copy-article-preview-title"></h6>
+                  <p class="copy-article-preview-writer"></p>
+                </div>
+                <div class="copy-article-preview-content"></div>
+              </div>
+            </div>
           </div>
-          <div class="article-list"></div>
-          <div class="article-preview"></div>
+          <div class="modal-footer">
+            <button class="btn btn-outline-primary">옮기기</button>
+          </div>
         </div>
       </div>
     </div>
     <script>
       $(".modal").modal("show");
+      $(".copy-board").click(function() {
+        $(".copy-board").removeClass("active-board");
+        $(this).addClass("active-board");
+        $.ajax({
+          url: "/test/articles",
+          type: "post",
+          data: { id: this.id.slice(1) },
+          success: function(data) {
+            $("div").remove(".copy-article");
+            if (data.length === 0) {
+              $(".copy-article-list .ss-content").append(`<div class="copy-article">글이 없습니다</div>`);
+              return;
+            }
+            $(data).each(function(index, article) {
+              const time = article.timeLocal;
+              const timeStr = `${time.year.toString().slice(2)}-${
+                time.monthValue >= 10 ? time.monthValue : "0" + time.monthValue
+              }-${
+                time.dayOfMonth >= 10 ? time.dayOfMonth : "0" + time.dayOfMonth
+              }`;
+              $(".copy-article-list .ss-content").append(
+                `<div class="copy-article" id="a${
+                  article.id
+                }"><span class="copy-article-title">${
+                  article.title
+                }</span><span class="copy-writer">${
+                  article.writer.name
+                }</span><span class="copy-time">${timeStr}</span></div>`
+              );
+            });
+          }
+        }).done(function() {
+          addEventToArticle();
+        });
+      });
+
+      function addEventToArticle() {
+        $(".copy-article").click(function() {
+          $(".copy-article").removeClass("active-article");
+          $(this).addClass("active-article");
+          $.ajax({
+            url: "/test/article",
+            type: "post",
+            data: { id: this.id.slice(1) },
+            success: function(article) {
+              $(
+                ".copy-article-preview-title, .copy-article-preview-writer, .copy-article-preview-content"
+              ).empty();
+              $(".copy-article-preview-title").text(article.title);
+              $(".copy-article-preview-writer").text(article.writer.name);
+              $(".copy-article-preview-content").html(article.content);
+            }
+          });
+        });
+      }
+      
+      SimpleScrollbar.initAll();
     </script>
   </body>
 </html>

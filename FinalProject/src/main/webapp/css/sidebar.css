@@ -1,67 +1,71 @@
 .sidebar {
-	text-align: center;
-	display: flex;
-	justify-content: center;
+  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .logo {
-	text-align: center;
-	width: 90%;
-	border-bottom: 1px solid white;
-	margin: 0 3px 0 3px;
+  text-align: center;
+  width: 90%;
+  border-bottom: 1px solid white;
+  margin: 0 3px 0 3px;
 }
 
 .logo img {
-	width: 80%;
-	margin-top: 10px;
+  width: 80%;
+  margin-top: 10px;
 }
 
 .user-photo {
-	height: 50px;
-	border-radius: 32px;
-	margin: 10px 0 10px 0;
+  height: 50px;
+  border-radius: 32px;
+  margin: 10px 0 10px 0;
 }
 
 .user-profile {
-	border-bottom: 1px solid white;
-	margin: 0 3px 3px 3px;
+  border-bottom: 1px solid white;
+  margin: 0 3px 3px 3px;
 }
 
 .side-nav {
-	width: 100%;
+  width: 100%;
 }
 
 .nav-icon {
-	padding: 13px 0;
-	font-size: 16px;
+  padding: 13px 0;
+  font-size: 16px;
 }
 
 .nav-icon a {
-	color: white;
+  color: white;
+}
+
+.nav-icon:active i {
+  transform: scale(0.97);
 }
 
 .active-menu {
-	background: white;
-	box-sizing: border-box;
-	border-left: 5px solid #F39C12;
+  background: white;
+  box-sizing: border-box;
+  border-left: 5px solid #F39C12;
 }
 
 .active-menu a {
-	color: #2D3E50 !important;
+  color: #2D3E50 !important;
 }
 
 .side-nav-menu a {
-	text-decoration: none;
-	color: #2D3E50;
-	display: block;
-	padding: 10px 10px;
+  text-decoration: none;
+  color: #2D3E50;
+  display: block;
+  padding: 10px 10px;
 }
 
 .side-nav-menu {
-	padding-top: 60px;
+  padding-top: 60px;
 }
 
 .side-nav-menu a:hover {
-	background: #F39C12;
-	color: white;
+  background: #F39C12;
+  color: white;
 }
