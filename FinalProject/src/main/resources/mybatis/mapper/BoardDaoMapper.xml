@@ -35,7 +35,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM BOARD
     WHERE course_id = #{course_id}
   </select>
-  
   <select id="selectBoardByCourseId" resultType="kr.or.bit.model.Board">
   	SELECT ID, BOARD_NAME, BOARDTYPE, COURSE_ID
   	FROM BOARD
@@ -65,6 +64,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM board
     WHERE course_id = #{course_id}
     AND board_name = '트러블슈팅${season}${group_no}'
+  </select>
+  <select id="selectBoardInCourse" resultType="kr.or.bit.model.Board">
+    SELECT id, board_name, boardtype, course_id
+    FROM board
+    WHERE course_id = #{course_id}
+    AND boardtype = #{boardtype}
   </select>
 </mapper>  
 

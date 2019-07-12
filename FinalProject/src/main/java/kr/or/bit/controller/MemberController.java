@@ -31,7 +31,7 @@ public class MemberController {
 		String username = Helper.userName();
 		Member user = memberDao.selectMemberByUsername(username);
 		model.addAttribute("user", user);
-		return "mypageForm";
+		return "mypage/mypageForm";
 	}
 	
 	@PostMapping("/mypage")
