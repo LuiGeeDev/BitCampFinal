@@ -152,7 +152,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="selectOneArticle"
     resultType="kr.or.bit.model.Article">
     SELECT a.id, a.title, a.content,
-    a.time, a.view_count,
+    a.time, a.view_count, a.enable,
     a.original_id, a.level, a.username, a.layer, a.sibling,
     a.board_id,
     (SELECT COUNT(*) FROM ARTICLE_VOTE WHERE

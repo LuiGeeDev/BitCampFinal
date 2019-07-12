@@ -1,5 +1,6 @@
 package kr.or.bit.model;
 
+import java.sql.Date;
 import java.util.List;
 
 public class Member {
@@ -14,6 +15,17 @@ public class Member {
   private String role;
   private List<String> scrap;
   private int group_no;
+  
+  private Date end_date;
+  
+  
+  public Date getEnd_date() {
+    return end_date;
+  }
+
+  public void setEnd_date(Date end_date) {
+    this.end_date = end_date;
+  }
 
   public int getGroup_id() {
     return group_id;

@@ -121,3 +121,7 @@ svg:active {
   margin: 0;
   color: black;
 }
+
+.message-color, .mypage-color {
+  color:black;
+}
