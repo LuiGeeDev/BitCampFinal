@@ -221,6 +221,42 @@ body {
 }
 
 .profile-detail {
+  display:flex;
+  flex-direction: column;
+  padding: 0px;
+  margin-top:20px;
+}
+.profile-detail-row {
+  display:flex;
+  flex-direction: row;
+  margin-bottom:10px;
+}
+.profile-detail-label {
+  width:30%;
+  border:1px solid #2d3e50;
+  color:#2d3e50;
+  font-color:white;
+  border-radius:3px;
+  margin:2px 5px 2px 5px;
+  font-size:12px;
+  padding:3px;
   
 }
-
+.profile-detail-value {
+  width:70%;
+  text-align:left;
+  border:1px solid #d4d4d4;
+  border-radius:3px;
+  margin:2px 5px 2px 0;
+  padding:3px;
+  padding-left:7px;
+  font-size:12px;
+}
+.updateBtnWrapper {
+  text-align:right;
+  margin-right:10px;
+  
+}
+.btn-sm {
+  color:white;
+}
