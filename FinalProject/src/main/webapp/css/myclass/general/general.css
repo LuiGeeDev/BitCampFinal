@@ -147,13 +147,15 @@ a {
 }
 
 .page-btns {
-  display:flex;
+  display: flex;
   margin: auto;
-  margin-bottom:200px;
+  margin-bottom: 200px;
+  position: absolute;
+  left: 40%;
 }
 
 .write-btns {
-  margin-right: 17%;
+  margin-left: auto;
 }
 
 .btn.btn-primary.paging {
@@ -167,4 +169,10 @@ a {
   background-color: #EA8A02;
   border: 2px #EA8A02 solid;
   font-weight: bold;
+}
+
+.bottom-row {
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
 }
