@@ -10,13 +10,6 @@ body {
   margin-left: 8px;
 }
 
-#profile-img {
-  height: auto;
-  border-radius: 90px;
-  width: 180px;
-}
-
-
 .profiledetail {
   display: flex;
   flex-direction: row;
@@ -94,23 +87,6 @@ body {
   margin-left: 3px;
 }
 
-.profile {
-  display: flex;
-  flex-direction: row;
-  border: 1px solid rgba(0, 0, 0, .125);
-  margin: 10px;
-  padding: 10px;
-  margin-bottom: 19px;
-  border-radius: 10px;
-  text-align:center;
-}
-
-.studentDetailContainer {
-  display: flex;
-  flex-direction: column;
-  width:40%;
-}
-
 .contentWrapper {
   margin: 20px;
   width: 83%;
@@ -149,82 +125,16 @@ body {
   border-bottom: 1px solid rgba(0, 0, 0, .125);
 }
 
-.listName {
-  display: flex;
-  width: 34%;
-  text-align: center;
-  flex-direction: row;
-}
-
-.detail {
-  border: 1px solid rgba(0, 0, 0, .125);
-  margin: 0 10px 10px 10px;
-  margin-bottom: 19px;
-  border-radius: 10px;
-}
-
-.detailName {
-  border-bottom: 1px solid rgba(0, 0, 0, .125);
-  padding: 10px;
-}
-
-.detailContent {
-  padding: 10px;
-}
-
-.counseling {
-  border: 1px solid rgba(0, 0, 0, .125);
-  margin: 0 10px 10px 10px;
-  margin-bottom: 19px;
-  border-radius: 10px;
-}
-
-.counselingName {
-  border-bottom: 1px solid rgba(0, 0, 0, .125);
-  padding: 10px;
-}
-
-.counselingContent {
-  padding: 10px;
-}
-
-.profileimg {
-  
-}
-
-.studentArticle {
-  border: 1px solid rgba(0, 0, 0, .125);
-  margin: 0 10px 10px 10px;
-  margin-bottom: 19px;
-  border-radius: 10px;
-}
-
-.studentArticleTitle {
-  border-bottom: 1px solid rgba(0, 0, 0, .125);
-  padding: 10px;
-}
-
-.studentArticleContent {
-  padding: 10px;
-}
-
 .selectSize {
   height: 27%;
   width: 80%;
 }
 
-.selector {
-  word-break: break-all;
-}
 .cardShadow {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   display:flex;
   flex-direction:column;
 }
-.searchIcon{
-font-size: 21px;
-}
-
 
 .member-list-container {
   display:flex;
@@ -285,7 +195,32 @@ font-size: 21px;
   color:#bababa;
 }
 
+.profile {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(0, 0, 0, .125);
+  margin: 10px;
+  padding: 10px;
+  height : 500px;
+  margin-bottom: 19px;
+  border-radius: 10px;
+  text-align:center;
+}
 
+.studentDetailContainer {
+  display: flex;
+  flex-direction: column;
+  width:40%;
+  
+}
 
+#profile_photo {
+  height: auto;
+  border-radius: 90px;
+  width: 180px;
+}
 
+.profile-detail {
+  
+}
 
