@@ -83,13 +83,13 @@
           <span th:if="${pager.prev}">
             <a
               class="btn btn-primary paging"
-              th:href="@{/myclass/board(page=${pager.startPage}-1,board_id=${board.id})}"
+              th:href="@{/myclass/board(page=${pager.prevPage},board_id=${board.id})}"
             >
               &laquo;
             </a>
           </span>
           <span
-            th:each="idx, iterStat : ${#numbers.sequence(pager.startPage,pager.endPage)}"
+            th:each="idx : ${#numbers.sequence(pager.startPage,pager.endPage)}"
           >
             <a
               th:if="${boardSearch} != null"
@@ -106,10 +106,10 @@
               th:text="${idx}"
             ></a>
           </span>
-          <span th:if="${pager.next} and ${pager.endPage > 0}">
+          <span th:if="${pager.next}">
             <a
               class="btn btn-primary paging"
-              th:href="@{/myclass/board(page=${pager.endPage}+1,board_id=${board.id})}"
+              th:href="@{/myclass/board(page=${pager.nextPage},board_id=${board.id})}"
             >
               &raquo;
             </a>
