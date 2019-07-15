@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.ArticleDao;
@@ -65,10 +66,11 @@ public class MypageController {
     return "mypage/mypage";
   }
 
-  @GetMapping("/home/CommentList")
-  public String getCommentList(String user) {
-    
-    return null;
+  @PostMapping("/home/CommentList")
+  public @ResponseBody List<Comment> getCommentList(String user) {
+    CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
+    List<Comment> comments = commentDao.selectAllCommentByUsername(user);
+    return comments;
   }
   
   

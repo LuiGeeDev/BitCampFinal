@@ -24,7 +24,7 @@
             </div>
             <div class="profileContent">
               <div class="profileName">
-              <input type="hidden" value="${user.username}">
+              <input type="hidden" th:value="${user.username}" id="usernameBox">
                 [[${user.name}]](<span>[[${user.username}]]</span>)
               </div>
               <div class="profileCourse">
@@ -67,31 +67,30 @@
                 <span>등록한 댓글</span>
               </button>
             </div>
-            <div id="boardArticletWrapper">
+            <div>
             <div class="board">
+            
+            
               <div class="boardNav">
                 <div class="boardId nav-style">글번호</div>
-                <div class="boardTitle nav-style">제목</div>
+                <div class="boardTitle nav-style" id="TitleorContent">제목</div>
                 <div class="boardDate nav-style">작성일</div>
-                <div class="boardView nav-style">조회</div>
+                <div class="boardView nav-style" id="boardVoteCount">조회</div>
               </div>
+              
+              
                 <div class="boardContent iteration"
-                  th:each="list : ${article2}">
+                  th:each="list : ${article2}" id="boardArticletWrapper">
                   <div class="boardId cont-style">#[[${list.id}]]</div>
                   <div class="boardTitle cont-style">[[${list.title}]]</div>
                   <div class="boardDate cont-style">[[${list.time}]]</div>
                   <div class="boardView cont-style">[[${list.view_count}]]</div>
                 </div>
-            </div></div>
-
+                
+                
             <div class="board" id="Commentsboard">
-              <div class="boardNav">
-                <div class="boardId nav-style">글번호</div>
-                <div class="boardTitle nav-style">댓글내용</div>
-                <div class="boardDate nav-style">작성일</div>
-                <div class="boardView nav-style">조회</div>
-              </div>
               <div id="boardCommentWrapper">
+              <!-- 요기부터 댓글테이블 -->
                 <div class="boardContent iteration"
                   th:each="comment : ${comments}">
                   <div class="boardId cont-style" id="commentId"></div>
@@ -99,8 +98,11 @@
                   <div class="boardDate cont-style" id="commentDate"></div>
                   <div class="boardView cont-style" id="commentView"></div>
                 </div>
+                <!-- 끄읏 -->
               </div>
             </div>
+            
+            
           </div>
         </div>
       </div>
@@ -108,31 +110,63 @@
   </div>
   <!-- 이페이지에서사용하는자바스크립트는이script 태그안에작성-->
   <script th:inline="javascript">
-      $(document).ready(function() {
-        $("#Commentsboard").hide();
-      });
-      
+  
+  	
       
       $("#userComments").click(function(){
-        $("#boardArticletWrapper").empty();
-        $("#Commentsboard").show();
+
         
-        
-        const username = 
+        const username = $("#usernameBox").val();
         
         
         function getCommentList(username) {
           $.ajax({
             url: "/mypage/home/CommentList",
-            type: "GET",
+            type: "POST",
             data: {
               user:username
             },
             success: function(data) {
               
+              $("#TitleorContent").empty();
+              $("div").remove("#boardArticletWrapper");
+              $("div").remove("#boardVoteCount");
+              $("div").remove("#commentView");
+              $("#commentId").empty();
+              $("#commentContent").empty();
+              $("#commentDate").empty();
+              $("#TitleorContent").append("댓글내용");
+              $("#boardCommentWrapper").empty();
+              
+              $.each(data, function(index, item) {
+              
+                const id = item.id;
+                const content = item.content;
+                const date = item.updated_time;
+                
+                console.log(item.index);
+                
+              
+              let html = "<div class='boardContent iteration'>"+
+              "<div class='boardId cont-style' id='commentId'>"+ "#" + id +
+              "</div><div class='boardTitle cont-style' id='commentContent'>"+ content +
+              "</div><div class='boardDate cont-style' id='commentDate'>"+ date + "</div></div>";
+              
+              $("#boardCommentWrapper").append(html);
+              
+              
+              $(".boardTitle").css("width","70%");
+              
+              
+              });
+              
+             
+              
             }
           })
         }
+        
+        getCommentList(username);
         
       });
       
