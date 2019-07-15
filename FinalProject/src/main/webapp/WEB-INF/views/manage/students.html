@@ -88,6 +88,8 @@
                     th:text=${memberList.course_name}></div>
                   <div class="hidden" id="member-list-end_date"
                     th:text=${memberList.end_date}></div>
+                  <div class="hidden" id="member-list-profile_photo"
+                    th:text=${memberList.profile_photo}></div>
                   <div class="member-list-username"
                     th:text=${memberList.username}></div>
                   <div class="member-list-name"
@@ -111,7 +113,7 @@
           <div class="profile cardShadow">
           <div class="profile-img">
             <img id="profile_photo" 
-                 th:src="@{/css/stack/profile.jpg}" 
+                 th:src="@{/resources/images/default.png}" 
                  alt="프로필 사진">
           </div> 
           <div class="profile-detail">
@@ -160,8 +162,13 @@
   	  const role = $(this).children(".member-list-role").text();
   	  const enabled = $(this).children(".member-list-enabled").html();
   	  
+  	  const defaultImg = "/resources/images/default.png";
+  	  if(profile_photo.trim() == "default.png" || profile_photo == "") {
+  	    $("#profile_photo").attr("src",defaultImg);
+  	  } else {
+  	    $("#profile_photo").attr("src",profile_photo); 
+  	  }
   	  $("#profile-name, #profile-username, #profile-role, #profile-course_name, #profile-end_date, #profile-enabled").empty();
-  	  $("#profile_photo").attr("src",profile_photo);
   	  $("#profile-name").append(name);
   	  $("#profile-username").append(username);
   	  $("#profile-role").append(role);
