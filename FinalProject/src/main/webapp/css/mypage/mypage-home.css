@@ -137,11 +137,13 @@ body {
 .boardNav {
   display: flex;
   flex-direction: row;
+  margin-bottom: 10px;
 }
 
 .boardContent {
   display: flex;
   flex-direction: row;
+  margin-bottom: 7px;
 }
 
 .nav-style {
