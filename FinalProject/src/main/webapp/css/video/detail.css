@@ -46,11 +46,14 @@ body {
   height: 450px;
   margin-bottom: 50px;
 }
-
+#detailContentText{
+  white-space: pre-wrap;
+}
 #detailContent, #commentsContent {
   background-color: white;
   padding: 10px;
   margin: 10px;
+  
 }
 
 #videoWrapper {

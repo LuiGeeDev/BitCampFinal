@@ -1,14 +1,21 @@
 @charset "UTF-8";
+body{
+  font-family: 'Nanum Gothic';
+}
 
 .board-main-title {
   margin: 10px 0 0 80px;
-  font-size: 32px;
+  font-size: 14px;
   font-weight: bold;
   display: flex;
   width: 83%;
   margin-bottom: 20px;
+  
 }
-
+.board-main-title h4{
+  font-size:14px;
+  font-weight:bold;
+}
 .board-topnav {
   margin: 0 auto;
   padding: 10px 0;
@@ -23,6 +30,8 @@
 
 .board-topnav {
   display: flex;
+  font-size:14px;
+  font-weight:bold;
 }
 
 .board-writer, .board-write-time, .board-count {
@@ -91,15 +100,14 @@ a {
 }
 
 .board-search {
-  font-size: 17px;
+  font-size: 14px;
   margin-left: auto;
-  height: 31px;
+  height: 30px;
   margin-top: 1;
+  border-radius:3px;
 }
 
-.inputtext {
-  font-size: 17px;
-}
+
 
 .search-item {
   margin-left: auto;
@@ -120,8 +128,10 @@ a {
 .inputtext {
   border-radius: 3px;
   outline: none;
-  padding: 5px 10px;
+  padding: 4px 10px;
   width: 50%;
+  font-size: 14px;
+  border : 1px solid #c2c2c2;
 }
 
 .icon-wrapper {
@@ -163,6 +173,11 @@ a {
   color: #EA8A02;
   border: 2px #EA8A02 solid;
   font-weight: bold;
+  
+}
+.btn{
+  font-size:14px;
+  padding : 5.5px 12px;
 }
 
 .btn.btn-primary.paging.active {

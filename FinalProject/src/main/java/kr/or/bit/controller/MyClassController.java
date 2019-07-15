@@ -462,8 +462,7 @@ public class MyClassController {
     articleInsertService.writeArticle(article, homework, null, request);
 
     Schedule schedule = new Schedule();
-    article = articleDao.selectOneArticle(articleDao.selectMostRecentArticleId(article));
-    schedule.setArticle_id(articleDao.selectMostRecentArticleId(article));
+    schedule.setArticle_id(article.getId());
     schedule.setCourse_id(member.getCourse_id());
     schedule.setTitle(article.getTitle());
     schedule.setStart(Date.valueOf(article.getTime().toLocalDateTime().toLocalDate()));

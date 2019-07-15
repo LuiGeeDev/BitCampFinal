@@ -195,15 +195,14 @@ public class BoardService {
           general.setFile2(insertedFile.getId());
         }
       }
-      int insertedArticleId = articleDao.getMostRecentArticleId();
-      general.setArticle_id(insertedArticleId);
+      general.setArticle_id(article.getId());
       generalDao.insertGeneral(general);
     } catch (IllegalStateException e) {
       System.out.println("WriteArticle: " + e.getMessage());
     } catch (IOException e) {
       System.out.println("WriteArticle: " + e.getMessage());
     }
-    return articleDao.getMostRecentArticleId();
+    return article.getId();
   }
 
   public int writeReplyArticle(Article article, MultipartFile file1, MultipartFile file2, HttpServletRequest request) {
@@ -228,15 +227,14 @@ public class BoardService {
           general.setFile2(insertedFile.getId());
         }
       }
-      int insertedArticleId = articleDao.getMostRecentArticleId();
-      general.setArticle_id(insertedArticleId);
+      general.setArticle_id(article.getId());
       generalDao.insertGeneral(general);
     } catch (IllegalStateException e) {
       System.out.println("WriteArticle: " + e.getMessage());
     } catch (IOException e) {
       System.out.println("WriteArticle: " + e.getMessage());
     }
-    return articleDao.getMostRecentArticleId();
+    return article.getId();
   }
   
   public void writeComment(int article_id, Comment comment) {
