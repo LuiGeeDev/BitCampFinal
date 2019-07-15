@@ -88,6 +88,8 @@
                     th:text=${memberList.course_name}></div>
                   <div class="hidden" id="member-list-end_date"
                     th:text=${memberList.end_date}></div>
+                  <div class="hidden" id="member-list-profile_photo"
+                    th:text=${memberList.profile_photo}></div>
                   <div class="member-list-username"
                     th:text=${memberList.username}></div>
                   <div class="member-list-name"
@@ -107,124 +109,112 @@
               th:text="'검색결과 : '+${memberList.size()}+'명'"></div>
           </div>
 
-          <div class="studentDetailContainer">
-            <div class="profile cardShadow">
-              <div class="profile-img">
-                <img th:src="@{/css/stack/profile.jpg}"
-                  id="profile_photo">
-              </div>
-              <!-- 
-         프로필 사진
-         이름 , 아이디, email, enable, course_id(어떤수업 어떤강산지?) 
-        
-         
-         -->
-              <div class="profile-detail">
-                <div class="profile-detail-row">
-                  <div class="profile-detail-label">이름</div>
-                  <div class="profile-detail-value" id="profile-name"></div>
-                </div>
-                <div class="profile-detail-row">
-                  <div class="profile-detail-label">아이디</div>
-                  <div class="profile-detail-value"
-                    id="profile-username"></div>
-                </div>
-                <div class="profile-detail-row">
-                  <div class="profile-detail-label">직책</div>
-                  <div class="profile-detail-value" id="profile-role"></div>
-                </div>
-                <div class="profile-detail-row">
-                  <div class="profile-detail-label">클래스</div>
-                  <div class="profile-detail-value"
-                    id="profile-course_name"></div>
-                </div>
-                <div class="profile-detail-row">
-                  <div class="profile-detail-label">수료일</div>
-                  <div class="profile-detail-value"
-                    id="profile-end_date"></div>
-                </div>
-                <div class="profile-detail-row">
-                  <div class="profile-detail-label">계정</div>
-                  <div class="profile-detail-value" id="profile-enabled"></div>
-                </div>
-              </div>
-              <div class="updateBtnWrapper">
-                <button class="btn btn-warning btn-sm"
-                  id="switch-enabled-btn">계정</button>
-              </div>
+        <div class="studentDetailContainer">
+          <div class="profile cardShadow">
+          <div class="profile-img">
+            <img id="profile_photo" 
+                 th:src="@{/resources/images/default.png}" 
+                 alt="프로필 사진">
+          </div> 
+          <div class="profile-detail">
+           	<div class="profile-detail-row">
+              <div class="profile-detail-label">이름</div>
+              <div class="profile-detail-value" id="profile-name"></div>
             </div>
+            <div class="profile-detail-row">
+              <div class="profile-detail-label">아이디</div>
+              <div class="profile-detail-value" id="profile-username"></div>
+            </div>
+            <div class="profile-detail-row">
+              <div class="profile-detail-label">직책</div>
+              <div class="profile-detail-value" id="profile-role"></div>
+            </div>
+            <div class="profile-detail-row">
+              <div class="profile-detail-label">클래스</div>
+              <div class="profile-detail-value" id="profile-course_name"></div>
+            </div>
+            <div class="profile-detail-row">
+              <div class="profile-detail-label">수료일</div>
+              <div class="profile-detail-value" id="profile-end_date"></div>
+            </div>
+            <div class="profile-detail-row">
+              <div class="profile-detail-label">계정</div>
+              <div class="profile-detail-value" id="profile-enabled"></div>  
+            </div>
+            <div class="updateBtnWrapper">
+              <button class="btn btn-warning btn-sm" id="switch-enabled-btn">계정</button>
+            </div>
+          </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
+  </div>
   <script src="/js/qna/content.js"></script>
   <script th:inline="javascript">
-          $(".member-list")
-              .click(
-                  function(event) {
-                    const course_name = $(this).children(
-                        "#member-list-course_name").text();
-                    const end_date = $(this).children("#member-list-end_date")
-                        .text();
-                    const username = $(this).children(".member-list-username")
-                        .text();
-                    const name = $(this).children(".member-list-name").text();
-                    const role = $(this).children(".member-list-role").text();
-                    const enabled = $(this).children(".member-list-enabled")
-                        .html();
-                    $(
-                        "#profile-name, #profile-username, #profile-role, #profile-course_name, #profile-end_date, #profile-enabled")
-                        .empty();
-                    $("#profile-name").append(name);
-                    $("#profile-username").append(username);
-                    $("#profile-role").append(role);
-                    $("#profile-course_name").append(course_name);
-                    $("#profile-end_date").append(end_date);
-                    $("#profile-enabled").append(enabled);
-                    const memberEnabled = $("#profile-enabled").text().trim();
-                    $("#switch-enabled-btn").empty();
-                    if (memberEnabled === "활성화") {
-                      $("#switch-enabled-btn").append("비활성");
-                    } else {
-                      $("#switch-enabled-btn").append("활성화");
-                    }
-                  });
-          $("#switch-enabled-btn")
-              .click(
-                  function(event) {
-                    const memberEnabled = $("#profile-enabled").text().trim();
-                    const memberUsername = $("#profile-username").text();
-                    console.log("enabled : " + memberEnabled);
-                    console.log("username : " + memberUsername);
-                    $
-                        .ajax({
-                          url : "/ajax/manage/enabledUpdate",
-                          type : "POST",
-                          data : {
-                            username : memberUsername,
-                            enabled : memberEnabled
-                          }
-                        })
-                        .done(
-                            function() {
-                              $(
-                                  "#profile-enabled, #switch-enabled-btn, #"
-                                      + memberUsername).empty();
-                              if (memberEnabled == "활성화") {
-                                $("#profile-enabled, #" + memberUsername)
-                                    .append(
-                                        "<i class='fas fa-circle off' th:case='0'> 비활성</i>");
-                                $("#switch-enabled-btn").append("활성화");
-                              } else {
-                                $("#profile-enabled, #" + memberUsername)
-                                    .append(
-                                        "<i class='fas fa-circle on' th:case='1'> 활성화</i>");
-                                $("#switch-enabled-btn").append("비활성화");
-                              }
-                            });
-                  });
-        </script>
+  	$(".member-list").click(function(event){
+  	  const course_name = $(this).children("#member-list-course_name").text();
+  	  const end_date = $(this).children("#member-list-end_date").text();
+  	  const profile_photo = $(this).children("#member-list-profile_photo").text();
+  	  const username = $(this).children(".member-list-username").text();
+  	  const name = $(this).children(".member-list-name").text();
+  	  const role = $(this).children(".member-list-role").text();
+  	  const enabled = $(this).children(".member-list-enabled").html();
+  	  
+  	  const defaultImg = "/resources/images/default.png";
+  	  if(profile_photo.trim() == "default.png" || profile_photo == "") {
+  	    $("#profile_photo").attr("src",defaultImg);
+  	  } else {
+  	    $("#profile_photo").attr("src",profile_photo); 
+  	  }
+  	  $("#profile-name, #profile-username, #profile-role, #profile-course_name, #profile-end_date, #profile-enabled").empty();
+  	  $("#profile-name").append(name);
+  	  $("#profile-username").append(username);
+  	  $("#profile-role").append(role);
+  	  $("#profile-course_name").append(course_name);
+  	  $("#profile-end_date").append(end_date);
+  	  $("#profile-enabled").append(enabled);
+  	  
+  	  const memberEnabled = $("#profile-enabled").text().trim();
+  	  $("#switch-enabled-btn").empty();
+  	  if(memberEnabled === "활성화") {
+  	    $("#switch-enabled-btn").append("비활성");
+	  } else {
+	    $("#switch-enabled-btn").append("활성화");
+	  }
+  	});
+  	
+  	$("#switch-enabled-btn").click(function(event){
+  	  const memberEnabled = $("#profile-enabled").text().trim();
+  	  const memberUsername = $("#profile-username").text();
+  	 
+  	  console.log("enabled : "+memberEnabled);
+  	  console.log("username : " +memberUsername);
+  	  
+  	  $.ajax({
+  	   	url:"/ajax/manage/enabledUpdate",
+  	   	type:"POST",
+  	   	data: {
+  	   	  username: memberUsername,
+  	   	  enabled: memberEnabled
+  	   	}
+  	  }).done(function() {
+  	    $("#profile-enabled, #switch-enabled-btn, #" + memberUsername).empty();
+  	    if(memberEnabled=="활성화") {
+  	      $("#profile-enabled, #"+memberUsername).append("<i class='fas fa-circle off' th:case='0'> 비활성</i>");
+  	      $("#switch-enabled-btn").append("활성화");
+  	    }else {
+  	      $("#profile-enabled, #"+memberUsername).append("<i class='fas fa-circle on' th:case='1'> 활성화</i>");
+  	      $("#switch-enabled-btn").append("비활성화");
+  	    }
+  	    
+  	    
+  	    
+
+  	    
+  	  });
+  	});
+  </script>
 </body>
 </html>
