@@ -12,7 +12,7 @@
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
       <div th:replace="myclass/nav :: project-nav(chat)"></div>
-      <div class="chat-room" ss-container></div>
+      <div class="chat-room"></div>
       <div class="chat-input">
         <input type="file" name="file" id="file" />
         <label for="file">+</label>
@@ -22,17 +22,6 @@
     <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-database.js"></script>
     <script th:inline="javascript">
-      const sock = new SockJS("/chat");
-      const client = Stomp.over(sock);
-      client.connect({}, function() {
-        client.subscribe("/topic/chat/groups/" + [[${group.id}]], renderMessages);
-        client.subscribe("/topic/chat/groups/member/" + [[${group.id}]], function(data) {
-          console.log(JSON.parse(data.body));
-        });
-
-        client.send("/app/chat/in", {}, [[${group.id}]]);
-      });
-
       appendDate(new Date(Date.now()));
       // Your web app's Firebase configuration
       const firebaseConfig = {
@@ -53,11 +42,11 @@
           name: name,
           time: Date.now(),
           content: content,
-          group_id: [[${group.id}]]
+          group_id: [[${user.group_id}]]
         };
 
-        database.ref("chat/groups/" + [[${group.id}]]).push(chatMessage);
-        client.send("/app/chat/send", {}, JSON.stringify(chatMessage));
+        database.ref("chat/groups/" + [[${user.group_id}]]).push(chatMessage);
+        client.send("/app/chat", {}, JSON.stringify(chatMessage));
         
         if (!client.connected) {
           console.log("접속 끊김");
@@ -75,7 +64,7 @@
 
       function renderMessages(data) {
         const message = JSON.parse(data.body);
-        getRecentMessages([[${group.id}]]).then(function(data) {
+        getRecentMessages([[${user.group_id}]]).then(function(data) {
           if (data) {
             const previousMessage = data[Object.keys(data)[0]];
             const currentMessage = data[Object.keys(data)[1]];
@@ -100,8 +89,6 @@
           } else {
             makeNewMessage(message);
           }
-          
-          $(".chat-room .ss-content")[0].scrollTop = $(".chat-room .ss-content")[0].scrollHeight;
         });
       }
 
@@ -115,13 +102,13 @@
         chatHeader.append($(`<img src="https://via.placeholder.com/40" alt="프로필 사진" />`));
         chatHeader.append(chatSenderInfo);
         chatMessage.append(chatHeader).append(`<a href="${message.filepath}" download="${message.content}"><span class="chat-content-file"><span class="file-name">${message.content}</span><i class="fas fa-cloud-download-alt"></i></span></a>`);
-        $(".chat-room .ss-content").append(chatMessage);
+        $(".chat-room").append(chatMessage);
       }
 
       function appendDate(now) {
         const date = `${now.getFullYear()}년 ${now.getMonth() + 1}월 ${now.getDate()}일`;
         const dateLine = $(`<div class="date-line"><span class="date">${date}</span></div>`);
-        $(".chat-room .ss-content").append(dateLine);
+        $(".chat-room").append(dateLine);
       }
 
       function stickMessage(message) {
@@ -137,13 +124,21 @@
         chatHeader.append($(`<img src="https://via.placeholder.com/40" alt="프로필 사진" />`));
         chatHeader.append(chatSenderInfo);
         chatMessage.append(chatHeader).append(`<div class="chat-content">${message.content}</div>`);
-        $(".chat-room .ss-content").append(chatMessage);
+        $(".chat-room").append(chatMessage);
       }
+
+      const interval = setInterval(function() {
+        client.subscribe("/topic/chat/groups/" + [[${user.group_id}]], renderMessages);
+
+        if (client.connected) {
+          clearInterval(interval);
+        }
+      }, 1500);
 
       $("#chat-message").keydown(function(event) {
         if (event.keyCode === 13) {
           event.preventDefault();
-          const groupId = [[${group.id}]];
+          const groupId = [[${user.group_id}]];
           const username = [[${user.username}]];
           const name = [[${user.name}]];
           const content = $('#chat-message').val();
@@ -165,7 +160,7 @@
         const inputFile = document.getElementById("file");
         formData.append("file", inputFile.files[0]);
         formData.append("time", Date.now());
-        formData.append("group_id", [[${group.id}]]);
+        formData.append("group_id", [[${user.group_id}]]);
         formData.append("name", [[${user.name}]]);
         $.ajax({
           url: "/ajax/chat/file",
@@ -174,16 +169,11 @@
           processData: false,
           contentType: false,
           success: function(data) {
-            database.ref("chat/groups/" + [[${group.id}]]).push(data);
-            client.send("/app/chat/send", {}, JSON.stringify(data));
+            database.ref("chat/groups/" + [[${user.group_id}]]).push(data);
+            client.send("/app/chat", {}, JSON.stringify(data));
           }
         })
       });
-
-      window.onbeforeunload = function() {
-        client.send("/app/chat/out", {}, [[${group.id}]]);
-        client.disconnect();
-      }
     </script>
   </body>
 </html>

@@ -41,12 +41,6 @@ body {
   top: 10px;
   right: 10px;
   color: #F39C20;
-  border: none;
-  background: none;
-}
-
-.edit-link:active i, .edit-checklist:active i {
-  transform: scale(0.95);
 }
 
 .project-link {

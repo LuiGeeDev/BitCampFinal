@@ -1,16 +1,12 @@
-function connectToWebSocket() {
-  const sock = new SockJS("/notification");
-  const client = Stomp.over(sock);
-  client.connect({}, function() {
-    client.subscribe("/user/queue/notice", function(data) {
-      const notification = JSON.parse(data.body);
-      addNotice(notification);
-      showToast(notification);
-    });
+const sock = new SockJS("/socket");
+const client = Stomp.over(sock);
+client.connect({}, function() {
+  client.subscribe("/user/queue/notice", function(data) {
+    const notification = JSON.parse(data.body);
+    addNotice(notification);
+    showToast(notification);
   });
-}
-
-connectToWebSocket();
+});
 
 function addNotice(notification) {
   const link = $(`<a class="notice-link" href="${notification.link}">`);

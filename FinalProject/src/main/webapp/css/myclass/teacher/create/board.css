@@ -45,12 +45,6 @@ h4 {
   right: 3px;
   top: 9px;
   color: #F29C20;
-  background: none;
-  border: none;
-}
-
-.board button:active i {
-  transform: scale(0.95);
 }
 
 .board-to-remove {
@@ -88,18 +82,17 @@ h4 {
   border: 1px solid #a6a6a6;
   border-right: none;
   border-radius: 3px 0 0 3px;
-  padding: 5px 10px 7px;
+  padding: 5px 10px;
   font-size: 14px;  
-  line-height: 20px;
 }
 
 .new-board button {
   border: 1px solid #a6a6a6;
   font-size: 14px;
   border-radius: 0 3px 3px 0;
-  padding: 6px 10px;
+  border-left: none;
+  padding: 5px 10px;
   margin-left: -4px;
-  line-height: 20px;
 }
 
 .new-board button:active {

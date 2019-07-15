@@ -26,6 +26,7 @@ import kr.or.bit.model.Comment;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.General;
 import kr.or.bit.service.ArticleService;
+import kr.or.bit.service.ArticleUpdateService;
 import kr.or.bit.service.BoardService;
 import kr.or.bit.utils.Helper;
 import kr.or.bit.utils.Pager;

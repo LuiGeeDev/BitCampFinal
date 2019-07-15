@@ -222,6 +222,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE g.id = #{group_id})),
     (select max(id)+1 from (select * from
     article) as temp))
+
   </insert>
   <update id="updateTroubleShootingArticle">
     UPDATE article

@@ -2,6 +2,7 @@
   width: 80%;
   margin-left: 20px;
   height: 75vh;
+  overflow-y: scroll;
 }
 
 .chat-message {
@@ -39,7 +40,7 @@
 .chat-input {
   margin: 20px 20px;
   width: 80%;
-  position: relative;
+  /* position: absolute; */
 }
 
 #chat-message {
@@ -57,7 +58,7 @@
   display: none;
 }
 
-#file + label {
+#file+label {
   vertical-align: top;
   position: absolute;
   font-size: 42px;
@@ -66,9 +67,9 @@
   left: 2px;
   padding: 0 2px 9px 0px;
   margin: 0 3px;
+  margin-left: 234px;
   border-right: 1px solid #23262a;
   cursor: pointer;
-  background: none;
 }
 
 #file+label:hover {
@@ -115,10 +116,11 @@
   color: #F39C20;
 }
 
-.chat-content-file:hover i {
-  transform: scale(1.03);
+.chat-content-file:hover svg {
+  transform: scale(1.1);
+  transition: .2s;
 }
 
-.chat-content-file:active i {
-  transform: scale(0.98);
+.chat-content-file:active svg {
+  transform: scale(0.9);
 }
