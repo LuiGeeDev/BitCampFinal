@@ -163,6 +163,7 @@
           },
           success: function(data) {
            /*  console.log("new Date : " + new Date(${data.time})); */
+           console.log(data);
             $(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime").empty();
             $("#message-sender-id").append(`${data.sender_username}`);
             $(".message-sender-name")
