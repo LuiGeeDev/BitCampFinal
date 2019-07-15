@@ -208,8 +208,11 @@ body {
 
 #profile_photo {
   height: auto;
+  width:180px;
   border-radius: 90px;
-  width: 180px;
+}
+.profile-img {
+  height: 180px;
 }
 
 .profile-detail {
