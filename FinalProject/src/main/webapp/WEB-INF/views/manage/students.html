@@ -88,9 +88,9 @@
               <div class="member-list-username" th:text=${memberList.username}></div>
               <div class="member-list-name" th:text=${memberList.name}></div>
               <div class="member-list-role" th:text=${memberList.role}></div>
-              <div class="member-list-enabled" th:switch="${memberList.enabled}">
+              <div class="member-list-enabled" th:id="${memberList.username}" th:switch="${memberList.enabled}">
                 <i class="fas fa-circle on" th:case="1"> 활성화</i>
-                <i class="fas fa-circle off" th:case="0"> 비활성화</i>
+                <i class="fas fa-circle off" th:case="0"> 비활성</i>
               </div>
             </div>
             </div>
@@ -166,7 +166,7 @@
   	  const memberEnabled = $("#profile-enabled").text().trim();
   	  $("#switch-enabled-btn").empty();
   	  if(memberEnabled === "활성화") {
-  	    $("#switch-enabled-btn").append("비활성화");
+  	    $("#switch-enabled-btn").append("비활성");
 	  } else {
 	    $("#switch-enabled-btn").append("활성화");
 	  }
@@ -175,6 +175,7 @@
   	$("#switch-enabled-btn").click(function(event){
   	  const memberEnabled = $("#profile-enabled").text().trim();
   	  const memberUsername = $("#profile-username").text();
+  	 
   	  console.log("enabled : "+memberEnabled);
   	  console.log("username : " +memberUsername);
   	  
@@ -186,15 +187,19 @@
   	   	  enabled: memberEnabled
   	   	}
   	  }).done(function() {
-  	    $("#profile-enabled").empty();
-  	    $("#switch-enabled-btn").empty();
+  	    $("#profile-enabled, #switch-enabled-btn, #" + memberUsername).empty();
   	    if(memberEnabled=="활성화") {
-  	      $("#profile-enabled").append("<i class='fas fa-circle off' th:case='0'> 비활성화</i>");
+  	      $("#profile-enabled, #"+memberUsername).append("<i class='fas fa-circle off' th:case='0'> 비활성</i>");
   	      $("#switch-enabled-btn").append("활성화");
   	    }else {
-  	      $("#profile-enabled").append("<i class='fas fa-circle on' th:case='1'> 활성화</i>");
+  	      $("#profile-enabled, #"+memberUsername).append("<i class='fas fa-circle on' th:case='1'> 활성화</i>");
   	      $("#switch-enabled-btn").append("비활성화");
   	    }
+  	    
+  	    
+  	    
+
+  	    
   	  });
   	});
   </script>
