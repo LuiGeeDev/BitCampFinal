@@ -15,45 +15,57 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  -->
  <mapper namespace="kr.or.bit.dao.ManagerDao">
  	<select id="selectMembersByRole" resultType="kr.or.bit.model.Member">
- 		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role
+ 		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role, c.course_name, c.end_date
 		FROM member m JOIN authorities a 
-						ON m.username = a.username
+		ON m.username = a.username
+		JOIN course c
+		ON m.course_id=c.id
 		WHERE a.role = #{role}
  	</select>
  	<select id="selectMembersByRoleAndOneIntColumn" resultType="kr.or.bit.model.Member">
- 		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role
+ 		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role, c.course_name, c.end_date
 		FROM member m JOIN authorities a 
-						ON m.username = a.username
+		ON m.username = a.username
+		JOIN course c
+		ON m.course_id=c.id
 		WHERE a.role = #{role} 
 		AND   m.${intColumn} = #{intValue}
  	</select>
  	<select id="selectMembersByRoleAndOneStringColumn" resultType="kr.or.bit.model.Member">
- 		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role
+ 		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role, c.course_name, c.end_date
 		FROM member m JOIN authorities a 
-						ON m.username = a.username
+		ON m.username = a.username
+		JOIN course c
+		ON m.course_id=c.id
 		WHERE a.role = #{role} 
 		AND   m.${stringColumn} LIKE '%${stringValue}%'
  	</select>
  	<select id="selectMembersByRoleAndEnableAndCourseId" resultType="kr.or.bit.model.Member">
- 		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role
+ 		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role, c.course_name, c.end_date
 		FROM member m JOIN authorities a 
-						ON m.username = a.username
+		ON m.username = a.username
+		JOIN course c
+		ON m.course_id=c.id
 		WHERE a.role = #{role} 
 		AND   m.enabled = #{enabled}
 		AND   m.course_id = #{course_id}
  	</select>
  	<select id="selectMembersByRoleAndStringColumnAndIntColumn" resultType="kr.or.bit.model.Member">
- 		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role
+ 		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role, c.course_name, c.end_date
 		FROM member m JOIN authorities a 
-						ON m.username = a.username
+		ON m.username = a.username
+		JOIN course c
+		ON m.course_id=c.id
 		WHERE a.role = #{role} 
 		AND   m.${stringColumn} LIKE '%${stringValue}%'
 		AND   m.${intColumn} = #{intValue}
  	</select>
  	<select id="selectMemberByRoleAndEnableAndCourseIdAndSearch" resultType="kr.or.bit.model.Member">
- 		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role
+ 		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role, c.course_name, c.end_date
 		FROM member m JOIN authorities a 
-						ON m.username = a.username
+		ON m.username = a.username
+		JOIN course c
+		ON m.course_id=c.id
 		WHERE a.role = #{role} 
 		AND   m.enabled = #{enabled}
 		AND   m.course_id = #{course_id}
@@ -63,58 +75,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		SELECT id, course_name, start_date, end_date, subject, Classroom_id 
 		FROM course
  	</select>
- 	
- 	
- 	
- 	
- 	<!-- test -->
- 	<select id="selectMembersByName" resultType="kr.or.bit.model.Member">
- 		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role
-		FROM member m JOIN authorities a 
-						ON m.username = a.username
-		WHERE m.name = #{name}
- 	</select>
- 	<select id="selectMembersByUserame" resultType="kr.or.bit.model.Member">
- 		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role
-		FROM member m JOIN authorities a 
-						ON m.username = a.username
-		WHERE m.username = #{username}
- 	</select>
- 	<select id="selectMembersByCourseId" resultType="kr.or.bit.model.Member">
- 		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role
-		FROM member m JOIN authorities a 
-						ON m.username = a.username
-		WHERE m.course_id = #{course_id}
- 	</select>
- 	<select id="selectMembersByEnabled" resultType="kr.or.bit.model.Member">
- 		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role
-		FROM member m JOIN authorities a 
-						ON m.username = a.username
-		WHERE m.enable = #{enabled}
- 	</select>
- 	<select id="selectMembersByOneColumn" resultType="kr.or.bit.model.Member">
- 		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role
-		FROM member m JOIN authorities a 
-						ON m.username = a.username
-		WHERE a.role = #{role} 
-		AND   m.enable = #{enable}
-		AND	  m.course_id = #{course_id}
-		AND   m.${column} = #{value}
- 	</select>
- 	<select id="selectMembersByTwoColumns" resultType="kr.or.bit.model.Member">
- 		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role
-		FROM member m JOIN authorities a 
-						ON m.username = a.username
-		WHERE a.role = #{role} 
-		AND   m.${columnOne} = #{valueOne}
-		AND   m.${columnTwo} = #{valueTwo}
- 	</select>
- 	<select id="selectMembersByThreeColumn" resultType="kr.or.bit.model.Member">
- 		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role
-		FROM member m JOIN authorities a 
-						ON m.username = a.username
-		WHERE m.enable = #{enabled}
- 	</select>
+ 	<update id="updateMemberEnabled">
+ 		UPDATE member
+		SET enabled=#{enabled}
+		WHERE username=#{username}
+ 	</update>
  	
  </mapper>
  
