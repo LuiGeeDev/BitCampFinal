@@ -26,7 +26,7 @@
             <li class="ui-widget-content" th:each="tag : ${tags}">#[[${tag.tag}]]</li>
           </ol>
           <div class="submit-btn">
-            <button type="submit" id="submitbtn" class="btn btn-primary">올리기</button>
+            <button type="submit" id="submitbtn" class="btn btn-primary submit-btn">올리기</button>
           </div>
         </div>
       </div>
@@ -38,6 +38,30 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <script type="text/javascript">
+  	var title = $("#input-title");
+  	var note = $(".note-editable").val();
+    $(".submit-btn").click(function(event) {
+      
+      if(title.val() == null || title.val().trim() == "") {
+        event.preventDefault();
+        Swal.fire({
+	  	    type: 'error',
+	  	    text: '다시 입력해주세요 !!',
+	  	  })
+      } else {
+        Swal.fire({
+    	    type: 'success',
+    	    title: '작성되었습니다',
+    	    showConfirmButton: false,
+    	    timer: 1500
+    	  });
+      }   
+    });
+  
+
+  	
+  	
+  
       $(function() {
         $("#selectable").selectable({
           stop : function() {
