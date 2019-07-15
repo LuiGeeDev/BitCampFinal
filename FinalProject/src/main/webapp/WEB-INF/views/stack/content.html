@@ -9,9 +9,7 @@
   <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
   <div class="main" th:fragment="main">
     <div class="title">
-      <h3>
-        <b>스택게시판</b>
-      </h3>
+      <h3>스택게시판</h3>
       <div class="spinner-border text-warning spin-where" role="status"
         id="spinner">
         <span class="sr-only">Loading...</span>
@@ -29,11 +27,9 @@
         <td colspan="1" id="contenteditor"><a
           th:href="@{/stack/edit(id=${stackcontent.id})}"
           th:if="${user.username == stackcontent.username}"
-          class="updateBtn">[수정]</a> 
-          <span th:if="${user.username == stackcontent.username or user.role == 'MANAGER'}"
-                class="deleteBtn" id="deleteCheck">[삭제]
-          </span>
-          </td>
+          class="updateBtn">[수정]</a> <span
+          th:if="${user.username == stackcontent.username or user.role == 'MANAGER'}"
+          class="deleteBtn" id="deleteCheck">[삭제] </span></td>
       </tr>
       <tr>
         <td colspan="4" class="tdtitle"><span
@@ -87,8 +83,8 @@
       </tr>
     </table>
     <!-- 댓글목록 -->
-    
-    
+
+
     <!-- 채택된 답변 -->
 
 
@@ -115,13 +111,13 @@
         class="iteration" th:each="list : ${stackcontent.commentlist}">
         <tr>
           <td class="td8"><i class="fas fa-user-circle fa-lg fa-2x"></i></td>
-          <td>[[${list.writer.name}]] 
-            <a th:if="${list.id != stackcontent.option.adopted_answer and (list.username == user.username or user.role == 'MANAGER')}"
+          <td class="comment-writer">[[${list.writer.name}]] <a
+            th:if="${list.id != stackcontent.option.adopted_answer and (list.username == user.username or user.role == 'MANAGER')}"
             th:href="@{/stack/commentdelete(id=${list.id})}">[삭제]</a><br>
             <span class="commentCalender"
             th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
-            </td>
-          
+          </td>
+
           <td class="td7"></td>
         </tr>
         <tr>
@@ -129,12 +125,12 @@
           <td></td>
         </tr>
         <tr>
-          <td colspan="2" class="td6">
-          <span th:if="${stackcontent.username}==${user.username} and ${stackcontent.option.adopted_answer==0}"
-          class="checkButton"><a th:href="@{/stack/chooseanswer(article_id=${stackcontent.id},comment_id=${list.id})}"
-          style="color:black;">
-          채택 <i class="far fa-check-circle"></i></a></span>
-          </td>
+          <td colspan="2" class="td6"><span
+            th:if="${stackcontent.username}==${user.username} and ${stackcontent.option.adopted_answer==0}"
+            class="checkButton"><a
+              th:href="@{/stack/chooseanswer(article_id=${stackcontent.id},comment_id=${list.id})}"
+              style="color: black;"> 채택 <i
+                class="far fa-check-circle"></i></a></span></td>
           <td></td>
         </tr>
       </table>

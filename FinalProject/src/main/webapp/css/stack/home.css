@@ -5,8 +5,12 @@ body {
 }
 
 .title {
-  font-size: 190%;
-  margin: 20px;
+  margin: 10px 20px 20px 140px;
+}
+
+.title h3 {
+  font-size: 18px;
+  font-weight: bold;
 }
 
 table {
@@ -14,6 +18,7 @@ table {
   margin-right: 10%;
   width: 80%;
   border-collapse: collapse;
+  font-size: 14px;
 }
 
 th, td {
@@ -27,7 +32,7 @@ td[colspan="2"] {
 
 .tdtitle {
   color: #0984e3;
-  font-size: 120%;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
 }
@@ -41,7 +46,6 @@ td[colspan="2"] {
   max-height: 50px;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 110%
 }
 
 .tdcontent br {
@@ -55,12 +59,12 @@ td[colspan="2"] {
 .tdcontent p {
   margin: 0px;
   display: inline;
-  font-family: 'Nanum Gothic'!important;
-  font-size: 15.6px!important;
+  font-family: 'Nanum Gothic' !important;
+  font-size: 14x !important;
 }
 
 .tdst {
-  font-size: 130%;
+  font-size: 14px;
   font-weight: bold;
 }
 
@@ -82,7 +86,6 @@ td[colspan="2"] {
   width: 20%;
   font-weight: bold;
 }
-
 
 .tag-name span {
   border-radius: 5px;
@@ -141,7 +144,7 @@ td[colspan="2"] {
 
 .page-btns {
   margin: auto;
-  margin-bottom:200px;
+  margin-bottom: 200px;
 }
 
 .write-btns {
@@ -155,12 +158,27 @@ td[colspan="2"] {
   font-weight: bold;
 }
 
+.btn {
+  font-size: 14px;
+}
+
+.seath input#boardSearch {
+  height: 30px;
+  margin: 5px;
+}
+
+.seath input.btn {
+  padding: 5px 12px;
+  margin-top: -3px;
+}
+
 .btn.btn-primary.paging.active {
   background-color: #EA8A02;
   border: 2px #EA8A02 solid;
   font-weight: bold;
 }
 
-.titleanswer{
-  color:red;
+.titleanswer {
+  color: red;
+  font-size: 12px
 }

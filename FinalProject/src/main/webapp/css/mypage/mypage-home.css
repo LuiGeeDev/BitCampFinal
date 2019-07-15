@@ -91,18 +91,20 @@ body {
 }
 
 .profileName {
-  font-size: 27px;
+  font-size: 18px;
   font-weight: 600;
 }
 
 .profileRole {
   margin-top: 2px;
+  font-size:12px;
 }
 
 .profileDetail {
   margin-top: 3px;
   display: flex;
   flex-direction: row;
+  font-size:13px;
 }
 
 .progresPercent {
@@ -132,18 +134,21 @@ body {
 
 .profileCourse {
   margin-top: 8px;
+  font-size:12px;
 }
 
 .boardNav {
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
+  font-size:15px;
 }
 
 .boardContent {
   display: flex;
   flex-direction: row;
   margin-bottom: 7px;
+  font-size:14px;
 }
 
 .nav-style {

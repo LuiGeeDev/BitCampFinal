@@ -24,10 +24,14 @@ body {
 }
 
 .title {
-  font-size: 190%;
+  font-size: 18px;
   margin: 20px;
   display: flex;
   flex-direction: column;
+}
+
+.title h3{
+  fon-size:18px;
 }
 
 .searchContainer {

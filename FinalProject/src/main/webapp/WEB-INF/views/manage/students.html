@@ -10,147 +10,160 @@
   <div class="main" th:fragment="main">
     <div class="Wrapper">
       <div class="title">
-        <h3>
-          <b>회원관리페이지</b>
-        </h3>
+        <h3>회원관리페이지</h3>
       </div>
       <hr>
       <div class="contentWrapper">
-      <div class="manageContainer">
-        <div class="memberContainer">
-        <form method="post" class="member-SearchContainer">
-          <div class="search cardShadow">
-          <div class="search-container">
-              <div class="searchTitle">
-                <div>직책</div>
-              </div>
-              <div class="searchContent">
-                <div>
-                  <select size="1" class="selectSize" name="role">
-                    <option value="STUDENT" selected>학생</option>
-                    <option value="TEACHER">강사</option>
-                    <option value="GRADUATE">졸업자</option>
-                  </select>
-                </div>
-              </div>
-             </div>
-             <div class="search-container">
-              <div class="searchTitle">
-                <div>비활성계정</div>
-              </div>
-              <div class="searchContent">
-                <div>
-                  <select size="1" class="selectSize" name="enabled">
-                    <option value="999" selected>전체</option>
-                    <option value="1">활성</option>
-                    <option value="0">비활성</option>
-                  </select>
-                </div>
-              </div>
-             </div>
-             <div class="search-container">
-              <div class="searchTitle">
-                <div>클래스</div>
-              </div>
-              <div class="searchContent">
-                <div>
-                  <select class="selectSize" name="course_id">
-                  <option value="0" selected>전체</option>
-                  <div th:each="courseList : ${courseList}">
-                  <option th:value="${courseList.id}" th:text="${courseList.course_name}"></option>
+        <div class="manageContainer">
+          <div class="memberContainer">
+            <form method="post" class="member-SearchContainer">
+              <div class="search cardShadow">
+                <div class="search-container">
+                  <div class="searchTitle">
+                    <div>직책</div>
                   </div>
-                  </select>
+                  <div class="searchContent">
+                    <div>
+                      <select size="1" class="selectSize" name="role">
+                        <option value="STUDENT" selected>학생</option>
+                        <option value="TEACHER">강사</option>
+                        <option value="GRADUATE">졸업자</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="search-container">
+                  <div class="searchTitle">
+                    <div>비활성계정</div>
+                  </div>
+                  <div class="searchContent">
+                    <div>
+                      <select size="1" class="selectSize" name="enabled">
+                        <option value="999" selected>전체</option>
+                        <option value="1">활성</option>
+                        <option value="0">비활성</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="search-container">
+                  <div class="searchTitle">
+                    <div>클래스</div>
+                  </div>
+                  <div class="searchContent">
+                    <div>
+                      <select class="selectSize" name="course_id">
+                        <option value="0" selected>전체</option>
+                        <div th:each="courseList : ${courseList}">
+                          <option th:value="${courseList.id}"
+                            th:text="${courseList.course_name}"></option>
+                        </div>
+                      </select>
+                    </div>
+                  </div>
                 </div>
               </div>
-             </div>
-            </div>
-            
-            <div class="searchContainer">
-        <span> <select class="search-select-box"name="stringColumn">
-            <option value="name" selected>이름</option>
-            <option value="username">아이디</option>
-        </select> <input class="search-input-text" type="text" name="stringValue"
-          placeholder="검색내용을 적어주세요"><input type="submit" class="btn btn-outline-primary searchBtn" value="검색">
-        </span>
-      </div>
-        </form>
-        <div class="member-list-board">
+
+              <div class="searchContainer">
+                <span> <select class="search-select-box"
+                  name="stringColumn">
+                    <option value="name" selected>이름</option>
+                    <option value="username">아이디</option>
+                </select> <input class="search-input-text" type="text"
+                  name="stringValue" placeholder="검색내용을 적어주세요"><input
+                  type="submit"
+                  class="btn btn-outline-primary searchBtn" value="검색">
+                </span>
+              </div>
+            </form>
+            <div class="member-list-board">
               <div class="member-list-username">ID</div>
               <div class="member-list-name">이름</div>
               <div class="member-list-role">직책</div>
               <div class="member-list-enabled">비활성</div>
             </div>
-          <div class="list cardShadow">
-            <div th:each="memberList : ${memberList}" class="member-list-container">
-            <div class="member-list">
-              <div class="member-list-username" th:text=${memberList.username}></div>
-              <div class="member-list-name" th:text=${memberList.name}></div>
-              <div class="member-list-role" th:text=${memberList.role}></div>
-              <div class="member-list-enabled" th:switch="${memberList.enabled}">
-                <i class="fas fa-circle on" th:case="1"></i>
-                <i class="fas fa-circle off" th:case="0"></i>
+            <div class="list cardShadow">
+              <div th:each="memberList : ${memberList}"
+                class="member-list-container">
+                <div class="member-list">
+                  <div class="member-list-username"
+                    th:text=${memberList.username}></div>
+                  <div class="member-list-name"
+                    th:text=${memberList.name}></div>
+                  <div class="member-list-role"
+                    th:text=${memberList.role}></div>
+                  <div class="member-list-enabled"
+                    th:switch="${memberList.enabled}">
+                    <i class="fas fa-circle on" th:case="1"></i> <i
+                      class="fas fa-circle off" th:case="0"></i>
+                  </div>
+                  <!-- <div class="member-list-enabled" th:if="${memberList.enabled == 0}"><i class="fas fa-circle"></i></div> -->
+                </div>
               </div>
-              <!-- <div class="member-list-enabled" th:if="${memberList.enabled == 0}"><i class="fas fa-circle"></i></div> -->
             </div>
-            </div>
+            <div class="select-list-count"
+              th:text="'검색결과 : '+${memberList.size()}+'명'"></div>
           </div>
-          <div class="select-list-count" th:text="'검색결과 : '+${memberList.size()}+'명'"></div>
-        </div>
 
-        <div class="studentDetailContainer">
-          <div class="profile cardShadow">
-          <div class="profile-img">
-          <img th:src="@{/css/stack/profile.jpg}" id="profile_photo" >
-          </div>
-          <!-- 
+          <div class="studentDetailContainer">
+            <div class="profile cardShadow">
+              <div class="profile-img">
+                <img th:src="@{/css/stack/profile.jpg}"
+                  id="profile_photo">
+              </div>
+              <!-- 
          프로필 사진
          이름 , 아이디, email, enable, course_id(어떤수업 어떤강산지?) 
         
          
          -->
-          <div class="profile-detail">
-           	<div class="profile-detail-row">
-              <div class="profile-detail-label">이름</div>
-              <input type="text" class="profile-detail-value" value="이힘찬">
-            </div>
-            <div class="profile-detail-row">
-              <div class="profile-detail-label">아이디</div>
-              <input type="text" class="profile-detail-value" value="1907050107">
-            </div>
-            <div class="profile-detail-row">
-              <div class="profile-detail-label">직책</div>
-              <input type="text" class="profile-detail-value" value="학생">
-            </div>
-            <div class="profile-detail-row">
-              <div class="profile-detail-label">클래스</div>
-              <input type="text" class="profile-detail-value" value="프론트앤드 및 백앤드 개발자양성과정">
-            </div>
-            <div class="profile-detail-row">
-              <div class="profile-detail-label">수료일</div>
-              <input type="text" class="profile-detail-value" value="2019-07-30">
-            </div>
-            <div class="profile-detail-row">
-              <div class="profile-detail-label">계정</div>
-              <div class="profile-detail-value" th:switch="1">
-                <i class="fas fa-circle on" th:case="1"> 활성화</i>
-                <i class="fas fa-circle off" th:case="0"> 비활성화</i>
+              <div class="profile-detail">
+                <div class="profile-detail-row">
+                  <div class="profile-detail-label">이름</div>
+                  <input type="text" class="profile-detail-value"
+                    value="이힘찬">
+                </div>
+                <div class="profile-detail-row">
+                  <div class="profile-detail-label">아이디</div>
+                  <input type="text" class="profile-detail-value"
+                    value="1907050107">
+                </div>
+                <div class="profile-detail-row">
+                  <div class="profile-detail-label">직책</div>
+                  <input type="text" class="profile-detail-value"
+                    value="학생">
+                </div>
+                <div class="profile-detail-row">
+                  <div class="profile-detail-label">클래스</div>
+                  <input type="text" class="profile-detail-value"
+                    value="프론트앤드 및 백앤드 개발자양성과정">
+                </div>
+                <div class="profile-detail-row">
+                  <div class="profile-detail-label">수료일</div>
+                  <input type="text" class="profile-detail-value"
+                    value="2019-07-30">
+                </div>
+                <div class="profile-detail-row">
+                  <div class="profile-detail-label">계정</div>
+                  <div class="profile-detail-value" th:switch="1">
+                    <i class="fas fa-circle on" th:case="1"> 활성화</i> <i
+                      class="fas fa-circle off" th:case="0"> 비활성화</i>
+                  </div>
+                </div>
+              </div>
+              <div class="updateBtnWrapper">
+                <input type="submit" class="btn btn-warning btn-sm"
+                  id="" value="저장">
               </div>
             </div>
-          </div>
-          <div class="updateBtnWrapper"><input
-            type="submit"
-            class="btn btn-warning btn-sm"
-            id=""
-            value="저장"
-          >
-          </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <script src="/js/qna/content.js"></script>
-  <script th:inline="javascript">
+    </div>
+   
+    <script src="/js/qna/content.js"></script>
+    <script th:inline="javascript">
  
   </script>
 </body>
