@@ -59,7 +59,6 @@ public class VideoController {
     Article article = articleService.selectOneArticle("video", id);
     
     articleUpdateService.viewCount(article);
-    System.out.println("비디오의 아티클 : " + article);
     
     model.addAttribute("voteStatus", articleVoteService.selectVote(id, Helper.userName()));
     model.addAttribute("article", article);
