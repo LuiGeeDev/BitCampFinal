@@ -204,7 +204,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     #{title}, #{content}, #{username}, #{board_id}, (select max(id)+1
     from (select * from article )as temp))
   </insert>
-  <insert id="insertTroubleShootingArticle">
+  <insert id="insertTroubleShootingArticle" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO article(time, updated_time, title,
     content, username, board_id, original_id)
     VALUES (now(),
@@ -229,7 +229,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SET title=#{title}, content=#{content}
     WHERE id=#{id}
   </update>
-  <insert id="insertReplyArticle">
+  <insert id="insertReplyArticle" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO article(time, updated_time, title,
     content, username, board_id,
     level, original_id, layer, sibling)
