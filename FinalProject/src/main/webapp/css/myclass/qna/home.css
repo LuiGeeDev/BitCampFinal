@@ -4,9 +4,19 @@ body {
   font-family: 'Nanum Gothic';
 }
 
+.title h3 {
+  font-size: 18px;
+}
+
 .title {
-  font-size: 190%;
-  margin: 20px;
+  margin: 10px 20px 20px 140px ;
+}
+
+#boardSearch {
+  border-radius: 3px;
+  border:1px #c2c2c2 solid;
+  height: 27px;
+  padding: 2px 4px;
 }
 
 table {
@@ -15,6 +25,7 @@ table {
   width: 80%;
   border: 1px solid white;
   border-collapse: collapse;
+  font-size: 14px;
 }
 
 th, td {
@@ -62,7 +73,7 @@ th, td {
 
 .td2 {
   width: 2.6%;
-  font-size: 70%;
+  font-size: 14px;
 }
 
 .td3 {
@@ -80,7 +91,7 @@ th, td {
 }
 
 .td6 {
-  
+  font-size: 16px;
 }
 
 .td5:hover {
@@ -138,12 +149,23 @@ th, td {
   font-weight: bold;
 }
 
-.align{
-  margin-left:45%;
-  margin-top:18px;
+.seath .btn {
+  font-size: 13px;
+  padding: 3.3px 10px;
+  margin: -3px 0 0 0;
+}
+
+.align {
+  margin-left: 45%;
+  margin-top: 18px;
   margin-bottom: 20px;
 }
 
-.writeBtnAlign{
+.writeBtnAlign {
   text-align: right;
+}
+
+.seath select {
+  height: 27px;
+  margin: -1px 5px 0px 5px;
 }

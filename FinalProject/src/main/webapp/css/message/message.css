@@ -5,6 +5,10 @@
   background-color: #F2F4F7;
 }
 
+.movemov i {
+  font-size:24px; 
+}
+
 .message-box2 {
   border: 1px solid #ededed;
   width: 34%;
@@ -138,7 +142,7 @@
 }
 
 .message-sender-name {
-  font-size: 20px;
+  font-size: 18px;
   color: black;
   font-weight: bold;
   display: flex;
@@ -175,6 +179,7 @@
 .message-sender-content {
   margin-left: 20px;
   margin-top: 50px;
+  font-size:14px;
 }
 
 .main {
@@ -193,7 +198,7 @@
 
 .text-move {
   margin-left: 12px;
-  font-size: 30px;
+  font-size: 18px;
 }
 
 .text-font {
@@ -216,6 +221,7 @@
 .movemov {
   margin-top: 20px;
   margin-left: 20px;
+  font-size: 18px;
 }
 
 .message-realtime {
@@ -236,7 +242,7 @@
 }
 
 .spinner-border {
-  width: 3rem; 
+  width: 3rem;
   height: 3rem;
- font-size: 300%;
+  font-size: 300%;
 }

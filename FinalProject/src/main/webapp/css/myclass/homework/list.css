@@ -1,8 +1,13 @@
 @charset "UTF-8";
 
+body {
+  font-familly: 'Nanum Gothic';
+}
+
 .board-main-title {
-  margin: 30px 0 20px 150px;
-  font-size: 32px;
+  margin: 10px 20px 20px 140px ;
+  font-size: 18px;
+  font-weight:bold;
   display: flex;
   width: 83%;
 }
@@ -11,12 +16,16 @@
   margin: 0 auto;
   padding: 10px 0;
   border-bottom: 1px solid #a6a6a6;
+  font-familly: 'Nanum Gothic';
+  font-size: 14px;
 }
 
 .board-content {
   margin: 0 auto;
   padding: 7px 0;
   board-bottom: 1px solid #a6a6a6;
+  font-familly: 'Nanum Gothic';
+  font-size: 14px;
 }
 
 .board-topnav {
@@ -68,7 +77,7 @@
 }
 
 .board {
-  margin: 30px 100px;
+  margin: 0 auto 30px;
   width: 80%;
   border: 1px solid #e5e5e5;
   border-radius: 5px;
@@ -113,8 +122,20 @@ a {
   font-weight: bold;
 }
 
+.btn{
+  font-size:14px;
+  margin-top:-5px;
+  
+}
+
 .btn.btn-primary.paging.active {
   background-color: #EA8A02;
   border: 2px #EA8A02 solid;
   font-weight: bold;
+}
+
+#boardSearch{
+  font-size:14px;
+  height:33px;
+  padding : 0 3px;
 }

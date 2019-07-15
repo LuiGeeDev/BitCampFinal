@@ -15,7 +15,7 @@ body {
 
 .page-title {
   font-weight: bold;
-  font-size: 32px;
+  font-size: 18px;
 }
 
 .project-name {
@@ -31,6 +31,7 @@ body {
   height: 25em;
   overflow-y: scroll;
   border: #2d3e50 0.5px solid;
+  font-size:14px;
 }
 
 .class-member {
@@ -46,10 +47,12 @@ body {
 
 .project-name-text {
   margin-right: 8.8px;
+  font-size:14px;
 }
 
 .group-count-text {
   margin-right: 4.5px;
+  font-size:14px;
 }
 
 .class-group {
@@ -71,6 +74,7 @@ body {
   height: 25em;
   border: 0.5px solid #2d3e50;
   padding-left: 1px;
+  font-size:14px;
 }
 
 .class-member:last-child {
@@ -80,9 +84,19 @@ body {
 .button-wrapper {
   margin: 10px auto;
 }
-
+.btn{
+  font-size:14px;
+  background-color:#f39c12;
+}
 .button-wrapper button {
-  font-weight: bold;
+  color:white;
+}
+.btn {
+  color:white;
+}
+.btn-warning.disabled, .btn-warning:disabled{
+  color:white;
+  background-color:#f39c12;
 }
 
 .content-wrapper input {
@@ -121,9 +135,7 @@ body {
 }
 
 .modal-footer button {
-  color: black;
-  font-weight: bold;
-  background-color: #EA8A02;
+  background-color: #F39C12;
 }
 
 .modal-body {
@@ -217,4 +229,12 @@ input[type="radio"] {
   font-weight: bold !important;
   color:black !important;
 }
-
+.modal-group-title{
+  font-size:15px;
+}
+.modal-title{
+  font-size:18px;
+}
+.modal-group-member{
+  font-size:14px;
+}

@@ -5,8 +5,12 @@ body {
 }
 
 .title {
-  font-size: 190%;
-  margin: 20px;
+  margin: 5px 20px 20px 140px;
+}
+
+.title h3 {
+  font-weight: bold;
+  font-size: 18px;
 }
 
 table {
@@ -23,7 +27,8 @@ th, td {
 
 .tdtitle {
   color: black;
-  font-size: 170%;
+  font-size: 18px;
+  font-weight: bold;
   border-bottom: 1.5px solid #eaebec;
   margin-left: 30px;
   margin-right: 30px;
@@ -32,7 +37,7 @@ th, td {
 
 .tdcontent {
   font-family: 'Nanum Gothic';
-  font-size: 17.6px;
+  font-size: 14px;
   border-right: 1.5px solid #eaebec;
   padding-bottom: 30px;
   padding-top: 20px;
@@ -40,16 +45,16 @@ th, td {
 
 .tdcontent p {
   font-family: 'Nanum Gothic' !important;
-  font-size: 17.6px !important;
 }
 
 .tdcontent span {
   font-family: 'Nanum Gothic' !important;
-  font-size: 17.6px !important;
+  font-size: 14px !important;
 }
 
 .td1 {
   width: 55%;
+  font-size: 16px;
 }
 
 .td2 {
@@ -93,15 +98,18 @@ th, td {
 .td9 {
   padding-bottom: 35px;
   padding-top: 25px;
+  font-size: 14px;
 }
 
 .td10 {
   padding: 20px 0px 10px 0px;
+  font-size: 14px;
 }
 
 .td11 {
-    padding-bottom: 28px;
-    padding-top: 25px;
+  padding-bottom: 28px;
+  padding-top: 25px;
+  font-size: 14px;
 }
 
 .tag-name span {
@@ -109,6 +117,7 @@ th, td {
   color: white;
   padding: 5px;
   line-height: 2.0em;
+  font-size: 14px;
 }
 
 #c1 {
@@ -149,10 +158,11 @@ th, td {
 
 .pwriter {
   margin-bottom: 0px;
+  font-size: 15px;
 }
 
 .pfont {
-  font-size: 80%;
+  font-size: 14px;
   color: gray;
   margin-bottom: 0px;
 }
@@ -199,8 +209,19 @@ th, td {
 }
 
 .comtitle {
-  font-size: 140%;
+  font-size: 18px;
   margin: 30px;
+  font-weight: bold;
+}
+
+.comment-writer {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.commentCalender {
+  font-size: 12px !important;
+  font-weight: normal;
 }
 
 .comtext {
@@ -208,6 +229,7 @@ th, td {
   margin-bottom: 0px;
   height: 110px;
   width: 100%;
+  resize: none;
 }
 
 .btnalign {
@@ -224,7 +246,7 @@ th, td {
 }
 
 .commentCalender {
-  font-size: 90%;
+  font-size: 12px;
   color: gray;
 }
 
@@ -261,12 +283,19 @@ th, td {
   color: red;
 }
 
-.checkButton{
+.checkButton {
   cursor: pointer;
   color: black;
 }
 
-.deleteBtn{
-  color:#007bff;
+.deleteBtn {
+  color: #007bff;
 }
 
+.btn {
+  font-size: 14px;
+}
+
+.stack-wrapper {
+  font-size: 14px;
+}
