@@ -107,8 +107,13 @@ public class StackController {
     if (adopted != 0) {
       Comment comment = stackdao.selectAdoptedAnswer(adopted);
       comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
+      comment.setTimeLocal(article.getTime().toLocalDateTime());
+      comment.setUpdatedTimeLocal(article.getUpdated_time().toLocalDateTime());
+      System.out.println("stack article :  " + article);
       model.addAttribute("adoptedanswer", comment);
     }
+    article.setTimeLocal(article.getTime().toLocalDateTime());
+    article.setUpdatedTimeLocal(article.getUpdated_time().toLocalDateTime());
     model.addAttribute("stackcontent", article);
     articleUpdateService.viewCount(article);
     return "stack/content";
