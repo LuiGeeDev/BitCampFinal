@@ -34,4 +34,7 @@ public interface CommentDao {
   void deleteVote(@Param("username") String username, @Param("id") int id);
   
   void countVote(int id);
+  
+  List<Comment> selectAllCommentByUsername(String username);
+
 }
