@@ -19,6 +19,8 @@ public interface CommentDao {
   
   List<Comment> selectAllComment(int article_id);
   
+  List<Comment> selectAllCommentByNotAdopted(int article_id);
+  
   Comment selectComment(@Param("article_id") int article_id, @Param("id") int id);
   
   Comment selectOneComment(int id);

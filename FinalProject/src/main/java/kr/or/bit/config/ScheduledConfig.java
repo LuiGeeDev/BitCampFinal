@@ -25,8 +25,10 @@ public class ScheduledConfig {
     
     List<Member> memberList = memberDao.selectStudent();
     
+    
     for(int i = 0 ; i < memberList.size() ; i ++) {
-      if(new java.util.Date(memberList.get(i).getEnd_date().getTime()).compareTo(new java.util.Date()) == -1) {
+      if(new java.util.Date(memberList.get(i).getEnd_date().getTime()).compareTo(new java.util.Date()) == -1
+         && !memberList.get(i).getRole().equals("TEACHER")) {
         memberDao.updateMemberGraduate(memberList.get(i));
       }
     }

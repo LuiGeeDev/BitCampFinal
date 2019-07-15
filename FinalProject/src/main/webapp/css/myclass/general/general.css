@@ -1,12 +1,21 @@
 @charset "UTF-8";
 
+body {
+  font-family: 'Nanum Gothic';
+}
+
 .board-main-title {
-  margin: 10px 0 0 80px;
-  font-size: 32px;
+  margin: 10px 0 0 140px;
+  font-size: 18px;
   font-weight: bold;
   display: flex;
   width: 83%;
   margin-bottom: 20px;
+}
+
+.board-main-title h4 {
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .board-topnav {
@@ -19,10 +28,13 @@
   margin: 0 auto;
   padding: 7px 0;
   board-bottom: 1px solid #a6a6a6;
+  font-size: 14px;
 }
 
 .board-topnav {
   display: flex;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .board-writer, .board-write-time, .board-count {
@@ -91,18 +103,16 @@ a {
 }
 
 .board-search {
-  font-size: 17px;
+  font-size: 14px;
   margin-left: auto;
-  height: 31px;
+  height: 30px;
   margin-top: 1;
-}
-
-.inputtext {
-  font-size: 17px;
+  border-radius: 3px;
 }
 
 .search-item {
   margin-left: auto;
+  margin-right: 35px;
 }
 
 .pointerImg, .pointerImg2 {
@@ -120,8 +130,10 @@ a {
 .inputtext {
   border-radius: 3px;
   outline: none;
-  padding: 5px 10px;
+  padding: 4px 10px;
   width: 50%;
+  font-size: 14px;
+  border: 1px solid #c2c2c2;
 }
 
 .icon-wrapper {
@@ -163,6 +175,12 @@ a {
   color: #EA8A02;
   border: 2px #EA8A02 solid;
   font-weight: bold;
+}
+
+.btn {
+  font-size: 14px;
+  padding: 5.5px 12px;
+  margin: 2px;
 }
 
 .btn.btn-primary.paging.active {

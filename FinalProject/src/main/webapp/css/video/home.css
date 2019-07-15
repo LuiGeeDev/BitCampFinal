@@ -5,9 +5,9 @@ body {
 }
 
 #title {
-  margin: 10px 0 0 80px;
-  font-size: 32px;
-  font-weight: bold
+  margin: 10px 0 0 140px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 #boardWrapper {
@@ -33,7 +33,7 @@ body {
 
 .video-title {
   display: inline-block;
-  font-size: 28px;
+  font-size: 16px;
   font-weight: bold;
   margin-top: 20px;
   white-space: nowrap;
@@ -44,7 +44,8 @@ body {
 
 .comment-count {
   color: #F39B10;
-  margin-left: 7.2px
+  margin-left: 7.2px;
+  font-size:12px;
 }
 
 .video-content {

@@ -124,15 +124,13 @@ public class TroubleShootingService {
     article.setTags(tags);
     article.setUsername(Helper.userName());
     articleDao.insertTroubleShootingArticle(article, group_id);
-    System.out.println(tagList);
-    System.out.println(articleDao.getMostRecentArticleId());
-    tagService.insertTag(tagList, articleDao.getMostRecentArticleId());
+    tagService.insertTag(tagList, article.getId());
     
     TroubleShooting troubleshooting = new TroubleShooting();
-    troubleshooting.setArticle_id(articleDao.getMostRecentArticleId());
+    troubleshooting.setArticle_id(article.getId());
     troubleshooting.setGroup_id(group_id);
     troubleShootingDao.insertTroubleShooting(troubleshooting);
-    return articleDao.getMostRecentArticleId();
+    return article.getId();
   }
   
   public void changeIssueStatus(int id) {

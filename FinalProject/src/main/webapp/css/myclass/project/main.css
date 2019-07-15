@@ -1,9 +1,14 @@
 body {
   background: #F2F4F7;
+  
 }
 
 .active-list {
   border-bottom: 1px solid #F2F4F7 !important;
+}
+
+#task{
+  border-radius:3px;
 }
 
 .card-title {
@@ -11,6 +16,7 @@ body {
   font-weight: bold;
   margin-top: 5px;
   margin-bottom: 25px;
+  font-familly:'Nanum Gothic' !important;
 }
 
 .top-row {
@@ -23,6 +29,11 @@ body {
   width: 250px;
   padding: 10px 20px;
   margin-right: 20px;
+  height:auto;
+}
+
+.checklist{
+  overflow-y:scroll;
 }
 
 .edit-link, .edit-checklist {
@@ -50,7 +61,11 @@ body {
 }
 
 .checklist-item {
-  padding: 10px 10px;
+  padding: 5px 5px;
+}
+
+.addbutton{
+  border-radius:3px;
 }
 
 input[type=checkbox] {
@@ -59,6 +74,7 @@ input[type=checkbox] {
 
 input[type=checkbox]+label {
   display: block;
+  height:22px;
 }
 
 input[type=checkbox]+label:active {
@@ -66,18 +82,21 @@ input[type=checkbox]+label:active {
   transform: scale(0.98);
 }
 
-input[type=checkbox]+label svg {
+input[type=checkbox]+label i {
   color: #a6a6a6;
   font-size: 22px;
 }
 
-input[type=checkbox]:checked+label svg {
+input[type=checkbox]:checked+label i {
   color: #F39C20;
 }
 
 .item-description {
-  font-size: 16px;
-  margin-left: 50px;
+  font-size: 14px;
+  margin-left: 10px;
+  height:auto;
+  font-weight:bold;
+  font-familly:'Nanum Gothic' ;
 }
 
 .timeline {

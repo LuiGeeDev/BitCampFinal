@@ -41,7 +41,7 @@
 
 #submit-button {
   margin-top: 10px;
-  margin-right: 5px;
+  margin-right: 20px;
   margin-left: auto;
 }
 
@@ -61,4 +61,21 @@
   top: 10px;
   right: 10px;
   color: #a6a6a6;
+}
+.content{
+  width: 98%;
+  margin:0 auto 0 5px;
+  border-radius:5px;
+  resize:none;
+  height:485px;
+  border:1px solid #c2c2c2;
+  outline:none;
+}
+
+#input-title, #input-url, .content{
+  transition : 0.5s;
+}
+
+#input-title:focus, #input-url:focus, .content:focus{
+  border:1px solid #f39c20;
 }
