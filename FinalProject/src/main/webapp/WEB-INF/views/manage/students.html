@@ -87,8 +87,8 @@
               <div class="member-list-name" th:text=${memberList.name}></div>
               <div class="member-list-role" th:text=${memberList.role}></div>
               <div class="member-list-enabled" th:switch="${memberList.enabled}">
-                <i class="fas fa-circle on" th:case="0"></i>
-                <i class="fas fa-circle off" th:case="1"></i>
+                <i class="fas fa-circle on" th:case="1"></i>
+                <i class="fas fa-circle off" th:case="0"></i>
               </div>
               <!-- <div class="member-list-enabled" th:if="${memberList.enabled == 0}"><i class="fas fa-circle"></i></div> -->
             </div>
@@ -100,44 +100,50 @@
         <div class="studentDetailContainer">
           <div class="profile cardShadow">
           <div class="profile-img">
-          <!-- <img th:src="@{/css/stack/profile.jpg}" id="profileimg" > -->
+          <img th:src="@{/css/stack/profile.jpg}" id="profile_photo" >
           </div>
-          <div class="profile-detail">
-           	<div class="profiledetailTitle">
-            <div>이름</div>
-            <div>생년월일</div>
-            <div>학력</div>
-            <div>주소</div>
-            <div>성별</div>
-            <div>핸드폰번호</div>
-            </div>
-            <div class="profiledetailContent">
-            <div>아이유</div>
-            <div>1993.05.16</div>
-            <div>대나무대학교</div>
-            <div>로엔엔터테이먼트</div>
-            <div>여자</div>
-            <div>01000000000</div>
-            </div>
-          </div>
-          </div>
-          <div class="detail cardShadow">
-          <div class="detailName">
-          <span>상세정보</span>
-          </div>
-          <div class="detailContent">
-          <span>노래를 잘부른다</span>
-          </div>
-          </div>
-          <div class="counseling cardShadow">
-          <div class="counselingName">
-          <span>상담기록</span>
-          </div>
-          <div class="counselingContent">
-          <span>진로를 바꾸고 싶어용</span>
-          </div>
-          </div>
+          <!-- 
+         프로필 사진
+         이름 , 아이디, email, enable, course_id(어떤수업 어떤강산지?) 
+        
          
+         -->
+          <div class="profile-detail">
+           	<div class="profile-detail-row">
+              <div class="profile-detail-label">이름</div>
+              <input type="text" class="profile-detail-value" value="이힘찬">
+            </div>
+            <div class="profile-detail-row">
+              <div class="profile-detail-label">아이디</div>
+              <input type="text" class="profile-detail-value" value="1907050107">
+            </div>
+            <div class="profile-detail-row">
+              <div class="profile-detail-label">직책</div>
+              <input type="text" class="profile-detail-value" value="학생">
+            </div>
+            <div class="profile-detail-row">
+              <div class="profile-detail-label">클래스</div>
+              <input type="text" class="profile-detail-value" value="프론트앤드 및 백앤드 개발자양성과정">
+            </div>
+            <div class="profile-detail-row">
+              <div class="profile-detail-label">수료일</div>
+              <input type="text" class="profile-detail-value" value="2019-07-30">
+            </div>
+            <div class="profile-detail-row">
+              <div class="profile-detail-label">계정</div>
+              <div class="profile-detail-value" th:switch="1">
+                <i class="fas fa-circle on" th:case="1"> 활성화</i>
+                <i class="fas fa-circle off" th:case="0"> 비활성화</i>
+              </div>
+            </div>
+          </div>
+          <div class="updateBtnWrapper"><input
+            type="submit"
+            class="btn btn-warning btn-sm"
+            id=""
+            value="저장"
+          >
+          </div>
           </div>
         </div>
       </div>
@@ -145,175 +151,7 @@
   </div>
   <script src="/js/qna/content.js"></script>
   <script th:inline="javascript">
-  $(document).ready(function() {
-    $("#spinner").hide();
-  }).ajaxStart(function() {
-    $("#spinner").show();
-  }).ajaxStop(function() {
-    $("#spinner").hide();
-  });
-  
-  $("#modal-submitbtn").click(function() {
-    const messageText = $("#message-text").val();
-    const messageSenderId = $("#message-sender-id").text();
-    let valueCheck = messageText;         
-    
-  	if(valueCheck.trim() === "" || valueCheck === null) {
-  	  Swal.fire({
-  	    type: 'error',
-  	    text: '다시 입력해주세요 !!',
-  	  })
-  	  	return;
-  	}
-    $.ajax({
-      url: "/ajax/message/reply",
-      type: "POST",
-      data: {
-        content: messageText,
-        receiver_username: messageSenderId
-      }
-    }).done(function() {
-      $(".modal").modal("hide");
-      Swal.fire({
-        type: 'success',
-        title: '전송되었습니다',
-        showConfirmButton: false,
-        timer: 1500
-      });
-      sendMessageNotice([[${user.name}]], messageSenderId);
-    });
-  });
-  
-    function getMessage(messageId) {
-      $.ajax({
-        url: "/ajax/message",
-        type: "POST",
-        data: {
-          id: messageId
-        },
-        success: function(data) {
-         /*  console.log("new Date : " + new Date(${data.time})); */
-          $(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime").empty();
-          $("#message-sender-id").append(`${data.sender_username}`);
-          $(".message-sender-name")
-            .append(`${data.senderName}`)
-            .append(`(${data.sender_username})`);
-          $(".message-sender-time").append(`${data.time}`);
-          const time = Number($(".message-sender-time").text());
-          const date = new Date(time);
-          let minutes = date.getMinutes();
-          minutes = (minutes < 10) ? "0" + minutes : minutes;
-          let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
-          hours = hours < 10 ? "0" +  hours : hours;
-          let getdate = date.getDate();
-          getdate = (getdate < 10) ? "0" + getdate : getdate;
-          
-          
-          
-          /* `${time.getHours() <= 12 ? time.getHours() : time.getHours() - 12}:${time.getMinutes() < 10 ? "0" + time.getMinutes() : time.getMinutes()} ${time.getHours() <= 11 ? 'AM' : 'PM'}`; */
-          const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 `+ getdate + `일 ` + hours +`:` + minutes;
-          $(".message-realtime").append(timedate);
-          $(".message-sender-content").append(`${data.content}`);
-          $(".sender-message").append(`<h6 class="text-font">받은쪽지</h6>`);
-          $(".fa-paper-plane").css("display", "block");
-          $(".fa-trash").css("display", "block");
-        },
-        error: function(xhr) {
-          alert("쪽지를 불러오지 못했습니다.");
-        }
-      }).done(function() {
-        if ($("#reply")) {
-          $("#reply").click(function() {
-            $(".modal").modal("show");
-            $("#message-text").val("");
-          });
-        }
-        
-        $("#delete").unbind("click");
-        $("#delete").click(function(event) {
-          
-          Swal.fire({
-            title: '정말 삭제하시겠습니까?',
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#F39B10',
-            cancelButtonColor: '#A6A6A6',
-            confirmButtonText: '네',
-            cancelButtonText: '아니요'
-          }).then((result) => {
-            if (result.value) {
-             
-              $.ajax({
-                url: "/ajax/message/delete",
-                type: "POST",
-                data: {
-                  id: messageId
-                },
-                success: function(data) {
-                  Swal.fire({
-                    	title: '삭제되었습니다',
-                    	type: 'success',
-                    	confirmButtonText: '확인',
-                    	confirmButtonColor: '#F39B10'
-                      
-                  }).then(function() {
-                      location.href = "/message";
-                    });
-                  
-                }
-              });
-              
-            }
-          })
-    
-        });
-      });
-    }
-
-    $(".message2").click(function(event) {
-      const removeIcon = $(event.currentTarget).children(".message-sender2");
-      const removeNotification = removeIcon
-        .children()
-        .siblings(".removenoti");
-
-      const count = $(".message-count");
-      const count2 = $(".countM");
-      if (removeNotification.text() == 0) {
-        count.text(count.text() - 1);
-        count2.text(count2.text() - 1);
-        removeNotification.text(1);
-      }
-      
-      
-      const messageId = $(this)
-        .children(".hidden")
-        .text();
-      getMessage(messageId);
-      console.log("messageId : " + messageId);
-
-      $.ajax({
-        url: "/ajax/message/update",
-        type: "POST",
-        data: {
-          id: messageId
-        },
-        success: function(data) {
-          removeIcon
-            .children()
-            .siblings(".unread")
-            .remove();
-        }
-      });
-    });
-    $(".close-btn").click(function() {
-      $(".receiver").remove();
-      $(".modal").css("display", "none");
-    });
-  
-
-  
-  
-  
+ 
   </script>
 </body>
 </html>

@@ -22,28 +22,19 @@ public class Pager {
     int q = totalArticles / articlesOnPage;
     int r = totalArticles % articlesOnPage;
     this.totalPages = (r == 0 && totalArticles != 0) ? q : (q + 1);
-    if (currentPage <= pageButtons) {
-      this.startPage = 1;
-    } else if (currentPage % pageButtons == 0) {
-      this.startPage = currentPage - (pageButtons - 1);
-    } else {
-      this.startPage = (currentPage / pageButtons) * 5 + 1;
-    }
 
-    if (totalPages <= pageButtons) {
-      this.endPage = totalPages;
-    } else if (currentPage % pageButtons == 0) {
-      this.endPage = currentPage;
-    } else if ((currentPage / pageButtons + 1) * 5 < totalPages) {
-      this.endPage = (currentPage / pageButtons + 1) * 5;
+    this.startPage = ((currentPage - 1) / pageButtons) * pageButtons + 1;
+
+    if (((currentPage - 1) / pageButtons + 1) * pageButtons < totalPages) {
+      this.endPage = ((currentPage - 1) / pageButtons + 1) * pageButtons;
+      this.next = true;
+      this.nextPage = endPage + 1;
     } else {
       this.endPage = totalPages;
     }
 
     this.prev = (currentPage <= pageButtons) ? false : true;
-    this.next = ((currentPage - 1) / pageButtons + 1) * 5 < totalPages ? true : false;
-    this.prevPage = (currentPage % 5 == 0) ? (currentPage / 5 - 1) * 5 : (currentPage / 5) * 5;
-    this.nextPage = (currentPage % 5 == 0) ? (currentPage / 5) * 5 + 1 : (currentPage / 5 + 1) * 5 + 1;
+    this.prevPage = startPage - 1;
   }
 
   public int getPrevPage() {

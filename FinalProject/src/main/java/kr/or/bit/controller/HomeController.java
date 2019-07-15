@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.bit.dao.ArticleDao;
@@ -85,60 +86,6 @@ public class HomeController {
     model.addAttribute("project", project);
     model.addAttribute("dDay", dDay.getDays());
     return "main";
-  }
-
-  @GetMapping("/test")
-  public String test(Model model) {
-    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-    CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
-    
-    String username = Helper.userName();
-    
-    List<Course> courses = courseDao.selectAllTeacherCourse(username);
-    for (Course course : courses) {
-      List<Board> boards = boardDao.selectBoardInCourse(course.getId(), 3);
-      course.setBoards(boards);
-    }
-    
-    model.addAttribute("courses", courses);
-    return "test";
-  }
-  
-  @PostMapping("/test/articles")
-  public @ResponseBody List<Article> getArticles(int id) {
-    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-    List<Article> articles = articleDao.selectFirstArticlesToCopyByBoardId(id);
-    for (Article article : articles) {
-      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
-      article.setTimeLocal(article.getTime().toLocalDateTime());
-    }
-    
-    return articles;
-  }
-  
-  @PostMapping("/test/more")
-  public @ResponseBody List<Article> getMoreArticles(int board_id, int id) {
-    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-    List<Article> articles = articleDao.selectNextArticlesToCopyByBoardId(board_id, id);
-    for (Article article : articles) {
-      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
-      article.setTimeLocal(article.getTime().toLocalDateTime());
-    }
-    
-    return articles;
-  }
-  
-  @PostMapping("/test/article")
-  public @ResponseBody Article getArticle(int id) {
-    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-    Article article = articleDao.selectOneArticle(id);
-    article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
-    article.setTimeLocal(article.getTime().toLocalDateTime());
-    
-    return article;
   }
 }
 
