@@ -1,107 +1,167 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
-<head>
-<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-<link rel="stylesheet" th:href="@{/css/home.css}" />
-<link rel="stylesheet"
-  th:href="@{/css/myclass/general/generalDetail.css}" />
-</head>
-<body>
-  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
-  <div class="main" th:fragment="main">
-    <div class="spinner-border text-warning spin-where" role="status"
-      id="spinner">
-      <span class="sr-only">Loading...</span>
-    </div>
-    <div class="detail-container">
-      <div class="detail-head">
-        <span class="detail-title" th:text="${article.title}"></span>
-        <div class="detail-subtitle">
-          <span th:text="${article.writer.name}"></span>&nbsp;| &nbsp; <span
-            th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd')}"></span>&nbsp;|
-          조회수 &nbsp; <span th:text="${article.view_count}"
-            class="pointOrange"></span>&nbsp;|댓글수&nbsp; <span
-            th:text="${article.commentlist.size()}" class="pointOrange2"></span>&nbsp;|
-          <span class="hidden" id="comment-articleID" th:text = "${article.id}"></span>
-          <span class="hidden" id="comment-boardID" th:text = "${board.id}"></span>
-          <input type="text" th:value="${article.sibling}" name = "sibling"/>
-        </div>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+    <link
+      rel="stylesheet"
+      th:href="@{/css/myclass/general/generalDetail.css}"
+    />
+  </head>
+  <body>
+    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+    <div class="main" th:fragment="main">
+      <div
+        class="spinner-border text-warning spin-where"
+        role="status"
+        id="spinner"
+      >
+        <span class="sr-only">Loading...</span>
       </div>
-      <div class="detail-content-parent">
-      <div class="detail-content" th:text="${article.content}"></div>
-     
-      </div>
-    </div>
-    <div class="file-parent">
-     <div th:each="files : ${article.option.files}">
-           <div th:if="${files!=null}">
-             <a th:href="@{{files}(filename=${files.filename})}"
-               th:attr="download=${files.original_filename}"> 
-               <i class="fas fa-paperclip"></i>
-               <span class="submit-file" th:text="${files.original_filename}">general.zip</span>
-             </a>
-           </div>
-         </div>
-         </div>
-    <div class="group-parent">
-      <div class="btn-group">
-      <!--th:if="${article.username == user.username}"  -->
-            <a th:if="${article.username == user.username or user.role == 'MANAGER' or user.role == 'TEACHER'}"
-              th:href="@{/myclass/board/edit(article_id=${article.id}, board_id=${board.id})}"
-              id="updatebtn" class="btn btn-primary btn-align">수정</a> 
-              <a th:if="${article.username == user.username}" id="deletebtn" class="btn btn-primary btn-align">삭제</a> <a
-              th:href="@{/myclass/board(board_id=${board.id})}"
-              id="listbtn" class="btn btn-primary btn-align">목록</a>
-              <a th:href="@{/myclass/board/replyWrite(article_id=${article.id}, board_id=${board.id})}" class="btn btn-primary reply-board-btn">답글</a>
+      <div class="detail-container">
+        <div class="detail-head">
+          <span class="detail-title" th:text="${article.title}"></span>
+          <div class="detail-subtitle">
+            <span th:text="${article.writer.name}"></span>&nbsp;| &nbsp;
+            <span
+              th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd')}"
+            ></span
+            >&nbsp;| 조회수 &nbsp;
+            <span th:text="${article.view_count}" class="pointOrange"></span
+            >&nbsp;|댓글수&nbsp;
+            <span
+              th:text="${article.commentlist.size()}"
+              class="pointOrange2"
+            ></span
+            >&nbsp;|
+            <span
+              class="hidden"
+              id="comment-articleID"
+              th:text="${article.id}"
+            ></span>
+            <span
+              class="hidden"
+              id="comment-boardID"
+              th:text="${board.id}"
+            ></span>
           </div>
-    </div>
-    <div class="detail-comment">
-
-      <span class="userIcon"> <i class="fas fa-user-circle fa-lg"></i>
-      </span> <span class="writerName" th:text="${user.name}"></span>
-        <input type="text" name="content" id="content"
-          class="comment-text" placeholder="댓글을 입력하세요"> <input
-          id="comment-submit" type="submit" class="btn btn-primary detail-btn" value="등록">
-    </div>
-
-    <div class="content-reply-form">
-      <div class="content-reply"
-        th:if="${article.commentlist.size()} > 0"
-        th:each="comment : ${article.commentlist}">
-        <div class="content-move">
-          <span class="userIcon"><i
-            class="fas fa-user-circle fa-lg"></i></span> <span
-            class="commentWriterName" th:text="${comment.writer.name}"></span> 
-            <a th:if="${comment.username}==${user.username}"
-            th:href="@{/myclass/board/commentdelete(comment_id=${comment.id}, article_id=${article.id}, board_id=${board.id})}">[삭제]</a>
-          <span class="write-date"
-            th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
         </div>
-        <div class="content-comment" th:text="${comment.content}"></div>
+        <div class="detail-content-parent">
+          <div class="detail-content" th:text="${article.content}"></div>
+        </div>
       </div>
-      <div th:if="${article.commentlist.size()} == 0" class="noComment">
-        등록된 댓글이 없습니다</div>
+      <div class="file-parent">
+        <div th:each="files : ${article.option.files}">
+          <div th:if="${files!=null}">
+            <a
+              th:href="@{{files}(filename=${files.filename})}"
+              th:attr="download=${files.original_filename}"
+            >
+              <i class="fas fa-paperclip"></i>
+              <span class="submit-file" th:text="${files.original_filename}"
+                >general.zip</span
+              >
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="group-parent">
+        <div class="btn-group">
+          <!--th:if="${article.username == user.username}"  -->
+          <a
+            th:if="${article.username == user.username or user.role == 'MANAGER' or user.role == 'TEACHER'}"
+            th:href="@{/myclass/board/edit(article_id=${article.id}, board_id=${board.id})}"
+            id="updatebtn"
+            class="btn btn-primary btn-align"
+            >수정</a
+          >
+          <a
+            th:if="${article.username == user.username}"
+            id="deletebtn"
+            class="btn btn-primary btn-align"
+            >삭제</a
+          >
+          <a
+            th:href="@{/myclass/board(board_id=${board.id})}"
+            id="listbtn"
+            class="btn btn-primary btn-align"
+            >목록</a
+          >
+          <a
+            th:href="@{/myclass/board/replyWrite(article_id=${article.id}, board_id=${board.id})}"
+            class="btn btn-primary reply-board-btn"
+            >답글</a
+          >
+          <button class="btn btn-primary" id="assemble">모여라</button>
+        </div>
+      </div>
+      <div class="detail-comment">
+        <span class="userIcon"> <i class="fas fa-user-circle fa-lg"></i> </span>
+        <span class="writerName" th:text="${user.name}"></span>
+        <input
+          type="text"
+          name="content"
+          id="content"
+          class="comment-text"
+          placeholder="댓글을 입력하세요"
+        />
+        <input
+          id="comment-submit"
+          type="submit"
+          class="btn btn-primary detail-btn"
+          value="등록"
+        />
+      </div>
 
+      <div class="content-reply-form">
+        <div
+          class="content-reply"
+          th:if="${article.commentlist.size()} > 0"
+          th:each="comment : ${article.commentlist}"
+        >
+          <div class="content-move">
+            <span class="userIcon"
+              ><i class="fas fa-user-circle fa-lg"></i
+            ></span>
+            <span
+              class="commentWriterName"
+              th:text="${comment.writer.name}"
+            ></span>
+            <a
+              th:if="${comment.username}==${user.username}"
+              th:href="@{/myclass/board/commentdelete(comment_id=${comment.id}, article_id=${article.id}, board_id=${board.id})}"
+              >[삭제]</a
+            >
+            <span
+              class="write-date"
+              th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd HH:mm')}"
+            ></span>
+          </div>
+          <div class="content-comment" th:text="${comment.content}"></div>
+        </div>
+        <div th:if="${article.commentlist.size()} == 0" class="noComment">
+          등록된 댓글이 없습니다
+        </div>
+      </div>
     </div>
+    <!-- 필요하다면 이 아래에 외부 자바스크립트도 추가 가능 -->
 
+    <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script th:inline="javascript">
+      $(document).ready(function() {
+        $("#spinner").hide();
+      }).ajaxStart(function() {
+        $("#spinner").show();
+      }).ajaxStop(function() {
+        $("#spinner").hide();
+      });
 
-  </div>
-  <!-- 필요하다면 이 아래에 외부 자바스크립트도 추가 가능 -->
-
-  <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-  <script th:inline="javascript">
-    $(document).ready(function() {
-      $("#spinner").hide();
-    }).ajaxStart(function() {
-      $("#spinner").show();
-    }).ajaxStop(function() {
-      $("#spinner").hide();
-    });
-    	$("#deletebtn").click(function(event) {
-    	  let articleId = [[${article.id}]];
-    	  event.preventDefault();
+      $("#deletebtn").click(function(event) {
+        let articleId = [[${article.id}]];
+        event.preventDefault();
         Swal.fire({
           title: '정말 삭제하시겠습니까?',
           type: 'warning',
@@ -112,64 +172,60 @@
           cancelButtonText: '아니요'
         }).then((result) => {
           if (result.value) {
-                  $.ajax({
-                    url: "/myclass/board/delete",
-                    type: "GET",
-                    data: {
-                      article_id: articleId
-                    },
-                    success: function(data) {
-                      Swal.fire({
-                        	title: '삭제되었습니다',
-                        	type: 'success',
-                        	confirmButtonText: '확인',
-                        	confirmButtonColor: '#F39B10'
-                      }).then(function() {
-                        location.href = "/myclass/board?board_id=" + [[${board.id}]];
-                      });
-                      
-                    }
-                  });
+            $.ajax({
+              url: "/myclass/board/delete",
+              type: "GET",
+              data: {
+                article_id: articleId
+              },
+              success: function(data) {
+                Swal.fire({
+                  title: '삭제되었습니다',
+                  type: 'success',
+                  confirmButtonText: '확인',
+                  confirmButtonColor: '#F39B10'
+                }).then(function() {
+                  location.href = "/myclass/board?board_id=" + [[${board.id}]];
+                });
+              }
+            });
           }
         })
-    	});  
-    	
+      });
+      
+      $("#assemble").click(function() {
+        sendAssembleNotice([[${user.name}]], [[${user.username}]], window.location.href);
+      });
+
     	$("#comment-submit").click(function(event) {
-          let valueCheck = $("#content").val();         
-          
-    	  	if(valueCheck.trim() === "" || valueCheck === null) {
-    	  	  Swal.fire({
-    	  	    type: 'error',
-    	  	    text: '다시 입력해주세요 !!',
-    	  	  })
-    	  	  	return;
-    	  	}
-    	  
-    	  
-    	  	const articleId = $("#comment-articleID").text();
+        let valueCheck = $("#content").val();
+        if (valueCheck.trim() === "" || valueCheck === null) {
+    	  	Swal.fire({
+    	      type: 'error',
+    		    text: '다시 입력해주세요 !!',
+        	});
+    	    return;
+        }
+        
+    	  const articleId = $("#comment-articleID").text();
     	 	const commentContent = $("#content").val();
     	 	const username = [[${user.username}]];
-    	 	
-    	 	const formData = new FormData();
-    	 	formData.append("article_id", articleId);
+
+      	const formData = new FormData();
+       	formData.append("article_id", articleId);
     	 	formData.append("content", commentContent);
     	 	formData.append("username", username);
-    	 	
-    	 	
-    	  $.ajax({
+
+      	$.ajax({
           url: "/myclass/board/commentwrite",
           type: "post",
           data: formData,
           contentType: false,
           processData: false,
           success: function(data) {
-            console.log(data);
             $(".content-reply-form").empty();
            	$("#content").val("");
-           
-            
-            
-            
+
             $.each(data, function(index, item) {
               const content = item.content;
               const username = item.writer.name;
@@ -177,7 +233,7 @@
               const date = new Date(time);
               const commentId = item.id;
               const articleId = item.article_id;
-              
+
               let minutes = date.getMinutes();
               minutes = (minutes < 10) ? "0" + minutes : minutes;
               let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
@@ -186,41 +242,27 @@
               getdate = (getdate < 10) ? "0" + getdate : getdate;
               let getmonth = date.getMonth() + 1;
               getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
-              
-              console.log(getmonth);
-                  
+
               const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ hours +`:` + minutes;
-			  let equalName = null;           
+              let equalName = null;
               if(item.username == [[${user.username}]]) {
                 equalName = "[삭제]";
               } else {
                 equalName = "";
               }
-              console.log(equalName);
+
               let html = "<div class='content-reply'>";
               html += "<div class='content-move'>" +
                       "<span class='userIcon'><i class='fas fa-user-circle fa-lg'></i></span>" +
-                      "<span class='commentWriterName'>" + username + "</span>" + 
-                      "<a href='/myclass/board/commentdelete?comment_id=" + commentId + "&article_id=" + articleId + "&board_id=" + [[${board.id}]] +"'" + ">" +equalName+"</a>" +  
+                      "<span class='commentWriterName'>" + username + "</span>" +
+                      "<a href='/myclass/board/commentdelete?comment_id=" + commentId + "&article_id=" + articleId + "&board_id=" + [[${board.id}]] +"'" + ">" +equalName+"</a>" +
                       "<span class='write-date'>" + timedate + "</span></div>";
               html += "<div class='content-comment'>" + content + "</div></div>";
               $(".content-reply-form").append(html);
-              
-            /*   class="commentWriterName" th:text="${comment.username}"></span> 
-              <a th:if="${comment.username}==${user.username}"
-              th:href="@{/myclass/board/commentdelete(comment_id=${comment.id}, article_id=${article.id}, board_id=${board.id})}">[삭제]</a> */
             });
-            
           }
         });
-        });
-    	  
-    	
-    	
-    	
-    	
-    
-    	
+      });
     </script>
-</body>
+  </body>
 </html>

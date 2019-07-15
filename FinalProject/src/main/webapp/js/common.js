@@ -82,11 +82,11 @@ function sendReplyNotice(senderName, receiverUsername, link) {
   client.send("/app/notice/reply", {}, JSON.stringify(notification));
 }
 
-function sendAssembleNotice(senderName, receiverUsername, link) {
+function sendAssembleNotice(senderName, username, link) {
   const notification = {
     title: "모여라",
-    content: `${senderName} 강사님이 모여라를 외칩니다.`,
-    username: receiverUsername,
+    content: `${senderName} 강사님이 여기로 부릅니다.`,
+    username: username,
     link
   };
 
@@ -97,6 +97,7 @@ function sendMessageNotice(senderName, receiverUsername) {
   const notification = {
       title: "쪽지",
       username: receiverUsername,
+      content: `${senderName}님이 쪽지를 보냈습니다`,
       link: "/message"
   }
 

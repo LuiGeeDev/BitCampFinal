@@ -57,10 +57,7 @@ public class VideoController {
      * parameter로 받은 아이디 값을 이용, 해당하는 글을 불러와서 페이지에 글을 넘겨준다
      */
     Article article = articleService.selectOneArticle("video", id);
-    
     articleUpdateService.viewCount(article);
-    System.out.println("비디오의 아티클 : " + article);
-    
     model.addAttribute("voteStatus", articleVoteService.selectVote(id, Helper.userName()));
     model.addAttribute("article", article);
     return "video/detail";

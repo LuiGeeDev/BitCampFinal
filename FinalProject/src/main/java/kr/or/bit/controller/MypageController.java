@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.ArticleDao;
@@ -28,6 +29,7 @@ import kr.or.bit.model.Files;
 import kr.or.bit.model.Member;
 import kr.or.bit.service.FileUploadService;
 import kr.or.bit.service.MemberService;
+import kr.or.bit.service.MypageService;
 import kr.or.bit.utils.Helper;
 
 @Controller
@@ -42,6 +44,8 @@ public class MypageController {
   private BCryptPasswordEncoder bCryptPasswordEncoder;
   @Autowired
   private FileUploadService fileUploadService;
+  @Autowired
+  private MypageService mypageService;
 
 
   @GetMapping("/home")
@@ -52,16 +56,32 @@ public class MypageController {
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     String username = Helper.userName();
     List<Article> article1 = articleDao.selectAllArticleByUsername(username);
-    List<Article> article2 = articleDao.selectEnableArticleByUsername(username);
-    List<Comment> comments = commentDao.selectAllCommentByUsername(username);
+    List<Article> article2 = mypageService.allArticleByUsername(username);
+    //List<Article> article2 = articleDao.selectEnableArticleByUsername(username);
+    List<Comment> comments = commentDao.selectAllCommentByUsername(username);  
     Member user = memberDao.selectMemberByUsername(username);
+    System.out.println("hi"+user.getCourse_id());
     Course course = courseDao.selectCourse(user.getCourse_id());
+    
     model.addAttribute("course",course);
     model.addAttribute("comments",comments);
     model.addAttribute("article1",article1);
     model.addAttribute("article2",article2);
     model.addAttribute("user",user);
     return "mypage/mypage";
+  }
+
+  @PostMapping("/home/CommentList")
+  public @ResponseBody List<Comment> getCommentList(String user) {
+    CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
+    List<Comment> comments = commentDao.selectAllCommentByUsername(user);
+    return comments;
+  }
+  
+  @PostMapping("/home/ArticleList")
+  public @ResponseBody List<Article> getArticleList(String user) {
+    List<Article> articles = mypageService.allArticleByUsername(user);
+    return articles;
   }
   
   
@@ -88,7 +108,7 @@ public class MypageController {
       member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
       service.updateMemberWithoutFile(member);
     }
-    return "redirect:/";
+    return "redirect:/mypage";
   }
   
 }

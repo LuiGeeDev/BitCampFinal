@@ -16,16 +16,17 @@
         <div class="profileWrapper">
           <div class="profileTopWrapper">
             <div class="profileimg">
-            <img th:unless="${user.profile_photo}!=null"
-            th:src="@{/css/stack/profile.jpg}" id="profileimg">
-            <img th:if="${user.profile_photo}!=null"
-              th:src="@{${user.profile_photo}}"
-              id="profileimg"
-              alt="프로필 사진"
-            />
+              <img th:unless="${user.profile_photo}!=null"
+                th:src="@{/css/stack/profile.jpg}" id="profileimg">
+              <img th:if="${user.profile_photo}!=null"
+                th:src="@{${user.profile_photo}}" id="profileimg"
+                alt="프로필 사진" />
             </div>
             <div class="profileContent">
-              <div class="profileName">[[${user.name}]](<span>[[${user.username}]]</span>)</div>
+              <div class="profileName">
+                <input type="hidden" th:value="${user.username}"
+                  id="usernameBox"> [[${user.name}]](<span>[[${user.username}]]</span>)
+              </div>
               <div class="profileCourse">
                 <span>[[${course.course_name}]]</span>
               </div>
@@ -38,7 +39,8 @@
                   class="pdArticleNum">[[${article1.size()}]]</span>회
                   |&nbsp
                 </span> <span class="pdComment">총댓글 <span
-                  class="pdCommentNum">[[${comments.size()}]]</span>개 </span>
+                  class="pdCommentNum">[[${comments.size()}]]</span>개
+                </span>
               </div>
             </div>
           </div>
@@ -56,46 +58,52 @@
         <div class="articleWrapper">
           <div class="tabsWrapper">
             <div class="articleNavWrapper">
-              <button class="btn btn-outline-primary btnwidth">
+              <button id="userArticles"
+                class="btn btn-outline-primary btnwidth">
                 <span>등록한 게시글</span>
               </button>
-              <button class="btn btn-outline-primary btnwidth">
+              <button id="userComments"
+                class="btn btn-outline-primary btnwidth">
                 <span>등록한 댓글</span>
               </button>
             </div>
-            <div class="board">
-              <div class="boardNav">
-                <div class="boardId nav-style">글번호</div>
-                <div class="boardTitle nav-style">제목</div>
-                <div class="boardDate nav-style">작성일</div>
-                <div class="boardView nav-style">조회</div>
-              </div>
-              <div class="boardContentWrapper">
-              <div class="boardContent iteration"
-                th:each="list : ${article2}">
-                <div class="boardId cont-style">#[[${list.id}]]</div>
-                <div class="boardTitle cont-style">[[${list.title}]]</div>
-                <div class="boardDate cont-style">[[${list.time}]]</div>
-                <div class="boardView cont-style">[[${list.view_count}]]</div>
-              </div>
-              </div>
-            </div>
+            <div>
+              <div class="board">
 
-            <div class="board">
-              <div class="boardNav">
-                <div class="boardId nav-style">글번호</div>
-                <div class="boardTitle nav-style">댓글내용</div>
-                <div class="boardDate nav-style">작성일</div>
-                <div class="boardView nav-style">조회</div>
-              </div>
-              <div class="boardContentWrapper">
-              <div class="boardContent iteration"
-                th:each="comment : ${comments}">
-                <div class="boardId cont-style">#[[${comment.id}]]</div>
-                <div class="boardTitle cont-style">[[${comment.content}]]</div>
-                <div class="boardDate cont-style">[[${comment.time}]]</div>
-                <div class="boardView cont-style">[[${comment.view_count}]]</div>
-              </div>
+
+                <div class="boardNav">
+                  <div class="boardId nav-style">글번호</div>
+                  <div class="boardTitle nav-style" id="TitleorContent">제목</div>
+                  <div class="boardDate nav-style">작성일</div>
+                  <div class="boardView nav-style" id="boardVoteCount">조회</div>
+                </div>
+
+                <!-- 게시물 테이블 -->
+                <div class="boardContent iteration"
+                  th:each="list : ${article2}" id="boardArticletWrapper">
+                  <div class="boardId cont-style">#[[${list.id}]]</div>
+                  <div class="boardTitle cont-style">[[${list.title}]]</div>
+                  <div class="boardDate cont-style"
+                    th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></div>
+                  <div class="boardView cont-style">[[${list.view_count}]]</div>
+                </div>
+                <!-- 게시물테이블끝 -->
+
+                <div class="board" id="Commentsboard">
+                  <div id="boardCommentWrapper">
+                    <!-- 요기부터 댓글테이블 -->
+                    <div class="boardContent iteration"
+                      th:each="comment : ${comments}">
+                      <div class="boardId cont-style" id="commentId"></div>
+                      <div class="boardTitle cont-style"
+                        id="commentContent"></div>
+                      <div class="boardDate cont-style" id="commentDate"></div>
+                      <div class="boardView cont-style" id="commentView"></div>
+                    </div>
+                    <!-- 끄읏 -->
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
@@ -105,7 +113,135 @@
   </div>
   <!-- 이페이지에서사용하는자바스크립트는이script 태그안에작성-->
   <script th:inline="javascript">
-      
+      $(document).ready(function() {
+        $("div").remove("#Commentsboard");
+      });
+      $("#userComments")
+          .click(
+              function() {
+                const username = $("#usernameBox").val();
+                function getCommentList(username) {
+                  $
+                      .ajax({
+                        url : "/mypage/home/CommentList",
+                        type : "POST",
+                        data : {
+                          user : username
+                        },
+                        success : function(data) {
+                          $("div").remove("#Commentsboard");
+                          $("div").remove("#boardArticletWrapper");
+                          $("div").remove("#boardContentWrapper");
+                          $(".boardNav").empty();
+                          let html1 = "<div class='boardId nav-style'>글번호"
+                              + "</div><div class='boardTitle nav-style' id='TitleorContent'>댓글내용"
+                              + "</div><div class='boardDate nav-style'>작성일</div>"
+                          $(".boardNav").append(html1);
+                          $
+                              .each(
+                                  data,
+                                  function(index, item) {
+                                    const id = item.id;
+                                    const content = item.content;
+                                    const time = Number(item.updated_time);
+                                    const date = new Date(time);
+                                    let minutes = date.getMinutes();
+                                    minutes = (minutes < 10) ? "0" + minutes
+                                        : minutes;
+                                    let hours = date.getHours() <= 12 ? date
+                                        .getHours() : date.getHours() - 12;
+                                    hours = hours < 10 ? "0" + hours : hours;
+                                    let getdate = date.getDate();
+                                    getdate = (getdate < 10) ? "0" + getdate
+                                        : getdate;
+                                    let getmonth = date.getMonth() + 1;
+                                    getmonth = (getmonth < 10) ? "0" + getmonth
+                                        : getmonth;
+                                    const timedate = `${date.getFullYear()}-`
+                                        + getmonth + `-` + getdate + ` `
+                                        + hours + `:` + minutes;
+                                    console.log(item.index);
+                                    let html2 = "<div class='boardContent iteration' id='boardContentWrapper'>"
+                                        + "<div class='boardId cont-style' id='commentId'>"
+                                        + "#"
+                                        + id
+                                        + "</div><div class='boardTitle cont-style' id='commentContent'>"
+                                        + content
+                                        + "</div><div class='boardDate cont-style' id='commentDate'>"
+                                        + timedate + "</div></div>";
+                                    $(".board").append(html2);
+                                    $(".boardTitle").css("width", "70%");
+                                  });
+                        }
+                      })
+                }
+                getCommentList(username);
+              });
+      $("#userArticles")
+          .click(
+              function() {
+                const username = $("#usernameBox").val();
+                function getArticleList(username) {
+                  $
+                      .ajax({
+                        url : "/mypage/home/ArticleList",
+                        type : "POST",
+                        data : {
+                          user : username
+                        },
+                        success : function(data) {
+                          $("div").remove("#boardArticletWrapper");
+                          $("#boardArticletWrapper").empty();
+                          $("div").remove("#Commentsboard");
+                          $("div").remove("#boardContentWrapper");
+                          $(".boardNav").empty();
+                          let html1 = "<div class='boardId nav-style'>글번호</div>"
+                              + "<div class='boardTitle nav-style' id='TitleorContent'>제목</div>"
+                              + "<div class='boardDate nav-style'>작성일</div>"
+                              + "<div class='boardView nav-style' id='boardVoteCount'>조회</div>";
+                          $(".boardNav").append(html1);
+                          $
+                          .each(
+                              data,
+                              function(index, item) {
+                                    const id = item.id;
+                                    const title = item.title;
+                                    const viewCount = item.view_count;
+                                    const time = Number(item.updated_time);
+                                    const date = new Date(time);
+                                    let minutes = date.getMinutes();
+                                    minutes = (minutes < 10) ? "0" + minutes
+                                        : minutes;
+                                    let hours = date.getHours() <= 12 ? date
+                                        .getHours() : date.getHours() - 12;
+                                    hours = hours < 10 ? "0" + hours : hours;
+                                    let getdate = date.getDate();
+                                    getdate = (getdate < 10) ? "0" + getdate
+                                        : getdate;
+                                    let getmonth = date.getMonth() + 1;
+                                    getmonth = (getmonth < 10) ? "0" + getmonth
+                                        : getmonth;
+                                    const timedate = `${date.getFullYear()}-`
+                                        + getmonth + `-` + getdate + ` `
+                                        + hours + `:` + minutes;
+                                    console.log(item.index);
+                                    
+                                    let html2 = "<div class='boardContent iteration' id='boardArticletWrapper'><div class='boardId cont-style'>"
+                                        + "#"
+                                        + id
+                                        + "</div><div class='boardTitle cont-style'>"
+                                        + title
+                                        + "</div><div class='boardDate cont-style'>"
+                                        + timedate
+                                        + "</div><div class='boardView cont-style'>"
+                                        + viewCount + "</div></div>"
+                                    $(".board").append(html2);
+                              });
+                        }
+                      })
+                }
+                getArticleList(username);
+              });
     </script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </body>

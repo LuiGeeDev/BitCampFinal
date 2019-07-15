@@ -18,7 +18,7 @@
   height: 10%;
   border-radius: 3px;
   font-weight: bold;
-  font-size:14px;
+  font-size: 14px;
 }
 
 .mypagePhoto, .mypageId, .mypagePwd, .mypageName, .mypageEmail {
@@ -50,11 +50,11 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus
 .main-title {
   margin: 10px 0 0 140px;
 }
-.main-title h4{
-  font-size:18px;
-  font-weight:bold;
-}
 
+.main-title h4 {
+  font-size: 18px;
+  font-weight: bold;
+}
 
 .photo-parent {
   margin-left: 50px;
@@ -62,8 +62,8 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus
   margin-top: 10px;
 }
 
-.btn{
-  color:white;
+.btn {
+  color: white;
 }
 
 .submit-btn {
@@ -84,9 +84,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus
   /* font-weight: bold; */
 }
 
-.updateBtn {
-  
-}
+
 
 .idCheck, span[class="hidden"] {
   font-weight: 600;
@@ -113,10 +111,19 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus
   margin-top: 5px
 }
 
-#files1{
-  width:100%;
+#files1 {
+  width: 100%;
+  display: none;
 }
-body{
+
+#file-button {
+  cursor:pointer;
+}
+
+label{
+  margin :0px;
+}
+
+body {
   font-family: 'Nanum-Gothic';
-  font-weight: bold;
 }
