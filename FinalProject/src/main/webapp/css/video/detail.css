@@ -25,7 +25,7 @@ body {
 }
 
 #detailTitle {
-  font-size: 32px;
+  font-size: 18px;
   font-weight: bold;
   margin-left: 20px;
 }
@@ -46,11 +46,15 @@ body {
   height: 450px;
   margin-bottom: 50px;
 }
-
+#detailContentText{
+  white-space: pre-wrap;
+  font-size:14px;
+}
 #detailContent, #commentsContent {
   background-color: white;
   padding: 10px;
   margin: 10px;
+  
 }
 
 #videoWrapper {
@@ -70,7 +74,7 @@ body {
 
 #writerName {
   font-weight: bold;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 #writeDate {
@@ -121,12 +125,17 @@ body {
 #noneComment{
 	padding : 10px 0px 10px 30px;
 	font-weight:bold;
+	font-size:14px;
 }
 .spin-where {
   position: fixed;
   top: 50%;
   left: 50%;
   z-index: 1;
+}
+
+.btn{
+  font-size:14px;
 }
 
 .spinner-border {

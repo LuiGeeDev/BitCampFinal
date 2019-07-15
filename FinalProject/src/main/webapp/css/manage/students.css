@@ -15,19 +15,16 @@ body {
   flex-direction: row;
 }
 
-.profiledetailTitle {
-  
-}
-
-.profiledetailContent {
-  
-}
-
 .title {
-  font-size: 190%;
-  margin: 20px;
+  font-size: 18px;
+  margin: 20px 0 0 140px;;
   display: flex;
   flex-direction: column;
+  font-weight:bold;
+}
+
+.title h3{
+  fon-size:18px !important;
 }
 
 .searchContainer {
@@ -59,6 +56,7 @@ body {
   width: 60%;
   padding: 10px 0px 10px 10px;
   margin-right: 25px;
+  font-size:14px;
 }
 .search-container{
   display: flex;
@@ -68,7 +66,7 @@ body {
   display: flex;
   flex-direction: column;
   border: 1px solid rgba(0, 0, 0, .125);
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .list {
@@ -99,6 +97,7 @@ body {
   text-align: center;
   border-right: 1px solid rgba(0, 0, 0, .125);
   background-color: #ECECEC;
+  font-weight:bold;
 }
 
 .searchTitle div {
@@ -126,7 +125,7 @@ body {
 }
 
 .selectSize {
-  height: 27%;
+  height: 30%;
   width: 80%;
 }
 
@@ -153,6 +152,8 @@ body {
   text-align: center;
   margin-top: 30px;
   padding-right:19px;
+  font-weight:bold;
+  padding : 5px 20px 5px 0;
 }
 .member-list {
   display:flex;
@@ -173,6 +174,7 @@ body {
 }
 .member-list-enabled {
   width:20%;
+  font-size:14px;
 }
 
 .selectSize {
@@ -203,7 +205,7 @@ body {
   padding: 10px;
   height : 500px;
   margin-bottom: 19px;
-  border-radius: 10px;
+  border-radius: 5px;
   text-align:center;
 }
 
@@ -225,6 +227,7 @@ body {
   flex-direction: column;
   padding: 0px;
   margin-top:20px;
+  font-size:14px;
 }
 .profile-detail-row {
   display:flex;
@@ -232,14 +235,15 @@ body {
   margin-bottom:10px;
 }
 .profile-detail-label {
+  font-size:14px;
   width:30%;
   border:1px solid #2d3e50;
   color:#2d3e50;
   font-color:white;
   border-radius:3px;
   margin:2px 5px 2px 5px;
-  font-size:12px;
   padding:3px;
+  font-weight:bold;
   
 }
 .profile-detail-value {
@@ -259,4 +263,10 @@ body {
 }
 .btn-sm {
   color:white;
+}
+.hidden {
+  display:none;
+}
+.btn{
+  margin-bottom:5px;
 }

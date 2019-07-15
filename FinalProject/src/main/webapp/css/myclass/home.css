@@ -10,12 +10,12 @@ body {
 }
 
 .card-title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
 }
 
 .barTitle h5 {
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 600;
 }
 
@@ -31,6 +31,7 @@ body {
 .moreLotation {
   margin-left: auto;
   cursor: pointer;
+  font-size:12px;
 }
 
 .myclassWrapper {
@@ -47,6 +48,10 @@ body {
   height: 206.8px;
   padding: 20px;
   padding-top: 30px;
+}
+
+.processBar h5{
+  font-size:14px;
 }
 
 .recentHomework {

@@ -10,15 +10,16 @@
 }
 
 #title {
-  margin: 30px 0 20px 170px;
-  font-size: 32px;
-  font-weight:bold;
+  margin: 10px 20px 20px 140px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .homework-container {
   display: flex;
   width: 70%;
   margin: 8px 150px;
+  font-size: 14px;
 }
 
 .homework-submit-container {
@@ -36,6 +37,7 @@
   border: 1px solid #a3a3a3;
   border-radius: 3px;
   padding: 15px 30px;
+  font-size: 14px;
 }
 
 .homework-submit {
@@ -126,7 +128,7 @@
 }
 
 .ppt-upload-input {
-  margin-right:25px
+  margin-right: 25px
 }
 
 .source-upload-text {
@@ -212,9 +214,9 @@
 }
 
 .reply-title {
-  margin-left: 170px;
-  font-size: 25px;
-  font-weight:bold;
+  margin-left: 140px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .relpy-article {
@@ -269,9 +271,9 @@
 
 .reply-update-button {
   text-align: center;
-  width: 5%;  
-}  
-  
+  width: 5%;
+}
+
 #reply-delete-button {
   cursor: pointer;
 }
@@ -279,22 +281,27 @@
 .button-wrapper {
   margin: 10px 150px;
   width: 70%;
-  text-align:right;
+  text-align: right;
 }
 
 .none-reply-container {
   padding: 50px 280px;
+  font-size: 14px;
 }
 
 .contents label {
   margin: none !important;
-  background-color:#2D3E50;
-  border : 1px #2D3E50 solid;
+  background-color: #2D3E50;
+  border: 1px #2D3E50 solid;
 }
 
-.contents label:hover{
+.btn {
+  font-size: 14px;
+}
+
+.contents label:hover {
   background-color: #212529;
-  border : 1px #212529 solid;
+  border: 1px #212529 solid;
 }
 
 #homework-submit-button {
@@ -304,15 +311,17 @@
 
 .contents {
   margin-left: 120px;
-  width:100%;
+  width: 100%;
   padding-left: 110px
 }
-.homework-submit-title{
-  font-size:25px;
-  font-weight:bold;
-  margin-left:170px;
-  margin-bottom:20px;
+
+.homework-submit-title {
+  font-size: 25px;
+  font-weight: bold;
+  margin-left: 170px;
+  margin-bottom: 20px;
 }
-body{
+
+body {
   font-family: 'Nanum Gothic';
 }

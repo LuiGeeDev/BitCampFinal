@@ -54,4 +54,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="countVote" resultType="kr.or.bit.model.CommentVote">
 		SELECT count(comment_id) from comment_vote where comment_id=#{id}
 	</select>
+	<select id="selectAllCommentByUsername" resultType="kr.or.bit.model.Article">
+  	SELECT *
+  	FROM comment
+  	WHERE username = #{username}
+    </select>
 </mapper>

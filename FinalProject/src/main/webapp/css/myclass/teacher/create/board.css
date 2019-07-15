@@ -37,6 +37,7 @@ h4 {
   margin-left: 20px;
   max-width: 100px;
   padding: 10px 0;
+  font-size: 14px;
 }
 
 .board button {
@@ -117,4 +118,8 @@ h4 {
 
 .hide * {
   color: white;
+}
+
+body{
+  font-familly:'Nanum Gothic';
 }
