@@ -36,6 +36,36 @@
 
       const database = firebase.database();
 
+      function loadMoreMessage(time) {
+        let lastTime = time;
+
+        function changeTime(newTime) {
+          lastTime = newTime;
+        }
+
+        
+
+        return async function() {
+          const list = [];
+          const result = await database
+            .ref("chat/groups/" + [[${group.id}]])
+            .orderByChild("time")
+            .endAt(lastTime)
+            .limitToLast(10)
+            .once("value")
+            .then(function(data) {
+                data.forEach(function(item, index) {
+                list.push(item.val());
+              });
+              changeTime(list[0].time - 1);
+              return list;
+            });
+          return result;
+        }
+      }
+
+      const loadOldMessages = loadMoreMessage(Date.now());
+
       function writeChatMessage(groupId, username, name, content) {
         const chatMessage = {
           username: username,
@@ -47,7 +77,7 @@
 
         database.ref("chat/groups/" + [[${group.id}]]).push(chatMessage);
         client.send("/app/chat", {}, JSON.stringify(chatMessage));
-        
+
         if (!client.connected) {
           console.log("접속 끊김");
         }
@@ -89,8 +119,80 @@
           } else {
             makeNewMessage(message);
           }
-          
-          $(".chat-room .ss-content")[0].scrollTop = $(".chat-room .ss-content")[0].scrollHeight; 
+        });
+        $(".chat-room .ss-content")[0].scrollTop = $(".chat-room .ss-content")[0].scrollHeight;
+      }
+
+      function showOldMessages(messageList) {
+        for (let i = 0; i < messageList.length; i++) {
+          const message = messageList[i];
+          const now = new Date(message.time);
+          let previousTime;
+
+          if (i > 0) {
+            previousTime = new Date(messageList[i - 1].time);
+          }
+
+          if (message.username === "fileServer") {
+            makeFileMessage(message);
+            continue;
+          }
+
+          if (i > 0 && previousTime.getDate() !== now.getDate()) {
+            appendDate(now);
+            continue;
+          }
+
+          if (i > 0 && previousTime.getMinutes() === now.getMinutes()
+            && previousTime.getDate() === now.getDate() && messageList[i - 1].username === message.username) {
+            stickMessage(message);
+            continue;
+          } else {
+            makeNewMessage(message);
+          }
+        }
+
+        $(".ss-content").scroll(function() {
+          if (this.scrollTop === 0) {
+            loadOldMessages().then(list => prependOldMessages(list.reverse()));
+          }
+        });
+
+        $(".chat-room .ss-content")[0].scrollTop = $(".chat-room .ss-content")[0].scrollHeight;
+      }
+
+      function prependOldMessages(messageList) {
+        messageList.forEach((message, index) => {
+          const now = new Date(message.time);
+          let previousTime;
+
+          if (index > 0) {
+            previousTime = new Date(messageList[index - 1].time);
+          }
+
+          if (message.username === 'fileServer') {
+            const link = message.content;
+            const chatMessage = $(`<div class="chat-message">`);
+            const chatHeader = $(`<div class="chat-header">`);
+            const chatSenderInfo = $(`<div class="chat-sender-info">`);
+            chatSenderInfo.append($(`<span class="chat-sender-name">${message.name}</span>`));
+            chatSenderInfo.append($(`<span class="chat-sender-time">  ${formatTime(message.time)}</span>`));
+            chatHeader.append($(`<img src="https://via.placeholder.com/40" alt="프로필 사진" />`));
+            chatHeader.append(chatSenderInfo);
+            chatMessage.append(chatHeader).append(`<a href="${message.filepath}" download="${message.content}"><span class="chat-content-file"><span class="file-name">${message.content}</span><i class="fas fa-cloud-download-alt"></i></span></a>`);
+            $(".chat-room .ss-content").prepend(chatMessage);
+          } else {
+            const chatMessage = $(`<div class="chat-message">`);
+            const chatHeader = $(`<div class="chat-header">`);
+            const chatSenderInfo = $(`<div class="chat-sender-info">`);
+            chatSenderInfo.append($(`<span class="chat-sender-name">${message.name}</span>`));
+            chatSenderInfo.append($(`<span class="chat-sender-time">  ${formatTime(message.time)}</span>`));
+            chatHeader.append($(`<img src="https://via.placeholder.com/40" alt="프로필 사진" />`));
+            chatHeader.append(chatSenderInfo);
+            chatMessage.append(chatHeader).append(`<div class="chat-content">${message.content}</div>`);
+            $(".ss-content").prepend(chatMessage);
+          }
+          $(".ss-content")[0].scrollTop = 1000;
         });
       }
 
@@ -134,6 +236,9 @@
 
         if (client.connected) {
           clearInterval(interval);
+          loadOldMessages().then(list => {
+            showOldMessages(list);
+          });
         }
       }, 1500);
 
