@@ -16,16 +16,17 @@
         <div class="profileWrapper">
           <div class="profileTopWrapper">
             <div class="profileimg">
-            <img th:unless="${user.profile_photo}!=null"
-            th:src="@{/css/stack/profile.jpg}" id="profileimg">
-            <img th:if="${user.profile_photo}!=null"
-              th:src="@{${user.profile_photo}}"
-              id="profileimg"
-              alt="프로필 사진"
-            />
+              <img th:unless="${user.profile_photo}!=null"
+                th:src="@{/css/stack/profile.jpg}" id="profileimg">
+              <img th:if="${user.profile_photo}!=null"
+                th:src="@{${user.profile_photo}}" id="profileimg"
+                alt="프로필 사진" />
             </div>
             <div class="profileContent">
-              <div class="profileName">[[${user.name}]](<span>[[${user.username}]]</span>)</div>
+              <div class="profileName">
+              <input type="hidden" value="${user.username}">
+                [[${user.name}]](<span>[[${user.username}]]</span>)
+              </div>
               <div class="profileCourse">
                 <span>[[${course.course_name}]]</span>
               </div>
@@ -38,7 +39,8 @@
                   class="pdArticleNum">[[${article1.size()}]]</span>회
                   |&nbsp
                 </span> <span class="pdComment">총댓글 <span
-                  class="pdCommentNum">[[${comments.size()}]]</span>개 </span>
+                  class="pdCommentNum">[[${comments.size()}]]</span>개
+                </span>
               </div>
             </div>
           </div>
@@ -56,13 +58,16 @@
         <div class="articleWrapper">
           <div class="tabsWrapper">
             <div class="articleNavWrapper">
-              <button class="btn btn-outline-primary btnwidth">
+              <button id="userArticles"
+                class="btn btn-outline-primary btnwidth">
                 <span>등록한 게시글</span>
               </button>
-              <button class="btn btn-outline-primary btnwidth">
+              <button id="userComments"
+                class="btn btn-outline-primary btnwidth">
                 <span>등록한 댓글</span>
               </button>
             </div>
+            <div id="boardArticletWrapper">
             <div class="board">
               <div class="boardNav">
                 <div class="boardId nav-style">글번호</div>
@@ -70,32 +75,30 @@
                 <div class="boardDate nav-style">작성일</div>
                 <div class="boardView nav-style">조회</div>
               </div>
-              <div class="boardContentWrapper">
-              <div class="boardContent iteration"
-                th:each="list : ${article2}">
-                <div class="boardId cont-style">#[[${list.id}]]</div>
-                <div class="boardTitle cont-style">[[${list.title}]]</div>
-                <div class="boardDate cont-style">[[${list.time}]]</div>
-                <div class="boardView cont-style">[[${list.view_count}]]</div>
-              </div>
-              </div>
-            </div>
+                <div class="boardContent iteration"
+                  th:each="list : ${article2}">
+                  <div class="boardId cont-style">#[[${list.id}]]</div>
+                  <div class="boardTitle cont-style">[[${list.title}]]</div>
+                  <div class="boardDate cont-style">[[${list.time}]]</div>
+                  <div class="boardView cont-style">[[${list.view_count}]]</div>
+                </div>
+            </div></div>
 
-            <div class="board">
+            <div class="board" id="Commentsboard">
               <div class="boardNav">
                 <div class="boardId nav-style">글번호</div>
                 <div class="boardTitle nav-style">댓글내용</div>
                 <div class="boardDate nav-style">작성일</div>
                 <div class="boardView nav-style">조회</div>
               </div>
-              <div class="boardContentWrapper">
-              <div class="boardContent iteration"
-                th:each="comment : ${comments}">
-                <div class="boardId cont-style">#[[${comment.id}]]</div>
-                <div class="boardTitle cont-style">[[${comment.content}]]</div>
-                <div class="boardDate cont-style">[[${comment.time}]]</div>
-                <div class="boardView cont-style">[[${comment.view_count}]]</div>
-              </div>
+              <div id="boardCommentWrapper">
+                <div class="boardContent iteration"
+                  th:each="comment : ${comments}">
+                  <div class="boardId cont-style" id="commentId"></div>
+                  <div class="boardTitle cont-style" id="commentContent"></div>
+                  <div class="boardDate cont-style" id="commentDate"></div>
+                  <div class="boardView cont-style" id="commentView"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -105,6 +108,35 @@
   </div>
   <!-- 이페이지에서사용하는자바스크립트는이script 태그안에작성-->
   <script th:inline="javascript">
+      $(document).ready(function() {
+        $("#Commentsboard").hide();
+      });
+      
+      
+      $("#userComments").click(function(){
+        $("#boardArticletWrapper").empty();
+        $("#Commentsboard").show();
+        
+        
+        const username = 
+        
+        
+        function getCommentList(username) {
+          $.ajax({
+            url: "/mypage/home/CommentList",
+            type: "GET",
+            data: {
+              user:username
+            },
+            success: function(data) {
+              
+            }
+          })
+        }
+        
+      });
+      
+      
       
     </script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
