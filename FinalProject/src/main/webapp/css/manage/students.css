@@ -15,14 +15,6 @@ body {
   flex-direction: row;
 }
 
-.profiledetailTitle {
-  
-}
-
-.profiledetailContent {
-  
-}
-
 .title {
   font-size: 190%;
   margin: 20px;
@@ -68,7 +60,7 @@ body {
   display: flex;
   flex-direction: column;
   border: 1px solid rgba(0, 0, 0, .125);
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .list {
@@ -203,7 +195,7 @@ body {
   padding: 10px;
   height : 500px;
   margin-bottom: 19px;
-  border-radius: 10px;
+  border-radius: 5px;
   text-align:center;
 }
 
@@ -259,4 +251,7 @@ body {
 }
 .btn-sm {
   color:white;
+}
+.hidden {
+  display:none;
 }

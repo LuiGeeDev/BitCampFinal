@@ -83,14 +83,15 @@
           <div class="list cardShadow">
             <div th:each="memberList : ${memberList}" class="member-list-container">
             <div class="member-list">
+              <div class="hidden" id="member-list-course_name" th:text=${memberList.course_name}></div>
+              <div class="hidden" id="member-list-end_date" th:text=${memberList.end_date}></div>
               <div class="member-list-username" th:text=${memberList.username}></div>
               <div class="member-list-name" th:text=${memberList.name}></div>
               <div class="member-list-role" th:text=${memberList.role}></div>
               <div class="member-list-enabled" th:switch="${memberList.enabled}">
-                <i class="fas fa-circle on" th:case="1"></i>
-                <i class="fas fa-circle off" th:case="0"></i>
+                <i class="fas fa-circle on" th:case="1"> 활성화</i>
+                <i class="fas fa-circle off" th:case="0"> 비활성화</i>
               </div>
-              <!-- <div class="member-list-enabled" th:if="${memberList.enabled == 0}"><i class="fas fa-circle"></i></div> -->
             </div>
             </div>
           </div>
@@ -111,38 +112,33 @@
           <div class="profile-detail">
            	<div class="profile-detail-row">
               <div class="profile-detail-label">이름</div>
-              <input type="text" class="profile-detail-value" value="이힘찬">
+              <div class="profile-detail-value" id="profile-name"></div>
             </div>
             <div class="profile-detail-row">
               <div class="profile-detail-label">아이디</div>
-              <input type="text" class="profile-detail-value" value="1907050107">
+              <div class="profile-detail-value" id="profile-username"></div>
             </div>
             <div class="profile-detail-row">
               <div class="profile-detail-label">직책</div>
-              <input type="text" class="profile-detail-value" value="학생">
+              <div class="profile-detail-value" id="profile-role"></div>
             </div>
             <div class="profile-detail-row">
               <div class="profile-detail-label">클래스</div>
-              <input type="text" class="profile-detail-value" value="프론트앤드 및 백앤드 개발자양성과정">
+              <div class="profile-detail-value" id="profile-course_name"></div>
             </div>
             <div class="profile-detail-row">
               <div class="profile-detail-label">수료일</div>
-              <input type="text" class="profile-detail-value" value="2019-07-30">
+              <div class="profile-detail-value" id="profile-end_date"></div>
             </div>
             <div class="profile-detail-row">
               <div class="profile-detail-label">계정</div>
-              <div class="profile-detail-value" th:switch="1">
-                <i class="fas fa-circle on" th:case="1"> 활성화</i>
-                <i class="fas fa-circle off" th:case="0"> 비활성화</i>
-              </div>
+              <div class="profile-detail-value" id="profile-enabled"></div>
             </div>
           </div>
-          <div class="updateBtnWrapper"><input
-            type="submit"
+          <div class="updateBtnWrapper"><button
             class="btn btn-warning btn-sm"
-            id=""
-            value="저장"
-          >
+            id="switch-enabled-btn"
+          >계정</button>
           </div>
           </div>
         </div>
@@ -151,7 +147,56 @@
   </div>
   <script src="/js/qna/content.js"></script>
   <script th:inline="javascript">
- 
+  	$(".member-list").click(function(event){
+  	  const course_name = $(this).children("#member-list-course_name").text();
+  	  const end_date = $(this).children("#member-list-end_date").text();
+  	  const username = $(this).children(".member-list-username").text();
+  	  const name = $(this).children(".member-list-name").text();
+  	  const role = $(this).children(".member-list-role").text();
+  	  const enabled = $(this).children(".member-list-enabled").html();
+  	  
+  	  $("#profile-name, #profile-username, #profile-role, #profile-course_name, #profile-end_date, #profile-enabled").empty();
+  	  $("#profile-name").append(name);
+  	  $("#profile-username").append(username);
+  	  $("#profile-role").append(role);
+  	  $("#profile-course_name").append(course_name);
+  	  $("#profile-end_date").append(end_date);
+  	  $("#profile-enabled").append(enabled);
+  	  
+  	  const memberEnabled = $("#profile-enabled").text().trim();
+  	  $("#switch-enabled-btn").empty();
+  	  if(memberEnabled === "활성화") {
+  	    $("#switch-enabled-btn").append("비활성화");
+	  } else {
+	    $("#switch-enabled-btn").append("활성화");
+	  }
+  	});
+  	
+  	$("#switch-enabled-btn").click(function(event){
+  	  const memberEnabled = $("#profile-enabled").text().trim();
+  	  const memberUsername = $("#profile-username").text();
+  	  console.log("enabled : "+memberEnabled);
+  	  console.log("username : " +memberUsername);
+  	  
+  	  $.ajax({
+  	   	url:"/ajax/manage/enabledUpdate",
+  	   	type:"POST",
+  	   	data: {
+  	   	  username: memberUsername,
+  	   	  enabled: memberEnabled
+  	   	}
+  	  }).done(function() {
+  	    $("#profile-enabled").empty();
+  	    $("#switch-enabled-btn").empty();
+  	    if(memberEnabled=="활성화") {
+  	      $("#profile-enabled").append("<i class='fas fa-circle off' th:case='0'> 비활성화</i>");
+  	      $("#switch-enabled-btn").append("활성화");
+  	    }else {
+  	      $("#profile-enabled").append("<i class='fas fa-circle on' th:case='1'> 활성화</i>");
+  	      $("#switch-enabled-btn").append("비활성화");
+  	    }
+  	  });
+  	});
   </script>
 </body>
 </html>

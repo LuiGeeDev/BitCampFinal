@@ -17,8 +17,16 @@ public class Member {
   private int group_no;
   
   private Date end_date;
+  private String course_name;
   
-  
+  public String getCourse_name() {
+    return course_name;
+  }
+
+  public void setCourse_name(String course_name) {
+    this.course_name = course_name;
+  }
+
   public Date getEnd_date() {
     return end_date;
   }
@@ -113,5 +121,13 @@ public class Member {
 
   public void setGroup_no(int group_no) {
     this.group_no = group_no;
+  }
+  
+  @Override
+  public String toString() {
+    return "Member [username=" + username + ", password=" + password + ", name=" + name + ", email=" + email
+        + ", enabled=" + enabled + ", course_id=" + course_id + ", profile_photo=" + profile_photo + ", group_id="
+        + group_id + ", role=" + role + ", scrap=" + scrap + ", group_no=" + group_no + ", end_date=" + end_date
+        + ", course_name=" + course_name + "]";
   }
 }
