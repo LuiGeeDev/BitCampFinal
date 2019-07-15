@@ -8,12 +8,12 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 
 @Configuration
 @EnableWebSocketMessageBroker
-public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
+public class ChatSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
   @Override
   public void registerStompEndpoints(StompEndpointRegistry registry) {
-    registry.addEndpoint("/notification").setAllowedOrigins("*").withSockJS();
+    registry.addEndpoint("/chat").setAllowedOrigins("*").withSockJS();
   }
-  
+
   @Override
   public void configureMessageBroker(MessageBrokerRegistry registry) {
     registry.enableSimpleBroker("/topic", "/queue");
