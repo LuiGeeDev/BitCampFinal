@@ -24,7 +24,7 @@
             <input type="text" id="input-url" placeholder="Youtube 주소 (https://youtu.be로 시작)" name="url" th:value="${video_id}"/>
             <i class="far fa-question-circle info" data-toggle="tooltip" data-placement="bottom" title data-original-title="공유 - 주소 복사"></i>
           </div>
-          <textarea name="content" id="summernote"></textarea>
+          <textarea name="content" class="content"></textarea>
           <button
             type="submit"
             class="btn btn-primary"
@@ -48,10 +48,7 @@
         
         $('[data-toggle="tooltip"]').tooltip();
         
-        $("#summernote").summernote({
-          height: 485,
-          disableResizeEditor: true
-        });
+
         
         if (title.val() == "") {
           submitBtn.attr("disabled", true);
