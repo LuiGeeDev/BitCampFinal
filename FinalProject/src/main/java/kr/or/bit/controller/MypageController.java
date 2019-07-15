@@ -18,10 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.CommentDao;
+import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.FilesDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
+import kr.or.bit.model.Course;
 import kr.or.bit.model.Files;
 import kr.or.bit.model.Member;
 import kr.or.bit.service.FileUploadService;
@@ -47,12 +49,17 @@ public class MypageController {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
+    CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     String username = Helper.userName();
-    List<Article> articles = articleDao.selectAllArticleByUsername(username);
+    List<Article> article1 = articleDao.selectAllArticleByUsername(username);
+    List<Article> article2 = articleDao.selectEnableArticleByUsername(username);
     List<Comment> comments = commentDao.selectAllCommentByUsername(username);
     Member user = memberDao.selectMemberByUsername(username);
+    Course course = courseDao.selectCourse(user.getCourse_id());
+    model.addAttribute("course",course);
     model.addAttribute("comments",comments);
-    model.addAttribute("articles",articles);
+    model.addAttribute("article1",article1);
+    model.addAttribute("article2",article2);
     model.addAttribute("user",user);
     return "mypage/mypage";
   }

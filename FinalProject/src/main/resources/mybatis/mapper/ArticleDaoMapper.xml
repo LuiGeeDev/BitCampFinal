@@ -499,5 +499,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	FROM article
   	WHERE username = #{username}
   </select>
+  <select id="selectEnableArticleByUsername" resultType="kr.or.bit.model.Article">
+  	SELECT *
+  	FROM article
+  	WHERE username = #{username} and enable=1
+  </select>
 </mapper>
  

@@ -1,4 +1,7 @@
 @charset "UTF-8";
+body{
+  font-familly:'Nanum Gothic' !important;
+}
 
 .detail-container {
   background-color: #e8e8e8;
@@ -14,7 +17,7 @@
 }
 
 .detail-title {
-  font-size: 32px;
+  font-size: 18px;
   font-weight: bold;
   margin-left: 20px;
 }
@@ -31,6 +34,7 @@
   padding: 10px;
   margin: 10px;
   min-height: 300px;
+  font-size:14px;
 }
 
 .detail-comment {
@@ -40,14 +44,16 @@
 
 .writerName {
   font-weight: bold;
-  font-size: 22px;
+  font-size: 15px;
 }
 
 .comment-text {
-  width: 80%;
+  width: 83.5%;
   height: 36px;
 }
-
+.btn{
+  font-size: 14px;
+}
 .detail-btn {
   margin-bottom: 5px;
 }
@@ -91,6 +97,7 @@
 .noComment{
 	padding : 10px 0px 10px 30px;
 	font-weight:bold;
+	font-size:14px
 }
 
 .pointOrange, .pointOrange2 {

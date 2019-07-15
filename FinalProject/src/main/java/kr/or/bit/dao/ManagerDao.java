@@ -37,24 +37,5 @@ public interface ManagerDao {
   
   List<Course> selectCourseList();
   
-  
-  
-  
-  
-  List<Member> selectMembersByName(String name);
-  
-  List<Member> selectMembersByUserame(String username);
-  
-  List<Member> selectMembersByCourseId(int course_id);
-  
-  List<Member> selectMembersByEnabled(String name);
-  
-  List<Member> selectMembersByOneColumn(String column, String value);
-  
-  List<Member> selectMembersByTwoColumns(String columnOne, String valueOne, String columnTwo, String valueTwo);
-  
-  List<Member> selectMembersByThreeColumn(String columnOne, String valueOne, String columnTwo, String valueTwo, String columnThree, String valueThree);
-  
-  List<Member> selectMembersByFourColumn(@Param("role") String role, @Param("enable") int enable, @Param("course_id") int course_id, @Param("column") String column, @Param("value") String value);
-  
+  void updateMemberEnabled(@Param("enabled") int enabled, @Param("username") String username);
 }

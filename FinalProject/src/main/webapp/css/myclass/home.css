@@ -10,7 +10,7 @@ body {
 }
 
 .card-title {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 600;
 }
 
@@ -48,6 +48,10 @@ body {
   height: 206.8px;
   padding: 20px;
   padding-top: 30px;
+}
+
+.processBar h5{
+  font-size:14px;
 }
 
 .recentHomework {

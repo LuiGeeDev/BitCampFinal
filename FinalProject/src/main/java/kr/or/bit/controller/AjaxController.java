@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.CourseDao;
+import kr.or.bit.dao.ManagerDao;
 import kr.or.bit.dao.MessageDao;
 import kr.or.bit.dao.NotificationDao;
 import kr.or.bit.model.Article;
@@ -128,5 +129,20 @@ public class AjaxController {
     notificationDao.checkAllNotification(username);
   }
   
+  @PostMapping("/manage/enabledUpdate")
+  public String updateMemberEnabled(String username, String enabled) {
+    System.out.println("username : "+username);
+    System.out.println("enabled : "+enabled);
+    ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
+    int enabledInt = 0;
+    if(enabled.equals("활성화")) {
+      enabledInt=0;
+      System.out.println("여기타야됨");
+    } else {
+      enabledInt=1;
+    }
+    managerDao.updateMemberEnabled(enabledInt, username);
+    return "redirect:/manage/students";
+  }
 
 }
