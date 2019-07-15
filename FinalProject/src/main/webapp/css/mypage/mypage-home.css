@@ -33,11 +33,13 @@ body {
 
 .profileimg {
   
+margin-right: 9px;
 }
 
 #profileimg {
-  width: 200px;
+  width: 188px;
   border-radius: 50%;
+  height: 188px;
 }
 
 .profileContent {
@@ -86,17 +88,14 @@ body {
   border-radius: 4px;
 }
 
-.bg-warning {
-  background-color: #2ECC71 !important;
-}
-
 .profileName {
-  font-size: 27px;
+  font-size: 24px;
   font-weight: 600;
 }
 
-.profileRole {
-  margin-top: 2px;
+.profileClassroom {
+  
+margin-top: 3px;
 }
 
 .profileDetail {
@@ -131,19 +130,21 @@ body {
 }
 
 .profileCourse {
-  margin-top: 8px;
+  margin-top: 9px;
 }
 
 .boardNav {
   display: flex;
   flex-direction: row;
-  margin-bottom: 10px;
+  padding: 11px;
+  background-color: #EAEAEA;
 }
 
 .boardContent {
   display: flex;
   flex-direction: row;
-  margin-bottom: 7px;
+  /* margin-bottom: 7px; */
+  padding: 10px;
 }
 
 .nav-style {
@@ -173,4 +174,25 @@ body {
 
 .boardId {
   width: 14%;
+}
+
+.middle-border {
+  border: 0.7px solid #D0D0D0;
+  margin-left: 12%;
+  margin-right: 15%;
+  margin-top: 6px;
+  margin-bottom: 19px;
+}
+
+.board {
+  border-top: 2px solid #D0D0D0;
+  border-bottom: 1px solid #D0D0D0;
+}
+
+.articleNavWrapper {
+  padding: 0px 0px 15px 0px;
+}
+.btnwidth{
+  
+width: 12%;
 }

@@ -100,4 +100,6 @@ public interface ArticleDao {
   List<Article> selectAllArticleByUsername(String username);
   
   List<Article> selectSearchTitleByBoardId(@Param("board_id")int board_id,@Param("title") String title);
+
+  List<Article> selectEnableArticleByUsername(String username);
 }
