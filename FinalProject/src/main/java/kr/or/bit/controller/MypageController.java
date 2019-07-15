@@ -55,6 +55,7 @@ public class MypageController {
     List<Article> article2 = articleDao.selectEnableArticleByUsername(username);
     List<Comment> comments = commentDao.selectAllCommentByUsername(username);
     Member user = memberDao.selectMemberByUsername(username);
+    System.out.println("hi"+user.getCourse_id());
     Course course = courseDao.selectCourse(user.getCourse_id());
     model.addAttribute("course",course);
     model.addAttribute("comments",comments);
@@ -62,6 +63,12 @@ public class MypageController {
     model.addAttribute("article2",article2);
     model.addAttribute("user",user);
     return "mypage/mypage";
+  }
+
+  @GetMapping("/home/CommentList")
+  public String getCommentList(String user) {
+    
+    return null;
   }
   
   
