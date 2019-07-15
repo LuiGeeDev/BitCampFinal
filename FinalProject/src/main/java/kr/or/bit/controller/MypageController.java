@@ -88,7 +88,7 @@ public class MypageController {
       member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
       service.updateMemberWithoutFile(member);
     }
-    return "redirect:/";
+    return "redirect:/mypage";
   }
   
 }

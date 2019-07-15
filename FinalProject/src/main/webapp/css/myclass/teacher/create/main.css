@@ -86,9 +86,17 @@ body {
 }
 .btn{
   font-size:14px;
+  background-color:#f39c12;
 }
 .button-wrapper button {
-  font-weight: bold;
+  color:white;
+}
+.btn {
+  color:white;
+}
+.btn-warning.disabled, .btn-warning:disabled{
+  color:white;
+  background-color:#f39c12;
 }
 
 .content-wrapper input {
@@ -127,9 +135,7 @@ body {
 }
 
 .modal-footer button {
-  color: black;
-  font-weight: bold;
-  background-color: #EA8A02;
+  background-color: #F39C12;
 }
 
 .modal-body {

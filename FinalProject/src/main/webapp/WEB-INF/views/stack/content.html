@@ -215,20 +215,21 @@
               
               let createText = null;
               
-              if ([[${stackcontent.option.adopted_answer}]]) {
-                
-               // 답변이 되어있는 글이라면
-                createText = "";
+              if ([[${stackcontent.option.adopted_answer}]] == 0 && [[${user.username}]] == [[${stackcontent.username}]] ) {
+               // 채택이 되어있는 글이라면
+               createText = "채택" + "&nbsp;<i class='far fa-check-circle'></i></a>";
               } else {
+                createText = "";
+                // 0이면 else문을 탄다
                //답변이 되어있는 글이 아니라면
-                createText = "채택" + "&nbsp;<i class='far fa-check-circle'></i></a>";
+                
               }
               
               
 
               let html = "<table class='iteration'><tbody>"+
               			 "<tr><td class='td8'><i class='fas fa-user-circle fa-lg fa-2x'></i></td>" +
-                         "<td>" + username + "<a href='/stack/commentdelete?id=" + commentId + "'" + ">" + equalName +"</a>" + 
+                         "<td class='comment-writer'>" + username + "&nbsp;<a href='/stack/commentdelete?id=" + commentId + "'" + ">" + equalName +"</a>" + 
                          "<br>" +
                          "<span class='commentCalender'>" + timedate + "</span></td>" +
                          "<td class='td7'></td></tr>" + 
