@@ -113,7 +113,7 @@
 
     <!-- 일반 답변 -->
     <div class="stack-wrapper">
-      <table th:unless="${stackcontent.commentlist.size()==0}"
+      <table th:if="${stackcontent.commentlist.size()!=0}"
         class="iteration" th:each="list : ${stackcontent.commentlist}">
         <tr>
           <td class="td8"><i class="fas fa-user-circle fa-lg fa-2x"></i></td>
