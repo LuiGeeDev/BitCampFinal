@@ -66,12 +66,12 @@ input[type=checkbox]+label:active {
   transform: scale(0.98);
 }
 
-input[type=checkbox]+label svg {
+input[type=checkbox]+label i {
   color: #a6a6a6;
   font-size: 22px;
 }
 
-input[type=checkbox]:checked+label svg {
+input[type=checkbox]:checked+label i {
   color: #F39C20;
 }
 

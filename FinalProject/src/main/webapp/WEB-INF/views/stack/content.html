@@ -63,7 +63,7 @@
             <span th:text="${stackcontent.writer.name}"></span>
           </p>
           <p class="pfont">
-            게시일:<span th:text="${stackcontent.updated_time}"></span>
+            게시일:<span th:text="${#temporals.format(stackcontent.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
           </p>
           <p class="pfont">
             <span th:text="${stackcontent.view_count}"></span>view
@@ -98,7 +98,9 @@
         <td class="td8"><i class="fas fa-user-circle fa-lg fa-2x"></i></td>
         <td class="td10"><span class="answer-name"> <b>[[${adoptedanswer.writer.name}]]
               [채택된 답변] </b><i class="fas fa-crown answer-icon"></i>
-        </span> <br> <span class="commentCalender" id="answertime">[[${adoptedanswer.time}]]</span>
+        </span> <br> <span class="commentCalender" id="answertime" th:text="${#temporals.format(adoptedanswer.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
+        <!-- <span class="commentCalender"
+            th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span> -->
         </td>
         <td class="td7"></td>
       </tr>
