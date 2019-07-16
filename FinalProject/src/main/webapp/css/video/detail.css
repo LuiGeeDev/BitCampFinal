@@ -90,7 +90,7 @@ body {
 
 #writeDate {
   float: right;
-  font-size: 14px;
+  font-size: 12px;
   color: gray;
 }
 
@@ -173,6 +173,23 @@ body {
   font-size: 300%;
 }
 
+.comment-delete-button{
+  font-size:12px;
+  color:#808080;
+  font-weight:100;
+  margin-left:20px;
+}
+
+.comment-delete-button:hover{
+  text-decoration:underline;
+  color:#808080;
+}
+
 #comment-articleID {
   display: none;
+}
+.writerIcon{
+  border-radius:50%;
+  width:25px;
+  height:25px;
 }

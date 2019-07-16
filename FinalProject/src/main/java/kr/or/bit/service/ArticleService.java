@@ -166,6 +166,7 @@ public class ArticleService {
       System.out.println(comment.getTime());
       comment.setTimeLocal(comment.getTime().toLocalDateTime());
       System.out.println("댓글이름:"+(memberDao.selectMemberByUsername(comment.getUsername())).getName());
+      comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
       comment.setName(
           (memberDao.selectMemberByUsername(comment.getUsername())).getName()
           );
