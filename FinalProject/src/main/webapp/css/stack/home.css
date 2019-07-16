@@ -110,6 +110,10 @@ td[colspan="2"] {
   cursor: pointer;
 }
 
+.write-btns {
+  margin-right: 10%;
+}
+
 #c1 {
   background-color: green;
 }

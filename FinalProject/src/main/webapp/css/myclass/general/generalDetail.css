@@ -139,7 +139,6 @@ body{
 .spinner-border {
   width: 3rem; 
   height: 3rem;
- font-size: 300%;
 }
 
 .group-parent {
@@ -157,4 +156,9 @@ body{
 
 .file-parent {
   margin-left: 50px
+}
+
+#icon {
+  width: 25px;
+  height: 25px;
 }
