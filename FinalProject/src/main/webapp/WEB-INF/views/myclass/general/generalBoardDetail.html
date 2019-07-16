@@ -98,7 +98,7 @@
         </div>
       </div>
       <div class="detail-comment">
-        <span class="userIcon"> <i class="fas fa-user-circle fa-lg"></i> </span>
+        <span class="userIcon"><img th:src="@{${user.profile_photo}}" id="icon"/> </span>
         <span class="writerName" th:text="${user.name}"></span>
         <input
           type="text"
@@ -123,8 +123,8 @@
         >
           <div class="content-move">
             <span class="userIcon"
-              ><i class="fas fa-user-circle fa-lg"></i
-            ></span>
+              ><img th:if="${comment.writer.profile_photo != null}" class="writerIcon" th:src="@{${comment.writer.profile_photo}}" width="25" height="25">
+                <img th:if="${comment.writer.profile_photo == null}" class="writerIcon" th:src="@{/resources/images/default.png}" width="25" height="25"></span>
             <span
               class="commentWriterName"
               th:text="${comment.writer.name}"
@@ -253,7 +253,8 @@
 
               let html = "<div class='content-reply'>";
               html += "<div class='content-move'>" +
-                      "<span class='userIcon'><i class='fas fa-user-circle fa-lg'></i></span>" +
+              /* <img src="+item.writer.profile_photo+" class='writerIcon'> */
+                      "<span class='userIcon'><img src="+item.writer.profile_photo+" id='icon'></span>" +
                       "<span class='commentWriterName'>" + username + "</span>" +
                       "<a href='/myclass/board/commentdelete?comment_id=" + commentId + "&article_id=" + articleId + "&board_id=" + [[${board.id}]] +"'" + ">" +equalName+"</a>" +
                       "<span class='write-date'>" + timedate + "</span></div>";

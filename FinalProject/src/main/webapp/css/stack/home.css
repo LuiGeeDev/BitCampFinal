@@ -14,9 +14,7 @@ body {
 }
 
 table {
-  margin-left: 10%;
-  margin-right: 10%;
-  width: 80%;
+  width: 100%;
   border-collapse: collapse;
   font-size: 14px;
 }
@@ -43,13 +41,22 @@ td[colspan="2"] {
 
 .tdcontent {
   cursor: pointer;
-  max-height: 46px;
+  max-height: 45px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .tdcontent br {
   display: none;
+}
+
+.tdcontent b {
+  display: none;
+}
+
+.tdcontent p span {
+  font-weight: 100 !important;
+  font-style: normal !important;
 }
 
 .tdcontent p img {
@@ -89,12 +96,22 @@ td[colspan="2"] {
   font-weight: bold;
 }
 
+.td5{
+    font-size: 80%;
+    text-align: center;
+    padding: 5px 0px;
+}
+
 .tag-name span {
   border-radius: 5px;
   color: white;
   padding: 5px;
   line-height: 2.0em;
   cursor: pointer;
+}
+
+.write-btns {
+  margin-right: 10%;
 }
 
 #c1 {
@@ -150,7 +167,7 @@ td[colspan="2"] {
 }
 
 .write-btns {
-  margin-right: 17%;
+  float: right;
 }
 
 .btn.btn-primary.paging {
@@ -183,4 +200,30 @@ td[colspan="2"] {
 .titleanswer {
   color: red;
   font-size: 12px;
+}
+
+.tableWrapper {
+  margin-left: 13%;
+  margin-right: 14%;
+}
+
+#profileimg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.navBar{
+  
+height: 44px;
+}
+
+.writeBtn{
+  
+}
+.searchBtn{padding: 4px 12px;}
+.selectBar{
+   height: 27px;
+   margin-right: 4px;
 }

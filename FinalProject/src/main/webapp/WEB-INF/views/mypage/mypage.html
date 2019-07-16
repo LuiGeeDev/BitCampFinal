@@ -18,7 +18,7 @@
             <div class="profileimg">
               <img th:unless="${user.profile_photo}!=null"
                 th:src="@{/css/stack/profile.jpg}" id="profileimg">
-              <img th:if="${user.profile_photo}!=null"
+               <img th:if="${user.profile_photo}!=null"
                 th:src="@{${user.profile_photo}}" id="profileimg"
                 alt="프로필 사진" />
             </div>
