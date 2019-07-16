@@ -128,12 +128,14 @@
             <span
               class="commentWriterName"
               th:text="${comment.writer.name}"
+              
             ></span>
             <a
               th:if="${comment.username}==${user.username}"
               th:href="@{/myclass/board/commentdelete(comment_id=${comment.id}, article_id=${article.id}, board_id=${board.id})}"
               >[삭제]</a
             >
+            <span class="hidden" id="messageSenderId" th:text=${comment.username}></span> 
             <span
               class="write-date"
               th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd HH:mm')}"
@@ -145,6 +147,27 @@
           등록된 댓글이 없습니다
         </div>
       </div>
+      
+      <div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <i class="far fa-paper-plane fa-2x"></i>&nbsp;&nbsp;<h5 class="modal-title">쪽지보내기</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea class="messageForm" id="messageText"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary submitMessage">전송</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+      
     </div>
     <!-- 필요하다면 이 아래에 외부 자바스크립트도 추가 가능 -->
 
@@ -159,6 +182,91 @@
         $("#spinner").hide();
       });
 
+      $(".commentWriterName").click(function() {
+        $(".modal").modal("show");
+      });
+      
+      $(".submitMessage").click(function() {
+        const messageText = $("#messageText").val();
+        const messageSenderId = $("#messageSenderId").text();
+        
+      	if(messageText.trim() === "" || messageText === null) {
+  	  	  Swal.fire({
+  	  	    type: 'error',
+  	  	    text: '다시 입력해주세요 !!',
+  	  	  })
+  	  	  	return;
+  	  	}
+      	
+      	$.ajax({
+          url: "/ajax/message/reply",
+          type: "POST",
+          data: {
+            content: messageText,
+            receiver_username: messageSenderId
+          }
+        }).done(function() {
+          $(".modal").modal("hide");
+          Swal.fire({
+            type: 'success',
+            title: '전송되었습니다',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          sendMessageNotice([[${user.name}]], messageSenderId);
+        });
+      	
+      	
+      });
+      
+      
+      
+ /*      $("#modal-submitbtn").click(function() {
+        const messageText = $("#message-text").val();
+        const messageSenderId = $("#message-sender-id").text();
+        let valueCheck = messageText;         
+        
+  	  	if(valueCheck.trim() === "" || valueCheck === null) {
+  	  	  Swal.fire({
+  	  	    type: 'error',
+  	  	    text: '다시 입력해주세요 !!',
+  	  	  })
+  	  	  	return;
+  	  	}
+        $.ajax({
+          url: "/ajax/message/reply",
+          type: "POST",
+          data: {
+            content: messageText,
+            receiver_username: messageSenderId
+          }
+        }).done(function() {
+          $(".modal").modal("hide");
+          Swal.fire({
+            type: 'success',
+            title: '전송되었습니다',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          sendMessageNotice([[${user.name}]], messageSenderId);
+        });
+      }); */
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      $(".submitMessage").click(function() {
+        
+      });
+      
       $("#deletebtn").click(function(event) {
         let articleId = [[${article.id}]];
         event.preventDefault();
