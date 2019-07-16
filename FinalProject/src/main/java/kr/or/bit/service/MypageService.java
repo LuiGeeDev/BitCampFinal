@@ -21,7 +21,7 @@ public class MypageService {
     List<Article> articleList = articleDao.selectEnableArticleByUsername(username);
     for (Article article : articleList) {
       article.setTimeLocal(article.getTime().toLocalDateTime());
-      article.setUpdatedTimeLocal(article.getUpdated_time().toLocalDateTime());
+      //article.setUpdatedTimeLocal(article.getUpdated_time().toLocalDateTime());
     }  
     return articleList;
   }

@@ -55,6 +55,7 @@ public class MypageController {
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     String username = Helper.userName();
+    System.out.println(username);
     List<Article> article1 = articleDao.selectAllArticleByUsername(username);
     List<Article> article2 = mypageService.allArticleByUsername(username);
     //List<Article> article2 = articleDao.selectEnableArticleByUsername(username);
@@ -82,6 +83,12 @@ public class MypageController {
   public @ResponseBody List<Article> getArticleList(String user) {
     List<Article> articles = mypageService.allArticleByUsername(user);
     return articles;
+  }
+  
+  @GetMapping("/mypage/home/articlecontent")
+  public String GetArticleContent(Model model,int id) {
+    
+    return null;
   }
   
   
