@@ -76,10 +76,11 @@ public class MypageController {
     return "mypage/mypage";
   }
   
-  @GetMapping("/home/Content")
+  @GetMapping("/home/content")
   public String getDetail(int article_id) {
-    
-    return null;
+    String URL = mypageService.selectOneArticleforMypage(article_id);
+    System.out.println("URL"+URL);
+    return "redirect:myclass/qna/content?id=798";
   }
 
   @PostMapping("/home/CommentList")

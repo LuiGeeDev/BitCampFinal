@@ -82,6 +82,7 @@
 
                 <!-- 게시물 테이블 -->
                 <div class="boardContent iteration"
+                th:onclick="location.href='/mypage/home/content?article_id=[[${list.id}]]'"
                   th:each="list : ${article2}" id="boardArticletWrapper">
                   <div class="boardId cont-style">#[[${list.id}]]</div>
                   <div class="boardTitle cont-style">[[${list.title}]]</div>
@@ -228,7 +229,7 @@
                                         + hours + `:` + minutes;
                                     console.log(item.index);
                                     
-                                    let html2 = "<div class='boardContent iteration' id='boardArticletWrapper'><div class='boardId cont-style'>"
+                                    let html2 = "<div class='boardContent iteration' id='boardArticletWrapper' th:onclick='location.href='/mypage/home/content?article_id="+ id +"''>"+"<div class='boardId cont-style'>"
                                         + "#"
                                         + id
                                         + "</div><div class='boardTitle cont-style'>"

@@ -29,8 +29,8 @@ td[colspan="2"] {
 }
 
 .tdtitle {
-  color: #0984e3;
-  font-size: 18px;
+  color: #0984E4;
+  font-size: 19px;
   font-weight: bold;
   cursor: pointer;
 }
@@ -89,11 +89,13 @@ td[colspan="2"] {
 
 .td3 {
   width: 50%;
+  padding: 5px 5px;
 }
 
 .td4 {
   width: 20%;
   font-weight: bold;
+  padding: 3px 3px 1px 48px;
 }
 
 .td5{
@@ -108,10 +110,6 @@ td[colspan="2"] {
   padding: 5px;
   line-height: 2.0em;
   cursor: pointer;
-}
-
-.write-btns {
-  margin-right: 10%;
 }
 
 #c1 {
