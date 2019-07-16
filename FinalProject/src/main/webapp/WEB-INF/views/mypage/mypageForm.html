@@ -9,10 +9,11 @@
 <body>
   <div class="main" th:fragment="main">
     <div class="main-title">프로필 수정</div>
+    <hr>
     <div class="row">
-      
-       
-      
+
+
+
 
       <div class="mypageContentForm" th:object="${user}">
         <div class="photo-parent">
@@ -34,83 +35,89 @@
             </div>
           </div>
 
-        <form method="POST" enctype="multipart/form-data" autocomplete="off">
-          <!-- <div class="photo-file"><input type="text" name="profile_photo" th:value="*{profile_photo}" placeholder="프로필 사진"></div> -->
-          <div class="id-wrapper">
-            <div class="mypageId">아이디</div>
-            <div class="idParent">
-              <input type="text" class="mypage-name" name="username"
-                th:value="*{username}" readonly> <span
-                class="idCheck"><i class="far fa-times-circle"></i></span>
+          <form method="POST" enctype="multipart/form-data"
+            autocomplete="off">
+            <!-- <div class="photo-file"><input type="text" name="profile_photo" th:value="*{profile_photo}" placeholder="프로필 사진"></div> -->
+            <div class="id-wrapper">
+              <div class="mypageId">아이디</div>
+              <div class="idParent">
+                <input type="text" class="mypage-name" name="username"
+                  th:value="*{username}" readonly> <span
+                  class="idCheck"><i class="far fa-times-circle"></i></span>
+              </div>
             </div>
-          </div>
-          <div class="mypagePwd">비밀번호</div>
-          <div class=passwordParent>
-            <input type="password" class="pwd" name="password" 
-              placeholder="비밀번호는 8글자 이상의 영문자,숫자,특수문자 조합을 입력해야 합니다"
-              maxlength="16" id="mypage-password"> <span
-              class="hidden" id="pwdCheck" name="pwdCheck"></span>
-          </div>
-          <div class="mypageName">이름</div>
-          <div>
-            <input type="text" name="name" th:value="*{name}"
-              placeholder="이름을 입력해주세요" id="mypage-name" maxlength="6">
-          </div>
-          
-          <div class="mypageEmail">이메일</div>
-          <div class="emailParent">
-            <input type="text" name="email" th:value="*{email}"
-              placeholder="이메일을 입력해주세요" id="mypage-email"> <span
-              class="hidden" id="emailCheck" name="emailCheck"></span>
-          </div>
-          <div class="submit-btn">
-            <input class="btn btn-primary btn-sm updateBtn"
-              type="submit" value="수정">
-          </div>
-          
-        </form>
+            <div class="mypagePwd">비밀번호</div>
+            <div class=passwordParent>
+              <input type="password" class="pwd" name="password"
+                placeholder="비밀번호는 8글자 이상의 영문자,숫자,특수문자 조합을 입력해야 합니다"
+                maxlength="16" id="mypage-password"> <span
+                class="hidden" id="pwdCheck" name="pwdCheck"></span>
+            </div>
+            <div class="mypageName">이름</div>
+            <div>
+              <input type="text" name="name" th:value="*{name}"
+                placeholder="이름을 입력해주세요" id="mypage-name" maxlength="6">
+            </div>
+
+            <div class="mypageEmail">이메일</div>
+            <div class="emailParent">
+              <input type="text" name="email" th:value="*{email}"
+                placeholder="이메일을 입력해주세요" id="mypage-email"> <span
+                class="hidden" id="emailCheck" name="emailCheck"></span>
+            </div>
+            <div class="submit-btn">
+              <input class="btn btn-primary btn-sm updateBtn"
+                type="submit" value="수정">
+            </div>
+
+          </form>
         </div>
         <form action="" method="post" enctype="multipart/form-data">
-          <div id="myModal" class="modal fade" role="dialog">
-            <div class="modal-dialog  modal-sm">
-              <!-- Modal content-->
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title">사진 변경</h4>
-                  <button type="button" class="close"
-                    data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                  <div class="photo-parent">
-                    <div th:if="*{profile_photo}==null"
-                      class="photo-icon">
-                      <img class="user-icon" id="icon"
-                        th:src="@{/resources/images/default.png}">
-                    </div>
-                    <div th:if="*{profile_photo}!=null"
-                      class="photo-icon">
-                      <img class="user-icon" id="icon"
-                        th:src="@{*{profile_photo}}">
-                    </div>
-                    <button type="reset" class="btn btn-primary btn-sm">
-                      <label for="files1" id="file-button">사진 찾기</label>
-                    </button>
-                    <input type="file" id="files1" class="files1"
-                      th:value="*{profile_photo}" name="files1">
-                    <input type="hidden" name="username"
-                      th:field="*{username}" th:value="*{username}">
+          <div class="row">
+            <div id="myModal" class="modal fade" role="dialog">
+              <div class="modal-dialog  modal-sm">
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">사진 변경</h4>
+                    <button type="button" class="close"
+                      data-dismiss="modal">&times;</button>
                   </div>
-                </div>
+                  <div class="modal-body">
+                    <div class="photo-parent">
+                      <div th:if="*{profile_photo}==null"
+                        class="photo-icon">
+                        <img class="user-icon" id="icon"
+                          th:src="@{/resources/images/default.png}">
+                      </div>
+                      <div th:if="*{profile_photo}!=null"
+                        class="photo-icon">
+                        <img class="user-icon" id="icon"
+                          th:src="@{*{profile_photo}}">
+                      </div>
+                      <button type="reset"
+                        class="btn btn-primary btn-sm">
+                        <label for="files1" id="file-button">사진
+                          찾기</label>
+                      </button>
+                      <input type="file" id="files1" class="files1"
+                        th:value="*{profile_photo}" name="files1">
+                      <input type="hidden" name="username"
+                        th:field="*{username}" th:value="*{username}">
+                    </div>
+                  </div>
 
-                <div class="modal-footer">
-                  <input type="submit" class="btn btn-primary btn-sm"
-                    value="완료">
-                  <button type="button" class="btn btn-primary btn-sm"
-                    data-dismiss="modal">닫기</button>
+                  <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary btn-sm"
+                      value="완료">
+                    <button type="button" class="btn btn-primary btn-sm"
+                      data-dismiss="modal">닫기</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
         </form>
       </div>
     </div>
