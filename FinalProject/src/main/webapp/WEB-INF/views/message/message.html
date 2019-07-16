@@ -185,6 +185,8 @@
    	$(".rMessage").css("color", "black"); // 받은쪽지함 검은색으로 변경
    	$(".sMessage").css("color", "#F39B10"); // 보낸쪽지함 주황색으로 변경
    	$(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime").empty();
+   	$(".fa-paper-plane").css("display", "none");
+    $(".fa-trash").css("display", "none");
     event.preventDefault();
    	  
    	});
@@ -384,8 +386,6 @@
         const messageId = $(this).children(".hidden").text();
         getMessage2(messageId);
       });
-      
-      
       
       $(".close-btn").click(function() {
         $(".receiver").remove();

@@ -63,7 +63,8 @@ public class MypageController {
     String username = Helper.userName();
     List<Article> article1 = articleDao.selectAllArticleByUsername(username);
     List<Article> article2 = mypageService.allArticleByUsername(username);
-    List<Comment> comments = commentDao.selectAllCommentByUsername(username);  
+    List<Comment> comments = commentDao.selectAllCommentByUsername(username); 
+
     Member user = memberDao.selectMemberByUsername(username);
     Course course = courseDao.selectCourse(user.getCourse_id());
     course.setEndDate(course.getEnd_date().toLocalDate());
@@ -71,6 +72,11 @@ public class MypageController {
     Period diff = Period.between(course.getStartDate(), course.getEndDate());
     Period diff2 = Period.between(course.getStartDate(), LocalDate.now());
     int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
+    
+    
+    System.out.println(comments.toString());
+    
+    
     model.addAttribute("completion", completion);
     model.addAttribute("course",course);
     model.addAttribute("comments",comments);
@@ -84,7 +90,7 @@ public class MypageController {
   public String getDetail(int article_id) {
     String URL = mypageService.selectOneArticleforMypage(article_id);
     System.out.println("URL"+URL);
-    return "redirect:myclass/qna/content?id=798";
+    return URL;
   }
 
   @PostMapping("/home/CommentList")
