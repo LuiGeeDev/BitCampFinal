@@ -86,7 +86,7 @@ th, td {
 
 .td5 {
   width: 55%;
-  color: #0b228e;
+  color: black;
   cursor: pointer;
 }
 
@@ -95,7 +95,7 @@ th, td {
 }
 
 .td5:hover {
-  color: #20cdff;
+  color: #F39C20;
 }
 
 .tag-name span {

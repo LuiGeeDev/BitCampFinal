@@ -108,6 +108,7 @@ a {
   height: 30px;
   margin-top: 1;
   border-radius: 3px;
+  border:1px solid #c2c2c2;
 }
 
 .search-item {
@@ -180,9 +181,11 @@ a {
 .btn {
   font-size: 14px;
   padding: 5.5px 12px;
-  margin: 2px;
+  
 }
-
+#btn-submit{
+  height:31px;
+}
 .btn.btn-primary.paging.active {
   background-color: #EA8A02;
   border: 2px #EA8A02 solid;

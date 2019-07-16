@@ -11,8 +11,8 @@ body {
 }
 
 #boardWrapper {
-  margin-left: 100px;
-  margin-right: 100px;
+  margin: auto;
+  display: flex;
 }
 
 .video-board {
@@ -29,7 +29,7 @@ body {
   border: 1px solid #eeeeee;
   margin-top: 10px;
   background-color: white;
-  width:85%
+  width: 85%
 }
 
 .video-title {
@@ -44,12 +44,12 @@ body {
 }
 
 .comment-count {
-  display:block;
+  display: block;
   color: #F39B10;
   margin-left: 7.2px;
-  margin-top:22px;
-  font-size:13px;
-  height:10px;
+  margin-top: 22px;
+  font-size: 13px;
+  height: 10px;
 }
 
 .video-content {
@@ -113,6 +113,6 @@ body {
   filter: blur(10px);
 }
 
-.title-wrapper{
-  display:flex;
+.title-wrapper {
+  display: flex;
 }
