@@ -68,7 +68,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE board_id= #{board_id}
 		ORDER BY view_count DESC
 	</select>
-
+	
+	<select id="selectWriteDayByDesc" resultType="kr.or.bit.model.Article">
+		SELECT *
+		FROM article
+		WHERE board_id= #{board_id}
+		ORDER BY time DESC
+	</select>
 
 </mapper>  
 

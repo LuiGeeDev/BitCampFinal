@@ -43,6 +43,8 @@ public interface ArticleDao {
   
   List<Article> selectAllPagingArticlesByViewCount(@Param("board_id") int board_id, @Param("pager") Pager pager);
   
+  List<Article> selectAllPagingArticlesByWrite(@Param("board_id") int board_id, @Param("pager") Pager pager);
+  
   List<Article> selectFirstArticlesByViewCount(@Param("board_id") int board_id);
   
 

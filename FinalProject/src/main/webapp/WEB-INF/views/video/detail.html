@@ -50,14 +50,19 @@
         <!-- 추가 ) 댓글수 -->
         <!-- 추가 ) 댓글 insert form -->
       </div>
+      <div class="row">
       <div id="commentInputWrapper">
-        
+        <div class="writer-info-wrapper">
           <span id="writerIcon">
-            <img src="https://via.placeholder.com/32" id="icon" />
+            <img th:src="@{${user.profile_photo}}" id="icon" width="25" height="25"/>
           </span>
           <span id="writerName" name="writerName" th:text="${user.name}"></span>
+        </div>
+        <div class="input-submit-wrapper">
           <input type="text" name="content" class="comtext" id="commentInput" placeholder ="댓글을 입력하세요."/>
           <input type="submit" class="btn btn-primary btnalign" value="등록">
+        </div>
+      </div>
       </div>
         <!-- 추가 ) 댓글 목록 불러오는 기능 -->
       <div id="commentsWrapper">
@@ -70,12 +75,13 @@
           <div id="commentsText">
             <div id="commentsWriter">
               <span id="writerIcon">
-                <i class="fas fa-user-circle fa-lg"></i>
+                <img th:if="${list.writer.profile_photo != null}" class="writerIcon" th:src="@{${list.writer.profile_photo}}" width="25" height="25">
+                <img th:if="${list.writer.profile_photo == null}" class="writerIcon" th:src="@{/resources/images/default.png}" width="25" height="25">
               </span>
               <span id="writerName">
                 <span th:text="${list.name}"></span>
-                <a th:if="${list.username==user.username or user.role == 'MANAGER'}"
-                   th:href="@{/video/commentdelete(id=${list.id})}">[삭제]</a>
+                <a class="comment-delete-button" th:if="${list.username==user.username or user.role == 'MANAGER'}"
+                   th:href="@{/video/commentdelete(id=${list.id})}">삭제</a>
               </span>
               <span id="writeDate">
                 <span th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
@@ -244,9 +250,10 @@
                 equalName = "";
               }
               
+
               let html = "<div id='commentsContent' class='iteration'><div id='commentsText'>";
               html += "<div id='commentsWriter'>" +
-              "<span id='writerIcon'><i class='fas fa-user-circle fa-lg'></i></span>&nbsp;" +
+              "<span id='writerIcon'><img src="+item.writer.profile_photo+" class='writerIcon'></span>&nbsp;" +
               "<span id='writerName'>" + username + 
               "<a href='/video/commentdelete?id= + " + commentId + "'" + ">&nbsp" + equalName + "</a></span>" + 
               "<span id='writeDate'>" + timedate +"</span></div>" + 

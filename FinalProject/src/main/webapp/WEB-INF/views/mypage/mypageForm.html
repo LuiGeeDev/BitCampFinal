@@ -30,7 +30,7 @@
           </div>
 
           <button type="button" data-toggle="modal"
-            class="btn btn-warning btn-sm btn-change"
+            class="btn btn-primary btn-sm btn-change"
             data-target="#myModal">사진 변경</button>
         </div>
         <form method="POST" enctype="multipart/form-data">
@@ -57,7 +57,7 @@
               class="hidden" id="emailCheck" name="emailCheck"></span>
           </div>
           <div class="submit-btn">
-            <input class="btn btn-warning btn-sm updateBtn" type="submit"
+            <input class="btn btn-primary btn-sm updateBtn" type="submit"
               value="수정">
           </div>
         </form>
@@ -84,7 +84,7 @@
                       <img class="user-icon" id="icon"
                         th:src="@{*{profile_photo}}">
                     </div>
-                    <button type="reset" class="btn btn-warning btn-sm"><label for="files1" id="file-button">사진 찾기</label></button>
+                    <button type="reset" class="btn btn-primary btn-sm"><label for="files1" id="file-button">사진 찾기</label></button>
                     <input type="file" id="files1" class="files1"
                       th:value="*{profile_photo}" name="files1">
                     <input type="hidden" name="username"
@@ -93,9 +93,9 @@
                 </div>
 
                 <div class="modal-footer">
-                  <input type="submit" class="btn btn-warning btn-sm"
+                  <input type="submit" class="btn btn-primary btn-sm"
                     value="완료">
-                  <button type="button" class="btn btn-warning btn-sm"
+                  <button type="button" class="btn btn-primary btn-sm"
                     data-dismiss="modal">닫기</button>
                 </div>
               </div>

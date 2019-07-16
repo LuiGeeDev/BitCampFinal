@@ -22,9 +22,11 @@
                   th:src="'https://img.youtube.com/vi/' + ${video.option.video_id} + '/maxresdefault.jpg'" />
               </div>
               <div class="video-detail">
+              <div class="title-wrapper">
                 <span class="video-title" th:text="${video.title}">
                   [생활코딩] HTML5 기초강좌 </span> <span class="comment-count"
                   th:text="${video.commentlist.size()}">5</span><br />
+              </div>
                 <div class="video-content" th:utext="${video.content}">
                   생활코딩 Egoing님과 함께하는 HTML5 기초강좌 ...</div>
                 <div class="video-view-count">
@@ -47,9 +49,12 @@
                   th:src="'https://img.youtube.com/vi/' + ${video.option.video_id} + '/maxresdefault.jpg'" />
               </div>
               <div class="video-detail">
+              <div class="title-wrapper">
                 <span class="video-title" th:text="${video.title}">
                   [생활코딩] HTML5 기초강좌 </span> <span class="comment-count"
                   th:text="${video.commentlist.size()}">5</span><br />
+              </div>
+                  
                 <div class="video-content" th:utext="${video.content}">
                   생활코딩 Egoing님과 함께하는 HTML5 기초강좌 ...</div>
                 <div class="video-view-count">
@@ -66,8 +71,8 @@
       </div>
 
       <div id="buttonWrapper">
-        <button class="btn btn-warning btn-sm" id="writeButton"
-          onClick="location.href='/video/write'">+</button>
+        <a class="btn btn-primary btn-sm" id="writeButton"
+          th:href="@{/video/write}">+</a>
       </div>
     </div>
   </div>

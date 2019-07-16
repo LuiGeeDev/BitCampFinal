@@ -27,7 +27,7 @@ th, td {
 
 .tdtitle {
   color: black;
-  font-size: 18px;
+  font-size: 19px;
   font-weight: bold;
   border-bottom: 1.5px solid #eaebec;
   margin-left: 30px;
@@ -206,6 +206,8 @@ th, td {
 #imgp2 {
   width: 110%;
   height: auto;
+  margin-bottom: 2px;
+  margin-top: 3px;
 }
 
 .comtitle {
@@ -298,4 +300,9 @@ th, td {
 
 .stack-wrapper {
   font-size: 14px;
+}
+
+.utilNav{
+
+font-size: 21px;
 }

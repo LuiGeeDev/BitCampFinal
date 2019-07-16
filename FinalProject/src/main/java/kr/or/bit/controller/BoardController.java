@@ -60,7 +60,7 @@ public class BoardController {
   @GetMapping("")
   public String listPage(int board_id, @RequestParam(defaultValue = "1") int page,
       @RequestParam(required = false) String boardSearch, @RequestParam(required = false) String criteria,
-      Model model) {
+      Model model, @RequestParam(defaultValue = "article") String separator ) {
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
@@ -76,10 +76,14 @@ public class BoardController {
       }
       articles = articleService.selectAllArticlesByBoardSearch(board_id, pager, boardSearch, criteria);
       model.addAttribute("boardSearch", boardSearch);
-    } else {
+    } else if(separator.equals("view")) {
+      pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardId(board_id));
+      articles = articleService.selectAllArticleViewCountByDesc("general", board_id, pager);
+    } else if(separator.equals("article")){
       pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardId(board_id));
       articles = articleService.selectAllArticle("general", board_id, pager);
     }
+
     
     List<Course> courses = courseDao.selectAllTeacherCourse(Helper.userName());
     for (Course course : courses) {
@@ -206,5 +210,80 @@ public class BoardController {
         + "&board_id=" + article.getBoard_id();
   }
   
+  @GetMapping("viewDesc")
+  public String selectViewCountByDesc(int board_id, @RequestParam(defaultValue = "1") int page,
+      @RequestParam(required = false) String boardSearch, @RequestParam(required = false) String criteria,
+      Model model) {
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
+    GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
+    List<Article> articles = null;
+    Pager pager = null;
+    if (boardSearch != null) {
+      if (criteria.equals("titleOrContent")) {
+        pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardIdAndTitleOrContent(board_id, boardSearch));
+      } else if (criteria.equals("title")) {
+        pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardIdAndTitle(board_id, boardSearch));
+      } else {
+        pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardIdAndWriter(board_id, boardSearch));
+      }
+      articles = articleService.selectAllArticlesByBoardSearch(board_id, pager, boardSearch, criteria);
+      model.addAttribute("boardSearch", boardSearch);
+    } else {
+      pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardId(board_id));
+      articles = articleService.selectAllArticleViewCountByDesc("general", board_id, pager);
+    }
+    
+    List<Course> courses = courseDao.selectAllTeacherCourse(Helper.userName());
+    for (Course course : courses) {
+      List<Board> boards = boardDao.selectBoardInCourse(course.getId(), 3);
+      course.setBoards(boards);
+    }
+    
+    model.addAttribute("articles", articles);
+    model.addAttribute("pager", pager);
+    model.addAttribute("page", page);
+    model.addAttribute("board", boardService.getBoardInfo(board_id));
+    model.addAttribute("courses", courses);
+    return "myclass/general/generalBoard";
+  }
+  
+  @GetMapping("writeDesc")
+  public String selectWriteByDesc(int board_id, @RequestParam(defaultValue = "1") int page,
+      @RequestParam(required = false) String boardSearch, @RequestParam(required = false) String criteria,
+      Model model) {
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
+    GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
+    List<Article> articles = null;
+    Pager pager = null;
+    if (boardSearch != null) {
+      if (criteria.equals("titleOrContent")) {
+        pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardIdAndTitleOrContent(board_id, boardSearch));
+      } else if (criteria.equals("title")) {
+        pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardIdAndTitle(board_id, boardSearch));
+      } else {
+        pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardIdAndWriter(board_id, boardSearch));
+      }
+      articles = articleService.selectAllArticlesByBoardSearch(board_id, pager, boardSearch, criteria);
+      model.addAttribute("boardSearch", boardSearch);
+    } else {
+      pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardId(board_id));
+      articles = articleService.selectAllArticleWriteByDesc("general", board_id, pager);
+    }
+    
+    List<Course> courses = courseDao.selectAllTeacherCourse(Helper.userName());
+    for (Course course : courses) {
+      List<Board> boards = boardDao.selectBoardInCourse(course.getId(), 3);
+      course.setBoards(boards);
+    }
+    
+    model.addAttribute("articles", articles);
+    model.addAttribute("pager", pager);
+    model.addAttribute("page", page);
+    model.addAttribute("board", boardService.getBoardInfo(board_id));
+    model.addAttribute("courses", courses);
+    return "myclass/general/generalBoard";
+  }
   
 }

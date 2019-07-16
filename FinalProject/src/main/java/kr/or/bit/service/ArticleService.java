@@ -104,6 +104,7 @@ public class ArticleService {
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     Article article = articledao.selectOneArticle(id);
+    System.out.println(article.getTime().toLocaleString());
     ArticleOption option = null;
     switch (optionName.toLowerCase()) {
     case "video":
@@ -166,12 +167,14 @@ public class ArticleService {
       System.out.println(comment.getTime());
       comment.setTimeLocal(comment.getTime().toLocalDateTime());
       System.out.println("댓글이름:"+(memberDao.selectMemberByUsername(comment.getUsername())).getName());
+      comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
       comment.setName(
           (memberDao.selectMemberByUsername(comment.getUsername())).getName()
           );
     }
     article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
     article.setOption(option);
+    System.out.println(article.getTime().toLocaleString());
     return article;
   }
   
@@ -337,6 +340,55 @@ public class ArticleService {
     List<Article> list = null;
     if(optionName.equals("general")) {
       list = articledao.selectAllPagingArticlesByViewCount(boardId, pager);
+    }else {
+      list = articledao.selectFirstArticlesByBoardId(boardId); 
+    }
+    for (Article article : list) {
+      ArticleOption option = null;
+      switch (optionName.toLowerCase()) {
+      case "video":
+        VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
+        option = videoDao.selectVideoByArticleId(article.getId());
+        break;
+      case "troubleshooting":
+        TroubleShootingDao troubleShootingDao = sqlSession.getMapper(TroubleShootingDao.class);
+        option = troubleShootingDao.selectTroubleShootingByArticleId(article.getId());
+        break;
+      case "general":
+        GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
+        option = generalDao.selectGeneralByArticleId(article.getId());
+        break;
+      case "qna":
+        QnaDao qnaDao = sqlSession.getMapper(QnaDao.class);
+        option = qnaDao.selectQnaByArticleId(article.getId());
+        break;
+      case "homework":
+        HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
+        option = homeworkDao.selectHomeworkByArticleId(article.getId());
+        break;
+      default:
+        break;
+      }
+      article.setTimeLocal(article.getTime().toLocalDateTime());
+      article.setUpdatedTimeLocal(article.getUpdated_time().toLocalDateTime());
+      article.setCommentlist(commentdao.selectAllComment(article.getId()));
+      for (Comment comment : article.getCommentlist()) {
+        comment.setTimeLocal(comment.getTime().toLocalDateTime());
+      }
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+      article.setOption(option);
+    }
+    return list;
+  }
+  
+  
+  public List<Article> selectAllArticleWriteByDesc(String optionName, int boardId, Pager pager) {// 게시판아이디를 기준으로 게시글을 전부 불러오는 함수
+    ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
+    CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    List<Article> list = null;
+    if(optionName.equals("general")) {
+      list = articledao.selectAllPagingArticlesByWrite(boardId, pager);
     }else {
       list = articledao.selectFirstArticlesByBoardId(boardId); 
     }

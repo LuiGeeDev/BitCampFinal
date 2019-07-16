@@ -32,7 +32,7 @@ td[colspan="2"] {
 
 .tdtitle {
   color: #0984e3;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: bold;
   cursor: pointer;
 }
@@ -43,7 +43,7 @@ td[colspan="2"] {
 
 .tdcontent {
   cursor: pointer;
-  max-height: 50px;
+  max-height: 58px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -66,6 +66,7 @@ td[colspan="2"] {
 .tdst {
   font-size: 14px;
   font-weight: bold;
+  margin-left: 4px;
 }
 
 .td1 {
@@ -76,6 +77,7 @@ td[colspan="2"] {
 
 .td2 {
   font-size: 80%;
+  text-align: center;
 }
 
 .td3 {
@@ -93,6 +95,10 @@ td[colspan="2"] {
   padding: 5px;
   line-height: 2.0em;
   cursor: pointer;
+}
+
+.write-btns {
+  margin-right: 10%;
 }
 
 #c1 {
@@ -143,12 +149,7 @@ td[colspan="2"] {
 }
 
 .page-btns {
-  margin: auto;
-  margin-bottom: 200px;
-}
-
-.write-btns {
-  margin-right: 17%;
+  margin: 0 auto;
 }
 
 .btn.btn-primary.paging {
@@ -180,5 +181,5 @@ td[colspan="2"] {
 
 .titleanswer {
   color: red;
-  font-size: 12px
+  font-size: 12px;
 }
