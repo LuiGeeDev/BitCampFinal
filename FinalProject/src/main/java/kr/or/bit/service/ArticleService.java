@@ -104,6 +104,7 @@ public class ArticleService {
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     Article article = articledao.selectOneArticle(id);
+    System.out.println(article.getTime().toLocaleString());
     ArticleOption option = null;
     switch (optionName.toLowerCase()) {
     case "video":
@@ -173,6 +174,7 @@ public class ArticleService {
     }
     article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
     article.setOption(option);
+    System.out.println(article.getTime().toLocaleString());
     return article;
   }
   
