@@ -80,7 +80,7 @@ public class MypageController {
   public String getDetail(int article_id) {
     String URL = mypageService.selectOneArticleforMypage(article_id);
     System.out.println("URL"+URL);
-    return "redirect:myclass/qna/content?id=798";
+    return URL;
   }
 
   @PostMapping("/home/CommentList")

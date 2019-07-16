@@ -61,19 +61,19 @@ public class MypageService {
            
       switch(board_type) {
       case 1: //스택 게시판
-        returnURL = "stack/content?id=" + article_id;
+        returnURL = "http://localhost:8090/stack/content?id=" + article_id;
         break;
       case 2: //동영상 게시판
-        returnURL = "video/detail?id=" + article_id;
+        returnURL = "http://localhost:8090/video/detail?id=" + article_id;
         break;
       case 3: //일반 게시판
-        returnURL = "myclass/board/read?article_id=" + article_id + "&board_id=" + board_id; 
+        returnURL = "http://localhost:8090/myclass/board/read?article_id=" + article_id + "&board_id=" + board_id; 
         break;
       case 4: //과제제출  
-        returnURL = "myclass/homework/detail?id=" + article_id;
+        returnURL = "http://localhost:8090/myclass/homework/detail?id=" + article_id;
         break;
       case 5: //질문 게시판
-        returnURL = "myclass/qna/content?id=" + article_id;
+        returnURL = "http://localhost:8090/myclass/qna/content?id=" + article_id;
         break;
       case 6: //트러블슈팅 게시판
         //이건 어떡할까 하하핳~~~

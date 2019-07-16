@@ -3,9 +3,11 @@
 body {
   font-family: 'Nanum Gothic';
 }
-
+.title-text {
+  font-weight:bold;
+}
 .title {
-  margin: 5px 20px 20px 140px;
+  margin: 10px 20px 20px 140px;
 }
 
 .title h3 {
