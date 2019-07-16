@@ -34,7 +34,7 @@
                 <span>제 [[${course.classroom_name}]]</span>
               </div>
               <div class="profileDetail">
-                [[${user.role}]]등급 |&nbsp<span class="pdProject"></span>
+                <span class="pdArticleNum">[[${user.role}]]</span>&nbsp등급 |&nbsp<span class="pdProject"></span>
                 <span class="pdArticle">총게시물 <span
                   class="pdArticleNum">[[${article1.size()}]]</span>회
                   |&nbsp
@@ -48,8 +48,10 @@
 
             <span class="progres"> <span> <span
                 class="progress-bar bg-warning progress-bar-striped"
-                id="progress"> </span> <span class="progresPercent">
-                  70.0% (70/100일) </span>
+                id="progress"
+                th:style="'width:' + ${completion} + '%;'"
+                > </span> <span class="progresPercent" th:text="${completion} + '% 진행 중'">
+                  </span>
             </span>
             </span>
           </div>

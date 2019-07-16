@@ -104,6 +104,7 @@ public class ArticleService {
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     Article article = articledao.selectOneArticle(id);
+    System.out.println(article.getTime().toLocaleString());
     ArticleOption option = null;
     switch (optionName.toLowerCase()) {
     case "video":
@@ -166,12 +167,14 @@ public class ArticleService {
       System.out.println(comment.getTime());
       comment.setTimeLocal(comment.getTime().toLocalDateTime());
       System.out.println("댓글이름:"+(memberDao.selectMemberByUsername(comment.getUsername())).getName());
+      comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
       comment.setName(
           (memberDao.selectMemberByUsername(comment.getUsername())).getName()
           );
     }
     article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
     article.setOption(option);
+    System.out.println(article.getTime().toLocaleString());
     return article;
   }
   

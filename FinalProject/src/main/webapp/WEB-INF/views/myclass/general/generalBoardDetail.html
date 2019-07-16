@@ -225,7 +225,7 @@
           success: function(data) {
             $(".content-reply-form").empty();
            	$("#content").val("");
-
+           	sendCommentNotice([[${user.name}]], [[${article.username}]], "/myclass/board/read?article_id="+[[${article.id}]]+"&board_id="+[[${board.id}]]);
             $.each(data, function(index, item) {
               const content = item.content;
               const username = item.writer.name;

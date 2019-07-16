@@ -24,16 +24,18 @@
           th:each="tag : ${stackcontent.tags}"> <span
             th:style="'background-color:'+@{${tag.color}}+';'">[[${tag.tag}]]</span>
         </span></td>
-        <td colspan="1" id="contenteditor"><a
+        <td colspan="1" id="contenteditor">
+        <span class="utilNav"><a
           th:href="@{/stack/edit(id=${stackcontent.id})}"
           th:if="${user.username == stackcontent.username}"
-          class="updateBtn">[수정]</a> <span
+          class="updateBtn"><i class="far fa-edit"></i></a> <span
           th:if="${user.username == stackcontent.username or user.role == 'MANAGER'}"
-          class="deleteBtn" id="deleteCheck">[삭제] </span></td>
+          class="deleteBtn" id="deleteCheck"><i class="fas fa-trash-alt"></i> </span></span></td>
       </tr>
       <tr>
         <td colspan="4" class="tdtitle"><span
-          th:text="${stackcontent.title}"></span></td>
+          th:text="${stackcontent.title}"></span>      
+          </td>
       </tr>
       <tr>
         <td colspan="3" class="tdcontent">
@@ -59,7 +61,8 @@
             <span th:text="${stackcontent.writer.name}"></span>
           </p>
           <p class="pfont">
-            게시일:<span th:text="${#temporals.format(stackcontent.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
+            게시일:<span
+              th:text="${#temporals.format(stackcontent.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
           </p>
           <p class="pfont">
             <span th:text="${stackcontent.view_count}"></span>view
@@ -94,8 +97,9 @@
         <td class="td8"><i class="fas fa-user-circle fa-lg fa-2x"></i></td>
         <td class="td10"><span class="answer-name"> <b>[[${adoptedanswer.writer.name}]]
               [채택된 답변] </b><i class="fas fa-crown answer-icon"></i>
-        </span> <br> <span class="commentCalender" id="answertime" th:text="${#temporals.format(adoptedanswer.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
-        <!-- <span class="commentCalender"
+        </span> <br> <span class="commentCalender" id="answertime"
+          th:text="${#temporals.format(adoptedanswer.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
+          <!-- <span class="commentCalender"
             th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span> -->
         </td>
         <td class="td7"></td>
@@ -115,7 +119,7 @@
           <td class="td8"><i class="fas fa-user-circle fa-lg fa-2x"></i></td>
           <td class="comment-writer">[[${list.writer.name}]] <a
             th:if="${list.id != stackcontent.option.adopted_answer and (list.username == user.username or user.role == 'MANAGER')}"
-            th:href="@{/stack/commentdelete(id=${list.id})}">[삭제]</a><br>
+            th:href="@{/stack/commentdelete(id=${list.id})}"><i class="fas fa-trash-alt"></i></a><br>
             <span class="commentCalender"
             th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
           </td>
@@ -141,6 +145,10 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <script th:inline="javascript">
   $(document).ready(function() {
+    
+    $("#imgp2").click(function(){
+      sendVoteNotice([[${user.name}]], [[${stackcontent.username}]], "/stack/content?id="+[[${stackcontent.id}]]);
+    })
     $("#spinner").hide();
   }).ajaxStart(function() {
     $("#spinner").show();
@@ -208,7 +216,7 @@
               const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ hours +`:` + minutes;
 			  let equalName = null;           
               if(item.id != [[${stackcontent.option.adopted_answer}]] && (item.username == [[${user.username}]] || [[${user.role}]] == 'MANAGER')) {
-                equalName = "[삭제]";
+                equalName = "<i class='fas fa-trash-alt'></i>";
               } else {
                 equalName = "";
               }
@@ -241,8 +249,7 @@
               $(".stack-wrapper").append(html);
               
             });
-            
-         
+            sendCommentNotice([[${user.name}]], [[${stackcontent.username}]], "/stack/content?id="+[[${stackcontent.id}]]);         
             
             const count = $(".commentPlus");
             count.text(Number(count.text()) +1);
@@ -275,8 +282,7 @@
           }
         })
       });
-       
-      
+
       </script>
 </body>
 </html>
