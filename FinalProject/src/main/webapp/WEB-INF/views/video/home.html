@@ -10,64 +10,71 @@
   <div class="main" th:fragment="main">
     <div id="title">인터넷강의 게시판</div>
     <hr />
-    <div id="boardWrapper">
-      <div id="board">
-        <th:block th:each="video : ${videoList}">
-          <a th:href="@{/video/detail(id=${video.id})}"
-            th:if="${video.enable == 1}">
-            <div class="video-board">
-              <div class="thumbnail">
-                <img class="thumbnail-image"
-                  src="https://img.youtube.com/vi/tZooW6PritE/maxresdefault.jpg"
-                  th:src="'https://img.youtube.com/vi/' + ${video.option.video_id} + '/maxresdefault.jpg'" />
-              </div>
-              <div class="video-detail">
-                <span class="video-title" th:text="${video.title}">
-                  [생활코딩] HTML5 기초강좌 </span> <span class="comment-count"
-                  th:text="${video.commentlist.size()}">5</span><br />
-                <div class="video-content" th:utext="${video.content}">
-                  생활코딩 Egoing님과 함께하는 HTML5 기초강좌 ...</div>
-                <div class="video-view-count">
-                  <span
-                    th:text="${#temporals.format(video.timeLocal, 'yyyy-MM-dd')}">22시간
-                    전</span> | 조회 <span th:text="${video.view_count}">43</span>
-                  | <span th:text="${video.writer.name}">매니저</span> | <span
-                    th:text="${video.vote_count}"></span>
+    <div class="row">
+      <div id="boardWrapper">
+        <div id="board">
+          <th:block th:each="video : ${videoList}">
+            <a th:href="@{/video/detail(id=${video.id})}"
+              th:if="${video.enable == 1}">
+              <div class="video-board">
+                <div class="thumbnail">
+                  <img class="thumbnail-image"
+                    src="https://img.youtube.com/vi/tZooW6PritE/maxresdefault.jpg"
+                    th:src="'https://img.youtube.com/vi/' + ${video.option.video_id} + '/maxresdefault.jpg'" />
+                </div>
+                <div class="video-detail">
+                  <div class="title-wrapper">
+                    <span class="video-title" th:text="${video.title}">
+                      [생활코딩] HTML5 기초강좌 </span> <span class="comment-count"
+                      th:text="${video.commentlist.size()}">5</span><br />
+                  </div>
+                  <div class="video-content" th:utext="${video.content}">
+                    생활코딩 Egoing님과 함께하는 HTML5 기초강좌 ...</div>
+                  <div class="video-view-count">
+                    <span
+                      th:text="${#temporals.format(video.timeLocal, 'yyyy-MM-dd')}">22시간
+                      전</span> | 조회 <span th:text="${video.view_count}">43</span>
+                    | <span th:text="${video.writer.name}">매니저</span> |
+                    <span th:text="${video.vote_count}"></span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </a>
-          <a th:href="@{/video/detail(id=${video.id})}"
-            th:if="${video.enable == 0}"
-            sec:authorize="hasRole('MANAGER')">
-            <div class="video-board article-disabled">
-              <div class="thumbnail">
-                <img class="thumbnail-image"
-                  src="https://img.youtube.com/vi/tZooW6PritE/maxresdefault.jpg"
-                  th:src="'https://img.youtube.com/vi/' + ${video.option.video_id} + '/maxresdefault.jpg'" />
-              </div>
-              <div class="video-detail">
-                <span class="video-title" th:text="${video.title}">
-                  [생활코딩] HTML5 기초강좌 </span> <span class="comment-count"
-                  th:text="${video.commentlist.size()}">5</span><br />
-                <div class="video-content" th:utext="${video.content}">
-                  생활코딩 Egoing님과 함께하는 HTML5 기초강좌 ...</div>
-                <div class="video-view-count">
-                  <span
-                    th:text="${#temporals.format(video.timeLocal, 'yyyy-MM-dd')}">22시간
-                    전</span> | 조회 <span th:text="${video.view_count}">43</span>
-                  | <span th:text="${video.writer.name}">매니저</span> | <span
-                    th:text="${video.vote_count}"></span>
+            </a>
+            <a th:href="@{/video/detail(id=${video.id})}"
+              th:if="${video.enable == 0}"
+              sec:authorize="hasRole('MANAGER')">
+              <div class="video-board article-disabled">
+                <div class="thumbnail">
+                  <img class="thumbnail-image"
+                    src="https://img.youtube.com/vi/tZooW6PritE/maxresdefault.jpg"
+                    th:src="'https://img.youtube.com/vi/' + ${video.option.video_id} + '/maxresdefault.jpg'" />
                 </div>
-              </div>
-            </div>
-          </a>
-        </th:block>
-      </div>
+                <div class="video-detail">
+                  <div class="title-wrapper">
+                    <span class="video-title" th:text="${video.title}">
+                      [생활코딩] HTML5 기초강좌 </span> <span class="comment-count"
+                      th:text="${video.commentlist.size()}">5</span><br />
+                  </div>
 
-      <div id="buttonWrapper">
-        <button class="btn btn-warning btn-sm" id="writeButton"
-          onClick="location.href='/video/write'">+</button>
+                  <div class="video-content" th:utext="${video.content}">
+                    생활코딩 Egoing님과 함께하는 HTML5 기초강좌 ...</div>
+                  <div class="video-view-count">
+                    <span
+                      th:text="${#temporals.format(video.timeLocal, 'yyyy-MM-dd')}">22시간
+                      전</span> | 조회 <span th:text="${video.view_count}">43</span>
+                    | <span th:text="${video.writer.name}">매니저</span> |
+                    <span th:text="${video.vote_count}"></span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </th:block>
+        </div>
+
+        <div id="buttonWrapper">
+          <a class="btn btn-primary btn-sm" id="writeButton"
+            th:href="@{/video/write}">+</a>
+        </div>
       </div>
     </div>
   </div>

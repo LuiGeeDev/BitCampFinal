@@ -104,9 +104,7 @@ public class MyClassController {
     for (Article article : recentArticles) {
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
       article.setTimeLocal(article.getTime().toLocalDateTime());
-    }
-      
-    
+    }  
     model.addAttribute("recentHomework",recentHomework);
     model.addAttribute("course", course);
     model.addAttribute("recentArticles", recentArticles);
@@ -450,7 +448,7 @@ public class MyClassController {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
-
+    
     
     Member member = memberDao.selectMemberByUsername(Helper.userName());
     int board_id = boardDao.selectBoardByCourseId(member.getCourse_id(), 4).getId();
@@ -462,6 +460,7 @@ public class MyClassController {
     articleInsertService.writeArticle(article, homework, null, request);
     System.out.println(" article : "+ article.toString());
     Schedule schedule = new Schedule();
+    article = articleDao.selectOneArticle(article.getId());
     schedule.setArticle_id(article.getId());
     schedule.setCourse_id(member.getCourse_id());
     schedule.setTitle(article.getTitle());

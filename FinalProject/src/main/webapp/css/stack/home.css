@@ -14,9 +14,7 @@ body {
 }
 
 table {
-  margin-left: 10%;
-  margin-right: 10%;
-  width: 80%;
+  width: 100%;
   border-collapse: collapse;
   font-size: 14px;
 }
@@ -31,8 +29,8 @@ td[colspan="2"] {
 }
 
 .tdtitle {
-  color: #0984e3;
-  font-size: 14px;
+  color: #0984E4;
+  font-size: 19px;
   font-weight: bold;
   cursor: pointer;
 }
@@ -43,13 +41,22 @@ td[colspan="2"] {
 
 .tdcontent {
   cursor: pointer;
-  max-height: 50px;
+  max-height: 45px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .tdcontent br {
   display: none;
+}
+
+.tdcontent b {
+  display: none;
+}
+
+.tdcontent p span {
+  font-weight: 100 !important;
+  font-style: normal !important;
 }
 
 .tdcontent p img {
@@ -66,6 +73,7 @@ td[colspan="2"] {
 .tdst {
   font-size: 14px;
   font-weight: bold;
+  margin-left: 4px;
 }
 
 .td1 {
@@ -76,15 +84,24 @@ td[colspan="2"] {
 
 .td2 {
   font-size: 80%;
+  text-align: center;
 }
 
 .td3 {
   width: 50%;
+  padding: 5px 5px;
 }
 
 .td4 {
   width: 20%;
   font-weight: bold;
+  padding: 3px 3px 1px 48px;
+}
+
+.td5{
+    font-size: 80%;
+    text-align: center;
+    padding: 5px 0px;
 }
 
 .tag-name span {
@@ -148,7 +165,7 @@ td[colspan="2"] {
 }
 
 .write-btns {
-  margin-right: 17%;
+  float: right;
 }
 
 .btn.btn-primary.paging {
@@ -180,5 +197,31 @@ td[colspan="2"] {
 
 .titleanswer {
   color: red;
-  font-size: 12px
+  font-size: 12px;
+}
+
+.tableWrapper {
+  margin-left: 13%;
+  margin-right: 14%;
+}
+
+#profileimg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.navBar{
+  
+height: 44px;
+}
+
+.writeBtn{
+  
+}
+.searchBtn{padding: 4px 12px;}
+.selectBar{
+   height: 27px;
+   margin-right: 4px;
 }

@@ -126,5 +126,15 @@ public class Comment {
   public void setProfile_photo(String profile_photo) {
     this.profile_photo = profile_photo;
   }
+
+  @Override
+  public String toString() {
+    return "Comment [id=" + id + ", content=" + content + ", time=" + time + ", updated_time=" + updated_time
+        + ", article_id=" + article_id + ", username=" + username + ", timeLocal=" + timeLocal + ", updatedTimeLocal="
+        + updatedTimeLocal + ", vote=" + vote + ", profile_photo=" + profile_photo + ", writer=" + writer + ", name="
+        + name + "]";
+  }
+  
+  
   
 }

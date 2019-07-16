@@ -198,6 +198,16 @@
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>javax.mail</groupId>
+      <artifactId>mail</artifactId>
+      <version>1.4.7</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+      <version>4.3.18.RELEASE</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -222,13 +232,13 @@
           <webxml>src/main/webapp/WEB-INF/web.xml</webxml>
         </configuration>
       </plugin>
-      
+
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>tomcat-maven-plugin</artifactId>
         <version>1.1</version>
         <configuration>
-          <url>http://13.124.99.108:8090/manager/text</url>
+          <url>http://54.180.94.138:8090/manager/text</url>
           <path>/bit</path>
           <username>springuser</username>
           <password>10041004</password>

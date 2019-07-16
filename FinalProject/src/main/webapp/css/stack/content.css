@@ -3,9 +3,11 @@
 body {
   font-family: 'Nanum Gothic';
 }
-
+.title-text {
+  font-weight:bold;
+}
 .title {
-  margin: 5px 20px 20px 140px;
+  margin: 10px 20px 20px 140px;
 }
 
 .title h3 {
@@ -27,7 +29,7 @@ th, td {
 
 .tdtitle {
   color: black;
-  font-size: 18px;
+  font-size: 19px;
   font-weight: bold;
   border-bottom: 1.5px solid #eaebec;
   margin-left: 30px;
@@ -206,6 +208,8 @@ th, td {
 #imgp2 {
   width: 110%;
   height: auto;
+  margin-bottom: 2px;
+  margin-top: 3px;
 }
 
 .comtitle {
@@ -298,4 +302,9 @@ th, td {
 
 .stack-wrapper {
   font-size: 14px;
+}
+
+.utilNav{
+
+font-size: 21px;
 }

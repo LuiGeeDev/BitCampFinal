@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+body {
+  font-family: 'Nanum Gothic' ;
+}
+
 #article-buttons {
   text-align: right;
   margin-bottom: 60px;
@@ -320,8 +324,4 @@
   font-weight: bold;
   margin-left: 170px;
   margin-bottom: 20px;
-}
-
-body {
-  font-family: 'Nanum Gothic';
 }

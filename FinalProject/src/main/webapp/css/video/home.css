@@ -11,8 +11,8 @@ body {
 }
 
 #boardWrapper {
-  margin-left: 100px;
-  margin-right: 100px;
+  margin: auto;
+  display: flex;
 }
 
 .video-board {
@@ -29,6 +29,7 @@ body {
   border: 1px solid #eeeeee;
   margin-top: 10px;
   background-color: white;
+  width: 85%
 }
 
 .video-title {
@@ -43,9 +44,12 @@ body {
 }
 
 .comment-count {
+  display: block;
   color: #F39B10;
   margin-left: 7.2px;
-  font-size:12px;
+  margin-top: 22px;
+  font-size: 13px;
+  height: 10px;
 }
 
 .video-content {
@@ -93,7 +97,7 @@ body {
   border-radius: 50%;
   color: white;
   font-size: 60px;
-  line-height: 0px;
+  line-height: 45px;
   width: 65px;
   height: 65px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -107,4 +111,8 @@ body {
 
 .article-disabled {
   filter: blur(10px);
+}
+
+.title-wrapper {
+  display: flex;
 }
