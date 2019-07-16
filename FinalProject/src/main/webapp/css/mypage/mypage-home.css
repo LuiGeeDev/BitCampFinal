@@ -32,14 +32,13 @@ body {
 }
 
 .profileimg {
-  
-margin-right: 9px;
+  margin-right: 9px;
 }
 
 #profileimg {
-  width: 188px;
+  width: 192px;
   border-radius: 50%;
-  height: 188px;
+  height: 192px;
 }
 
 .profileContent {
@@ -89,26 +88,27 @@ margin-right: 9px;
 }
 
 .profileName {
-  font-size: 24px;
+  font-size: 14px;
   font-weight: 600;
 }
 
 .profileClassroom {
-  
-margin-top: 3px;
+  margin-top: 3px;
+  font-size: 14px;
 }
 
 .profileDetail {
   margin-top: 3px;
   display: flex;
   flex-direction: row;
-  font-size:13px;
+  font-size: 13px;
 }
 
 .progresPercent {
-  top: 26%;
+  top: 30%;
   position: absolute;
-  left: 40%;
+  left: 41%;
+  font-size: 14px;
 }
 
 .pdArticleNum {
@@ -132,7 +132,7 @@ margin-top: 3px;
 
 .profileCourse {
   margin-top: 8px;
-  font-size:12px;
+  font-size: 14px;
 }
 
 .boardNav {
@@ -152,6 +152,7 @@ margin-top: 3px;
 .nav-style {
   text-align: center;
   font-weight: 600;
+  font-size: 14px;
 }
 
 .cont-style {
@@ -159,11 +160,13 @@ margin-top: 3px;
 }
 
 .boardTitle {
-  width: 46%;
+  width: 50%;
+  font-size: 14px;
 }
 
 .boardDate {
   width: 20%;
+  font-size: 14px;
 }
 
 .boardView {
@@ -176,6 +179,7 @@ margin-top: 3px;
 
 .boardId {
   width: 14%;
+  font-size: 14px;
 }
 
 .middle-border {
@@ -187,14 +191,25 @@ margin-top: 3px;
 }
 
 .board {
+  border-bottom: 1px solid #D0D0D0;
+}
+
+.Articlesboard {
+  border-top: 2px solid #D0D0D0;
+  border-bottom: 1px solid #D0D0D0;
+}
+
+.Commentsboard {
   border-top: 2px solid #D0D0D0;
   border-bottom: 1px solid #D0D0D0;
 }
 
 .articleNavWrapper {
   padding: 0px 0px 15px 0px;
+  border-bottom: 2px solid #D0D0D0;
 }
-.btnwidth{
-  
-width: 12%;
+
+.btnwidth {
+  width: 12%;
+  font-size: 14px;
 }

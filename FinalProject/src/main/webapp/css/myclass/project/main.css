@@ -1,14 +1,13 @@
 body {
   background: #F2F4F7;
-  
 }
 
 .active-list {
   border-bottom: 1px solid #F2F4F7 !important;
 }
 
-#task{
-  border-radius:3px;
+#task {
+  border-radius: 3px;
 }
 
 .card-title {
@@ -16,7 +15,7 @@ body {
   font-weight: bold;
   margin-top: 5px;
   margin-bottom: 25px;
-  font-familly:'Nanum Gothic' !important;
+  font-familly: 'Nanum Gothic' !important;
 }
 
 .top-row {
@@ -29,11 +28,11 @@ body {
   width: 250px;
   padding: 10px 20px;
   margin-right: 20px;
-  height:auto;
+  height: auto;
 }
 
-.checklist{
-  overflow-y:scroll;
+.checklist {
+  overflow-y: scroll;
 }
 
 .edit-link, .edit-checklist {
@@ -41,6 +40,12 @@ body {
   top: 10px;
   right: 10px;
   color: #F39C20;
+  background: none;
+  border: none;
+}
+
+.edit-link:active i, .edit-checklist:active i {
+  transform: scale(0.97);
 }
 
 .project-link {
@@ -64,8 +69,8 @@ body {
   padding: 5px 5px;
 }
 
-.addbutton{
-  border-radius:3px;
+.addbutton {
+  border-radius: 3px;
 }
 
 input[type=checkbox] {
@@ -74,7 +79,7 @@ input[type=checkbox] {
 
 input[type=checkbox]+label {
   display: block;
-  height:22px;
+  height: 22px;
 }
 
 input[type=checkbox]+label:active {
@@ -94,9 +99,9 @@ input[type=checkbox]:checked+label i {
 .item-description {
   font-size: 14px;
   margin-left: 10px;
-  height:auto;
-  font-weight:bold;
-  font-familly:'Nanum Gothic' ;
+  height: auto;
+  font-weight: bold;
+  font-familly: 'Nanum Gothic';
 }
 
 .timeline {
@@ -195,7 +200,7 @@ input[type=checkbox]:checked+label i {
 }
 
 .spinner-border {
-  width: 3rem; 
+  width: 3rem;
   height: 3rem;
- font-size: 300%;
+  font-size: 300%;
 }
