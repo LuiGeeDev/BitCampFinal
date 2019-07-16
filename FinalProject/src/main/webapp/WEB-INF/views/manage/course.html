@@ -4,206 +4,355 @@
   th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
 >
   <head>
-    <link rel="stylesheet" th:href="@{/css/home.css}" />
     <link rel="stylesheet" th:href="@{/css/manage/home.css}" />
   </head>
   <body>
     <div class="main" th:fragment="main">
-      <div id="title">
-        클래스 생성하기
-        <span id="buttonWrapper">
-          <button
-            type="button"
-            class="btn btn-warning btn-sm"
-            data-toggle="modal"
-            data-target="#modal"
-            id="createButton"
-          >
-            생성
-          </button>
-        </span>
+      <div class="row">
+        <div class="page-row">
+          <h6 class="title">수업 관리</h6>
+          <div id="buttonWrapper">
+            <button
+              type="button"
+              class="btn btn-primary btn-sm"
+              data-toggle="modal"
+              data-target="#modal1"
+              id="create-course-button"
+            >
+              수업 생성
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary btn-sm"
+              data-toggle="modal"
+              data-target="#modal2"
+              id="create-teacher-button"
+            >
+              강사 생성
+            </button>
+          </div>
+        </div>
       </div>
-      
-      <hr>
-      
-      <div id="title">수업 진행중인 클래스</div>
-      <table>
-        <tr>
-          <th>강의</th>
-          <th>수업기간</th>
-          <th>학생 수</th>
-          <th>강의실 번호</th>
-        </tr>
-        <tr>
-          <td>JAVA프로그래밍</td>
-          <td>2018.02.20 ~ 2018.08.20</td>
-          <td>23</td>
-          <td>6477</td>
-        </tr>
-        <tr>
-          <td>C++</td>
-          <td>2018.01.07 ~ 2018.06.07</td>
-          <td>28</td>
-          <td>6478</td>
-        </tr>
-        <tr>
-          <td>JAVA프로그래밍</td>
-          <td>2017.12.22 ~~ 2018.06.22</td>
-          <td>21</td>
-          <td>6479</td>
-        </tr>
-      </table>
 
-      <hr />
+      <div class="row">
+        <div class="page-row">
+          <h6 class="title">진행 중인 수업</h6>
+          <table>
+            <tr>
+              <th>강의</th>
+              <th>수업기간</th>
+              <th>학생 수</th>
+              <th>강의실 번호</th>
+            </tr>
+            <tr>
+              <td>JAVA프로그래밍</td>
+              <td>2018.02.20 ~ 2018.08.20</td>
+              <td>23</td>
+              <td>6477</td>
+            </tr>
+            <tr>
+              <td>C++</td>
+              <td>2018.01.07 ~ 2018.06.07</td>
+              <td>28</td>
+              <td>6478</td>
+            </tr>
+            <tr>
+              <td>JAVA프로그래밍</td>
+              <td>2017.12.22 ~~ 2018.06.22</td>
+              <td>21</td>
+              <td>6479</td>
+            </tr>
+          </table>
+        </div>
+      </div>
 
-      <div id="title">수업 종료된 클래스</div>
-      <table>
-        <tr>
-          <th>강의</th>
-          <th>수업기간</th>
-          <th>학생 수</th>
-          <th>강의실 번호</th>
-        </tr>
-        <tr>
-          <td>JAVA프로그래밍</td>
-          <td>2018.02.20 ~ 2018.08.20</td>
-          <td>23</td>
-          <td>6477</td>
-        </tr>
-        <tr>
-          <td>C++</td>
-          <td>2018.01.07 ~ 2018.06.07</td>
-          <td>28</td>
-          <td>6478</td>
-        </tr>
-        <tr>
-          <td>JAVA프로그래밍</td>
-          <td>2017.12.22 ~~ 2018.06.22</td>
-          <td>21</td>
-          <td>6479</td>
-        </tr>
-      </table>
-
-      <hr />
+      <div class="row">
+        <div class="page-row">
+          <h6 class="title">종료된 수업</h6>
+          <table>
+            <tr>
+              <th>강의</th>
+              <th>수업기간</th>
+              <th>학생 수</th>
+              <th>강의실 번호</th>
+            </tr>
+            <tr>
+              <td>JAVA프로그래밍</td>
+              <td>2018.02.20 ~ 2018.08.20</td>
+              <td>23</td>
+              <td>6477</td>
+            </tr>
+            <tr>
+              <td>C++</td>
+              <td>2018.01.07 ~ 2018.06.07</td>
+              <td>28</td>
+              <td>6478</td>
+            </tr>
+            <tr>
+              <td>JAVA프로그래밍</td>
+              <td>2017.12.22 ~~ 2018.06.22</td>
+              <td>21</td>
+              <td>6479</td>
+            </tr>
+          </table>
+        </div>
+      </div>
       <div
         class="modal fade"
-        id="modal"
+        id="modal1"
         aria-labelledby="myModalLabel"
         tabindex="-1"
         role="dialog"
         aria-hidden="true"
       >
-        <div class="modal-dialog" role="document"></div>
-        <div class="modal-content">
-          <div class="modal-header" id="createClassTitle">
-            <div class="modal-title">
-              <img
-                src="/resources/images/teacher-pointing-blackboard.png"
-                id="img"
-              />
-              클래스 생성
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header" id="createClassTitle">
+              <div class="modal-title">
+                <img
+                  src="/resources/images/teacher-pointing-blackboard.png"
+                  id="img"
+                />
+                클래스 생성
+              </div>
+            </div>
+            <div class="modal-body">
+              <form th:action="@{/manage/createClass}" method="post">
+                <div class="th">강사명</div>
+                <select id="" name="teacher_id">
+                  <option value="">강사를 선택하세요.</option>
+                  <option value="1">임경균</option>
+                </select>
+                <div class="th">강의명</div>
+                <div>
+                  <span id="classNameWrapper">
+                    <input
+                      type="text"
+                      placeholder="강의이름 입력"
+                      id="course_Name"
+                      name="course_name"
+                    />
+                  </span>
+                </div>
+                <div class="th">시작일</div>
+                <div>
+                  <span id="dateWrapper">
+                    <input type="date" id="start_date" name="start_date" />
+                  </span>
+                </div>
+                <div class="th">종료일</div>
+                <div>
+                  <input type="date" id="end_date" name="end_date" />
+                </div>
+                <div class="th">과목</div>
+                <div>
+                  <select id="" name="subject">
+                    <option value="" selected>과목을 선택하세요.</option>
+                    <option value="1">JAVA</option>
+                  </select>
+                </div>
+                <div class="th">학생수</div>
+                <div>
+                  <span id="studentAmountWrapper">
+                    <input
+                      type="text"
+                      id="studentAmount"
+                      placeholder="학생 수 입력"
+                      name="people"
+                    />
+                  </span>
+                </div>
+                <div class="th">강의실</div>
+                <div>
+                  <span id="classRoomSelectWrapper">
+                    <select id="classRoomSelect" name="classroom_id">
+                      <option value="">강의실 번호 선택</option>
+                    </select>
+                  </span>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-outline-primary">
+                    생성
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary close_link"
+                    data-dismiss="modal"
+                    id="closeButton"
+                  >
+                    닫기
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
-          <div class="modal-body">
-            <form th:action="@{/manage/createClass}" method="post">
-              <div id="th">강사명</div>
-              <select id="" name = 'teacher_id'>
-                <option value="">강사를 선택하세요.</option>
-                <option value="1">임경균</option>
-              </select>
-              <div id="th">강의명</div>
-              <div>
-                <span id="classNameWrapper">
-                  <input
-                    type="text"
-                    placeholder="강의이름 입력"
-                    id="course_Name"
-                    name="course_name"
-                  />
-                </span>
+        </div>
+      </div>
+
+      <div
+        class="modal fade"
+        id="modal2"
+        aria-labelledby="myModalLabel"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header" id="createClassTitle">
+              <div class="modal-title">
+                <img
+                  src="/resources/images/teacher-pointing-blackboard.png"
+                  id="img"
+                />
+                강사 계정 생성
               </div>
-              <div id="th">시작일</div>
-              <div>
-                <span id="dateWrapper">
-                  <input type="date" id="start_date" name="start_date" />
-                </span>
-              </div>
+            </div>
+            <div class="modal-body">
+              <form
+                th:action="@{/manage/create/teacher}"
+                method="post"
+                id="teacher-form"
+              >
+                <div class="th">강사 이름</div>
+                <input type="text" name="name" id="teacher-name" />
+                <div class="th">계정명</div>
+                <div class="input-username">
+                  <input type="text" name="username" id="teacher-username" />
+                  <span class="username-error username-message"
+                    >올바른 계정명이 아닙니다</span
+                  >
+                  <span class="username-duplicate username-message"
+                    >이미 존재하는 아이디입니다</span
+                  >
+                </div>
+                <div class="th">이메일</div>
+                <input type="email" name="email" id="teacher-email" />
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-outline-primary">
+                    생성
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary close_link"
+                    data-dismiss="modal"
+                    id="closeButton"
+                  >
+                    닫기
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      $("#start_date, #end_date").change(function() {
+        $("#classRoomSelect").empty();
+        $.ajax({
+          method: "post",
+          url: "/ajax/classroom",
+          data: {
+            start_date: $("#start_date").val(),
+            end_date: $("#end_date").val()
+          },
+          success: function(response) {
+            console.log(response);
+            const classroom = response;
+            classroom.forEach(function(item) {
+              const option = `<option value="${item.id}">${
+                item.classroom_name
+              }</option>`;
+              $("#classRoomSelect").append($(option));
+            });
+          }
+        });
+      });
 
-              <div id="th">종료일</div>
-              <div>
-                <input type="date" id="end_date" name="end_date" />
-              </div>
+      function checkIdDuplicates(username) {
+        let xhr;
 
-						<div id="th">과목</div>
-						<div>
-							<select id="" name = "subject">
-								<option value="" selected>과목을 선택하세요.</option>
-								<option value="1">JAVA</option>
-							</select>
-						</div>
-						<div id="th">학생수</div>
-						<div>
-							<span id="studentAmountWrapper"> <input type="text"
-								id="studentAmount" placeholder="학생 수 입력" name = "people">
-							</span>
-						</div>
-						<div id="th">강의실</div>
-						<div>
-							<span id="classRoomSelectWrapper"> 
-								<select id="classRoomSelect" name = "classroom_id">
-									<option value="">강의실 번호 선택</option>
-								</select>
-							</span>
-						</div>
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-default">생성</button>
-							<button type="button" class="btn btn-default close_link"
-								data-dismiss="modal" id="closeButton">닫기</button>
-						</div>
-					</form>
-				</div>
+        if (xhr) {
+          xhr.abort();
+        }
 
-			</div>
-		</div>
-	</div>
-	</div>
-	<script>
-	$("#start_date, #end_date").change(function(){
-		$('#classRoomSelect').empty();
-		$.ajax({
-			method : "post",
-			url : "/ajax/classroom",
-			data: {start_date:$("#start_date").val(),
-				   end_date:$("#end_date").val()},
-			success: function(response) {
-				console.log(response);
-				const classroom = response;
-				classroom.forEach(function(item){
-					const option = `<option value="${item.id}">${item.classroom_name}</option>`;
-					$("#classRoomSelect").append($(option));
-				});
-			}
-		})
-		
-	})
+        xhr = new Promise(function(resolve) {
+          $.ajax({
+            url: "/manage/check/id",
+            type: "post",
+            data: { username },
+            success: function(data) {
+              resolve(data);
+            }
+          });
+        });
 
-	
-/* 	$("#end_date").change(function(){
-		$('#classRoomSelect').empty();
-		$.ajax({
-			method : "post",
-			url : "/ajax/classroom",
-			success: function(response) {
-				console.log(response);
-				const classroom = response;
-				classroom.forEach(function(item){
-					const option = `<option value="${item.id}">${item.classroom_name}</option>`;
-					$("#classRoomSelect").append($(option));
-				});
-			}
-		})
-	})	
-	 */
-	</script>
-</body>
+        return xhr;
+      }
+
+      function checkIdValid(username) {
+        const regExp = /^[A-Za-z0-9]{6,}$/;
+        return username.match(regExp);
+      }
+
+      $("input[name='username']").keyup(function() {
+        const username = $("input[name='username']").val();
+        const checkDuplicates = checkIdDuplicates(username);
+        $(".username-message").hide();
+
+        if (!checkIdValid(username)) {
+          $(".username-error").show();
+        }
+
+        checkDuplicates.then(function(data) {
+          if (data) {
+            $(".username-message").hide();
+            $(".username-duplicate").show();
+          } else {
+            $(".username-duplicate").hide();
+          }
+        });
+      });
+
+      $("#teacher-form").submit(function() {
+        const teacherName = $("#teacher-name").val();
+        const teacherUsername = $("#teacher-username").val();
+        const teacherEmail = $("#teacher-email").val();
+        const checkDuplicates = checkIdDuplicates(teacherUsername);
+        let isValid = checkIdValid(teacherUsername);
+        let duplicates;
+
+        checkDuplicates.then(function(data) {
+          duplicates = data;
+          if (
+              !teacherName ||
+              !teacherUsername ||
+              !teacherEmail ||
+              !isValid ||
+              duplicates
+            ) {
+              event.preventDefault();
+            }
+        });
+      });
+
+      /* 	$("#end_date").change(function(){
+      	$('#classRoomSelect').empty();
+      	$.ajax({
+      		method : "post",
+      		url : "/ajax/classroom",
+      		success: function(response) {
+      			console.log(response);
+      			const classroom = response;
+      			classroom.forEach(function(item){
+      				const option = `<option value="${item.id}">${item.classroom_name}</option>`;
+      				$("#classRoomSelect").append($(option));
+      			});
+      		}
+      	})
+      })
+       */
+    </script>
+  </body>
 </html>
