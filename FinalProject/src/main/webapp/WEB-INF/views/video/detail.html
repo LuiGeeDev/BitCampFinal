@@ -50,14 +50,19 @@
         <!-- 추가 ) 댓글수 -->
         <!-- 추가 ) 댓글 insert form -->
       </div>
+      <div class="row">
       <div id="commentInputWrapper">
-        
+        <div class="writer-info-wrapper">
           <span id="writerIcon">
-            <img src="https://via.placeholder.com/32" id="icon" />
+            <img th:src="@{${user.profile_photo}}" id="icon" width="25" height="25"/>
           </span>
           <span id="writerName" name="writerName" th:text="${user.name}"></span>
+        </div>
+        <div class="input-submit-wrapper">
           <input type="text" name="content" class="comtext" id="commentInput" placeholder ="댓글을 입력하세요."/>
           <input type="submit" class="btn btn-primary btnalign" value="등록">
+        </div>
+      </div>
       </div>
         <!-- 추가 ) 댓글 목록 불러오는 기능 -->
       <div id="commentsWrapper">
