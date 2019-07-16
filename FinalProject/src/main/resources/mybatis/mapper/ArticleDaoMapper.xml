@@ -528,6 +528,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     #{pager.articlesOnPage}
   </select>
   
+    <select id="selectAllPagingArticlesByWrite"
+    resultType="kr.or.bit.model.Article">
+     SELECT id, title, content, time, updated_time,
+    view_count, original_id,
+    enable,
+    level, username, board_id,
+    (SELECT
+    count(*) FROM article_vote
+    WHERE article_id=a.id) as votenum,
+    (SELECT
+    count(*) FROM comment
+    WHERE article_id=a.id) as commentnum
+    FROM
+    ARTICLE as a
+    WHERE
+    BOARD_ID=#{board_id} AND ENABLE=1
+    ORDER BY
+    time DESC
+    LIMIT #{pager.start},
+    #{pager.articlesOnPage}
+  </select>
+  
   
     <select id="selectFirstArticlesByViewCount"
     resultType="kr.or.bit.model.Article">
