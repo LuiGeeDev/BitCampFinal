@@ -161,11 +161,8 @@ public class BoardService {
     files.add(filesDao.selectFilesById(general.getFile1()));
     files.add(filesDao.selectFilesById(general.getFile2()));
     general.setFiles(files);
-    System.out.println(general);
     article.setOption(general);
-    System.out.println("전의 아티클 : " + article);
     article.setTimeLocal(article.getTime().toLocalDateTime());
-    System.out.println("후의 아티클 : " + article);
     List<Comment> commentList = commentDao.selectAllComment(article.getId());
     for (Comment comment : commentList) {
       comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
