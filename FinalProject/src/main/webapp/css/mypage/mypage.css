@@ -152,3 +152,10 @@ label {
   flex-direction:column;
   align-items:center;
 }
+.modal-body{
+  display:inline-flex;
+  margin:auto;
+}
+.photo-icon{
+  display:block;
+}
