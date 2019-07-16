@@ -2,6 +2,8 @@ package kr.or.bit.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,21 +57,29 @@ public class MypageController {
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     String username = Helper.userName();
-    System.out.println(username);
     List<Article> article1 = articleDao.selectAllArticleByUsername(username);
     List<Article> article2 = mypageService.allArticleByUsername(username);
-    //List<Article> article2 = articleDao.selectEnableArticleByUsername(username);
     List<Comment> comments = commentDao.selectAllCommentByUsername(username);  
     Member user = memberDao.selectMemberByUsername(username);
-    System.out.println("hi"+user.getCourse_id());
     Course course = courseDao.selectCourse(user.getCourse_id());
-    
+    course.setEndDate(course.getEnd_date().toLocalDate());
+    course.setStartDate(course.getStart_date().toLocalDate());
+    Period diff = Period.between(course.getStartDate(), course.getEndDate());
+    Period diff2 = Period.between(course.getStartDate(), LocalDate.now());
+    int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
+    model.addAttribute("completion", completion);
     model.addAttribute("course",course);
     model.addAttribute("comments",comments);
     model.addAttribute("article1",article1);
     model.addAttribute("article2",article2);
     model.addAttribute("user",user);
     return "mypage/mypage";
+  }
+  
+  @GetMapping("/home/Content")
+  public String getDetail(int article_id) {
+    
+    return null;
   }
 
   @PostMapping("/home/CommentList")
