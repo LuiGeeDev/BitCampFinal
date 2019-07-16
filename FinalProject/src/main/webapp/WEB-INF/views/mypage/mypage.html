@@ -145,6 +145,7 @@
                                   data,
                                   function(index, item) {
                                     const id = item.id;
+                                    const article_id = item.article_id;
                                     const content = item.content;
                                     const time = Number(item.updated_time);
                                     const date = new Date(time);
@@ -164,7 +165,7 @@
                                         + getmonth + `-` + getdate + ` `
                                         + hours + `:` + minutes;
                                     console.log(item.index);
-                                    let html2 = "<div class='boardContent iteration' id='boardContentWrapper'>"
+                                    let html2 = "<div class='boardContent iteration' id='boardContentWrapper' onclick="+'"'+"location.href='/mypage/home/content?article_id="+article_id+"'"+'"'+">"
                                         + "<div class='boardId cont-style' id='commentId'>"
                                         + "#"
                                         + id
@@ -229,7 +230,8 @@
                                         + hours + `:` + minutes;
                                     console.log(item.index);
                                     
-                                    let html2 = "<div class='boardContent iteration' id='boardArticletWrapper' th:onclick='location.href='/mypage/home/content?article_id="+ id +"''>"+"<div class='boardId cont-style'>"
+                                    let html2 = "<div class='boardContent iteration' id='boardArticletWrapper' onclick="+'"'+"location.href='/mypage/home/content?article_id="+id+"'"+'"'+">"
+                                    	+"<div class='boardId cont-style'>"
                                         + "#"
                                         + id
                                         + "</div><div class='boardTitle cont-style'>"
