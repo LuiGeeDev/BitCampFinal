@@ -14,9 +14,7 @@ body {
 }
 
 table {
-  margin-left: 10%;
-  margin-right: 10%;
-  width: 80%;
+  width: 100%;
   border-collapse: collapse;
   font-size: 14px;
 }
@@ -43,7 +41,7 @@ td[colspan="2"] {
 
 .tdcontent {
   cursor: pointer;
-  max-height: 46px;
+  max-height: 45px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -183,4 +181,16 @@ td[colspan="2"] {
 .titleanswer {
   color: red;
   font-size: 12px;
+}
+
+.tableWrapper {
+  margin-left: 13%;
+  margin-right: 14%;
+}
+
+#profileimg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 5px;
 }
