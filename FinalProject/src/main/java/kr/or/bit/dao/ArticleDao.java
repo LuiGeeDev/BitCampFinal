@@ -40,6 +40,11 @@ public interface ArticleDao {
   List<Article> selectNextArticlesToCopyByBoardId(@Param("board_id") int board_id, @Param("id") int id);
 
   List<Article> selectAllPagingArticlesByBoardId(@Param("board_id") int board_id, @Param("pager") Pager pager);
+  
+  List<Article> selectAllPagingArticlesByViewCount(@Param("board_id") int board_id, @Param("pager") Pager pager);
+  
+  List<Article> selectFirstArticlesByViewCount(@Param("board_id") int board_id);
+  
 
   Article selectOneArticle(@Param("id") int id);
 
