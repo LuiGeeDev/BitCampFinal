@@ -36,9 +36,9 @@ body {
 }
 
 #profileimg {
-  width: 188px;
+  width: 192px;
   border-radius: 50%;
-  height: 188px;
+  height: 192px;
 }
 
 .profileContent {
@@ -160,7 +160,7 @@ body {
 }
 
 .boardTitle {
-  width: 46%;
+  width: 50%;
   font-size: 14px;
 }
 

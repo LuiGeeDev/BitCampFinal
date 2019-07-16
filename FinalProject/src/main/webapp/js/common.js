@@ -97,6 +97,7 @@ function sendMessageNotice(senderName, receiverUsername) {
   const notification = {
       title: "쪽지",
       username: receiverUsername,
+      content: `${senderName}님이 쪽지를 보냈습니다`,
       link: "/message"
   }
 

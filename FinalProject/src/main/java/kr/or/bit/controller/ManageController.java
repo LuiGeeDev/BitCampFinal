@@ -94,4 +94,9 @@ public class ManageController {
 	  model.addAttribute("memberList", memberList);
 	  return"manage/students";
 	}
+	
+	@GetMapping("/chart")
+	public String memberChartPage() {
+	  return "manage/chart";
+	}
 }

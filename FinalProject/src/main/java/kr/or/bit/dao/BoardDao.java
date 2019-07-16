@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
 
 /*
@@ -33,4 +34,6 @@ public interface BoardDao {
   Board selectTroubleShootingBoard(@Param("course_id") int course_id, @Param("season") int season, @Param("group_no") int group_no);
   
   List<Board> selectBoardInCourse(@Param("course_id") int course_id, @Param("boardtype") int boardtype);
+  
+  List<Article> selectViewCountByDesc(int board_id);
 }

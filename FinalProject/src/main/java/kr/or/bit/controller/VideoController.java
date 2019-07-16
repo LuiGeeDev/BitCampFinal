@@ -28,7 +28,7 @@ import kr.or.bit.utils.Helper;
 @Controller
 @RequestMapping("/video")
 public class VideoController {
-  private final int VIDEO_BOARD_ID = 2;
+  private final int VIDEO_BOARD_ID = 5;
   @Autowired
   private SqlSession sqlSession;
   @Autowired

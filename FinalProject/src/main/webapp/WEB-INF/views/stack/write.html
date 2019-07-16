@@ -42,7 +42,7 @@
   	var note = $(".note-editable").val();
     $(".submit-btn").click(function(event) {
       
-      if(title.val() == null || title.val().trim() == "") {
+      if(title.val() == null || title.val().trim() == "" || ) {
         event.preventDefault();
         Swal.fire({
 	  	    type: 'error',
