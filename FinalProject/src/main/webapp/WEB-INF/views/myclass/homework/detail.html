@@ -107,6 +107,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script>
+      $("#homework-submit-button").click(function(){
+        sendReplyNotice([[${user.name}]], [[${article.username}]], "/myclass/homework/detail?id="+[[${article.id}]]+"&page="+[[${page}]]);
+      })
       $("#delete-btn").click(function(event) {
         
         Swal.fire({

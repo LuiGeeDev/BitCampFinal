@@ -144,7 +144,9 @@
   }).ajaxStop(function() {
     $("#spinner").hide();
   });
-
+	$("#imgp2").click(function(){
+	  sendVoteNotice([[${user.name}]], [[${qnacontent.username}]], "/myclass/qna/content?id="+[[${qnacontent.id}]]);
+	})
       var currentPosition = parseInt($("#floatMenu").css("top"));
       $(window).scroll(function() {
         var position = $(window).scrollTop();
@@ -183,6 +185,7 @@
           processData: false,
           success: function(data) {
             console.log(data);
+            sendCommentNotice([[${user.name}]], [[${qnacontent.username}]], "/myclass/qna/content?id="+[[${qnacontent.id}]]);
             $(".stack-wrapper").empty();
            	$(".comtext").val("");
             $.each(data, function(index, item) {

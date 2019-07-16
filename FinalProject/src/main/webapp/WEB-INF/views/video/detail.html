@@ -173,7 +173,7 @@
             $("#voteText").html(data.countVote);
             if (data.checkStatus == 1) {
               $('#thumbIcon').addClass("voted");
-              sendVoteNotice([[${user.name}]], [[${article.username}]], "link");
+              sendVoteNotice([[${user.name}]], [[${article.username}]], "/video/detail?id="+[[${article.id}]]);
             } else {
               $('#thumbIcon').removeClass("voted");
             }
@@ -256,7 +256,7 @@
              
               
             });
-           	
+           	sendCommentNotice([[${user.name}]], [[${article.username}]],"/video/detail?id="+[[${article.id}]]);
            	
           }
         });
