@@ -104,9 +104,7 @@ public class MyClassController {
     for (Article article : recentArticles) {
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
       article.setTimeLocal(article.getTime().toLocalDateTime());
-    }
-      
-    
+    }  
     model.addAttribute("recentHomework",recentHomework);
     model.addAttribute("course", course);
     model.addAttribute("recentArticles", recentArticles);

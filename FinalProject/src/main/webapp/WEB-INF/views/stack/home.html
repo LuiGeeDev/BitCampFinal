@@ -39,9 +39,9 @@
           th:onclick="'window.location.href = \'' + @{/stack/content(id=${list.id})} + '\''">
           <td class="td1"><span class="tdst"> <span
               th:text="${list.votenum}"></span> <br />
-          </span> <span class="td2">추천</span><br /> <span class="tdst">
+          </span> <span class="td2">Like</span><br /> <span class="tdst">
               <span th:text="${list.commentlist.size()}"></span> <br />
-          </span> <span class="td2">답변</span></td>
+          </span> <span class="td2">Answer</span></td>
           <td colspan="2">
             <p class="tdtitle">
               <span th:text="${list.title}"></span>
@@ -53,7 +53,7 @@
           </td>
         </tr>
         <tr>
-          <td class="td2"><span th:text="${list.view_count}"></span>view</td>
+          <td class="td2"><b><span th:text="${list.view_count}"></span></b>view</td>
           <td class="td3"><span class="tag-name iteration"
             th:each="tag : ${list.tags}"> <span
               th:style="'background-color:'+@{${tag.color}}+';'"
