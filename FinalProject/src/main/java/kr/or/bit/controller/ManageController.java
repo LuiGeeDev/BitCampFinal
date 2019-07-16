@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.ManagerDao;
 import kr.or.bit.dao.MemberDao;
+import kr.or.bit.model.Comment;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.Member;
 import kr.or.bit.service.ClassCreateService;
@@ -96,7 +97,28 @@ public class ManageController {
 	}
 	
 	@GetMapping("/chart")
-	public String memberChartPage() {
+	public String memberChartPage(Model model) {
+	  ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
+	  
+	  List<Course> chartOne = managerDao.countCourseBySubject();
+    int courseCount = managerDao.countAllCourse();
+    for(Course course : chartOne) {
+      double result = (double)course.getCount()/(double)courseCount;
+      System.out.println("결과 : "+(Math.round(result*1000)/10.0)+"%");
+      course.setDivisionResult(Math.round(result*1000)/10.0);
+    }
+    
+    List<Course> chartTwo = managerDao.countEnableMember();
+    List<Course> chartThree = managerDao.articleWriteRank();
+    List<Comment> chartFour = managerDao.commentWriteRank();
+    List<Course> courseList = managerDao.selectCourseList();
+    
+    model.addAttribute("chartTwo", chartTwo);
+    model.addAttribute("chartOne", chartOne);
+    model.addAttribute("chartThree", chartThree);
+    model.addAttribute("chartFour", chartFour);
+    model.addAttribute("courseList", courseList);
 	  return "manage/chart";
 	}
+
 }
