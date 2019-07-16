@@ -26,7 +26,7 @@
             </p>
           </div>
         </div>
-        <div th:if="${mainMessage.isEmpty()}">쪽지가 없습니다</div>
+        <div th:if="${mainMessage.isEmpty()}" class="no-message">아직 쪽지가 없습니다<br>먼저 쪽지를 보내보세요</div>
       </div>
       <div class="my-project">
         <div class="d-day">
@@ -66,6 +66,7 @@
             <div class="video-description" th:utext="${video.content}"></div>
           </div>
         </a>
+        <div th:if="${recentVideos.isEmpty()}" class="no-video">아직 영상이 없어요<br>좋은 영상을 공유해보세요</div>
       </div>
       <!-- 스택 -->
       <div class="stack">
@@ -85,6 +86,7 @@
                 전</div>
             </div>
           </a>
+          <div th:if="${recentStacks.isEmpty()}" class="no-recent-stack">아직 질문이 없습니다</div>
         </div>
         <div class="stack-popular">
           <div class="stack-header">
@@ -101,6 +103,7 @@
                 전</div>
             </div>
           </a>
+          <div th:if="${recentlyCommented.isEmpty()}" class="no-recently-commented">답변된 질문이 없습니다</div>
         </div>
       </div>
     </div>

@@ -43,7 +43,7 @@ td[colspan="2"] {
 
 .tdcontent {
   cursor: pointer;
-  max-height: 46px;
+  max-height: 58px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -97,6 +97,10 @@ td[colspan="2"] {
   cursor: pointer;
 }
 
+.write-btns {
+  margin-right: 10%;
+}
+
 #c1 {
   background-color: green;
 }
@@ -145,12 +149,7 @@ td[colspan="2"] {
 }
 
 .page-btns {
-  margin: auto;
-  margin-bottom: 200px;
-}
-
-.write-btns {
-  margin-right: 17%;
+  margin: 0 auto;
 }
 
 .btn.btn-primary.paging {
