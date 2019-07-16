@@ -50,6 +50,15 @@ td[colspan="2"] {
   display: none;
 }
 
+.tdcontent b {
+  display: none;
+}
+
+.tdcontent p span {
+  font-weight: 100 !important;
+  font-style: normal !important;
+}
+
 .tdcontent p img {
   display: none;
 }
@@ -85,6 +94,12 @@ td[colspan="2"] {
 .td4 {
   width: 20%;
   font-weight: bold;
+}
+
+.td5{
+    font-size: 80%;
+    text-align: center;
+    padding: 5px 0px;
 }
 
 .tag-name span {
@@ -148,7 +163,7 @@ td[colspan="2"] {
 }
 
 .write-btns {
-  margin-right: 17%;
+  float: right;
 }
 
 .btn.btn-primary.paging {
@@ -193,4 +208,18 @@ td[colspan="2"] {
   height: 40px;
   border-radius: 50%;
   margin-right: 5px;
+}
+
+.navBar{
+  
+height: 44px;
+}
+
+.writeBtn{
+  
+}
+.searchBtn{padding: 4px 12px;}
+.selectBar{
+   height: 27px;
+   margin-right: 4px;
 }
