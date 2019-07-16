@@ -205,4 +205,6 @@ public class BoardController {
     return "redirect:/myclass/board/read?article_id=" + boardService.writeReplyArticle(article, file1, file2, request)
         + "&board_id=" + article.getBoard_id();
   }
+  
+  
 }
