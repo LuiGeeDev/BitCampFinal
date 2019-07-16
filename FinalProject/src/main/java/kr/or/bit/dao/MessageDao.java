@@ -19,6 +19,8 @@ public interface MessageDao {
   void deleteMessage(int id);
 
   List<Message> selectAllMessage(String receiver_username);
+  
+  List<Message> selectAllSenderMessage(String sender_username);
       
   List<Message> selectMessageById(String sender_username);
   
