@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -85,5 +86,31 @@ public class AxiosContoller {
     Map<String, Object> returnMap = new HashMap<String, Object>();
     returnMap.put("index", Integer.parseInt(todo.get("index") + ""));
     return returnMap;
+  }
+  
+  @PostMapping("/checkUpdate")
+  @Transactional
+  public Map<String, Object> checkUpdate(int id, int group_id) {
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    ChecklistDao checklistDao = sqlSession.getMapper(ChecklistDao.class);
+    TimelineDao timelineDao = sqlSession.getMapper(TimelineDao.class);
+    Map<String,Object> timelineList = new HashMap<String,Object>();
+    checklistDao.checkUpdate(id, Helper.userName());
+    
+    Checklist checklist = checklistDao.selectOneChecklist(id);
+
+    if(checklist.getChecked() == 0 ) {
+      return timelineList;
+    }
+    Timeline timeline = new Timeline();
+    timeline.setTitle("체크리스트 완료");
+    timeline.setContent(checklist.getContent());
+    timeline.setGroup_id(group_id);
+    timeline.setUsername(Helper.userName());
+    timelineDao.insertTimeline(timeline);
+    
+    timeline.setWriter(memberDao.selectMemberByUsername(timeline.getUsername()));
+    timelineList.put("timeline", timeline);
+    return timelineList;
   }
 }

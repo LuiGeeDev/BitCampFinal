@@ -20,7 +20,34 @@ public class Course {
   private LocalDate endDate;
   
   private List<Board> boards;
-  
+  private int count;
+  private double divisionResult;
+  private String name;
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public double getDivisionResult() {
+    return divisionResult;
+  }
+
+  public void setDivisionResult(double divisionResult) {
+    this.divisionResult = divisionResult;
+  }
+
+  public int getCount() {
+    return count;
+  }
+
+  public void setCount(int count) {
+    this.count = count;
+  }
+
   public List<Board> getBoards() {
     return boards;
   }

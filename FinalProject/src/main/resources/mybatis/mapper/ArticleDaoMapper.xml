@@ -204,7 +204,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     #{title}, #{content}, #{username}, #{board_id}, (select max(id)+1
     from (select * from article )as temp))
   </insert>
-  <insert id="insertTroubleShootingArticle" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertTroubleShootingArticle" useGeneratedKeys="true" keyProperty="article.id">
     INSERT INTO article(time, updated_time, title,
     content, username, board_id, original_id)
     VALUES (now(),
