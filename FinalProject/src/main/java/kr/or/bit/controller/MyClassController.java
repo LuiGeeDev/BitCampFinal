@@ -86,6 +86,7 @@ public class MyClassController {
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
+    ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     Course course = courseDao.selectCourse(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id());
     course.setEndDate(course.getEnd_date().toLocalDate());
     course.setStartDate(course.getStart_date().toLocalDate());
@@ -107,6 +108,9 @@ public class MyClassController {
     model.addAttribute("course", course);
     model.addAttribute("recentArticles", recentArticles);
     model.addAttribute("completion", completion);
+    model.addAttribute("project", projectDao.selectRecentProjectByCourseId(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id()));
+    model.addAttribute("group_id", memberDao.selectMemberByUsername(Helper.userName()).getGroup_id());
+    
     return "myclass/home";
   }
 
