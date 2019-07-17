@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.ManagerDao;
 import kr.or.bit.dao.MemberDao;
+import kr.or.bit.model.Classroom;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.Member;
+import kr.or.bit.model.Subject;
 import kr.or.bit.service.ClassCreateService;
 import kr.or.bit.service.MailService;
 import kr.or.bit.utils.Helper;
@@ -35,7 +37,14 @@ public class ManageController {
 	private MailService mailService;
 
 	@GetMapping("/course")
-	public String manageHome() {
+	public String manageHome(Model model) {
+	  ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
+	  List<Member> teacherList = managerDao.selectTeacherList();
+	  List<Subject> subjectList = managerDao.selectSubjectList();
+	  List<Classroom> classroomList = managerDao.selectClassroomList();
+	  model.addAttribute("teacherList", teacherList);
+	  model.addAttribute("subjectList", subjectList);
+	  model.addAttribute("classroomList", classroomList);
 		return "manage/course";
 	}
 
@@ -58,6 +67,7 @@ public class ManageController {
 	@PostMapping("/createClass")
 	public String createClass(Course course, @RequestParam(required = true) int people, @RequestParam int teacher_id,
 			Model model) {
+	  System.out.println("teacher_id : "+teacher_id);
 		classCreateService.createClass(course, people, teacher_id);
 
 		return "redirect:/manage/course";
@@ -69,10 +79,6 @@ public class ManageController {
 		CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
 		List<Member> memberList = managerDao.selectMembersByRole("STUDENT");
 		List<Course> courseList = managerDao.selectCourseList();
-		System.out.println(courseList.get(0).getCourse_name());
-		System.out.println(courseList.get(1).getCourse_name());
-		System.out.println(courseList.get(2).getCourse_name());
-		System.out.println(courseList.get(3).getCourse_name());
 		model.addAttribute("courseList", courseList);
 		model.addAttribute("memberList", memberList);
 		return "manage/students";
@@ -83,8 +89,6 @@ public class ManageController {
 			@RequestParam(defaultValue = "null") String stringValue, Model model) {
 		ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
 		List<Member> memberList = null;
-
-		System.out.println(role + "/" + enabled + "/" + course_id + "/" + stringColumn + "/" + stringValue);
 
 		if (enabled == 999 & course_id == 0 & stringValue.equals("null")) {
 			System.out.println("role?");
@@ -111,14 +115,7 @@ public class ManageController {
 					stringValue);
 		}
 
-		System.out.println("--------------------");
-		System.out.println(memberList.toString());
-
 		List<Course> courseList = managerDao.selectCourseList();
-		System.out.println(courseList.get(0).getCourse_name());
-		System.out.println(courseList.get(1).getCourse_name());
-		System.out.println(courseList.get(2).getCourse_name());
-		System.out.println(courseList.get(3).getCourse_name());
 		model.addAttribute("courseList", courseList);
 		model.addAttribute("memberList", memberList);
 		return "manage/students";
