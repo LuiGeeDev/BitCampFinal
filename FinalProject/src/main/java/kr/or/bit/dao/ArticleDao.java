@@ -47,7 +47,6 @@ public interface ArticleDao {
   
   List<Article> selectFirstArticlesByViewCount(@Param("board_id") int board_id);
   
-
   Article selectOneArticle(@Param("id") int id);
 
   void insertVote(@Param("id") int id, @Param("username") String username);

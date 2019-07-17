@@ -132,7 +132,7 @@ a[class^="carousel-control"] {
   text-align: center;
 }
 
-.my-project {
+.my-project, .my-notification {
   margin: auto;
   margin-left: 50px;
   border: 1px solid #2D3E50;
@@ -151,12 +151,12 @@ a[class^="carousel-control"] {
   color: #F39B10;
 }
 
-.my-project h4 {
+.my-project h4, .my-notification h4 {
   margin-bottom: 20px;
   color: #2D3E50;
 }
 
-.project-new-content {
+.project-new-content, .new-notification {
   margin: 0;
   margin-top: 25px;
   font-size: 15px;
@@ -166,7 +166,7 @@ a[class^="carousel-control"] {
   border-bottom: 2px solid transparent;
 }
 
-.project-new-content:hover {
+.project-new-content:hover, .new-notification:hover {
   border-bottom: 2px solid #F39B10;
 }
 
@@ -276,4 +276,8 @@ a[class^="carousel-control"] {
   font-size: 14px;
   font-weight: bold;
   text-align: center;
+}
+
+.message-photo {
+  background: url("/resources/images/default.png");
 }
