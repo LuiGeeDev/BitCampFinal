@@ -165,10 +165,12 @@ public class BoardService {
     article.setTimeLocal(article.getTime().toLocalDateTime());
     List<Comment> commentList = commentDao.selectAllComment(article.getId());
     for (Comment comment : commentList) {
+      comment.setTimeLocal(comment.getTime().toLocalDateTime());
       comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
     }
     article.setCommentlist(commentList);
     article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+    System.out.println("article : " +article.getCommentlist().toString());
     return article;
   }
 

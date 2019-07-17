@@ -165,12 +165,6 @@ body {
   margin-left: 50px
 }
 
-#icon {
-  width: 25px;
-  height: 25px;
-}
-
-
 .commentWriterName {
   cursor: pointer;
 }
@@ -185,6 +179,11 @@ body {
   height:100%;
 }
 
-#messageSenderId {
+
+.writerIcon, #icon {
+  width: 25px;
+  height: 25px;
+}
+.messageReceiverId {
   display:none;
 }
