@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.BoardDao;
 import kr.or.bit.dao.ChecklistDao;
-import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.GroupDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.ProjectDao;
@@ -88,5 +88,11 @@ public class ProjectController {
     return "myclass/chat/main";
   }
   
+  @PostMapping("/link")
+  public String linkUpdate(Group group) {
+    GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
+    groupDao.updateGroup(group);
+    return "redirect:/myclass/project?group_id="+group.getId();
+  }
 
 }

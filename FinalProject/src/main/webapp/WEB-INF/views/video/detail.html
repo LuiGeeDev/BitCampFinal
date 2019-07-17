@@ -8,7 +8,11 @@
   </head>
   <body>
     <div class="main" th:fragment="main">
-     <div class="spinner-border text-warning spin-where" role="status" id="spinner">
+      <div
+        class="spinner-border text-warning spin-where"
+        role="status"
+        id="spinner"
+      >
         <span class="sr-only">Loading...</span>
       </div>
       <div id="detailWrapper">
@@ -24,7 +28,11 @@
             | 조회수
             <span id="point" th:text="${article.view_count}">43</span> | 댓글
             <span id="point" th:text="${article.commentlist.size()}">2</span>
-            <span class="hidden" id="comment-articleID" th:text = "${article.id}"></span>
+            <span
+              class="hidden"
+              id="comment-articleID"
+              th:text="${article.id}"
+            ></span>
           </div>
         </div>
         <div id="detailContent">
@@ -51,20 +59,39 @@
         <!-- 추가 ) 댓글 insert form -->
       </div>
       <div class="row">
-      <div id="commentInputWrapper">
-        <div class="writer-info-wrapper">
-          <span id="writerIcon">
-            <img th:src="@{${user.profile_photo}}" id="icon" width="25" height="25"/>
-          </span>
-          <span id="comment-writer" class="comment-writer" th:text="${user.name}"></span>
-        </div>
-        <div class="input-submit-wrapper">
-          <input type="text" name="content" class="comtext" id="commentInput" placeholder ="댓글을 입력하세요."/>
-          <input type="submit" class="btn btn-primary btnalign" value="등록">
+        <div id="commentInputWrapper">
+          <div class="writer-info-wrapper">
+            <span id="writerIcon">
+              <img
+                th:src="@{${user.profile_photo}}"
+                id="icon"
+                width="25"
+                height="25"
+              />
+            </span>
+            <span
+              id="writerName"
+              name="writerName"
+              th:text="${user.name}"
+            ></span>
+          </div>
+          <div class="input-submit-wrapper">
+            <input
+              type="text"
+              name="content"
+              class="comtext"
+              id="commentInput"
+              placeholder="댓글을 입력하세요."
+            />
+            <input
+              type="submit"
+              class="btn btn-primary btnalign"
+              value="등록"
+            />
+          </div>
         </div>
       </div>
-      </div>
-        <!-- 추가 ) 댓글 목록 불러오는 기능 -->
+      <!-- 추가 ) 댓글 목록 불러오는 기능 -->
       <div id="commentsWrapper">
         <div
           id="commentsContent"
@@ -75,8 +102,20 @@
           <div id="commentsText">
             <div id="commentsWriter">
               <span id="writerIcon">
-                <img th:if="${list.writer.profile_photo != null}" class="writerIcon" th:src="@{${list.writer.profile_photo}}" width="25" height="25">
-                <img th:if="${list.writer.profile_photo == null}" class="writerIcon" th:src="@{/resources/images/default.png}" width="25" height="25">
+                <img
+                  th:if="${list.writer.profile_photo != null}"
+                  class="writerIcon"
+                  th:src="@{${list.writer.profile_photo}}"
+                  width="25"
+                  height="25"
+                />
+                <img
+                  th:if="${list.writer.profile_photo == null}"
+                  class="writerIcon"
+                  th:src="@{/resources/images/default.png}"
+                  width="25"
+                  height="25"
+                />
               </span>
               <span id="writerName">
                 <span class="commentsName"
@@ -87,22 +126,23 @@
                    th:href="@{/video/commentdelete(id=${list.id})}">삭제</a>
               </span>
               <span id="writeDate">
-                <span th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
+                <span
+                  th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"
+                ></span>
               </span>
             </div>
             <div id="commentsDetail">
               <span th:text="${list.content}"></span>
             </div>
           </div>
-          <div id="commentsDetail">
-          </div>
+          <div id="commentsDetail"></div>
         </div>
-        <div th:if="${article.commentlist.size()} == 0" id ="noneComment">
-        	등록된 댓글이 없습니다.
+        <div th:if="${article.commentlist.size()} == 0" id="noneComment">
+          등록된 댓글이 없습니다.
         </div>
       </div>
-      
-          <!-- 모달이 시작 -->
+
+      <!-- 모달이 시작 -->
       <div class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -123,12 +163,9 @@
         <button type="button" class="btn btn-primary submitMessage">전송</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
       </div>
-    </div>
-  </div>
-</div>
 
-<!-- 모달이 끝 -->
-      
+      <!-- 모달이 끝 -->
+
       <div id="buttonWrapper">
         <a
           th:if="${article.username==user.username and article.enable==1}"
@@ -145,74 +182,82 @@
         >
           삭제
         </a>
-        <a 
-        th:if="${user.role=='MANAGER' and article.enable==0}"
-        th:href="@{/video/activation(id = ${article.id})}"
-        class="btn btn-primary btn-sm">활성화</a>
-        
-        <a 
-        th:if="${user.role=='MANAGER' and article.enable==1}"
-        th:href="@{/video/activation(id = ${article.id})}"
-        class="btn btn-primary btn-sm">비활성화</a>
-        
-        
+        <a
+          th:if="${user.role=='MANAGER' and article.enable==0}"
+          th:href="@{/video/activation(id = ${article.id})}"
+          class="btn btn-primary btn-sm"
+        >
+          활성화
+        </a>
+
+        <a
+          th:if="${user.role=='MANAGER' and article.enable==1}"
+          th:href="@{/video/activation(id = ${article.id})}"
+          class="btn btn-primary btn-sm"
+        >
+          비활성화
+        </a>
+
         <a class="btn btn-primary btn-sm" th:href="@{/video}">목록</a>
-        <a 
-        th:if="${user.role=='MANAGER' and article.enable==0}"
-        th:href="@{/video/realDelete(id = ${article.id})}"
-        class="btn btn-primary btn-sm realDelete">찐삭</a>
+        <a
+          th:if="${user.role=='MANAGER' and article.enable==0}"
+          th:href="@{/video/realDelete(id = ${article.id})}"
+          class="btn btn-primary btn-sm realDelete"
+        >
+          완전 삭제
+        </a>
       </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script th:inline="javascript">
-    
-    $(document).ready(function() {
-      $("#spinner").hide();
-    }).ajaxStart(function() {
-      $("#spinner").show();
-    }).ajaxStop(function() {
-      $("#spinner").hide();
-    });
-    
-    // 동기 메시지보내기 처리 시작
-    $(".commentsName").unbind("click");
-    $(".commentsName").click(function(event) {
-      const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
-      const messageReceiveName = $(event.currentTarget).text();
-      $(".messageReceiveName").text(messageReceiveName);
-      if([[${user.username}]] != receiverId) {
-      $(".modal").modal("show");
-      }
-	        
-      $(".submitMessage").unbind("click");
-      $(".submitMessage").click(function() {
-        const messageText = $("#messageText").val();
-      	if(messageText.trim() === "" || messageText === null) {
-  	  	  Swal.fire({
-  	  	    type: 'error',
-  	  	    text: '다시 입력해주세요 !!',
-  	  	  })
-  	  	  	return;
-  	  	}
-      	$("#messageText").val("");
-      	
-      	$.ajax({
-          url: "/ajax/message/reply",
-          type: "POST",
-          data: {
-            content: messageText,
-            receiver_username: receiverId
-          }
-        }).done(function() {
-          $(".modal").modal("hide");
-          Swal.fire({
-            type: 'success',
-            title: '전송되었습니다',
-            showConfirmButton: false,
-            timer: 1500
+      $(document).ready(function() {
+        $("#spinner").hide();
+      }).ajaxStart(function() {
+        $("#spinner").show();
+      }).ajaxStop(function() {
+        $("#spinner").hide();
+      });
+
+      // 동기 메시지보내기 처리 시작
+      $(".commentsName").unbind("click");
+      $(".commentsName").click(function(event) {
+        const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
+        const messageReceiveName = $(event.currentTarget).text();
+        $(".messageReceiveName").text(messageReceiveName);
+        if([[${user.username}]] != receiverId) {
+        $(".modal").modal("show");
+        }
+
+        $(".submitMessage").unbind("click");
+        $(".submitMessage").click(function() {
+          const messageText = $("#messageText").val();
+        	if(messageText.trim() === "" || messageText === null) {
+       	  Swal.fire({
+       	    type: 'error',
+       	    text: '다시 입력해주세요 !!',
+       	  })
+       	  	return;
+       	}
+        	$("#messageText").val("");
+
+        	$.ajax({
+            url: "/ajax/message/reply",
+            type: "POST",
+            data: {
+              content: messageText,
+              receiver_username: receiverId
+            }
+          }).done(function() {
+            $(".modal").modal("hide");
+            Swal.fire({
+              type: 'success',
+              title: '전송되었습니다',
+              showConfirmButton: false,
+              timer: 1500
+            });
+            sendMessageNotice([[${user.name}]], receiverId);
           });
-          sendMessageNotice([[${user.name}]], receiverId);
         });
       });  
     });
@@ -222,7 +267,6 @@
     
     
       $("#deletebtn").click(function(event) {
-        console.log([[${article}]]);
         event.preventDefault();
         Swal.fire({
           title: '정말 삭제하시겠습니까?',
@@ -234,17 +278,17 @@
           cancelButtonText: '아니요'
         }).then((result) => {
           if (result.value) {
-                Swal.fire({
-                  	title: '삭제되었습니다',
-                  	type: 'success',
-                  	confirmButtonText: '확인',
-                  	confirmButtonColor: '#F39B10'
-                }).then(() => {
-                  location.href="/video/delete?id=" + [[${article.id}]];  
-                });
+            Swal.fire({
+              title: '삭제되었습니다',
+              type: 'success',
+              confirmButtonText: '확인',
+              confirmButtonColor: '#F39B10'
+            }).then(() => {
+              location.href="/video/delete?id=" + [[${article.id}]];
+            });
           }
         })
-      });      
+      });
 
       $('#voteButton').click(function(data){
         $.ajax({
@@ -257,37 +301,34 @@
             $("#voteText").html(data.countVote);
             if (data.checkStatus == 1) {
               $('#thumbIcon').addClass("voted");
-              sendVoteNotice([[${user.name}]], [[${article.username}]], "/video/detail?id="+[[${article.id}]]);
+              if ([[${user.username}]] !== [[${article.username}]]) {
+                sendVoteNotice([[${user.name}]], [[${article.username}]], "/video/detail?id="+[[${article.id}]]);
+              }
             } else {
               $('#thumbIcon').removeClass("voted");
             }
           }
         });
       });
-      
+
       $(".btnalign").click(function() {
-        let valueCheck = $("#commentInput").val();         
-        
-  	  	if(valueCheck.trim() === "" || valueCheck === null) {
-  	  	  Swal.fire({
-  	  	    type: 'error',
-  	  	    text: '다시 입력해주세요 !!',
-  	  	  })
-  	  	  	return;
-  	  	}
-  	  	
-  	  	    const articleId = $("#comment-articleID").text();
-    	 	const commentContent = $("#commentInput").val();
-    	 	const username = [[${user.username}]];
-    	 	
-    	 	const formData = new FormData();
-    	 	formData.append("article_id", articleId);
-    	 	formData.append("content", commentContent);
-    	 	formData.append("username", username);
-  	  	
-  	  	/* <form th:action="@{/video/commentwrite(id=${article.id})}" method="post"> */
-  	  	
-    	  $.ajax({
+        let valueCheck = $("#commentInput").val();
+        if (valueCheck.trim() === "" || valueCheck === null) {
+       	  Swal.fire({
+       	    type: 'error',
+         	  text: '다시 입력해주세요 !!',
+         	})
+          return;
+        }
+        const articleId = $("#comment-articleID").text();
+        const commentContent = $("#commentInput").val();
+        const username = [[${user.username}]];
+        const formData = new FormData();
+      	formData.append("article_id", articleId);
+      	formData.append("content", commentContent);
+      	formData.append("username", username);
+
+        $.ajax({
           url: "/video/commentwrite",
           type: "post",
           data: formData,
@@ -295,9 +336,8 @@
           processData: false,
           success: function(data) {
             $("#commentsWrapper").empty();
-           	$("#commentInput").val("");
-            
-           	$.each(data, function(index, item) {
+            $("#commentInput").val("");
+            $.each(data, function(index, item) {
               const content = item.content;
               const username = item.writer.name;
               const time = Number(item.time);
@@ -315,9 +355,8 @@
               getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
                   
               const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ hours +`:` + minutes;
-              
-			  let equalName = null;           
-              if(item.username == [[${user.username}]] || [[${user.role}]] == 'MANAGER') {
+              let equalName = null;
+              if (item.username == [[${user.username}]] || [[${user.role}]] == 'MANAGER') {
                 equalName = "[삭제]";
               } else {
                 equalName = "";
@@ -339,6 +378,7 @@
               "<span id='writeDate'>" + timedate +"</span></div>" + 
               "<div id='commentDetail'>"+ content +"</div>" + 
               "</div></div>";
+
               $("#commentsWrapper").append(html);
              
             });
@@ -391,9 +431,6 @@
           }
         });
       });
-      
-      
-      
     </script>
   </body>
 </html>
