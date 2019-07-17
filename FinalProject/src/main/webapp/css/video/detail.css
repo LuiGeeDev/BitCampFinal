@@ -112,7 +112,7 @@ body {
   font-size: 16px;
   font-weight: bold;
   color: white;
-  background-color: #2d3e50;
+  background-color: #2d3e50 !important;
 }
 
 #voteText {
