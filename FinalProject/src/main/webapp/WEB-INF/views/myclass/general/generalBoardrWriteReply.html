@@ -51,8 +51,10 @@
           disableResizeEditor : true
         });
         $("#submit-button").click(function() {
-          sendReplyNotice(`[[${user.name}]]`, `[[${article.username}]]`, "/myclass/board/read?article_id="+[[${article.id}]]+"&board_id="+[[${board.id}]]);
-          console.log([[${article.username}]]);
+          if ([[${user.username}]] !== [[${article.username}]]) {
+            sendReplyNotice(`[[${user.name}]]`, `[[${article.username}]]`, "/myclass/board/read?article_id="+[[${article.id}]]+"&board_id="+[[${board.id}]]);
+          }
+          
           Swal.fire({
             type : 'success',
             title : '답글이 작성되었습니다',

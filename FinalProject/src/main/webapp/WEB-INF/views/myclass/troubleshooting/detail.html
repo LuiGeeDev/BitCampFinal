@@ -21,27 +21,57 @@
       <div th:replace="myclass/nav :: project-nav(ts)"></div>
       <div class="row">
         <div class="page-title">
-        <div class="issue-main-title">
-          <h2 class="title" th:text="${article.title}">테스트 해보는 중입니다.</h2>
-          <p class="issue-info">
-            <span class="badge badge-danger" th:if="${article.option.issue_closed == 0}">
-              <i class="fas fa-exclamation-circle fa-xs"></i>
-              미해결
-            </span>
-            <span class="badge badge-success" th:if="${article.option.issue_closed == 1}">
-              <i class="fas fa-check-circle fa-xs"></i>
-              해결
-            </span>
-            <strong><span th:text="${article.writer.name}">윤종석</span>님</strong>이 
-            <span th:text="${#temporals.format(article.timeLocal, 'yyyy년 M월 d일')}">2019년 7월 1일</span>에 올림
-            <span class="comments">댓글 <span th:text="${article.commentlist.size()}">4</span>개</span>
-          </p>
-        </div>
-        <div class="button-wrapper">
-          <a th:if="${user.username == article.username}" th:href="@{/myclass/project/troubleshooting/edit(group_id=${group.id}, id=${article.id})}" class="btn btn-outline-primary btn-sm">수정</a>
-          <a th:if="${user.username == article.username}" th:href="@{/myclass/project/troubleshooting/delete(group_id=${group.id}, id=${article.id})}" class="btn btn-outline-primary btn-sm">삭제</a>
-          <a th:href="@{/myclass/project/troubleshooting/write(group_id=${group.id})}" class="btn btn-outline-primary btn-sm">새로 올리기</a>
-        </div>
+          <div class="issue-main-title">
+            <h2 class="title" th:text="${article.title}">
+              테스트 해보는 중입니다.
+            </h2>
+            <p class="issue-info">
+              <span
+                class="badge badge-danger"
+                th:if="${article.option.issue_closed == 0}"
+              >
+                <i class="fas fa-exclamation-circle fa-xs"></i>
+                미해결
+              </span>
+              <span
+                class="badge badge-success"
+                th:if="${article.option.issue_closed == 1}"
+              >
+                <i class="fas fa-check-circle fa-xs"></i>
+                해결
+              </span>
+              <strong
+                ><span th:text="${article.writer.name}">윤종석</span>님</strong
+              >이
+              <span
+                th:text="${#temporals.format(article.timeLocal, 'yyyy년 M월 d일')}"
+                >2019년 7월 1일</span
+              >에 올림
+              <span class="comments"
+                >댓글
+                <span th:text="${article.commentlist.size()}">4</span>개</span
+              >
+            </p>
+          </div>
+          <div class="button-wrapper">
+            <a
+              th:if="${user.username == article.username}"
+              th:href="@{/myclass/project/troubleshooting/edit(group_id=${group.id}, id=${article.id})}"
+              class="btn btn-outline-primary btn-sm"
+              >수정</a
+            >
+            <a
+              th:if="${user.username == article.username}"
+              th:href="@{/myclass/project/troubleshooting/delete(group_id=${group.id}, id=${article.id})}"
+              class="btn btn-outline-primary btn-sm"
+              >삭제</a
+            >
+            <a
+              th:href="@{/myclass/project/troubleshooting/write(group_id=${group.id})}"
+              class="btn btn-outline-primary btn-sm"
+              >새로 올리기</a
+            >
+          </div>
         </div>
       </div>
       <div class="row">
@@ -54,8 +84,14 @@
           <div class="issue-main">
             <div class="issue-title">
               <span class="writer">
-                <strong><span th:text="${article.writer.name}">윤종석</span>님</strong>이 
-                <span th:text="${#temporals.format(article.timeLocal, 'yyyy년 M월 d일')}">2019년 7월 1일</span>에 올림
+                <strong
+                  ><span th:text="${article.writer.name}">윤종석</span
+                  >님</strong
+                >이
+                <span
+                  th:text="${#temporals.format(article.timeLocal, 'yyyy년 M월 d일')}"
+                  >2019년 7월 1일</span
+                >에 올림
               </span>
               <span class="author-badge">작성자</span>
             </div>
@@ -76,15 +112,29 @@
           <div class="issue-main">
             <div class="issue-title">
               <span class="writer">
-                <strong><span th:text="${comment.writer.name}">윤종석</span>님</strong>이 
-                <span th:text="${#temporals.format(comment.timeLocal, 'yyyy년 M월 d일')}">2019년 7월 1일</span>에 올림
+                <strong
+                  ><span th:text="${comment.writer.name}">윤종석</span
+                  >님</strong
+                >이
+                <span
+                  th:text="${#temporals.format(comment.timeLocal, 'yyyy년 M월 d일')}"
+                  >2019년 7월 1일</span
+                >에 올림
               </span>
-              <span th:if="${comment.username == article.username}" class="author-badge">작성자</span>
+              <span
+                th:if="${comment.username == article.username}"
+                class="author-badge"
+                >작성자</span
+              >
             </div>
             <div class="issue-content" th:utext="${comment.content}">
               잘되네요. @권예지 도 되나요?
             </div>
-            <a th:if="${comment.username == user.username}" th:href="@{/myclass/project/troubleshooting/delete/comment(id=${comment.id}, article_id=${article.id}, group_id=${group.id})}" class="delete-btn">
+            <a
+              th:if="${comment.username == user.username}"
+              th:href="@{/myclass/project/troubleshooting/delete/comment(id=${comment.id}, article_id=${article.id}, group_id=${group.id})}"
+              class="delete-btn"
+            >
               <i class="far fa-times-circle"></i>
             </a>
           </div>
@@ -98,10 +148,15 @@
             th:src="@{/resources/images/{picture}(picture=${user.profile_photo})}"
             alt=""
           />
-          <form class="write-form" method="post" th:action="@{/myclass/project/troubleshooting/comment}" id="comment-submit">
+          <form
+            class="write-form"
+            method="post"
+            th:action="@{/myclass/project/troubleshooting/comment}"
+            id="comment-submit"
+          >
             <div class="content">
-              <input type="hidden" name="article_id" th:value="${article.id}">
-              <input type="hidden" name="group_id" th:value="${group.id}">
+              <input type="hidden" name="article_id" th:value="${article.id}" />
+              <input type="hidden" name="group_id" th:value="${group.id}" />
               <textarea
                 name="content"
                 id="content"
@@ -111,20 +166,20 @@
             <div class="form-footer">
               <a
                 th:href="@{/myclass/project/troubleshooting/change(id=${article.id}, group_id=${group.id})}"
-                class="btn btn-outline-success" 
+                class="btn btn-outline-success"
                 th:if="${user.username == article.username and article.option.issue_closed == 0}"
-                data-toggle="tooltip" 
-                data-placement="top" 
+                data-toggle="tooltip"
+                data-placement="top"
                 title="해결된 문제로 표시됩니다"
               >
                 해결됨
               </a>
-              <a 
-                th:href="@{/myclass/project/troubleshooting/change(id=${article.id}, group_id=${group.id})}" 
-                class="btn btn-outline-danger" 
+              <a
+                th:href="@{/myclass/project/troubleshooting/change(id=${article.id}, group_id=${group.id})}"
+                class="btn btn-outline-danger"
                 th:if="${user.username == article.username and article.option.issue_closed == 1}"
-                data-toggle="tooltip" 
-                data-placement="top" 
+                data-toggle="tooltip"
+                data-placement="top"
                 title="해결되지 않은 문제로 표시됩니다"
               >
                 다시 미해결
@@ -140,7 +195,7 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
     <script th:inline="javascript">
       $(".btn").tooltip();
-    
+
       $("#content").summernote({
         placeholder: "댓글을 남겨주세요",
         height: 100,
@@ -149,7 +204,7 @@
 
       $("#comment-submit").submit(function() {
         if ([[${user.username}]] !== [[${article.username}]]) {
-          sendCommentNotice([[${user.name}]], [[${article.username}]], window.location.href);
+          sendCommentNotice([[${user.name}]], [[${article.username}]], `/myclass/project/troubleshooting/read?id=[[${article.id}]]&group_id=[[${group.id}]]`);
         }
       });
     </script>

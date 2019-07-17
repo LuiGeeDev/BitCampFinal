@@ -67,7 +67,6 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-left: 15px;
   line-height: 30px;
 }
 
@@ -268,4 +267,49 @@ input[type=checkbox]:checked+label i {
 
 .issue-title a h3, .issue-tags, .issue-writer{
   line-height:32px;
+}
+
+label .fab, label .fas {
+  font-size:22px;
+}
+
+#new-link #github-address{
+  margin-left:4px;
+  padding-left:3px;
+}
+#new-link #drive-address{
+  margin-left:3px;
+  padding-left:3px;
+}
+#new-link #inbox-address{
+  padding-left:3px;
+}
+
+#new-link input{
+  width:80% !important;
+}
+#clipboard{
+  width:1px;
+  height:1px;
+}
+.button-wrapper{
+  text-align:right;
+  margin-right: 9px;
+}
+.non-link-address{
+  line-height: 30px;
+  font-weight:bold;
+  font-size:14px;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.links .fa-github{
+  margin-right:15px;
+}
+.links .fa-google-drive{
+  margin-right:14px;
+}
+.links .fa-inbox{
+  margin-right:10px;
 }

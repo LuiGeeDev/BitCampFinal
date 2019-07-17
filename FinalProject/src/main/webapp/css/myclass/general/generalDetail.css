@@ -177,8 +177,8 @@ body {
 .messageForm {
   width: 100%;
   height:100%;
+  resize:none;
 }
-
 
 .writerIcon, #icon {
   width: 25px;
@@ -186,4 +186,27 @@ body {
 }
 .messageReceiverId {
   display:none;
+}
+
+.toForm {
+  margin-left: 20px;
+  font-weight:bold;
+}
+
+.my-comment-name {
+  cursor: default;
+}
+
+.messageForm:focus {
+  outline-color: #F39B10;
+}
+
+.messageTitle {
+  font-size:16px;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+.messageHeader {
+  height:40px;
 }

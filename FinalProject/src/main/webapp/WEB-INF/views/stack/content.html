@@ -1,297 +1,354 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
-<head>
-<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-<link rel="stylesheet" th:href="@{/css/stack/content.css}" />
-</head>
-<body>
-  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
-  <div class="main" th:fragment="main">
-    <div class="title">
-      <h3>스택게시판</h3>
-      <div class="spinner-border text-warning spin-where" role="status"
-        id="spinner">
-        <span class="sr-only">Loading...</span>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+    <link rel="stylesheet" th:href="@{/css/stack/content.css}" />
+  </head>
+  <body>
+    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+    <div class="main" th:fragment="main">
+      <div class="title">
+        <h3>스택게시판</h3>
+        <div
+          class="spinner-border text-warning spin-where"
+          role="status"
+          id="spinner"
+        >
+          <span class="sr-only">Loading...</span>
+        </div>
       </div>
-    </div>
-    <!-- 게시물컨텐트 -->
-    <hr>
-    <table>
-      <tr>
-        <td colspan="2" class="td12"><span
-          class="tag-name iteration"
-          th:each="tag : ${stackcontent.tags}"> <span
-            th:style="'background-color:'+@{${tag.color}}+';'">[[${tag.tag}]]</span>
-        </span></td>
-        <td colspan="2" id="contenteditor">
-        <span class="utilNav"><a
-          th:href="@{/stack/edit(id=${stackcontent.id})}"
-          th:if="${user.username == stackcontent.username}"
-          class="updateBtn"><i class="far fa-edit"></i></a> <span
-          th:if="${user.username == stackcontent.username or user.role == 'MANAGER'}"
-          class="deleteBtn" id="deleteCheck"><i class="fas fa-trash-alt"></i> </span></span></td>
-      </tr>
-      <tr>
-        <td colspan="4" class="tdtitle"><span
-          th:text="${stackcontent.title}"></span>      
+      <!-- 게시물컨텐트 -->
+      <hr />
+      <table>
+        <tr>
+          <td colspan="2" class="td12">
+            <span
+              class="tag-name iteration"
+              th:each="tag : ${stackcontent.tags}"
+            >
+              <span th:style="'background-color:'+@{${tag.color}}+';'">
+                [[${tag.tag}]]
+              </span>
+            </span>
           </td>
-      </tr>
-      <tr>
-        <td colspan="4" class="tdcontent">
-            <span th:utext="${stackcontent.content}"> </span>
+          <td colspan="2" id="contenteditor">
+            <span class="utilNav">
+              <a
+                th:href="@{/stack/edit(id=${stackcontent.id})}"
+                th:if="${user.username == stackcontent.username}"
+                class="updateBtn"
+              >
+                <i class="far fa-edit"></i>
+              </a>
+              <span
+                th:if="${user.username == stackcontent.username or user.role == 'MANAGER'}"
+                class="deleteBtn"
+                id="deleteCheck"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </span>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4" class="tdtitle">
+            <span th:text="${stackcontent.title}"></span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4" class="tdcontent">
+            <span th:utext="${stackcontent.content}"></span>
             <div class="votecountalign">
-            <span class="voteSpan">
-            <span><a th:href="@{/stack/plusvote(id=${stackcontent.id})}">
-              <i class="far fa-thumbs-up votecount"></i>
-            </a></span>
-            <span class="votecount-font">
-            [[${stackcontent.vote_count}]]
-            </span>
-            </span>
+              <span class="voteSpan">
+                <span>
+                  <a th:href="@{/stack/plusvote(id=${stackcontent.id})}">
+                    <i class="far fa-thumbs-up votecount"></i>
+                  </a>
+                </span>
+                <span class="votecount-font">
+                  [[${stackcontent.vote_count}]]
+                </span>
+              </span>
             </div>
-        </td>
-      </tr>
-      <tr>
-        <td class="td5">
-               <img th:if="${stackcontent.writer.profile_photo}!=null"
-                th:src="@{${stackcontent.writer.profile_photo}}" id="profileimg1"/>   
           </td>
-        <td colspan="2" class="td4">
-          <p class="pwriter">
-            <span th:text="${stackcontent.writer.name}"></span>
-          </p>
-          <p class="pfont">
-            게시일:<span
-              th:text="${#temporals.format(stackcontent.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
-          </p>
-          <p class="pfont">
-            <span th:text="${stackcontent.view_count}"></span>view
-          </p>
-        </td>
-      </tr>
-    </table>
-    <!-- 댓글insert -->
-    <table>
-      <tr>
-        <td class="comtitle" colspan="4">총 [<span
-          class="commentPlus"
-          th:text="${stackcontent.commentlist.size()}"></span>]개의 답변
-        </td>
-      </tr>
-      <tr>
-        <td class="ctd1" colspan="4"><textarea name="content"
-            class="comtext"></textarea> <br> <input type="submit"
-          class="btn btn-primary btnalign" value="등록"></td>
-      </tr>
-    </table>
-    <!-- 댓글목록 -->
-
-
-    <!-- 채택된 답변 -->
-
-
-    <table th:unless="${stackcontent.option.adopted_answer==0}"
-      class="answerWrapper">
-      <tr>
-        <td class="td8">
-            <img th:if="${adoptedanswer.writer.profile_photo}!=null"
-         th:src="@{${adoptedanswer.writer.profile_photo}}" id="profileimg2"/>
-        </td>
-        <td class="td10" colspan="2"><span class="answer-name"> <b>[[${adoptedanswer.writer.name}]]
-              [채택된 답변] </b><i class="fas fa-crown answer-icon"></i>
-        </span> <br> <span class="commentCalender" id="answertime"
-          th:text="${#temporals.format(adoptedanswer.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
-          <!-- <span class="commentCalender"
-            th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span> -->
-        </td>
-      </tr>
-      <tr>
-        <td colspan="3" class="td9">[[${adoptedanswer.content}]]</td>
-      </tr>
-    </table>
-
-
-    <!-- 일반 답변 -->
-    <div class="stack-wrapper">
-      <table th:if="${stackcontent.commentlist.size()!=0}"
-        class="iteration" th:each="list : ${stackcontent.commentlist}">
-        <tr>
-          <td class="td8">
-            <img th:if="${stackcontent.writer.profile_photo}!=null"
-                th:src="@{${list.writer.profile_photo}}" id="profileimg2"/>
-            </td>
-          <td class="comment-writer">[[${list.writer.name}]] <a
-            th:if="${list.id != stackcontent.option.adopted_answer and (list.username == user.username or user.role == 'MANAGER')}"
-            th:href="@{/stack/commentdelete(id=${list.id})}"><i class="fas fa-trash-alt"></i></a><br>
-            <span class="commentCalender"
-            th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
-          </td>
-          <td class="td7"></td>
         </tr>
         <tr>
-          <td colspan="3" class="td11">[[${list.content}]]</td>
-        </tr>
-        <tr>
-          <td colspan="3" class="td6"><span
-            th:if="${stackcontent.username}==${user.username} and ${stackcontent.option.adopted_answer==0}"
-            class="checkButton"><a
-              th:href="@{/stack/chooseanswer(article_id=${stackcontent.id},comment_id=${list.id})}"
-              style="color: black;"> 채택 <i
-                class="far fa-check-circle"></i></a></span></td>
+          <td class="td5">
+            <img
+              th:if="${stackcontent.writer.profile_photo}!=null"
+              th:src="@{${stackcontent.writer.profile_photo}}"
+              id="profileimg1"
+            />
+          </td>
+          <td colspan="2" class="td4">
+            <p class="pwriter">
+              <span th:text="${stackcontent.writer.name}"></span>
+            </p>
+            <p class="pfont">
+              게시일:<span
+                th:text="${#temporals.format(stackcontent.timeLocal, 'yyyy-MM-dd HH:mm')}"
+              ></span>
+            </p>
+            <p class="pfont">
+              <span th:text="${stackcontent.view_count}"></span>view
+            </p>
+          </td>
         </tr>
       </table>
+
+      <!-- 댓글insert -->
+      <table>
+        <tr>
+          <td class="comtitle" colspan="4">
+            총 [<span
+              class="commentPlus"
+              th:text="${stackcontent.commentlist.size()}"
+            ></span
+            >]개의 답변
+          </td>
+        </tr>
+        <tr>
+          <td class="ctd1" colspan="4">
+            <textarea name="content" class="comtext"></textarea> <br />
+            <input
+              type="submit"
+              class="btn btn-primary btnalign"
+              value="등록"
+            />
+          </td>
+        </tr>
+      </table>
+
+      <!-- 댓글목록 -->
+
+      <!-- 채택된 답변 -->
+
+      <table
+        th:unless="${stackcontent.option.adopted_answer==0}"
+        class="answerWrapper"
+      >
+        <tr>
+          <td class="td8">
+            <img
+              th:if="${adoptedanswer.writer.profile_photo}!=null"
+              th:src="@{${adoptedanswer.writer.profile_photo}}"
+              id="profileimg2"
+            />
+          </td>
+          <td class="td10" colspan="2">
+            <span class="answer-name">
+              <b>[[${adoptedanswer.writer.name}]] [채택된 답변] </b>
+              <i class="fas fa-crown answer-icon"></i>
+            </span>
+            <br />
+            <span
+              class="commentCalender"
+              id="answertime"
+              th:text="${#temporals.format(adoptedanswer.timeLocal, 'yyyy-MM-dd HH:mm')}"
+            ></span>
+            <!-- <span class="commentCalender"
+            th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span> -->
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3" class="td9">[[${adoptedanswer.content}]]</td>
+        </tr>
+      </table>
+
+      <!-- 일반 답변 -->
+      <div class="stack-wrapper">
+        <table
+          th:if="${stackcontent.commentlist.size()!=0}"
+          class="iteration"
+          th:each="list : ${stackcontent.commentlist}"
+        >
+          <tr>
+            <td class="td8">
+              <img
+                th:if="${stackcontent.writer.profile_photo}!=null"
+                th:src="@{${list.writer.profile_photo}}"
+                id="profileimg2"
+              />
+            </td>
+            <td class="comment-writer">
+              [[${list.writer.name}]]
+              <a
+                th:if="${list.id != stackcontent.option.adopted_answer and (list.username == user.username or user.role == 'MANAGER')}"
+                th:href="@{/stack/commentdelete(id=${list.id})}"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </a>
+              <br />
+              <span
+                class="commentCalender"
+                th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"
+              ></span>
+            </td>
+            <td class="td7"></td>
+          </tr>
+          <tr>
+            <td colspan="3" class="td11">[[${list.content}]]</td>
+          </tr>
+          <tr>
+            <td colspan="3" class="td6">
+              <span
+                th:if="${stackcontent.username}==${user.username} and ${stackcontent.option.adopted_answer==0}"
+                class="checkButton"
+              >
+                <a
+                  th:href="@{/stack/chooseanswer(article_id=${stackcontent.id},comment_id=${list.id})}"
+                  style="color: black;"
+                >
+                  채택 <i class="far fa-check-circle"></i>
+                </a>
+              </span>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-  <script th:inline="javascript">
-  $(document).ready(function() {
-    
-    $("#imgp2").click(function(){
-      sendVoteNotice([[${user.name}]], [[${stackcontent.username}]], "/stack/content?id="+[[${stackcontent.id}]]);
-    })
-    $("#spinner").hide();
-  }).ajaxStart(function() {
-    $("#spinner").show();
-  }).ajaxStop(function() {
-    $("#spinner").hide();
-  });
-
-      var currentPosition = parseInt($("#floatMenu").css("top"));
-      $(window).scroll(function() {
-        var position = $(window).scrollTop();
-        $("#floatMenu").stop().animate({
-          "top" : position + currentPosition + "px"
-        }, 1500);
-      });
-
-      $(".btnalign").click(function() {
-        let valueCheck = $(".comtext").val();         
-        
-  	  	if(valueCheck.trim() === "" || valueCheck === null) {
-  	  	  Swal.fire({
-  	  	    type: 'error',
-  	  	    text: '다시 입력해주세요 !!',
-  	  	  })
-  	  	  	return;
-  	  	} 
-        	const articleId = [[${stackcontent.id}]];
-    	 	const commentContent = $(".comtext").val();
-    	 	const username = [[${user.username}]];
-    	 	
-    	 	
-    	 	console.log(commentContent);
-    	 	
-    	 	const formData = new FormData();
-    	 	formData.append("article_id", articleId);
-    	 	formData.append("content", commentContent);
-    	 	formData.append("username", username);
-  	  	
-    	 	$.ajax({
-          url: "/stack/commentwrite",
-          type: "post",
-          data: formData,
-          contentType: false,
-          processData: false,
-          success: function(data) {
-            console.log(data);
-            $(".stack-wrapper").empty();
-           	$(".comtext").val("");
-            $.each(data, function(index, item) {
-              const content = item.content;
-              const username = item.writer.name;
-              const time = Number(item.time);
-              const date = new Date(time);
-              const commentId = item.id;
-              const articleId = item.article_id;
-              const profiel_photo = item.writer.profile_photo;
-              
-              let minutes = date.getMinutes();
-              minutes = (minutes < 10) ? "0" + minutes : minutes;
-              let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
-              hours = hours < 10 ? "0" +  hours : hours;
-              let getdate = date.getDate();
-              getdate = (getdate < 10) ? "0" + getdate : getdate;
-              let getmonth = date.getMonth() + 1;
-              getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
-              
-              const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ hours +`:` + minutes;
-			  let equalName = null;           
-              if(item.id != [[${stackcontent.option.adopted_answer}]] && (item.username == [[${user.username}]] || [[${user.role}]] == 'MANAGER')) {
-                equalName = "<i class='fas fa-trash-alt'></i>";
-              } else {
-                equalName = "";
-              }
-              
-              let createText = null;
-              
-              if ([[${stackcontent.option.adopted_answer}]] == 0 && [[${user.username}]] == [[${stackcontent.username}]] ) {
-               // 채택이 되어있는 글이라면
-               createText = "채택" + "&nbsp;<i class='far fa-check-circle'></i></a>";
-              } else {
-                createText = "";
-                // 0이면 else문을 탄다
-               //답변이 되어있는 글이 아니라면
-                
-              }
-              
-              
-
-              let html = "<table class='iteration'><tbody>"+
-              			 "<tr><td class='td8'><img if='"+ profiel_photo +"!=null' src='"+ profiel_photo +"' id='profileimg2'/></td>" +
-                         "<td class='comment-writer'>" + username + "&nbsp;<a href='/stack/commentdelete?id=" + commentId + "'" + ">" + equalName +"</a>" + 
-                         "<br>" +
-                         "<span class='commentCalender'>" + timedate + "</span></td>" +
-                         "<td class='td7'></td></tr>" + 
-                         "<tr><td colspan='3' class='td11'>" + content + "</td></tr>" +
-                         "<tr><td colspan='3' class='td6'>" +
-                         "<span class='checkButton'><a href='/stack/chooseanswer?article_id=" + articleId + "&comment_id=" + commentId + "' style='color:black;'>" +
-                         "</span>" + createText +
-                         "</td></tr></tbody></table>";
-              $(".stack-wrapper").append(html);
-              
-            });
-            sendCommentNotice([[${user.name}]], [[${stackcontent.username}]], "/stack/content?id="+[[${stackcontent.id}]]);         
-            
-            const count = $(".commentPlus");
-            count.text(Number(count.text()) +1);
-            
-          }
-        });
-      });
-      
-      
-      $(".deleteBtn").unbind("click");
-      $(".deleteBtn").click(function(event) {
-        Swal.fire({
-          title: '정말 삭제하시겠습니까?',
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#F39B10',
-          cancelButtonColor: '#A6A6A6',
-          confirmButtonText: '네',
-          cancelButtonText: '아니요'
-        }).then((result) => {
-          if (result.value) {
-            Swal.fire({
-            	title: '삭제되었습니다',
-            	type: 'success',
-            	confirmButtonText: '확인',
-            	confirmButtonColor: '#F39B10'
-          }).then(function() {
-            location.href="/stack/delete?id=" + [[${stackcontent.id}]];
-          });
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script th:inline="javascript">
+      $(document).ready(function() {
+        $("#imgp2").click(function() {
+          if ([[${stackcontent.username}]] !== [[${user.username}]]) {
+            sendVoteNotice([[${user.name}]], [[${stackcontent.username}]], "/stack/content?id="+[[${stackcontent.id}]]);
           }
         })
+        $("#spinner").hide();
+      }).ajaxStart(function() {
+        $("#spinner").show();
+      }).ajaxStop(function() {
+        $("#spinner").hide();
       });
 
-      </script>
-</body>
+          var currentPosition = parseInt($("#floatMenu").css("top"));
+          $(window).scroll(function() {
+            var position = $(window).scrollTop();
+            $("#floatMenu").stop().animate({
+              "top" : position + currentPosition + "px"
+            }, 1500);
+          });
+
+          $(".btnalign").click(function() {
+            let valueCheck = $(".comtext").val();
+
+      	  	if(valueCheck.trim() === "" || valueCheck === null) {
+      	  	  Swal.fire({
+      	  	    type: 'error',
+      	  	    text: '다시 입력해주세요 !!',
+      	  	  })
+      	  	  return;
+      	  	}
+
+            const articleId = [[${stackcontent.id}]];
+        	 	const commentContent = $(".comtext").val();
+        	 	const username = [[${user.username}]];
+
+        	 	const formData = new FormData();
+        	 	formData.append("article_id", articleId);
+        	 	formData.append("content", commentContent);
+        	 	formData.append("username", username);
+
+        	 	$.ajax({
+              url: "/stack/commentwrite",
+              type: "post",
+              data: formData,
+              contentType: false,
+              processData: false,
+              success: function(data) {
+                $(".stack-wrapper").empty();
+               	$(".comtext").val("");
+                $.each(data, function(index, item) {
+                  const content = item.content;
+                  const username = item.writer.name;
+                  const time = Number(item.time);
+                  const date = new Date(time);
+                  const commentId = item.id;
+                  const articleId = item.article_id;
+                  const profiel_photo = item.writer.profile_photo;
+
+                  let minutes = date.getMinutes();
+                  minutes = (minutes < 10) ? "0" + minutes : minutes;
+                  let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
+                  hours = hours < 10 ? "0" +  hours : hours;
+                  let getdate = date.getDate();
+                  getdate = (getdate < 10) ? "0" + getdate : getdate;
+                  let getmonth = date.getMonth() + 1;
+                  getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
+
+                  const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ hours +`:` + minutes;
+      	          let equalName = null;
+
+                  if(item.id != [[${stackcontent.option.adopted_answer}]] && (item.username == [[${user.username}]] || [[${user.role}]] == 'MANAGER')) {
+                    equalName = "<i class='fas fa-trash-alt'></i>";
+                  } else {
+                    equalName = "";
+                  }
+
+                  let createText = null;
+
+                  if ([[${stackcontent.option.adopted_answer}]] == 0 && [[${user.username}]] == [[${stackcontent.username}]] ) {
+                   // 채택이 되어있는 글이라면
+                    createText = "채택" + "&nbsp;<i class='far fa-check-circle'></i></a>";
+                  } else {
+                    createText = "";
+                    // 0이면 else문을 탄다
+                    //답변이 되어있는 글이 아니라면
+                  }
+
+                  let html = "<table class='iteration'><tbody>"+
+                  			 "<tr><td class='td8'><img if='"+ profiel_photo +"!=null' src='"+ profiel_photo +"' id='profileimg2'/></td>" +
+                             "<td class='comment-writer'>" + username + "&nbsp;<a href='/stack/commentdelete?id=" + commentId + "'" + ">" + equalName +"</a>" +
+                             "<br>" +
+                             "<span class='commentCalender'>" + timedate + "</span></td>" +
+                             "<td class='td7'></td></tr>" +
+                             "<tr><td colspan='3' class='td11'>" + content + "</td></tr>" +
+                             "<tr><td colspan='3' class='td6'>" +
+                             "<span class='checkButton'><a href='/stack/chooseanswer?article_id=" + articleId + "&comment_id=" + commentId + "' style='color:black;'>" +
+                             "</span>" + createText +
+                             "</td></tr></tbody></table>";
+                  $(".stack-wrapper").append(html);
+
+                });
+
+                if ([[${stackcontent.username}]] !== [[${user.username}]]) {
+                  sendCommentNotice([[${user.name}]], [[${stackcontent.username}]], "/stack/content?id="+[[${stackcontent.id}]]);
+                }
+
+                const count = $(".commentPlus");
+                count.text(Number(count.text()) +1);
+              }
+            });
+          });
+
+
+          $(".deleteBtn").unbind("click");
+          $(".deleteBtn").click(function(event) {
+            Swal.fire({
+              title: '정말 삭제하시겠습니까?',
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#F39B10',
+              cancelButtonColor: '#A6A6A6',
+              confirmButtonText: '네',
+              cancelButtonText: '아니요'
+            }).then((result) => {
+              if (result.value) {
+                Swal.fire({
+                	title: '삭제되었습니다',
+                	type: 'success',
+                	confirmButtonText: '확인',
+                	confirmButtonColor: '#F39B10'
+              }).then(function() {
+                location.href="/stack/delete?id=" + [[${stackcontent.id}]];
+              });
+              }
+            })
+          });
+    </script>
+  </body>
 </html>
-
-
-
-
-
-
-

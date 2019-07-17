@@ -33,9 +33,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM GROUPS
     WHERE id = #{id}
   </select>
-  <update id="updateGrouplink">
+  <update id="updateGroup">
 	update groups
-	set #{link} = #{content}
+	set link1 = #{link1}, link2=#{link2}, link3 = #{link3}
 	where id=#{id}
   </update>
   <select id="selectAllLinkById">
