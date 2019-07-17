@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.or.bit.model.Classroom;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.Member;
@@ -15,7 +16,8 @@ import kr.or.bit.model.Member;
  * 
  * @description: MemberDaoMapper 
  * 
- */ 
+ */
+import kr.or.bit.model.Subject; 
 public interface ManagerDao {
   //role은 기본선택
   List<Member> selectMembersByRole(String role);
@@ -45,4 +47,10 @@ public interface ManagerDao {
   List<Comment> commentWriteRank();
   //클래스 리스트
   List<Course> selectCourseList();
+  //강사 리스트
+  List<Member> selectTeacherList();
+  //과목 리스트
+  List<Subject> selectSubjectList();
+  //강의실 리스트
+  List<Classroom> selectClassroomList();
 }
