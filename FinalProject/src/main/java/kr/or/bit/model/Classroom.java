@@ -2,7 +2,6 @@ package kr.or.bit.model;
 
 public class Classroom {
 	private int id;
-	
 	private String classroom_name;
 
 	public int getId() {

@@ -42,4 +42,7 @@ public interface MemberDao {
   void updateMemberGraduate(Member member);
   
   void insertTeacher(Member member);
+  
+  int getCountCourseMember(@Param("courseid") int courseid, @Param("status") String status);
+  
 }

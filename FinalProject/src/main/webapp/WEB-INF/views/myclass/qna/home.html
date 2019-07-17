@@ -51,8 +51,11 @@
       <tr
         th:onclick="'window.location.href = \'' + @{/myclass/qna/content(id=${list.id})} + '\''">
         <td colspan="3" class="td5 tr2"><span
-            th:text="${list.title}"></span> [<span
-          th:text="${list.commentlist.size()}"></span>]</td>
+            th:text="${list.title}"></span><span class="answer-style">
+          <span th:if="${list.commentlist.size()}>0">
+          완료<i class="far fa-check-circle"></i></span>
+          </span>
+          </td>
         <td class="tr2"><i class="fas fa-eye"></i> [[${list.view_count}]]</td>
         <td class="tr2"><i class="far fa-heart"></i> [[${list.votenum}]]</td>
         <td class="td3 tr2">[[${list.writer.name}]]</td>
