@@ -1,6 +1,5 @@
 package kr.or.bit.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -9,23 +8,10 @@ import org.springframework.stereotype.Service;
 
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.BoardDao;
-import kr.or.bit.dao.CommentDao;
-import kr.or.bit.dao.FilesDao;
-import kr.or.bit.dao.GeneralDao;
-import kr.or.bit.dao.HomeworkDao;
 import kr.or.bit.dao.MemberDao;
-import kr.or.bit.dao.QnaDao;
-import kr.or.bit.dao.StackDao;
-import kr.or.bit.dao.TroubleShootingDao;
-import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
-import kr.or.bit.model.ArticleOption;
 import kr.or.bit.model.Board;
-import kr.or.bit.model.Comment;
-import kr.or.bit.model.Files;
-import kr.or.bit.model.General;
 import kr.or.bit.model.Member;
-import kr.or.bit.model.Tag;
 
 
 @Service

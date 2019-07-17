@@ -33,6 +33,15 @@ public class Article {
   private List<Files> fileslist;
   private int layer;
   private int sibling;
+  private int boardtype;
+
+  public int getBoardtype() {
+    return boardtype;
+  }
+
+  public void setBoardtype(int boardtype) {
+    this.boardtype = boardtype;
+  }
 
   public int getSibling() {
     return sibling;

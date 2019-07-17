@@ -10,66 +10,68 @@
   <div class="main" th:fragment="main">
     <div class="row">
       <div id="column">
-        <div class="scrap-card" th:each="scrap : ${scraps}">
-          <h5 class="scrap-title" th:text="${scrap.title}"></h5>
-          <p class="scrap-content" th:text="${scrap.content}"></p>
-        </div>
-        <div class="scrap-card">
-          <h5 class="scrap-title">글 제목</h5>
-          <p class="scrap-content">Lorem ipsum sadasasj aiad
-            saipacsakl sacasiopcsak sacaoskca ascopasckoasck sacaosckasc
-            salcascakasnc ascopascasl casocaksc</p>
-        </div>
-        <div class="scrap-card">
-          <h5 class="scrap-title">글 제목</h5>
-          <p class="scrap-content">Lorem ipsum sadasasj aiad
-            saipacsakl sacasiopcsak</p>
-        </div>
-        <div class="scrap-card">
-          <h5 class="scrap-title">글 제목</h5>
-          <p class="scrap-content">Lorem ipsum sadasasj aiad
-            saipacsakl sacasiopcsak salcascakasnc ascopascasl casocaksc</p>
-        </div>
-        <div class="scrap-card">
-          <h5 class="scrap-title">글 제목</h5>
-          <p class="scrap-content">Lorem ipsum sadasasj aiad
-            saipacsakl sacasiopcsak copasckoasck sacaosckasc
-            salcascakasnc ascopascasl casocaksc</p>
-        </div>
-        <div class="scrap-card">
-          <h5 class="scrap-title">글 제목</h5>
-          <p class="scrap-content">Lorem ipsum sadasasj aiad
-            saipacsakl sacasiopcsak ascopascasl casocaksc</p>
-        </div>
-        <div class="scrap-card">
-          <h5 class="scrap-title">글 제목</h5>
-          <p class="scrap-content">Lorem ipsum sadasasj aiad
-            saipacsakl salcascakasnc ascopascasl casocaksc</p>
-        </div>
-        <div class="scrap-card">
-          <h5 class="scrap-title">글 제목</h5>
-          <p class="scrap-content">Lorem ipsum sadasasj aiak
-            sacaoskca ascopasckoasck sacaosckasc salcascakasnc
-            ascopascasl casocaksc</p>
-        </div>
-        <div class="scrap-card">
-          <h5 class="scrap-title">글 제목</h5>
-          <p class="scrap-content">Lorem ipsum sadasasj aiascasl
-            casocaksc</p>
-        </div>
-        <div class="scrap-card">
-          <h5 class="scrap-title">글 제목</h5>
-          <p class="scrap-content">Lorem ipsum ssck sacaosckasc
-            salcascakasnc ascopascasl casocaksc</p>
-        </div>
+        <th:block th:each="scrap : ${scraps}">
+          <a th:if="${scrap.boardtype == 1}" class="scrap-card"
+            th:href="@{/stack/content(id=${scrap.id})}">
+            <h5 class="scrap-title" th:text="${scrap.title}"></h5>
+            <div class="scrap-content">
+              <th:block th:if="${#strings.length(scrap.content)} > 2000">
+                <div
+                  th:utext="${#strings.substring(scrap.content,0,2000)} + '...'"></div>
+              </th:block>
+              <th:block
+                th:if="${#strings.length(scrap.content)} <= 2000">
+                <div th:utext="${scrap.content}"></div>
+              </th:block>
+            </div>
+          </a>
+          <a th:if="${scrap.boardtype == 2}" class="scrap-card"
+            th:href="@{/video/detail(id=${scrap.id})}">
+            <h5 class="scrap-title" th:text="${scrap.title}"></h5>
+            <div class="scrap-content">
+              <th:block th:if="${#strings.length(scrap.content)} > 2000">
+                <div
+                  th:utext="${#strings.substring(scrap.content,0,2000)} + '...'"></div>
+              </th:block>
+              <th:block
+                th:if="${#strings.length(scrap.content)} <= 2000">
+                <div th:utext="${scrap.content}"></div>
+              </th:block>
+            </div>
+          </a>
+          <a th:if="${scrap.boardtype == 3}" class="scrap-card"
+            th:href="@{/myclass/board/read(article_id=${scrap.id}, board_id=${scrap.board_id})}">
+            <h5 class="scrap-title" th:text="${scrap.title}"></h5>
+            <div class="scrap-content">
+              <th:block th:if="${#strings.length(scrap.content)} > 2000">
+                <div
+                  th:utext="${#strings.substring(scrap.content,0,2000)} + '...'"></div>
+              </th:block>
+              <th:block
+                th:if="${#strings.length(scrap.content)} <= 2000">
+                <div th:utext="${scrap.content}"></div>
+              </th:block>
+            </div>
+          </a>
+          <a th:if="${scrap.boardtype == 5}" class="scrap-card"
+            th:href="@{/myclass/qna/content(id=${scrap.id})}">
+            <h5 class="scrap-title" th:text="${scrap.title}">안녕</h5>
+            <div class="scrap-content">
+              <th:block th:if="${#strings.length(scrap.content)} > 2000">
+                <div
+                  th:utext="${#strings.substring(scrap.content,0,2000)} + '...'"></div>
+              </th:block>
+              <th:block
+                th:if="${#strings.length(scrap.content)} <= 2000">
+                <div th:utext="${scrap.content}"></div>
+              </th:block>
+            </div>
+          </a>
+        </th:block>
       </div>
     </div>
   </div>
   <!-- 이script 태그안에작성-->
-  <script th:inline="javascript">
-      
-    </script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script th:inline="javascript"></script>
 </body>
 </html>
-
