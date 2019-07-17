@@ -55,80 +55,41 @@
           </div>
 
         </div>
+        
+        <!-- 트러블슈팅 없을때 -->
         <div class="card recent-issues">
-          <div class="issue">
-            <div class="closed">
-              <i class="fas fa-exclamation-circle"></i>
+          <div th:if="${troubleShootingList.size()} == 0" class="issue">
+          
+            <div class="noArticle">
+              트러블 슈팅 게시판에 등록된 글이 없습니다.
             </div>
-            <div class="issue-title">
-              <h3>오늘 저녁은 배가 고프다</h3>
-            </div>
-            <div class="issue-tags">
-              <span class="tag">DB</span> <span class="tag">Java</span>
-            </div>
-            <div class="issue-info">
-              <p class="issue-writer">윤종석</p>
-            </div>
+          
+       
+            
           </div>
-          <div class="issue">
+          <!-- 트러블슈팅 게시글 있을때 -->
+          <div th:if="${troubleShootingList.size()} > 0" class="issue" th:each="troubleShooting : ${troubleShootingList}">
+          
             <div class="closed">
-              <i class="fas fa-exclamation-circle"></i>
+              <i class="fas" th:classappend="${troubleShooting.option.issue_closed} == 0 ? fa-exclamation-circle : fa-check-circle"></i>
             </div>
             <div class="issue-title">
-              <h3>오늘 저녁은 배가 고프다</h3>
+              <a th:href="@{/myclass/project/troubleshooting/read(id=${troubleShooting.id},group_id=${group.id})}">
+                <h3 th:text="${troubleShooting.title}">오늘 저녁은 배가 고프다</h3>
+               </a>
             </div>
             <div class="issue-tags">
-              <span class="tag">DB</span> <span class="tag">Java</span>
+              <span class="tag" th:each="tags:${troubleShooting.tags}" th:text="${tags.tag}">DB</span>
             </div>
             <div class="issue-info">
-              <p class="issue-writer">윤종석</p>
+              <p class="issue-writer" th:text="${troubleShooting.writer.name}">윤종석</p>
             </div>
-          </div>
-          <div class="issue">
-            <div class="closed">
-              <i class="fas fa-check-circle"></i>
-            </div>
-            <div class="issue-title">
-              <h3>오늘 저녁은 배가 고프다</h3>
-            </div>
-            <div class="issue-tags">
-              <span class="tag">DB</span> <span class="tag">Java</span>
-            </div>
-            <div class="issue-info">
-              <p class="issue-writer">윤종석</p>
-            </div>
-          </div>
-          <div class="issue">
-            <div class="closed">
-              <i class="fas fa-check-circle"></i>
-            </div>
-            <div class="issue-title">
-              <h3>오늘 저녁은 배가 고프다</h3>
-            </div>
-            <div class="issue-tags">
-              <span class="tag">DB</span> <span class="tag">Java</span>
-            </div>
-            <div class="issue-info">
-              <p class="issue-writer">윤종석</p>
-            </div>
-          </div>
-          <div class="issue">
-            <div class="closed">
-              <i class="fas fa-exclamation-circle"></i>
-            </div>
-            <div class="issue-title">
-              <h3>오늘 저녁은 배가 고프다</h3>
-            </div>
-            <div class="issue-tags">
-              <span class="tag">DB</span> <span class="tag">Java</span>
-            </div>
-            <div class="issue-info">
-              <p class="issue-writer">윤종석</p>
-            </div>
+            
           </div>
         </div>
       </div>
     </div>
+    
     <div class="row">
       <div class="card timeline">
         <div class="timeline__wrap">
