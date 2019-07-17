@@ -66,11 +66,10 @@
               th:onclick="'window.location.href = \'' + @{/stack?criteria=Tag(boardSearch=${tag.tag})} + '\''">[[${tag.tag}]]</span>
           </span></td>
           <td class="td4">
-<!--               <img th:if="${list.writer.profile_photo}!=null"
-                th:src="@{${list.writer.profile_photo}}" id="profileimg"
-              /> -->
-              <img
-                th:src="@{/css/stack/profile2.png}" id="profileimg"/>
+               <img th:if="${list.writer.profile_photo}!=null"
+                th:src="@{${list.writer.profile_photo}}" id="profileimg"/>
+<!--               <img
+                th:src="@{/css/stack/profile2.png}" id="profileimg"/> -->
           <span th:text="${list.writer.name}"></span>
           
           </td>

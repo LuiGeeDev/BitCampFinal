@@ -71,9 +71,6 @@ public class MypageController {
     Period diff = Period.between(course.getStartDate(), course.getEndDate());
     Period diff2 = Period.between(course.getStartDate(), LocalDate.now());
     int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
-
-    System.out.println(comments.toString());
-
     model.addAttribute("completion", completion);
     model.addAttribute("course", course);
     model.addAttribute("comments", comments);
