@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- @date: 2019. 7. 17. @author: 권예지 @description: ScrapDaoMapper -->
 <mapper namespace="kr.or.bit.dao.ScrapDao">
   <select id="selectAllScrap" resultType="kr.or.bit.model.Article">
-    SELECT a.id as id, title,
+    SELECT a.id as id, title,content,
     time, view_count, original_id, level,
     updated_time, enable, a.username
     as username, board_id, layer, sibling
