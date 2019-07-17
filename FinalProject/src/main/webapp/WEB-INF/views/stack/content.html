@@ -38,19 +38,18 @@
           </td>
       </tr>
       <tr>
-        <td colspan="3" class="tdcontent">
-          <p>
+        <td colspan="4" class="tdcontent">
             <span th:utext="${stackcontent.content}"> </span>
-          </p>
-        </td>
-        <td class="td3" rowspan="2" style="vertical-align: top;">
-          <div id="floatMenu">
-            <a th:href="@{/stack/plusvote(id=${stackcontent.id})}">
-              <img th:src="@{/css/stack/like.png}" id="imgp2">
-            </a><br> &nbsp;<span th:text="${stackcontent.vote_count}"></span>
-            <br> <img th:src="@{/css/stack/bookmark.png}"
-              id="imgp2">
-          </div>
+            <div class="votecountalign">
+            <span class="voteSpan">
+            <span><a th:href="@{/stack/plusvote(id=${stackcontent.id})}">
+              <i class="far fa-thumbs-up votecount"></i>
+            </a></span>
+            <span class="votecount-font">
+            [[${stackcontent.vote_count}]]
+            </span>
+            </span>
+            </div>
         </td>
       </tr>
       <tr>
@@ -81,10 +80,9 @@
         </td>
       </tr>
       <tr>
-        <td class="ctd1" colspan="3"><textarea name="content"
+        <td class="ctd1" colspan="4"><textarea name="content"
             class="comtext"></textarea> <br> <input type="submit"
           class="btn btn-primary btnalign" value="등록"></td>
-        <td class="ctd2"></td>
       </tr>
     </table>
     <!-- 댓글목록 -->
@@ -100,18 +98,16 @@
             <img th:if="${adoptedanswer.writer.profile_photo}!=null"
          th:src="@{${adoptedanswer.writer.profile_photo}}" id="profileimg2"/>
         </td>
-        <td class="td10"><span class="answer-name"> <b>[[${adoptedanswer.writer.name}]]
+        <td class="td10" colspan="2"><span class="answer-name"> <b>[[${adoptedanswer.writer.name}]]
               [채택된 답변] </b><i class="fas fa-crown answer-icon"></i>
         </span> <br> <span class="commentCalender" id="answertime"
           th:text="${#temporals.format(adoptedanswer.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
           <!-- <span class="commentCalender"
             th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span> -->
         </td>
-        <td class="td7"></td>
       </tr>
       <tr>
-        <td colspan="2" class="td9">[[${adoptedanswer.content}]]</td>
-        <td></td>
+        <td colspan="3" class="td9">[[${adoptedanswer.content}]]</td>
       </tr>
     </table>
 
@@ -131,21 +127,18 @@
             <span class="commentCalender"
             th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
           </td>
-
           <td class="td7"></td>
         </tr>
         <tr>
-          <td colspan="2" class="td11">[[${list.content}]]</td>
-          <td></td>
+          <td colspan="3" class="td11">[[${list.content}]]</td>
         </tr>
         <tr>
-          <td colspan="2" class="td6"><span
+          <td colspan="3" class="td6"><span
             th:if="${stackcontent.username}==${user.username} and ${stackcontent.option.adopted_answer==0}"
             class="checkButton"><a
               th:href="@{/stack/chooseanswer(article_id=${stackcontent.id},comment_id=${list.id})}"
               style="color: black;"> 채택 <i
                 class="far fa-check-circle"></i></a></span></td>
-          <td></td>
         </tr>
       </table>
     </div>
@@ -211,6 +204,7 @@
               const date = new Date(time);
               const commentId = item.id;
               const articleId = item.article_id;
+              const profiel_photo = item.writer.profile_photo;
               
               let minutes = date.getMinutes();
               minutes = (minutes < 10) ? "0" + minutes : minutes;
@@ -244,16 +238,16 @@
               
 
               let html = "<table class='iteration'><tbody>"+
-              			 "<tr><td class='td8'><i class='fas fa-user-circle fa-lg fa-2x'></i></td>" +
+              			 "<tr><td class='td8'><img if='"+ profiel_photo +"!=null' src='"+ profiel_photo +"' id='profileimg2'/></td>" +
                          "<td class='comment-writer'>" + username + "&nbsp;<a href='/stack/commentdelete?id=" + commentId + "'" + ">" + equalName +"</a>" + 
                          "<br>" +
                          "<span class='commentCalender'>" + timedate + "</span></td>" +
                          "<td class='td7'></td></tr>" + 
-                         "<tr><td colspan='2' class='td11'>" + content + "</td><td></td></tr>" +
-                         "<tr><td colspan='2' class='td6'>" +
+                         "<tr><td colspan='3' class='td11'>" + content + "</td></tr>" +
+                         "<tr><td colspan='3' class='td6'>" +
                          "<span class='checkButton'><a href='/stack/chooseanswer?article_id=" + articleId + "&comment_id=" + commentId + "' style='color:black;'>" +
                          "</span>" + createText +
-                         "</td><td></td></tr></tbody></table>";
+                         "</td></tr></tbody></table>";
               $(".stack-wrapper").append(html);
               
             });

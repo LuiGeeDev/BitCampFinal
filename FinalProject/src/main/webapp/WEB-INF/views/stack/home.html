@@ -70,8 +70,10 @@
                 th:src="@{${list.writer.profile_photo}}" id="profileimg"/>
 <!--               <img
                 th:src="@{/css/stack/profile2.png}" id="profileimg"/> -->
-          <span th:text="${list.writer.name}"></span>
-          
+                <span class="writerWrapper">
+          <span th:text="${list.writer.name}" class="writer-name"></span>
+          <span th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd')}" class="write-date"></span>
+          </span>
           </td>
         </tr>
         <tr>
