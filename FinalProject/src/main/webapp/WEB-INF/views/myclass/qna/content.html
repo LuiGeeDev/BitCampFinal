@@ -3,15 +3,13 @@
   th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
 <head>
 <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-<link rel="stylesheet" th:href="@{/css/stack/content.css}" />
+<link rel="stylesheet" th:href="@{/css/myclass/qna/content.css}" />
 </head>
 <body>
   <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
   <div class="main" th:fragment="main">
     <div class="title">
-      <h3>
-        <b>Q&A게시판</b>
-      </h3>
+      <h3>Q&A게시판</h3>
       <div class="spinner-border text-warning spin-where" role="status"
         id="spinner">
         <span class="sr-only">Loading...</span>
@@ -19,47 +17,55 @@
     </div>
     <!-- 게시물컨텐트 -->
     <hr>
-    <table>
+
+    <span class="top"><a href="#"><i
+        class="fas fa-chevron-circle-up iconSize"></i></a></span>
+
+    <table class="tableWrapper">
       <tr>
-        <td colspan="3" class="td1"><span
-          class="tag-name iteration"
-          th:each="tag : ${qnacontent.tags}"> <span
-            th:style="'background-color:'+@{${tag.color}}+';'">[[${tag.tag}]]</span>
+        <td colspan="2" class="td12"><span
+          class="tag-name iteration" th:each="tag : ${qnacontent.tags}">
+            <span th:style="'background-color:'+@{${tag.color}}+';'">[[${tag.tag}]]</span>
         </span></td>
-        <td colspan="1" id="contenteditor"><a
-          th:href="@{/myclass/qna/edit(id=${qnacontent.id})}"
-          class="updateBtn">[수정]</a> <span class="deleteBtn"
-          id="deleteCheck">[삭제]</span></td>
+        <td colspan="2" id="contenteditor"><span class="utilNav"><a
+            th:href="@{/myclass/qna/edit(id=${qnacontent.id})}"
+            th:if="${user.username == qnacontent.username}"
+            class="updateBtn"><i class="far fa-edit"></i></a> <span
+            th:if="${user.username == qnacontent.username or user.role == 'MANAGER'}"
+            class="deleteBtn" id="deleteCheck"><i
+              class="fas fa-trash-alt"></i> </span></span></td>
       </tr>
       <tr>
         <td colspan="4" class="tdtitle"><span
-          th:text="${qnacontent.title}"></span></td>
+          th:text="${qnacontent.title}"></span>
+          <i class="fas fa-book"></i>
+          </td>
       </tr>
       <tr>
-        <td colspan="3" class="tdcontent">
-          <p>
-            <span th:utext="${qnacontent.content}"> </span>
-          </p>
-        </td>
-        <td class="td3" rowspan="2" style="vertical-align: top;">
-          <div id="floatMenu">
+        <td colspan="4" class="tdcontent"><span
+          th:utext="${qnacontent.content}"> </span>
+          <div class="votecountalign">
             <a th:href="@{/myclass/qna/plusvote(id=${qnacontent.id})}">
-              <img th:src="@{/css/stack/like.png}" id="imgp2">
-            </a><br> &nbsp;<span th:text="${qnacontent.vote_count}"></span>
-            <br> <img th:src="@{/css/stack/bookmark.png}"
-              id="imgp2">
-          </div>
-        </td>
+              <span class="voteSpan"> <span> <i
+                  class="far fa-thumbs-up votecount"></i>
+              </span> <span class="votecount-font">
+                  [[${qnacontent.vote_count}]] </span>
+            </span>
+            </a>
+          </div></td>
       </tr>
       <tr>
-        <td class="td5"><img th:src="@{/css/stack/profile.jpg}"
-          class="imgp"></td>
-        <td colspan="2" class="td4">
+        <td class="td5"><img
+          th:if="${qnacontent.writer.profile_photo}!=null"
+          th:src="@{${qnacontent.writer.profile_photo}}"
+          id="profileimg1" /></td>
+        <td colspan="3" class="td4">
           <p class="pwriter">
             <span th:text="${qnacontent.writer.name}"></span>
           </p>
           <p class="pfont">
-            게시일:<span th:text="${qnacontent.updated_time}"></span>
+            게시일:<span
+              th:text="${#temporals.format(qnacontent.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
           </p>
           <p class="pfont">
             <span th:text="${qnacontent.view_count}"></span>view
@@ -67,70 +73,48 @@
         </td>
       </tr>
     </table>
+
     <!-- 댓글insert -->
-    <table>
+    <table th:if="${user.role == 'TEACHER'}">
       <tr>
         <td class="comtitle" colspan="4">총 [<span
-          class="commentPlus"
-          th:text="${qnacontent.commentlist.size()}"></span>]개의 답변
+          class="commentPlus" th:text="${qnacontent.commentlist.size()}"></span>]개의
+          답변
         </td>
       </tr>
       <tr>
-        <td class="ctd1" colspan="3"><textarea name="content"
+        <td class="ctd1" colspan="4"><textarea name="content"
             class="comtext"></textarea> <br> <input type="submit"
           class="btn btn-primary btnalign" value="등록"></td>
-        <td class="ctd2"></td>
       </tr>
     </table>
     <!-- 댓글목록 -->
-    <!-- 채택된 답변 -->
-
-
-    <table th:unless="${qnacontent.option.adopted_answer==0}"
-      class="answerWrapper">
-      <tr>
-        <td class="td8"><i class="fas fa-user-circle fa-lg fa-2x"></i></td>
-        <td class="td10"><span class="answer-name"> <b>[[${adoptedanswer.writer.name}]]
-              [채택된 답변] </b><i class="fas fa-crown answer-icon"></i>
-
-        </span> <br> <span class="commentCalender" id="answertime">[[${adoptedanswer.time}]]</span>
-        </td>
-        <td class="td7"></td>
-      </tr>
-      <tr>
-        <td colspan="2" class="td9">[[${adoptedanswer.content}]]</td>
-        <td></td>
-      </tr>
-    </table>
-
-
     <!-- 일반 답변 -->
     <div class="stack-wrapper">
-      <table th:unless="${qnacontent.commentlist.size()==0}"
-        class="iteration" th:each="list : ${qnacontent.commentlist}">
+      <table th:if="${qnacontent.commentlist.size()!=0}"
+        class="iteration commentWrapper" th:each="list : ${qnacontent.commentlist}">
         <tr>
-          <td class="td8"><i class="fas fa-user-circle fa-lg fa-2x"></i></td>
-          <td>[[${list.writer.name}]] 
-            <a th:if="${list.username}==${user.username} and ${list.id}!=${qnacontent.option.adopted_answer}"
-            th:href="@{/myclass/qna/commentdelete(id=${list.id})}">[삭제]</a><br>
-            <span class="commentCalender"
+          <td class="td8"><img
+            th:unless="${qnacontent.writer.profile_photo}!=null"
+            class="user-photo" id="icon"
+            th:src="@{/resources/images/default.png}" alt="프로필 사진">
+            <img th:if="${qnacontent.writer.profile_photo}!=null"
+            th:src="@{${list.writer.profile_photo}}" id="profileimg2" />
+          </td>
+          <td class="comment-writer">[[${list.writer.name}]] <a
+            th:if="${list.username == user.username or user.role == 'MANAGER'}"
+            th:href="@{/myclass/qna/commentdelete(id=${list.id})}"><i
+              class="fas fa-trash-alt"></i></a><br> <span
+            class="commentCalender"
             th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
-            </td>
-          
+          </td>
           <td class="td7"></td>
         </tr>
         <tr>
-          <td colspan="2" class="td11">[[${list.content}]]</td>
-          <td></td>
+          <td colspan="3" class="td11">[[${list.content}]]</td>
         </tr>
         <tr>
-          <td colspan="2" class="td6">
-          <span th:if="${qnacontent.username}==${user.username} and ${qnacontent.option.adopted_answer==0}"
-          class="checkButton"><a th:href="@{/myclass/qna/chooseanswer(article_id=${qnacontent.id},comment_id=${list.id})}"
-          style="color:black;">
-          채택 <i class="far fa-check-circle"></i></a></span>
-          </td>
-          <td></td>
+          <td colspan="3" class="td6"></td>
         </tr>
       </table>
     </div>
@@ -138,15 +122,17 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <script th:inline="javascript">
   $(document).ready(function() {
+    
+    $("#imgp2").click(function(){
+      sendVoteNotice([[${user.name}]], [[${qnacontent.username}]], "/myclass/qna/content?id="+[[${qnacontent.id}]]);
+    })
     $("#spinner").hide();
   }).ajaxStart(function() {
     $("#spinner").show();
   }).ajaxStop(function() {
     $("#spinner").hide();
   });
-	$("#imgp2").click(function(){
-	  sendVoteNotice([[${user.name}]], [[${qnacontent.username}]], "/myclass/qna/content?id="+[[${qnacontent.id}]]);
-	})
+
       var currentPosition = parseInt($("#floatMenu").css("top"));
       $(window).scroll(function() {
         var position = $(window).scrollTop();
@@ -185,7 +171,6 @@
           processData: false,
           success: function(data) {
             console.log(data);
-            sendCommentNotice([[${user.name}]], [[${qnacontent.username}]], "/myclass/qna/content?id="+[[${qnacontent.id}]]);
             $(".stack-wrapper").empty();
            	$(".comtext").val("");
             $.each(data, function(index, item) {
@@ -195,6 +180,7 @@
               const date = new Date(time);
               const commentId = item.id;
               const articleId = item.article_id;
+              const profiel_photo = item.writer.profile_photo;
               
               let minutes = date.getMinutes();
               minutes = (minutes < 10) ? "0" + minutes : minutes;
@@ -207,21 +193,26 @@
               
               const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ hours +`:` + minutes;
 			  let equalName = null;           
-              if(item.username == [[${user.username}]]) {
-                equalName = "[삭제]";
+              if(item.id != [[${qnacontent.option.adopted_answer}]] && (item.username == [[${user.username}]] || [[${user.role}]] == 'MANAGER')) {
+                equalName = "<i class='fas fa-trash-alt'></i>";
               } else {
                 equalName = "";
               }
               
+     
+
               let html = "<table class='iteration'><tbody>"+
-              			 "<tr><td class='td8'><i class='fas fa-user-circle fa-lg fa-2x'></i></td>" +
-                         "<td>" + username + "<a href='/myclass/qna/commentdelete?id=" + commentId + "'" + ">" + equalName +"</a>" + 
+              			 "<tr><td class='td8'><img if='"+ profiel_photo +"!=null' src='"+ profiel_photo +"' id='profileimg2'/></td>" +
+                         "<td class='comment-writer'>" + username + "&nbsp;<a href='/myclass/qna/commentdelete?id=" + commentId + "'" + ">" + equalName +"</a>" + 
                          "<br>" +
                          "<span class='commentCalender'>" + timedate + "</span></td>" +
                          "<td class='td7'></td></tr>" + 
-                         "<tr><td colspan='2' class='td11'>" + content + "</td><td></td></tr><tr><td colspan='2' class='td6'></td><td></td></tr> </table>";
+                         "<tr><td colspan='3' class='td11'>" + content + "</td></tr>" +
+                         "<tr><td colspan='3' class='td6'>" + "</td></tr></tbody></table>";
               $(".stack-wrapper").append(html);
+              
             });
+            sendCommentNotice([[${user.name}]], [[${qnacontent.username}]], "/myclass/qna/content?id="+[[${qnacontent.id}]]);         
             
             const count = $(".commentPlus");
             count.text(Number(count.text()) +1);
@@ -254,15 +245,22 @@
           }
         })
       });
-       
       
+      $( document ).ready( function() {
+        $( window ).scroll( function() {
+          if ( $( this ).scrollTop() > 200 ) {
+            $( '.top' ).fadeIn();
+          } else {
+            $( '.top' ).fadeOut();
+          }
+        } );
+        $( '.top' ).click( function() {
+          $( 'html, body' ).animate( { scrollTop : 0 }, 100 );
+          return false;
+        } );
+      } );
+
+
       </script>
 </body>
 </html>
-
-
-
-
-
-
-

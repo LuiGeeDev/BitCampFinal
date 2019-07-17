@@ -46,7 +46,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     where id in
     (select project_id
     from groups
-    where id in (select max(group_id) from group_member where member_name =${username});
+    where id in (select max(group_id) from group_member where member_name = ${username});
+  </select>
+  
+  <!--  Project selectRecentProjectByCourseId(int courseid);  -->
+  <select id="selectRecentProjectByCourseId" resultType="kr.or.bit.model.Project">
+    select id,project_name, start_date, end_date, season, course_id
+    from project
+    where course_id = #{courseid}
+    order by id desc
+    limit 1;
   </select>
 </mapper>
 
