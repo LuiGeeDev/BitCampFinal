@@ -1,27 +1,26 @@
 package kr.or.bit.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 
+import kr.or.bit.dao.ArticleDao;
+import kr.or.bit.dao.BoardDao;
 import kr.or.bit.dao.ChecklistDao;
 import kr.or.bit.dao.GroupDao;
 import kr.or.bit.dao.MemberDao;
+import kr.or.bit.dao.ProjectDao;
+import kr.or.bit.dao.StackDao;
 import kr.or.bit.dao.TimelineDao;
+import kr.or.bit.dao.TroubleShootingDao;
+import kr.or.bit.model.Article;
 import kr.or.bit.model.Checklist;
 import kr.or.bit.model.Group;
 import kr.or.bit.model.Timeline;
@@ -38,9 +37,30 @@ public class ProjectController {
     ChecklistDao checklistDao = sqlSession.getMapper(ChecklistDao.class);
     TimelineDao timelineDao = sqlSession.getMapper(TimelineDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    TroubleShootingDao troubleShootingDao = sqlSession.getMapper(TroubleShootingDao.class);
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     List<Timeline> timelineList = timelineDao.selectTimelineByGroupId(group_id);
+    ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    StackDao stackDao = sqlSession.getMapper(StackDao.class);
     
     Group group = groupDao.selectGroupById(group_id);
+    
+    List<Article> troubleShootingList = articleDao.selectAllArticleByBoardId(
+                                          boardDao.selectTroubleShootingBoard(
+                                            memberDao.selectMemberByUsername(
+                                                Helper.userName()).getCourse_id(), 
+                                                projectDao.selectProject(
+                                                    group.getProject_id()).getSeason(), 
+                                                    group.getGroup_no())
+                                           .getId());
+    
+    for(Article article : troubleShootingList) {
+      article.setOption(troubleShootingDao.selectTroubleShootingByArticleId(article.getId()));
+      article.setTags(stackDao.selectTagList(article.getId()));
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+    }
+    
     
     List<Checklist> checklist = checklistDao.selectAllChecklist(group_id);
     List<String> checklistContents = new ArrayList<String>();
@@ -55,6 +75,7 @@ public class ProjectController {
     model.addAttribute("group", group);
     model.addAttribute("checklist",checklist);
     model.addAttribute("timelineList",timelineList);
+    model.addAttribute("troubleShootingList", troubleShootingList);
     return "myclass/project/main";
   }
 
@@ -67,5 +88,11 @@ public class ProjectController {
     return "myclass/chat/main";
   }
   
+  @PostMapping("/link")
+  public String linkUpdate(Group group) {
+    GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
+    groupDao.updateGroup(group);
+    return "redirect:/myclass/project?group_id="+group.getId();
+  }
 
 }

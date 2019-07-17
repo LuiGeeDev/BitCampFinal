@@ -123,10 +123,8 @@ public class ArticleService {
       
       if (general.getFile1() != 0) {
         fileidlist.add(general.getFile1());
-        System.out.println(general.getFile1());
         if (general.getFile2() != 0) {
           fileidlist.add(general.getFile2());
-          System.out.println(general.getFile2());
         }
       }
       FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
@@ -137,13 +135,10 @@ public class ArticleService {
       } else if (fileidlist.size() > 0) {
         for (int fileid : fileidlist) {
           files = filesDao.selectFilesById(fileid);
-          System.out.println(files);
           filelist.add(files);
         }
       }
-      System.out.println(article);
       article.setFileslist(filelist);
-      System.out.println(article);
       break;
     case "qna":
       QnaDao qnaDao = sqlSession.getMapper(QnaDao.class);
@@ -164,9 +159,7 @@ public class ArticleService {
     article.setCommentlist(commentdao.selectAllComment(id));
     
     for (Comment comment : article.getCommentlist()) {
-      System.out.println(comment.getTime());
       comment.setTimeLocal(comment.getTime().toLocalDateTime());
-      System.out.println("댓글이름:"+(memberDao.selectMemberByUsername(comment.getUsername())).getName());
       comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
       comment.setName(
           (memberDao.selectMemberByUsername(comment.getUsername())).getName()

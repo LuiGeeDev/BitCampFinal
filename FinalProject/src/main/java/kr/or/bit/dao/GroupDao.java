@@ -21,7 +21,7 @@ public interface GroupDao {
   
   void deleteGroup();
   
-  void updateGroup();
+  void updateGroup(Group group);
   
   void selectAllLinkById();
   

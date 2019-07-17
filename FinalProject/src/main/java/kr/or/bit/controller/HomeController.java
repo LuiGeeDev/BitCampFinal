@@ -53,7 +53,6 @@ public class HomeController {
     List<Article> recentlyCommentedStacks = articleDao.selectRecentlyCommentedArticle();
     Project project = projectDao.selectRecentProject(user.getCourse_id());
     
-    
     for (Article video : recentVideos) {
       video.setOption(videoDao.selectVideoByArticleId(video.getId()));
     }
@@ -71,6 +70,7 @@ public class HomeController {
     for (Message m : mainMessage) {
       m.setTimeLocal(m.getTime().toLocalDateTime());
       m.setSenderName(memberDao.selectMemberByUsername(m.getSender_username()).getName());
+      m.setSender(memberDao.selectMemberByUsername(m.getSender_username()));
     }
     
     project.setStartDateLocal(project.getStart_date().toLocalDate());

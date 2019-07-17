@@ -121,7 +121,9 @@
                 <div class="th">강사명</div>
                 <select id="" name="teacher_id">
                   <option value="">강사를 선택하세요.</option>
-                  <option value="1">임경균</option>
+                  <div th:each="teacherList : ${teacherList}">
+                  <option th:value="${teacherList.teacher_id}" th:text="${teacherList.name}"></option>
+                  </div>
                 </select>
                 <div class="th">강의명</div>
                 <div>
@@ -148,7 +150,9 @@
                 <div>
                   <select id="" name="subject">
                     <option value="" selected>과목을 선택하세요.</option>
-                    <option value="1">JAVA</option>
+                    <div th:each="subjectList : ${subjectList}">
+                      <option th:value="${subjectList.id}" th:text="${subjectList.subject}">JAVA</option>
+                    </div>
                   </select>
                 </div>
                 <div class="th">학생수</div>
@@ -167,6 +171,9 @@
                   <span id="classRoomSelectWrapper">
                     <select id="classRoomSelect" name="classroom_id">
                       <option value="">강의실 번호 선택</option>
+                      <div th:each="classroomList : ${classroomList}">
+                        <option th:value="${classroomList.id}" th:text="${classroomList.classroom_name}"></option>
+                      </div>
                     </select>
                   </span>
                 </div>
@@ -260,10 +267,13 @@
           success: function(response) {
             console.log(response);
             const classroom = response;
+            if (!classroom.length) {
+              $("#classRoomSelect").append("<option>빈 강의실 없음</option>");
+              return;
+            }
             classroom.forEach(function(item) {
-              const option = `<option value="${item.id}">${
-                item.classroom_name
-              }</option>`;
+              const option = 
+                `<option value="${item.id}">${item.classroom_name}</option>`;
               $("#classRoomSelect").append($(option));
             });
           }
