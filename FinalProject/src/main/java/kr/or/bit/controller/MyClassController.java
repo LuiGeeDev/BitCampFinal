@@ -487,27 +487,39 @@ public class MyClassController {
     CourseDao coursedao = sqlSession.getMapper(CourseDao.class);
     MemberDao memberdao = sqlSession.getMapper(MemberDao.class);
     ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
+    GroupDao groupdao = sqlSession.getMapper(GroupDao.class);
+    
     String username = Helper.userName();
     Member member = memberdao.selectMemberByUsername(username);
     Course course = coursedao.selectCourse(member.getCourse_id());
     Project project = projectdao.selectRecentProjectByCourseId(member.getCourse_id());
+    
+    List<Group> groups = groupdao.selectAllGroupByProject(project.getId());
+    
     project.setStartDateLocal(project.getStart_date().toLocalDate());
     project.setEndDateLocal(project.getEnd_date().toLocalDate());
+    course.setStartDateLocal(course.getStart_date().toLocalDate());
+    course.setEndDateLocal(course.getEnd_date().toLocalDate());
+    
+    Period ccDay = Period.between(course.getStartDateLocal(), course.getEndDateLocal());
+    Period cDay = Period.between(course.getEndDateLocal(), LocalDate.now());
     
     Period ddDay = Period.between(project.getStartDateLocal(), project.getEndDateLocal());
-    Period dDay = Period.between(LocalDate.now(), project.getEndDateLocal());
-    int i = (int)((float)(dDay.getDays()) / (float)(ddDay.getDays())*100);
+    Period dDay = Period.between(project.getStartDateLocal(), LocalDate.now());
     
     
-    System.out.println(ddDay.getDays());
-    System.out.println(dDay.getDays());
-    System.out.println(i);
-    System.out.println(project.toString());
+    System.out.println(project);
     System.out.println(course);
+    
     model.addAttribute("course", course);
     model.addAttribute("project", project);
-    model.addAttribute("percent", i);
-    /* model.addAttribute("dDay",dDay); */
+    model.addAttribute("project_percent", (int)((float)(dDay.getDays() / (float)(ddDay.getDays()))*100));
+    model.addAttribute("enable", memberdao.getCountCourseMember(course.getId(), "enable"));
+    model.addAttribute("disable", memberdao.getCountCourseMember(course.getId(), "disable"));
+    model.addAttribute("all", memberdao.getCountCourseMember(course.getId(), "enable") + memberdao.getCountCourseMember(course.getId(), "disable"));
+    model.addAttribute("course_percent", (int)((float)(cDay.getDays() / (float)(ccDay.getDays()))*100));
+    model.addAttribute("groups", groups);
+    
     return "myclass/teacher/managing";
   }
 }

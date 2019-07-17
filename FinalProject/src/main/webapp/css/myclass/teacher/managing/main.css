@@ -9,7 +9,7 @@ body {
 
 .card {
   width: 900px;
-  height: 300px;
+  height: 260px;
   margin: 10px auto 0;
   flex-direction: row;
   margin: 10px auto 0;
@@ -86,6 +86,13 @@ body {
   border: 10px;
   max-width: 300px;
   border-radius: 5px;
+}
+
+.btn-move-project-board{
+  margin-top:4px;
+  flex-direction: row;
+  width: 200px;
+  height: 30px;
 }
 
 .row-control-right>div {
@@ -167,4 +174,17 @@ body {
 
 .course_info {
   display: flex;
+}
+
+.btn-group-url{
+  margin-top: 10px;
+}
+
+.btn-group-url > div{
+  margin: 3px;
+}
+
+.btn-group-url > h5 {
+  margin-top: 5px;
+  margin-bottom: 4px;
 }

@@ -2,85 +2,82 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- /*
-*
-* @date: 2019. 06. 25.
-*
-* @author: 권순조
-* 
-  void insertGroup(Group group);
-  
-  void deleteGroup();
-  
-  void updateGroup();
-  
-  void selectAllLinkByGroup();
-  
-  List<Group> selectAllGroupByProject();
-
-*/ -->
+<!-- /* * * @date: 2019. 06. 25. * * @author: 권순조 * void insertGroup(Group 
+  group); void deleteGroup(); void updateGroup(); void selectAllLinkByGroup(); 
+  List<Group> selectAllGroupByProject(); */ -->
 <mapper namespace="kr.or.bit.dao.GroupDao">
-  <insert id="insertGroup" parameterType="kr.or.bit.model.Group">     
-	insert into groups(group_no, leader_name, project_id)
-	values(#{group_no}, #{leader_name}, #{project_id})
-  </insert> 
+  <insert id="insertGroup" parameterType="kr.or.bit.model.Group">
+    insert into groups(group_no, leader_name, project_id)
+    values(#{group_no}, #{leader_name}, #{project_id})
+  </insert>
   <delete id="deleteGroup">
-	delete from groups 
-	where id=#{id}
+    delete from groups
+    where id=#{id}
   </delete>
   <select id="selectGroupById" resultType="kr.or.bit.model.Group">
-    SELECT id, group_no, link1, link2, link3, leader_name, project_id
+    SELECT id, group_no,
+    link1, link2, link3, leader_name, project_id
     FROM GROUPS
-    WHERE id = #{id}
+    WHERE id =
+    #{id}
   </select>
   <update id="updateGrouplink">
-	update groups
-	set #{link} = #{content}
-	where id=#{id}
+    update groups
+    set #{link} = #{content}
+    where id=#{id}
   </update>
   <select id="selectAllLinkById">
-	select link1, link2, link3
-	from groups
-	where project_id=#{project_id} and group_no=#{group_no}
+    select link1, link2, link3
+    from groups
+    where project_id=#{project_id} and group_no=#{group_no}
   </select>
-  <select id="selectAllGroupByProject">
-	select id, group_no, link1, link2, link3, leader_name, project_id
-	from groups
-	where project_id=#{project_id}
+  <select id="selectAllGroupByProject" resultType="kr.or.bit.model.Group">
+    select * 
+    from groups 
+    where project_id = #{projectid};
   </select>
-  <select id="selectRecentGroup" resultType="kr.or.bit.model.Group">
-    SELECT id, group_no, link1, link2, link3, leader_name, project_id
+  <select id="selectRecentGroup"
+    resultType="kr.or.bit.model.Group">
+    SELECT id, group_no, link1, link2, link3, leader_name,
+    project_id
     FROM GROUPS
     WHERE id = (SELECT MAX(group_id)
-                 FROM GROUP_MEMBER
-                 WHERE member_name = #{username})
+    FROM GROUP_MEMBER
+    WHERE member_name = #{username})
   </select>
-  <select id="selectAllMyGroup" resultType="kr.or.bit.model.Group">
-    SELECT id, group_no, link1, link2, link3, leader_name, project_id
+  <select id="selectAllMyGroup"
+    resultType="kr.or.bit.model.Group">
+    SELECT id, group_no, link1, link2, link3, leader_name,
+    project_id
     FROM GROUPS
     WHERE id in (SELECT group_id
-                 FROM GROUP_MEMBER
-                 WHERE member_name = #{username})
+    FROM GROUP_MEMBER
+    WHERE member_name = #{username})
   </select>
   <select id="getProjectSeason" resultType="int">
     SELECT season
-    FROM project
+    FROM
+    project
   </select>
-  <select id="selectMyNewGroup" resultType="kr.or.bit.model.Group">
-  	SELECT ID, GROUP_NO, LEADER_NAME, PROJECT_ID
-  	FROM GROUPS
-  	WHERE PROJECT_ID=#{project_id} AND GROUP_NO=#{group_no}
+  <select id="selectMyNewGroup"
+    resultType="kr.or.bit.model.Group">
+    SELECT ID, GROUP_NO, LEADER_NAME, PROJECT_ID
+    FROM GROUPS
+    WHERE PROJECT_ID=#{project_id} AND GROUP_NO=#{group_no}
   </select>
   <select id="getGroupNoByGroupId" resultType="int">
-  	SELECT group_no
-  	FROM groups
-  	where id=#{id}
+    SELECT group_no
+    FROM groups
+    where id=#{id}
   </select>
-  <select id="selectGroupByProjectId" resultType="kr.or.bit.model.Group">
-    SELECT id, group_no, link1, link2, link3, leader_name, project_id
+  <select id="selectGroupByProjectId"
+    resultType="kr.or.bit.model.Group">
+    SELECT id, group_no, link1, link2, link3, leader_name,
+    project_id
     FROM groups g
     LEFT JOIN group_member gm
-    ON gm.group_id = g.id
+    ON gm.group_id =
+    g.id
     WHERE project_id = #{project_id}
     AND member_name = #{username}
   </select>
