@@ -14,7 +14,7 @@
         </div>
         <div class="user-info" th:object="${user}">
           <div class="user-profile">
-            <a href="/myinfo/profile">
+            <a href="/mypage/home">
             <img th:if="*{profile_photo}==null" class="user-photo" id="icon" th:src="@{/resources/images/default.png}" alt="프로필 사진"> 
             <img th:if="${user.profile_photo}!=null"
               class="user-photo"

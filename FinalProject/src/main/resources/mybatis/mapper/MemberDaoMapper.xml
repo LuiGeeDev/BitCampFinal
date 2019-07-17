@@ -101,6 +101,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	SET PROFILE_PHOTO =#{profile_photo}
   	WHERE USERNAME=#{username}
   </update>
+  
+  <!--   int getCountCourseAllMember(int courseid);
+  
+  int getCountCourseEnable1Member(int courseid);
+  
+  int getCountCourseEnable0Member(int courseid); -->
+  
+  <select id="getCountCourseMember" resultType="int" >
+    select count(enabled)
+    from member
+    where course_id=#{courseid}
+    <choose>
+      <when test="status == 'enable'">
+        and enabled =1
+      </when>
+      <when test="status == 'disable'">
+        and enabled =0
+      </when>
+    </choose>
+  </select>
 </mapper>
 
 

@@ -169,3 +169,8 @@ th, td {
   height: 27px;
   margin: -1px 5px 0px 5px;
 }
+
+.answer-style{
+  color: red;
+  font-weight: 600;
+}
