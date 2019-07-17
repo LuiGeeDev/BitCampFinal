@@ -25,6 +25,7 @@ import kr.or.bit.model.Checklist;
 import kr.or.bit.model.Group;
 import kr.or.bit.model.Timeline;
 import kr.or.bit.utils.Helper;
+
 @Controller
 @RequestMapping("myclass/project")
 public class ProjectController {
@@ -33,6 +34,7 @@ public class ProjectController {
 
   @GetMapping("")
   public String projectPage(int group_id, Model model) {
+    System.out.println(group_id);
     GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
     ChecklistDao checklistDao = sqlSession.getMapper(ChecklistDao.class);
     TimelineDao timelineDao = sqlSession.getMapper(TimelineDao.class);
@@ -43,38 +45,26 @@ public class ProjectController {
     List<Timeline> timelineList = timelineDao.selectTimelineByGroupId(group_id);
     ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     StackDao stackDao = sqlSession.getMapper(StackDao.class);
-    
     Group group = groupDao.selectGroupById(group_id);
-    
     List<Article> troubleShootingList = articleDao.selectAllArticleByBoardId(
-                                          boardDao.selectTroubleShootingBoard(
-                                            memberDao.selectMemberByUsername(
-                                                Helper.userName()).getCourse_id(), 
-                                                projectDao.selectProject(
-                                                    group.getProject_id()).getSeason(), 
-                                                    group.getGroup_no())
-                                           .getId());
-    
-    for(Article article : troubleShootingList) {
+        boardDao.selectTroubleShootingBoard(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id(),
+            projectDao.selectProject(group.getProject_id()).getSeason(), group.getGroup_no()).getId());
+    for (Article article : troubleShootingList) {
       article.setOption(troubleShootingDao.selectTroubleShootingByArticleId(article.getId()));
       article.setTags(stackDao.selectTagList(article.getId()));
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
     }
-    
-    
     List<Checklist> checklist = checklistDao.selectAllChecklist(group_id);
     List<String> checklistContents = new ArrayList<String>();
-    for(Checklist todo : checklist) {
+    for (Checklist todo : checklist) {
       checklistContents.add(todo.getContent());
     }
-    
-    for(Timeline timeline : timelineList) {
+    for (Timeline timeline : timelineList) {
       timeline.setWriter(memberDao.selectMemberByUsername(timeline.getUsername()));
     }
-    
     model.addAttribute("group", group);
-    model.addAttribute("checklist",checklist);
-    model.addAttribute("timelineList",timelineList);
+    model.addAttribute("checklist", checklist);
+    model.addAttribute("timelineList", timelineList);
     model.addAttribute("troubleShootingList", troubleShootingList);
     return "myclass/project/main";
   }
@@ -83,16 +73,14 @@ public class ProjectController {
   public String chatPage(int group_id, Model model) {
     GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
     Group group = groupDao.selectGroupById(group_id);
-
     model.addAttribute("group", group);
     return "myclass/chat/main";
   }
-  
+
   @PostMapping("/link")
   public String linkUpdate(Group group) {
     GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
     groupDao.updateGroup(group);
-    return "redirect:/myclass/project?group_id="+group.getId();
+    return "redirect:/myclass/project?group_id=" + group.getId();
   }
-
 }

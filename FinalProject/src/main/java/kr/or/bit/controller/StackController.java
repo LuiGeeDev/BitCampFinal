@@ -100,6 +100,7 @@ public class StackController {
   public String GetStackContent(int id, Model model) {
     MemberDao memberDao = sqlsession.getMapper(MemberDao.class);
     StackDao stackdao = sqlsession.getMapper(StackDao.class);    
+    ScrapDao scrapDao =sqlsession.getMapper(ScrapDao.class);
     Article article = articleService.selectOneArticle("qna", id);
     Qna qna = (Qna) article.getOption();
     int adopted = qna.getAdopted_answer();
@@ -111,6 +112,8 @@ public class StackController {
       comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
       model.addAttribute("adoptedanswer", comment);
     }
+   /* Scrap scrap = scrapDao.selectOneScrapById(id);*/
+    /*model.addAttribute("scrap",scrap);*/
     model.addAttribute("stackcontent", article);
     articleUpdateService.viewCount(article);
     return "stack/content";
@@ -119,7 +122,13 @@ public class StackController {
   @GetMapping("/insertScrap")
   public String insertScrap(int article_id) {
     ScrapDao scrapDao = sqlsession.getMapper(ScrapDao.class);
-    scrapDao.insertScrap(article_id, Helper.userName());
+    Scrap scrap = scrapDao.selectOneScrap(article_id, Helper.userName());
+    if(scrap == null) {
+      scrapDao.insertScrap(article_id, Helper.userName());
+    } else {
+      scrapDao.deleteScrap(article_id);
+    }
+ 
     return "redirect:/stack/content?id=" + article_id;
   }
 

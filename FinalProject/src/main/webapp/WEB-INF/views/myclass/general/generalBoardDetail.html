@@ -148,7 +148,7 @@
             <span
               class="commentWriterName"
               th:text="${comment.writer.name}"
-              th:classappend="${comment.writer.name == user.name} ? 'my-comment-name'"
+              th:classappend="${comment.writer.name == user.name} ? 'my-comment-name2'"
             ></span>
             <a
               th:if="${comment.username}==${user.username}"

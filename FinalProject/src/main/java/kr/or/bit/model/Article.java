@@ -1,6 +1,7 @@
 package kr.or.bit.model;
 
 import java.io.File;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,7 +19,6 @@ public class Article {
   private int enable; // default 1
   private String username;
   private int board_id;
-
   private LocalDateTime timeLocal;
   private LocalDateTime updatedTimeLocal;
   private Member writer;
@@ -251,6 +251,6 @@ public class Article {
         + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", board_name=" + board_name + ", tags="
         + tags + ", commentlist=" + commentlist + ", commentSize=" + commentSize + ", option=" + option + ", vote="
         + vote + ", votenum=" + votenum + ", vote_count=" + vote_count + ", fileslist=" + fileslist + ", layer=" + layer
-        + ", sibling=" + sibling + "]";
+        + ", sibling=" + sibling + ", end_date=" + end_date + "]";
   }
 }
