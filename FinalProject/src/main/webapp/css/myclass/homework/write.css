@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+body {
+  font-family: 'Nanum Gothic' ;
+}
+
 #title {
   margin: 10px 20px 20px 140px;
   font-size: 18px;

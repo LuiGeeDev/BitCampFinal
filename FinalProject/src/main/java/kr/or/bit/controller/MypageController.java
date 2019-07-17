@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
@@ -30,6 +31,7 @@ import kr.or.bit.model.Course;
 import kr.or.bit.model.Files;
 import kr.or.bit.model.Member;
 import kr.or.bit.service.FileUploadService;
+import kr.or.bit.service.MailService;
 import kr.or.bit.service.MemberService;
 import kr.or.bit.service.MypageService;
 import kr.or.bit.utils.Helper;
@@ -37,7 +39,7 @@ import kr.or.bit.utils.Helper;
 @Controller
 @RequestMapping("/mypage")
 public class MypageController {
-  
+
   @Autowired
   private SqlSession sqlSession;
   @Autowired
@@ -48,7 +50,8 @@ public class MypageController {
   private FileUploadService fileUploadService;
   @Autowired
   private MypageService mypageService;
-
+  @Autowired
+  private MailService mailService;
 
   @GetMapping("/home")
   public String mainPage(Model model) {
@@ -59,7 +62,8 @@ public class MypageController {
     String username = Helper.userName();
     List<Article> article1 = articleDao.selectAllArticleByUsername(username);
     List<Article> article2 = mypageService.allArticleByUsername(username);
-    List<Comment> comments = commentDao.selectAllCommentByUsername(username);  
+    List<Comment> comments = commentDao.selectAllCommentByUsername(username);
+
     Member user = memberDao.selectMemberByUsername(username);
     Course course = courseDao.selectCourse(user.getCourse_id());
     course.setEndDate(course.getEnd_date().toLocalDate());
@@ -68,18 +72,19 @@ public class MypageController {
     Period diff2 = Period.between(course.getStartDate(), LocalDate.now());
     int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
     model.addAttribute("completion", completion);
-    model.addAttribute("course",course);
-    model.addAttribute("comments",comments);
-    model.addAttribute("article1",article1);
-    model.addAttribute("article2",article2);
-    model.addAttribute("user",user);
+    model.addAttribute("course", course);
+    model.addAttribute("comments", comments);
+    model.addAttribute("article1", article1);
+    model.addAttribute("article2", article2);
+    model.addAttribute("user", user);
     return "mypage/mypage";
   }
-  
-  @GetMapping("/home/Content")
+
+  @GetMapping("/home/content")
   public String getDetail(int article_id) {
-    
-    return null;
+    String URL = mypageService.selectOneArticleforMypage(article_id);
+    System.out.println("URL" + URL);
+    return URL;
   }
 
   @PostMapping("/home/CommentList")
@@ -88,20 +93,19 @@ public class MypageController {
     List<Comment> comments = commentDao.selectAllCommentByUsername(user);
     return comments;
   }
-  
+
   @PostMapping("/home/ArticleList")
   public @ResponseBody List<Article> getArticleList(String user) {
     List<Article> articles = mypageService.allArticleByUsername(user);
     return articles;
   }
-  
+
   @GetMapping("/mypage/home/articlecontent")
-  public String GetArticleContent(Model model,int id) {
-    
+  public String GetArticleContent(Model model, int id) {
+
     return null;
   }
-  
-  
+
   @GetMapping("")
   public String updateMember(Model model, Principal principal) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
@@ -127,5 +131,5 @@ public class MypageController {
     }
     return "redirect:/mypage";
   }
-  
+
 }

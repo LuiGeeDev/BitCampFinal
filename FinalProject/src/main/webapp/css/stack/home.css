@@ -14,9 +14,7 @@ body {
 }
 
 table {
-  margin-left: 10%;
-  margin-right: 10%;
-  width: 80%;
+  width: 100%;
   border-collapse: collapse;
   font-size: 14px;
 }
@@ -31,8 +29,8 @@ td[colspan="2"] {
 }
 
 .tdtitle {
-  color: #0984e3;
-  font-size: 18px;
+  color: #0984E4;
+  font-size: 19px;
   font-weight: bold;
   cursor: pointer;
 }
@@ -43,13 +41,22 @@ td[colspan="2"] {
 
 .tdcontent {
   cursor: pointer;
-  max-height: 58px;
+  max-height: 45px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .tdcontent br {
   display: none;
+}
+
+.tdcontent b {
+  display: none;
+}
+
+.tdcontent p span {
+  font-weight: 100 !important;
+  font-style: normal !important;
 }
 
 .tdcontent p img {
@@ -82,11 +89,18 @@ td[colspan="2"] {
 
 .td3 {
   width: 50%;
+  padding: 5px 5px;
 }
 
 .td4 {
   width: 20%;
-  font-weight: bold;
+  padding-left: 7px;
+}
+
+.td5 {
+  font-size: 80%;
+  text-align: center;
+  padding: 5px 0px;
 }
 
 .tag-name span {
@@ -97,9 +111,10 @@ td[colspan="2"] {
   cursor: pointer;
 }
 
-.write-btns {
-  margin-right: 10%;
+.tag-name span:active {
+  padding:4px;
 }
+
 
 #c1 {
   background-color: green;
@@ -149,7 +164,12 @@ td[colspan="2"] {
 }
 
 .page-btns {
-  margin: 0 auto;
+  margin: auto;
+  margin-bottom: 200px;
+}
+
+.write-btns {
+  float: right;
 }
 
 .btn.btn-primary.paging {
@@ -182,4 +202,53 @@ td[colspan="2"] {
 .titleanswer {
   color: red;
   font-size: 12px;
+}
+
+.tableWrapper {
+  margin-left: 13%;
+  margin-right: 14%;
+}
+
+#profileimg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.navBar {
+  height: 44px;
+}
+
+.writeBtn {
+  
+}
+
+.searchBtn {
+  padding: 4px 12px;
+}
+
+.selectBar {
+  height: 27px;
+  margin-right: 4px;
+  
+}
+
+.writer-name{
+  
+font-weight: 600;
+}
+
+.write-date{
+  
+color: gray;
+  
+font-size: 13px;
+  
+margin-left: 5px;
+}
+
+.writerWrapper{
+  
+height: auto;
 }

@@ -11,18 +11,32 @@
   <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
   <div class="main" th:fragment="main">
     <div class="row">
-      <div class="message-box2">
+      <div class="message-box2" ss-container>
         <h4 class="message-title2">
           <div class="movemov">
-            <span><i class="far fa-envelope fa-2x"></i></span> <span
-              class="text-move">받은쪽지함</span>
-            <div class="message-title-count">
-              <span class="countM" th:text="${countmessage}"></span>개의
-              쪽지가 왔습니다
-            </div>
+          
+            <i class="far fa-envelope fa-2x ricon"></i>
+          <a href="" class="rMessage">
+            <span class="receiveMessageForm">
+            <span class="text-move">받은쪽지함</span>
+            </span>
+          </a>
+          
+            <i class="far fa-envelope fa-2x sicon"></i> 
+          <a href="" class="sMessage">  
+            <span class="sendMessageForm">
+            <span class="text-moveForm">보낸쪽지함</span>
+            </span>
+          </a>
+          
           </div>
+            <div class="message-title-count">
+              <span class="countM" th:text="${countmessage}"></span>개의쪽지가 왔습니다
+            </div>
         </h4>
-        <!-- 쪽지 있는 만큼 담기 -->
+        
+       <div class="receiveMessageList">
+        <!-- 받은쪽지함 리스트 -->
         <div th:each="all : ${selectall}">
           <div class="message2">
             <span class="hidden" th:text="${all.id}"></span>
@@ -47,6 +61,36 @@
             <p class="message-preview2" th:text="${all.content}"></p>
           </div>
         </div>
+        </div>
+        
+        
+        <!-- 내가 보낸 쪽지함 리스트 -->
+        <div class="senderMessageList">
+         <div th:each="sendMessage : ${sendMessage}">
+          <div class="message3">
+            <span class="hidden" th:text="${sendMessage.id}"></span>
+            <div class="message-sender2">
+              <span class="hidden" th:text="${sendMessage.receiver_username}"></span>
+              <span class="hidden" th:text="${sendMessage.sender_username}"></span>
+              <!-- <span class="readbtn"><i class="fas fa-circle"></i>&nbsp;</span> -->
+              <!-- <span class="unread" th:unless="${sendMessage.checked}"><span
+                class="badge badge-danger">N</span></span><span
+                class="hidden removenoti" th:text="${sendMessage.checked}"></span> -->
+              <span class="sender2" th:text="${sendMessage.senderName}"></span>
+              <span>(</span> <span class="senderName"
+                th:text="${sendMessage.sender_username}"></span> <span>)</span>
+              <span class="time2"
+                th:text="${#dates.format(sendMessage.timeDate, 'yyyy년 MMM dd일')}"></span>
+
+            </div>
+            <p class="message-preview2" th:text="${sendMessage.content}"></p>
+          </div>
+        </div>
+        </div>
+        
+        
+        
+        
       </div>
       <div class="message-paper2">
 
@@ -59,8 +103,8 @@
         <!-- 메시지 보낸사람   -->
         <div class="send-message-icon">
           <div class="message-right">
-            <i class="far fa-paper-plane fa-2x" id="reply"></i> <i
-              class="fas fa-trash fa-2x" id="delete"></i>
+            <i class="far fa-paper-plane fa-2x replyicon" id="reply"></i> <i
+              class="fas fa-trash fa-2x deleteicon" id="delete"></i>
           </div>
         </div>
         <div class="message-sender-name"></div>
@@ -122,6 +166,36 @@
     }).ajaxStop(function() {
       $("#spinner").hide();
     });
+    
+    
+   	$(".rMessage").click(function(event) {
+   	$(".senderMessageList").css("display", "none");
+   	$(".receiveMessageList").css("display", "block");
+   	$(".message-title-count").css("display", "block");
+   	$(".sMessage").css("color", "black");
+   	$(".rMessage").css("color", "#F39B10");
+   	$(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime").empty();
+   	event.preventDefault();
+   	});
+   	
+   	$(".sMessage").click(function(event) {
+   	$(".receiveMessageList").css("display", "none"); // 메시지 리스트 제거
+   	$(".senderMessageList").css("display", "block"); // 보낸사람 리스트 보여주기
+   	$(".message-title-count").css("display", "none"); // 카운트 안보여주기
+   	$(".rMessage").css("color", "black"); // 받은쪽지함 검은색으로 변경
+   	$(".sMessage").css("color", "#F39B10"); // 보낸쪽지함 주황색으로 변경
+   	$(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime").empty();
+   	$(".fa-paper-plane").css("display", "none");
+    $(".fa-trash").css("display", "none");
+    event.preventDefault();
+   	  
+   	});
+    
+
+   	$("sMessage").hover(function() {
+   	  $(this).css("color", "#F39B10");
+   	});
+    
     
     $("#modal-submitbtn").click(function() {
       const messageText = $("#message-text").val();
@@ -240,12 +314,46 @@
           });
         });
       }
+      
+      
+      function getMessage2(messageId) {
+        $.ajax({
+          url: "/ajax/message",
+          type: "POST",
+          data: {
+            id: messageId
+          },
+          success: function(data) {
+           /*  console.log("new Date : " + new Date(${data.time})); */
+            $(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime").empty();
+            $("#message-sender-id").append(`${data.sender_username}`);
+            $(".message-sender-name")
+              .append(`${data.senderName}`)
+              .append(`(${data.sender_username})`);
+            $(".message-sender-time").append(`${data.time}`);
+            const time = Number($(".message-sender-time").text());
+            const date = new Date(time);
+            let minutes = date.getMinutes();
+            minutes = (minutes < 10) ? "0" + minutes : minutes;
+            let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
+            hours = hours < 10 ? "0" +  hours : hours;
+            let getdate = date.getDate();
+            getdate = (getdate < 10) ? "0" + getdate : getdate;
+            
+            const timedate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 `+ getdate + `일 ` + hours +`:` + minutes;
+            $(".message-realtime").append(timedate);
+            $(".message-sender-content").append(`${data.content}`);
+            $(".sender-message").append(`<h6 class="text-font">보낸쪽지</h6>`);
+          },
+          error: function(xhr) {
+            alert("쪽지를 불러오지 못했습니다.");
+          }
+        })
+      };
 
       $(".message2").click(function(event) {
         const removeIcon = $(event.currentTarget).children(".message-sender2");
-        const removeNotification = removeIcon
-          .children()
-          .siblings(".removenoti");
+        const removeNotification = removeIcon.children().siblings(".removenoti");
 
         const count = $(".message-count");
         const count2 = $(".countM");
@@ -255,10 +363,7 @@
           removeNotification.text(1);
         }
         
-        
-        const messageId = $(this)
-          .children(".hidden")
-          .text();
+        const messageId = $(this).children(".hidden").text();
         getMessage(messageId);
         console.log("messageId : " + messageId);
 
@@ -276,6 +381,12 @@
           }
         });
       });
+      
+      $(".message3").click(function(event) {
+        const messageId = $(this).children(".hidden").text();
+        getMessage2(messageId);
+      });
+      
       $(".close-btn").click(function() {
         $(".receiver").remove();
         $(".modal").css("display", "none");

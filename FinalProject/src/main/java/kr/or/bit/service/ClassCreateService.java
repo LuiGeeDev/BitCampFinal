@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.model.Course;
+import kr.or.bit.utils.Helper;
 
 @Service
 public class ClassCreateService {
@@ -16,7 +17,7 @@ public class ClassCreateService {
 
   @Transactional
   public void createClass(Course course, int people, int teacher_id) {
-    String defaultPassword = "$2a$10$L1pWhHeMtfEafgAFLR9iUO/gbTZFFoqFMMAWQ7RRDaKVd88kO92Ve"; // bitcamp
+    String defaultPassword = Helper.defaultPassword(); // bitcamp
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     // 강의 생성

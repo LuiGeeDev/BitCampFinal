@@ -10,8 +10,9 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
-        
-  <security:global-method-security pre-post-annotations="enabled" />
+
+  <security:global-method-security
+    pre-post-annotations="enabled" />
 
   <!-- Use spring servlet for all requests, including static resources -->
   <mvc:default-servlet-handler />
@@ -23,8 +24,9 @@
     base-package="kr.or.bit" />
   <mvc:resources mapping="/resources/**"
     location="/resources/" />
-  
-  <tx:annotation-driven transaction-manager="transactionManager" />
+
+  <tx:annotation-driven
+    transaction-manager="transactionManager" />
 
   <mvc:interceptors>
     <mvc:interceptor>
@@ -33,6 +35,7 @@
       <mvc:exclude-mapping path="/js/**" />
       <mvc:exclude-mapping path="/socket/**" />
       <mvc:exclude-mapping path="/login*" />
+      <mvc:exclude-mapping path="/forgot-password" />
       <bean id="commonPageInterceptor"
         class="kr.or.bit.interceptor.CommonPageInterceptor"></bean>
     </mvc:interceptor>
@@ -43,13 +46,15 @@
       <mvc:exclude-mapping path="/mypage" />
       <mvc:exclude-mapping path="/socket/**" />
       <mvc:exclude-mapping path="/login*" />
+      <mvc:exclude-mapping path="/forgot-password" />
       <mvc:exclude-mapping path="/resources/**" />
       <bean id="passwordChangedInterceptor"
         class="kr.or.bit.interceptor.PasswordChangedInterceptor"></bean>
     </mvc:interceptor>
     <mvc:interceptor>
-      <mvc:mapping path="/myclass/**"/>
-      <bean id="myClassInterceptor" class="kr.or.bit.interceptor.MyClassInterceptor"></bean>
+      <mvc:mapping path="/myclass/**" />
+      <bean id="myClassInterceptor"
+        class="kr.or.bit.interceptor.MyClassInterceptor"></bean>
     </mvc:interceptor>
   </mvc:interceptors>
 
@@ -85,10 +90,21 @@
     <property name="cacheable" value="false" />
   </bean>
 
+  <bean id="emailTemplateResolver"
+    class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+    <property name="prefix" value="/WEB-INF/mail/" />
+    <property name="suffix" value=".html" />
+    <property name="templateMode" value="HTML" />
+    <property name="characterEncoding" value="UTF-8" />
+    <property name="cacheable" value="false" />
+  </bean>
+
   <!-- Thymeleaf Template Engine (Spring4-specific version) -->
   <bean id="templateEngine"
     class="org.thymeleaf.spring4.SpringTemplateEngine">
-    <property name="templateResolver" ref="templateResolver" />
+    <property name="templateResolver">
+      <ref bean="templateResolver" />
+    </property>
     <property name="additionalDialects">
       <set>
         <!-- Note the package would change to 'springsecurity[3|4]' if you 
@@ -99,6 +115,11 @@
           class="org.thymeleaf.extras.java8time.dialect.Java8TimeDialect" />
       </set>
     </property>
+  </bean>
+  
+  <bean id="emailTemplateEngine"
+    class="org.thymeleaf.spring4.SpringTemplateEngine">
+    <property name="templateResolver" ref="emailTemplateResolver" />
   </bean>
 
   <bean name="jsonView"
@@ -114,5 +135,19 @@
     <!-- property name="maxInMemorySize" value="52428800" / -->
     <!-- defaultEncoding -->
     <property name="defaultEncoding" value="utf-8" />
+  </bean>
+
+  <bean id="mailSender"
+    class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <property name="host" value="smtp.gmail.com" />
+    <property name="port" value="587" />
+    <property name="username" value="bitcampfinal2team@gmail.com" />
+    <property name="password" value="q!w2e3r4" />
+    <property name="javaMailProperties">
+      <props>
+        <prop key="mail.smtp.auth">true</prop>
+        <prop key="mail.smtp.starttls.enable">true</prop>
+      </props>
+    </property>
   </bean>
 </beans>
