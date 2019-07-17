@@ -35,6 +35,7 @@
       <mvc:exclude-mapping path="/js/**" />
       <mvc:exclude-mapping path="/socket/**" />
       <mvc:exclude-mapping path="/login*" />
+      <mvc:exclude-mapping path="/forgot-password" />
       <bean id="commonPageInterceptor"
         class="kr.or.bit.interceptor.CommonPageInterceptor"></bean>
     </mvc:interceptor>
@@ -45,6 +46,7 @@
       <mvc:exclude-mapping path="/mypage" />
       <mvc:exclude-mapping path="/socket/**" />
       <mvc:exclude-mapping path="/login*" />
+      <mvc:exclude-mapping path="/forgot-password" />
       <mvc:exclude-mapping path="/resources/**" />
       <bean id="passwordChangedInterceptor"
         class="kr.or.bit.interceptor.PasswordChangedInterceptor"></bean>

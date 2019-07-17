@@ -19,6 +19,10 @@ body {
   font-familly: 'Nanum Gothic' !important;
 }
 
+.card.recent-issues{
+  overflow-y: scroll;
+}
+
 .top-row {
   margin: 0 auto;
   display: flex;
@@ -26,7 +30,7 @@ body {
 }
 
 .links, .checklist {
-  width: 250px;
+  width: 271px;
   padding: 10px 20px;
   margin-right: 20px;
   height: auto;
@@ -56,7 +60,6 @@ body {
   text-overflow: ellipsis;
   display: flex;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .link-address {
@@ -142,7 +145,11 @@ input[type=checkbox]:checked+label i {
 .issue {
   display: flex;
   border-bottom: 1px solid #292929;
-  padding: 10.5px 35px;
+  padding: 10.5px 26.5px;
+}
+
+.fa-check-square{
+  font-size: 15px !important;
 }
 
 .issue:last-child {
@@ -155,7 +162,7 @@ input[type=checkbox]:checked+label i {
 
 .issue-title h3 {
   margin-left: 15px;
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 700;
   line-height: 27px;
 }
@@ -169,11 +176,16 @@ input[type=checkbox]:checked+label i {
   background: #F39C20;
   border-radius: 5px;
   padding: 2px 8px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .issue-tags {
   margin-left: 3px;
+  max-width: 140px;
+  word-break: break-word;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 
 .fa-exclamation-circle {
@@ -216,4 +228,44 @@ input[type=checkbox]:checked+label i {
   overflow:hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.timeline__title{
+  font-size:16px;
+  font-weight:bold;
+  text-align:center;
+  
+}
+.timeline-content{
+  margin-top:20px;
+  font-size:14px;
+  text-align:center;
+  line-height:1px
+}
+.timeline__writer{
+  font-size:12px;
+  font-weight:bold;
+  text-align:center;
+}
+.timeline__date{
+  font-size:11px;
+
+}
+.timeline__writer__info{
+  margin-top:15px;
+  text-align:center;
+  line-height:5px
+}
+.timeline__content{
+  padding-top:10px !important;
+}
+.noArticle{
+  font-weight:bold;
+  line-height:230px;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.issue-title a h3, .issue-tags, .issue-writer{
+  line-height:32px;
 }

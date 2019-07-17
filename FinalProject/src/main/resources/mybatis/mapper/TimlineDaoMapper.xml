@@ -8,6 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT ID, TITLE, CONTENT, EVENT_DATE, GROUP_ID , USERNAME
 		FROM TIMELINE
 		WHERE GROUP_ID = #{group_id}
+		ORDER BY ID DESC;
 	</select>
 
 	<insert id="insertTimeline">

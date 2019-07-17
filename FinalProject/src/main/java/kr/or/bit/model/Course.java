@@ -23,6 +23,26 @@ public class Course {
   private int count;
   private double divisionResult;
   private String name;
+  private String teacher;
+  private int students;
+  
+  
+
+  public String getTeacher() {
+    return teacher;
+  }
+
+  public void setTeacher(String teacher) {
+    this.teacher = teacher;
+  }
+
+  public int getStudents() {
+    return students;
+  }
+
+  public void setStudents(int students) {
+    this.students = students;
+  }
 
   public String getName() {
     return name;

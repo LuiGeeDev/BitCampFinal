@@ -107,15 +107,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY count DESC
  	</select>
  	<select id="selectCourseList" resultType="kr.or.bit.model.Course">
- 		SELECT c.id, c.course_name, c.start_date, c.end_date, s.subject AS subject_name, c.classroom_id
-		FROM course c JOIN subject s ON c.subject=s.id
-		ORDER BY c.id DESC
- 	</select>
- 	<select id="">
- 		SELECT c.id, c.course_name, c.start_date, c.end_date, s.subject AS subjectName, c.classroom_id,
-		(select m.name
-		from member m JOIN authorities a ON m.username=a.username 
-		where role="TEACHER" AND course_id=c.id) AS teacher
+ 		SELECT c.id, c.course_name, c.start_date, c.end_date, s.subject AS subject_name, c.classroom_id,
+		(SELECT m.name
+		FROM member m JOIN authorities a ON m.username=a.username 
+		WHERE role="TEACHER" AND course_id=c.id AND course_id != 0) AS teacher,
+		(SELECT count(*) FROM member WHERE course_id = c.id) AS students
 		FROM course c JOIN subject s ON c.subject = s.id
 		ORDER BY c.id DESC
  	</select>

@@ -17,11 +17,17 @@
         <div class="chart-column">
           <!-- 첫번째 차트 -->
           <div class="chart-container">
+            <div class="chart-title">과목별 개강 클래스 비율</div>
+            <div class="chart-content">
               <div id="chart-one"></div>
+            </div>
           </div>
           <!-- 두번째 차트 -->
           <div class="chart-container">
+            <div class="chart-title">클래스별 중도 탈락자 </div>
+            <div class="chart-content">
               <div id="chart-two"></div>
+            </div>
           </div>
         </div>
         <!-- 클래스 리스트 -->
@@ -30,15 +36,25 @@
             <div class="course-title">학원 클래스 현황 리스트</div>
             <div class="course-list-table">
               <div class="course-list-category">
-                <div class="start_date">시작일</div>
-                <div class="end_date">종료일</div>
-                <div class="course_name">과정명</div><!-- subjectName -->
-                <div class="teacher">강사</div><!-- teacher -->
-                <div class="subject">과목</div><!-- subjectName -->
-                <div class="students">학생수</div><!--students -->
+                <!-- <div class="start_date">시작일</div> -->
+                <!-- <div class="end_date">종료일</div> -->
+                <div class="course_name">과정명</div>
+                <div class="teacher">강사</div>
+                <div class="subject">과목</div>
                 <div class="classroom">강의실</div>
+                <div class="students">학생수</div>
               </div>
-              <div class="course-list-list"></div>
+              <div class="course-list">
+                <div class="course-list-row" th:each="courseList : ${courseList}">
+                  <!-- <div class="start_date" th:text="${courseList.start_date}">시작일</div> -->
+                  <!-- <div class="end_date" th:text="${courseList.end_date}">종료일</div> -->
+                  <div class="course_name" th:text="${courseList.course_name}">과정명</div>
+                  <div class="teacher" th:text="${courseList.teacher}">강사</div>
+                  <div class="subject" th:text="${courseList.subject_name}">과목</div>
+                  <div class="classroom" th:text="${courseList.classroom_id}+'강의실'">강의실</div>
+                  <div class="students" th:text="${courseList.students}">학생수</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -46,11 +62,17 @@
       <div class="chart-row">
         <!-- 세번째 차트 -->
         <div class="chart-container">
+          <div class="chart-title">글가장 많이 쓴 학생</div>
+          <div class="chart-content">
             <div id="chart-three"></div>
+          </div>
         </div>
         <!-- 네번째 차트 -->
         <div class="chart-container">
-            <div id="chart-four"></div>  
+          <div class="chart-title">댓글 가장 많이 쓴 학생</div>
+          <div class="chart-content">
+            <div id="chart-four"></div>
+          </div>  
         </div>
       </div>
     </div>
@@ -123,7 +145,7 @@
           }
         },
         title: {
-          text: '과목별 개강 클래스 비율'
+          text: ''
         },
         tooltip: {
           pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -150,11 +172,11 @@
       const chart = Highcharts.chart('chart-two', {
 
         title: {
-          text: '클래스별 중도 탈락자 수'
+          text: ''
         },
 
         subtitle: {
-          text: '내림차순'
+          text: ''
         },
         
         xAxis: {
@@ -164,10 +186,6 @@
         chart: {
           inverted: true,
           polar: false
-        },
-        
-        subtitle: {
-          text: 'Inverted'
         },
 
         series: [{
@@ -191,7 +209,7 @@
           }
       },
       title: {
-          text: '글가장 많이 쓴 회원'
+          text: ''
       },
       plotOptions: {
           column: {
@@ -230,7 +248,7 @@
           }
       },
       title: {
-          text: '댓글가장 많이 쓴 회원'
+          text: ''
       },
       plotOptions: {
           column: {

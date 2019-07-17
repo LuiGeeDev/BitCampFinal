@@ -69,14 +69,9 @@ public class MypageService {
       case 3: //일반 게시판
         returnURL = "http://localhost:8090/myclass/board/read?article_id=" + article_id + "&board_id=" + board_id; 
         break;
-      case 4: //과제제출  
-        returnURL = "http://localhost:8090/myclass/homework/detail?id=" + article_id;
-        break;
       case 5: //질문 게시판
         returnURL = "http://localhost:8090/myclass/qna/content?id=" + article_id;
         break;
-      case 6: //트러블슈팅 게시판
-        //이건 어떡할까 하하핳~~~
       }
       
       System.out.println("returnURL:"+returnURL);
