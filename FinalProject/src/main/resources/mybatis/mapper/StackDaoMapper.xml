@@ -69,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<insert id="insertTag">
 		INSERT INTO article_tag (tag_id, article_id)
-		VALUES (#{tag_id},#{article_id});
+		VALUES (#{tag_id}, #{article_id});
 	</insert>
 	<select id="countAllStackArticle" resultType="Integer">
 		SELECT count(*)

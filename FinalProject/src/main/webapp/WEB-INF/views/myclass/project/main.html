@@ -132,55 +132,18 @@
     <div class="row">
       <div class="card timeline">
         <div class="timeline__wrap">
-          <div class="timeline__items">
-            <div class="timeline__item">
+          <div class="timeline__items" id="timeline__items">
+            <div class="timeline__item" th:each="timeline:${timelineList}">
               <div class="timeline__content">
-                <h2>1</h2>
-                <p>asdasdsdsdasdas</p>
+                <div class="timeline__title" th:text="${timeline.title}">1</div>
+                <div class="timeline-content" th:text="${timeline.content}">asdasdsdsdasdas</div>
+                <div class="timeline__writer__info">
+                <span class="timeline__writer" th:text='${timeline.writer.name}'></span> 
+                <span class="timeline__date" th:text="${timeline.event_date}"></span>
+                </div>
               </div>
             </div>
-            <div class="timeline__item">
-              <div class="timeline__content">
-                <h2>1</h2>
-                <p>asdassdasdas</p>
-              </div>
-            </div>
-            <div class="timeline__item">
-              <div class="timeline__content">
-                <h2>1</h2>
-                <p>asdasdasdasdas</p>
-              </div>
-            </div>
-            <div class="timeline__item">
-              <div class="timeline__content">
-                <h2>1</h2>
-                <p>asdasdasdsadasdsdasdas</p>
-              </div>
-            </div>
-            <div class="timeline__item">
-              <div class="timeline__content">
-                <h2>1</h2>
-                <p>asdasdasdasdas</p>
-              </div>
-            </div>
-            <div class="timeline__item">
-              <div class="timeline__content">
-                <h2>1</h2>
-                <p>asdasdasds</p>
-              </div>
-            </div>
-            <div class="timeline__item">
-              <div class="timeline__content">
-                <h2>1</h2>
-                <p>asdasdasdsa</p>
-              </div>
-            </div>
-            <div class="timeline__item">
-              <div class="timeline__content">
-                <h2>1</h2>
-                <p>asdasdasdsad</p>
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>
@@ -309,7 +272,7 @@
       $(".timeline").timeline({
         forceVerticalMode : 700,
         mode : "horizontal",
-        visibleItems : 6
+        visibleItems : [[${timelineList.size()}]] < 4 ? [[${timelineList.size()}]] : 4
       });
       
       function formatDate(date) {
@@ -386,15 +349,15 @@
       
       $('.checkbox').click(function(event){
         const id = $(this).prop("for");
-        console.log(id);
         
         $.ajax({
-          url:'/myclass/project/checkUpdate',
+          url:'/axios/checkUpdate',
           data : { 
             id:id,
             group_id:[[${group.id}]]
             },
           method: 'post',
+
         })
       })
     </script>
