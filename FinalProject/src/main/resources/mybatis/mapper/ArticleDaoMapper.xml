@@ -501,12 +501,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	FROM article
   	WHERE username = #{username}
   </select>
-  <select id="selectEnableArticleByUsername" resultType="kr.or.bit.model.Article">
-	SELECT *
+  <select id="selectEnableArticleByUsername" resultType=	SELECT *
 	FROM article a
 	LEFT JOIN board b
 	ON a.board_id = b.id
-	WHERE enable=1 and not boardtype in (4,6) and username = #{username};
+	WHERE enable=1 and not boardtype in (4,6) and username = #{username}; and username = #{username};
   </select>
   <select id="selectAllPagingArticlesByViewCount"
     resultType="kr.or.bit.model.Article">
