@@ -27,7 +27,7 @@ public class NewsService {
     // API 접속을 위한 ID와 비밀번호
     String clientId = "vqLcW7JqiYZue0zeuYqs";
     String clientSecret = "3ItRGLhcxI";
-    final int DISPLAY = 3; // 뉴스를 가져올 숫자(최대 100개)
+    final int DISPLAY = 9; // 뉴스를 가져올 숫자(최대 100개)
     
     // 뉴스 결과를 담을 StringBuffer
     StringBuffer resp = new StringBuffer();

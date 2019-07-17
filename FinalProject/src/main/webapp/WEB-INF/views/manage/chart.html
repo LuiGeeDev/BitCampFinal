@@ -33,7 +33,7 @@
         <!-- 클래스 리스트 -->
         <div class="chart-column">
           <div class="course-list-container">
-            <div class="course-title">학원 클래스 현황 리스트</div>
+            <div class="course-title">학원 클래스 리스트</div>
             <div class="course-list-table">
               <div class="course-list-category">
                 <!-- <div class="start_date">시작일</div> -->
@@ -176,7 +176,7 @@
         },
 
         subtitle: {
-          text: ''
+          text: '내림차순'
         },
         
         xAxis: {
@@ -190,6 +190,7 @@
 
         series: [{
           type: 'column',
+          name: '인원',
           colorByPoint: true,
           data: enabledNum,
           showInLegend: false
@@ -211,6 +212,11 @@
       title: {
           text: ''
       },
+      
+      subtitle: {
+        text: 'TOP 10'
+      },
+      
       plotOptions: {
           column: {
               depth: 25
@@ -250,6 +256,11 @@
       title: {
           text: ''
       },
+
+      subtitle: {
+        text: 'TOP 10'
+      },
+      
       plotOptions: {
           column: {
               depth: 25

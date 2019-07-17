@@ -97,14 +97,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		SELECT count(*) AS count, a.username, m.name, m.course_id, c.course_name, c.start_date, c.end_date, c.subject
 		FROM  member m JOIN article a ON m.username = a.username
 		JOIN course c ON m.course_id = c.id
+		JOIN authorities au ON m.username = au.username
+        WHERE au.role != "teacher"
 		GROUP BY a.username 
 		ORDER BY count DESC
+		LIMIT 1, 10
  	</select>
  	<select id="commentWriteRank" resultType="kr.or.bit.model.Comment">
  		SELECT count(*) AS count, m.name
 		FROM comment c JOIN member m ON c.username = m.username
+		JOIN authorities au ON m.username = au.username
+        WHERE au.role != "teacher"
 		GROUP BY c.username
 		ORDER BY count DESC
+		LIMIT 1, 10
  	</select>
  	<select id="selectCourseList" resultType="kr.or.bit.model.Course">
  		SELECT c.id, c.course_name, c.start_date, c.end_date, s.subject AS subject_name, c.classroom_id,
