@@ -74,9 +74,11 @@
             <span class="recentProject cardshadow">
               <span class="moreRow">
                 <span class="card-title">최근 프로젝트</span>
-                <span class="moreLotation">더보기</span>
+                <span class="moreLotation"
+                th:onclick="'window.location.href = \'' + @{/myclass/project(group_id=${group_id})} + '\''">
+                                    바로가기</span>
               </span>
-              <span class="recentProjectcontent">파이널 프로젝트 진행중</span>
+              <span class="recentProjectcontent" th:text="${project.project_name} + ' 진행중'">파이널 프로젝트 진행중</span>
             </span>
           </div>
         </div>
