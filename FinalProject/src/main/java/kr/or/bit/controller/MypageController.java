@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.ArticleDao;
+import kr.or.bit.dao.BoardDao;
 import kr.or.bit.dao.CommentDao;
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.FilesDao;
@@ -102,7 +103,12 @@ public class MypageController {
   @GetMapping("/scrap")
   public String getScrapList(Model model) {
     ScrapDao scrapDao = sqlSession.getMapper(ScrapDao.class);
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     List<Article> scraps = scrapDao.selectAllScrap(Helper.userName());
+    
+    for (Article scrap : scraps) {
+      scrap.setBoardtype(boardDao.selectBoardById(scrap.getBoard_id()).getBoardtype());
+    }
     
     model.addAttribute("scraps", scraps);
     return "mypage/scrap/scrap";

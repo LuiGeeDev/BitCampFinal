@@ -21,6 +21,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		or id = 0)
   	AND #{start_date} &lt; #{end_date}
   </select>
+  <select id="selectAvailableTeacher" resultType="kr.or.bit.model.Member">
+  	SELECT t.id AS teacher_id, m.name 
+	FROM teacher t JOIN member m ON t.username = m.username
+	WHERE t.id NOT IN(
+		SELECT t.id 
+		FROM course c 
+		JOIN teacher_course tc ON c.id = tc.course_id
+		JOIN member m ON m.username = tc.teacher_username
+		JOIN teacher t ON t.username = m.username
+		WHERE #{start_date} between start_date and end_date
+		OR #{end_date} between start_date and end_date
+		OR c.id = 0)
+	AND #{start_date} &lt; #{end_date}
+  </select>
   <select id="selectAllCourse" resultType="kr.or.bit.model.Course">     
     SELECT c.id as id, course_name, start_date, end_date, c.subject as subject, c.classroom_id as classroom_id, r.classroom_name as classroom_name, s.subject as subject_name
     FROM Course as c 

@@ -33,14 +33,14 @@ public class Article {
   private List<Files> fileslist;
   private int layer;
   private int sibling;
-  private Date end_date;
+  private int boardtype;
 
-  public Date getEnd_date() {
-    return end_date;
+  public int getBoardtype() {
+    return boardtype;
   }
 
-  public void setEnd_date(Date end_date) {
-    this.end_date = end_date;
+  public void setBoardtype(int boardtype) {
+    this.boardtype = boardtype;
   }
 
   public int getSibling() {
