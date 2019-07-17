@@ -62,7 +62,12 @@
               </span>
               <span class="recentHomeworkcontent">
               <span th:each="homework : ${recentHomework}">
-              <span th:utext="${homework.title}"></span>
+              <a th:href="@{/myclass/homework/detail(id=${homework.id},page=1)}" th:text="${homework.title}" class="homework-title"></a>
+              <span class="period">
+              <span th:text="${#temporals.format(homework.timeLocal, 'yyyy-MM-dd')}"></span>
+              ~ 
+              <span th:text="${homework.option.end_date}"></span>
+              </span>
                </span>
               </span>
             </span>
