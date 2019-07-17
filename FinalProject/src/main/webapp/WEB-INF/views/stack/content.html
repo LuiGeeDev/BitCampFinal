@@ -19,12 +19,12 @@
     <hr>
     <table>
       <tr>
-        <td colspan="3" class="td1"><span
+        <td colspan="2" class="td12"><span
           class="tag-name iteration"
           th:each="tag : ${stackcontent.tags}"> <span
             th:style="'background-color:'+@{${tag.color}}+';'">[[${tag.tag}]]</span>
         </span></td>
-        <td colspan="1" id="contenteditor">
+        <td colspan="2" id="contenteditor">
         <span class="utilNav"><a
           th:href="@{/stack/edit(id=${stackcontent.id})}"
           th:if="${user.username == stackcontent.username}"
@@ -54,8 +54,10 @@
         </td>
       </tr>
       <tr>
-        <td class="td5"><img th:src="@{/css/stack/profile.jpg}"
-          class="imgp"></td>
+        <td class="td5">
+               <img th:if="${stackcontent.writer.profile_photo}!=null"
+                th:src="@{${stackcontent.writer.profile_photo}}" id="profileimg1"/>   
+          </td>
         <td colspan="2" class="td4">
           <p class="pwriter">
             <span th:text="${stackcontent.writer.name}"></span>
@@ -94,7 +96,10 @@
     <table th:unless="${stackcontent.option.adopted_answer==0}"
       class="answerWrapper">
       <tr>
-        <td class="td8"><i class="fas fa-user-circle fa-lg fa-2x"></i></td>
+        <td class="td8">
+            <img th:if="${adoptedanswer.writer.profile_photo}!=null"
+         th:src="@{${adoptedanswer.writer.profile_photo}}" id="profileimg2"/>
+        </td>
         <td class="td10"><span class="answer-name"> <b>[[${adoptedanswer.writer.name}]]
               [채택된 답변] </b><i class="fas fa-crown answer-icon"></i>
         </span> <br> <span class="commentCalender" id="answertime"
@@ -116,7 +121,10 @@
       <table th:if="${stackcontent.commentlist.size()!=0}"
         class="iteration" th:each="list : ${stackcontent.commentlist}">
         <tr>
-          <td class="td8"><i class="fas fa-user-circle fa-lg fa-2x"></i></td>
+          <td class="td8">
+            <img th:if="${stackcontent.writer.profile_photo}!=null"
+                th:src="@{${list.writer.profile_photo}}" id="profileimg2"/>
+            </td>
           <td class="comment-writer">[[${list.writer.name}]] <a
             th:if="${list.id != stackcontent.option.adopted_answer and (list.username == user.username or user.role == 'MANAGER')}"
             th:href="@{/stack/commentdelete(id=${list.id})}"><i class="fas fa-trash-alt"></i></a><br>

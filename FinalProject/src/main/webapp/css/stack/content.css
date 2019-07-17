@@ -64,7 +64,7 @@ th, td {
 }
 
 .td3 {
-  width: 10%;
+  width: 9%;
 }
 
 .td4 {
@@ -72,13 +72,15 @@ th, td {
   border-bottom: 1.5px solid #eaebec;
   padding-bottom: 30px;
   padding-top: 20px;
+  padding-left: 9px;
 }
 
 .td5 {
-  width: 5%;
+  width: 1%;
   border-bottom: 1.5px solid #eaebec;
   padding-bottom: 30px;
   padding-top: 20px;
+  padding-right: 0px;
 }
 
 .td6 {
@@ -94,7 +96,7 @@ th, td {
 
 .td8 {
   width: 2%;
-  padding: 12px 8px;
+  padding: 12px 3px 12px 8px;
 }
 
 .td9 {
@@ -104,7 +106,7 @@ th, td {
 }
 
 .td10 {
-  padding: 20px 0px 10px 0px;
+  padding: 10px 0px 10px 0px;
   font-size: 14px;
 }
 
@@ -112,6 +114,26 @@ th, td {
   padding-bottom: 28px;
   padding-top: 25px;
   font-size: 14px;
+}
+
+.td12{
+  width: 55%;
+  font-size: 16px;
+  padding: 2px 12px;
+}
+
+#profileimg1 {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+#profileimg2 {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 5px;
 }
 
 .tag-name span {
@@ -221,6 +243,7 @@ th, td {
 .comment-writer {
   font-size: 14px;
   font-weight: bold;
+  padding-left: 3px;
 }
 
 .commentCalender {
@@ -257,6 +280,7 @@ th, td {
 #contenteditor {
   width: 10%;
   text-align: right;
+  padding: 2px 12px;
 }
 
 #deleteCheck {
