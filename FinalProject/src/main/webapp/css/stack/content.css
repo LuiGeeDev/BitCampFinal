@@ -385,16 +385,16 @@ th, td {
 }
 
 .commentWriterName {
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .messageReceiverId {
-  display:none;
+  display: none;
 }
 
 .toForm {
   margin-left: 20px;
-  font-weight:bold;
+  font-weight: bold;
 }
 
 .my-comment-name {
@@ -406,36 +406,33 @@ th, td {
 }
 
 .messageTitle {
-  font-size:16px;
+  font-size: 16px;
   font-weight: bold;
   margin-left: 20px;
 }
 
 .messageHeader {
-  height:40px;
+  height: 40px;
 }
 
 .modal-body {
-  height:200px;
-  width:500px;
+  height: 200px;
+  width: 500px;
 }
 
 .messageForm {
   width: 100%;
-  height:100%;
-  resize:none;
+  height: 100%;
+  resize: none;
 }
 
 .bookmarkSpan {
   padding: 8px;
   border: 4px solid white;
-  border-radius: 15px;
-  background-color: #EEEEEE;
   cursor: pointer;
 }
-.bookmarkLabel{
-  
-font-size: 14px;
-  
-margin-right: 3px;
+
+.bookmarkLabel {
+  font-size: 14px;
+  margin-right: 3px;
 }
