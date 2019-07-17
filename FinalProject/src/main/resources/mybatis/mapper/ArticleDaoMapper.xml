@@ -504,7 +504,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="selectEnableArticleByUsername" resultType="kr.or.bit.model.Article">	
   	SELECT *
 	FROM article
-	WHERE enable=1 and not board_id in ('4','6') and username = #{username}; and username = #{username};
+	WHERE enable=1 and not board_id in (4,6) and username = #{username};
   </select>
   <select id="selectAllPagingArticlesByViewCount"
     resultType="kr.or.bit.model.Article">
