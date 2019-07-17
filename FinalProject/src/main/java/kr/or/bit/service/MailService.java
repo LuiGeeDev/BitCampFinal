@@ -29,16 +29,17 @@ public class MailService {
     helper.setFrom(from);
     helper.setTo(to);
     helper.setSubject("[티밍] 강사 계정 생성 안내");
-    String htmlContent = emailTemplateEngine.process("mail", context);
+    String htmlContent = emailTemplateEngine.process("newTeacherMail", context);
     helper.setText(htmlContent, true);
 
     mailSender.send(message);
   }
-  
+
   public void sendNewPasswordEmail(int newPassword, Member member) throws MessagingException {
     Context context = new Context();
     context.setVariable("member", member);
-    
+    context.setVariable("newPassword", newPassword);
+
     String from = "mail@bitcamp.com";
     MimeMessage message = mailSender.createMimeMessage();
     MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");

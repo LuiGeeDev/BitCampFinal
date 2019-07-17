@@ -39,7 +39,7 @@ import kr.or.bit.utils.Helper;
 @Controller
 @RequestMapping("/mypage")
 public class MypageController {
-  
+
   @Autowired
   private SqlSession sqlSession;
   @Autowired
@@ -53,7 +53,6 @@ public class MypageController {
   @Autowired
   private MailService mailService;
 
-
   @GetMapping("/home")
   public String mainPage(Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
@@ -63,7 +62,7 @@ public class MypageController {
     String username = Helper.userName();
     List<Article> article1 = articleDao.selectAllArticleByUsername(username);
     List<Article> article2 = mypageService.allArticleByUsername(username);
-    List<Comment> comments = commentDao.selectAllCommentByUsername(username); 
+    List<Comment> comments = commentDao.selectAllCommentByUsername(username);
 
     Member user = memberDao.selectMemberByUsername(username);
     Course course = courseDao.selectCourse(user.getCourse_id());
@@ -73,18 +72,18 @@ public class MypageController {
     Period diff2 = Period.between(course.getStartDate(), LocalDate.now());
     int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
     model.addAttribute("completion", completion);
-    model.addAttribute("course",course);
-    model.addAttribute("comments",comments);
-    model.addAttribute("article1",article1);
-    model.addAttribute("article2",article2);
-    model.addAttribute("user",user);
+    model.addAttribute("course", course);
+    model.addAttribute("comments", comments);
+    model.addAttribute("article1", article1);
+    model.addAttribute("article2", article2);
+    model.addAttribute("user", user);
     return "mypage/mypage";
   }
-  
+
   @GetMapping("/home/content")
   public String getDetail(int article_id) {
     String URL = mypageService.selectOneArticleforMypage(article_id);
-    System.out.println("URL"+URL);
+    System.out.println("URL" + URL);
     return URL;
   }
 
@@ -94,32 +93,19 @@ public class MypageController {
     List<Comment> comments = commentDao.selectAllCommentByUsername(user);
     return comments;
   }
-  
+
   @PostMapping("/home/ArticleList")
   public @ResponseBody List<Article> getArticleList(String user) {
     List<Article> articles = mypageService.allArticleByUsername(user);
     return articles;
   }
-  
+
   @GetMapping("/mypage/home/articlecontent")
-  public String GetArticleContent(Model model,int id) {
-    
+  public String GetArticleContent(Model model, int id) {
+
     return null;
   }
-  
-  @GetMapping("/forgot-password")
-  public String sendNewPassword(String username) throws MessagingException {
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-    int tempPassword = ((int) Math.random() * 9000) + 1000;
-    Member member = memberDao.selectMemberByUsername(username);
-    member.setPassword(bCryptPasswordEncoder.encode(String.valueOf(tempPassword)));
-    memberDao.updateMember(member);
-    mailService.sendNewPasswordEmail(tempPassword, member);
-    
-    return "redirect:/mypage/home";
-  }
-  
-  
+
   @GetMapping("")
   public String updateMember(Model model, Principal principal) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
@@ -145,5 +131,5 @@ public class MypageController {
     }
     return "redirect:/mypage";
   }
-  
+
 }

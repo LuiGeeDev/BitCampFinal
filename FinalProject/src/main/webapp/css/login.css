@@ -17,10 +17,9 @@ body {
   font-weight: 100;
 }
 
-#container {
+.main {
   background-color: gray;
-  height: 80vh;
-  margin: 10px;
+  height: 100vh;
   text-align: right;
   padding: 210px 0px 0px 100px;
   background: no-repeat;
@@ -130,6 +129,10 @@ button:hover:after {
   user-select: none;
 }
 
+.remember-me, #remember-me + svg {
+  cursor: pointer;
+}
+
 #remember-me:checked + svg {
   color: #F29C20;
 }
@@ -139,5 +142,55 @@ button:hover:after {
 }
 
 .checkbox-area {
+  display: flex;
   margin-left: 16px;
+}
+
+.find-password {
+  margin-left: auto;
+  font-size: 13px;
+  line-height: 25px;
+  cursor: pointer;
+}
+
+.find-password:hover {
+  text-decoration: underline !important;
+}
+
+.find-password:active {
+  font-weight: bold;
+}
+
+.modal-title {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.modal-content p {
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.modal-content label {
+  display: block;
+  font-size: 14px;
+}
+
+.modal-content input {
+  margin-left: 20px;
+  width: 70%;
+  outline: none;
+  border: 1px solid #a6a6a6;
+  border-radius: 3px;
+  padding: 3px 10px;
+  transition: .2s;
+}
+
+.modal-content input:focus {
+  border: 1px solid #F29C20;
+}
+
+#email-error {
+  margin: 0 50px 3px;
+  color: #FF3B30;
 }
