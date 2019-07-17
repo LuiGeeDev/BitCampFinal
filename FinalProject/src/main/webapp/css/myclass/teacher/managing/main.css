@@ -9,7 +9,7 @@ body {
 
 .card {
   width: 900px;
-  height: 260px;
+  height: 220px;
   margin: 10px auto 0;
   flex-direction: row;
   margin: 10px auto 0;
@@ -89,10 +89,10 @@ body {
 }
 
 .btn-move-project-board{
-  margin-top:4px;
-  flex-direction: row;
+  margin-left:5px;
   width: 200px;
-  height: 30px;
+  height: 20px;
+  
 }
 
 .row-control-right>div {
@@ -177,7 +177,8 @@ body {
 }
 
 .btn-group-url{
-  margin-top: 10px;
+  display: flex;
+  margin-top: 20px;
 }
 
 .btn-group-url > div{
@@ -185,6 +186,15 @@ body {
 }
 
 .btn-group-url > h5 {
-  margin-top: 5px;
-  margin-bottom: 4px;
+  padding: 2px;
 }
+
+.homework-title {
+  font-weight: bolder;
+  font-size: 17px;
+}
+
+.homework-content > button {
+  margin-top: 10px;
+}
+

@@ -29,7 +29,7 @@ public interface ProjectDao {
   
   Project selectProject(int id);
   
-  Project selectRecentProjectByUsername(int username);
+  Project selectRecentProjectByUsername(String username);
   
   Project selectRecentProjectByCourseId(int courseid);
 }

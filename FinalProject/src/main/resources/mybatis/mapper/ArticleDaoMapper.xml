@@ -146,7 +146,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE
     BOARD_ID=#{board_id} AND ENABLE=1
     AND title LIKE '%${title}%'
-    ORDER BY id DESC
+    ORDER BY
+    id DESC
   </select>
   <select id="selectAllPagingArticlesByBoardId"
     resultType="kr.or.bit.model.Article">
@@ -197,30 +198,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     a.username = m.username
     WHERE ID=#{id};
   </select>
-  <insert id="insertArticle" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertArticle" useGeneratedKeys="true"
+    keyProperty="id">
     INSERT INTO article(time, updated_time, title,
-    content, username, board_id, original_id)
+    content,
+    username, board_id, original_id)
     VALUES (now(), now(),
-    #{title}, #{content}, #{username}, #{board_id}, (select max(id)+1
-    from (select * from article )as temp))
+    #{title},
+    #{content}, #{username}, #{board_id}, (select max(id)+1
+    from (select
+    * from article )as temp))
   </insert>
-  <insert id="insertTroubleShootingArticle" useGeneratedKeys="true" keyProperty="article.id">
-    INSERT INTO article(time, updated_time, title,
+  <insert id="insertTroubleShootingArticle"
+    useGeneratedKeys="true" keyProperty="article.id">
+    INSERT INTO article(time,
+    updated_time, title,
     content, username, board_id, original_id)
-    VALUES (now(),
+    VALUES
+    (now(),
     now(),
     #{article.title},
     #{article.content},
     #{article.username},
     (SELECT id
     FROM board
-    WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season,
+    WHERE board_name = (SELECT
+    CONCAT('트러블슈팅', p.season,
     g.group_no)
     FROM groups g
     LEFT JOIN project p
     ON g.project_id = p.id
     WHERE g.id = #{group_id})),
-    (select max(id)+1 from (select * from
+    (select max(id)+1
+    from (select * from
     article) as temp))
 
   </insert>
@@ -229,13 +239,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SET title=#{title}, content=#{content}
     WHERE id=#{id}
   </update>
-  <insert id="insertReplyArticle" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertReplyArticle" useGeneratedKeys="true"
+    keyProperty="id">
     INSERT INTO article(time, updated_time, title,
-    content, username, board_id,
+    content,
+    username, board_id,
     level, original_id, layer, sibling)
-    VALUES (now(), now(), #{title}, #{content}, #{username},
+    VALUES (now(),
+    now(), #{title}, #{content}, #{username},
     #{board_id},
-    #{level}, #{original_id}, #{layer}, #{sibling})
+    #{level},
+    #{original_id}, #{layer}, #{sibling})
   </insert>
   <update id="deleteArticle" parameterType="Integer">
     UPDATE article
@@ -287,7 +301,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   <select id="selectArticlesForClassMain"
     resultType="kr.or.bit.model.Article">
-    select a.title, time, board_name, a.username
+    select a.id, a.title, time, board_name, a.username, a.board_id
     from article
     a
     left join board b
@@ -496,21 +510,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     =
     #{sibling}+1
   </select>
-  <select id="selectAllArticleByUsername" resultType="kr.or.bit.model.Article">
-  	SELECT *
-  	FROM article
-  	WHERE username = #{username}
+  <select id="selectAllArticleByUsername"
+    resultType="kr.or.bit.model.Article">
+    SELECT *
+    FROM article
+    WHERE username = #{username}
   </select>
-  <select id="selectEnableArticleByUsername" resultType="kr.or.bit.model.Article">
-	SELECT *
+  <select id="selectEnableArticleByUsername" resultType="kr.or.bit.model.Article">	
+	SELECT a.id, title, content, time, view_count, original_id, level, updated_time, enable, a.board_id, layer, sibling, boardtype
 	FROM article a
-	LEFT JOIN board b
+	JOIN board b
 	ON a.board_id = b.id
 	WHERE enable=1 and not boardtype in (4,6) and username = #{username};
   </select>
   <select id="selectAllPagingArticlesByViewCount"
     resultType="kr.or.bit.model.Article">
-     SELECT id, title, content, time, updated_time,
+    SELECT id, title, content, time, updated_time,
     view_count, original_id,
     enable,
     level, username, board_id,
@@ -519,20 +534,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE article_id=a.id) as votenum,
     (SELECT
     count(*) FROM comment
-    WHERE article_id=a.id) as commentnum
+    WHERE
+    article_id=a.id) as commentnum
     FROM
-    ARTICLE as a
+    ARTICLE
+    as a
     WHERE
     BOARD_ID=#{board_id} AND ENABLE=1
     ORDER BY
     view_count DESC
-    LIMIT #{pager.start},
+    LIMIT
+    #{pager.start},
     #{pager.articlesOnPage}
   </select>
-  
-    <select id="selectAllPagingArticlesByWrite"
+
+  <select id="selectAllPagingArticlesByWrite"
     resultType="kr.or.bit.model.Article">
-     SELECT id, title, content, time, updated_time,
+    SELECT id, title, content, time, updated_time,
     view_count, original_id,
     enable,
     level, username, board_id,
@@ -541,19 +559,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE article_id=a.id) as votenum,
     (SELECT
     count(*) FROM comment
-    WHERE article_id=a.id) as commentnum
+    WHERE
+    article_id=a.id) as commentnum
     FROM
-    ARTICLE as a
+    ARTICLE
+    as a
     WHERE
     BOARD_ID=#{board_id} AND ENABLE=1
     ORDER BY
     time DESC
-    LIMIT #{pager.start},
+    LIMIT
+    #{pager.start},
     #{pager.articlesOnPage}
   </select>
-  
-  
-    <select id="selectFirstArticlesByViewCount"
+
+
+  <select id="selectFirstArticlesByViewCount"
     resultType="kr.or.bit.model.Article">
     SELECT id, title, content, time, updated_time,
     view_count, original_id, enable,
@@ -563,14 +584,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     (SELECT count(*) FROM comment WHERE article_id=a.id) as commentnum
     FROM ARTICLE as a
     WHERE BOARD_ID=#{board_id} AND ENABLE=1
-    ORDER BY view_count
+    ORDER BY
+    view_count
     DESC
     LIMIT 10
   </select>
-  
-  
 
-  
-  
+  <select id="selectRecentHomework"
+    resultType="kr.or.bit.model.Article">
+    select a.id, a.title, a.content, a.time, h.end_date
+    from article as a
+    join homework as h on a.id=h.article_id and a.enable = 1
+    where a.id = a.original_id and a.username = #{username}
+    order by id desc
+    limit 1;
+  </select>
+
+
 </mapper>
  

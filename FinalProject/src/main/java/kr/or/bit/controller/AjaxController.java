@@ -1,7 +1,6 @@
 package kr.or.bit.controller;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,13 +24,11 @@ import kr.or.bit.dao.NotificationDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.ChatMessage;
 import kr.or.bit.model.Classroom;
-import kr.or.bit.model.Comment;
 import kr.or.bit.model.Files;
+import kr.or.bit.model.Member;
 import kr.or.bit.model.Message;
-import kr.or.bit.service.ArticleDeleteService;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleVoteService;
-import kr.or.bit.service.BoardService;
 import kr.or.bit.service.FileUploadService;
 import kr.or.bit.service.NewsService;
 import kr.or.bit.utils.Helper;
@@ -107,8 +103,14 @@ public class AjaxController {
   public List<Classroom> getClassroom(Date start_date, @RequestParam(defaultValue = "1970-01-01") Date end_date) {
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     List<Classroom> classroomList = courseDao.selectAvailableClassroom(start_date, end_date);
-
     return classroomList;
+  }
+  
+  @PostMapping("/classroom/teacher")
+  public List<Member> getTeacher(Date start_date,  @RequestParam(defaultValue = "1970-01-01") Date end_date) {
+    CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
+    List<Member> teacherList = courseDao.selectAvailableTeacher(start_date, end_date);
+    return teacherList;
   }
 
   @PostMapping("/vote")
