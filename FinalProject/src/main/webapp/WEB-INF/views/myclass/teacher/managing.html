@@ -30,9 +30,6 @@
             <h5
               th:text="'총원 '+${all}+'명'+' / '+' 재적 '+${enable}+'명'+' / '+'중탈 '+${disable}+'명'">총원
               23명</h5>
-            <div class="btn-teacher">
-              <button class="btn btn-primary">학생 관리</button>
-            </div>
           </div>
         </div>
         <div class="teacher-manage-right">
@@ -51,11 +48,13 @@
 
           <div class="btn-group-url">
             <h5>프로젝트 둘러보기</h5>
-            <select class="btn-move-project-board">
+            <select class="btn-move-project-board"
+              onchange="if(this.value) location.href=(this.value);">
               <option value=" ">이동하기</option>
-              <option th:each="groups : ${groups}"
-                th:text="${groups.group_no}+'조 프로젝트'" th:href="">?조 프로젝트
-                게시판</option>
+              <option th:each="group : ${groups}"
+                th:text="${group.group_no}+'조 프로젝트'"
+                th:value="@{/myclass/project(group_id=${group.id})}">
+              </option>
             </select>
           </div>
         </div>
@@ -69,7 +68,14 @@
               <div class="card-content">
                 <p class="title">최근과제</p>
                 <div class="homework-content">
-                  <span>현재 ?명 중 ?명 제출(?%)</span><br>
+                  <span class="homework-title"
+                    th:text="${homeworkarticle.title}"></span> <span>
+                    진행중 입니다.</span>
+                  <div th:text="'마감일: '+${homeworkarticle.end_date}"></div>
+                  <div
+                    th:each="homeworkarticlere,iter : ${homeworkarticlere}">
+                    <div th:text="${iter.count}+'개의 과제가 제출되었습니다.'"></div>
+                  </div>
                   <button class="btn btn-primary">과제 확인하러 가기</button>
                 </div>
               </div>
