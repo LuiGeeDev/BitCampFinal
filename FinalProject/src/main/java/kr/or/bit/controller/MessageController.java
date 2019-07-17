@@ -24,14 +24,18 @@ public class MessageController {
     String username = Helper.userName();
     MessageDao messageDao = SqlSession.getMapper(MessageDao.class);
     List<Message> selectall = messageDao.selectAllMessage(username);
+    List<Message> selectSenderMessage = messageDao.selectAllSenderMessage(username);
     int countmessage = messageDao.selectCountMessage(username);
     for (Message message: selectall) {
       message.setTimeDate(new Date(message.getTime().getTime()));
     }
     
-    
+    for(Message message : selectSenderMessage) {
+      message.setTimeDate(new Date(message.getTime().getTime()));
+    }
     model.addAttribute("selectall", selectall);
     model.addAttribute("countmessage", countmessage);
+    model.addAttribute("sendMessage", selectSenderMessage);
     return "message/message";
   }
 }

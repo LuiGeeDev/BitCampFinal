@@ -71,15 +71,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND   m.course_id = #{course_id}
 		AND   m.${stringColumn} LIKE '%${stringValue}%'
  	</select>
- 	<select id="selectCourseList" resultType="kr.or.bit.model.Course">
- 		SELECT id, course_name, start_date, end_date, subject, Classroom_id 
-		FROM course
- 	</select>
  	<update id="updateMemberEnabled">
  		UPDATE member
 		SET enabled=#{enabled}
 		WHERE username=#{username}
  	</update>
- 	
+ 	<select id="countCourseBySubject" resultType="kr.or.bit.model.Course">
+		SELECT count(*) count, s.subject subject_name
+		FROM course c JOIN subject s ON c.subject = s.id
+		GROUP BY c.subject
+		ORDER BY count
+ 	</select>
+ 	<select id="countAllCourse" resultType="Integer">
+ 		SELECT count(*) count
+ 		FROM course
+ 	</select>
+ 	<select id="countEnableMember" resultType="kr.or.bit.model.Course">
+ 		SELECT count(*) AS count, c.course_name, c.start_date, c.end_date, c.subject AS subject_name
+		FROM member m JOIN course c ON m.course_id = c.id
+		WHERE m.enabled=0
+		GROUP BY c.course_name
+		ORDER BY count DESC;
+ 	</select>
+ 	<select id="articleWriteRank" resultType="kr.or.bit.model.Course">
+ 		SELECT count(*) AS count, a.username, m.name, m.course_id, c.course_name, c.start_date, c.end_date, c.subject
+		FROM  member m JOIN article a ON m.username = a.username
+		JOIN course c ON m.course_id = c.id
+		GROUP BY a.username 
+		ORDER BY count DESC
+ 	</select>
+ 	<select id="commentWriteRank" resultType="kr.or.bit.model.Comment">
+ 		SELECT count(*) AS count, m.name
+		FROM comment c JOIN member m ON c.username = m.username
+		GROUP BY c.username
+		ORDER BY count DESC
+ 	</select>
+ 	<select id="selectCourseList" resultType="kr.or.bit.model.Course">
+ 		SELECT c.id, c.course_name, c.start_date, c.end_date, s.subject AS subject_name, c.classroom_id
+		FROM course c JOIN subject s ON c.subject=s.id
+		ORDER BY c.id DESC
+ 	</select>
+ 	<select id="">
+ 		SELECT c.id, c.course_name, c.start_date, c.end_date, s.subject AS subjectName, c.classroom_id,
+		(select m.name
+		from member m JOIN authorities a ON m.username=a.username 
+		where role="TEACHER" AND course_id=c.id) AS teacher
+		FROM course c JOIN subject s ON c.subject = s.id
+		ORDER BY c.id DESC
+ 	</select>
  </mapper>
  

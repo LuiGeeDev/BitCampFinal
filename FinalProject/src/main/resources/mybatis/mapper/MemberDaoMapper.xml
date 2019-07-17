@@ -30,6 +30,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     profile_photo=#{profile_photo}
     WHERE username=#{username}
   </update>
+  <insert id="insertTeacher">
+    INSERT INTO member (username, password, name, email, enabled, course_id)
+    VALUES (#{username}, #{password}, #{name}, #{email}, 1, 0);
+    
+    UPDATE authorities
+    SET role = 'TEACHER'
+    WHERE username = #{username};
+    
+    INSERT INTO TEACHER (username)
+    VALUES (#{username});
+  </insert>
   <delete id="deleteMember">
     DELETE FROM member
     WHERE username=#{username}
