@@ -19,6 +19,7 @@ import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.MessageDao;
 import kr.or.bit.dao.ProjectDao;
+import kr.or.bit.dao.TimelineDao;
 import kr.or.bit.dao.VideoDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
@@ -26,6 +27,8 @@ import kr.or.bit.model.Course;
 import kr.or.bit.model.Member;
 import kr.or.bit.model.Message;
 import kr.or.bit.model.Project;
+import kr.or.bit.model.Timeline;
+import kr.or.bit.service.TroubleShootingService;
 import kr.or.bit.utils.Helper;
 
 @Controller
@@ -43,6 +46,7 @@ public class HomeController {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
     ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    TimelineDao timelineDao = sqlSession.getMapper(TimelineDao.class);
 
     String username = Helper.userName();
 
@@ -51,6 +55,7 @@ public class HomeController {
     List<Article> recentVideos = articleDao.selectAllArticleByBoardId(VIDEO_BOARD_ID);
     List<Article> recentStacks = articleDao.selectAllArticleByBoardId(STACK_BOARD_ID);
     List<Article> recentlyCommentedStacks = articleDao.selectRecentlyCommentedArticle();
+    List<Timeline> recentTimeline = timelineDao.selectTimelineByGroupId(user.getGroup_id());
     Project project = projectDao.selectRecentProject(user.getCourse_id());
     
     for (Article video : recentVideos) {
@@ -82,6 +87,7 @@ public class HomeController {
     model.addAttribute("mainMessage", mainMessage);
     model.addAttribute("recentVideos", recentVideos);
     model.addAttribute("recentStacks", recentStacks);
+    model.addAttribute("recentTimeline", recentTimeline);
     model.addAttribute("recentlyCommented", recentlyCommentedStacks);
     model.addAttribute("project", project);
     model.addAttribute("dDay", dDay.getDays());
