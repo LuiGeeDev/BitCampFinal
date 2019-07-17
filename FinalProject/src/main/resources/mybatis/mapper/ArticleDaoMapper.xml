@@ -301,7 +301,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   <select id="selectArticlesForClassMain"
     resultType="kr.or.bit.model.Article">
-    select a.title, time, board_name, a.username
+    select a.id, a.title, time, board_name, a.username, a.board_id
     from article
     a
     left join board b

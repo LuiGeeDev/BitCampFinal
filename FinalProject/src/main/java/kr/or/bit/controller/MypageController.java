@@ -25,6 +25,7 @@ import kr.or.bit.dao.CommentDao;
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.FilesDao;
 import kr.or.bit.dao.MemberDao;
+import kr.or.bit.dao.ScrapDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Course;
@@ -50,8 +51,6 @@ public class MypageController {
   private FileUploadService fileUploadService;
   @Autowired
   private MypageService mypageService;
-  @Autowired
-  private MailService mailService;
 
   @GetMapping("/home")
   public String mainPage(Model model) {
@@ -99,12 +98,16 @@ public class MypageController {
     List<Article> articles = mypageService.allArticleByUsername(user);
     return articles;
   }
-
-  @GetMapping("/mypage/home/articlecontent")
-  public String GetArticleContent(Model model, int id) {
-
-    return null;
+  
+  @GetMapping("/scrap")
+  public String getScrapList(Model model) {
+    ScrapDao scrapDao = sqlSession.getMapper(ScrapDao.class);
+    List<Article> scraps = scrapDao.selectAllScrap(Helper.userName());
+    
+    model.addAttribute("scraps", scraps);
+    return "mypage/scrap/scrap";
   }
+
 
   @GetMapping("")
   public String updateMember(Model model, Principal principal) {

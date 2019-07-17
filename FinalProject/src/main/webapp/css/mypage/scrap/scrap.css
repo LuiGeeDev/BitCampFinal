@@ -1,0 +1,38 @@
+#column {
+  width: 80%;
+  margin: auto;
+  column-width: 200px;
+}
+
+.scrap-card {
+  border: 1px solid transparent;
+  border-radius: 3px;
+  display: inline-block;
+  margin: 0 2px 15px;
+  width: 200px;
+  padding: 10px 20px;
+  transition: 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.scrap-card:hover {
+  border: 1px solid #F29C20;
+  cursor: pointer;
+}
+
+#column:hover .scrap-card:not(:hover) {
+  opacity: 0.6;
+}
+
+.scrap-title {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.scrap-content {
+  margin: 0;
+  font-size: 14px;
+  color: #a6a6a6;
+  padding-top: 5px;
+  border-top: 1px solid #a6a6a6;
+}

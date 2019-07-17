@@ -19,10 +19,6 @@ body {
   font-familly: 'Nanum Gothic' !important;
 }
 
-.card.recent-issues{
-  overflow-y: scroll;
-}
-
 .top-row {
   margin: 0 auto;
   display: flex;
@@ -34,10 +30,6 @@ body {
   padding: 10px 20px;
   margin-right: 20px;
   height: auto;
-}
-
-.checklist {
-  overflow-y: scroll;
 }
 
 .edit-link, .edit-checklist {
@@ -108,7 +100,6 @@ input[type=checkbox]:checked+label i {
   height: auto;
   font-weight: bold;
   font-familly: 'Nanum Gothic';
-  
 }
 
 .timeline {
@@ -147,7 +138,7 @@ input[type=checkbox]:checked+label i {
   padding: 10.5px 26.5px;
 }
 
-.fa-check-square{
+.fa-check-square {
   font-size: 15px !important;
 }
 
@@ -221,95 +212,110 @@ input[type=checkbox]:checked+label i {
   font-size: 300%;
 }
 
-.checkbox{
-  display:inline-block;
+.checkbox {
+  display: inline-block;
   max-width: 190px;
-  overflow:hidden;
+  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.timeline__title{
-  font-size:16px;
-  font-weight:bold;
-  text-align:center;
-  
+.timeline__title {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
 }
-.timeline-content{
-  margin-top:20px;
-  font-size:14px;
-  text-align:center;
-  line-height:1px
-}
-.timeline__writer{
-  font-size:12px;
-  font-weight:bold;
-  text-align:center;
-}
-.timeline__date{
-  font-size:11px;
 
+.timeline-content {
+  margin-top: 20px;
+  font-size: 14px;
+  text-align: center;
+  line-height: 1px
 }
-.timeline__writer__info{
-  margin-top:15px;
-  text-align:center;
-  line-height:5px
+
+.timeline__writer {
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
 }
-.timeline__content{
-  padding-top:10px !important;
+
+.timeline__date {
+  font-size: 11px;
 }
-.noArticle{
-  font-weight:bold;
-  line-height:230px;
+
+.timeline__writer__info {
+  margin-top: 15px;
+  text-align: center;
+  line-height: 5px
+}
+
+.timeline__content {
+  padding-top: 10px !important;
+}
+
+.noArticle {
+  font-weight: bold;
+  line-height: 230px;
   -webkit-user-drag: none;
   user-select: none;
 }
 
-.issue-title a h3, .issue-tags, .issue-writer{
-  line-height:32px;
+.issue-title a h3, .issue-tags, .issue-writer {
+  line-height: 32px;
 }
 
 label .fab, label .fas {
-  font-size:22px;
+  font-size: 22px;
 }
 
-#new-link #github-address{
-  margin-left:4px;
-  padding-left:3px;
-}
-#new-link #drive-address{
-  margin-left:3px;
-  padding-left:3px;
-}
-#new-link #inbox-address{
-  padding-left:3px;
+#new-link #github-address {
+  margin-left: 4px;
+  padding-left: 3px;
 }
 
-#new-link input{
-  width:80% !important;
+#new-link #drive-address {
+  margin-left: 3px;
+  padding-left: 3px;
 }
-#clipboard{
-  width:1px;
-  height:1px;
+
+#new-link #inbox-address {
+  padding-left: 3px;
 }
-.button-wrapper{
-  text-align:right;
+
+#new-link input {
+  width: 80% !important;
+}
+
+#clipboard {
+  width: 1px;
+  height: 1px;
+}
+
+.button-wrapper {
+  text-align: right;
   margin-right: 9px;
 }
-.non-link-address{
+
+.non-link-address {
   line-height: 30px;
-  font-weight:bold;
-  font-size:14px;
+  font-weight: bold;
+  font-size: 14px;
   -webkit-user-drag: none;
   user-select: none;
 }
 
-.links .fa-github{
-  margin-right:15px;
+.links .fa-github {
+  margin-right: 15px;
 }
-.links .fa-google-drive{
-  margin-right:14px;
+
+.links .fa-google-drive {
+  margin-right: 14px;
 }
-.links .fa-inbox{
-  margin-right:10px;
+
+.links .fa-inbox {
+  margin-right: 10px;
+}
+
+.checklist-list {
+  height: 74%;
 }

@@ -152,7 +152,7 @@ a[class^="carousel-control"] {
 }
 
 .my-project h4, .my-notification h4 {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   color: #2D3E50;
 }
 
@@ -280,4 +280,14 @@ a[class^="carousel-control"] {
 
 .message-photo {
   background: url("/resources/images/default.png");
+}
+
+.no-timeline {
+  position: absolute;
+  top: 45%;
+  left: 11%;
+  padding: 5px 10px;
+  width: 80%;
+  text-align: center;
+  font-weight: bold;
 }

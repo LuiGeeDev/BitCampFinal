@@ -20,8 +20,7 @@ body {
 }
 
 .title {
-  font-size: 190%;
-  margin: 20px;
+  font-size: 14px;
 }
 
 .moreRow {
@@ -31,7 +30,7 @@ body {
 .moreLotation {
   margin-left: auto;
   cursor: pointer;
-  font-size:12px;
+  font-size: 12px;
 }
 
 .myclassWrapper {
@@ -50,8 +49,8 @@ body {
   padding-top: 30px;
 }
 
-.processBar h5{
-  font-size:14px;
+.processBar h5 {
+  font-size: 14px;
 }
 
 .recentHomework {
@@ -70,6 +69,7 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 220px;
 }
 
 .recentProjectcontent {
@@ -170,4 +170,24 @@ body {
 
 .fc-day-number {
   font-size: 14px;
+}
+
+.homework-title{
+  max-width:300px;
+  color:black;
+}
+
+.period {
+  position: absolute;
+  right: 240px;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.article-info{
+  cursor:pointer;
+}
+
+.article-info:hover{
+  background-color:#f7f7f7;
 }

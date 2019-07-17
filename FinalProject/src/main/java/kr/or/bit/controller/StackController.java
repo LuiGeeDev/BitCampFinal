@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.QnaDao;
+import kr.or.bit.dao.ScrapDao;
 import kr.or.bit.dao.StackDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.ArticleOption;
@@ -24,6 +25,7 @@ import kr.or.bit.model.General;
 import kr.or.bit.model.Tag;
 import kr.or.bit.model.Member;
 import kr.or.bit.model.Qna;
+import kr.or.bit.model.Scrap;
 import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleUpdateService;
@@ -97,7 +99,7 @@ public class StackController {
   @GetMapping("/content")
   public String GetStackContent(int id, Model model) {
     MemberDao memberDao = sqlsession.getMapper(MemberDao.class);
-    StackDao stackdao = sqlsession.getMapper(StackDao.class);
+    StackDao stackdao = sqlsession.getMapper(StackDao.class);    
     Article article = articleService.selectOneArticle("qna", id);
     Qna qna = (Qna) article.getOption();
     int adopted = qna.getAdopted_answer();
@@ -112,6 +114,13 @@ public class StackController {
     model.addAttribute("stackcontent", article);
     articleUpdateService.viewCount(article);
     return "stack/content";
+  }
+  
+  @GetMapping("/insertScrap")
+  public String insertScrap(int article_id) {
+    ScrapDao scrapDao = sqlsession.getMapper(ScrapDao.class);
+    scrapDao.insertScrap(article_id, Helper.userName());
+    return "redirect:/stack/content?id=" + article_id;
   }
 
   // 글쓰기 폼 화면으로..
