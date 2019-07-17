@@ -23,6 +23,7 @@ body {
   display:flex;
   flex-direction:row;
   width:950px;
+  margin-bottom:30px;
 }
 
 .chart-column {
