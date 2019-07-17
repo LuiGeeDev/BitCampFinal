@@ -160,8 +160,8 @@
       <div class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <i class="far fa-paper-plane fa-2x"></i>&nbsp;&nbsp;<h5 class="modal-title">쪽지보내기</h5>
+      <div class="modal-header messageHeader">
+        <h5 class="modal-title messageTitle">쪽지보내기</h5>
         <span class="toForm">
         <span class="messageTo">To</span>
         <span class="messageReceiveName"></span>
@@ -339,8 +339,6 @@
               if(item.writer.profile_photo == null) {
                 userPhoto = "/resources/images/default.png";
                 
-                 /*  <img th:if="${comment.writer.profile_photo != null}" class="writerIcon" th:src="@{${comment.writer.profile_photo}}">
-                <img th:if="${comment.writer.profile_photo == null}" class="writerIcon" th:src="@{/resources/images/default.png}"></span> */  
                } else {
                 userPhoto = item.writer.profile_photo;
                }
