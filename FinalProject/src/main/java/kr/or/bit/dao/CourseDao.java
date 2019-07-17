@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import kr.or.bit.model.Classroom;
 import kr.or.bit.model.Course;
+import kr.or.bit.model.Member;
 
 /*
 *
@@ -31,6 +32,8 @@ public interface CourseDao {
   Course selectRecentCourse();
 
   List<Classroom> selectAvailableClassroom(@Param("start_date") Date start_date, @Param("end_date") Date end_date);
+  
+  List<Member> selectAvailableTeacher(@Param("start_date") Date start_date, @Param("end_date") Date end_date);
   
   List<Course> selectAllTeacherCourse(String username);
   
