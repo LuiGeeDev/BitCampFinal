@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="kr.or.bit.dao.HomeworkDao">
   <insert id="insertHomework">
   	insert into homework(end_date, file1, file2, article_id)
-	values (now(),#{file1},#{file2},#{article_id})
+	values (#{end_date},#{file1},#{file2},#{article_id})
   </insert>
   <update id="updateHomework">
   	{call CHANGE("troubleshooting", ${id})}

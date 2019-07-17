@@ -174,11 +174,20 @@ body {
 
 .homework-title{
   max-width:300px;
+  color:black;
 }
 
 .period {
   position: absolute;
   right: 240px;
-  font-size:12px;
+  font-size:11px;
   font-weight:bold;
+}
+
+.article-info{
+  cursor:pointer;
+}
+
+.article-info:hover{
+  background-color:#eee;
 }
