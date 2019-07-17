@@ -301,19 +301,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   <select id="selectArticlesForClassMain"
     resultType="kr.or.bit.model.Article">
-    select a.id, a.title, time, board_name, a.username, a.board_id
+    select a.id, a.title, time, board_name, a.username,
+    a.board_id
     from article
     a
     left join board b
     on a.board_id = b.id
-    left join member m
+    left
+    join member m
     on
     m.username = a.username
-    where b.course_id = #{course_id}
+    where b.course_id =
+    #{course_id}
     and
     b.boardtype not in (1, 2, 4, 6)
     and level = 1
-    order by a.id desc
+    order by
+    a.id desc
     LIMIT
     5
   </select>
@@ -596,11 +600,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="selectRecentHomework"
     resultType="kr.or.bit.model.Article">
     select a.id, a.title, a.content, a.time, h.end_date
-    from article as a
+    from
+    article as a
     join homework as h on a.id=h.article_id and a.enable = 1
     where a.id = a.original_id and a.username = #{username}
-    order by id desc
+    order by id
+    desc
     limit 1;
+  </select>
+
+  <select id="selectRecentStackbyCourse"
+    resultType="kr.or.bit.Article">
+    select *
+    from article as a
+    join member as m on a.username = m.username
+    where course_id = #{courseid} and board_id = 1
+    order by id desc
+    limit 5;
   </select>
 
 

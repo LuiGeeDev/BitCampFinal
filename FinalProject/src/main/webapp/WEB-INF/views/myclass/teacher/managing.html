@@ -76,7 +76,7 @@
                     th:each="homeworkarticlere,iter : ${homeworkarticlere}">
                     <div th:text="${iter.count}+'개의 과제가 제출되었습니다.'"></div>
                   </div>
-                  <button class="btn btn-primary">과제 확인하러 가기</button>
+                  <button class="btn btn-primary" th:onclick="'window.location.href = \'' + @{/myclass/homework/detail(id=${homeworkarticle.id},page=1)} + '\''">과제 확인하러 가기</button>
                 </div>
               </div>
             </div>
