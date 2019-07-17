@@ -99,14 +99,17 @@
       </div>
       <div class="detail-comment">
         <span class="userIcon">
-        
-        <img th:if="@{${user.profile_photo} == null}" 
-             th:src="@{/resources/images/default.png}" id="icon"/>
-             
-        <img th:if="@{${user.profile_photo} != null}" 
-             th:src="${user.profile_photo}" id="icon"/>
-        
-        
+          <img
+            th:if="@{${user.profile_photo} == null}"
+            th:src="@{/resources/images/default.png}"
+            id="icon"
+          />
+
+          <img
+            th:if="@{${user.profile_photo} != null}"
+            th:src="${user.profile_photo}"
+            id="icon"
+          />
         </span>
         <span class="writerName" th:text="${user.name}"></span>
         <input
@@ -132,23 +135,33 @@
         >
           <div class="content-move">
             <span class="userIcon"
-              ><img th:if="${comment.writer.profile_photo != null}" class="writerIcon" th:src="@{${comment.writer.profile_photo}}">
-                <img th:if="${comment.writer.profile_photo == null}" class="writerIcon" th:src="@{/resources/images/default.png}"></span>
+              ><img
+                th:if="${comment.writer.profile_photo != null}"
+                class="writerIcon"
+                th:src="@{${comment.writer.profile_photo}}"/>
+              <img
+                th:if="${comment.writer.profile_photo == null}"
+                class="writerIcon"
+                th:src="@{/resources/images/default.png}"
+            /></span>
+
             <span
-              
               class="commentWriterName"
               th:text="${comment.writer.name}"
-              
             ></span>
             <a
               th:if="${comment.username}==${user.username}"
               th:href="@{/myclass/board/commentdelete(comment_id=${comment.id}, article_id=${article.id}, board_id=${board.id})}"
               >[삭제]</a
             >
-            <span class="hidden messageReceiverId" th:text=${comment.username}></span> 
+            <span
+              class="hidden messageReceiverId"
+              th:text="${comment.username}"
+            ></span>
             <span
               class="write-date"
-              th:text="${#temporals.format(comment.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
+              th:text="${#temporals.format(comment.timeLocal, 'yyyy-MM-dd HH:mm')}"
+            ></span>
           </div>
           <div class="content-comment" th:text="${comment.content}"></div>
         </div>
@@ -156,27 +169,40 @@
           등록된 댓글이 없습니다
         </div>
       </div>
-      
+
       <div class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <i class="far fa-paper-plane fa-2x"></i>&nbsp;&nbsp;<h5 class="modal-title">쪽지보내기</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <i class="far fa-paper-plane fa-2x"></i>&nbsp;&nbsp;
+              <h5 class="modal-title">쪽지보내기</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <textarea class="messageForm" id="messageText"></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary submitMessage">
+                전송
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                취소
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="modal-body">
-        <textarea class="messageForm" id="messageText"></textarea>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary submitMessage">전송</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-      </div>
-    </div>
-  </div>
-</div>
-      
     </div>
     <!-- 필요하다면 이 아래에 외부 자바스크립트도 추가 가능 -->
 
@@ -195,21 +221,21 @@
       $(".commentWriterName").click(function(event) {
         const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
         if([[${user.username}]] != receiverId) {
-        $(".modal").modal("show");
+          $(".modal").modal("show");
         }
-        
+
         $(".submitMessage").unbind("click");
         $(".submitMessage").click(function() {
           const messageText = $("#messageText").val();
-        	if(messageText.trim() === "" || messageText === null) {
-    	  	  Swal.fire({
-    	  	    type: 'error',
-    	  	    text: '다시 입력해주세요 !!',
-    	  	  })
-    	  	  	return;
-    	  	}
-        	
-        	$.ajax({
+         	if (messageText.trim() === "" || messageText === null) {
+        	  Swal.fire({
+        	    type: 'error',
+        	    text: '다시 입력해주세요 !!',
+        	  })
+        	  return;
+        	}
+
+         	$.ajax({
             url: "/ajax/message/reply",
             type: "POST",
             data: {
@@ -226,18 +252,9 @@
             });
             sendMessageNotice([[${user.name}]], receiverId);
           });
-        });  
-        
-        
+        });
       });
-        
-       
-      
-      
-      
-      
-      
- 
+
       $("#deletebtn").click(function(event) {
         let articleId = [[${article.id}]];
         event.preventDefault();
@@ -271,31 +288,31 @@
           }
         })
       });
-      
+
       $("#assemble").click(function() {
-        sendAssembleNotice([[${user.name}]], [[${user.username}]], window.location.href);
+        sendAssembleNotice([[${user.name}]], [[${user.username}]], `/myclass/board/read?article_id=[[${article.id}]]&board_id=[[${article.board_id}]]`);
       });
 
-    	$("#comment-submit").click(function(event) {
+      $("#comment-submit").click(function(event) {
         let valueCheck = $("#content").val();
         if (valueCheck.trim() === "" || valueCheck === null) {
-    	  	Swal.fire({
-    	      type: 'error',
-    		    text: '다시 입력해주세요 !!',
-        	});
-    	    return;
+          Swal.fire({
+            type: 'error',
+      	    text: '다시 입력해주세요 !!',
+         	});
+          return;
         }
-        
-    	  const articleId = $("#comment-articleID").text();
-    	 	const commentContent = $("#content").val();
-    	 	const username = [[${user.username}]];
 
-      	const formData = new FormData();
-       	formData.append("article_id", articleId);
-    	 	formData.append("content", commentContent);
-    	 	formData.append("username", username);
+        const articleId = $("#comment-articleID").text();
+       	const commentContent = $("#content").val();
+       	const username = [[${user.username}]];
 
-      	$.ajax({
+       	const formData = new FormData();
+        formData.append("article_id", articleId);
+       	formData.append("content", commentContent);
+       	formData.append("username", username);
+
+       	$.ajax({
           url: "/myclass/board/commentwrite",
           type: "post",
           data: formData,
@@ -303,8 +320,10 @@
           processData: false,
           success: function(data) {
             $(".content-reply-form").empty();
-           	$("#content").val("");
-           	sendCommentNotice([[${user.name}]], [[${article.username}]], "/myclass/board/read?article_id="+[[${article.id}]]+"&board_id="+[[${board.id}]]);
+            $("#content").val("");
+            if ([[${user.username}]] !== [[${article.username}]]) {
+              sendCommentNotice([[${user.name}]], [[${article.username}]], "/myclass/board/read?article_id="+[[${article.id}]]+"&board_id="+[[${board.id}]]);
+            }
             $.each(data, function(index, item) {
               const content = item.content;
               const username = item.writer.name;
@@ -324,58 +343,53 @@
 
               const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ hours +`:` + minutes;
               let equalName = null;
-              if(item.username == [[${user.username}]]) {
+              if (item.username == [[${user.username}]]) {
                 equalName = "[삭제]";
               } else {
                 equalName = "";
               }
-			  
-              var userPhoto = null;
-              
-              if(item.writer.profile_photo == null) {
+
+              let userPhoto = null;
+
+              if (item.writer.profile_photo == null) {
                 userPhoto = "/resources/images/default.png";
-                
-                 /*  <img th:if="${comment.writer.profile_photo != null}" class="writerIcon" th:src="@{${comment.writer.profile_photo}}">
-                <img th:if="${comment.writer.profile_photo == null}" class="writerIcon" th:src="@{/resources/images/default.png}"></span> */  
-               } else {
+              } else {
                 userPhoto = item.writer.profile_photo;
-               }
-              
-              
+              }
+
+
               let html = "<div class='content-reply'>";
               html += "<div class='content-move'>" +
-              /* <img src="+item.writer.profile_photo+" class='writerIcon'> */
                       "<span class='userIcon'><img src="+userPhoto+" id='icon'></span>" +
                       "<span class='commentWriterName'>" + username + "</span>" +
                       "<a href='/myclass/board/commentdelete?comment_id=" + commentId + "&article_id=" + articleId + "&board_id=" + [[${board.id}]] +"'" + ">" +equalName+"</a>" +
-                      "<span class='hidden messageReceiverId'>" + item.username + "</span>" + 
+                      "<span class='hidden messageReceiverId'>" + item.username + "</span>" +
                       "<span class='write-date'>" + timedate + "</span></div>";
               html += "<div class='content-comment'>" + content + "</div></div>";
               $(".content-reply-form").append(html);
-              
             });
-            
-            
-            
+
+
+
             $(".commentWriterName").unbind("click");
             $(".commentWriterName").click(function(event) {
               const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
               if([[${user.username}]] != receiverId) {
-              $(".modal").modal("show");
+                $(".modal").modal("show");
               }
-              
+
               $(".submitMessage").unbind("click");
               $(".submitMessage").click(function() {
                 const messageText = $("#messageText").val();
-              	if(messageText.trim() === "" || messageText === null) {
-          	  	  Swal.fire({
-          	  	    type: 'error',
-          	  	    text: '다시 입력해주세요 !!',
-          	  	  })
-          	  	  	return;
-          	  	}
-              	
-              	$.ajax({
+                if (messageText.trim() === "" || messageText === null) {
+           	  	  Swal.fire({
+           	  	    type: 'error',
+           	  	    text: '다시 입력해주세요 !!',
+           	  	  })
+           	  	  return;
+           	    }
+
+               	$.ajax({
                   url: "/ajax/message/reply",
                   type: "POST",
                   data: {
@@ -392,10 +406,8 @@
                   });
                   sendMessageNotice([[${user.name}]], receiverId);
                 });
-              });  
-              
+              });
             });
-              
           }
         });
       });
