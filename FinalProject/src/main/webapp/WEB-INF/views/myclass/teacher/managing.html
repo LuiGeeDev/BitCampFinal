@@ -5,33 +5,54 @@
 <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
 <link rel="stylesheet"
   th:href="@{/css/myclass/teacher/managing/main.css}" />
-  <link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
+<link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
 </head>
 <body>
   <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
   <div class="main" th:fragment="main">
-  <div th:replace="myclass/teacher/nav :: teacher-nav(manage)"></div>
+    <div th:replace="myclass/teacher/nav :: teacher-nav(manage)"></div>
     <div class="row">
       <div class="card">
         <div class="teacher-manage-left">
           <p class="title">내 수업</p>
-          <h5>수업이 없습니다. 수업을 등록해주세요</h5>
-          <h5>2019-01-01~2019-07-30</h5>
+          <h5 th:text="${course.course_name}">수업이 없습니다. 수업을 등록해주세요</h5>
+          <div class="course_info">
+            <h5 th:text="${course.start_date}">2019-01-01</h5>
+            <h5>~</h5>
+            <h5 th:text="${course.end_date}">2019-01-02</h5>
+          </div>
           <div class="progres">
             <div>
               <div class="progress-bar bg-warning progress-bar-striped"
-                style="width: 70%"></div>
+                th:style="'width:' + ${percent} + '%; height: 30px;'"></div>
             </div>
-            <span>&nbsp?% 적용중</span>
+          </div>
+          <span th:text="${percent} + '% 진행중'"> 진행중</span>
+          <div class="class-info">
+            <h5>총원 23명 / 재적 20명 / 중탈 3명</h5>
+          </div>
+          <div class="progres">
+            <div>
+              <div class="progress-bar bg-warning progress-bar-striped"
+                th:style="'width:' + ${percent} + '%; height: 30px;'"></div>
+            </div>
+            <div></div>
           </div>
           <div class="btn-teacher">
-            <button class="btn btn-primary">내 수업으로 가기</button>
-            <button class="btn btn-primary">내 자료 관리하기</button>
+            <button class="btn btn-primary">학생 관리</button>
           </div>
         </div>
         <div class="teacher-manage-right">
-          <div>
-            <span>1차 프로젝트</span><br> <span> 진행중입니다.</span>
+          <p class="title" th:text="${project.project_name}+'&nbsp진행중'">?차
+            프로젝트</p>
+          <h5 th:text="${project.season} + '번째 프로젝트'">번째 프로젝트</h5>
+          <h5
+            th:text="${project.start_date} + '~' + ${project.end_date}"></h5>
+          <div class="progres">
+            <div>
+              <div class="progress-bar bg-warning progress-bar-striped"
+                th:style="'width:' + ${percent} + '%; height: 30px;'"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -45,7 +66,7 @@
                 <p class="title">최근과제</p>
                 <div class="homework-content">
                   <span>현재 ?명 중 ?명 제출(?%)</span><br>
-                    <button class="btn btn-primary">과제 확인하러 가기</button>
+                  <button class="btn btn-primary">과제 확인하러 가기</button>
                 </div>
               </div>
             </div>

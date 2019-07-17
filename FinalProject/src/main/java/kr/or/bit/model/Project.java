@@ -11,13 +11,11 @@ public class Project {
   private Date end_date;
   private int season;
   private int course_id;
-  
   private int groups;
   private LocalDate startDateLocal;
   private LocalDate endDateLocal;
   private List<ProjectMember> students;
 
-  
   public int getGroups() {
     return groups;
   }
@@ -96,5 +94,12 @@ public class Project {
 
   public void setEndDateLocal(LocalDate endDateLocal) {
     this.endDateLocal = endDateLocal;
+  }
+
+  @Override
+  public String toString() {
+    return "Project [id=" + id + ", project_name=" + project_name + ", start_date=" + start_date + ", end_date="
+        + end_date + ", season=" + season + ", course_id=" + course_id + ", groups=" + groups + ", startDateLocal="
+        + startDateLocal + ", endDateLocal=" + endDateLocal + ", students=" + students + "]";
   }
 }

@@ -84,15 +84,12 @@ public class MyClassController {
   @Autowired
   private ArticleVoteService articleVoteService;
 
-  
-  
   @GetMapping("")
   public String mainPage(Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
-    
     Course course = courseDao.selectCourse(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id());
     course.setEndDate(course.getEnd_date().toLocalDate());
     course.setStartDate(course.getStart_date().toLocalDate());
@@ -104,15 +101,14 @@ public class MyClassController {
     for (Article article : recentArticles) {
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
       article.setTimeLocal(article.getTime().toLocalDateTime());
-    }  
-    model.addAttribute("recentHomework",recentHomework);
+    }
+    model.addAttribute("recentHomework", recentHomework);
     model.addAttribute("course", course);
     model.addAttribute("recentArticles", recentArticles);
     model.addAttribute("completion", completion);
     return "myclass/home";
   }
-  
-  
+
   @GetMapping("/qna")
   public String qnaPage(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model)
       throws Exception {
@@ -142,7 +138,7 @@ public class MyClassController {
     model.addAttribute("page", page);
     return "myclass/qna/home";
   }
-  
+
   @GetMapping("/qna/write")
   public String writeQna(Model model) {
     StackDao stackdao = sqlSession.getMapper(StackDao.class);
@@ -150,7 +146,7 @@ public class MyClassController {
     model.addAttribute("tags", tags);
     return "myclass/qna/write";
   }
-  
+
   @PostMapping("/qna/write")
   public String writeOkQna(Article article, String tag) {
     List<String> tagList = new ArrayList<>();
@@ -165,7 +161,7 @@ public class MyClassController {
     articleInsertService.writeQnaArticle(article, tagList);
     return "redirect:/myclass/qna";
   }
-  
+
   @GetMapping("/qna/content")
   public String GetQnaContent(int id, Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
@@ -181,12 +177,12 @@ public class MyClassController {
       comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
       model.addAttribute("adoptedanswer", comment);
     }
-    System.out.println("채택답변"+qna.getAdopted_answer());
+    System.out.println("채택답변" + qna.getAdopted_answer());
     model.addAttribute("qnacontent", article);
     articleUpdateService.viewCount(article);
     return "myclass/qna/content";
   }
-  
+
   @GetMapping("/qna/edit")
   public String editQna(int id, Model model) {
     StackDao stackdao = sqlSession.getMapper(StackDao.class);
@@ -196,7 +192,7 @@ public class MyClassController {
     model.addAttribute("article", article);
     return "myclass/qna/edit";
   }
-  
+
   @PostMapping("/qna/edit")
   public String editQnaArticle(Article article) {
     article.setUsername(Helper.userName());
@@ -204,14 +200,14 @@ public class MyClassController {
     articleUpdateService.updateArticle(article);
     return "redirect:/myclass/qna";
   }
-  
+
   @GetMapping("/qna/delete")
   public String deleteQna(int id) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     articleDao.deleteArticle(id);
     return "redirect:/myclass/qna";
   }
-  
+
   @PostMapping("/qna/commentwrite")
   public @ResponseBody List<Comment> QnaCommentWrite(int article_id, Comment comment) {
     comment.setUsername(Helper.userName());
@@ -264,7 +260,6 @@ public class MyClassController {
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
     TimelineDao timelineDao = sqlSession.getMapper(TimelineDao.class);
-    
     String teacherName = Helper.userName();
     Member teacher = memberDao.selectMemberByUsername(teacherName); // 강사 저장
     int course_id = teacher.getCourse_id();
@@ -273,13 +268,11 @@ public class MyClassController {
     Project newProject = projectDao.selectRecentProject(course_id);
     List<ProjectMember> leaderList = new ArrayList<>();
     List<ProjectMember> students = project.getStudents();
-    
     for (ProjectMember pm : students) {
       if (pm.isLeader()) {
         leaderList.add(pm);
       }
     }
-    
     for (ProjectMember leader : leaderList) {
       Group group = new Group();
       group.setGroup_no(leader.getGroup());
@@ -287,7 +280,6 @@ public class MyClassController {
       group.setProject_id(newProject.getId());
       groupDao.insertGroup(group);
     }
-    
     for (ProjectMember member : students) {
       int group_no = member.getGroup();
       String username = member.getUsername();
@@ -297,7 +289,6 @@ public class MyClassController {
       newMember.setUsername(username);
       groupMemberDao.insertGroupMember(newMember);
     }
-    
     for (int i = 1; i <= leaderList.size(); i++) {
       Board board = new Board();
       board.setBoard_name("트러블슈팅" + newProject.getSeason() + i);
@@ -313,22 +304,17 @@ public class MyClassController {
     schedule.setGroup_id(0);
     schedule.setCourse_id(teacher.getCourse_id());
     scheduleDao.insertSchedule(schedule);
-
-    
-    for(int i = 0 ; i < leaderList.size() ; i++) {
-      
+    for (int i = 0; i < leaderList.size(); i++) {
       Timeline timeline = new Timeline();
       timeline.setTitle("프로젝트 시작");
       timeline.setContent(newProject.getProject_name());
       timeline.setGroup_id(memberDao.selectMemberByUsername(leaderList.get(i).getUsername()).getGroup_id());
       timeline.setUsername(Helper.userName());
       timelineDao.insertTimeline(timeline);
-      
     }
-    
     return "redirect:/myclass/setting";
   }
-  
+
   @GetMapping("/create/board")
   public String boardPage(Model model) {
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
@@ -336,34 +322,33 @@ public class MyClassController {
     String username = Helper.userName();
     Member user = memberDao.selectMemberByUsername(username);
     List<Board> boardlist = boardDao.selectMyClassBoard(user.getCourse_id());
-    
     model.addAttribute("boardlist", boardlist);
     return "myclass/teacher/create/board";
   }
-  
-  @PostMapping("/create/board") 
-  public void createBoard(@RequestBody BoardAddRemove boardAddRemove) { 
-    boardService.decideBoardAddOrRemove(boardAddRemove);  
+
+  @PostMapping("/create/board")
+  public void createBoard(@RequestBody BoardAddRemove boardAddRemove) {
+    boardService.decideBoardAddOrRemove(boardAddRemove);
   }
 
   @GetMapping("/homework")
-  public String homework(@RequestParam(defaultValue = "1") int page, String boardSearch,
-      Model model, HttpServletRequest request) {
+  public String homework(@RequestParam(defaultValue = "1") int page, String boardSearch, Model model,
+      HttpServletRequest request) {
     String username = Helper.userName();
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
     Member member = memberDao.selectMemberByUsername(username);
     List<Article> homeworkList = null;
     Pager pager = null;
-    if(boardSearch != null) {
+    if (boardSearch != null) {
       pager = new Pager(page, homeworkDao.countHomeworkArticleBySearchWorkd(member.getCourse_id(), boardSearch));
-      homeworkList = homeworkDao.selectHomeworkArticleBySearchWord(pager, member.getCourse_id(), boardSearch); 
+      homeworkList = homeworkDao.selectHomeworkArticleBySearchWord(pager, member.getCourse_id(), boardSearch);
       model.addAttribute("boardSearch", boardSearch);
     } else {
-      pager = new Pager(page, homeworkDao.countAllHomeworkArticle(member.getCourse_id())); 
+      pager = new Pager(page, homeworkDao.countAllHomeworkArticle(member.getCourse_id()));
       homeworkList = homeworkDao.selectAllHomeworkArticle(pager, member.getCourse_id());
     }
-    for(Article article : homeworkList) {
+    for (Article article : homeworkList) {
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
     }
     model.addAttribute("userRole", member.getRole());
@@ -374,8 +359,7 @@ public class MyClassController {
   }
 
   @GetMapping("/homework/detail")
-  public String homeworkDetailPage(Model model, int id, HttpServletRequest request ) {
-    
+  public String homeworkDetailPage(Model model, int id, HttpServletRequest request) {
     Article article = articleService.selectOneArticle("homework", id);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     GroupMemberDao groupMemberDao = sqlSession.getMapper(GroupMemberDao.class);
@@ -383,12 +367,9 @@ public class MyClassController {
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
     FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
-    
     articleUpdateService.viewCount(article);
-    
     List<Article> replies = articleDao.selectHomeworkReplies(id);
-    
-    for(Article reply : replies) {
+    for (Article reply : replies) {
       reply.setTimeLocal(reply.getTime().toLocalDateTime());
       Homework homework = homeworkDao.selectHomeworkByArticleId(reply.getId());
       List<Files> files = new ArrayList<Files>();
@@ -399,25 +380,23 @@ public class MyClassController {
       replyMember = memberDao.selectMemberByUsername(reply.getUsername());
       int groupId = groupMemberDao.getGroupIdByUsername(reply.getUsername());
       replyMember.setGroup_no(groupDao.getGroupNoByGroupId(groupId));
-      reply.setWriter(replyMember); 
+      reply.setWriter(replyMember);
       reply.setOption(homework);
     }
-    
     String username = Helper.userName();
     Member member = memberDao.selectMemberByUsername(username);
     model.addAttribute("username", username);
     model.addAttribute("userRole", member.getRole());
     model.addAttribute("article", article);
     model.addAttribute("replies", replies);
-    model.addAttribute("page",request.getParameter("page"));
+    model.addAttribute("page", request.getParameter("page"));
     model.addAttribute("boardSearch", request.getParameter("boardSearch"));
-
     return "myclass/homework/detail";
   }
 
   @PostMapping("/homework/detail")
   public String submitHomeworkDetail(Article article, MultipartFile file1, MultipartFile file2,
-      HttpServletRequest request,Model model) {
+      HttpServletRequest request, Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     Member member = memberDao.selectMemberByUsername(Helper.userName());
@@ -433,7 +412,7 @@ public class MyClassController {
     files.add(file2);
     articleInsertService.writeReplyArticle(article, homework, files, request);
     model.addAttribute("boardSearch", request.getParameter("boardSearch"));
-    return "redirect:/myclass/homework/detail?id=" + article.getId() +"&page="+request.getParameter("page");
+    return "redirect:/myclass/homework/detail?id=" + article.getId() + "&page=" + request.getParameter("page");
   }
 
   @GetMapping("/homework/write")
@@ -448,18 +427,14 @@ public class MyClassController {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
-    
-    
     Member member = memberDao.selectMemberByUsername(Helper.userName());
     int board_id = boardDao.selectBoardByCourseId(member.getCourse_id(), 4).getId();
     article.setUsername(Helper.userName());
     article.setBoard_id(board_id);
-    
     Homework homework = new Homework();
     homework.setEnd_date(end_date);
     articleInsertService.writeArticle(article, homework, null, request);
     System.out.println(article);
-    
     Schedule schedule = new Schedule();
     article = articleDao.selectOneArticle(article.getId());
     schedule.setArticle_id(article.getId());
@@ -469,12 +444,9 @@ public class MyClassController {
     schedule.setEnd(homework.getEnd_date());
     schedule.setColor("green");
     schedule.setGroup_id(0);
-    
     scheduleDao.insertScheduleByBoard(schedule);
-    
     return "redirect:/myclass/homework";
   }
-
 
   @GetMapping("/homework/edit")
   public String editHomeworkArticle(Model model, int id, HttpServletRequest request) {
@@ -483,14 +455,14 @@ public class MyClassController {
     Article article = articleDao.selectOneArticle(id);
     Homework homework = homeworkDao.selectHomeworkByArticleId(id);
     article.setOption(homework);
-    
     model.addAttribute("article", article);
     model.addAttribute("boardSearch", request.getParameter("boardSearch"));
     return "myclass/homework/edit";
   }
 
   @PostMapping("/homework/edit")
-  public String editOkHomeworkArticle(Article updateArticle, HttpServletRequest request, String boardSearch) throws UnsupportedEncodingException {
+  public String editOkHomeworkArticle(Article updateArticle, HttpServletRequest request, String boardSearch)
+      throws UnsupportedEncodingException {
     request.setCharacterEncoding("UTF-8");
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
@@ -498,7 +470,8 @@ public class MyClassController {
     updateArticle.setOption(homework);
     articleDao.updateArticle(updateArticle);
     homeworkDao.updateHomeworkArticle(updateArticle);
-    return "redirect:/myclass/homework/detail?id=" + updateArticle.getId() + "&page="+request.getParameter("page") +"&boardSearch="+boardSearch;
+    return "redirect:/myclass/homework/detail?id=" + updateArticle.getId() + "&page=" + request.getParameter("page")
+        + "&boardSearch=" + boardSearch;
   }
 
   @PostMapping("/homework/delete")
@@ -509,12 +482,35 @@ public class MyClassController {
     article = articleDao.selectOneArticle(article.getId());
     articleDao.deleteArticle(article.getId());
     scheduleDao.deleteSchedule(scheduleDao.selectScheduleByArticleId(article.getId()).getId());
-    
     return "redirect:/myclass/homework";
   }
-  
+
   @GetMapping("/setting")
-  public String manageMain() {
+  public String manageMain(Model model) {
+    CourseDao coursedao = sqlSession.getMapper(CourseDao.class);
+    MemberDao memberdao = sqlSession.getMapper(MemberDao.class);
+    ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
+    String username = Helper.userName();
+    Member member = memberdao.selectMemberByUsername(username);
+    Course course = coursedao.selectCourse(member.getCourse_id());
+    Project project = projectdao.selectRecentProjectByCourseId(member.getCourse_id());
+    project.setStartDateLocal(project.getStart_date().toLocalDate());
+    project.setEndDateLocal(project.getEnd_date().toLocalDate());
+    
+    Period ddDay = Period.between(project.getStartDateLocal(), project.getEndDateLocal());
+    Period dDay = Period.between(LocalDate.now(), project.getEndDateLocal());
+    int i = (int)((float)(dDay.getDays()) / (float)(ddDay.getDays())*100);
+    
+    
+    System.out.println(ddDay.getDays());
+    System.out.println(dDay.getDays());
+    System.out.println(i);
+    System.out.println(project.toString());
+    System.out.println(course);
+    model.addAttribute("course", course);
+    model.addAttribute("project", project);
+    model.addAttribute("percent", i);
+    /* model.addAttribute("dDay",dDay); */
     return "myclass/teacher/managing";
   }
 }

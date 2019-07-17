@@ -116,4 +116,14 @@ public class Course {
   public void setEndDate(LocalDate endDate) {
     this.endDate = endDate;
   }
+
+  @Override
+  public String toString() {
+    return "Course [id=" + id + ", course_name=" + course_name + ", start_date=" + start_date + ", end_date=" + end_date
+        + ", subject=" + subject + ", classroom_id=" + classroom_id + ", people=" + people + ", classroom_name="
+        + classroom_name + ", subject_name=" + subject_name + ", startDate=" + startDate + ", endDate=" + endDate
+        + ", boards=" + boards + "]";
+  }
+  
+  
 }
