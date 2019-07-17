@@ -138,7 +138,7 @@
               
               class="commentWriterName"
               th:text="${comment.writer.name}"
-              
+              th:classappend="${comment.writer.name == user.name} ? 'my-comment-name'"
             ></span>
             <a
               th:if="${comment.username}==${user.username}"
@@ -156,12 +156,16 @@
           등록된 댓글이 없습니다
         </div>
       </div>
-      
+      <!-- 모달이 시작 -->
       <div class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <i class="far fa-paper-plane fa-2x"></i>&nbsp;&nbsp;<h5 class="modal-title">쪽지보내기</h5>
+        <span class="toForm">
+        <span class="messageTo">To</span>
+        <span class="messageReceiveName"></span>
+        </span>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -176,6 +180,8 @@
     </div>
   </div>
 </div>
+
+<!-- 모달이 끝 -->
       
     </div>
     <!-- 필요하다면 이 아래에 외부 자바스크립트도 추가 가능 -->
@@ -191,13 +197,17 @@
         $("#spinner").hide();
       });
 
+      
+      // 동기 메시지보내기 처리 시작
       $(".commentWriterName").unbind("click");
       $(".commentWriterName").click(function(event) {
         const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
+        const messageReceiveName = $(event.currentTarget).text();
+        $(".messageReceiveName").text(messageReceiveName);
         if([[${user.username}]] != receiverId) {
-        $(".modal").modal("show");
+          $(".modal").modal("show");
         }
-        
+		        
         $(".submitMessage").unbind("click");
         $(".submitMessage").click(function() {
           const messageText = $("#messageText").val();
@@ -208,7 +218,7 @@
     	  	  })
     	  	  	return;
     	  	}
-        	
+        	$("#messageText").val("");
         	$.ajax({
             url: "/ajax/message/reply",
             type: "POST",
@@ -227,17 +237,11 @@
             sendMessageNotice([[${user.name}]], receiverId);
           });
         });  
-        
-        
       });
-        
-       
+      
+      // 동기 메시지보내기 처리 끝
       
       
-      
-      
-      
- 
       $("#deletebtn").click(function(event) {
         let articleId = [[${article.id}]];
         event.preventDefault();
@@ -341,12 +345,18 @@
                 userPhoto = item.writer.profile_photo;
                }
               
+              let spanClass;
+              if (username === [[${user.name}]]) {
+                spanClass = "<span class='commentWriterName my-comment-name'>";
+              } else {
+                spanClass = "<span class='commentWriterName'>";
+              }
               
               let html = "<div class='content-reply'>";
               html += "<div class='content-move'>" +
               /* <img src="+item.writer.profile_photo+" class='writerIcon'> */
                       "<span class='userIcon'><img src="+userPhoto+" id='icon'></span>" +
-                      "<span class='commentWriterName'>" + username + "</span>" +
+                      spanClass + username + "</span>" +
                       "<a href='/myclass/board/commentdelete?comment_id=" + commentId + "&article_id=" + articleId + "&board_id=" + [[${board.id}]] +"'" + ">" +equalName+"</a>" +
                       "<span class='hidden messageReceiverId'>" + item.username + "</span>" + 
                       "<span class='write-date'>" + timedate + "</span></div>";
@@ -360,6 +370,8 @@
             $(".commentWriterName").unbind("click");
             $(".commentWriterName").click(function(event) {
               const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
+              const messageReceiveName = $(event.currentTarget).text();
+              $(".messageReceiveName").text(messageReceiveName);
               if([[${user.username}]] != receiverId) {
               $(".modal").modal("show");
               }
@@ -374,7 +386,7 @@
           	  	  })
           	  	  	return;
           	  	}
-              	
+              	$("#messageText").val("");
               	$.ajax({
                   url: "/ajax/message/reply",
                   type: "POST",

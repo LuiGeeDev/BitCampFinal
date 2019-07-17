@@ -56,7 +56,7 @@
           <span id="writerIcon">
             <img th:src="@{${user.profile_photo}}" id="icon" width="25" height="25"/>
           </span>
-          <span id="writerName" name="writerName" th:text="${user.name}"></span>
+          <span id="comment-writer" class="comment-writer" th:text="${user.name}"></span>
         </div>
         <div class="input-submit-wrapper">
           <input type="text" name="content" class="comtext" id="commentInput" placeholder ="댓글을 입력하세요."/>
@@ -79,7 +79,8 @@
                 <img th:if="${list.writer.profile_photo == null}" class="writerIcon" th:src="@{/resources/images/default.png}" width="25" height="25">
               </span>
               <span id="writerName">
-                <span th:text="${list.name}"></span>
+                <span class="commentsName"th:text="${list.name}"></span>
+                <span class="hidden messageReceiverId" th:text=${list.username}></span>
                 <a class="comment-delete-button" th:if="${list.username==user.username or user.role == 'MANAGER'}"
                    th:href="@{/video/commentdelete(id=${list.id})}">삭제</a>
               </span>
@@ -98,6 +99,34 @@
         	등록된 댓글이 없습니다.
         </div>
       </div>
+      
+          <!-- 모달이 시작 -->
+      <div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <i class="far fa-paper-plane fa-2x"></i>&nbsp;&nbsp;<h5 class="modal-title">쪽지보내기</h5>
+        <span class="toForm">
+        <span class="messageTo">To</span>
+        <span class="messageReceiveName"></span>
+        </span>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea class="messageForm" id="messageText"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary submitMessage">전송</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 모달이 끝 -->
+      
       <div id="buttonWrapper">
         <a
           th:if="${article.username==user.username and article.enable==1}"
@@ -143,6 +172,59 @@
     }).ajaxStop(function() {
       $("#spinner").hide();
     });
+    
+    // 동기 메시지보내기 처리 시작
+    $(".commentsName").unbind("click");
+    $(".commentsName").click(function(event) {
+      const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
+      const messageReceiveName = $(event.currentTarget).text();
+      $(".messageReceiveName").text(messageReceiveName);
+      if([[${user.username}]] != receiverId) {
+      $(".modal").modal("show");
+      }
+	        
+      $(".submitMessage").unbind("click");
+      $(".submitMessage").click(function() {
+        const messageText = $("#messageText").val();
+      	if(messageText.trim() === "" || messageText === null) {
+  	  	  Swal.fire({
+  	  	    type: 'error',
+  	  	    text: '다시 입력해주세요 !!',
+  	  	  })
+  	  	  	return;
+  	  	}
+      	$("#messageText").val("");
+      	
+      	$.ajax({
+          url: "/ajax/message/reply",
+          type: "POST",
+          data: {
+            content: messageText,
+            receiver_username: receiverId
+          }
+        }).done(function() {
+          $(".modal").modal("hide");
+          Swal.fire({
+            type: 'success',
+            title: '전송되었습니다',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          sendMessageNotice([[${user.name}]], receiverId);
+        });
+      });  
+    });
+    
+    // 동기 메시지보내기 처리 끝
+    
+    
+    
+    
+    
+    
+    
+    
+    
       $("#deletebtn").click(function(event) {
         console.log([[${article}]]);
         event.preventDefault();

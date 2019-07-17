@@ -179,11 +179,20 @@ body {
   height:100%;
 }
 
-
 .writerIcon, #icon {
   width: 25px;
   height: 25px;
 }
 .messageReceiverId {
   display:none;
+}
+
+.toForm {
+  margin-left:170px;
+  margin-top:10px;
+  font-weight:bold;
+}
+
+.my-comment-name {
+  cursor: default;
 }
