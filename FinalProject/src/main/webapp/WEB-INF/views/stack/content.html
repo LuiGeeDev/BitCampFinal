@@ -17,6 +17,9 @@
     </div>
     <!-- 게시물컨텐트 -->
     <hr>
+    
+    <span class="top"><a href="#"><i class="fas fa-chevron-circle-up iconSize"></i></a></span>
+    
     <table>
       <tr>
         <td colspan="2" class="td12"><span
@@ -33,22 +36,24 @@
           class="deleteBtn" id="deleteCheck"><i class="fas fa-trash-alt"></i> </span></span></td>
       </tr>
       <tr>
-        <td colspan="4" class="tdtitle"><span
-          th:text="${stackcontent.title}"></span>      
+        <td colspan="3" class="tdtitle"><span
+          th:text="${stackcontent.title}"></span>
           </td>
+          <td class="bookmarkRow"> <span class="bookmarkSpan">북마크<i class="fas fa-book bookmarkIcon"></i></span>  </td>
       </tr>
       <tr>
         <td colspan="4" class="tdcontent">
             <span th:utext="${stackcontent.content}"> </span>
             <div class="votecountalign">
+            <a th:href="@{/stack/plusvote(id=${stackcontent.id})}">
             <span class="voteSpan">
-            <span><a th:href="@{/stack/plusvote(id=${stackcontent.id})}">
+            <span>
               <i class="far fa-thumbs-up votecount"></i>
-            </a></span>
+            </span>
             <span class="votecount-font">
             [[${stackcontent.vote_count}]]
             </span>
-            </span>
+            </span></a>
             </div>
         </td>
       </tr>
@@ -57,7 +62,7 @@
                <img th:if="${stackcontent.writer.profile_photo}!=null"
                 th:src="@{${stackcontent.writer.profile_photo}}" id="profileimg1"/>   
           </td>
-        <td colspan="2" class="td4">
+        <td colspan="3" class="td4">
           <p class="pwriter">
             <span th:text="${stackcontent.writer.name}"></span>
           </p>
@@ -284,6 +289,21 @@
           }
         })
       });
+      
+      $( document ).ready( function() {
+        $( window ).scroll( function() {
+          if ( $( this ).scrollTop() > 200 ) {
+            $( '.top' ).fadeIn();
+          } else {
+            $( '.top' ).fadeOut();
+          }
+        } );
+        $( '.top' ).click( function() {
+          $( 'html, body' ).animate( { scrollTop : 0 }, 100 );
+          return false;
+        } );
+      } );
+
 
       </script>
 </body>
