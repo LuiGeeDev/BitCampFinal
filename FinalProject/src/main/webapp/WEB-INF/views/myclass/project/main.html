@@ -28,23 +28,23 @@
             <button id="button-link" class="edit-link" data-toggle="modal" data-target="#link-modal">
               <i class="fas fa-pen-square fa-2x"></i>
             </button>
-            <i class="fab fa-github fa-2x"></i> <a class="link-address" th:if="${group.link1}!=null" id="link-address"
+            <i class="fab fa-github fa-2x"></i> <a class="link-address" th:if="${group.link1 != null && group.link1 != ''}" id="link-address"
               href="#" th:text="${group.link1}" th:data-clipboard-text="${group.link1}">github.com/project</a>
-              <span th:if="${group.link1} == ''" class="non-link-address"
+              <span th:if="${group.link1==null || group.link1==''}" class="non-link-address"
                >등록된 주소가 없습니다.</span>
           </div>
           <div class="project-link">
             <i class="fab fa-google-drive fa-2x"></i> <a id="link-address"
-              th:if = "${group.link2} != ''" class="link-address" href="#" th:text="${group.link2}"
-              th:data-clipboard-text="${group.link2}"> drive.google.com/project</a>
-            <span th:if="${group.link2} == ''" class="non-link-address"
-             >&nbsp;&nbsp;&nbsp;&nbsp;등록된 주소가 없습니다.</span>
+              th:if="${group.link2 != null && group.link2 != ''}" class="link-address" href="#" th:text="${group.link2}"
+              th:data-clipboard-text="${group.link2}">drive.google.com/project</a>
+            <span th:if="${group.link2==null || group.link2==''}" class="non-link-address"
+             >등록된 주소가 없습니다.</span>
           </div>
           <div class="project-link">
             <i class="fas fa-inbox fa-2x"></i> 
-            <a th:if="${group.link3} != null" class="link-address" id="link-address"
+            <a th:if="${group.link3 != null && group.link3 != ''}" class="link-address" id="link-address"
               href="#" th:text="${group.link3}" th:data-clipboard-text="${group.link3}">project@gmail.com</a>
-             <span th:if="${group.link3} == ''" class="non-link-address"
+             <span th:if="${group.link3==null || group.link3==''}" class="non-link-address"
              >등록된 주소가 없습니다.</span>
           </div>
           
@@ -233,17 +233,18 @@
             
              <input
               type="hidden" name="id" th:value="${group.id}" />
+          <div class="button-wrapper">
           <button id="submit-new-link" type="submit"
               class="btn btn-primary btn-sm">
               수정</button>
             <button type="button" class="btn btn-secondary btn-sm"
               data-dismiss="modal">취소</button>
+          </div>
           </form>
         </div>
       </div>
     </div>
    
-        <input id="clipboard" type="text" value="">
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>

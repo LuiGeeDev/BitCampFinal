@@ -67,7 +67,6 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-left: 15px;
   line-height: 30px;
 }
 
@@ -292,4 +291,25 @@ label .fab, label .fas {
 #clipboard{
   width:1px;
   height:1px;
+}
+.button-wrapper{
+  text-align:right;
+  margin-right: 9px;
+}
+.non-link-address{
+  line-height: 30px;
+  font-weight:bold;
+  font-size:14px;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.links .fa-github{
+  margin-right:15px;
+}
+.links .fa-google-drive{
+  margin-right:14px;
+}
+.links .fa-inbox{
+  margin-right:10px;
 }
