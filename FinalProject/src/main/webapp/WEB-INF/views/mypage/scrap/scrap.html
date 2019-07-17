@@ -10,6 +10,10 @@
   <div class="main" th:fragment="main">
     <div class="row">
       <div id="column">
+        <div class="scrap-card" th:each="scrap : ${scraps}">
+          <h5 class="scrap-title" th:text="${scrap.title}"></h5>
+          <p class="scrap-content" th:text="${scrap.content}"></p>
+        </div>
         <div class="scrap-card">
           <h5 class="scrap-title">글 제목</h5>
           <p class="scrap-content">Lorem ipsum sadasasj aiad
