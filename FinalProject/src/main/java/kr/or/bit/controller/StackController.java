@@ -112,8 +112,8 @@ public class StackController {
       comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
       model.addAttribute("adoptedanswer", comment);
     }
-    Scrap scrap = scrapDao.selectOneScrapById(id);
-    model.addAttribute("scrap",scrap);
+   /* Scrap scrap = scrapDao.selectOneScrapById(id);*/
+    /*model.addAttribute("scrap",scrap);*/
     model.addAttribute("stackcontent", article);
     articleUpdateService.viewCount(article);
     return "stack/content";

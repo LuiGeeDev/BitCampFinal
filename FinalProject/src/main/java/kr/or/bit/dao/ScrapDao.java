@@ -25,7 +25,7 @@ public interface ScrapDao {
   Scrap selectOneScrap(@Param("article_id") int article_id, @Param("username") String username);
   
   //스크랩했나 안했나 확인하는 용도임 2
-  Scrap selectOneScrapById(@Param("article_id") int article_id);
+  int selectOneScrapCount(@Param("article_id") int article_id, @Param("username") String username);
   
   //마이페이지 스크랩목록 불러올때 쓰는 메소드
   List<Article> selectAllScrap(String username);
