@@ -50,8 +50,6 @@ public class MypageController {
   private FileUploadService fileUploadService;
   @Autowired
   private MypageService mypageService;
-  @Autowired
-  private MailService mailService;
 
   @GetMapping("/home")
   public String mainPage(Model model) {
@@ -103,7 +101,7 @@ public class MypageController {
   @GetMapping("/scrap")
   public String getScrapList(Model model) {
     
-    return "mypage/scrap/home";
+    return "mypage/scrap/scrap";
   }
 
 

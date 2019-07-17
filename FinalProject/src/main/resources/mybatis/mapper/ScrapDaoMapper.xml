@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- /* * * @date: 2019. 06. 28. * * @author: 권예지 * * @description: ArticleDaMapper로 
+	DAO의 parameter에 들어갈 값을 매핑해서 쿼리문을 보낸다 * */ -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- @date: 2019. 7. 17.
+@author: 권예지
+@description: ScrapDaoMapper -->
+<mapper namespace="kr.or.bit.dao.ScrapDao">
+	<select id="selectAllScrap" resultType="kr.or.bit.model.Scrap">
+		SELECT a.id as id, title,
+		time, view_count, original_id, level,
+		updated_time, enable, a.username
+		as username, board_id, layer, sibling
+		FROM article a
+		JOIN scrap s
+		ON a.id
+		= s.article_id
+		WHERE s.username=#{username};
+	</select>
+	<insert id="insertScrap">
+		INSERT INTO scrap(article_id, username)
+		VALUES
+		(#{article_id}, #{username})
+	</insert>
+	<delete id="deleteScrap">
+		DELETE FROM scrap
+		WHERE article_id=#{article_id}
+	</delete>
+</mapper>
