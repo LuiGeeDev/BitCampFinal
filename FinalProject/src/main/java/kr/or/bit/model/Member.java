@@ -18,7 +18,16 @@ public class Member {
   
   private Date end_date;
   private String course_name;
+  private int teacher_id;
   
+  public int getTeacher_id() {
+    return teacher_id;
+  }
+
+  public void setTeacher_id(int teacher_id) {
+    this.teacher_id = teacher_id;
+  }
+
   public String getCourse_name() {
     return course_name;
   }
