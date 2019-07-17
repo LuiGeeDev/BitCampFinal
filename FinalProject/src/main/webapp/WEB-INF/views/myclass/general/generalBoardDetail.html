@@ -215,58 +215,8 @@
           });
           sendMessageNotice([[${user.name}]], messageSenderId);
         });
-      	
-      	
       });
-      
-      
-      
- /*      $("#modal-submitbtn").click(function() {
-        const messageText = $("#message-text").val();
-        const messageSenderId = $("#message-sender-id").text();
-        let valueCheck = messageText;         
-        
-  	  	if(valueCheck.trim() === "" || valueCheck === null) {
-  	  	  Swal.fire({
-  	  	    type: 'error',
-  	  	    text: '다시 입력해주세요 !!',
-  	  	  })
-  	  	  	return;
-  	  	}
-        $.ajax({
-          url: "/ajax/message/reply",
-          type: "POST",
-          data: {
-            content: messageText,
-            receiver_username: messageSenderId
-          }
-        }).done(function() {
-          $(".modal").modal("hide");
-          Swal.fire({
-            type: 'success',
-            title: '전송되었습니다',
-            showConfirmButton: false,
-            timer: 1500
-          });
-          sendMessageNotice([[${user.name}]], messageSenderId);
-        });
-      }); */
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      $(".submitMessage").click(function() {
-        
-      });
-      
+ 
       $("#deletebtn").click(function(event) {
         let articleId = [[${article.id}]];
         event.preventDefault();
@@ -368,6 +318,7 @@
                       "<span class='write-date'>" + timedate + "</span></div>";
               html += "<div class='content-comment'>" + content + "</div></div>";
               $(".content-reply-form").append(html);
+              
             });
           }
         });
