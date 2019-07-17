@@ -4,12 +4,30 @@
     <title>Teaming</title>
     <link
       rel="stylesheet"
+      href="/css/common.css"
+      th:href="@{/css/bs-customization.css}"
+    />
+    <link
+      rel="stylesheet"
       href=""
       type="text/css"
       th:href="@{/css/login.css}"
     />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
     <meta charset="UTF-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
   </head>
   <body>
     <div class="main">
@@ -45,7 +63,7 @@
             <div id="button-wrapper">
               <button
                 type="submit"
-                class="btn btn-warning btn-sm"
+                class="btn btn-primary btn-sm"
                 id="submit-button"
               >
                 로그인
@@ -57,6 +75,9 @@
                 <i class="far fa-check-square"></i>
                 <span class="remember-me">자동 로그인</span>
               </label>
+              <a class="find-password" data-toggle="modal" data-target="#password-modal">
+                비밀번호 찾기
+              </a>
             </div>
             <p th:if="${error}" class="fail">
               올바른 아이디나 비밀번호가 아닙니다.
@@ -65,8 +86,67 @@
         </div>
       </div>
     </div>
+    <div class="modal fade" id="password-modal">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">비밀번호 찾기</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>아이디와 이메일을 입력해주세요</p>
+            <label>
+              아이디
+              <input type="text" name="username" id="newPassword-username" />
+            </label>
+            <label>
+              이메일
+              <input type="email" name="email" id="newPassword-email" />
+            </label>
+          </div>
+          <div class="modal-footer">
+            <p id="email-error">아이디와 이메일이 일치하지 않습니다</p>
+            <button id="newPassword" type="button" class="btn btn-primary">
+              비밀번호 발급
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <script th:fragment="script">
-      console.log("Hello, world!");
+      $("#email-error").hide();
+      $("#newPassword").click(function() {
+        const username = $("#newPassword-username").val();
+        const email = $("#newPassword-email").val();
+
+        $.ajax({
+          url: "/forgot-password",
+          type: "post",
+          data: { username, email },
+          success: function(result) {
+            console.log(result);
+            if (result) {
+              $("#email-error").hide();
+              $(".modal-body, .modal-footer").empty();
+              $(".modal-body").append(
+                "<p>임시 비밀번호가 발급되었습니다. 이메일에서 확인해주세요.</p>"
+              );
+              $(".modal-footer").append(
+                "<button class='btn btn-primary' data-dismiss='modal'>닫기</button>"
+              );
+            } else {
+              $("#email-error").show();
+            }
+          }
+        });
+      });
     </script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   </body>
