@@ -2,7 +2,6 @@ package kr.or.bit.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -37,14 +35,12 @@ import kr.or.bit.dao.QnaDao;
 import kr.or.bit.dao.ScheduleDao;
 import kr.or.bit.dao.StackDao;
 import kr.or.bit.dao.TimelineDao;
-import kr.or.bit.dao.ViewCountDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
 import kr.or.bit.model.BoardAddRemove;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.Files;
-import kr.or.bit.model.General;
 import kr.or.bit.model.Group;
 import kr.or.bit.model.Homework;
 import kr.or.bit.model.Member;
@@ -248,6 +244,7 @@ public class MyClassController {
     Member teacher = memberDao.selectMemberByUsername(teacherName); // 강사 저장
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     Course course = courseDao.selectCourse(teacher.getCourse_id()); // 코스 저장
+    
     List<Member> memberList = memberDao.selectAllMembersByMycourse(teacher.getCourse_id()); // 코스에 속한 학생리스트 저장
     model.addAttribute("memberList", memberList);
     model.addAttribute("course", course);

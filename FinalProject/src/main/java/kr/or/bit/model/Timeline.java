@@ -10,8 +10,16 @@ public class Timeline {
   private Date event_date;
   private int group_id;
   private String username;
-
+  private Member writer;
   private LocalDate eventDateLocal;
+
+  public Member getWriter() {
+    return writer;
+  }
+
+  public void setWriter(Member writer) {
+    this.writer = writer;
+  }
 
   public int getId() {
     return id;

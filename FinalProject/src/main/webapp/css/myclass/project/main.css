@@ -217,3 +217,33 @@ input[type=checkbox]:checked+label i {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.timeline__title{
+  font-size:16px;
+  font-weight:bold;
+  text-align:center;
+  
+}
+.timeline-content{
+  margin-top:20px;
+  font-size:14px;
+  text-align:center;
+  line-height:1px
+}
+.timeline__writer{
+  font-size:12px;
+  font-weight:bold;
+  text-align:center;
+}
+.timeline__date{
+  font-size:11px;
+
+}
+.timeline__writer__info{
+  margin-top:15px;
+  text-align:center;
+  line-height:5px
+}
+.timeline__content{
+  padding-top:10px !important;
+}
