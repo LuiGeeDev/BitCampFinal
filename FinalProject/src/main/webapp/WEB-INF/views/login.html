@@ -114,6 +114,7 @@
           <div class="modal-footer">
             <p id="email-error">아이디와 이메일이 일치하지 않습니다</p>
             <button id="newPassword" type="button" class="btn btn-primary">
+              <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
               비밀번호 발급
             </button>
           </div>
@@ -121,6 +122,7 @@
       </div>
     </div>
     <script th:fragment="script">
+      $("#spinner").hide();
       $("#email-error").hide();
       $("#newPassword").click(function() {
         const username = $("#newPassword-username").val();
@@ -130,8 +132,10 @@
           url: "/forgot-password",
           type: "post",
           data: { username, email },
+          beforeSend: function() {
+            $("#spinner").show();
+          },
           success: function(result) {
-            console.log(result);
             if (result) {
               $("#email-error").hide();
               $(".modal-body, .modal-footer").empty();
@@ -144,6 +148,7 @@
             } else {
               $("#email-error").show();
             }
+            $("#spinner").hide();
           }
         });
       });

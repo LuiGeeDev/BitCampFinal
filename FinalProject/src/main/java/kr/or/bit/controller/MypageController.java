@@ -99,12 +99,13 @@ public class MypageController {
     List<Article> articles = mypageService.allArticleByUsername(user);
     return articles;
   }
-
-  @GetMapping("/mypage/home/articlecontent")
-  public String GetArticleContent(Model model, int id) {
-
-    return null;
+  
+  @GetMapping("/scrap")
+  public String getScrapList(Model model) {
+    
+    return "mypage/scrap/home";
   }
+
 
   @GetMapping("")
   public String updateMember(Model model, Principal principal) {
