@@ -161,9 +161,11 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary submitMessage">전송</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-secondary messageCancle" data-dismiss="modal">취소</button>
       </div>
-
+</div>
+</div>
+</div>
       <!-- 모달이 끝 -->
 
       <div id="buttonWrapper">
@@ -207,8 +209,8 @@
           완전 삭제
         </a>
       </div>
-    </div>
-
+    
+</div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script th:inline="javascript">
       $(document).ready(function() {
@@ -220,6 +222,10 @@
       });
 
       // 동기 메시지보내기 처리 시작
+  	  $(".messageCancle").click(function() {
+  	    $("#messageText").val("");
+  	  });
+
       $(".commentsName").unbind("click");
       $(".commentsName").click(function(event) {
         const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
@@ -260,7 +266,7 @@
           });
         });
       });  
-    });
+ 
     
     // 동기 메시지보내기 처리 끝
     
@@ -383,7 +389,12 @@
              
             });
            	
-         // 비동기 메시지보내기 처리 시작
+         
+           // 비동기 메시지보내기 처리 시작
+	 		 $(".messageCancle").click(function() {
+	  		 $("#messageText").val("");
+			     });
+
             $(".commentsName").unbind("click");
             $(".commentsName").click(function(event) {
               const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();

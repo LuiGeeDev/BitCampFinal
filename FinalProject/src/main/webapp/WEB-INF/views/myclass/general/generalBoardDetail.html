@@ -189,8 +189,11 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary submitMessage">전송</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-secondary messageCancle" data-dismiss="modal">취소</button>
       </div>
+    </div>
+    </div>
+    </div>
     </div>
     <!-- 필요하다면 이 아래에 외부 자바스크립트도 추가 가능 -->
 
@@ -204,9 +207,13 @@
       }).ajaxStop(function() {
         $("#spinner").hide();
       });
+      
+   // 동기 메시지보내기 처리 시작
+	  $(".messageCancle").click(function() {
+	    $("#messageText").val("");
+	  });
 
-
-      // 동기 메시지보내기 처리 시작
+      
       $(".commentWriterName").unbind("click");
       $(".commentWriterName").click(function(event) {
         const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
@@ -348,12 +355,8 @@
 
               if (item.writer.profile_photo == null) {
                 userPhoto = "/resources/images/default.png";
-<<<<<<< HEAD
-                
                } else {
-=======
-              } else {
->>>>>>> b7a6127535bc8b00eb55d471611edcdbb4e554be
+
                 userPhoto = item.writer.profile_photo;
                }
 
@@ -375,8 +378,11 @@
               $(".content-reply-form").append(html);
             });
 
-
-
+         // 비동기 메시지보내기 처리 시작
+        	  $(".messageCancle").click(function() {
+        	    $("#messageText").val("");
+        	  });
+		
             $(".commentWriterName").unbind("click");
             $(".commentWriterName").click(function(event) {
               const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
@@ -416,6 +422,8 @@
                 });
               });
             });
+            
+            // 비동기 메시지보내기 처리 끝
           }
         });
       });
