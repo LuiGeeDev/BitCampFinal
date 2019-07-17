@@ -94,14 +94,13 @@ td[colspan="2"] {
 
 .td4 {
   width: 20%;
-  font-weight: bold;
-  padding: 3px 3px 1px 48px;
+  padding-left: 7px;
 }
 
-.td5{
-    font-size: 80%;
-    text-align: center;
-    padding: 5px 0px;
+.td5 {
+  font-size: 80%;
+  text-align: center;
+  padding: 5px 0px;
 }
 
 .tag-name span {
@@ -111,6 +110,11 @@ td[colspan="2"] {
   line-height: 2.0em;
   cursor: pointer;
 }
+
+.tag-name span:active {
+  padding:4px;
+}
+
 
 #c1 {
   background-color: green;
@@ -212,16 +216,39 @@ td[colspan="2"] {
   margin-right: 5px;
 }
 
-.navBar{
-  
-height: 44px;
+.navBar {
+  height: 44px;
 }
 
-.writeBtn{
+.writeBtn {
   
 }
-.searchBtn{padding: 4px 12px;}
-.selectBar{
-   height: 27px;
-   margin-right: 4px;
+
+.searchBtn {
+  padding: 4px 12px;
+}
+
+.selectBar {
+  height: 27px;
+  margin-right: 4px;
+  
+}
+
+.writer-name{
+  
+font-weight: 600;
+}
+
+.write-date{
+  
+color: gray;
+  
+font-size: 13px;
+  
+margin-left: 5px;
+}
+
+.writerWrapper{
+  
+height: auto;
 }
