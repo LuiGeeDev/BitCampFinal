@@ -92,6 +92,11 @@ public class MyClassController {
     List<Article> recentHomework = homeworkDao.selectRecentHomeworkArticle(course.getId());
     Period diff = Period.between(course.getStartDate(), course.getEndDate());
     Period diff2 = Period.between(course.getStartDate(), LocalDate.now());
+    for (Article article : recentHomework) {
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+      article.setTimeLocal(article.getTime().toLocalDateTime());
+      article.setOption(homeworkDao.selectHomeworkByArticleId(article.getId()));
+    }
     int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
     List<Article> recentArticles = articleDao.selectArticlesForClassMain(course.getId());
     for (Article article : recentArticles) {
