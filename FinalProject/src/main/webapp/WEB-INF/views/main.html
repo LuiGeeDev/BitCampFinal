@@ -35,12 +35,11 @@
         </div>
         <h4>내 프로젝트</h4>
         <div class="troublelist">
-          <a href="#">
-            <p class="project-new-content">
-              메인 페이지 CSS 이 부분 어떻게? <span class="project-new-from">트러블
+          <div class="no-timeline" th:if="${recentTimeline.isEmpty()}">프로젝트 활동이 없습니다</div>
+            <p class="project-new-content" th:if="${iter.index < 4}" th:each="timeline, iter : ${recentTimeline}">
+              [[${timeline.content}]] <span class="project-new-from" th:text="${timeline.title}">트러블
                 슈팅</span>
             </p>
-          </a>
         </div>
       </div>
       <div class="my-notification" th:unless="${user.role == 'STUDENT'}">
