@@ -19,9 +19,18 @@ public class Comment {
   
   private Member writer;
   private String name;
+  private int count;
   
   
   
+  public int getCount() {
+    return count;
+  }
+
+  public void setCount(int count) {
+    this.count = count;
+  }
+
   public String getName() {
     return name;
   }

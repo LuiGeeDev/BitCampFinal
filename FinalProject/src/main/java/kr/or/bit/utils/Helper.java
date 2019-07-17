@@ -11,6 +11,11 @@ public class Helper {
      return username;
    }
    
+   public static String defaultPassword() {
+     String defaultPassword = "$2a$10$L1pWhHeMtfEafgAFLR9iUO/gbTZFFoqFMMAWQ7RRDaKVd88kO92Ve"; // bitcamp
+     return defaultPassword;
+   }
+   
    public static int articleId() {//게시글 아이디를 뽑아주는 함수
       int i = 0;
       return i;

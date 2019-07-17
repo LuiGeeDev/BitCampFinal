@@ -40,4 +40,6 @@ public interface MemberDao {
   List<Member> selectStudent();
   
   void updateMemberGraduate(Member member);
+  
+  void insertTeacher(Member member);
 }

@@ -458,8 +458,7 @@ public class MyClassController {
     Homework homework = new Homework();
     homework.setEnd_date(end_date);
     articleInsertService.writeArticle(article, homework, null, request);
-    System.out.println(article);
-    
+    System.out.println(" article : "+ article.toString());
     Schedule schedule = new Schedule();
     article = articleDao.selectOneArticle(article.getId());
     schedule.setArticle_id(article.getId());
