@@ -33,6 +33,7 @@
 .btn-primary:hover,
 .btn-outline-primary:hover {
   background-color: #ea8a02 !important;
+  color: white !important;
 }
 
 .btn-primary:active,

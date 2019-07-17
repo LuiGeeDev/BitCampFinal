@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
+<head>
+<!-- 이페이지에서만별도로사용하는CSS가있다면여기다link 태그로삽입-->
+<link rel="stylesheet" th:href="@{/css/mypage/scrap/scrap.css}" />
+</head>
+<body>
+  <!-- 이 페이지의내용은main 클래스div 태그안에작성-->
+  <div class="main" th:fragment="main">
+    <div class="row">
+      <div id="column">
+        <div class="scrap-card" th:each="scrap : ${scraps}">
+          <h5 class="scrap-title" th:text="${scrap.title}"></h5>
+          <p class="scrap-content" th:text="${scrap.content}"></p>
+        </div>
+        <div class="scrap-card">
+          <h5 class="scrap-title">글 제목</h5>
+          <p class="scrap-content">Lorem ipsum sadasasj aiad
+            saipacsakl sacasiopcsak sacaoskca ascopasckoasck sacaosckasc
+            salcascakasnc ascopascasl casocaksc</p>
+        </div>
+        <div class="scrap-card">
+          <h5 class="scrap-title">글 제목</h5>
+          <p class="scrap-content">Lorem ipsum sadasasj aiad
+            saipacsakl sacasiopcsak</p>
+        </div>
+        <div class="scrap-card">
+          <h5 class="scrap-title">글 제목</h5>
+          <p class="scrap-content">Lorem ipsum sadasasj aiad
+            saipacsakl sacasiopcsak salcascakasnc ascopascasl casocaksc</p>
+        </div>
+        <div class="scrap-card">
+          <h5 class="scrap-title">글 제목</h5>
+          <p class="scrap-content">Lorem ipsum sadasasj aiad
+            saipacsakl sacasiopcsak copasckoasck sacaosckasc
+            salcascakasnc ascopascasl casocaksc</p>
+        </div>
+        <div class="scrap-card">
+          <h5 class="scrap-title">글 제목</h5>
+          <p class="scrap-content">Lorem ipsum sadasasj aiad
+            saipacsakl sacasiopcsak ascopascasl casocaksc</p>
+        </div>
+        <div class="scrap-card">
+          <h5 class="scrap-title">글 제목</h5>
+          <p class="scrap-content">Lorem ipsum sadasasj aiad
+            saipacsakl salcascakasnc ascopascasl casocaksc</p>
+        </div>
+        <div class="scrap-card">
+          <h5 class="scrap-title">글 제목</h5>
+          <p class="scrap-content">Lorem ipsum sadasasj aiak
+            sacaoskca ascopasckoasck sacaosckasc salcascakasnc
+            ascopascasl casocaksc</p>
+        </div>
+        <div class="scrap-card">
+          <h5 class="scrap-title">글 제목</h5>
+          <p class="scrap-content">Lorem ipsum sadasasj aiascasl
+            casocaksc</p>
+        </div>
+        <div class="scrap-card">
+          <h5 class="scrap-title">글 제목</h5>
+          <p class="scrap-content">Lorem ipsum ssck sacaosckasc
+            salcascakasnc ascopascasl casocaksc</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 이script 태그안에작성-->
+  <script th:inline="javascript">
+      
+    </script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</body>
+</html>
+

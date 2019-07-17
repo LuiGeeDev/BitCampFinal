@@ -55,12 +55,14 @@
             data-toggle="modal" data-target="#modal-checklist">
             <i class="fas fa-pen-square fa-2x"></i>
           </button>
+          <div class="checklist-list" ss-container>
           <div class="checklist-item" th:each="check:${checklist}">
             <input type="checkbox" name="" th:id="${check.id}" th:checked="${check.checked}==1 ? 'checked'" /> 
             <label class="checkbox" th:for="${check.id}">
               <i class="fas fa-check-square"></i> <span
               class="item-description" th:text="${check.content}"></span>
             </label>
+          </div>
           </div>
 
         </div>
@@ -77,7 +79,7 @@
             
           </div>
           <!-- 트러블슈팅 게시글 있을때 -->
-          <div th:if="${troubleShootingList.size()} > 0" class="issue" th:each="troubleShooting : ${troubleShootingList}">
+          <div th:if="${troubleShootingList.size()} > 0 and ${iter.index < 5}" class="issue" th:each="troubleShooting,iter : ${troubleShootingList}">
           
             <div class="closed">
               <i class="fas" th:classappend="${troubleShooting.option.issue_closed} == 0 ? fa-exclamation-circle : fa-check-circle"></i>

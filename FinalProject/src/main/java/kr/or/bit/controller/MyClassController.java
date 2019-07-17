@@ -86,12 +86,18 @@ public class MyClassController {
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
+    ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     Course course = courseDao.selectCourse(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id());
     course.setEndDate(course.getEnd_date().toLocalDate());
     course.setStartDate(course.getStart_date().toLocalDate());
     List<Article> recentHomework = homeworkDao.selectRecentHomeworkArticle(course.getId());
     Period diff = Period.between(course.getStartDate(), course.getEndDate());
     Period diff2 = Period.between(course.getStartDate(), LocalDate.now());
+    for (Article article : recentHomework) {
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
+      article.setTimeLocal(article.getTime().toLocalDateTime());
+      article.setOption(homeworkDao.selectHomeworkByArticleId(article.getId()));
+    }
     int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
     List<Article> recentArticles = articleDao.selectArticlesForClassMain(course.getId());
     for (Article article : recentArticles) {
@@ -102,6 +108,9 @@ public class MyClassController {
     model.addAttribute("course", course);
     model.addAttribute("recentArticles", recentArticles);
     model.addAttribute("completion", completion);
+    model.addAttribute("project", projectDao.selectRecentProjectByCourseId(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id()));
+    model.addAttribute("group_id", memberDao.selectMemberByUsername(Helper.userName()).getGroup_id());
+    
     return "myclass/home";
   }
 
@@ -488,6 +497,8 @@ public class MyClassController {
     MemberDao memberdao = sqlSession.getMapper(MemberDao.class);
     ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
     GroupDao groupdao = sqlSession.getMapper(GroupDao.class);
+    ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
+    
     
     String username = Helper.userName();
     Member member = memberdao.selectMemberByUsername(username);
@@ -500,16 +511,20 @@ public class MyClassController {
     project.setEndDateLocal(project.getEnd_date().toLocalDate());
     course.setStartDateLocal(course.getStart_date().toLocalDate());
     course.setEndDateLocal(course.getEnd_date().toLocalDate());
-    
+    System.out.println(groups);
     Period ccDay = Period.between(course.getStartDateLocal(), course.getEndDateLocal());
     Period cDay = Period.between(course.getEndDateLocal(), LocalDate.now());
     
     Period ddDay = Period.between(project.getStartDateLocal(), project.getEndDateLocal());
     Period dDay = Period.between(project.getStartDateLocal(), LocalDate.now());
     
+    Article homeworkarticle = articledao.selectRecentHomework(username);
+    List<Article> homeworkarticlere = articledao.selectHomeworkReplies(homeworkarticle.getId());
     
     System.out.println(project);
     System.out.println(course);
+    System.out.println(homeworkarticle);
+    System.out.println(homeworkarticlere);
     
     model.addAttribute("course", course);
     model.addAttribute("project", project);
@@ -519,6 +534,8 @@ public class MyClassController {
     model.addAttribute("all", memberdao.getCountCourseMember(course.getId(), "enable") + memberdao.getCountCourseMember(course.getId(), "disable"));
     model.addAttribute("course_percent", (int)((float)(cDay.getDays() / (float)(ccDay.getDays()))*100));
     model.addAttribute("groups", groups);
+    model.addAttribute("homeworkarticle",homeworkarticle);
+    model.addAttribute("homeworkarticlere",homeworkarticlere);
     
     return "myclass/teacher/managing";
   }

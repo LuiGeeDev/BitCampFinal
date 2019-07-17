@@ -62,16 +62,23 @@
               </span>
               <span class="recentHomeworkcontent">
               <span th:each="homework : ${recentHomework}">
-              <span th:utext="${homework.title}"></span>
+              <a th:href="@{/myclass/homework/detail(id=${homework.id},page=1)}" th:text="${homework.title}" class="homework-title"></a>
+              <span class="period">
+              <span th:text="${#temporals.format(homework.timeLocal, 'yyyy-MM-dd')}"></span>
+              ~ 
+              <span th:text="${homework.option.end_date}"></span>
+              </span>
                </span>
               </span>
             </span>
             <span class="recentProject cardshadow">
               <span class="moreRow">
                 <span class="card-title">최근 프로젝트</span>
-                <span class="moreLotation">더보기</span>
+                <span class="moreLotation"
+                th:onclick="'window.location.href = \'' + @{/myclass/project(group_id=${group_id})} + '\''">
+                                    바로가기</span>
               </span>
-              <span class="recentProjectcontent">파이널 프로젝트 진행중</span>
+              <span class="recentProjectcontent" th:text="${project.project_name} + ' 진행중'">파이널 프로젝트 진행중</span>
             </span>
           </div>
         </div>
@@ -91,7 +98,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr th:each="article : ${recentArticles}">
+                  <tr th:each="article : ${recentArticles}" class="article-info"
+                      th:onclick="'window.location.href = \'' + @{/myclass/board/read(article_id=${article.id}, board_id=${article.board_id})} + '\''">
                     <td th:text="${article.board_name}"></td>
                     <td th:text="${article.title}"></td>
                     <td th:text="${article.writer.name}"></td>
