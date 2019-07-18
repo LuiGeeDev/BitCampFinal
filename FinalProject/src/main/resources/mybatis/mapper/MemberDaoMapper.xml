@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   <select id="selectStudentsList"
     resultType="kr.or.bit.model.Member">
-    SELECT m.username, m.password, m.name, m.email, m.profile_photo, course_id, group_id
+    SELECT m.username, m.name, m.email, m.profile_photo, course_id, group_id
     FROM member m
     LEFT JOIN authorities a
     ON m.username = a.username
@@ -64,7 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   <select id="selectMemberByUsername"
     resultType="kr.or.bit.model.Member">
-    SELECT m.username, password, name, email, profile_photo, course_id, group_id, a.role
+    SELECT m.username, name, email, profile_photo, course_id, group_id, a.role
     FROM MEMBER m
     LEFT JOIN GROUP_MEMBER g
     ON m.username = g.member_name
@@ -101,12 +101,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	SET PROFILE_PHOTO =#{profile_photo}
   	WHERE USERNAME=#{username}
   </update>
-  
-  <!--   int getCountCourseAllMember(int courseid);
-  
-  int getCountCourseEnable1Member(int courseid);
-  
-  int getCountCourseEnable0Member(int courseid); -->
   
   <select id="getCountCourseMember" resultType="int" >
     select count(enabled)

@@ -411,7 +411,7 @@ public class MyClassController {
   }
 
   @PostMapping("/homework/detail")
-  public String submitHomeworkDetail(Article article, MultipartFile file1, MultipartFile file2,
+  public String submitHomeworkDetail(Article article, Homework homework, MultipartFile file1, MultipartFile file2,
       HttpServletRequest request, Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
@@ -422,7 +422,6 @@ public class MyClassController {
     article.setTitle("과제제출");
     article.setContent("과제제출");
     article.setLevel(2);
-    Homework homework = new Homework();
     List<MultipartFile> files = new ArrayList<>();
     files.add(file1);
     files.add(file2);

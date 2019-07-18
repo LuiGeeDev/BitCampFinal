@@ -149,6 +149,13 @@ body {
 
 .class-stack {
   margin-bottom: 25px;
+  border-bottom: 2px ridge;
+  padding-bottom: 5px;
+  cursor : pointer;
+}
+
+.class-stack:hover {
+  border-bottom: 2px solid #f39c20
 }
 
 .homework-content, .issue-content {
@@ -157,7 +164,6 @@ body {
 
 .stack-content {
   font-size: 14px;
-  margin-bottom: 5px;
 }
 
 .homework-content, .issue-content {
@@ -204,3 +210,4 @@ body {
   justify-content: space-around;
   flex: 1;
 }
+

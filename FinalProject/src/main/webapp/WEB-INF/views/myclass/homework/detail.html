@@ -58,11 +58,13 @@
               <input type="submit" class="btn btn-primary btn-sm" id="homework-submit-button" value="제출">
             </div>
             <input type="hidden" name="page" th:value="${page}">
+            <input type="hidden" th:value="${article.option.end_date}" name="end_date">
           </div>
         </form>
       </div>
       <hr>
       </div>
+
     <div class="reply-title">과제제출 목록</div>
     <div class="none-reply-container" th:if="${replies.size()} == 0">제출된
       과제가 없습니다.</div>

@@ -48,11 +48,6 @@
              </a>
             </div>
           </div>
-          <div class="nav-menu" sec:authorize="hasRole('TEACHER')">
-            <div class="nav-icon">
-              <i class="fas fa-database fa-2x"></i>
-            </div>
-          </div>
           <div class="nav-menu" sec:authorize="hasRole('MANAGER')">
             <div th:classappend="${#strings.contains(#request.getRequestURI(),'manage')} ? 'active-menu'" class="nav-icon">
               <a th:href="@{/manage/course}">

@@ -24,6 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT id, content, checked, username, link, title
     FROM notification
     WHERE username = #{username}
+    ORDER BY id DESC
     LIMIT 20
   </select>
   <select id="selectAllNewNotification"
@@ -31,12 +32,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT id, content, checked, username, link, title
     FROM notification
     WHERE username = #{username} AND checked = 0
+    ORDER BY id DESC
   </select>
   <select id="selectAllOldNotification"
     resultType="kr.or.bit.model.Notification">
     SELECT id, content, checked, username, link, title
     FROM notification
     WHERE username = #{username} AND checked = 1
+    ORDER BY id DESC
   </select>
 </mapper>
   
