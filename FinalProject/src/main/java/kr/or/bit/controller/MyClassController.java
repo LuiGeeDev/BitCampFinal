@@ -421,14 +421,16 @@ public class MyClassController {
   }
 
   @PostMapping("/homework/detail")
-  public String submitHomeworkDetail(Article article, Homework homework, MultipartFile file1, MultipartFile file2, int page,
-      HttpServletRequest request, Model model) {
-    System.out.println(article);
-    System.out.println(homework);
+  public String submitHomeworkDetail(@RequestParam("original_id") int original_id, @RequestParam("end_date") Date end_date, @RequestParam("page") int page,
+      @RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2, HttpServletRequest request, Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     Member member = memberDao.selectMemberByUsername(Helper.userName());
     Board board = boardDao.selectBoardByCourseId(member.getCourse_id(), 4);
+    Homework homework = new Homework();
+    homework.setEnd_date(end_date);
+    Article article = new Article();
+    article.setOriginal_id(original_id);
     article.setUsername(Helper.userName());
     article.setBoard_id(board.getId());
     article.setTitle("과제제출");

@@ -158,7 +158,7 @@
             <a
               th:if="${comment.username}==${user.username}"
               th:href="@{/myclass/board/commentdelete(comment_id=${comment.id}, article_id=${article.id}, board_id=${board.id})}"
-              >[삭제]</a
+              class="comment-delete">삭제</a
             >
             <span
               class="hidden messageReceiverId"
