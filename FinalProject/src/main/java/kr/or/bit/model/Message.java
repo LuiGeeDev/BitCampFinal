@@ -98,4 +98,11 @@ public class Message {
     this.senderName = senderName;
   }
 
+  @Override
+  public String toString() {
+    return "Message [id=" + id + ", content=" + content + ", time=" + time + ", checked=" + checked
+        + ", sender_username=" + sender_username + ", receiver_username=" + receiver_username + ", timeDate=" + timeDate
+        + ", timeLocal=" + timeLocal + ", senderName=" + senderName + ", sender=" + sender + "]";
+  }
+
 }
