@@ -46,14 +46,14 @@
                 th:if="${user.username == stackcontent.username}"
                 class="updateBtn"
               >
-                <i class="far fa-edit"></i>
+                <i class="far fa-edit stackIcon"></i>
               </a>
               <span
                 th:if="${user.username == stackcontent.username or user.role == 'MANAGER'}"
                 class="deleteBtn"
                 id="deleteCheck"
               >
-                <i class="fas fa-trash-alt"></i>
+                <i class="fas fa-trash-alt stackIcon"></i>
               </span>
             </span>
           </td>
@@ -63,8 +63,10 @@
             <span th:text="${stackcontent.title}"></span>
           </td>
           <td class="bookmarkRow">
-            <button class="btn btn-outline-primary btn-sm bookmarkSpan"
-            th:onclick="location.href='/stack/insertScrap?article_id=[[${stackcontent.id}]]'"
+            <button
+              class="btn btn-outline-primary btn-sm bookmarkSpan"
+              th:classappend="${scrapCount} == 1 ? 'scrapCompletion'"
+              th:onclick="location.href='/stack/insertScrap?article_id=[[${stackcontent.id}]]'"
             >
               <span class="bookmarkLabel">북마크</span>
               <i class="fas fa-book bookmarkIcon"></i>
@@ -75,16 +77,18 @@
           <td colspan="4" class="tdcontent">
             <span th:utext="${stackcontent.content}"> </span>
             <div class="votecountalign">
-              <a th:href="@{/stack/plusvote(id=${stackcontent.id})}">
-                <span class="voteSpan">
-                  <span>
-                    <i class="far fa-thumbs-up votecount"></i>
-                  </span>
-                  <span class="votecount-font">
-                    [[${stackcontent.vote_count}]]
-                  </span>
-                </span></a
-              >
+              <button type="button" id="voteButton">
+                <span>
+                  <i
+                    class="fas fa-thumbs-up"
+                    id="thumbIcon"
+                    th:classappend="${voteCount} == 1 ? 'voted'"
+                  ></i>
+                </span>
+                <span class="votecount-font" id="voteText">
+                  [[${stackcontent.vote_count}]]
+                </span>
+              </button>
             </div>
           </td>
         </tr>
@@ -98,12 +102,18 @@
           </td>
           <td colspan="3" class="td4">
             <span class="stackWriterNameForm">
-              <span class="stackWriterName" th:text="${stackcontent.writer.name}"
-                    th:classappend="${stackcontent.writer.name == user.name} ? 'my-comment-name'"></span>
+              <span
+                class="stackWriterName"
+                th:text="${stackcontent.writer.name}"
+                th:classappend="${stackcontent.writer.name == user.name} ? 'my-comment-name'"
+              ></span>
             </span>
-            
-            <span class="hidden writerReceiverId" th:text="${stackcontent.username}"></span>
-            
+
+            <span
+              class="hidden writerReceiverId"
+              th:text="${stackcontent.username}"
+            ></span>
+
             <p class="pfont">
               게시일:<span
                 th:text="${#temporals.format(stackcontent.timeLocal, 'yyyy-MM-dd HH:mm')}"
@@ -198,7 +208,7 @@
               <a
                 th:if="${list.id != stackcontent.option.adopted_answer and (list.username == user.username or user.role == 'MANAGER')}"
                 th:href="@{/stack/commentdelete(id=${list.id})}"
-                ><i class="fas fa-trash-alt"></i>
+                ><i class="fas fa-trash-alt stackIcon"></i>
               </a>
               <span
                 class="hidden messageReceiverId"
@@ -273,287 +283,298 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script th:inline="javascript">
-        $(document).ready(function() {
-
-          $("#imgp2").click(function(){
-            sendVoteNotice([[${user.name}]], [[${stackcontent.username}]], "/stack/content?id="+[[${stackcontent.id}]]);
-          })
-          $("#spinner").hide();
-        }).ajaxStart(function() {
-          $("#spinner").show();
-        }).ajaxStop(function() {
-          $("#spinner").hide();
+      $(document).ready(function() {
+        $("#imgp2").click(function(){
+          sendVoteNotice([[${user.name}]], [[${stackcontent.username}]], "/stack/content?id="+[[${stackcontent.id}]]);
         });
-
-        /* 메시지 보내는 함수 */
-        function replyMessage(messageText, receiverId) {
-           $.ajax({
-             url: "/ajax/message/reply",
-             type: "POST",
-             data: {
-               content: messageText,
-               receiver_username: receiverId
-             }
-           }).done(function() {
-             $(".modal").modal("hide");
-             Swal.fire({
-               type: 'success',
-               title: '전송되었습니다',
-               showConfirmButton: false,
-               timer: 1500
-             });
-             sendMessageNotice([[${user.name}]], receiverId);
-           });
-           };
-           
-           /* 메시지 보내는 함수 */
-        
-        
-
-      //동기 메시지보내기 처리 시작
-        $(".messageCancle").click(function() {
-          $("#messageText").val("");
-        });
-
-
-          $(".commentWriterName").unbind("click");
-          $(".commentWriterName").click(function(event) {
-            const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
-            const messageReceiveName = $(event.currentTarget).text();
-            $(".messageReceiveName").text(messageReceiveName);
-            if([[${user.username}]] != receiverId) {
-              $(".modal").modal("show");
-            }
-
-            $(".submitMessage").unbind("click");
-            $(".submitMessage").click(function() {
-              const messageText = $("#messageText").val();
-             	if (messageText.trim() === "" || messageText === null) {
-            	  Swal.fire({
-            	    type: 'error',
-            	    text: '다시 입력해주세요 !!',
-            	  })
-            	  return;
-            	}
-              $("#messageText").val("");
-              replyMessage(messageText, receiverId);
-            });
-          });
-
-          // 동기 메시지보내기 처리 끝
-
-
-          // 글쓴이 동기 메시지보내기 처리 시작
-    $(".stackWriterNameForm").unbind("click");
-    $(".stackWriterNameForm").click(function(event) {
-	  const receiverId = $(event.currentTarget).siblings(".writerReceiverId").text();
-      const messageReceiveName = $(event.currentTarget).text();
-      $(".messageReceiveName").text(messageReceiveName);
-      if([[${user.username}]] != receiverId) {
-        $(".modal").modal("show");
-      }
-      $(".submitMessage").unbind("click");
-      $(".submitMessage").click(function() {
-        const messageText = $("#messageText").val();
-       	if (messageText.trim() === "" || messageText === null) {
-      	  Swal.fire({
-      	    type: 'error',
-      	    text: '다시 입력해주세요 !!',
-      	  })
-      	  return;
-      	}
-        $("#messageText").val("");
-     	replyMessage(messageText, receiverId);
+        $("#spinner").hide();
+      }).ajaxStart(function() {
+        $("#spinner").show();
+      }).ajaxStop(function() {
+        $("#spinner").hide();
       });
-    });
 
-    // 글쓴이 동기 메시지보내기 처리 끝
+      /* 메시지 보내는 함수 */
+      function replyMessage(messageText, receiverId) {
+        $.ajax({
+          url: "/ajax/message/reply",
+          type: "POST",
+          data: {
+            content: messageText,
+            receiver_username: receiverId
+          }
+        }).done(function() {
+          $(".modal").modal("hide");
+          Swal.fire({
+            type: 'success',
+            title: '전송되었습니다',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          sendMessageNotice([[${user.name}]], receiverId);
+        });
+      }
+
+      /* 메시지 보내는 함수 */
+      //동기 메시지보내기 처리 시작
+      $(".messageCancle").click(function() {
+        $("#messageText").val("");
+      });
+
+      $(".commentWriterName").unbind("click");
+      $(".commentWriterName").click(function(event) {
+        const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
+        const messageReceiveName = $(event.currentTarget).text();
+        $(".messageReceiveName").text(messageReceiveName);
+
+        if ([[${user.username}]] != receiverId) {
+          $(".modal").modal("show");
+        }
+
+        $(".submitMessage").unbind("click");
+        $(".submitMessage").click(function() {
+        const messageText = $("#messageText").val();
+        if (messageText.trim() === "" || messageText === null) {
+          Swal.fire({
+            type: 'error',
+            text: '다시 입력해주세요 !!',
+          })
+          return;
+        }
+        $("#messageText").val("");
+        replyMessage(messageText, receiverId);
+        });
+      });
+
+      // 동기 메시지보내기 처리 끝
+
+      // 글쓴이 동기 메시지보내기 처리 시작
+      $(".stackWriterNameForm").unbind("click");
+      $(".stackWriterNameForm").click(function(event) {
+        const receiverId = $(event.currentTarget).siblings(".writerReceiverId").text();
+        const messageReceiveName = $(event.currentTarget).text();
+        $(".messageReceiveName").text(messageReceiveName);
+
+        if ([[${user.username}]] != receiverId) {
+          $(".modal").modal("show");
+        }
+
+        $(".submitMessage").unbind("click");
+        $(".submitMessage").click(function() {
+          const messageText = $("#messageText").val();
+          if (messageText.trim() === "" || messageText === null) {
+            Swal.fire({
+         	    type: 'error',
+         	    text: '다시 입력해주세요 !!',
+         	  })
+         	  return;
+          }
+          $("#messageText").val("");
+          replyMessage(messageText, receiverId);
+        });
+      });
+
+      // 글쓴이 동기 메시지보내기 처리 끝
+      const currentPosition = parseInt($("#floatMenu").css("top"));
+      $(window).scroll(function() {
+        const position = $(window).scrollTop();
+        $("#floatMenu").stop().animate({
+          "top" : position + currentPosition + "px"
+        }, 1500);
+      });
+
+      $(".btnalign").click(function() {
+        const valueCheck = $(".comtext").val();
+
+        if (valueCheck.trim() === "" || valueCheck === null) {
+          Swal.fire({
+            type: 'error',
+            text: '다시 입력해주세요 !!',
+          })
+          return;
+        }
+
+        const articleId = [[${stackcontent.id}]];
+        const commentContent = $(".comtext").val();
+        const username = [[${user.username}]];
+
+        const formData = new FormData();
+        formData.append("article_id", articleId);
+        formData.append("content", commentContent);
+        formData.append("username", username);
+
+        $.ajax({
+          url: "/stack/commentwrite",
+          type: "post",
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function(data) {
+            $(".stack-wrapper").empty();
+            $(".comtext").val("");
+            $.each(data, function(index, item) {
+              const content = item.content;
+              const username = item.writer.name;
+              const time = Number(item.time);
+              const date = new Date(time);
+              const commentId = item.id;
+              const articleId = item.article_id;
+              const profiel_photo = item.writer.profile_photo;
+
+              let minutes = date.getMinutes();
+              minutes = (minutes < 10) ? "0" + minutes : minutes;
+              let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
+              hours = hours < 10 ? "0" +  hours : hours;
+              let newHours = date.getHours();
+              newHours = (newHours < 10) ? "0" + newHours : newHours;
+
+              let getdate = date.getDate();
+              getdate = (getdate < 10) ? "0" + getdate : getdate;
+              let getmonth = date.getMonth() + 1;
+              getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
+
+              const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ newHours +`:` + minutes;
+              let equalName = null;
+              if (item.id != [[${stackcontent.option.adopted_answer}]] && (item.username == [[${user.username}]] || [[${user.role}]] == 'MANAGER')) {
+                equalName = "<i class='fas fa-trash-alt stackIcon'></i>";
+              } else {
+                equalName = "";
+              }
+
+              let createText = null;
+
+              if ([[${stackcontent.option.adopted_answer}]] == 0 && [[${user.username}]] == [[${stackcontent.username}]] ) {
+               // 채택이 되어있는 글이라면
+               createText = "채택" + "&nbsp;<i class='far fa-check-circle'></i></a>";
+              } else {
+                createText = "";
+                // 0이면 else문을 탄다
+               //답변이 되어있는 글이 아니라면
+              }
+
+              let spanClass;
+              if (username === [[${user.name}]]) {
+                spanClass = "<span class='commentWriterName my-comment-name'>";
+              } else {
+                spanClass = "<span class='commentWriterName'>";
+              }
 
 
-            var currentPosition = parseInt($("#floatMenu").css("top"));
-            $(window).scroll(function() {
-              var position = $(window).scrollTop();
-              $("#floatMenu").stop().animate({
-                "top" : position + currentPosition + "px"
-              }, 1500);
+              let html = "<table class='iteration'><tbody>"+
+                         "<tr><td class='td8'><img if='"+ profiel_photo +"!=null' src='"+ profiel_photo +"' id='profileimg2'/></td>" +
+                         "<td class='comment-writer'>" + spanClass +  username + "</span>"+
+                         "<span class='hidden messageReceiverId'>" + item.username + "</span>" + "&nbsp;<a href='/stack/commentdelete?id=" + commentId + "'" + ">" + equalName +"</a>" +
+                         "<br>" +
+                         "<span class='commentCalender'>" + timedate + "</span></td>" +
+                         "<td class='td7'></td></tr>" +
+                         "<tr><td colspan='3' class='td11'>" + content + "</td></tr>" +
+                         "<tr><td colspan='3' class='td6'>" +
+                         "<span class='checkButton'><a href='/stack/chooseanswer?article_id=" + articleId + "&comment_id=" + commentId + "' style='color:black;'>" +
+                         "</span>" + createText +
+                         "</td></tr></tbody></table>";
+              $(".stack-wrapper").append(html);
             });
-            $(".btnalign").click(function() {
-              let valueCheck = $(".comtext").val();
 
-              if(valueCheck.trim() === "" || valueCheck === null) {
+            // 비동기 메시지보내기 처리 시작
+            $(".messageCancle").click(function() {
+              $("#messageText").val("");
+            });
+
+
+            $(".commentWriterName").unbind("click");
+            $(".commentWriterName").click(function(event) {
+              const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
+              const messageReceiveName = $(event.currentTarget).text();
+              $(".messageReceiveName").text(messageReceiveName);
+              if ([[${user.username}]] != receiverId) {
+                $(".modal").modal("show");
+              }
+              $(".submitMessage").unbind("click");
+              $(".submitMessage").click(function() {
+                const messageText = $("#messageText").val();
+                if (messageText.trim() === "" || messageText === null) {
                 Swal.fire({
                   type: 'error',
                   text: '다시 입력해주세요 !!',
                 })
-                  return;
+                return;
               }
-                  const articleId = [[${stackcontent.id}]];
-                  const commentContent = $(".comtext").val();
-                  const username = [[${user.username}]];
-
-
-                  console.log(commentContent);
-
-                  const formData = new FormData();
-                  formData.append("article_id", articleId);
-                  formData.append("content", commentContent);
-                  formData.append("username", username);
-
-                  $.ajax({
-                url: "/stack/commentwrite",
-                type: "post",
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-                  console.log(data);
-                  $(".stack-wrapper").empty();
-                  $(".comtext").val("");
-                  $.each(data, function(index, item) {
-                    const content = item.content;
-                    const username = item.writer.name;
-                    const time = Number(item.time);
-                    const date = new Date(time);
-                    const commentId = item.id;
-                    const articleId = item.article_id;
-                    const profiel_photo = item.writer.profile_photo;
-
-                    let minutes = date.getMinutes();
-                    minutes = (minutes < 10) ? "0" + minutes : minutes;
-                    let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
-                    hours = hours < 10 ? "0" +  hours : hours;
-                    let newHours = date.getHours();
-                    newHours = (newHours < 10) ? "0" + newHours : newHours;
-                    
-                    let getdate = date.getDate();
-                    getdate = (getdate < 10) ? "0" + getdate : getdate;
-                    let getmonth = date.getMonth() + 1;
-                    getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
-
-                    const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ newHours +`:` + minutes;
-                    let equalName = null;
-                    if(item.id != [[${stackcontent.option.adopted_answer}]] && (item.username == [[${user.username}]] || [[${user.role}]] == 'MANAGER')) {
-                      equalName = "<i class='fas fa-trash-alt'></i>";
-                    } else {
-                      equalName = "";
-                    }
-
-                    let createText = null;
-
-                    if ([[${stackcontent.option.adopted_answer}]] == 0 && [[${user.username}]] == [[${stackcontent.username}]] ) {
-                     // 채택이 되어있는 글이라면
-                     createText = "채택" + "&nbsp;<i class='far fa-check-circle'></i></a>";
-                    } else {
-                      createText = "";
-                      // 0이면 else문을 탄다
-                     //답변이 되어있는 글이 아니라면
-
-                    }
-
-                    let spanClass;
-                    if (username === [[${user.name}]]) {
-                      spanClass = "<span class='commentWriterName my-comment-name'>";
-                    } else {
-                      spanClass = "<span class='commentWriterName'>";
-                    }
-
-
-                    let html = "<table class='iteration'><tbody>"+
-                               "<tr><td class='td8'><img if='"+ profiel_photo +"!=null' src='"+ profiel_photo +"' id='profileimg2'/></td>" +
-                               "<td class='comment-writer'>" + spanClass +  username + "</span>"+
-                               "<span class='hidden messageReceiverId'>" + item.username + "</span>" + "&nbsp;<a href='/stack/commentdelete?id=" + commentId + "'" + ">" + equalName +"</a>" +
-                               "<br>" +
-                               "<span class='commentCalender'>" + timedate + "</span></td>" +
-                               "<td class='td7'></td></tr>" +
-                               "<tr><td colspan='3' class='td11'>" + content + "</td></tr>" +
-                               "<tr><td colspan='3' class='td6'>" +
-                               "<span class='checkButton'><a href='/stack/chooseanswer?article_id=" + articleId + "&comment_id=" + commentId + "' style='color:black;'>" +
-                               "</span>" + createText +
-                               "</td></tr></tbody></table>";
-                    $(".stack-wrapper").append(html);
-
-                  });
-
-                // 비동기 메시지보내기 처리 시작
-                  $(".messageCancle").click(function() {
-                    $("#messageText").val("");
-                  });
-
-
-                    $(".commentWriterName").unbind("click");
-                    $(".commentWriterName").click(function(event) {
-                      const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
-                      const messageReceiveName = $(event.currentTarget).text();
-                      $(".messageReceiveName").text(messageReceiveName);
-                      if([[${user.username}]] != receiverId) {
-                        $(".modal").modal("show");
-                      }
-
-                      $(".submitMessage").unbind("click");
-                      $(".submitMessage").click(function() {
-                        const messageText = $("#messageText").val();
-                       	if (messageText.trim() === "" || messageText === null) {
-                      	  Swal.fire({
-                      	    type: 'error',
-                      	    text: '다시 입력해주세요 !!',
-                      	  })
-                      	  return;
-                      	}
-                        $("#messageText").val("");
-                        replyMessage(messageText, receiverId);
-                      });
-                    });
-
-                    // 비동기 메시지보내기 처리 끝
-
-
-                  sendCommentNotice([[${user.name}]], [[${stackcontent.username}]], "/stack/content?id="+[[${stackcontent.id}]]);
-
-                  const count = $(".commentPlus");
-                  count.text(Number(count.text()) +1);
-
-                }
+               $("#messageText").val("");
+               replyMessage(messageText, receiverId);
               });
             });
 
+            // 비동기 메시지보내기 처리 끝
+            if ([[${user.username}]] === [[${stackcontent.username}]]) {
+              sendCommentNotice([[${user.name}]], [[${stackcontent.username}]], "/stack/content?id="+[[${stackcontent.id}]]);
+            }
 
-            $(".deleteBtn").unbind("click");
-            $(".deleteBtn").click(function(event) {
-              Swal.fire({
-                title: '정말 삭제하시겠습니까?',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#F39B10',
-                cancelButtonColor: '#A6A6A6',
-                confirmButtonText: '네',
-                cancelButtonText: '아니요'
-              }).then((result) => {
-                if (result.value) {
-                  Swal.fire({
-                      title: '삭제되었습니다',
-                      type: 'success',
-                      confirmButtonText: '확인',
-                      confirmButtonColor: '#F39B10'
-                }).then(function() {
-                  location.href="/stack/delete?id=" + [[${stackcontent.id}]];
-                });
-                }
-              })
+            const count = $(".commentPlus");
+            count.text(Number(count.text()) +1);
+          }
+        });
+      });
+
+
+      $(".deleteBtn").unbind("click");
+      $(".deleteBtn").click(function(event) {
+        Swal.fire({
+          title: '정말 삭제하시겠습니까?',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#F39B10',
+          cancelButtonColor: '#A6A6A6',
+          confirmButtonText: '네',
+          cancelButtonText: '아니요'
+        }).then((result) => {
+          if (result.value) {
+            Swal.fire({
+              title: '삭제되었습니다',
+              type: 'success',
+              confirmButtonText: '확인',
+              confirmButtonColor: '#F39B10'
+            }).then(function() {
+              location.href="/stack/delete?id=" + [[${stackcontent.id}]];
             });
+          }
+        })
+      });
 
-            $( document ).ready( function() {
-              $( window ).scroll( function() {
-                if ( $( this ).scrollTop() > 200 ) {
-                  $( '.top' ).fadeIn();
-                } else {
-                  $( '.top' ).fadeOut();
-                }
-              } );
-              $( '.top' ).click( function() {
-                $( 'html, body' ).animate( { scrollTop : 0 }, 100 );
-                return false;
-              } );
-            } );
+      $( document ).ready( function() {
+        $( window ).scroll( function() {
+          if ( $( this ).scrollTop() > 200 ) {
+            $( '.top' ).fadeIn();
+          } else {
+            $( '.top' ).fadeOut();
+          }
+        });
+
+        $( '.top' ).click( function() {
+          $( 'html, body' ).animate( { scrollTop : 0 }, 100 );
+          return false;
+        });
+      });
+
+      $('#voteButton').click(function(data){
+        $.ajax({
+          url:"/ajax/vote",
+           data:{
+            articleId: [[${stackcontent.id}]],
+           },
+          method: "post",
+          success: function(data) {
+           $("#voteText").html(data.countVote);
+            if (data.checkStatus == 1) {
+              $('#thumbIcon').addClass("voted");
+              if ([[${user.username}]] !== [[${stackcontent.username}]]) {
+                sendVoteNotice([[${user.name}]], [[${stackcontent.username}]], "/stack/content?id="+[[${stackcontent.id}]]);
+              }
+            } else {
+              $('#thumbIcon').removeClass("voted");
+            }
+          }
+        });
+      });
     </script>
   </body>
 </html>

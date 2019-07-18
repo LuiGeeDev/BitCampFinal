@@ -27,11 +27,18 @@ public class SocketController {
   @Autowired
   private SqlSession sqlSession;
   
-  @MessageMapping({"/notice/vote", "/notice/comment", "/notice/reply", "/notice/message"})
+  @MessageMapping({"/notice/vote", "/notice/comment", "/notice/reply"})
   public void sendNotice(Notification notification) {
     NotificationDao notificationDao = sqlSession.getMapper(NotificationDao.class);
     notificationDao.insertNotification(notification);
     template.convertAndSendToUser(notification.getUsername(), "/queue/notice", notification);
+  }
+  
+  @MessageMapping("/notice/message")
+  public void sendMessageNotice(Notification notification) {
+    NotificationDao notificationDao = sqlSession.getMapper(NotificationDao.class);
+    notificationDao.insertNotification(notification);
+    template.convertAndSendToUser(notification.getUsername(), "/queue/message", notification);
   }
   
   @MessageMapping("/notice/assemble")

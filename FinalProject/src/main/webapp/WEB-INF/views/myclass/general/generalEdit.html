@@ -39,13 +39,15 @@
                 th:text="${fi.original_filename}"
                 th:name="${iter.count}">오리지날파일네임</div>
               <div class="filebutton">
-                <button type="button" onclick="deletefile(event)">삭제</button>
+                <button class="btn btn-primary btnSize" type="button" onclick="deletefile(event)">삭제</button>
               </div>
             </div>
           </div>
         </div>
+        <div class="submitButton">
         <button type="submit" class="btn btn-primary" id="submit-button">
           올리기</button>
+          </div>
       </div>
     </form>
     <div th:each="fi, iter : ${article.option.files}">

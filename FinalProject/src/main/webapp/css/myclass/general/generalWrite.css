@@ -82,8 +82,19 @@ input[type=file] {
 
 .download-content {
   display: flex;
+  padding: 3px;
+  margin-right: 2px;
 }
 
 .filebutton {
   margin-left:auto;
+}
+
+.btnSize{
+  width:63px;
+  font-size:14px;
+}
+
+.submitButton {
+  display:flex;
 }

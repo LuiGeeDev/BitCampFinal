@@ -60,6 +60,7 @@ body {
   margin-bottom: 2.7%;
   padding: 10 0 0 20;
   padding: 15px;
+  position:relative;
 }
 
 .recentHomeworkcontent {
@@ -179,7 +180,7 @@ body {
 
 .period {
   position: absolute;
-  right: 240px;
+  right: 15px;
   font-size:11px;
   font-weight:bold;
 }

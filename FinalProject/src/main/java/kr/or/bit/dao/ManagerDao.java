@@ -45,8 +45,6 @@ public interface ManagerDao {
   List<Course> articleWriteRank();
   //댓글 가장 많이 쓴 수
   List<Comment> commentWriteRank();
-  //클래스 리스트
-  List<Course> selectCourseList();
   //강사 리스트
   List<Member> selectTeacherList();
   //과목 리스트

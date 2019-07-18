@@ -1,109 +1,126 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
-<head>
-<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-<link rel="stylesheet" th:href="@{/css/myclass/qna/home.css}" />
-</head>
-<body>
-  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
-  <div class="main" th:fragment="main">
-    <div class="title">
-      <h3>
-        <b>Q&A게시판</b>
-      </h3>
-    </div>
-    <!-- 게시판 -->
-    <hr>
-    <table>
-      <tr>
-        <td class="seath">
-          <form method="get">
-            <select size="1" name="criteria">
-              <option value="titleOrContent" selected>제목 + 내용</option>
-              <option value="title">제목</option>
-              <option value="name">글작성자</option>
-            </select><input
-              type="text" name="boardSearch" id="boardSearch" size="25"
-              placeholder="검색내용을 적어주세요" /> <input
-              type="submit" class="btn btn-outline-primary" value="검색">
-          </form>
-        </td>
-        <td class="writeBtnAlign">
-        <a th:href="@{/myclass/qna/write}">
-          <button class="btn btn-outline-primary">글쓰기</button>
-        </a>
-        </td>
-      </tr>
-    </table>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+    <link rel="stylesheet" th:href="@{/css/myclass/qna/home.css}" />
+  </head>
+  <body>
+    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+    <div class="main" th:fragment="main">
+      <div class="wrapper">
+        <h3 class="title">Q&A게시판</h3>
+        <table>
+          <tr>
+            <td class="seath">
+              <form method="get">
+                <select size="1" name="criteria">
+                  <option value="titleOrContent" selected>제목 + 내용</option>
+                  <option value="title">제목</option>
+                  <option value="name">글작성자</option>
+                </select>
+                <input
+                  type="text"
+                  name="boardSearch"
+                  id="boardSearch"
+                  size="25"
+                  placeholder="검색내용을 적어주세요"
+                />
+                <input
+                  type="submit"
+                  class="btn btn-outline-primary"
+                  value="검색"
+                />
+              </form>
+            </td>
+            <td class="writeBtnAlign">
+              <a th:href="@{/myclass/qna/write}">
+                <button class="btn btn-outline-primary">글쓰기</button>
+              </a>
+            </td>
+          </tr>
+        </table>
 
-    <!-- 목록불러오기 -->
-    <table class="iteration" th:each="list,count : ${qnaList}">
-      <tr class="tr1">
-        <td class="td2 tr3">#[[${list.id}]]</td>
-        <td colspan="2" class="td6 tr3"><span class="tag-name iteration"
-            th:each="tag : ${list.tags}"> <span
-              th:style="'background-color:'+@{${tag.color}}+';'"
-              th:onclick="'window.location.href = \'' + @{/myclass/qna?criteria=Tag(boardSearch=${tag.tag})} + '\''">[[${tag.tag}]]</span>
-          </span></td>
-        <td colspan="2" class="td4"></td>
-      </tr>
-      <tr
-        th:onclick="'window.location.href = \'' + @{/myclass/qna/content(id=${list.id})} + '\''">
-        <td colspan="3" class="td5 tr2"><span
-            th:text="${list.title}"></span><span class="answer-style">
-          <span th:if="${list.commentlist.size()}>0">
-          완료<i class="far fa-check-circle"></i></span>
-          </span>
-          </td>
-        <td class="tr2"><i class="fas fa-eye"></i> [[${list.view_count}]]</td>
-        <td class="tr2"><i class="far fa-heart"></i> [[${list.votenum}]]</td>
-        <td class="td3 tr2">[[${list.writer.name}]]</td>
-      </tr>
-    </table>
+        <!-- 목록불러오기 -->
+        <table class="iteration" th:each="list,count : ${qnaList}">
+          <tr class="tr1">
+            <td class="td2 tr3">#[[${list.id}]]</td>
+            <td colspan="2" class="td6 tr3">
+              <span class="tag-name iteration" th:each="tag : ${list.tags}">
+                <span
+                  th:style="'background-color:'+@{${tag.color}}+';'"
+                  th:onclick="'window.location.href = \'' + @{/myclass/qna?criteria=Tag(boardSearch=${tag.tag})} + '\''"
+                  >[[${tag.tag}]]</span
+                >
+              </span>
+            </td>
+            <td colspan="2" class="td4"></td>
+          </tr>
+          <tr
+            th:onclick="'window.location.href = \'' + @{/myclass/qna/content(id=${list.id})} + '\''"
+          >
+            <td colspan="3" class="td5 tr2">
+              <span th:text="${list.title}"></span
+              ><span class="answer-style">
+                <span th:if="${list.commentlist.size()}>0">
+                  완료<i class="far fa-check-circle"></i
+                ></span>
+              </span>
+            </td>
+            <td class="tr2">
+              <i class="fas fa-eye"></i> [[${list.view_count}]]
+            </td>
+            <td class="tr2">
+              <i class="far fa-heart"></i> [[${list.votenum}]]
+            </td>
+            <td class="td3 tr2">[[${list.writer.name}]]</td>
+          </tr>
+        </table>
 
-
-
-
-
-    <div class="row">
-    <div class="align">
-      <div class="page-btns">
-        <span th:if="${pager.prev}"> <a
-          class="btn btn-primary paging"
-          th:href="@{/myclass/qna(page=${pager.startPage}-1)}">&laquo;</a>
-        </span> <span
-         >
-          <a th:if="${boardSearch} != null" th:each="idx, iterStat : ${#numbers.sequence(pager.startPage,pager.endPage)}"
-          class="btn btn-primary paging"
-          th:href="@{/myclass/qna(page=${idx},boardSearch=${boardSearch},criteria=${criteria})}"
-          th:classappend="${pager.currentPage} == ${idx} ? active"
-          th:text="${idx}"></a> <a th:if="${boardSearch} == null"  th:each="idx, iterStat : ${#numbers.sequence(pager.startPage,pager.endPage)}"
-          class="btn btn-primary paging"
-          th:href="@{/myclass/qna(page=${idx})}"
-          th:classappend="${pager.currentPage} == ${idx} ? active"
-          th:text="${idx}"></a>
-        </span> <span th:if="${pager.next} and ${pager.endPage > 0}"> <a
-          class="btn btn-primary paging"
-          th:href="@{/myclass/qna(page=${pager.endPage}+1)}">&raquo;</a>
-        </span>
-        
+        <div class="row">
+          <div class="align">
+            <div class="page-btns">
+              <span th:if="${pager.prev}">
+                <a
+                  class="btn btn-primary paging"
+                  th:href="@{/myclass/qna(page=${pager.startPage}-1)}"
+                  >&laquo;</a
+                >
+              </span>
+              <span>
+                <a
+                  th:if="${boardSearch} != null"
+                  th:each="idx, iterStat : ${#numbers.sequence(pager.startPage,pager.endPage)}"
+                  class="btn btn-primary paging"
+                  th:href="@{/myclass/qna(page=${idx},boardSearch=${boardSearch},criteria=${criteria})}"
+                  th:classappend="${pager.currentPage} == ${idx} ? active"
+                  th:text="${idx}"
+                ></a>
+                <a
+                  th:if="${boardSearch} == null"
+                  th:each="idx, iterStat : ${#numbers.sequence(pager.startPage,pager.endPage)}"
+                  class="btn btn-primary paging"
+                  th:href="@{/myclass/qna(page=${idx})}"
+                  th:classappend="${pager.currentPage} == ${idx} ? active"
+                  th:text="${idx}"
+                ></a>
+              </span>
+              <span th:if="${pager.next} and ${pager.endPage > 0}">
+                <a
+                  class="btn btn-primary paging"
+                  th:href="@{/myclass/qna(page=${pager.endPage}+1)}"
+                  >&raquo;</a
+                >
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
-      </div>
     </div>
-
-    
-
-  </div>
-  <script>
+    <script>
       console.log("Hello, world!");
     </script>
-</body>
+  </body>
 </html>
-
-
-
-
-
-
-
