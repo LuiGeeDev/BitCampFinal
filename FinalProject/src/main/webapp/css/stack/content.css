@@ -355,12 +355,10 @@ th, td {
 }
 
 .voteSpan {
-  padding: 16px;
-  border: 5px solid #eeeeee;
-  border-radius: 14px;
+  padding: 8px 21px;
 }
 .voteSpan:active {
-  padding: 15px;
+  padding: 7px 20px;
 }
 
 .votecount-font {
@@ -464,7 +462,8 @@ th, td {
 }
 
 .voted{
-  color:#f39c20;
+  background-color:#ea8a02 !important;
+  color:white;
 }
 
 #thumbIcon{
@@ -474,9 +473,4 @@ th, td {
 }
 
 #voteButton{
-  background-color:#e1e1e1;
-  border:1px solid;
-  border-radius:3px;
-  width:50px;
-  height:30px;
 }

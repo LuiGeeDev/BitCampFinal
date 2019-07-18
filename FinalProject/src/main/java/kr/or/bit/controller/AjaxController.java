@@ -30,6 +30,7 @@ import kr.or.bit.model.Message;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleVoteService;
 import kr.or.bit.service.FileUploadService;
+import kr.or.bit.service.MypageService;
 import kr.or.bit.service.NewsService;
 import kr.or.bit.utils.Helper;
 
@@ -45,6 +46,9 @@ public class AjaxController {
 
   @Autowired
   private ArticleVoteService articleVoteService;
+  
+  @Autowired
+  private MypageService mypageService;
 
   @PostMapping("/chat/file")
   public ChatMessage uploadFile(HttpServletRequest request, int group_id, long time, String name, MultipartFile file)
@@ -145,6 +149,11 @@ public class AjaxController {
     }
     managerDao.updateMemberEnabled(enabledInt, username);
     return "redirect:/manage/students";
+  }
+  
+  @PostMapping("/bookmark")
+  public Map<String, Object> bookmarkStackArticle(int article_id) {
+    return mypageService.insertBookmark(article_id, Helper.userName());
   }
 
 }
