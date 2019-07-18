@@ -77,19 +77,18 @@
           <td colspan="4" class="tdcontent">
             <span th:utext="${stackcontent.content}"> </span>
             <div class="votecountalign">
-              <a th:href="@{/stack/plusvote(id=${stackcontent.id})}">
-                <span
-                  class="voteSpan stackIcon"
-                  th:classappend="${voteCount} == 1 ? 'voteCompletion'"
-                >
-                  <span>
-                    <i class="far fa-thumbs-up votecount"></i>
-                  </span>
-                  <span class="votecount-font">
-                    [[${stackcontent.vote_count}]]
-                  </span>
-                </span></a
-              >
+              <button type="button" id="voteButton">
+                <span>
+                  <i
+                    class="fas fa-thumbs-up"
+                    id="thumbIcon"
+                    th:classappend="${voteCount} == 1 ? 'voted'"
+                  ></i>
+                </span>
+                <span class="votecount-font" id="voteText">
+                  [[${stackcontent.vote_count}]]
+                </span>
+              </button>
             </div>
           </td>
         </tr>
@@ -517,43 +516,65 @@
       });
 
 
-                 $(".deleteBtn").unbind("click");
-                 $(".deleteBtn").click(function(event) {
-                   Swal.fire({
-                     title: '정말 삭제하시겠습니까?',
-                     type: 'warning',
-                     showCancelButton: true,
-                     confirmButtonColor: '#F39B10',
-                     cancelButtonColor: '#A6A6A6',
-                     confirmButtonText: '네',
-                     cancelButtonText: '아니요'
-                   }).then((result) => {
-                     if (result.value) {
-                       Swal.fire({
-                           title: '삭제되었습니다',
-                           type: 'success',
-                           confirmButtonText: '확인',
-                           confirmButtonColor: '#F39B10'
-                     }).then(function() {
-                       location.href="/stack/delete?id=" + [[${stackcontent.id}]];
-                     });
-                     }
-                   })
-                 });
+      $(".deleteBtn").unbind("click");
+      $(".deleteBtn").click(function(event) {
+        Swal.fire({
+          title: '정말 삭제하시겠습니까?',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#F39B10',
+          cancelButtonColor: '#A6A6A6',
+          confirmButtonText: '네',
+          cancelButtonText: '아니요'
+        }).then((result) => {
+          if (result.value) {
+            Swal.fire({
+              title: '삭제되었습니다',
+              type: 'success',
+              confirmButtonText: '확인',
+              confirmButtonColor: '#F39B10'
+            }).then(function() {
+              location.href="/stack/delete?id=" + [[${stackcontent.id}]];
+            });
+          }
+        })
+      });
 
-                 $( document ).ready( function() {
-                   $( window ).scroll( function() {
-                     if ( $( this ).scrollTop() > 200 ) {
-                       $( '.top' ).fadeIn();
-                     } else {
-                       $( '.top' ).fadeOut();
-                     }
-                   } );
-                   $( '.top' ).click( function() {
-                     $( 'html, body' ).animate( { scrollTop : 0 }, 100 );
-                     return false;
-                   } );
-                 } );
+      $( document ).ready( function() {
+        $( window ).scroll( function() {
+          if ( $( this ).scrollTop() > 200 ) {
+            $( '.top' ).fadeIn();
+          } else {
+            $( '.top' ).fadeOut();
+          }
+        });
+
+        $( '.top' ).click( function() {
+          $( 'html, body' ).animate( { scrollTop : 0 }, 100 );
+          return false;
+        });
+      });
+
+      $('#voteButton').click(function(data){
+        $.ajax({
+          url:"/ajax/vote",
+           data:{
+            articleId: [[${stackcontent.id}]],
+           },
+          method: "post",
+          success: function(data) {
+           $("#voteText").html(data.countVote);
+            if (data.checkStatus == 1) {
+              $('#thumbIcon').addClass("voted");
+              if ([[${user.username}]] !== [[${stackcontent.username}]]) {
+                sendVoteNotice([[${user.name}]], [[${stackcontent.username}]], "/stack/content?id="+[[${stackcontent.id}]]);
+              }
+            } else {
+              $('#thumbIcon').removeClass("voted");
+            }
+          }
+        });
+      });
     </script>
   </body>
 </html>
