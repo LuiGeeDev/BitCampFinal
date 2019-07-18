@@ -39,9 +39,16 @@ public class ManageController {
 	@GetMapping("/course")
 	public String manageHome(Model model) {
 	  ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
+	  CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
 	  List<Member> teacherList = managerDao.selectTeacherList();
 	  List<Subject> subjectList = managerDao.selectSubjectList();
 	  List<Classroom> classroomList = managerDao.selectClassroomList();
+	  List<Course> currentCourseList = courseDao.selectCurrentCourseList();
+	  List<Course> endCourseList = courseDao.selectEndCourseList();
+	  List<Course> openingCourseList = courseDao.selectOpeningCourseList();
+	  model.addAttribute("currentCourseList", currentCourseList);
+	  model.addAttribute("endCourseList", endCourseList);
+	  model.addAttribute("openingCourseList", openingCourseList);
 	  model.addAttribute("teacherList", teacherList);
 	  model.addAttribute("subjectList", subjectList);
 	  model.addAttribute("classroomList", classroomList);
@@ -78,7 +85,7 @@ public class ManageController {
 		ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
 		CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
 		List<Member> memberList = managerDao.selectMembersByRole("STUDENT");
-		List<Course> courseList = managerDao.selectCourseList();
+		List<Course> courseList = courseDao.selectAllCourseList();
 		model.addAttribute("courseList", courseList);
 		model.addAttribute("memberList", memberList);
 		return "manage/students";
@@ -88,6 +95,7 @@ public class ManageController {
 	public String manageStudentSearch(String role, int enabled, int course_id, String stringColumn,
 			@RequestParam(defaultValue = "null") String stringValue, Model model) {
 		ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
+		CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
 		List<Member> memberList = null;
 
 		if (enabled == 999 & course_id == 0 & stringValue.equals("null")) {
@@ -115,7 +123,7 @@ public class ManageController {
 					stringValue);
 		}
 
-		List<Course> courseList = managerDao.selectCourseList();
+		List<Course> courseList = courseDao.selectAllCourseList();
 		model.addAttribute("courseList", courseList);
 		model.addAttribute("memberList", memberList);
 		return "manage/students";
@@ -124,6 +132,7 @@ public class ManageController {
 	@GetMapping("/chart")
 	public String memberChartPage(Model model) {
 	  ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
+	  CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
 	  
 	  List<Course> chartOne = managerDao.countCourseBySubject();
     int courseCount = managerDao.countAllCourse();
@@ -136,7 +145,7 @@ public class ManageController {
     List<Course> chartTwo = managerDao.countEnableMember();
     List<Course> chartThree = managerDao.articleWriteRank();
     List<Comment> chartFour = managerDao.commentWriteRank();
-    List<Course> courseList = managerDao.selectCourseList();
+    List<Course> courseList = courseDao.selectAllCourseList();
     
     model.addAttribute("chartTwo", chartTwo);
     model.addAttribute("chartOne", chartOne);
