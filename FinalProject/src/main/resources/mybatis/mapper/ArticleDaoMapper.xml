@@ -609,7 +609,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
   <select id="selectRecentStackbyCourse"
     resultType="kr.or.bit.model.Article">
-    select a.title, a.time, a.username
+    select a.id, a.title, a.time, a.username
     from article as a
     join member as m on a.username = m.username
     where course_id = #{courseid} and board_id = 1
