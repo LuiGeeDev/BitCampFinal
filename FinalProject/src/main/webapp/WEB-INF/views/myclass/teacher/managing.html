@@ -100,7 +100,7 @@
           </div>
           <div class="stack-control">
             <div class="class-stack" th:each="starticle : ${stackarticle}">
-              <div class="stack-content" th:text="${starticle.title}">과제를 모르겠수요</div>
+              <div class="stack-content" th:text="${starticle.title}" th:onclick="'window.location.href = \'' + @{/stack/content(id=${starticle.id})} + '\''">과제를 모르겠수요</div>
               <div class="stack-info">
                 <span class="stack-writer" th:text="${starticle.writer.name}">권순조</span> <span
                   class="stack-time" th:text="${#temporals.format(starticle.timeLocal, 'YYYY/MM/dd')}" >2019-09-21</span>
