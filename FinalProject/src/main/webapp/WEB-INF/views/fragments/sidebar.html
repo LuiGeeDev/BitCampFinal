@@ -58,7 +58,7 @@
         </div>
       </div>
 	
-      <div th:if="${#strings.contains(#request.getRequestURI(),'myclass')}" class="side-nav-menu">
+      <div th:if="${#strings.contains(#request.getRequestURI(),'myclass')}" class="side-nav-menu" ss-container>
         <!-- 프로젝트 게시판 -->
         <a th:href="@{/myclass}">메인 페이지</a>
         <a href="#project" data-toggle="collapse" th:if="${projects.size() != 0}">프로젝트 게시판</a>
