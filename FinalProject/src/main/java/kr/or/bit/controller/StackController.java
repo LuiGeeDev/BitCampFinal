@@ -32,6 +32,7 @@ import kr.or.bit.service.ArticleUpdateService;
 import kr.or.bit.service.ArticleVoteService;
 import kr.or.bit.service.BoardService;
 import kr.or.bit.service.CommentService;
+import kr.or.bit.service.MypageService;
 import kr.or.bit.service.TagService;
 import kr.or.bit.utils.Helper;
 import kr.or.bit.utils.Pager;
@@ -56,6 +57,8 @@ public class StackController {
   private TagService tagService;
   @Autowired
   private BoardService boardService;
+  @Autowired
+  private MypageService mypageService;
 
   @GetMapping("")
   public String listPage(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model)
@@ -100,7 +103,7 @@ public class StackController {
   public String GetStackContent(int id, Model model) {
     MemberDao memberDao = sqlsession.getMapper(MemberDao.class);
     StackDao stackdao = sqlsession.getMapper(StackDao.class);    
-    ScrapDao scrapDao =sqlsession.getMapper(ScrapDao.class);
+    int scrapCount = mypageService.scrapCount(id, Helper.userName());
     Article article = articleService.selectOneArticle("qna", id);
     Qna qna = (Qna) article.getOption();
     int adopted = qna.getAdopted_answer();
@@ -114,6 +117,7 @@ public class StackController {
     }
    /* Scrap scrap = scrapDao.selectOneScrapById(id);*/
     /*model.addAttribute("scrap",scrap);*/
+    //model.addAttribute("scrapCount",scrapCount);
     model.addAttribute("stackcontent", article);
     articleUpdateService.viewCount(article);
     return "stack/content";
