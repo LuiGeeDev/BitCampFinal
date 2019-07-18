@@ -1,21 +1,65 @@
 @charset "UTF-8";
 
-body {
-  font-family: "Nanum Gothic";
+.main {
+  display: flex;
+  flex-direction: column;
 }
 
 .content-wrapper {
-  padding: 10px 0px 10px 50px;
-  margin-left: 16vw;
+  width: 80%;
+  margin: auto;
 }
 
 .page-title-wrapper {
-  margin-bottom: 20px;
+  width: 100%;
 }
 
 .page-title {
+  display: block;
   font-weight: bold;
   font-size: 18px;
+  margin: 20px auto 20px;
+  width: 100%;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #a6a6a6;
+}
+
+.header-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+.inner.wrapper {
+  display: flex;
+  width: 55%;
+  margin: 15px auto;
+}
+
+.inner.wrapper span {
+  display: inline-block;
+  line-height: 35px;
+}
+
+.inner.wrapper input {
+  flex: 1;
+  height: 35px;
+}
+
+.project-date {
+  position: relative;
+  flex: 1;
+}
+
+.project-date span {
+  position: absolute;
+  top: -27px;
+}
+
+.project-date input {
+  display: block;
+  width: 100% !important;
+  margin: 0;
 }
 
 .project-name {
@@ -29,9 +73,8 @@ body {
 .class-member-list {
   width: 250px;
   height: 25em;
-  overflow-y: scroll;
   border: #2d3e50 0.5px solid;
-  font-size:14px;
+  font-size: 14px;
 }
 
 .class-member {
@@ -47,12 +90,12 @@ body {
 
 .project-name-text {
   margin-right: 8.8px;
-  font-size:14px;
+  font-size: 14px;
 }
 
 .group-count-text {
   margin-right: 4.5px;
-  font-size:14px;
+  font-size: 14px;
 }
 
 .class-group {
@@ -70,11 +113,10 @@ body {
   margin-left: 30px;
   margin-right: auto;
   width: 350px;
-  overflow-y: scroll;
   height: 25em;
   border: 0.5px solid #2d3e50;
   padding-left: 1px;
-  font-size:14px;
+  font-size: 14px;
 }
 
 .class-member:last-child {
@@ -82,21 +124,25 @@ body {
 }
 
 .button-wrapper {
-  margin: 10px auto;
+  margin: 20px auto 50px;
 }
-.btn{
-  font-size:14px;
-  background-color:#f39c12;
-}
-.button-wrapper button {
-  color:white;
-}
+
 .btn {
-  color:white;
+  font-size: 14px;
+  background-color: #f39c12;
 }
-.btn-warning.disabled, .btn-warning:disabled{
-  color:white;
-  background-color:#f39c12;
+
+.button-wrapper button {
+  color: white;
+}
+
+.btn {
+  color: white;
+}
+
+.btn-warning.disabled, .btn-warning:disabled {
+  color: white;
+  background-color: #f39c12;
 }
 
 .content-wrapper input {
@@ -117,8 +163,14 @@ body {
   font-size: 13px;
 }
 
+.project-term-wrapper {
+  width: 70%;
+}
+
 .project-term-text {
   text-align: left;
+  font-size: 14px;
+  line-height: 35px;
 }
 
 .modal-content {
@@ -153,6 +205,11 @@ body {
 
 input[type="radio"] {
   display: none;
+}
+
+.list-wrapper {
+  display: flex;
+  margin: auto;
 }
 
 .modal-group-member {
@@ -222,19 +279,23 @@ input[type="radio"] {
   color: #F39C12;
   cursor: pointer;
 }
-.swal2-styled{
-  background-color:#F39C12 !important;
-  outline:none !important;
+
+.swal2-styled {
+  background-color: #F39C12 !important;
+  outline: none !important;
   font-family: 'Nanum Gothic' !important;
   font-weight: bold !important;
-  color:black !important;
+  color: black !important;
 }
-.modal-group-title{
-  font-size:15px;
+
+.modal-group-title {
+  font-size: 15px;
 }
-.modal-title{
-  font-size:18px;
+
+.modal-title {
+  font-size: 18px;
 }
-.modal-group-member{
-  font-size:14px;
+
+.modal-group-member {
+  font-size: 14px;
 }

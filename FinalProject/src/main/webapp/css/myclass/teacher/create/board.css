@@ -1,10 +1,18 @@
 .board-management {
+  display: flex;
+  flex-direction: column;
   margin: auto;
+  justify-content: space-around;
+  width: 80%;
 }
 
 h4 {
+  width: 100%;
   font-size: 18px;
   font-weight: 700;
+  margin: 10px auto 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #a6a6a6;
 }
 
 .remove-btn, .add-btn {
@@ -18,16 +26,18 @@ h4 {
 
 .board-add-remove {
   display: flex;
-  min-height: 60vh;
-  max-height: 60vh;
+  justify-content: space-around;
+  height: 60vh;
   padding-bottom: 50px;
   position: relative;
+  width: 70%;
+  margin: auto;
 }
 
 .buttons {
   position: absolute;
   bottom: 0;
-  right: 0;
+  right: 33px;
 }
 
 .board-to-add {
@@ -40,6 +50,7 @@ h4 {
   display: flex;
   position: relative;
   border-bottom: 1px solid black;
+  width: 149px;
 }
 
 .board-name {
@@ -62,10 +73,6 @@ h4 {
   width: 150px;
 }
 
-.board-to-remove .board {
-  width: 149px;
-}
-
 .board-remove {
   min-height: 100%;
 }
@@ -73,7 +80,7 @@ h4 {
 .board-nav {
   display: flex;
   flex-direction: column;
-  margin: auto 60px;
+  margin: auto 20px;
 }
 
 .board-nav svg {
