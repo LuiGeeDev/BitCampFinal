@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.BoardDao;
 import kr.or.bit.dao.MemberDao;
+import kr.or.bit.dao.ScrapDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
 import kr.or.bit.model.Member;
@@ -57,8 +58,9 @@ public class MypageService {
     return "redirect:" + returnURL;
   }
 
-  public int selectVote(int articleId, String username) {
-    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
-    return articleDao.selectVote(articleId, username);
+  public int scrapCount(int articleId, String username) {
+    ScrapDao scrapDao = sqlSession.getMapper(ScrapDao.class);
+    return scrapDao.selectOneScrapCount(articleId, username);
   }
+
 }

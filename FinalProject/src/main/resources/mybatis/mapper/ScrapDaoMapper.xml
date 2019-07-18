@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	FROM scrap
 	WHERE article_id=#{article_id} and username=#{username} ;
   </select>
-  <select id="selectOneScrapCount" resultType="kr.or.bit.model.Scrap">
+  <select id="selectOneScrapCount" resultType="integer">
     SELECT COUNT(*)
     FROM scrap
 	WHERE article_id=#{article_id} and username=#{username} ;
