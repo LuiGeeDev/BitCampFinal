@@ -66,8 +66,6 @@ public class ArticleUpdateService{
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     ViewCountDao viewCountDao = sqlSession.getMapper(ViewCountDao.class);
     
-    System.out.println(article);
-    
     if (viewCountDao.countExistViewCount(article.getId(), Helper.userName()) == 0) {
       viewCountDao.insertViewCount(article.getId(), Helper.userName());
       article.setView_count(viewCountDao.countViewCountByArticleId(article.getId()));
