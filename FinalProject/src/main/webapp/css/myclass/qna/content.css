@@ -353,6 +353,14 @@ th, td {
   color: #808080;
 }
 
+#voteButton{
+  display: contents;
+}
+
+.voted{
+  color:#f39D20
+}
+
 .voteSpan {
   padding: 16px;
   border: 5px solid #EEEEEE;

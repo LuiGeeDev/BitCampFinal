@@ -4,8 +4,16 @@ body {
   font-family: 'Nanum Gothic'
 }
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 #title {
-  margin: 10px 0 0 140px;
+  width: 80%;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #c6c6c6;
+  margin: 20px auto 10px;
   font-size: 18px;
   font-weight: bold;
 }
@@ -27,9 +35,9 @@ body {
 
 #board {
   border: 1px solid #eeeeee;
-  margin-top: 10px;
+  margin: 10px auto;
   background-color: white;
-  width: 85%
+  width: 90%;
 }
 
 .video-title {

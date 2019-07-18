@@ -10,11 +10,11 @@
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
-      <div class="title">회원통계페이지</div>
-    <hr>
+    <div class="page-top"><div class="page-title">회원통계페이지</div></div>
+
     <div class="chartPage">
       <div class="chart-row">
-        <div class="chart-column">
+        <div class="chart-column-left">
           <!-- 첫번째 차트 -->
           <div class="chart-container">
             <div class="chart-title">과목별 개강 클래스 비율</div>
@@ -31,7 +31,7 @@
           </div>
         </div>
         <!-- 클래스 리스트 -->
-        <div class="chart-column">
+        <div class="chart-column-right">
           <div class="course-list-container">
             <div class="course-title">학원 클래스 리스트</div>
             <div class="course-list-table">
@@ -61,16 +61,16 @@
       </div>
       <div class="chart-row">
         <!-- 세번째 차트 -->
-        <div class="chart-container">
-          <div class="chart-title">글가장 많이 쓴 학생</div>
-          <div class="chart-content">
+        <div class="chart-container-row">
+          <div class="chart-title-left">글가장 많이 쓴 학생</div>
+          <div class="chart-content-left">
             <div id="chart-three"></div>
           </div>
         </div>
         <!-- 네번째 차트 -->
-        <div class="chart-container">
-          <div class="chart-title">댓글 가장 많이 쓴 학생</div>
-          <div class="chart-content">
+        <div class="chart-container-row">
+          <div class="chart-title-right">댓글 가장 많이 쓴 학생</div>
+          <div class="chart-content-right">
             <div id="chart-four"></div>
           </div>  
         </div>
