@@ -19,21 +19,21 @@ public interface QnaDao extends OptionDao {
 
   void chooseAnswer(@Param("comment_id") int comment_id, @Param("article_id") int article_id);
 
-  int countAllQnaArticle();
+  int countAllQnaArticle(int course_id);
   
-  int countQnaArticleByTitleOrContent(@Param("boardSearch") String boardSearch);
+  int countQnaArticleByTitleOrContent(@Param("boardSearch") String boardSearch, @Param("course_id") int course_id);
   
-  int countQnaArticleByTitle(@Param("boardSearch") String boardSearch);
+  int countQnaArticleByTitle(@Param("boardSearch") String boardSearch,@Param("course_id") int course_id);
   
-  int countQnaArticleByWriter(@Param("boardSearch") String boardSearch);
+  int countQnaArticleByWriter(@Param("boardSearch") String boardSearch,@Param("course_id") int course_id);
   
-  List<Article> selectQnaArticleByTitleOrContent(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
+  List<Article> selectQnaArticleByTitleOrContent(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch,@Param("course_id") int course_id);
   
-  List<Article> selectQnaArticleByTitle(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
+  List<Article> selectQnaArticleByTitle(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch,@Param("course_id") int course_id);
   
-  List<Article> selectQnaArticleByWriter(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
+  List<Article> selectQnaArticleByWriter(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch,@Param("course_id") int course_id);
 
-  List<Article> selectQnaArticleByTag(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch);
+  List<Article> selectQnaArticleByTag(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch,@Param("course_id") int course_id);
 
-  List<Article> selectAllQnaArticle(Pager pager);
+  List<Article> selectAllQnaArticle(@Param("pager")Pager pager, @Param("course_id") int course_id);
 }
