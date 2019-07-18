@@ -1,77 +1,170 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
-<head>
-<!-- 이페이지에서만별도로사용하는CSS가있다면여기다link 태그로삽입-->
-<link rel="stylesheet" th:href="@{/css/mypage/scrap/scrap.css}" />
-</head>
-<body>
-  <!-- 이 페이지의내용은main 클래스div 태그안에작성-->
-  <div class="main" th:fragment="main">
-    <div class="row">
-      <div id="column">
-        <th:block th:each="scrap : ${scraps}">
-          <a th:if="${scrap.boardtype == 1}" class="scrap-card"
-            th:href="@{/stack/content(id=${scrap.id})}">
-            <h5 class="scrap-title" th:text="${scrap.title}"></h5>
-            <div class="scrap-content">
-              <th:block th:if="${#strings.length(scrap.content)} > 2000">
-                <div
-                  th:utext="${#strings.substring(scrap.content,0,2000)} + '...'"></div>
-              </th:block>
-              <th:block
-                th:if="${#strings.length(scrap.content)} <= 2000">
-                <div th:utext="${scrap.content}"></div>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이페이지에서만별도로사용하는CSS가있다면여기다link 태그로삽입-->
+    <link rel="stylesheet" th:href="@{/css/mypage/scrap/scrap.css}" />
+  </head>
+  <body>
+    <!-- 이 페이지의내용은main 클래스div 태그안에작성-->
+    <div class="main" th:fragment="main">
+      <div class="row">
+        <div class="wrapper">
+          <div class="page-top">
+            <h4 class="page-title">내가 스크랩한 글</h4>
+            <input type="text" id="search" placeholder="제목으로 검색" />
+            <button class="btn btn-outline-primary btn-sm" id="search-btn">
+              검색하기
+            </button>
+          </div>
+          <div id="column">
+            <div class="spinner-border text-primary" role="status" id="spinner">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <div class="scrap-cards">
+              <th:block th:each="scrap : ${scraps}">
+                <a
+                  th:if="${scrap.boardtype == 1}"
+                  class="scrap-card"
+                  th:href="@{/stack/content(id=${scrap.id})}"
+                >
+                  <h5 class="scrap-title" th:text="${scrap.title}"></h5>
+                  <div class="scrap-content">
+                    <th:block th:if="${#strings.length(scrap.content)} > 2000">
+                      <div
+                        th:utext="${#strings.substring(scrap.content,0,2000)} + '...'"
+                      ></div>
+                    </th:block>
+                    <th:block th:if="${#strings.length(scrap.content)} <= 2000">
+                      <div th:utext="${scrap.content}"></div>
+                    </th:block>
+                  </div>
+                </a>
+                <a
+                  th:if="${scrap.boardtype == 2}"
+                  class="scrap-card"
+                  th:href="@{/video/detail(id=${scrap.id})}"
+                >
+                  <h5 class="scrap-title" th:text="${scrap.title}"></h5>
+                  <div class="scrap-content">
+                    <th:block th:if="${#strings.length(scrap.content)} > 2000">
+                      <div
+                        th:utext="${#strings.substring(scrap.content,0,2000)} + '...'"
+                      ></div>
+                    </th:block>
+                    <th:block th:if="${#strings.length(scrap.content)} <= 2000">
+                      <div th:utext="${scrap.content}"></div>
+                    </th:block>
+                  </div>
+                </a>
+                <a
+                  th:if="${scrap.boardtype == 3}"
+                  class="scrap-card"
+                  th:href="@{/myclass/board/read(article_id=${scrap.id}, board_id=${scrap.board_id})}"
+                >
+                  <h5 class="scrap-title" th:text="${scrap.title}"></h5>
+                  <div class="scrap-content">
+                    <th:block th:if="${#strings.length(scrap.content)} > 2000">
+                      <div
+                        th:utext="${#strings.substring(scrap.content,0,2000)} + '...'"
+                      ></div>
+                    </th:block>
+                    <th:block th:if="${#strings.length(scrap.content)} <= 2000">
+                      <div th:utext="${scrap.content}"></div>
+                    </th:block>
+                  </div>
+                </a>
+                <a
+                  th:if="${scrap.boardtype == 5}"
+                  class="scrap-card"
+                  th:href="@{/myclass/qna/content(id=${scrap.id})}"
+                >
+                  <h5 class="scrap-title" th:text="${scrap.title}">안녕</h5>
+                  <div class="scrap-content">
+                    <th:block th:if="${#strings.length(scrap.content)} > 2000">
+                      <div
+                        th:utext="${#strings.substring(scrap.content,0,2000)} + '...'"
+                      ></div>
+                    </th:block>
+                    <th:block th:if="${#strings.length(scrap.content)} <= 2000">
+                      <div th:utext="${scrap.content}"></div>
+                    </th:block>
+                  </div>
+                </a>
               </th:block>
             </div>
-          </a>
-          <a th:if="${scrap.boardtype == 2}" class="scrap-card"
-            th:href="@{/video/detail(id=${scrap.id})}">
-            <h5 class="scrap-title" th:text="${scrap.title}"></h5>
-            <div class="scrap-content">
-              <th:block th:if="${#strings.length(scrap.content)} > 2000">
-                <div
-                  th:utext="${#strings.substring(scrap.content,0,2000)} + '...'"></div>
-              </th:block>
-              <th:block
-                th:if="${#strings.length(scrap.content)} <= 2000">
-                <div th:utext="${scrap.content}"></div>
-              </th:block>
-            </div>
-          </a>
-          <a th:if="${scrap.boardtype == 3}" class="scrap-card"
-            th:href="@{/myclass/board/read(article_id=${scrap.id}, board_id=${scrap.board_id})}">
-            <h5 class="scrap-title" th:text="${scrap.title}"></h5>
-            <div class="scrap-content">
-              <th:block th:if="${#strings.length(scrap.content)} > 2000">
-                <div
-                  th:utext="${#strings.substring(scrap.content,0,2000)} + '...'"></div>
-              </th:block>
-              <th:block
-                th:if="${#strings.length(scrap.content)} <= 2000">
-                <div th:utext="${scrap.content}"></div>
-              </th:block>
-            </div>
-          </a>
-          <a th:if="${scrap.boardtype == 5}" class="scrap-card"
-            th:href="@{/myclass/qna/content(id=${scrap.id})}">
-            <h5 class="scrap-title" th:text="${scrap.title}">안녕</h5>
-            <div class="scrap-content">
-              <th:block th:if="${#strings.length(scrap.content)} > 2000">
-                <div
-                  th:utext="${#strings.substring(scrap.content,0,2000)} + '...'"></div>
-              </th:block>
-              <th:block
-                th:if="${#strings.length(scrap.content)} <= 2000">
-                <div th:utext="${scrap.content}"></div>
-              </th:block>
-            </div>
-          </a>
-        </th:block>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <!-- 이script 태그안에작성-->
-  <script th:inline="javascript"></script>
-</body>
+    <!-- 이script 태그안에작성-->
+    <script th:inline="javascript">
+      $("#spinner").hide();
+
+      $("#search").keypress(function(event) {
+        if (event.keyCode === 13) {
+          $("#search-btn").click();
+        }
+      });
+
+      $("#search-btn").click(function() {
+        const formData = new FormData();
+        formData.append("word", $("#search").val());
+
+        $("#spinner").show();
+        $(".scrap-cards").empty();
+        fetch("/mypage/scrap/search", {
+          body: formData,
+          method: "POST"
+        })
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(json) {
+            const scraps = json;
+            
+            if (scraps.length === 0) {
+              $(".scrap-cards").append(`<div class="no-result">일치하는 글이 없습니다</div>`);
+            }
+            
+            scraps.forEach(function(scrap) {
+              const link = $("<a class='scrap-card'>");
+              switch (scrap.boardtype) {
+                case 1:
+                  $(link).prop("href", `/stack/content?id=${scrap.id}`);
+                  break;
+                case 2:
+                  $(link).prop("href", `/video/detail?id=${scrap.id}`);
+                  break;
+                case 3:
+                  $(link).prop(
+                    "href",
+                    `/myclass/board/read?article_id=${scrap.id}&board_id=${
+                      scrap.board_id
+                    }`
+                  );
+                  break;
+                case 5:
+                  $(link).prop("href", `/myclass/qna/content?id=${scrap.id}`);
+                  break;
+              }
+
+              link.append(
+                `<h5 class="scrap-title">${
+                  scrap.title
+                }</h5><div class="scrap-content">${scrap.content.replace(
+                  /<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g,
+                  ""
+                )}</div>`
+              );
+
+              $(".scrap-cards").append(link);
+            });
+            $("#spinner").hide();
+          });
+      });
+    </script>
+  </body>
 </html>

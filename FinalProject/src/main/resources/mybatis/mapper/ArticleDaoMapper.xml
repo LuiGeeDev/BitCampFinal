@@ -597,24 +597,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
   <select id="selectRecentHomework"
     resultType="kr.or.bit.model.Article">
-    select a.id, a.title, a.content, a.time, h.end_date
+    select a.id, a.title, a.content, a.time
     from
     article as a
     join homework as h on a.id=h.article_id and a.enable = 1
     where a.id = a.original_id and a.username = #{username}
     order by id
     desc
-    limit 1;
+    limit 1
   </select>
 
   <select id="selectRecentStackbyCourse"
     resultType="kr.or.bit.model.Article">
-    select *
+    select a.title, a.time, a.username
     from article as a
     join member as m on a.username = m.username
     where course_id = #{courseid} and board_id = 1
     order by id desc
-    limit 5;
+    limit 5
   </select>
 
 
