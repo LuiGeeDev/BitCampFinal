@@ -33,7 +33,7 @@ body {
 
 .detail-content {
   background-color: white;
-  padding: 30px;
+  padding: 10px;
   margin: 5px 3px 3px;
   border-radius: 0 0 5px 5px;
   min-height: 300px;
@@ -170,28 +170,27 @@ body {
 }
 
 .modal-body {
-  height: 200px;
-  width: 500px;
+  height:200px;
+  width:500px;
 }
 
 .messageForm {
   width: 100%;
-  height: 100%;
-  resize: none;
+  height:100%;
+  resize:none;
 }
 
 .writerIcon, #icon {
   width: 25px;
   height: 25px;
 }
-
 .messageReceiverId {
-  display: none;
+  display:none;
 }
 
 .toForm {
   margin-left: 20px;
-  font-weight: bold;
+  font-weight:bold;
 }
 
 .my-comment-name {
@@ -203,11 +202,12 @@ body {
 }
 
 .messageTitle {
-  font-size: 16px;
+  font-size:16px;
   font-weight: bold;
   margin-left: 20px;
 }
 
 .messageHeader {
-  height: 40px;
+  height:40px;
 }
+

@@ -148,7 +148,7 @@
             <span
               class="commentWriterName"
               th:text="${comment.writer.name}"
-              th:classappend="${comment.writer.name == user.name} ? 'my-comment-name2'"
+              th:classappend="${comment.writer.name == user.name} ? 'my-comment-name'"
             ></span>
             <a
               th:if="${comment.username}==${user.username}"
@@ -210,6 +210,35 @@
         $("#spinner").hide();
       });
       
+      
+    	/* 메시지 보내는 함수 */
+      function replyMessage(messageText, receiverId) {
+         $.ajax({
+           url: "/ajax/message/reply",
+           type: "POST",
+           data: {
+             content: messageText,
+             receiver_username: receiverId
+           }
+         }).done(function() {
+           $(".modal").modal("hide");
+           Swal.fire({
+             type: 'success',
+             title: '전송되었습니다',
+             showConfirmButton: false,
+             timer: 1500
+           });
+           sendMessageNotice([[${user.name}]], receiverId);
+         });
+         };
+         
+         /* 메시지 보내는 함수 */
+      
+      
+      
+      
+      
+      
    // 동기 메시지보내기 처리 시작
 	  $(".messageCancle").click(function() {
 	    $("#messageText").val("");
@@ -236,23 +265,7 @@
         	  return;
         	}
           $("#messageText").val("");
-         	$.ajax({
-            url: "/ajax/message/reply",
-            type: "POST",
-            data: {
-              content: messageText,
-              receiver_username: receiverId
-            }
-          }).done(function() {
-            $(".modal").modal("hide");
-            Swal.fire({
-              type: 'success',
-              title: '전송되었습니다',
-              showConfirmButton: false,
-              timer: 1500
-            });
-            sendMessageNotice([[${user.name}]], receiverId);
-          });
+          replyMessage(messageText, receiverId);
         });
       });
 
@@ -340,12 +353,16 @@
               minutes = (minutes < 10) ? "0" + minutes : minutes;
               let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
               hours = hours < 10 ? "0" +  hours : hours;
+              
+              let newHours = date.getHours();
+              newHours = (newHours < 10) ? "0" + newHours : newHours;
+              
               let getdate = date.getDate();
               getdate = (getdate < 10) ? "0" + getdate : getdate;
               let getmonth = date.getMonth() + 1;
               getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
 
-              const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ hours +`:` + minutes;
+              const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ newHours +`:` + minutes;
               let equalName = null;
               if (item.username == [[${user.username}]]) {
                 equalName = "[삭제]";
@@ -405,23 +422,7 @@
            	  	  return;
                 }
                 $("#messageText").val("");
-               	$.ajax({
-                  url: "/ajax/message/reply",
-                  type: "POST",
-                  data: {
-                    content: messageText,
-                    receiver_username: receiverId
-                  }
-                }).done(function() {
-                  $(".modal").modal("hide");
-                  Swal.fire({
-                    type: 'success',
-                    title: '전송되었습니다',
-                    showConfirmButton: false,
-                    timer: 1500
-                  });
-                  sendMessageNotice([[${user.name}]], receiverId);
-                });
+                replyMessage(messageText, receiverId);
               });
             });
             
