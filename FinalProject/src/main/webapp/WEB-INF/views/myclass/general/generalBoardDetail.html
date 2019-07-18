@@ -56,7 +56,7 @@
         <div th:each="files : ${article.option.files}">
           <div th:if="${files!=null}">
             <a
-              th:href="@{{files}(filename=${files.filename})}"
+              th:href="@{{files}(files=${files.filename})}"
               th:attr="download=${files.original_filename}"
             >
               <i class="fas fa-paperclip"></i>
