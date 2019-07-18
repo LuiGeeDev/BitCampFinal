@@ -115,9 +115,9 @@ a {
 }
 
 .btn.btn-primary.paging {
-  background-color: white;
-  color: #EA8A02;
-  border: 2px #EA8A02 solid;
+  background-color: white !important;
+  color: #EA8A02 !important;
+  border: 2px #EA8A02 solid !important;
   font-weight: bold;
 }
 
@@ -126,10 +126,10 @@ a {
   margin-top: -5px;
 }
 
-.btn.btn-primary.paging.active {
-  background-color: #EA8A02;
-  border: 2px #EA8A02 solid;
-  font-weight: bold;
+.btn.btn-primary.paging.active{
+  color:white !important;
+  background-color:#EA8A02 !important;
+  margin:5px;
 }
 
 #boardSearch {

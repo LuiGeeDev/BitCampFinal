@@ -25,6 +25,7 @@ import kr.or.bit.model.Subject;
 import kr.or.bit.service.ClassCreateService;
 import kr.or.bit.service.MailService;
 import kr.or.bit.utils.Helper;
+import kr.or.bit.utils.Pager;
 
 @Controller
 @RequestMapping("/manage")
@@ -37,21 +38,29 @@ public class ManageController {
 	private MailService mailService;
 
 	@GetMapping("/course")
-	public String manageHome(Model model) {
+	public String manageHome(Model model, @RequestParam(defaultValue = "1") int page) {
 	  ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
 	  CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
+	  Pager pager = new Pager(page, courseDao.countEndCourseList());
+	  System.out.println("현재 페이지 : "+ page);
+	  System.out.println("현재 페이지 : "+courseDao.countEndCourseList());
+	  System.out.println(pager.getStart()+" / "+pager.getArticlesOnPage());
+	  
 	  List<Member> teacherList = managerDao.selectTeacherList();
 	  List<Subject> subjectList = managerDao.selectSubjectList();
 	  List<Classroom> classroomList = managerDao.selectClassroomList();
 	  List<Course> currentCourseList = courseDao.selectCurrentCourseList();
-	  List<Course> endCourseList = courseDao.selectEndCourseList();
 	  List<Course> openingCourseList = courseDao.selectOpeningCourseList();
+	  List<Course> endCourseList = courseDao.selectEndCourseList(pager);
+	  System.out.println("탔나");
 	  model.addAttribute("currentCourseList", currentCourseList);
 	  model.addAttribute("endCourseList", endCourseList);
 	  model.addAttribute("openingCourseList", openingCourseList);
 	  model.addAttribute("teacherList", teacherList);
 	  model.addAttribute("subjectList", subjectList);
 	  model.addAttribute("classroomList", classroomList);
+	  model.addAttribute("pager", pager);
+	  model.addAttribute("page", page);
 		return "manage/course";
 	}
 
