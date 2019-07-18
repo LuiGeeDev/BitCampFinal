@@ -6,6 +6,13 @@ client.connect({}, function() {
     addNotice(notification);
     showToast(notification);
   });
+
+  client.subscribe("/user/queue/message", function(data) {
+    const notification = JSON.parse(data.body);
+    addNotice(notification);
+    showToast(notification);
+    $(".message-count").text(Number($(".message-count").text()) + 1);
+  });
 });
 
 function addNotice(notification) {
@@ -111,6 +118,5 @@ function sendMessageNotice(senderName, receiverUsername) {
     link: "/message"
   };
 
-  $(".message-count").val(Number($(".message-count").val()) + 1);
   client.send("/app/notice/message", {}, JSON.stringify(notification));
 }
