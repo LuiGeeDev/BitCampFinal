@@ -1,5 +1,19 @@
 @charset "UTF-8";
 
+.page-top {
+  display: flex;
+  width: 80%;
+  margin: 20px auto 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #c6c6c6;
+}
+
+.page-title {
+  flex: 1;
+  font-size: 18px;
+  font-weight: bold;
+}
+
 body {
   font-family: 'Nanum Gothic';
 }
@@ -15,18 +29,26 @@ body {
 .chartPage {
   display:flex;
   flex-direction: column;
-  margin:0 0 150px 100px;
+  width:80%;
+  margin: 20px auto 20px;
  
 }
 
 .chart-row {
   display:flex;
   flex-direction:row;
-  width:950px;
   margin-bottom:30px;
 }
 
-.chart-column {
+.chart-column-left {
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  height:auto;
+  margin-right:20px;
+}
+
+.chart-column-right {
   display:flex;
   flex-direction:column;
   width:100%;
@@ -34,11 +56,18 @@ body {
 }
 
 .chart-container {
-  width:450px;
   height:auto;
   display:flex;
   flex-direction: column; 
-  margin:20px 0 0 20px;
+  margin-top:20px;
+}
+
+.chart-container-row {
+  width:100%;
+  height:auto;
+  display:flex;
+  flex-direction: column; 
+  margin-top:20px;
 }
 
 .chart-title {
@@ -54,6 +83,40 @@ body {
 .chart-content {
   width:100%;
   border:1px solid #c9c9c9;
+}
+
+.chart-title-left {
+  font-size:14px;
+  width:100%;
+  height:40px;
+  padding:10px;
+  border:1px solid #c9c9c9;
+  border-bottom:none;
+  border-right:none;
+  background-color:#f7f7f7;
+}
+
+.chart-content-left {
+  width:100%;
+  border:1px solid #c9c9c9;
+  border-right:none;
+}
+
+.chart-title-right {
+  font-size:14px;
+  width:100%;
+  height:40px;
+  padding:10px;
+  border:1px solid #c9c9c9;
+  border-bottom:none;
+  border-left:none;
+  background-color:#f7f7f7;
+}
+
+.chart-content-right {
+  width:100%;
+  border:1px solid #c9c9c9;
+  border-left:none;
 }
 
 #chart-one {
@@ -80,7 +143,7 @@ body {
   display:flex;
   flex-direction:column;
   font-size:12px;
-  margin:20px 0 0 15px;
+  margin-top:20px;
 }
 
 .course-title {

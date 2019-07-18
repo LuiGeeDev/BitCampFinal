@@ -71,7 +71,7 @@
                   <span class="homework-title"
                     th:text="${homeworkarticle.title}"></span> <span>
                     진행중 입니다.</span>
-                  <div th:text="'마감일: '+${homeworkarticle.end_date}"></div>
+                  <div th:text="'마감일: '+${homeworkarticle.option.end_date}"></div>
                   <div
                     th:each="homeworkarticlere,iter : ${homeworkarticlere}">
                     <div th:text="${iter.count}+'개의 과제가 제출되었습니다.'"></div>
@@ -95,35 +95,18 @@
         </div>
         <div class="row-control-right">
           <div class="card">
+          <div>
             <p class="title">우리반 스택</p>
-            <div class="class-stack">
-              <div class="stack-content">과제를 모르겠수요</div>
+          </div>
+          <div class="stack-control">
+            <div class="class-stack" th:each="starticle : ${stackarticle}">
+              <div class="stack-content" th:text="${starticle.title}">과제를 모르겠수요</div>
               <div class="stack-info">
-                <span class="stack-writer">권순조</span> <span
-                  class="stack-time">2019-09-21</span>
+                <span class="stack-writer" th:text="${starticle.writer.name}">권순조</span> <span
+                  class="stack-time" th:text="${#temporals.format(starticle.timeLocal, 'YYYY/MM/dd')}" >2019-09-21</span>
               </div>
             </div>
-            <div class="class-stack">
-              <div class="stack-content">과제를 모르겠수요</div>
-              <div class="stack-info">
-                <span class="stack-writer">권순조</span> <span
-                  class="stack-time">2019-09-21</span>
-              </div>
-            </div>
-            <div class="class-stack">
-              <div class="stack-content">과제를 모르겠수요</div>
-              <div class="stack-info">
-                <span class="stack-writer">권순조</span> <span
-                  class="stack-time">2019-09-21</span>
-              </div>
-            </div>
-            <div class="class-stack">
-              <div class="stack-content">과제를 모르겠수요</div>
-              <div class="stack-info">
-                <span class="stack-writer">권순조</span> <span
-                  class="stack-time">2019-09-21</span>
-              </div>
-            </div>
+          </div>
           </div>
         </div>
       </div>

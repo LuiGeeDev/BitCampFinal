@@ -46,14 +46,14 @@
                 th:if="${user.username == stackcontent.username}"
                 class="updateBtn"
               >
-                <i class="far fa-edit"></i>
+                <i class="far fa-edit stackIcon"></i>
               </a>
               <span
                 th:if="${user.username == stackcontent.username or user.role == 'MANAGER'}"
                 class="deleteBtn"
                 id="deleteCheck"
               >
-                <i class="fas fa-trash-alt"></i>
+                <i class="fas fa-trash-alt stackIcon"></i>
               </span>
             </span>
           </td>
@@ -64,6 +64,7 @@
           </td>
           <td class="bookmarkRow">
             <button class="btn btn-outline-primary btn-sm bookmarkSpan"
+            th:classappend="${scrapCount} == 1 ? 'scrapCompletion'"
             th:onclick="location.href='/stack/insertScrap?article_id=[[${stackcontent.id}]]'"
             >
               <span class="bookmarkLabel">북마크</span>
@@ -76,7 +77,9 @@
             <span th:utext="${stackcontent.content}"> </span>
             <div class="votecountalign">
               <a th:href="@{/stack/plusvote(id=${stackcontent.id})}">
-                <span class="voteSpan">
+                <span class="voteSpan stackIcon"
+                th:classappend="${voteCount} == 1 ? 'voteCompletion'"
+                >
                   <span>
                     <i class="far fa-thumbs-up votecount"></i>
                   </span>
@@ -198,7 +201,7 @@
               <a
                 th:if="${list.id != stackcontent.option.adopted_answer and (list.username == user.username or user.role == 'MANAGER')}"
                 th:href="@{/stack/commentdelete(id=${list.id})}"
-                ><i class="fas fa-trash-alt"></i>
+                ><i class="fas fa-trash-alt stackIcon"></i>
               </a>
               <span
                 class="hidden messageReceiverId"
@@ -433,7 +436,7 @@
                     const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ newHours +`:` + minutes;
                     let equalName = null;
                     if(item.id != [[${stackcontent.option.adopted_answer}]] && (item.username == [[${user.username}]] || [[${user.role}]] == 'MANAGER')) {
-                      equalName = "<i class='fas fa-trash-alt'></i>";
+                      equalName = "<i class='fas fa-trash-alt stackIcon'></i>";
                     } else {
                       equalName = "";
                     }

@@ -6,11 +6,13 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.transform.impl.AddDelegateTransformer;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javassist.expr.NewArray;
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.BoardDao;
 import kr.or.bit.dao.CourseDao;
@@ -187,6 +190,8 @@ public class MyClassController {
     }
     System.out.println("채택답변" + qna.getAdopted_answer());
     model.addAttribute("qnacontent", article);
+    model.addAttribute("voteStatus", articleVoteService.selectVote(article.getId(), Helper.userName()));
+    
     articleUpdateService.viewCount(article);
     return "myclass/qna/content";
   }
@@ -503,7 +508,7 @@ public class MyClassController {
     ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
     GroupDao groupdao = sqlSession.getMapper(GroupDao.class);
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
-    
+    HomeworkDao homeworkdao = sqlSession.getMapper(HomeworkDao.class);
     
     String username = Helper.userName();
     Member member = memberdao.selectMemberByUsername(username);
@@ -524,14 +529,23 @@ public class MyClassController {
     Period dDay = Period.between(project.getStartDateLocal(), LocalDate.now());
     
     Article homeworkarticle = articledao.selectRecentHomework(username);
-    List<Article> homeworkarticlere = articledao.selectHomeworkReplies(homeworkarticle.getId());
-    List<Article> Stackarticle = articledao.selectRecentStackbyCourse(member.getCourse_id());
+    Homework homework = homeworkdao.selectHomeworkByArticleId(homeworkarticle.getId());
+    homeworkarticle.setOption(homework);
     
+    List<Article> recentStackArticle = articledao.selectRecentStackbyCourse(course.getId());
+    
+    List<Article> homeworkarticlere = articledao.selectHomeworkReplies(homeworkarticle.getId());
+
+    for(Article a : recentStackArticle) {
+      a.setWriter(memberdao.selectMemberByUsername(a.getUsername()));
+      a.setTimeLocal(a.getTime().toLocalDateTime());
+    }
     
     System.out.println(project);
     System.out.println(course);
     System.out.println(homeworkarticle);
     System.out.println(homeworkarticlere);
+    System.out.println(recentStackArticle);
     
     model.addAttribute("course", course);
     model.addAttribute("project", project);
@@ -543,7 +557,7 @@ public class MyClassController {
     model.addAttribute("groups", groups);
     model.addAttribute("homeworkarticle",homeworkarticle);
     model.addAttribute("homeworkarticlere",homeworkarticlere);
-    model.addAttribute("Stackarticle",Stackarticle);
+    model.addAttribute("stackarticle",recentStackArticle);
     
     return "myclass/teacher/managing";
   }

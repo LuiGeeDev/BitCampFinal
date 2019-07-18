@@ -104,6 +104,7 @@ public class StackController {
     MemberDao memberDao = sqlsession.getMapper(MemberDao.class);
     StackDao stackdao = sqlsession.getMapper(StackDao.class);    
     int scrapCount = mypageService.scrapCount(id, Helper.userName());
+    int voteCount = articleVoteService.selectVote(id, Helper.userName());
     Article article = articleService.selectOneArticle("qna", id);
     Qna qna = (Qna) article.getOption();
     int adopted = qna.getAdopted_answer();
@@ -117,7 +118,8 @@ public class StackController {
     }
    /* Scrap scrap = scrapDao.selectOneScrapById(id);*/
     /*model.addAttribute("scrap",scrap);*/
-    //model.addAttribute("scrapCount",scrapCount);
+    model.addAttribute("scrapCount",scrapCount);
+    model.addAttribute("voteCount",voteCount);
     model.addAttribute("stackcontent", article);
     articleUpdateService.viewCount(article);
     return "stack/content";
