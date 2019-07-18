@@ -43,3 +43,7 @@
 .btn-primary:focus, .btn-outline-primary:focus {
   box-shadow: 0 0 0 0.2rem rgba(255, 145, 5, 0.5) !important;
 }
+
+.text-primary {
+  color: #F39C20 !important;
+}

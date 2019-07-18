@@ -17,6 +17,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     = s.article_id
     WHERE s.username=#{username};
   </select>
+  <select id="selectScrapByWord" resultType="kr.or.bit.model.Article">
+    SELECT a.id as id, title, content,
+    time, view_count, original_id, level,
+    updated_time, enable, a.username
+    as username, board_id, layer, sibling
+    FROM article a
+    JOIN scrap s
+    ON a.id = s.article_id
+    WHERE s.username = #{username}
+    AND title LIKE '%${word}%'
+  </select>
   <insert id="insertScrap">
     INSERT INTO scrap(article_id, username)
     VALUES
@@ -31,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	FROM scrap
 	WHERE article_id=#{article_id} and username=#{username} ;
   </select>
-  <select id="selectOneScrapCount" resultType="kr.or.bit.model.Scrap">
+  <select id="selectOneScrapCount" resultType="integer">
     SELECT COUNT(*)
     FROM scrap
 	WHERE article_id=#{article_id} and username=#{username} ;

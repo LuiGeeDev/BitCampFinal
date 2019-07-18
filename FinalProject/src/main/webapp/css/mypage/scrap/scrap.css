@@ -1,7 +1,28 @@
+.wrapper {
+  width: 100%;
+  margin: auto;
+}
+
+.page-top {
+  display: flex;
+  width: 80%;
+  margin: 20px auto 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #c6c6c6;
+}
+
+.page-title {
+  flex: 1;
+  font-size: 18px;
+  font-weight: bold;
+}
+
 #column {
   width: 80%;
   margin: auto;
   column-width: 200px;
+  padding-left: 20px;
+  position: relative;
 }
 
 .scrap-card {
@@ -20,7 +41,7 @@
   cursor: pointer;
 }
 
-#column:hover .scrap-card:not (:hover ) {
+#column:hover .scrap-card:not(:hover) {
   opacity: 0.6;
 }
 
@@ -41,4 +62,33 @@
 .scrap-content * {
   all: unset;
   color: #a6a6a6 !important;
+}
+
+#search {
+  padding: 3px 10px;
+  border-radius: 3px 0 0 3px;
+  border-right: 0;
+  font-size: 14px;
+}
+
+#search::placeholder {
+  font-size: 14px;
+}
+
+#search-btn {
+  border-radius: 0 3px 3px 0;
+}
+
+#spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.no-result {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  font-size: 15px;
+  font-weight: bold;
 }

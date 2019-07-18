@@ -33,5 +33,6 @@ public interface ScrapDao {
   //마이페이지 스크랩목록에서 삭제하고싶을때 쓰세요
   void deleteScrap(int article_id);
   
-  
+  // 검색한 스크랩 글
+  List<Article> selectScrapByWord(@Param("username") String username, @Param("word") String word);
 }
