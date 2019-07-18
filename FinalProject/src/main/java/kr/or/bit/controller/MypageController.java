@@ -113,7 +113,19 @@ public class MypageController {
     model.addAttribute("scraps", scraps);
     return "mypage/scrap/scrap";
   }
-
+  
+  @PostMapping("/scrap/search")
+  public @ResponseBody List<Article> searchScraps(String word) {
+    ScrapDao scrapDao = sqlSession.getMapper(ScrapDao.class);
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    List<Article> scraps = scrapDao.selectScrapByWord(Helper.userName(), word);
+    
+    for (Article scrap : scraps) {
+      scrap.setBoardtype(boardDao.selectBoardById(scrap.getBoard_id()).getBoardtype());
+    }
+    
+    return scraps;
+  }
 
   @GetMapping("")
   public String updateMember(Model model, Principal principal) {
