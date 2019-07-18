@@ -1,9 +1,5 @@
 @charset "UTF-8";
 
-body {
-  font-family: 'Nanum Gothic';
-}
-
 .main-container {
   margin: 20px 50px 10px 200px;
   padding: 5px;
@@ -13,7 +9,7 @@ body {
 }
 
 .profile-photo-wrapper {
-  margin-bottom:20px;
+  margin-bottom: 20px;
 }
 
 .mypagePhoto, .photo-icon {
@@ -46,27 +42,33 @@ input[type=text], input[type=email] {
   padding: 15px;
   width: 80%;
   border-radius: 5px;
-  border : 1px solid #c2c2c2;
+  border: 1px solid #c2c2c2;
 }
 
-input[type=password]{
+input[type=password] {
   margin: 0 0 30px 10px;
   padding: 15px;
   width: 80%;
   border-radius: 5px;
-  border : 1px solid #c2c2c2;
-  outline:none;
-  transition:.3s;
+  border: 1px solid #c2c2c2;
+  outline: none;
+  transition: .3s;
 }
 
-input[type=password]:focus{
+input[type=password]:focus {
   border: 1px solid #F39C20;
 }
-.main-title {
-  margin: 10px 0 0 140px;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
 }
 
 .main-title {
+  width: 80%;
+  margin: 20px auto;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #c6c6c6;
   font-size: 18px;
   font-weight: bold;
 }
@@ -75,7 +77,7 @@ input[type=password]:focus{
   margin-left: 0px;
   height: 150px;
   margin-top: 10px;
-  width:100%;
+  width: 100%;
 }
 
 .btn {
@@ -106,19 +108,21 @@ input[type=password]:focus{
 
 .idParent, .passwordParent, .emailParent {
   position: relative;
-  width:100%;
+  width: 100%;
 }
-.idCheck{
+
+.idCheck {
   left: 45px;
   position: absolute;
-  font-size:12px;
+  font-size: 12px;
   bottom: 86px;
 }
+
 #pwdCheck, #emailCheck {
   bottom: 86px;
   position: absolute;
   left: 60px;
-  font-size:12px
+  font-size: 12px
 }
 
 .user-icon {
@@ -145,17 +149,19 @@ label {
   margin: 0px;
 }
 
-.mypageContentForm{
-  margin:auto;
-  width:60%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+.mypageContentForm {
+  margin: auto;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.modal-body{
-  display:inline-flex;
-  margin:auto;
+
+.modal-body {
+  display: inline-flex;
+  margin: auto;
 }
-.photo-icon{
-  display:block;
+
+.photo-icon {
+  display: block;
 }

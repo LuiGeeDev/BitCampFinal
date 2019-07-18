@@ -355,12 +355,10 @@ th, td {
 }
 
 .voteSpan {
-  padding: 16px;
-  border: 5px solid #eeeeee;
-  border-radius: 14px;
+  padding: 8px 21px;
 }
 .voteSpan:active {
-  padding: 15px;
+  padding: 7px 20px;
 }
 
 .votecount-font {
@@ -461,4 +459,18 @@ th, td {
 
 .voteCompletion{
   
+}
+
+.voted{
+  background-color:#ea8a02 !important;
+  color:white;
+}
+
+#thumbIcon{
+  width:20px;
+  height:20px;
+  
+}
+
+#voteButton{
 }

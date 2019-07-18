@@ -292,4 +292,67 @@
   margin-left:35px;
 }
 
+.printNoMessage {
+  margin: auto;
+}
 
+.receiveMessageList {
+  width:100%;
+  height:100%;
+}
+
+.noMessage {
+  display:flex;
+  width:100%;
+  height:100%;
+}
+
+.printNoMessage {
+  font-weight:bold;
+  border: 2px solid #F39C20;
+  border-radius: 3px;
+  padding: 10px;
+  text-align: center;
+}
+
+.senderMessageList {
+  width:100%;
+  height:100%;
+  display:flex;
+}
+
+.noSendMessage {
+  /* margin:auto; */
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.printNoSendMessage {
+  font-weight:bold;
+  border: 2px solid #F39C20;
+  border-radius: 3px;
+  padding: 10px;
+  text-align: center;
+  margin:auto;
+}
+
+.messageHead {
+  height: 45px;
+}
+
+.messageFooter {
+  height: 60px;
+}
+
+.messageTextVal {
+  resize:none;
+  height: 100%px;
+  height: 100%;
+  width: 100%;
+}
+
+.messageBody {
+  height: 200px;
+  width: 500px;
+}

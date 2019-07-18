@@ -7,6 +7,15 @@ h4 {
   font-weight: 700;
 }
 
+.remove-btn, .add-btn {
+  background: none;
+  border: none;
+}
+
+.remove-btn:active i, .add-btn:active i {
+  transform: scale(0.9);
+}
+
 .board-add-remove {
   display: flex;
   min-height: 60vh;
@@ -73,6 +82,10 @@ h4 {
   transform: none;
 }
 
+.new-board {
+  margin-bottom: 10px;
+}
+
 .new-board * {
   padding: 0;
   margin: 0;
@@ -120,6 +133,7 @@ h4 {
   color: white;
 }
 
-body{
-  font-familly:'Nanum Gothic';
+i[class*="fa-caret-square"] {
+  margin: auto;
+  color: #F29C20;
 }

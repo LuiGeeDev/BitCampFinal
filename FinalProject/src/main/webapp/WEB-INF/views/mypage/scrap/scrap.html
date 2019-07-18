@@ -124,11 +124,13 @@
           })
           .then(function(json) {
             const scraps = json;
-            
+
             if (scraps.length === 0) {
-              $(".scrap-cards").append(`<div class="no-result">일치하는 글이 없습니다</div>`);
+              $(".scrap-cards").append(
+                `<div class="no-result">일치하는 글이 없습니다</div>`
+              );
             }
-            
+
             scraps.forEach(function(scrap) {
               const link = $("<a class='scrap-card'>");
               switch (scrap.boardtype) {

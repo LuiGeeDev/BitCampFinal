@@ -1,20 +1,22 @@
 @charset "UTF-8";
 
-body {
-  font-family: 'Nanum Gothic';
-}
-
-.title h3 {
-  font-size: 18px;
+.wrapper {
+  display: flex;
+  flex-direction: column;
 }
 
 .title {
-  margin: 10px 20px 20px 140px ;
+  width: 80%;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 20px auto 10px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #c6c6c6;
 }
 
 #boardSearch {
   border-radius: 3px;
-  border:1px #c2c2c2 solid;
+  border: 1px #c2c2c2 solid;
   height: 27px;
   padding: 2px 4px;
 }
@@ -170,20 +172,22 @@ th, td {
   margin: -1px 5px 0px 5px;
 }
 
-.answer-style{
+.answer-style {
   color: red;
   font-weight: 600;
 }
-.btn.btn-primary.paging.active{
-  color:white !important;
-  background-color:#EA8A02 !important;
-  margin:5px;
+
+.btn.btn-primary.paging.active {
+  color: white !important;
+  background-color: #EA8A02 !important;
+  margin: 5px;
 }
 
-#boardSearch:focus, select:focus{
-  border:#F39C20 1px solid;
+#boardSearch:focus, select:focus {
+  border: #F39C20 1px solid;
 }
-#boardSEarch, select{
-  transition:.3s;
-  outline:none;
+
+#boardSEarch, select {
+  transition: .3s;
+  outlsine: none;
 }

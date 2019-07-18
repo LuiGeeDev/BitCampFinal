@@ -156,6 +156,7 @@ public class BoardService {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     Article article = articleDao.selectOneArticle(article_id);
     General general = generalDao.selectGeneralByArticleId(article_id);
+    System.out.println(article);
     articleUpdateService.viewCount(article);
     List<Files> files = new ArrayList<>();
     files.add(filesDao.selectFilesById(general.getFile1()));
