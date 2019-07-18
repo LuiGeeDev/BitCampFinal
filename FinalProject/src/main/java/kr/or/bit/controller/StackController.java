@@ -132,7 +132,7 @@ public class StackController {
     if(scrap == null) {
       scrapDao.insertScrap(article_id, Helper.userName());
     } else {
-      scrapDao.deleteScrap(article_id);
+      scrapDao.deleteScrap(article_id, Helper.userName());
     }
  
     return "redirect:/stack/content?id=" + article_id;

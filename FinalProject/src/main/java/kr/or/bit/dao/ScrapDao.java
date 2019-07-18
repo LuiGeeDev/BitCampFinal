@@ -27,11 +27,14 @@ public interface ScrapDao {
   //스크랩했나 안했나 확인하는 용도임 2
   int selectOneScrapCount(@Param("article_id") int article_id, @Param("username") String username);
   
+  //이 게시물이 얼마나 스크랩되었는지 알수있는 메소드
+  int selectOneScrapTotalCount(int article_id);
+  
   //마이페이지 스크랩목록 불러올때 쓰는 메소드
   List<Article> selectAllScrap(String username);
   
   //마이페이지 스크랩목록에서 삭제하고싶을때 쓰세요
-  void deleteScrap(int article_id);
+  void deleteScrap(@Param("article_id") int article_id, @Param("username") String username);
   
   // 검색한 스크랩 글
   List<Article> selectScrapByWord(@Param("username") String username, @Param("word") String word);
