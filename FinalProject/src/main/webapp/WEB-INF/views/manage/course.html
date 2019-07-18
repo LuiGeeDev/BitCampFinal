@@ -8,10 +8,9 @@
   </head>
   <body>
     <div class="main" th:fragment="main">
-      <div class="page-top"><div class="page-title">수업관리페이지</div></div>
-      <div class="row">
-        <div class="page-row">
-          <div id="buttonWrapper">
+      <div class="page-top">
+        <div class="page-title">수업관리페이지</div>
+        <div id="buttonWrapper">
             <button
               type="button"
               class="btn btn-primary btn-sm"
@@ -31,9 +30,7 @@
               강사 생성
             </button>
           </div>
-        </div>
       </div>
-
       <div class="row">
         <div class="page-row">
           <h6 class="title">진행 중인 클래스</h6>
@@ -79,6 +76,7 @@
               <div class="subject">과목</div>
               <div class="classroom">강의실</div>
               <div class="students">학생수</div>
+              <div class="delete"></div>
             </div>
             <div class="opening-table-list">
               <div class="course-list-row" th:each="openingCourseList : ${openingCourseList}">
@@ -89,6 +87,7 @@
                 <div class="subject" th:text="${openingCourseList.subject_name}">과목</div>
                 <div class="classroom" th:text="${openingCourseList.classroom_id}+'강의실'">강의실</div>
                 <div class="students" th:text="${openingCourseList.students}">학생수</div>
+                <div class="delete"><i class="far fa-trash-alt"></i></div>
               </div>
             </div>
           </div>
@@ -122,7 +121,18 @@
               </div>
             </div>
           </div>
-          
+          <!-- 페이지 버튼 -->
+          <div class="page-btns">
+            <span th:if="${pager.prev}">
+              <a class="btn btn-primary paging" th:href="@{/manage/course(page=${pager.startPage}-1)}">&laquo;</a>
+            </span>
+            <span th:each="idx, iterStat : ${#numbers.sequence(pager.startPage, pager.endPage)}" >
+              <a class="btn btn-primary paging" th:href="@{/manage/course(page=${idx})}" th:classappend="${pager.currentPage} == ${idx} ? active" th:text="${idx}"></a>          
+            </span>
+            <span th:if="${pager.next} and ${pager.endPage > 0}">
+              <a class="btn btn-primary paging" th:href="@{/manage/course(page=${pager.endPage}+1)}">&raquo;</a>
+            </span>
+          </div>
         </div>
       </div>
       
