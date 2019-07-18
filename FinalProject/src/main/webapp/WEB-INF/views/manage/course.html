@@ -87,7 +87,10 @@
                 <div class="subject" th:text="${openingCourseList.subject_name}">과목</div>
                 <div class="classroom" th:text="${openingCourseList.classroom_id}+'강의실'">강의실</div>
                 <div class="students" th:text="${openingCourseList.students}">학생수</div>
-                <div class="delete"><i class="far fa-trash-alt"></i></div>
+                <div class="delete" th:value="${openingCourseList.id}">
+                  <!-- <div class="hidden" th:value="${openingCourseList.id}"></div> -->
+                  <i class="far fa-trash-alt"></i>
+                </div>
               </div>
             </div>
           </div>
@@ -411,22 +414,22 @@
         });
       });
 
-      /* 	$("#end_date").change(function(){
-      	$('#classRoomSelect').empty();
-      	$.ajax({
-      		method : "post",
-      		url : "/ajax/classroom",
-      		success: function(response) {
-      			console.log(response);
-      			const classroom = response;
-      			classroom.forEach(function(item){
-      				const option = `<option value="${item.id}">${item.classroom_name}</option>`;
-      				$("#classRoomSelect").append($(option));
-      			});
-      		}
-      	})
-      })
-       */
+      $(".delete").click(function(event){
+        console.log("삭제");
+        const id = $(this).val();
+        
+        console.log("id : "+id);
+        
+        
+        /* 
+        $.ajax({
+          url:"/ajax/manage/course/delete"
+          type:"POST",
+          data: {
+            id : id
+          }
+        }); */
+      });
     </script>
   </body>
 </html>
