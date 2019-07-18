@@ -55,8 +55,6 @@
                 class="badge badge-danger">N</span></span><span
                 class="hidden removenoti" th:text="${all.checked}"></span>
               <span class="sender2" th:text="${all.senderName}"></span>
-              <span>(</span> <span class="senderName"
-                th:text="${all.sender_username}"></span> <span>)</span>
               <!-- <span class="time2" th:text="${all.time}"></span> -->
               <!-- <span class="time2" th:text="${#dates.format(${all.time}, 'dd/MMM/yyyy HH:mm')}"></span> -->
               <span class="time2"
@@ -71,6 +69,7 @@
         
         
         <!-- 내가 보낸 쪽지함 리스트 -->
+        <div class="senderMessageListForm">
         <div class="senderMessageList">
            <div th:if="${sendMessage.size()} == 0" class="noSendMessage">
           <div class="printNoSendMessage">보낸 메시지가 없습니다</div>
@@ -87,14 +86,13 @@
                 class="badge badge-danger">N</span></span><span
                 class="hidden removenoti" th:text="${sendMessage.checked}"></span> -->
               <span class="sender2" th:text="${sendMessage.senderName}"></span>
-              <span>(</span> <span class="senderName"
-                th:text="${sendMessage.sender_username}"></span> <span>)</span>
               <span class="time2"
                 th:text="${#temporals.format(sendMessage.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
 
             </div>
             <p class="message-preview2" th:text="${sendMessage.content}"></p>
           </div>
+        </div>
         </div>
         </div>
         
@@ -186,6 +184,7 @@
    	
    	$(".sMessage").click(function(event) {
    	$(".fitMessage").html("<div class='fitMargin'>&nbsp;</div>");
+   	$(".senderMessageListForm").css("display", "block");
    	$(".receiveMessageList").css("display", "none"); // 메시지 리스트 제거
    	$(".senderMessageList").css("display", "block"); // 보낸사람 리스트 보여주기
    	$(".message-title-count").css("display", "none"); // 카운트 안보여주기

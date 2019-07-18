@@ -335,6 +335,9 @@ select::-ms-expand {
   width:4%;
   cursor:pointer;
 }
+.hidden {
+  display:none;
+}
 
 .delete:active {
   font-size:12px;
