@@ -28,6 +28,7 @@ import kr.or.bit.model.General;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleUpdateService;
 import kr.or.bit.service.BoardService;
+import kr.or.bit.service.MypageService;
 import kr.or.bit.utils.Helper;
 import kr.or.bit.utils.Pager;
 
@@ -40,6 +41,8 @@ public class BoardController {
   private ArticleService articleService;
   @Autowired
   private SqlSession sqlSession;
+  @Autowired
+  private MypageService mypageService;
 
   /*
    * @GetMapping("") public String listPage(int
@@ -114,6 +117,8 @@ public class BoardController {
   @GetMapping("/read")
   public String readArticle(int article_id, int board_id, Model model) {
     Article article = boardService.readArticle(article_id);
+    int scrapCount = mypageService.scrapCount(article_id, Helper.userName());
+    model.addAttribute("scrapCount",scrapCount);
     model.addAttribute("article", article);
     model.addAttribute("board", boardService.getBoardInfo(board_id));
     return "myclass/general/generalBoardDetail";
