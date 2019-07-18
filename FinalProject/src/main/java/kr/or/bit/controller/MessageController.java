@@ -28,10 +28,12 @@ public class MessageController {
     int countmessage = messageDao.selectCountMessage(username);
     for (Message message: selectall) {
       message.setTimeDate(new Date(message.getTime().getTime()));
+      message.setTimeLocal(message.getTime().toLocalDateTime());
     }
     
     for(Message message : selectSenderMessage) {
       message.setTimeDate(new Date(message.getTime().getTime()));
+      message.setTimeLocal(message.getTime().toLocalDateTime());
     }
     model.addAttribute("selectall", selectall);
     model.addAttribute("countmessage", countmessage);
