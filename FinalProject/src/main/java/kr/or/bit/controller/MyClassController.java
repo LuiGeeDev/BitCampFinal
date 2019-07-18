@@ -59,6 +59,7 @@ import kr.or.bit.service.ArticleUpdateService;
 import kr.or.bit.service.ArticleVoteService;
 import kr.or.bit.service.BoardService;
 import kr.or.bit.service.CommentService;
+import kr.or.bit.service.MypageService;
 import kr.or.bit.service.TagService;
 import kr.or.bit.utils.Helper;
 import kr.or.bit.utils.Pager;
@@ -82,6 +83,8 @@ public class MyClassController {
   private CommentService commentService;
   @Autowired
   private ArticleVoteService articleVoteService;
+  @Autowired
+  private MypageService mypageService;
 
   @GetMapping("")
   public String mainPage(Model model) {
@@ -178,6 +181,8 @@ public class MyClassController {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     StackDao stackdao = sqlSession.getMapper(StackDao.class);
     Article article = articleService.selectOneArticle("qna", id);
+    int scrapCount = mypageService.scrapCount(id, Helper.userName());
+    int voteCount = articleVoteService.selectVote(id, Helper.userName());
     Qna qna = (Qna) article.getOption();
     int adopted = qna.getAdopted_answer();
     for (Comment c : article.getCommentlist()) {
@@ -188,7 +193,12 @@ public class MyClassController {
       comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
       model.addAttribute("adoptedanswer", comment);
     }
-
+   
+    
+    System.out.println("scrapCount:"+scrapCount);
+    
+    model.addAttribute("scrapCount",scrapCount);
+    model.addAttribute("voteCount", voteCount);
     model.addAttribute("qnacontent", article);
     model.addAttribute("voteStatus", articleVoteService.selectVote(article.getId(), Helper.userName()));
     
