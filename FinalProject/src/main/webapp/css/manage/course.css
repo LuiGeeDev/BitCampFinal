@@ -1,5 +1,19 @@
 @charset "UTF-8";
 
+.page-top {
+  display: flex;
+  width: 80%;
+  margin: 20px auto 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #c6c6c6;
+}
+
+.page-title {
+  flex: 1;
+  font-size: 18px;
+  font-weight: bold;
+}
+
 #createButton {
   color: white
 }
@@ -12,6 +26,7 @@
   padding: 1rem 0 1rem 1rem !important;
 }
 
+/*
 table a:link {
   color: #666;
   font-weight: bold;
@@ -120,6 +135,7 @@ table tr:hover td {
     to(#f0f0f0));
   background: -moz-linear-gradient(top, #f2f2f2, #f0f0f0);
 }
+*/
 
 #createClassTitle {
   text-align: left;
@@ -131,14 +147,6 @@ table tr:hover td {
 
 .btn {
   font-size: 14px;
-}
-
-.title {
-  text-align: left;
-  margin: 30px 30px 10px;
-  font-size: 18px;
-  font-weight: bold;
-  display: inline-block;
 }
 
 #buttonWrapper {
@@ -221,12 +229,6 @@ select::-ms-expand {
   margin: 0px 20px 0px 20px;
 }
 
-.page-row {
-  margin: 0 auto;
-  width: 80%;
-  border-bottom: 1px solid #e6e6e6;
-}
-
 .input-username {
   position: relative;
 }
@@ -239,3 +241,78 @@ select::-ms-expand {
   font-size: 13px;
   color: #FF3B30;
 }
+
+.page-row {
+  margin: 0 auto;
+  width: 80%;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.title {
+  text-align: left;
+  margin: 30px 0 20px 50px;
+  font-size: 14px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.course-table {
+  display:flex;
+  flex-direction:column;
+}
+
+.course-table-category {
+  display:flex;
+  flex-direction:row;
+  border:1px solid #c9c9c9;
+  border-bottom:none;
+  background-color:#f7f7f7;
+}
+
+.current-table-list {
+  display:flex;
+  flex-direction:column;  
+  border:1px solid #c9c9c9;
+}
+
+.opening-table-list {
+  display:flex;
+  flex-direction:column;  
+  border:1px solid #c9c9c9;
+}
+
+.end-table-list {
+  display:flex;
+  flex-direction:column;  
+  border:1px solid #c9c9c9;
+}
+
+.course-list-row {
+  display:flex;
+  flex-direction:row;
+  font-size: 13px;
+}
+
+.start_date {
+  width:15%;
+}
+.end_date {
+  width:15%;
+}
+.course_name {
+  width:30%;
+} 
+.teacher {
+  width:10%;
+}
+.subject {
+  width:10%;  
+}
+.classroom {
+  width:10%;
+}
+.students {
+  width:10%;
+}
+
+

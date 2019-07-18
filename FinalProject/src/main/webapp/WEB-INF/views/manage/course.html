@@ -4,13 +4,13 @@
   th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
 >
   <head>
-    <link rel="stylesheet" th:href="@{/css/manage/home.css}" />
+    <link rel="stylesheet" th:href="@{/css/manage/course.css}" />
   </head>
   <body>
     <div class="main" th:fragment="main">
+      <div class="page-top"><div class="page-title">수업관리페이지</div></div>
       <div class="row">
         <div class="page-row">
-          <h6 class="title">수업 관리</h6>
           <div id="buttonWrapper">
             <button
               type="button"
@@ -36,67 +36,97 @@
 
       <div class="row">
         <div class="page-row">
-          <h6 class="title">진행 중인 수업</h6>
-          <table>
-            <tr>
-              <th>강의</th>
-              <th>수업기간</th>
-              <th>학생 수</th>
-              <th>강의실 번호</th>
-            </tr>
-            <tr>
-              <td>JAVA프로그래밍</td>
-              <td>2018.02.20 ~ 2018.08.20</td>
-              <td>23</td>
-              <td>6477</td>
-            </tr>
-            <tr>
-              <td>C++</td>
-              <td>2018.01.07 ~ 2018.06.07</td>
-              <td>28</td>
-              <td>6478</td>
-            </tr>
-            <tr>
-              <td>JAVA프로그래밍</td>
-              <td>2017.12.22 ~~ 2018.06.22</td>
-              <td>21</td>
-              <td>6479</td>
-            </tr>
-          </table>
+          <h6 class="title">진행 중인 클래스</h6>
+          
+          <div class="course-table">
+            <div class="course-table-category">
+              <div class="start_date">시작일</div>
+              <div class="end_date">종료일</div>
+              <div class="course_name">과정명</div>
+              <div class="teacher">강사</div>
+              <div class="subject">과목</div>
+              <div class="classroom">강의실</div>
+              <div class="students">학생수</div>
+            </div>
+            <div class="current-table-list">
+              <div class="course-list-row" th:each="currentCourseList : ${currentCourseList}">
+                <div class="start_date" th:text="${currentCourseList.start_date}">시작일</div>
+                <div class="end_date" th:text="${currentCourseList.end_date}">종료일</div>
+                <div class="course_name" th:text="${currentCourseList.course_name}">과정명</div>
+                <div class="teacher" th:text="${currentCourseList.teacher}">강사</div>
+                <div class="subject" th:text="${currentCourseList.subject_name}">과목</div>
+                <div class="classroom" th:text="${currentCourseList.classroom_id}+'강의실'">강의실</div>
+                <div class="students" th:text="${currentCourseList.students}">학생수</div>
+              </div>
+            </div>
+          </div>
+          
         </div>
       </div>
 
+      
+      
       <div class="row">
         <div class="page-row">
-          <h6 class="title">종료된 수업</h6>
-          <table>
-            <tr>
-              <th>강의</th>
-              <th>수업기간</th>
-              <th>학생 수</th>
-              <th>강의실 번호</th>
-            </tr>
-            <tr>
-              <td>JAVA프로그래밍</td>
-              <td>2018.02.20 ~ 2018.08.20</td>
-              <td>23</td>
-              <td>6477</td>
-            </tr>
-            <tr>
-              <td>C++</td>
-              <td>2018.01.07 ~ 2018.06.07</td>
-              <td>28</td>
-              <td>6478</td>
-            </tr>
-            <tr>
-              <td>JAVA프로그래밍</td>
-              <td>2017.12.22 ~~ 2018.06.22</td>
-              <td>21</td>
-              <td>6479</td>
-            </tr>
-          </table>
+          <h6 class="title">개강 예정 클래스</h6>
+          
+          <div class="course-table">
+            <div class="course-table-category">
+              <div class="start_date">시작일</div>
+              <div class="end_date">종료일</div>
+              <div class="course_name">과정명</div>
+              <div class="teacher">강사</div>
+              <div class="subject">과목</div>
+              <div class="classroom">강의실</div>
+              <div class="students">학생수</div>
+            </div>
+            <div class="opening-table-list">
+              <div class="course-list-row" th:each="openingCourseList : ${openingCourseList}">
+                <div class="start_date" th:text="${openingCourseList.start_date}">시작일</div>
+                <div class="end_date" th:text="${openingCourseList.end_date}">종료일</div>
+                <div class="course_name" th:text="${openingCourseList.course_name}">과정명</div>
+                <div class="teacher" th:text="${openingCourseList.teacher}">강사</div>
+                <div class="subject" th:text="${openingCourseList.subject_name}">과목</div>
+                <div class="classroom" th:text="${openingCourseList.classroom_id}+'강의실'">강의실</div>
+                <div class="students" th:text="${openingCourseList.students}">학생수</div>
+              </div>
+            </div>
+          </div>
+          
         </div>
       </div>
+      
+      <div class="row">
+        <div class="page-row">
+          <h6 class="title">종료된 클래스</h6>
+          
+          <div class="course-table">
+            <div class="course-table-category">
+              <div class="start_date">시작일</div>
+              <div class="end_date">종료일</div>
+              <div class="course_name">과정명</div>
+              <div class="teacher">강사</div>
+              <div class="subject">과목</div>
+              <div class="classroom">강의실</div>
+              <div class="students">학생수</div>
+            </div>
+            <div class="end-table-list">
+              <div class="course-list-row" th:each="endCourseList : ${endCourseList}">
+                <div class="start_date" th:text="${endCourseList.start_date}">시작일</div>
+                <div class="end_date" th:text="${endCourseList.end_date}">종료일</div>
+                <div class="course_name" th:text="${endCourseList.course_name}">과정명</div>
+                <div class="teacher" th:text="${endCourseList.teacher}">강사</div>
+                <div class="subject" th:text="${endCourseList.subject_name}">과목</div>
+                <div class="classroom" th:text="${endCourseList.classroom_id}+'강의실'">강의실</div>
+                <div class="students" th:text="${endCourseList.students}">학생수</div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      <!-- 클래스 생성 -->
       <div
         class="modal fade"
         id="modal1"
@@ -195,7 +225,7 @@
           </div>
         </div>
       </div>
-
+      <!-- 강사 계정 생성 -->
       <div
         class="modal fade"
         id="modal2"
