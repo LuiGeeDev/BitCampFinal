@@ -135,7 +135,7 @@ input[type=checkbox]:checked+label i {
 .issue {
   display: flex;
   border-bottom: 1px solid #292929;
-  padding: 10.5px 26.5px;
+  padding: 8.5px 26.5px;
 }
 
 .fa-check-square {

@@ -520,6 +520,8 @@ public class MyClassController {
     
     Article homeworkarticle = articledao.selectRecentHomework(username);
     List<Article> homeworkarticlere = articledao.selectHomeworkReplies(homeworkarticle.getId());
+    List<Article> Stackarticle = articledao.selectRecentStackbyCourse(member.getCourse_id());
+    
     
     System.out.println(project);
     System.out.println(course);
@@ -536,6 +538,7 @@ public class MyClassController {
     model.addAttribute("groups", groups);
     model.addAttribute("homeworkarticle",homeworkarticle);
     model.addAttribute("homeworkarticlere",homeworkarticlere);
+    model.addAttribute("Stackarticle",Stackarticle);
     
     return "myclass/teacher/managing";
   }

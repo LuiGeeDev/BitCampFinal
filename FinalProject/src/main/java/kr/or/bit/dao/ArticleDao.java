@@ -110,4 +110,8 @@ public interface ArticleDao {
   List<Article> selectEnableArticleByUsername(String username);
   
   Article selectRecentHomework(String username);
+  
+  List<Article> selectRecentStackbyCourse(int courseid);
+  
+  
 }
