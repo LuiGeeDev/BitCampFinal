@@ -34,7 +34,7 @@ public class Article {
   private int layer;
   private int sibling;
   private int boardtype;
-
+  private Date end_date;
   public int getBoardtype() {
     return boardtype;
   }
@@ -121,6 +121,14 @@ public class Article {
 
   public void setView_count(int view_count) {
     this.view_count = view_count;
+  }
+
+  public Date getEnd_date() {
+    return end_date;
+  }
+
+  public void setEnd_date(Date end_date) {
+    this.end_date = end_date;
   }
 
   public int getOriginal_id() {
@@ -251,6 +259,6 @@ public class Article {
         + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", board_name=" + board_name + ", tags="
         + tags + ", commentlist=" + commentlist + ", commentSize=" + commentSize + ", option=" + option + ", vote="
         + vote + ", votenum=" + votenum + ", vote_count=" + vote_count + ", fileslist=" + fileslist + ", layer=" + layer
-        + ", sibling=" + sibling +"]";
+        + ", sibling=" + sibling + ", end_date=" + end_date + "]";
   }
 }
