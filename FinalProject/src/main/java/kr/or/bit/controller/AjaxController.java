@@ -2,6 +2,7 @@ package kr.or.bit.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ import kr.or.bit.dao.NotificationDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.ChatMessage;
 import kr.or.bit.model.Classroom;
+import kr.or.bit.model.Course;
 import kr.or.bit.model.Files;
 import kr.or.bit.model.Member;
 import kr.or.bit.model.Message;
@@ -33,6 +35,7 @@ import kr.or.bit.service.FileUploadService;
 import kr.or.bit.service.MypageService;
 import kr.or.bit.service.NewsService;
 import kr.or.bit.utils.Helper;
+import kr.or.bit.utils.Pager;
 
 @RestController
 @RequestMapping(path = "/ajax")
@@ -161,4 +164,23 @@ public class AjaxController {
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     courseDao.deleteCourse(id);
   }
+  
+  @GetMapping("/manage/course/paging")
+  public Map<String,Object> paging(int page){
+    CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
+    Pager pager = new Pager(page, courseDao.countEndCourseList());
+    System.out.println(courseDao.selectEndCourseList(pager).get(0).getStart_date());
+    List<Course> courseList = courseDao.selectEndCourseList(pager);
+    for(Course course : courseList) {
+      course.setStartDateLocal(course.getStart_date().toLocalDate());
+      course.setEndDateLocal(course.getEnd_date().toLocalDate());
+    }
+    Map<String, Object> returnMap = new HashMap<String, Object>();
+    returnMap.put("courseList", courseList);
+    returnMap.put("allCount", courseDao.countEndCourseList());
+    return returnMap;
+  }
 }
+
+
+
