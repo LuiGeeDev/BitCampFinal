@@ -85,5 +85,12 @@ input[type=file] {
 }
 
 .filebutton {
-  margin-left:auto;
+  /* margin-left:auto; */
+  margin-left: 1080px;
+  padding:2px;
+}
+
+.btnSize{
+  width:63px;
+  font-size:14px;
 }

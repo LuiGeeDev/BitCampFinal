@@ -174,3 +174,16 @@ th, td {
   color: red;
   font-weight: 600;
 }
+.btn.btn-primary.paging.active{
+  color:white !important;
+  background-color:#EA8A02 !important;
+  margin:5px;
+}
+
+#boardSearch:focus, select:focus{
+  border:#F39C20 1px solid;
+}
+#boardSEarch, select{
+  transition:.3s;
+  outline:none;
+}
