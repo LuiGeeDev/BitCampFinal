@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import kr.or.bit.model.Classroom;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.Member;
+import kr.or.bit.utils.Pager;
 
 /*
 *
@@ -41,7 +42,9 @@ public interface CourseDao {
   //진행중인 클래스 리스트
   List<Course> selectCurrentCourseList();
   //종료된 클래스 리스트
-  List<Course> selectEndCourseList();
+  List<Course> selectEndCourseList(@Param("pager") Pager pager);
+  //종료된 클래스 개수
+  int countEndCourseList();
   //개강예정 클래스 리스트
   List<Course> selectOpeningCourseList();
   
