@@ -155,5 +155,10 @@ public class AjaxController {
   public Map<String, Object> bookmarkStackArticle(int article_id) {
     return mypageService.insertBookmark(article_id, Helper.userName());
   }
-
+  
+  @PostMapping("/manage/course/delete")
+  public void deleteCourse(int id) {
+    CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
+    courseDao.deleteCourse(id);
+  }
 }
