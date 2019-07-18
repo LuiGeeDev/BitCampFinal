@@ -42,7 +42,7 @@ body {
   margin-left: 5px;
   margin: 10px 5px 10px;
   float: left;
-  display:flex;
+  display: flex;
   flex-direction: row;
 }
 
@@ -130,7 +130,7 @@ body {
   display: table;
   cursor: pointer;
   border-radius: 5px;
-  background-color: #EEEEEE; !important;
+  background-color: #EEEEEE; ! important;
   margin-right: 4px;
 }
 
@@ -139,5 +139,12 @@ body {
 }
 
 #select-result {
-  display:none 
+  display: none
+}
+
+.textarea-size {
+  height: 470px;
+  width: 98%;
+  margin-left: 5px;
+  border-radius: 4px;
 }

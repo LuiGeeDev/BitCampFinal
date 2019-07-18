@@ -15,13 +15,15 @@
         <div class="board-management">
           <h4>게시판 관리</h4>
           <div class="board-add-remove">
-            <div class="board-to-add">
+            <div class="board-to-add" ss-container>
               <div
                 class="board"
                 th:each="board : ${boardlist}"
                 th:if="${board.boardtype == 3 and board.board_name != '공지사항'}"
               >
-                <span class="board-name" th:text="${board.board_name}">자유게시판</span>
+                <span class="board-name" th:text="${board.board_name}"
+                  >자유게시판</span
+                >
                 <button class="remove-btn">
                   <i class="far fa-minus-square"></i>
                 </button>
@@ -49,7 +51,7 @@
               <i class="far fa-caret-square-left fa-3x"></i>
               <i class="far fa-caret-square-right fa-3x"></i>
             </div>
-            <div class="board-to-remove"></div>
+            <div class="board-to-remove" ss-container></div>
             <div class="buttons">
               <button id="submit" class="btn btn-outline-primary btn-sm">
                 수정하기
@@ -71,7 +73,7 @@
 
       $(".board-nav button").click(function() {
         const newBoardName = $("#new-board-input");
-        $(".board-to-add").append(
+        $(".board-to-add .ss-content").append(
           `<div class="board">
                 <span class="board-name">${newBoardName.val()}</span>
                 <button class="remove-btn"><i class="far fa-minus-square"></i></button>
@@ -93,7 +95,7 @@
             board.append(
               `<button class="add-btn"><i class="far fa-plus-square"></i></button>`
             );
-            $(".board-to-remove").append(board);
+            $(".board-to-remove .ss-content").append(board);
             addBtnHandler();
           });
         }
@@ -107,7 +109,7 @@
             board.append(
               `<button class="remove-btn"><i class="far fa-minus-square"></i></button>`
             );
-            $(".board-to-add").append(board);
+            $(".board-to-add .ss-content").append(board);
             removeBtnHandler();
           });
         }

@@ -1,128 +1,182 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
-<head>
-<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-<link rel="stylesheet" th:href="@{/css/myclass/teacher/create/main.css}" />
-<link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
-</head>
-<body>
-  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+    <link rel="stylesheet" th:href="@{/css/myclass/teacher/create/main.css}" />
+    <link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
+  </head>
+  <body>
+    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
 
-  <div class="main" th:fragment="main">
-    <div th:replace="myclass/teacher/nav :: teacher-nav(project)"></div>
-    <div class="content-wrapper">
-      <div class="header-wrapper">
-        <div class="page-title-wrapper">
-          <span class="page-title">프로젝트 생성하기</span>
-        </div>
-
-        <hr />
-        <div class="inner wrapper project-name-wrapper">
-          <span class="project-name-text text">프로젝트 명 : </span> <span
-            class="project-name-input"><input type="text"
-            class="project-name" form="submit-form" name="project_name"
-            id="project-name" /></span>
-        </div>
-        <div class="inner wrapper group-count-wrapper">
-          <span class="group-count-text text">생성할 조 수 : </span> <span
-            class="select-group-count"><input type="number"
-            value="4" id="member-count" class="group-count" min="1" /></span>
-        </div>
-        <div class="inner wrapper project-term-wrapper">
-          <div class="project-term-text text">프로젝트 기간</div>
-          <span class="project-term-start-day-text text date">시작일</span>
-          <span class="select-project-term-start-day"><input
-            type="date" class="select-start-date date-input"
-            id="start-date" form="submit-form" name="start_date" /></span> ~ <span
-            class="project-term-end-day-text text date">종료일</span> <span
-            class="select-project-term-end-day"><input
-            type="date" class="select-end-date date-input" id="end-date"
-            form="submit-form" name="end_date" /></span>
-        </div>
-      </div>
-
-      <div>
-        <div class="row">
-          <div id="member-list" class="class-member-list">
-            <div th:each="student, status : ${memberList}"
-              th:text="${student.name}"
-              th:id="'student'+${status.count}" class="class-member"
-              draggable="true"
-              th:attr="data-username=${student.username}"></div>
-
+    <div class="main" th:fragment="main">
+      <div th:replace="myclass/teacher/nav :: teacher-nav(project)"></div>
+      <div class="content-wrapper">
+        <div class="header-wrapper">
+          <div class="page-title-wrapper">
+            <span class="page-title">프로젝트 생성하기</span>
           </div>
-          <div id="class-group-list" class="class-group-list">
-            <div class="group">
-              <div class="class-group">1조</div>
+          <div class="inner wrapper project-name-wrapper">
+            <span class="project-name-text text">프로젝트 명: </span>
+            <input
+              type="text"
+              class="project-name"
+              form="submit-form"
+              name="project_name"
+              id="project-name"
+            />
+          </div>
+          <div class="inner wrapper group-count-wrapper">
+            <span class="group-count-text text">생성할 조 수: </span>
+            <input
+              type="number"
+              value="4"
+              id="member-count"
+              class="group-count"
+              min="1"
+            />
+          </div>
+          <div class="inner wrapper project-term-wrapper">
+            <div class="project-term-text text">프로젝트 기간:&nbsp;</div>
+            <div class="project-date start-date">
+              <span class="project-term-start-day-text text date">시작일</span>
+              <input
+                type="date"
+                class="select-start-date date-input"
+                id="start-date"
+                form="submit-form"
+                name="start_date"
+              />
             </div>
-            <div class="group">
-              <div class="class-group">2조</div>
-            </div>
-            <div class="group">
-              <div class="class-group">3조</div>
-            </div>
-            <div class="group">
-              <div class="class-group">4조</div>
+            &nbsp;~&nbsp;
+            <div class="project-date end-date">
+              <span class="project-term-end-day-text text date">종료일</span>
+              <input
+                type="date"
+                class="select-end-date date-input"
+                id="end-date"
+                form="submit-form"
+                name="end_date"
+              />
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="button-wrapper">
-            <button id="reset-button" class="btn btn-warning btn-sm">초기화</button>
-            <button id="submit-button" class="btn btn-warning btn-sm"
-              disabled>생성</button>
-          </div>
-        </div>
-        <div class="modal fade" id="modal" tabindex="-1" role="dialog"
-          aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">클래스
-                  생성 확인</h5>
 
-                <button type="button" class="close" data-dismiss="modal"
-                  aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+        <div>
+          <div class="row">
+            <div class="list-wrapper">
+              <div id="member-list" class="class-member-list" ss-container>
+                <div
+                  th:each="student, status : ${memberList}"
+                  th:text="${student.name}"
+                  th:id="'student'+${status.count}"
+                  class="class-member"
+                  draggable="true"
+                  th:attr="data-username=${student.username}"
+                ></div>
               </div>
-              <form id="submit-form" action="" method="post">
-                <div class="modal-body" id="modal-body">
-                  <h6 class="modal-desc">조장을 선택해주세요.</h6>
-                  <div class="modal-group" id="group1">
-                    <div class="modal-group-title">1조</div>
-                    <div class="modal-group-member"></div>
-                  </div>
-                  <div class="modal-group" id="group2">
-                    <div class="modal-group-title">2조</div>
-                    <div class="modal-group-member"></div>
-                  </div>
-                  <div class="modal-group" id="group3">
-                    <div class="modal-group-title">3조</div>
-                    <div class="modal-group-member"></div>
-                  </div>
-                  <div class="modal-group" id="group4">
-                    <div class="modal-group-title">4조</div>
-                    <div class="modal-group-member"></div>
-                  </div>
+              <div id="class-group-list" class="class-group-list" ss-container>
+                <div class="group">
+                  <div class="class-group">1조</div>
                 </div>
-                <div class="modal-footer">
-                  <button class="btn btn-warning btn-sm" type="submit"
-                    id="modal-submit-button" disabled>생성</button>
-                  <button type="button" class="btn btn-warning btn-sm"
-                    data-dismiss="modal">취소</button>
+                <div class="group">
+                  <div class="class-group">2조</div>
                 </div>
-              </form>
+                <div class="group">
+                  <div class="class-group">3조</div>
+                </div>
+                <div class="group">
+                  <div class="class-group">4조</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="button-wrapper">
+              <button id="reset-button" class="btn btn-warning btn-sm">
+                초기화
+              </button>
+              <button
+                id="submit-button"
+                class="btn btn-warning btn-sm"
+                disabled
+              >
+                생성
+              </button>
+            </div>
+          </div>
+          <div
+            class="modal fade"
+            id="modal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    클래스 생성 확인
+                  </h5>
+
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form id="submit-form" action="" method="post">
+                  <div class="modal-body" id="modal-body">
+                    <h6 class="modal-desc">조장을 선택해주세요.</h6>
+                    <div class="modal-group" id="group1">
+                      <div class="modal-group-title">1조</div>
+                      <div class="modal-group-member"></div>
+                    </div>
+                    <div class="modal-group" id="group2">
+                      <div class="modal-group-title">2조</div>
+                      <div class="modal-group-member"></div>
+                    </div>
+                    <div class="modal-group" id="group3">
+                      <div class="modal-group-title">3조</div>
+                      <div class="modal-group-member"></div>
+                    </div>
+                    <div class="modal-group" id="group4">
+                      <div class="modal-group-title">4조</div>
+                      <div class="modal-group-member"></div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      class="btn btn-warning btn-sm"
+                      type="submit"
+                      id="modal-submit-button"
+                      disabled
+                    >
+                      생성
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-warning btn-sm"
+                      data-dismiss="modal"
+                    >
+                      취소
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-  <script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script>
       function dragstart_handler(event) {
         event.dataTransfer.setData("text/plain", event.target.id);
       }
@@ -135,7 +189,7 @@
         const id = event.dataTransfer.getData("text");
         const target = event.target;
         if (target.classList.contains("group")) {
-          target.appendChild(document.getElementById(id));  
+          target.appendChild(document.getElementById(id));
         } else {
           target.parentNode.appendChild(document.getElementById(id));
         }
@@ -152,90 +206,113 @@
           student.addEventListener("dragstart", dragstart_handler);
         }
       );
-      
+
       addEventToGroup();
 
       function reset() {
         const groupList = document.getElementById("class-group-list");
-		Array.from(groupList.getElementsByClassName("class-member")).forEach(
-		  function(student){
-		    document.getElementById("member-list").appendChild(student);
-		  }    
-	    )
+        Array.from(groupList.getElementsByClassName("class-member")).forEach(
+          function(student) {
+            document.querySelector("#member-list .ss-content").appendChild(student);
+          }
+        );
       }
-      
+
       document.getElementById("reset-button").onclick = reset;
-      
+
       $("#member-count").change(function() {
-		reset();
+        reset();
         const count = $("#member-count").val();
-        
-        $("#class-group-list").empty();
+
+        $("#class-group-list .ss-content").empty();
         $(".modal-body").empty();
-        for(let i = 1 ; i <= count ; i++){
-          $("#class-group-list").append(`<div class="group"><div class="class-group">${i}조</div></div>`);
-          $(".modal-body").append(`<div class="modal-group" id="group${i}"><div class="modal-group-title">${i}조</div><div class="modal-group-member"></div></div>`);
+        for (let i = 1; i <= count; i++) {
+          $("#class-group-list .ss-content").append(
+            `<div class="group"><div class="class-group">${i}조</div></div>`
+          );
+          $(".modal-body").append(
+            `<div class="modal-group" id="group${i}"><div class="modal-group-title">${i}조</div><div class="modal-group-member"></div></div>`
+          );
         }
-        
+
         addEventToGroup();
       });
-		
-      $('#submit-button').click(function(){
+
+      $("#submit-button").click(function() {
         const studentArray = [];
         $(".modal-group-member").empty();
-        $(".class-member").each(function(index, member){
-          const student ={name:$(member).text(), username:$(member).data("username"), group:$(member).siblings(".class-group").text().slice(0,1)};
+        $(".class-member").each(function(index, member) {
+          const student = {
+            name: $(member).text(),
+            username: $(member).data("username"),
+            group: $(member)
+              .siblings(".class-group")
+              .text()
+              .slice(0, 1)
+          };
           studentArray.push(student);
         });
-        
-        $(studentArray).each(function(index, member){
-          $(`#group${member.group} .modal-group-member`).append(`<label><input type="radio" name="leader_name[${member.group-1}]" value="${member.username}">${member.name}<span class="fas fa-chess-king icon hide"></span></label>`);
-        })
-        
-       $('input[type="radio"]').change(function() {
-         if($('input[type="radio"]:checked').length == $('#member-count').val()){
-           $('#modal-submit-button').attr('disabled',false);
-         }else{
-           $('#modal-submit-button').attr('disabled',true);
-         }
-        $('input[type="radio"]').each(function() {
-        	const checked = $(this).prop('checked');
-        	const icon = $(this).next();
-        	if(checked){
-        	  icon.removeClass('hide');
-        	}else{
-        	  icon.addClass('hide');
-        	}
-        })
-      })
-        
-        $("#modal").modal('show');
+
+        $(studentArray).each(function(index, member) {
+          $(`#group${member.group} .modal-group-member`).append(
+            `<label><input type="radio" name="leader_name[${member.group -
+              1}]" value="${member.username}">${
+              member.name
+            }<span class="fas fa-chess-king icon hide"></span></label>`
+          );
+        });
+
+        $('input[type="radio"]').change(function() {
+          if (
+            $('input[type="radio"]:checked').length == $("#member-count").val()
+          ) {
+            $("#modal-submit-button").attr("disabled", false);
+          } else {
+            $("#modal-submit-button").attr("disabled", true);
+          }
+          $('input[type="radio"]').each(function() {
+            const checked = $(this).prop("checked");
+            const icon = $(this).next();
+            if (checked) {
+              icon.removeClass("hide");
+            } else {
+              icon.addClass("hide");
+            }
+          });
+        });
+
+        $("#modal").modal("show");
         //<div class="modal-group-member"></div>
       });
-      
+
       $("button[type='submit']").click(function(event) {
         event.preventDefault();
         const form = document.getElementById("submit-form");
         const formData = new FormData(form);
         const studentArray = [];
-        $(".class-member").each(function(index, member){
+        $(".class-member").each(function(index, member) {
           const student = {
-              name:$(member).text(), 
-              username:$(member).data("username"), 
-              group:$(member).siblings(".class-group").text().slice(0,1),
-              leader: $(`.modal-group-member input[value="${$(member).data('username')}"]`).prop("checked")              
+            name: $(member).text(),
+            username: $(member).data("username"),
+            group: $(member)
+              .siblings(".class-group")
+              .text()
+              .slice(0, 1),
+            leader: $(
+              `.modal-group-member input[value="${$(member).data("username")}"]`
+            ).prop("checked")
           };
           studentArray.push(student);
         });
-        
+
         const project = {
-            project_name: formData.get("project_name"),
-            groups: $("#member-count").val(),
-            start_date: formData.get("start_date"),
-            end_date: formData.get("end_date"),
-            students: studentArray,
-        }
-        
+          project_name: formData.get("project_name"),
+          groups: $("#member-count").val(),
+          start_date: formData.get("start_date"),
+          end_date: formData.get("end_date"),
+          students: studentArray
+        };
+
         $.ajax({
           url: "/myclass/create/project",
           method: "post",
@@ -246,56 +323,64 @@
           location.href = "/myclass/setting";
         });
       });
-      
+
       // 프로젝트명, 조 수, 기간 유효성 검증 disabled
-		$("#project-name, #member-count, #start-date, #end-date").change(function(){ 
-      	console.log();
-		  if($("#project-name").val() !== "" &&
-		     $("#member-count").val() !== "" &&
-		     $("#start-date").val() !== "" &&
-		     $("#end-date").val() !== "" &&
-		     $("#member-list").children().length === 0
-		     ){
-		    $("#submit-button").attr('disabled',false);
-		  }else{
-		    $("#submit-button").attr('disabled',true);
-		  }
-		})
-		
-		//드래그하고나서 이벤트임
-		$("#class-group-list").hover(function(){
-  		  if($("#project-name").val() !== "" &&
-			     $("#member-count").val() !== "" &&
-			     $("#start-date").val() !== "" &&
-			     $("#end-date").val() !== "" &&
-			     $("#member-list").children().length === 0
-			     ){
-			    $("#submit-button").attr('disabled',false);
-			  }else{
-			    $("#submit-button").attr('disabled',true);
-			  }  
-		})
-		$("#modal-submit-button").hover(function(){
-    	  if($('input[type="radio"]:checked').length == $('#member-count').val()){
-      	  	$('#modal-submit-button').attr('disabled',false);
-   		  }else{
-        	$('#modal-submit-button').attr('disabled',true);
-      	  }
-		})
-		$("#end-date, #start-date").change(function(){
-		  if($("#end-date").val() !== ""){
-		  if($("#end-date").val() < $("#start-date").val()){
-		    $("#end-date").val("");
-		    Swal.fire({
-		      type: 'error',
-		      title: '잘못된 값입니다.',
-		      text: '종료일이 시작일보다 빠릅니다!',
-		      footer: '종료일이 알맞은 값인지 확인해보세요.',
-		      confirmButtonText:"확인",
-		    })
-		  }
-		  }
-		})
+      $("#project-name, #member-count, #start-date, #end-date").change(
+        function() {
+          console.log();
+          if (
+            $("#project-name").val() !== "" &&
+            $("#member-count").val() !== "" &&
+            $("#start-date").val() !== "" &&
+            $("#end-date").val() !== "" &&
+            $("#member-list .ss-content").children().length === 0
+          ) {
+            $("#submit-button").attr("disabled", false);
+          } else {
+            $("#submit-button").attr("disabled", true);
+          }
+        }
+      );
+
+      //드래그하고나서 이벤트임
+      $("#class-group-list").hover(function() {
+        if (
+          $("#project-name").val() !== "" &&
+          $("#member-count").val() !== "" &&
+          $("#start-date").val() !== "" &&
+          $("#end-date").val() !== "" &&
+          $("#member-list .ss-content").children().length === 0
+        ) {
+          $("#submit-button").attr("disabled", false);
+        } else {
+          $("#submit-button").attr("disabled", true);
+        }
+      });
+      
+      $("#modal-submit-button").hover(function() {
+        if (
+          $('input[type="radio"]:checked').length == $("#member-count").val()
+        ) {
+          $("#modal-submit-button").attr("disabled", false);
+        } else {
+          $("#modal-submit-button").attr("disabled", true);
+        }
+      });
+      
+      $("#end-date, #start-date").change(function() {
+        if ($("#end-date").val() !== "") {
+          if ($("#end-date").val() < $("#start-date").val()) {
+            $("#end-date").val("");
+            Swal.fire({
+              type: "error",
+              title: "잘못된 값입니다.",
+              text: "종료일이 시작일보다 빠릅니다!",
+              footer: "종료일이 알맞은 값인지 확인해보세요.",
+              confirmButtonText: "확인"
+            });
+          }
+        }
+      });
     </script>
-</body>
+  </body>
 </html>

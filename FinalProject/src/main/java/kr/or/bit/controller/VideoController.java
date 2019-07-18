@@ -23,6 +23,7 @@ import kr.or.bit.service.ArticleUpdateService;
 import kr.or.bit.service.ArticleVoteService;
 import kr.or.bit.service.BoardService;
 import kr.or.bit.service.CommentService;
+import kr.or.bit.service.MypageService;
 import kr.or.bit.utils.Helper;
 
 @Controller
@@ -43,6 +44,8 @@ public class VideoController {
   private CommentService commentService;
   @Autowired
   private BoardService boardService;
+  @Autowired
+  private MypageService mypageService;
 
   @GetMapping("")
   public String videoHome(Model model) {
@@ -57,9 +60,11 @@ public class VideoController {
      * parameter로 받은 아이디 값을 이용, 해당하는 글을 불러와서 페이지에 글을 넘겨준다
      */
     Article article = articleService.selectOneArticle("video", id);
+    int scrapCount = mypageService.scrapCount(id, Helper.userName());
     articleUpdateService.viewCount(article);
     model.addAttribute("voteStatus", articleVoteService.selectVote(id, Helper.userName()));
     model.addAttribute("article", article);
+    model.addAttribute("scrapCount",scrapCount);
     return "video/detail";
   }
 
