@@ -20,6 +20,17 @@
           <span id="detailTitle" th:text="${article.title}"
             >[생활코딩] HTML5 기초강좌</span
           >
+          <button class="btn btn-outline-primary btn-sm bookmarkSpan"
+            th:classappend="${scrapCount} == 1 ? 'scrapCompletion'"
+            id="bookmarkButton"
+            >
+            <span class="bookmarkLabel"
+            id="bookmarkLabel"
+            >북마크</span> <i
+              class="fas fa-book bookmarkIcon"
+              id="bookmarkIcon"
+              ></i>
+          </button> 
           <div id="detailViewCount">
           
             <span class="videoWriterNameForm">
@@ -476,6 +487,27 @@
           }
         });
       });
+      
+      $('#bookmarkButton').click(function(data){
+        $.ajax({
+          url:"/ajax/bookmark",
+          data:{
+            article_id:[[${article.id}]],
+          },
+          method: "post",
+          success: function(data) {
+            if(data.checkStatus == 1) {
+              $("#bookmarkButton").addClass("scrapCompletion");
+            } else {
+              $("#bookmarkButton").removeClass("scrapCompletion");
+            }
+          }
+          
+        });
+      });
+
+      
+      
     </script>
   </body>
 </html>

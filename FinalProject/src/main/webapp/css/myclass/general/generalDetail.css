@@ -107,7 +107,7 @@ body {
 .comment-delete {
   margin-left: 5px;
   font-size: 11px;
-  line-height:23px;
+  line-height: 23px;
 }
 
 .noComment {
@@ -227,4 +227,17 @@ body {
 
 .writerReceiverId {
   display: none;
+}
+
+.bookmarkRow {
+  text-align: right;
+}
+
+.bookmarkSpan {
+  float: right;
+}
+
+.scrapCompletion{
+    background-color: #ea8a02 !important;
+    color: white !important;
 }
