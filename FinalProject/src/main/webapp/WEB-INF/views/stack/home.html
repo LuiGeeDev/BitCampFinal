@@ -9,9 +9,7 @@
   <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
   <div class="main" th:fragment="main">
     <div class="title">
-      <h3>
-                스택게시판
-      </h3>
+      <h3>스택게시판</h3>
     </div>
     <hr />
     <div class="tableWrapper">
@@ -105,12 +103,10 @@
           th:href="@{/myclass/homework(page=${pager.endPage}+1)}">&raquo;</a>
         </span>
       </div>
-
     </div>
     </div>
   </div>
   <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
   <script th:inline="javascript"></script>
-  <script src="/js/stack/write.js"></script>
 </body>
 </html>

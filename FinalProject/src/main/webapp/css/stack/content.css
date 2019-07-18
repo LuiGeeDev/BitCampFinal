@@ -462,3 +462,21 @@ th, td {
 .voteCompletion{
   
 }
+
+.voted{
+  color:#f39c20;
+}
+
+#thumbIcon{
+  width:20px;
+  height:20px;
+  
+}
+
+#voteButton{
+  background-color:#e1e1e1;
+  border:1px solid;
+  border-radius:3px;
+  width:50px;
+  height:30px;
+}
