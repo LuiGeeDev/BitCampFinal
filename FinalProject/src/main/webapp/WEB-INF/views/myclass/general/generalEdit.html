@@ -33,7 +33,7 @@
         <div class="downloadbox">
           <div th:each="fi,iter : ${article.option.files}">
             
-            <div class="download-content" th:if="${fi!=null}">
+            <div class="download-content" th:if="${fi!=null}" th:id="'par'+${iter.count}">
             <div><i class="fas fa-paperclip"></i></div>
               <div class="filename" th:id="'count'+${iter.count}"
                 th:text="${fi.original_filename}"
