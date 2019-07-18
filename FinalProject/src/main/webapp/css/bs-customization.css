@@ -1,4 +1,4 @@
--- 부트스트랩의 기본 요소 수정하는 css * {
+* {
   font-family: "Nanum Gothic", sans-serif;
 }
 
@@ -30,19 +30,20 @@
   color: #e89013 !important;
 }
 
-.btn-primary:hover,
-.btn-outline-primary:hover {
+.btn-primary:hover, .btn-outline-primary:hover {
   background-color: #ea8a02 !important;
   color: white !important;
 }
 
-.btn-primary:active,
-.btn-outline-primary:active {
+.btn-primary:active, .btn-outline-primary:active {
   background-color: #ea8a02 !important;
   border-color: #c17201 !important;
 }
 
-.btn-primary:focus,
-.btn-outline-primary:focus {
+.btn-primary:focus, .btn-outline-primary:focus {
   box-shadow: 0 0 0 0.2rem rgba(255, 145, 5, 0.5) !important;
+}
+
+.text-primary {
+  color: #F39C20 !important;
 }

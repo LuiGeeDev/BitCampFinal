@@ -206,7 +206,7 @@ public class ArticleInsertService {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     QnaDao qna = sqlSession.getMapper(QnaDao.class);
     articleDao.insertArticle(article);
-
+    
     qna.insertQna(article.getId());
     tagService.insertTag(tagList, article.getId());
   }

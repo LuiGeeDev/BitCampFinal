@@ -436,3 +436,6 @@ table.commentWrapper {
   cursor:pointer;
 }
 
+.writerReceiverId {
+  display:none;
+}

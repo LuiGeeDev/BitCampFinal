@@ -436,3 +436,11 @@ th, td {
   font-size: 14px;
   margin-right: 3px;
 }
+
+.stackWriterNameForm {
+  cursor: pointer;
+}
+
+.writerReceiverId {
+  display:none;
+}
