@@ -32,12 +32,7 @@
                 >
                   <h5 class="scrap-title" th:text="${scrap.title}"></h5>
                   <div class="scrap-content">
-                    <th:block th:if="${#strings.length(scrap.content)} > 2000">
-                      <div
-                        th:utext="${#strings.substring(scrap.content,0,2000)} + '...'"
-                      ></div>
-                    </th:block>
-                    <th:block th:if="${#strings.length(scrap.content)} <= 2000">
+                    <th:block>
                       <div th:utext="${scrap.content}"></div>
                     </th:block>
                   </div>
@@ -49,12 +44,7 @@
                 >
                   <h5 class="scrap-title" th:text="${scrap.title}"></h5>
                   <div class="scrap-content">
-                    <th:block th:if="${#strings.length(scrap.content)} > 2000">
-                      <div
-                        th:utext="${#strings.substring(scrap.content,0,2000)} + '...'"
-                      ></div>
-                    </th:block>
-                    <th:block th:if="${#strings.length(scrap.content)} <= 2000">
+                    <th:block>
                       <div th:utext="${scrap.content}"></div>
                     </th:block>
                   </div>
@@ -66,12 +56,7 @@
                 >
                   <h5 class="scrap-title" th:text="${scrap.title}"></h5>
                   <div class="scrap-content">
-                    <th:block th:if="${#strings.length(scrap.content)} > 2000">
-                      <div
-                        th:utext="${#strings.substring(scrap.content,0,2000)} + '...'"
-                      ></div>
-                    </th:block>
-                    <th:block th:if="${#strings.length(scrap.content)} <= 2000">
+                    <th:block>
                       <div th:utext="${scrap.content}"></div>
                     </th:block>
                   </div>
@@ -83,12 +68,7 @@
                 >
                   <h5 class="scrap-title" th:text="${scrap.title}">안녕</h5>
                   <div class="scrap-content">
-                    <th:block th:if="${#strings.length(scrap.content)} > 2000">
-                      <div
-                        th:utext="${#strings.substring(scrap.content,0,2000)} + '...'"
-                      ></div>
-                    </th:block>
-                    <th:block th:if="${#strings.length(scrap.content)} <= 2000">
+                    <th:block>
                       <div th:utext="${scrap.content}"></div>
                     </th:block>
                   </div>
