@@ -359,9 +359,15 @@ th, td {
   border: 5px solid #eeeeee;
   border-radius: 14px;
 }
+.voteSpan:active {
+  padding: 15px;
+}
 
 .votecount-font {
   color: gray;
+}
+.voteCompletion {
+  background-color: #f7f7f7;
 }
 
 .top {
@@ -395,6 +401,9 @@ th, td {
 .toForm {
   margin-left: 20px;
   font-weight: bold;
+}
+.stackIcon {
+  color:#F39B10;
 }
 
 .my-comment-name {
@@ -435,4 +444,21 @@ th, td {
 .bookmarkLabel {
   font-size: 14px;
   margin-right: 3px;
+}
+
+.stackWriterNameForm {
+  cursor: pointer;
+}
+
+.writerReceiverId {
+  display:none;
+}
+
+.scrapCompletion{
+    background-color: #ea8a02 !important;
+    color: white !important;
+}
+
+.voteCompletion{
+  
 }

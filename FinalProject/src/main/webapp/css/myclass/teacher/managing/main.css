@@ -88,11 +88,10 @@ body {
   border-radius: 5px;
 }
 
-.btn-move-project-board{
-  margin-left:5px;
+.btn-move-project-board {
+  margin-left: 5px;
   width: 200px;
   height: 20px;
-  
 }
 
 .row-control-right>div {
@@ -115,8 +114,8 @@ body {
   
 }
 
-.class-info{
-  margin-top: 20px; 
+.class-info {
+  margin-top: 20px;
 }
 
 .progres {
@@ -136,7 +135,8 @@ body {
 .progres>span {
   width: 35%;
 }
-.progress-bar bg-warning progress-bar-striped{
+
+.progress-bar bg-warning progress-bar-striped {
   border-radius: 3px;
 }
 
@@ -176,16 +176,16 @@ body {
   display: flex;
 }
 
-.btn-group-url{
+.btn-group-url {
   display: flex;
   margin-top: 20px;
 }
 
-.btn-group-url > div{
+.btn-group-url>div {
   margin: 3px;
 }
 
-.btn-group-url > h5 {
+.btn-group-url>h5 {
   padding: 2px;
 }
 
@@ -194,7 +194,13 @@ body {
   font-size: 17px;
 }
 
-.homework-content > button {
+.homework-content>button {
   margin-top: 10px;
 }
 
+.stack-control {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex: 1;
+}

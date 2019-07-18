@@ -21,18 +21,28 @@
             >[생활코딩] HTML5 기초강좌</span
           >
           <div id="detailViewCount">
-            <span th:text="${article.writer.name}">매니저</span> |
+          
+            <span class="videoWriterNameForm">
+            <span class="videoWriterName" 
+                  th:text="${article.writer.name}"
+                  th:classappend="${article.writer.name == user.name} ? 'my-comment-name'">
+            </span>
+            </span> |
             <span
               th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd')}"
             ></span>
             | 조회수
-            <span id="point" th:text="${article.view_count}">43</span> | 댓글
-            <span id="point" th:text="${article.commentlist.size()}">2</span>
+            <span id="point" th:text="${article.view_count}"></span> | 댓글
+            <span id="point" th:text="${article.commentlist.size()}"></span>
             <span
               class="hidden"
               id="comment-articleID"
               th:text="${article.id}"
             ></span>
+            
+            <span class="hidden writerReceiverId" th:text="${article.username}"></span>
+            
+            
           </div>
         </div>
         <div id="detailContent">
@@ -220,6 +230,33 @@
       }).ajaxStop(function() {
         $("#spinner").hide();
       });
+      
+      /* 메시지 보내는 함수 */
+      function replyMessage(messageText, receiverId) {
+         $.ajax({
+           url: "/ajax/message/reply",
+           type: "POST",
+           data: {
+             content: messageText,
+             receiver_username: receiverId
+           }
+         }).done(function() {
+           $(".modal").modal("hide");
+           Swal.fire({
+             type: 'success',
+             title: '전송되었습니다',
+             showConfirmButton: false,
+             timer: 1500
+           });
+           sendMessageNotice([[${user.name}]], receiverId);
+         });
+         };
+         
+         /* 메시지 보내는 함수 */
+      
+      
+      
+      
 
       // 동기 메시지보내기 처리 시작
   	  $(".messageCancle").click(function() {
@@ -246,29 +283,41 @@
        	  	return;
        	}
         	$("#messageText").val("");
-
-        	$.ajax({
-            url: "/ajax/message/reply",
-            type: "POST",
-            data: {
-              content: messageText,
-              receiver_username: receiverId
-            }
-          }).done(function() {
-            $(".modal").modal("hide");
-            Swal.fire({
-              type: 'success',
-              title: '전송되었습니다',
-              showConfirmButton: false,
-              timer: 1500
-            });
-            sendMessageNotice([[${user.name}]], receiverId);
-          });
+        	replyMessage(messageText, receiverId);
         });
       });  
  
     
     // 동기 메시지보내기 처리 끝
+    
+    
+    // 글쓴이 동기 메시지보내기 처리 시작
+    $(".videoWriterNameForm").unbind("click");
+    $(".videoWriterNameForm").click(function(event) {
+	  const receiverId = $(event.currentTarget).siblings(".writerReceiverId").text();
+      const messageReceiveName = $(event.currentTarget).children(".videoWriterName").text();
+      $(".messageReceiveName").text(messageReceiveName);
+      if([[${user.username}]] != receiverId) {
+        $(".modal").modal("show");
+      }
+
+      $(".submitMessage").unbind("click");
+      $(".submitMessage").click(function() {
+        const messageText = $("#messageText").val();
+       	if (messageText.trim() === "" || messageText === null) {
+      	  Swal.fire({
+      	    type: 'error',
+      	    text: '다시 입력해주세요 !!',
+      	  })
+      	  return;
+      	}
+        $("#messageText").val("");
+     	replyMessage(messageText, receiverId);
+      });
+    });
+
+    // 글쓴이 동기 메시지보내기 처리 끝
+    
     
     
     
@@ -360,6 +409,8 @@
               let getmonth = date.getMonth() + 1;
               getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
                   
+              
+              
               const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ hours +`:` + minutes;
               let equalName = null;
               if (item.username == [[${user.username}]] || [[${user.role}]] == 'MANAGER') {
@@ -415,24 +466,7 @@
           	  	  	return;
           	  	}
               	$("#messageText").val("");
-              	
-              	$.ajax({
-                  url: "/ajax/message/reply",
-                  type: "POST",
-                  data: {
-                    content: messageText,
-                    receiver_username: receiverId
-                  }
-                }).done(function() {
-                  $(".modal").modal("hide");
-                  Swal.fire({
-                    type: 'success',
-                    title: '전송되었습니다',
-                    showConfirmButton: false,
-                    timer: 1500
-                  });
-                  sendMessageNotice([[${user.name}]], receiverId);
-                });
+              	replyMessage(messageText, receiverId);
               });  
             });
             

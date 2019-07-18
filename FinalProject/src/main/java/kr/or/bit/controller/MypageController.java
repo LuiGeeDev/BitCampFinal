@@ -113,7 +113,19 @@ public class MypageController {
     model.addAttribute("scraps", scraps);
     return "mypage/scrap/scrap";
   }
-
+  
+  @PostMapping("/scrap/search")
+  public @ResponseBody List<Article> searchScraps(String word) {
+    ScrapDao scrapDao = sqlSession.getMapper(ScrapDao.class);
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    List<Article> scraps = scrapDao.selectScrapByWord(Helper.userName(), word);
+    
+    for (Article scrap : scraps) {
+      scrap.setBoardtype(boardDao.selectBoardById(scrap.getBoard_id()).getBoardtype());
+    }
+    
+    return scraps;
+  }
 
   @GetMapping("")
   public String updateMember(Model model, Principal principal) {
@@ -128,6 +140,9 @@ public class MypageController {
   @PostMapping("")
   public String updateMember(Member member, Principal principal, MultipartFile files1, HttpServletRequest request)
       throws IllegalStateException, IOException {
+    if (member.getPassword()==null) {
+      
+    }
     if (files1 != null) {
       FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
       Files file = fileUploadService.uploadFile(files1, request);

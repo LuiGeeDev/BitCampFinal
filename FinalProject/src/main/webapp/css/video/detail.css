@@ -234,3 +234,11 @@ body {
 .messageHeader {
   height:40px;
 }
+
+.videoWriterNameForm {
+  cursor: pointer;
+}
+
+.writerReceiverId {
+  display:none;
+}
