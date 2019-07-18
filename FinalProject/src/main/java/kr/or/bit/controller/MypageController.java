@@ -140,6 +140,9 @@ public class MypageController {
   @PostMapping("")
   public String updateMember(Member member, Principal principal, MultipartFile files1, HttpServletRequest request)
       throws IllegalStateException, IOException {
+    if (member.getPassword()==null) {
+      
+    }
     if (files1 != null) {
       FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
       Files file = fileUploadService.uploadFile(files1, request);
