@@ -35,34 +35,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="countAllQnaArticle" resultType="Integer">
 		SELECT count(*)
 		FROM article
-		WHERE BOARD_ID=6 AND ENABLE=1
+		WHERE BOARD_ID=(select id from board where course_id=#{course_id} and board_name='질문 게시판') AND ENABLE=1
 	</select>
 	<select id="countQnaArticleByTitleOrContent" resultType="Integer">
 		SELECT COUNT(*)
   		FROM article
-  		WHERE board_id = 6 AND enable =  1 AND title LIKE '%${boardSearch}%' OR content LIKE '%${boardSearch}%'
+  		WHERE BOARD_ID=(select id from board where course_id=#{course_id} and board_name='질문 게시판') AND enable =  1 AND (title LIKE '%${boardSearch}%' OR content LIKE '%${boardSearch}%')
 	</select>
 	<select id="countQnaArticleByTitle" resultType="Integer">
 		SELECT COUNT(*)
   		FROM article
-  		WHERE board_id = 6 AND enable =  1 AND title LIKE '%${boardSearch}%'
+  		WHERE BOARD_ID=(select id from board where course_id=#{course_id} and board_name='질문 게시판') AND enable =  1 AND (title LIKE '%${boardSearch}%')
 	</select>
 	<select id="countQnaArticleByWriter" resultType="Integer">
 		SELECT COUNT(*)
   		FROM article a JOIN member m ON a.username = m.username
-  		WHERE board_id = 6 AND enable =  1 AND m.name LIKE '%${boardSearch}%'
+  		WHERE BOARD_ID=(select id from board where course_id=#{course_id} and board_name='질문 게시판') AND enable =  1 AND (m.name LIKE '%${boardSearch}%')
 	</select>	
 	<select id="selectQnaArticleByTitleOrContent" resultType="kr.or.bit.model.Article">
 		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
 		FROM ARTICLE a JOIN BOARD b ON a.board_id = b.id 
-		WHERE BOARD_ID=6 AND ENABLE = 1 AND a.title LIKE '%${boardSearch}%' OR a.content LIKE '%${boardSearch}%'
+		WHERE BOARD_ID=(select id from board where course_id=#{course_id} and board_name='질문 게시판') AND ENABLE = 1 AND (a.title LIKE '%${boardSearch}%' OR a.content LIKE '%${boardSearch}%')
 		ORDER BY a.ID DESC
 		LIMIT #{pager.start}, #{pager.articlesOnPage}
 	</select>
 	<select id="selectQnaArticleByTitle" resultType="kr.or.bit.model.Article">
 		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
 		FROM ARTICLE a JOIN BOARD b ON a.board_id = b.id 
-		WHERE BOARD_ID=6 AND ENABLE = 1 AND a.title LIKE '%${boardSearch}%'
+		WHERE BOARD_ID=(select id from board where course_id=#{course_id} and board_name='질문 게시판') AND ENABLE = 1 AND (a.title LIKE '%${boardSearch}%')
 		ORDER BY a.ID DESC
 		LIMIT #{pager.start}, #{pager.articlesOnPage}
 	</select>
@@ -71,7 +71,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM ARTICLE a 
 		JOIN BOARD b ON a.board_id = b.id
 		JOIN MEMBER m ON a.username = m.username
-		WHERE BOARD_ID=6 AND ENABLE = 1 AND m.name= #{boardSearch}
+		WHERE BOARD_ID=(select id from board where course_id=#{course_id} and board_name='질문 게시판') AND ENABLE = 1 AND (m.name= #{boardSearch})
 		ORDER BY a.ID DESC
 		LIMIT #{pager.start}, #{pager.articlesOnPage}
 	</select>
@@ -81,7 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		JOIN BOARD b ON a.board_id = b.id
 		JOIN ARTICLE_TAG at ON a.id = at.article_id
 		JOIN TAG t ON t.id = at.tag_id
-		WHERE BOARD_ID=6 AND ENABLE = 1 AND t.tag=#{boardSearch}
+		WHERE BOARD_ID=(select id from board where course_id=#{course_id} and board_name='질문 게시판') AND ENABLE = 1 AND t.tag=#{boardSearch}
 		ORDER BY a.ID DESC
 		LIMIT #{pager.start}, #{pager.articlesOnPage}
 	</select>
@@ -91,8 +91,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		level, username, board_id,
 		(SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum
 		FROM ARTICLE as a
-		WHERE BOARD_ID=6 AND ENABLE=1
+		WHERE BOARD_ID=(select id from board where course_id=#{course_id} and board_name='질문 게시판') AND ENABLE=1
 		ORDER BY id DESC
-		LIMIT #{start}, #{articlesOnPage}
+		LIMIT #{pager.start}, #{pager.articlesOnPage}
 	</select>
 </mapper>
