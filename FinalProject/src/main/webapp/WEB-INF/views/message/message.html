@@ -28,6 +28,7 @@
             <span class="text-moveForm">보낸쪽지함</span>
             </span>
           </a>
+          <div class="fitMessage"></div>
           
           </div>
             <div class="message-title-count">
@@ -36,8 +37,13 @@
         </h4>
         
        <div class="receiveMessageList">
+       
+        <div th:if="${selectall.size()} == 0" class="noMessage">
+          <div class="printNoMessage">받은 메시지가 없습니다</div>
+        </div>
         <!-- 받은쪽지함 리스트 -->
         <div th:each="all : ${selectall}">
+        
           <div class="message2">
             <span class="hidden" th:text="${all.id}"></span>
 
@@ -66,6 +72,10 @@
         
         <!-- 내가 보낸 쪽지함 리스트 -->
         <div class="senderMessageList">
+           <div th:if="${sendMessage.size()} == 0" class="noSendMessage">
+          <div class="printNoSendMessage">보낸 메시지가 없습니다</div>
+        </div>
+        
          <div th:each="sendMessage : ${sendMessage}">
           <div class="message3">
             <span class="hidden" th:text="${sendMessage.id}"></span>
@@ -169,6 +179,7 @@
     
     
    	$(".rMessage").click(function(event) {
+   	 $(".fitMessage").empty();  
    	$(".senderMessageList").css("display", "none");
    	$(".receiveMessageList").css("display", "block");
    	$(".message-title-count").css("display", "block");
@@ -179,6 +190,7 @@
    	});
    	
    	$(".sMessage").click(function(event) {
+   	$(".fitMessage").html("<div class='fitMargin'>&nbsp;</div>");
    	$(".receiveMessageList").css("display", "none"); // 메시지 리스트 제거
    	$(".senderMessageList").css("display", "block"); // 보낸사람 리스트 보여주기
    	$(".message-title-count").css("display", "none"); // 카운트 안보여주기
