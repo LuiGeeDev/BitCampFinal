@@ -1,18 +1,24 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
-<head>
-<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-<link rel="stylesheet" th:href="@{/css/stack/content.css}" />
-</head>
-<body>
-  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
-  <div class="main" th:fragment="main">
-    <div class="title">
-      <h3>스택게시판</h3>
-      <div class="spinner-border text-warning spin-where" role="status"
-        id="spinner">
-        <span class="sr-only">Loading...</span>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+    <link rel="stylesheet" th:href="@{/css/stack/content.css}" />
+  </head>
+  <body>
+    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+    <div class="main" th:fragment="main">
+      <div class="title">
+        <h3>스택게시판</h3>
+        <div
+          class="spinner-border text-warning spin-where"
+          role="status"
+          id="spinner"
+        >
+          <span class="sr-only">Loading...</span>
+        </div>
       </div>
       <!-- 게시물컨텐트 -->
       <hr />
@@ -53,46 +59,48 @@
           </td>
         </tr>
         <tr>
-          <td colspan="3" class="tdtitle"><span
-            th:text="${stackcontent.title}"></span></td>
+          <td colspan="3" class="tdtitle">
+            <span th:text="${stackcontent.title}"></span>
+          </td>
           <td class="bookmarkRow">
-          
-            <button class="btn btn-outline-primary btn-sm bookmarkSpan"
-              th:classappend="${scrapCount} == 1 ? 'scrapCompletion'"
-              id="bookmarkButton"
-              >
-              <span class="bookmarkLabel"
-              id="bookmarkLabel"
-              >북마크</span> <i
-                class="fas fa-book bookmarkIcon"
-                id="bookmarkIcon"
-                ></i>
-            </button>
-            
-          
+          <button class="btn btn-outline-primary btn-sm bookmarkSpan"
+            th:classappend="${scrapCount} == 1 ? 'scrapCompletion'"
+            id="bookmarkButton"
+            >
+            <span class="bookmarkLabel"
+            id="bookmarkLabel"
+            >북마크</span> <i
+              class="fas fa-book bookmarkIcon"
+              id="bookmarkIcon"
+              ></i>
+          </button>
           </td>
         </tr>
         <tr>
-          <td colspan="4" class="tdcontent"><span
-            th:utext="${stackcontent.content}"> </span>
-            <div class="votecountalign">
-              <button type="button" id="voteButton"
-                class="btn btn-outline-primary btn-sm voteSpan"
+          <td colspan="4" class="tdcontent">
+            <span th:utext="${stackcontent.content}"> </span>
+          <div class="votecountalign">
+            <button type="button" id="voteButton"
+              class="btn btn-outline-primary btn-sm voteSpan"
+              th:classappend="${voteCount} == 1 ? 'voted'"
+              >
+              <span><i class="far fa-thumbs-up" id="thumbIcon"
+                th:classappend="${voteCount} == 1 ? 'voted'"></i></span><span
+                class="votecount-font" id="voteText"
                 th:classappend="${voteCount} == 1 ? 'voted'"
                 >
-                <span><i class="far fa-thumbs-up" id="thumbIcon"
-                  th:classappend="${voteCount} == 1 ? 'voted'"></i></span><span
-                  class="votecount-font" id="voteText"
-                  th:classappend="${voteCount} == 1 ? 'voted'"
-                  >
-                  [[${stackcontent.vote_count}]]</span>
-              </button>
-            </div></td>
+                [[${stackcontent.vote_count}]]</span>
+            </button>
+          </div>
+          </td>
         </tr>
         <tr>
-          <td class="td8"><img
-            th:if="${stackcontent.writer.profile_photo}!=null"
-            th:src="@{${list.writer.profile_photo}}" id="profileimg2" />
+          <td class="td5">
+            <img
+              th:if="${stackcontent.writer.profile_photo}!=null"
+              th:src="@{${stackcontent.writer.profile_photo}}"
+              id="profileimg1"
+            />
           </td>
           <td colspan="3" class="td4">
             <span class="stackWriterNameForm">
@@ -117,91 +125,209 @@
               <span th:text="${stackcontent.view_count}"></span>view
             </p>
           </td>
-          <td class="td7"></td>
-        </tr>
-        <tr>
-          <td colspan="3" class="td11">[[${list.content}]]</td>
-        </tr>
-        <tr>
-          <td colspan="3" class="td6"><span
-            th:if="${stackcontent.username}==${user.username} and ${stackcontent.option.adopted_answer==0}"
-            class="checkButton"><a
-              th:href="@{/stack/chooseanswer(article_id=${stackcontent.id},comment_id=${list.id})}"
-              style="color: black;"> 채택 <i
-                class="far fa-check-circle"></i></a></span></td>
         </tr>
       </table>
-    </div>
 
-    <!-- 모달이 시작 -->
-    <div class="modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header messageHeader">
-            <h5 class="modal-title messageTitle">쪽지보내기</h5>
-            <span class="toForm"> <span class="messageTo">To</span>
-              <span class="messageReceiveName"></span>
+      <!-- 댓글insert -->
+      <table>
+        <tr>
+          <td class="comtitle" colspan="4">
+            총 [<span
+              class="commentPlus"
+              th:text="${stackcontent.commentlist.size()}"
+            ></span
+            >]개의 답변
+          </td>
+        </tr>
+        <tr>
+          <td class="ctd1" colspan="4">
+            <textarea name="content" class="comtext"></textarea> <br />
+            <input
+              type="submit"
+              class="btn btn-primary btnalign"
+              value="등록"
+            />
+          </td>
+        </tr>
+      </table>
+
+      <!-- 댓글목록 -->
+      <!-- 채택된 답변 -->
+      <table
+        th:unless="${stackcontent.option.adopted_answer==0}"
+        class="answerWrapper"
+      >
+        <tr>
+          <td class="td8">
+            <img
+              th:if="${adoptedanswer.writer.profile_photo}!=null"
+              th:src="@{${adoptedanswer.writer.profile_photo}}"
+              id="profileimg2"
+            />
+          </td>
+          <td class="td10" colspan="2">
+            <span class="answer-name">
+              <b>[[${adoptedanswer.writer.name}]] [채택된 답변] </b
+              ><i class="fas fa-crown answer-icon"></i>
             </span>
-            <button type="button" class="close" data-dismiss="modal"
-              aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <textarea class="messageForm" id="messageText"></textarea>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary submitMessage">
-              전송</button>
-            <button type="button"
-              class="btn btn-secondary messageCancle"
-              data-dismiss="modal">취소</button>
+            <br />
+            <span
+              class="commentCalender"
+              id="answertime"
+              th:text="${#temporals.format(adoptedanswer.timeLocal, 'yyyy-MM-dd HH:mm')}"
+            ></span>
+            <!-- <span class="commentCalender"
+            th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span> -->
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3" class="td9">[[${adoptedanswer.content}]]</td>
+        </tr>
+      </table>
+
+      <!-- 일반 답변 -->
+      <div class="stack-wrapper">
+        <table
+          th:if="${stackcontent.commentlist.size()!=0}"
+          class="iteration"
+          th:each="list : ${stackcontent.commentlist}"
+        >
+          <tr>
+            <td class="td8">
+              <img
+                th:if="${stackcontent.writer.profile_photo}!=null"
+                th:src="@{${list.writer.profile_photo}}"
+                id="profileimg2"
+              />
+            </td>
+            <td class="comment-writer">
+              <span
+                class="commentWriterName"
+                th:classappend="${list.writer.name == user.name} ? 'my-comment-name'"
+              >
+                [[${list.writer.name}]]
+              </span>
+              <a
+                th:if="${list.id != stackcontent.option.adopted_answer and (list.username == user.username or user.role == 'MANAGER')}"
+                th:href="@{/stack/commentdelete(id=${list.id})}"
+                ><i class="fas fa-trash-alt stackIcon"></i>
+              </a>
+              <span
+                class="hidden messageReceiverId"
+                th:text="${list.username}"
+              ></span>
+              <br />
+              <span
+                class="commentCalender"
+                th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"
+              ></span>
+            </td>
+            <td class="td7"></td>
+          </tr>
+          <tr>
+            <td colspan="3" class="td11">[[${list.content}]]</td>
+          </tr>
+          <tr>
+            <td colspan="3" class="td6">
+              <span
+                th:if="${stackcontent.username}==${user.username} and ${stackcontent.option.adopted_answer==0}"
+                class="checkButton"
+                ><a
+                  th:href="@{/stack/chooseanswer(article_id=${stackcontent.id},comment_id=${list.id})}"
+                  style="color: black;"
+                >
+                  채택 <i class="far fa-check-circle"></i></a
+              ></span>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- 모달이 시작 -->
+      <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header messageHeader">
+              <h5 class="modal-title messageTitle">쪽지보내기</h5>
+              <span class="toForm">
+                <span class="messageTo">To</span>
+                <span class="messageReceiveName"></span>
+              </span>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <textarea class="messageForm" id="messageText"></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary submitMessage">
+                전송
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary messageCancle"
+                data-dismiss="modal"
+              >
+                취소
+              </button>
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- 모달이 끝 -->
     </div>
-    <!-- 모달이 끝 -->
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-  <script th:inline="javascript">
-        $(document).ready(function() {
-
-          $("#imgp2").click(function(){
-            sendVoteNotice([[${user.name}]], [[${stackcontent.username}]], "/stack/content?id="+[[${stackcontent.id}]]);
-          })
-          $("#spinner").hide();
-        }).ajaxStart(function() {
-          $("#spinner").show();
-        }).ajaxStop(function() {
-          $("#spinner").hide();
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script th:inline="javascript">
+      $(document).ready(function() {
+        $("#imgp2").click(function(){
+          sendVoteNotice([[${user.name}]], [[${stackcontent.username}]], "/stack/content?id="+[[${stackcontent.id}]]);
         });
-        
-
-       
-
+        $("#spinner").hide();
+      }).ajaxStart(function() {
+        $("#spinner").show();
+      }).ajaxStop(function() {
+        $("#spinner").hide();
+      });
+      /* 메시지 보내는 함수 */
+      function replyMessage(messageText, receiverId) {
+        $.ajax({
+          url: "/ajax/message/reply",
+          type: "POST",
+          data: {
+            content: messageText,
+            receiver_username: receiverId
+          }
+        }).done(function() {
+          $(".modal").modal("hide");
+          Swal.fire({
+            type: 'success',
+            title: '전송되었습니다',
             showConfirmButton: false,
             timer: 1500
           });
           sendMessageNotice([[${user.name}]], receiverId);
         });
       }
-
       /* 메시지 보내는 함수 */
       //동기 메시지보내기 처리 시작
       $(".messageCancle").click(function() {
         $("#messageText").val("");
       });
-
       $(".commentWriterName").unbind("click");
       $(".commentWriterName").click(function(event) {
         const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
         const messageReceiveName = $(event.currentTarget).text();
         $(".messageReceiveName").text(messageReceiveName);
-
         if ([[${user.username}]] != receiverId) {
           $(".modal").modal("show");
         }
-
         $(".submitMessage").unbind("click");
         $(".submitMessage").click(function() {
         const messageText = $("#messageText").val();
@@ -216,20 +342,16 @@
         replyMessage(messageText, receiverId);
         });
       });
-
       // 동기 메시지보내기 처리 끝
-
       // 글쓴이 동기 메시지보내기 처리 시작
       $(".stackWriterNameForm").unbind("click");
       $(".stackWriterNameForm").click(function(event) {
         const receiverId = $(event.currentTarget).siblings(".writerReceiverId").text();
         const messageReceiveName = $(event.currentTarget).text();
         $(".messageReceiveName").text(messageReceiveName);
-
         if ([[${user.username}]] != receiverId) {
           $(".modal").modal("show");
         }
-
         $(".submitMessage").unbind("click");
         $(".submitMessage").click(function() {
           const messageText = $("#messageText").val();
@@ -244,7 +366,6 @@
           replyMessage(messageText, receiverId);
         });
       });
-
       // 글쓴이 동기 메시지보내기 처리 끝
       const currentPosition = parseInt($("#floatMenu").css("top"));
       $(window).scroll(function() {
@@ -253,10 +374,8 @@
           "top" : position + currentPosition + "px"
         }, 1500);
       });
-
       $(".btnalign").click(function() {
         const valueCheck = $(".comtext").val();
-
         if (valueCheck.trim() === "" || valueCheck === null) {
           Swal.fire({
             type: 'error',
@@ -264,16 +383,13 @@
           })
           return;
         }
-
         const articleId = [[${stackcontent.id}]];
         const commentContent = $(".comtext").val();
         const username = [[${user.username}]];
-
         const formData = new FormData();
         formData.append("article_id", articleId);
         formData.append("content", commentContent);
         formData.append("username", username);
-
         $.ajax({
           url: "/stack/commentwrite",
           type: "post",
@@ -291,19 +407,16 @@
               const commentId = item.id;
               const articleId = item.article_id;
               const profiel_photo = item.writer.profile_photo;
-
               let minutes = date.getMinutes();
               minutes = (minutes < 10) ? "0" + minutes : minutes;
               let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
               hours = hours < 10 ? "0" +  hours : hours;
               let newHours = date.getHours();
               newHours = (newHours < 10) ? "0" + newHours : newHours;
-
               let getdate = date.getDate();
               getdate = (getdate < 10) ? "0" + getdate : getdate;
               let getmonth = date.getMonth() + 1;
               getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
-
               const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ newHours +`:` + minutes;
               let equalName = null;
               if (item.id != [[${stackcontent.option.adopted_answer}]] && (item.username == [[${user.username}]] || [[${user.role}]] == 'MANAGER')) {
@@ -311,9 +424,7 @@
               } else {
                 equalName = "";
               }
-
               let createText = null;
-
               if ([[${stackcontent.option.adopted_answer}]] == 0 && [[${user.username}]] == [[${stackcontent.username}]] ) {
                // 채택이 되어있는 글이라면
                createText = "채택" + "&nbsp;<i class='far fa-check-circle'></i></a>";
@@ -322,15 +433,12 @@
                 // 0이면 else문을 탄다
                //답변이 되어있는 글이 아니라면
               }
-
               let spanClass;
               if (username === [[${user.name}]]) {
                 spanClass = "<span class='commentWriterName my-comment-name'>";
               } else {
                 spanClass = "<span class='commentWriterName'>";
               }
-
-
               let html = "<table class='iteration'><tbody>"+
                          "<tr><td class='td8'><img if='"+ profiel_photo +"!=null' src='"+ profiel_photo +"' id='profileimg2'/></td>" +
                          "<td class='comment-writer'>" + spanClass +  username + "</span>"+
@@ -345,13 +453,10 @@
                          "</td></tr></tbody></table>";
               $(".stack-wrapper").append(html);
             });
-
             // 비동기 메시지보내기 처리 시작
             $(".messageCancle").click(function() {
               $("#messageText").val("");
             });
-
-
             $(".commentWriterName").unbind("click");
             $(".commentWriterName").click(function(event) {
               const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
@@ -374,42 +479,15 @@
                replyMessage(messageText, receiverId);
               });
             });
-
             // 비동기 메시지보내기 처리 끝
             if ([[${user.username}]] === [[${stackcontent.username}]]) {
               sendCommentNotice([[${user.name}]], [[${stackcontent.username}]], "/stack/content?id="+[[${stackcontent.id}]]);
             }
-
             const count = $(".commentPlus");
             count.text(Number(count.text()) +1);
           }
         });
       });
-
-            
-            //북마크!!
-            
-            $('#bookmarkButton').click(function(data){
-              $.ajax({
-                url:"/ajax/bookmark",
-                data:{
-                  article_id:[[${stackcontent.id}]],
-                },
-                method: "post",
-                success: function(data) {
-                  if(data.checkStatus == 1) {
-                    $("#bookmarkButton").addClass("scrapCompletion");
-                  } else {
-                    $("#bookmarkButton").removeClass("scrapCompletion");
-                  }
-                }
-                
-              });
-            });
-            
-       
-            
-
       $(".deleteBtn").unbind("click");
       $(".deleteBtn").click(function(event) {
         Swal.fire({
@@ -433,7 +511,6 @@
           }
         })
       });
-
       $( document ).ready( function() {
         $( window ).scroll( function() {
           if ( $( this ).scrollTop() > 200 ) {
@@ -442,33 +519,59 @@
             $( '.top' ).fadeOut();
           }
         });
-
         $( '.top' ).click( function() {
           $( 'html, body' ).animate( { scrollTop : 0 }, 100 );
           return false;
         });
       });
-
+      
+      
+      
       $('#voteButton').click(function(data){
         $.ajax({
           url:"/ajax/vote",
-           data:{
+          data:{
             articleId: [[${stackcontent.id}]],
-           },
+          },
           method: "post",
           success: function(data) {
-           $("#voteText").html(data.countVote);
+            $("#voteText").html(data.countVote);
             if (data.checkStatus == 1) {
               $('#thumbIcon').addClass("voted");
+              $('#voteButton').addClass("voted");
+              $('#voteText').addClass("voted");
               if ([[${user.username}]] !== [[${stackcontent.username}]]) {
                 sendVoteNotice([[${user.name}]], [[${stackcontent.username}]], "/stack/content?id="+[[${stackcontent.id}]]);
               }
             } else {
               $('#thumbIcon').removeClass("voted");
+              $('#voteButton').removeClass("voted");
+              $('#voteText').removeClass("voted");
             }
           }
         });
       });
+      
+      
+      //북마크!!
+      
+      $('#bookmarkButton').click(function(data){
+        $.ajax({
+          url:"/ajax/bookmark",
+          data:{
+            article_id:[[${stackcontent.id}]],
+          },
+          method: "post",
+          success: function(data) {
+            if(data.checkStatus == 1) {
+              $("#bookmarkButton").addClass("scrapCompletion");
+            } else {
+              $("#bookmarkButton").removeClass("scrapCompletion");
+            }
+          }
+          
+        });
+      });
     </script>
-</body>
+  </body>
 </html>
