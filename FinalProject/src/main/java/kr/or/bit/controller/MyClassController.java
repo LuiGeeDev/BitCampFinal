@@ -187,6 +187,8 @@ public class MyClassController {
     }
     System.out.println("채택답변" + qna.getAdopted_answer());
     model.addAttribute("qnacontent", article);
+    model.addAttribute("voteStatus", articleVoteService.selectVote(article.getId(), Helper.userName()));
+    
     articleUpdateService.viewCount(article);
     return "myclass/qna/content";
   }

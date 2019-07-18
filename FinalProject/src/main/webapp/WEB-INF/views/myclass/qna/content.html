@@ -45,13 +45,13 @@
         <td colspan="4" class="tdcontent"><span
           th:utext="${qnacontent.content}"> </span>
           <div class="votecountalign">
-            <a th:href="@{/myclass/qna/plusvote(id=${qnacontent.id})}">
-              <span class="voteSpan"> <span> <i
-                  class="far fa-thumbs-up votecount"></i>
-              </span> <span class="votecount-font">
+            <button type="button" id="voteButton">
+              <span class="voteSpan"> <span> 
+              <i class="far fa-thumbs-up votecount" id="thumbIcon" th:classappend="${voteStatus} == 1 ? 'voted'"></i>
+              </span> <span class="votecount-font" id="votecount-font">
                   [[${qnacontent.vote_count}]] </span>
             </span>
-            </a>
+            </button>
           </div></td>
       </tr>
       <tr>
@@ -81,8 +81,8 @@
     <!-- 댓글insert -->
     <table th:if="${user.role == 'TEACHER'}">
       <tr>
-        <td class="comtitle" colspan="4">총 [<span
-          class="commentPlus" th:text="${qnacontent.commentlist.size()}"></span>]개의
+        <td class="comtitle" colspan="4">총 <span
+          class="commentPlus" th:text="${qnacontent.commentlist.size()}"></span>개의
           답변
         </td>
       </tr>
@@ -176,7 +176,26 @@
     $("#spinner").hide();
   });
   
-  
+  $('#voteButton').click(function(data){
+    $.ajax({
+      url:"/ajax/vote",
+      data:{
+        articleId: [[${qnacontent.id}]],
+      },
+      method: "post",
+      success: function(data) {
+        $("#votecount-font").text(data.countVote);
+        if (data.checkStatus == 1) {
+          $('#thumbIcon').addClass("voted");
+          if ([[${user.username}]] !== [[${qnacontent.username}]]) {
+            sendVoteNotice([[${user.name}]], [[${qnacontent.username}]], "/video/detail?id="+[[${qnacontent.id}]]);
+          }
+        } else {
+          $('#thumbIcon').removeClass("voted");
+        }
+      }
+    });
+  });
 
 	/* 메시지 보내는 함수 */
  function replyMessage(messageText, receiverId) {
