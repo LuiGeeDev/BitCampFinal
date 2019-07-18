@@ -24,7 +24,11 @@
         <div class="detail-head">
           <span class="detail-title" th:text="${article.title}"></span>
           <div class="detail-subtitle">
-            <span th:text="${article.writer.name}"></span>&nbsp;| &nbsp;
+          <span class="generalWriterForm">
+            <span class="generalWriter"
+            th:text="${article.writer.name}"
+            th:classappend="${article.writer.name == user.name} ? 'my-comment-name'">
+            </span></span>&nbsp;| &nbsp;
             <span
               th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd')}"
             ></span
@@ -46,6 +50,7 @@
               id="comment-boardID"
               th:text="${board.id}"
             ></span>
+            <span class="hidden writerReceiverId" th:text="${article.username}"></span>
           </div>
         </div>
         <div class="detail-content-parent">
@@ -271,7 +276,38 @@
 
       // 동기 메시지보내기 처리 끝
 
+     // 글쓴이 동기 메시지보내기 처리 시작
+    $(".generalWriterForm").unbind("click");
+    $(".generalWriterForm").click(function(event) {
+	  const receiverId = $(event.currentTarget).siblings(".writerReceiverId").text();
+      const messageReceiveName = $(event.currentTarget).children(".generalWriter").text();
+      $(".messageReceiveName").text(messageReceiveName);
+      if([[${user.username}]] != receiverId) {
+        $(".modal").modal("show");
+      }
 
+      $(".submitMessage").unbind("click");
+      $(".submitMessage").click(function() {
+        const messageText = $("#messageText").val();
+       	if (messageText.trim() === "" || messageText === null) {
+      	  Swal.fire({
+      	    type: 'error',
+      	    text: '다시 입력해주세요 !!',
+      	  })
+      	  return;
+      	}
+        $("#messageText").val("");
+     	replyMessage(messageText, receiverId);
+      });
+    });
+
+    // 글쓴이 동기 메시지보내기 처리 끝
+      
+      
+      
+      
+      
+      
       $("#deletebtn").click(function(event) {
         let articleId = [[${article.id}]];
         event.preventDefault();

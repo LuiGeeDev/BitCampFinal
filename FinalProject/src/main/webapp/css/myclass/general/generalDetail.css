@@ -193,7 +193,7 @@ body {
   font-weight:bold;
 }
 
-.my-comment-name {
+.my-comment-name, .writerName {
   cursor: default;
 }
 
@@ -209,5 +209,13 @@ body {
 
 .messageHeader {
   height:40px;
+}
+
+.generalWriterForm {
+  cursor:pointer;
+}
+
+.writerReceiverId {
+  display:none;
 }
 

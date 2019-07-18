@@ -178,7 +178,6 @@
   
   
 
-
 	/* 메시지 보내는 함수 */
  function replyMessage(messageText, receiverId) {
     $.ajax({
@@ -235,7 +234,7 @@
   
     
     
-      //동기 메시지보내기 처리 시작
+      // 글쓴이 동기 메시지보내기 처리 시작
     $(".pwriter").unbind("click");
     $(".pwriter").click(function(event) {
 	  const receiverId = $(event.currentTarget).children(".writerReceiverId").text();
@@ -260,7 +259,7 @@
       });
     });
 
-    // 동기 메시지보내기 처리 끝
+    // 글쓴이 동기 메시지보내기 처리 끝
  
   
   
@@ -333,11 +332,16 @@
                 equalName = "";
               }
               
-     
+              let spanClass;
+              if (username === [[${user.name}]]) {
+                spanClass = "<span class='commentWriterName my-comment-name'>";
+              } else {
+                spanClass = "<span class='commentWriterName'>";
+              }
 
               let html = "<table class='iteration commentWrapper'><tbody>"+
               			 "<tr><td class='td8'><img if='"+ profiel_photo +"!=null' src='"+ profiel_photo +"' id='profileimg2'/></td>" +
-                         "<td class='comment-writer'>" + username + "&nbsp;<a href='/myclass/qna/commentdelete?id=" + commentId + "'" + ">" + equalName +"</a>" + 
+                         "<td class='comment-writer'><span class='commentWriterNameForm'>"+ spanClass + username + "</span>" + "&nbsp;<a href='/myclass/qna/commentdelete?id=" + commentId + "'" + ">" + equalName +"</a>" + 
                          "<br>" +
                          "<span class='commentCalender'>" + timedate + "</span></td>" +
                          "<td class='td7'></td></tr>" + 
