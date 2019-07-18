@@ -118,29 +118,30 @@ public class MyClassController {
   public String qnaPage(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model)
       throws Exception {
     QnaDao qnaDao = sqlSession.getMapper(QnaDao.class);
-    StackDao stackDao = sqlSession.getMapper(StackDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     String username = Helper.userName();
     Member member = memberDao.selectMemberByUsername(username);
+    int course_id = member.getCourse_id();
     List<Article> qnaList = null;
     Pager pager = null;
     if (boardSearch != null) {
       if (criteria.equals("titleOrContent")) {
-        pager = new Pager(page, qnaDao.countQnaArticleByTitleOrContent(boardSearch));
+        pager = new Pager(page, qnaDao.countQnaArticleByTitleOrContent(boardSearch, course_id));
       } else if (criteria.equals("title")) {
-        pager = new Pager(page, qnaDao.countQnaArticleByTitle(boardSearch));
+        pager = new Pager(page, qnaDao.countQnaArticleByTitle(boardSearch, course_id));
       } else {
-        pager = new Pager(page, qnaDao.countQnaArticleByWriter(boardSearch));
+        pager = new Pager(page, qnaDao.countQnaArticleByWriter(boardSearch, course_id));
       }
-      qnaList = articleService.selectQnaArticlesByboardSearch(pager, boardSearch, criteria);
+      qnaList = articleService.selectQnaArticlesByboardSearch(pager, boardSearch, criteria, course_id);
       model.addAttribute("boardSearch", boardSearch);
     } else {
-      pager = new Pager(page, stackDao.countAllStackArticle());
-      qnaList = articleService.selectAllQnaArticles(pager);
+      pager = new Pager(page, qnaDao.countAllQnaArticle(course_id));
+      qnaList = articleService.selectAllQnaArticles(pager, course_id);
     }
     model.addAttribute("qnaList", qnaList);
     model.addAttribute("pager", pager);
     model.addAttribute("page", page);
+    model.addAttribute("criteria",criteria);
     return "myclass/qna/home";
   }
 
@@ -154,6 +155,8 @@ public class MyClassController {
 
   @PostMapping("/qna/write")
   public String writeOkQna(Article article, String tag) {
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     List<String> tagList = new ArrayList<>();
     String[] splitStr = tag.split("#");
     for (int i = 1; i < splitStr.length; i++) {
@@ -162,7 +165,7 @@ public class MyClassController {
     List<Tag> tags = tagService.selectTagByName(tagList);
     article.setTags(tags);
     article.setUsername(Helper.userName());
-    article.setBoard_id(6);
+    article.setBoard_id(boardDao.selectBoardByCourseId(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id(), 5).getId());
     articleInsertService.writeQnaArticle(article, tagList);
     return "redirect:/myclass/qna";
   }
@@ -200,8 +203,10 @@ public class MyClassController {
 
   @PostMapping("/qna/edit")
   public String editQnaArticle(Article article) {
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     article.setUsername(Helper.userName());
-    article.setBoard_id(6);
+    article.setBoard_id(boardDao.selectBoardByCourseId(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id(), 5).getId());
     articleUpdateService.updateArticle(article);
     return "redirect:/myclass/qna";
   }

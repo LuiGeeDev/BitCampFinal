@@ -234,12 +234,12 @@ public class ArticleService {
   }
   
   
-  public List<Article> selectAllQnaArticles(Pager pager) {
+  public List<Article> selectAllQnaArticles(Pager pager, int course_id) {
     StackDao stackdao = sqlSession.getMapper(StackDao.class);
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     QnaDao qnaDao = sqlSession.getMapper(QnaDao.class);
-    List<Article> articlelist = qnaDao.selectAllQnaArticle(pager);
+    List<Article> articlelist = qnaDao.selectAllQnaArticle(pager, course_id);
     
     for (Article article : articlelist) {
       ArticleOption option = null;
@@ -258,7 +258,7 @@ public class ArticleService {
     return articlelist;
   }
   
-  public List<Article> selectQnaArticlesByboardSearch(Pager pager,String boardSearch,String criteria) {
+  public List<Article> selectQnaArticlesByboardSearch(Pager pager,String boardSearch,String criteria,int course_id) {
     StackDao stackdao = sqlSession.getMapper(StackDao.class);
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
@@ -266,14 +266,14 @@ public class ArticleService {
     List<Article> articleList = null;
     
     if(criteria.equals("titleOrContent")) {
-      articleList = qnaDao.selectQnaArticleByTitleOrContent(pager,boardSearch);
+      articleList = qnaDao.selectQnaArticleByTitleOrContent(pager,boardSearch,course_id);
     }else if(criteria.equals("title")) {
-      articleList = qnaDao.selectQnaArticleByTitle(pager,boardSearch);
+      articleList = qnaDao.selectQnaArticleByTitle(pager,boardSearch,course_id);
     }else if(criteria.equals("Tag")) {
-      articleList = qnaDao.selectQnaArticleByTag(pager, boardSearch);
+      articleList = qnaDao.selectQnaArticleByTag(pager, boardSearch,course_id);
     }
     else {
-      articleList = qnaDao.selectQnaArticleByWriter(pager,boardSearch);
+      articleList = qnaDao.selectQnaArticleByWriter(pager,boardSearch,course_id);
     }
     
     for (Article article : articleList) {
