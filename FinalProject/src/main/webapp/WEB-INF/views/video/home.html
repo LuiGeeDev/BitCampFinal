@@ -1,93 +1,124 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
-<head>
-<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-<link rel="stylesheet" th:href="@{/css/video/home.css}" />
-</head>
-<body>
-  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
-  <div class="main" th:fragment="main">
-    <div id="title">인터넷강의 게시판</div>
-    <hr />
-    <div class="row">
-      <div id="boardWrapper">
-        <div id="board">
-          <th:block th:each="video : ${videoList}">
-            <a th:href="@{/video/detail(id=${video.id})}"
-              th:if="${video.enable == 1}">
-              <div class="video-board">
-                <div class="thumbnail">
-                  <img class="thumbnail-image"
-                    src="https://img.youtube.com/vi/tZooW6PritE/maxresdefault.jpg"
-                    th:src="'https://img.youtube.com/vi/' + ${video.option.video_id} + '/maxresdefault.jpg'" />
-                </div>
-                <div class="video-detail">
-                  <div class="title-wrapper">
-                    <span class="video-title" th:text="${video.title}">
-                      [생활코딩] HTML5 기초강좌 </span> <span class="comment-count"
-                      th:text="${video.commentlist.size()}">5</span><br />
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+    <link rel="stylesheet" th:href="@{/css/video/home.css}" />
+  </head>
+  <body>
+    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+    <div class="main" th:fragment="main">
+      <div class="wrapper">
+        <div id="title">인터넷강의 게시판</div>
+        <div class="row">
+          <div id="boardWrapper">
+            <div id="board">
+              <th:block th:each="video : ${videoList}">
+                <a
+                  th:href="@{/video/detail(id=${video.id})}"
+                  th:if="${video.enable == 1}"
+                >
+                  <div class="video-board">
+                    <div class="thumbnail">
+                      <img
+                        class="thumbnail-image"
+                        src="https://img.youtube.com/vi/tZooW6PritE/maxresdefault.jpg"
+                        th:src="'https://img.youtube.com/vi/' + ${video.option.video_id} + '/maxresdefault.jpg'"
+                      />
+                    </div>
+                    <div class="video-detail">
+                      <div class="title-wrapper">
+                        <span class="video-title" th:text="${video.title}">
+                          [생활코딩] HTML5 기초강좌
+                        </span>
+                        <span
+                          class="comment-count"
+                          th:text="${video.commentlist.size()}"
+                          >5</span
+                        ><br />
+                      </div>
+                      <div class="video-content" th:utext="${video.content}">
+                        생활코딩 Egoing님과 함께하는 HTML5 기초강좌 ...</div
+                      >
+                      <div class="video-view-count">
+                        <span
+                          th:text="${#temporals.format(video.timeLocal, 'yyyy-MM-dd')}"
+                          >22시간 전</span
+                        >
+                        | 조회 <span th:text="${video.view_count}">43</span> |
+                        <span th:text="${video.writer.name}">매니저</span> |
+                        <span th:text="${video.vote_count}"></span>
+                      </div>
+                    </div>
                   </div>
-                  <div class="video-content" th:utext="${video.content}">
-                    생활코딩 Egoing님과 함께하는 HTML5 기초강좌 ...</div>
-                  <div class="video-view-count">
-                    <span
-                      th:text="${#temporals.format(video.timeLocal, 'yyyy-MM-dd')}">22시간
-                      전</span> | 조회 <span th:text="${video.view_count}">43</span>
-                    | <span th:text="${video.writer.name}">매니저</span> |
-                    <span th:text="${video.vote_count}"></span>
-                  </div>
-                </div>
-              </div>
-            </a>
-            <a th:href="@{/video/detail(id=${video.id})}"
-              th:if="${video.enable == 0}"
-              sec:authorize="hasRole('MANAGER')">
-              <div class="video-board article-disabled">
-                <div class="thumbnail">
-                  <img class="thumbnail-image"
-                    src="https://img.youtube.com/vi/tZooW6PritE/maxresdefault.jpg"
-                    th:src="'https://img.youtube.com/vi/' + ${video.option.video_id} + '/maxresdefault.jpg'" />
-                </div>
-                <div class="video-detail">
-                  <div class="title-wrapper">
-                    <span class="video-title" th:text="${video.title}">
-                      [생활코딩] HTML5 기초강좌 </span> <span class="comment-count"
-                      th:text="${video.commentlist.size()}">5</span><br />
-                  </div>
+                </a>
+                <a
+                  th:href="@{/video/detail(id=${video.id})}"
+                  th:if="${video.enable == 0}"
+                  sec:authorize="hasRole('MANAGER')"
+                >
+                  <div class="video-board article-disabled">
+                    <div class="thumbnail">
+                      <img
+                        class="thumbnail-image"
+                        src="https://img.youtube.com/vi/tZooW6PritE/maxresdefault.jpg"
+                        th:src="'https://img.youtube.com/vi/' + ${video.option.video_id} + '/maxresdefault.jpg'"
+                      />
+                    </div>
+                    <div class="video-detail">
+                      <div class="title-wrapper">
+                        <span class="video-title" th:text="${video.title}">
+                          [생활코딩] HTML5 기초강좌
+                        </span>
+                        <span
+                          class="comment-count"
+                          th:text="${video.commentlist.size()}"
+                          >5</span
+                        ><br />
+                      </div>
 
-                  <div class="video-content" th:utext="${video.content}">
-                    생활코딩 Egoing님과 함께하는 HTML5 기초강좌 ...</div>
-                  <div class="video-view-count">
-                    <span
-                      th:text="${#temporals.format(video.timeLocal, 'yyyy-MM-dd')}">22시간
-                      전</span> | 조회 <span th:text="${video.view_count}">43</span>
-                    | <span th:text="${video.writer.name}">매니저</span> |
-                    <span th:text="${video.vote_count}"></span>
+                      <div class="video-content" th:utext="${video.content}">
+                        생활코딩 Egoing님과 함께하는 HTML5 기초강좌 ...</div
+                      >
+                      <div class="video-view-count">
+                        <span
+                          th:text="${#temporals.format(video.timeLocal, 'yyyy-MM-dd')}"
+                          >22시간 전</span
+                        >
+                        | 조회 <span th:text="${video.view_count}">43</span> |
+                        <span th:text="${video.writer.name}">매니저</span> |
+                        <span th:text="${video.vote_count}"></span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </a>
-          </th:block>
-        </div>
+                </a>
+              </th:block>
+            </div>
 
-        <div id="buttonWrapper">
-          <a class="btn btn-primary btn-sm" id="writeButton"
-            th:href="@{/video/write}">+</a>
+            <div id="buttonWrapper">
+              <a
+                class="btn btn-primary btn-sm"
+                id="writeButton"
+                th:href="@{/video/write}"
+                >+</a
+              >
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-  <script th:inline="javascript">
+    <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
+    <script th:inline="javascript">
       function getNextArticles() {
         let lastArticleId = [[${videoList[videoList.size() - 1].id}]];
-        
+
         function changeId(id) {
           lastArticleId = id;
         }
-        
+
         return function() {
           $.ajax({
             url: "/ajax/video/scroll",
@@ -104,9 +135,8 @@
           });
         }
       }
-      
+
       function addNewPage(list) {
-        console.log([[${user.role}]]);
         list.forEach(function(article) {
           if (article.enable === 1 || [[${user.role}]] === 'MANAGER') {
             const articleDiv = $(`<a href="/video/detail?id=${article.id}">`);
@@ -119,13 +149,12 @@
             const videoDetail = $(`<div class="video-detail">`);
             const time = article.timeLocal;
             const timeString = `${time.year}-${time.monthValue < 10 ? "0" + time.monthValue : time.monthValue}-${time.dayOfMonth < 10 ? "0" + time.dayOfMonth : time.dayOfMonth}`;
-            console.log(timeString);
-            
+
             videoDetail.append($(`<span class="video-title">${article.title}</span>`))
                        .append($(`<span class="comment-count">${article.commentlist.length}</span>`))
                        .append($(`<div class="video-content">${article.content}</div>`))
                        .append($(`<div class="video-view-count"><span>${timeString}</span> | 조회 <span>${article.view_count}</span> |<span>${article.writer.name}</span></div>`));
-            
+
             videoBoard.append(thumbnail).append(videoDetail);
             articleDiv.append(videoBoard);
 
@@ -133,21 +162,20 @@
           }
         });
       }
-      
+
       const ajax = getNextArticles();
-      
+
       window.addEventListener("scroll", function() {
         if ($(window).scrollTop() + $(window).height() === $(document).height()) {
-          console.log($(window).scrollTop() + $(window).height() === $(document).height());
           ajax();
         }
       });
-      
+
       function formatTime(ms) {
         const time = new Date(ms);
         const timeString = `${time.getHours() <= 12 ? time.getHours() : time.getHours() - 12}:${time.getMinutes() < 10 ? "0" + time.getMinutes() : time.getMinutes()} ${time.getHours() <= 11 ? 'AM' : 'PM'}`;
         return timeString;
       }
     </script>
-</body>
+  </body>
 </html>
