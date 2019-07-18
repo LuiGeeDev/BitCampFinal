@@ -608,7 +608,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
 
   <select id="selectRecentStackbyCourse"
-    resultType="kr.or.bit.Article">
+    resultType="kr.or.bit.model.Article">
     select *
     from article as a
     join member as m on a.username = m.username

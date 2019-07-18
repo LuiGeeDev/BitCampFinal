@@ -251,6 +251,6 @@ public class Article {
         + ", updatedTimeLocal=" + updatedTimeLocal + ", writer=" + writer + ", board_name=" + board_name + ", tags="
         + tags + ", commentlist=" + commentlist + ", commentSize=" + commentSize + ", option=" + option + ", vote="
         + vote + ", votenum=" + votenum + ", vote_count=" + vote_count + ", fileslist=" + fileslist + ", layer=" + layer
-        + ", sibling=" + sibling + ", end_date=" + end_date + "]";
+        + ", sibling=" + sibling +"]";
   }
 }
