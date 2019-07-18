@@ -58,7 +58,6 @@
               <input type="submit" class="btn btn-primary btn-sm" id="homework-submit-button" value="제출">
             </div>
             <input type="hidden" name="page" th:value="${page}">
-            <input type="hidden" th:value="${article.option.end_date}">
           </div>
         </form>
       </div>
@@ -111,9 +110,9 @@
     <script>
       $("#homework-submit-button").click(function(){
         sendReplyNotice([[${user.name}]], [[${article.username}]], "/myclass/homework/detail?id="+[[${article.id}]]+"&page="+[[${page}]]);
-      })
+      });
+      
       $("#delete-btn").click(function(event) {
-        
         Swal.fire({
           title: '정말 삭제하시겠습니까?',
           type: 'warning',
@@ -124,7 +123,6 @@
           cancelButtonText: '아니요'
         }).then((result) => {
           if (result.value) {
-           
             $.ajax({
               url: "/myclass/homework/delete",
               type: "POST",

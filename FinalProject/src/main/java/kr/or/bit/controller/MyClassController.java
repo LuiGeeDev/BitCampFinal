@@ -188,7 +188,7 @@ public class MyClassController {
       comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
       model.addAttribute("adoptedanswer", comment);
     }
-    System.out.println("채택답변" + qna.getAdopted_answer());
+
     model.addAttribute("qnacontent", article);
     model.addAttribute("voteStatus", articleVoteService.selectVote(article.getId(), Helper.userName()));
     
@@ -411,8 +411,10 @@ public class MyClassController {
   }
 
   @PostMapping("/homework/detail")
-  public String submitHomeworkDetail(Article article, Homework homework, MultipartFile file1, MultipartFile file2,
+  public String submitHomeworkDetail(Article article, Homework homework, MultipartFile file1, MultipartFile file2, int page,
       HttpServletRequest request, Model model) {
+    System.out.println(article);
+    System.out.println(homework);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     Member member = memberDao.selectMemberByUsername(Helper.userName());
@@ -427,7 +429,7 @@ public class MyClassController {
     files.add(file2);
     articleInsertService.writeReplyArticle(article, homework, files, request);
     model.addAttribute("boardSearch", request.getParameter("boardSearch"));
-    return "redirect:/myclass/homework/detail?id=" + article.getId() + "&page=" + request.getParameter("page");
+    return "redirect:/myclass/homework/detail?id=" + article.getOriginal_id() + "&page=" + page;
   }
 
   @GetMapping("/homework/write")
@@ -449,7 +451,6 @@ public class MyClassController {
     Homework homework = new Homework();
     homework.setEnd_date(end_date);
     articleInsertService.writeArticle(article, homework, null, request);
-    System.out.println(" article : "+ article.toString());
     Schedule schedule = new Schedule();
     article = articleDao.selectOneArticle(article.getId());
     schedule.setArticle_id(article.getId());
@@ -491,7 +492,6 @@ public class MyClassController {
 
   @PostMapping("/homework/delete")
   public String deleteHomeworkArticle(Article article) {
-    System.out.println(article);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
     article = articleDao.selectOneArticle(article.getId());
@@ -520,7 +520,6 @@ public class MyClassController {
     project.setEndDateLocal(project.getEnd_date().toLocalDate());
     course.setStartDateLocal(course.getStart_date().toLocalDate());
     course.setEndDateLocal(course.getEnd_date().toLocalDate());
-    System.out.println(groups);
     Period ccDay = Period.between(course.getStartDateLocal(), course.getEndDateLocal());
     Period cDay = Period.between(course.getEndDateLocal(), LocalDate.now());
     
@@ -539,12 +538,6 @@ public class MyClassController {
       a.setWriter(memberdao.selectMemberByUsername(a.getUsername()));
       a.setTimeLocal(a.getTime().toLocalDateTime());
     }
-    
-    System.out.println(project);
-    System.out.println(course);
-    System.out.println(homeworkarticle);
-    System.out.println(homeworkarticlere);
-    System.out.println(recentStackArticle);
     
     model.addAttribute("course", course);
     model.addAttribute("project", project);

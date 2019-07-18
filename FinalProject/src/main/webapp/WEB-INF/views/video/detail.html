@@ -59,7 +59,7 @@
               <i
                 class="fas fa-thumbs-up"
                 id="thumbIcon"
-                th:classappend="${voteCount} == 1 ? 'voted'"
+                th:classappend="${voteStatus} == 1 ? 'voted'"
               ></i>
               <span id="voteText" th:utext="${article.vote_count}">0</span>
             </button>

@@ -13,6 +13,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.MessageDao;
 import kr.or.bit.dao.NotificationDao;
+import kr.or.bit.model.Member;
 import kr.or.bit.model.Message;
 import kr.or.bit.model.Notification;
 import kr.or.bit.utils.Helper;
@@ -34,7 +35,10 @@ public class CommonPageInterceptor extends HandlerInterceptorAdapter {
     int unreadNotices = notificationDao.selectAllNewNotification(username).size();
     List<Notification> allNotices = notificationDao.selectAllNotification(username);
     
-    request.setAttribute("user", memberDao.selectMemberByUsername(username));
+    Member user = memberDao.selectMemberByUsername(username);
+    user.setPassword("");
+    
+    request.setAttribute("user", user);
     request.setAttribute("allNotices", allNotices);
     request.setAttribute("unreadMessages", unreadMessages);
     request.setAttribute("unreadNotices", unreadNotices);
