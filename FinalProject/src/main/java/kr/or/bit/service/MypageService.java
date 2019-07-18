@@ -1,6 +1,8 @@
 package kr.or.bit.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +64,27 @@ public class MypageService {
     ScrapDao scrapDao = sqlSession.getMapper(ScrapDao.class);
     return scrapDao.selectOneScrapCount(articleId, username);
   }
+  
+  
+  
+  public Map<String,Object> insertBookmark (int article_id, String username) {
+    Map<String, Object> Scrap = new HashMap<String, Object>();
+    ScrapDao scrapDao = sqlSession.getMapper(ScrapDao.class);
+    int result = scrapDao.selectOneScrapCount(article_id, username);
+    if(result > 0) {
+      scrapDao.deleteScrap(article_id, username);
+      Scrap.put("checkStatus", 0);//체크 했는지 안했는지
+    }else {
+      scrapDao.insertScrap(article_id, username);
+      Scrap.put("checkStatus", 1);
+    }
+    
+    Scrap.put("countScrap",scrapDao.selectOneScrapTotalCount(article_id));
+    return Scrap;
+  }
+  
+  
+  
+  
 
 }
