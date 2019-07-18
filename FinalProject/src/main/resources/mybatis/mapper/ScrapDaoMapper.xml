@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </insert>
   <delete id="deleteScrap">
     DELETE FROM scrap
-    WHERE article_id=#{article_id}
+    WHERE article_id=#{article_id} and username=#{username};
   </delete>
   <select id="selectOneScrap" resultType="kr.or.bit.model.Scrap">
 	SELECT * 
@@ -46,5 +46,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT COUNT(*)
     FROM scrap
 	WHERE article_id=#{article_id} and username=#{username} ;
+  </select>
+  <select id="selectOneScrapTotalCount" resultType="integer">
+    SELECT COUNT(*)
+    FROM scrap
+	WHERE article_id=#{article_id} ;
   </select>
 </mapper>
