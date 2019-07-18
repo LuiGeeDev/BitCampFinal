@@ -76,17 +76,16 @@
           <td colspan="4" class="tdcontent">
             <span th:utext="${stackcontent.content}"> </span>
             <div class="votecountalign">
-              <a th:href="@{/stack/plusvote(id=${stackcontent.id})}">
-                <span class="voteSpan stackIcon"
-                th:classappend="${voteCount} == 1 ? 'voteCompletion'"
-                >
+              <button type="button" id="voteButton">
                   <span>
-                    <i class="far fa-thumbs-up votecount"></i>
+                    <i class="fas fa-thumbs-up"
+                       id="thumbIcon"
+                       th:classappend="${voteCount} == 1 ? 'voted'"></i>
                   </span>
-                  <span class="votecount-font">
+                  <span class="votecount-font" id="voteText">
                     [[${stackcontent.vote_count}]]
                   </span>
-                </span></a
+                </button
               >
             </div>
           </td>
@@ -557,6 +556,26 @@
                 return false;
               } );
             } );
+            $('#voteButton').click(function(data){
+              $.ajax({
+                url:"/ajax/vote",
+                data:{
+                  articleId: [[${stackcontent.id}]],
+                },
+                method: "post",
+                success: function(data) {
+                  $("#voteText").html(data.countVote);
+                  if (data.checkStatus == 1) {
+                    $('#thumbIcon').addClass("voted");
+                    if ([[${user.username}]] !== [[${stackcontent.username}]]) {
+                      sendVoteNotice([[${user.name}]], [[${stackcontent.username}]], "/stack/content?id="+[[${stackcontent.id}]]);
+                    }
+                  } else {
+                    $('#thumbIcon').removeClass("voted");
+                  }
+                }
+              });
+            });
     </script>
   </body>
 </html>
