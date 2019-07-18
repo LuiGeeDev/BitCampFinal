@@ -125,15 +125,10 @@
             </div>
           </div>
           <!-- 페이지 버튼 -->
+          
           <div class="page-btns">
-            <span th:if="${pager.prev}">
-              <a class="btn btn-primary paging" th:href="@{/manage/course(page=${pager.startPage}-1)}">&laquo;</a>
-            </span>
-            <span th:each="idx, iterStat : ${#numbers.sequence(pager.startPage, pager.endPage)}" >
-              <a class="btn btn-primary paging" th:href="@{/manage/course(page=${idx})}" th:classappend="${pager.currentPage} == ${idx} ? active" th:text="${idx}"></a>          
-            </span>
-            <span th:if="${pager.next} and ${pager.endPage > 0}">
-              <a class="btn btn-primary paging" th:href="@{/manage/course(page=${pager.endPage}+1)}">&raquo;</a>
+            <span id="button-wrapper">
+              <button type="button" class="btn btn-primary paging next-btn" id=""> <i class="fas fa-angle-right"></i></button>          
             </span>
           </div>
         </div>
@@ -462,6 +457,62 @@
         })
         
       });
+      var page = 1;
+      var eventt = function(target){
+        console.log(page);
+		if(target.className== 'btn btn-primary paging next-btn'){
+          page+=1
+		}else if(target.currentTarget != null){
+		  if(target.currentTarget.className == 'btn btn-primary paging next-btn'){
+		    page+=1;
+		  }
+		}
+		if(target.className== 'btn btn-primary paging prev-btn'){
+      	  page-=1;
+		}else if(target.currentTarget != null){
+		  if(target.currentTarget.className == 'btn btn-primary paging prev-btn'){
+		    page-=1;
+		  }
+		}
+        $.ajax({
+          url:"/ajax/manage/course/paging",
+          type:"get",
+          data:{
+            page : page,
+          },
+          success:function(data){
+            $(".end-table-list").empty();
+            $("#button-wrapper").empty();
+            var nextBtn = "<button type='button' class='btn btn-primary paging next-btn' onclick='eventt(this)'>"
+              	nextBtn += "<i class='fas fa-angle-right'></i></button>";
+            var prevBtn = "<button type='button' class='btn btn-primary paging prev-btn' id='prev-btn' onclick='eventt(this)'>"
+               	prevBtn += "<i class='fas fa-angle-left'></i></button>"
+               	
+            if(page != 1 ){
+              $("#button-wrapper").append(prevBtn)
+            }  	
+            console.log(Math.floor(data.allCount/10));
+            if(Math.floor(data.allCount/10) >= page){
+              $("#button-wrapper").append(nextBtn)
+            }
+            console.log(data);
+			
+			$.each(data.courseList, function(index, item){
+              var html = "<div class='course-list-row'>"
+			  html+="<div class='start_date'>"+item.startDateLocal.year+"-"+(item.startDateLocal.monthValue < 10 ? "0"+item.startDateLocal.monthValue:item.startDateLocal.monthValue)+"-"+(item.startDateLocal.dayOfMonth < 10 ?"0"+item.startDateLocal.dayOfMonth:item.startDateLocal.dayOfMonth)+"</div>";
+			  html+="<div class='end_date'>"+item.endDateLocal.year+"-"+(item.endDateLocal.monthValue < 10 ? "0"+item.endDateLocal.monthValue:item.endDateLocal.monthValue)+"-"+(item.endDateLocal.dayOfMonth < 10 ?"0"+item.endDateLocal.dayOfMonth:item.endDateLocal.dayOfMonth)+"</div>";
+			  html+="<div class='course_name'>"+item.course_name+"</div>";
+			  html+="<div class='teacher'>"+(item.teacher == null ? "" :item.teacher)+"</div>";
+			  html+="<div class='subject'>"+item.subject_name+"</div>";
+			  html+="<div class='classroom'>"+item.classroom_id+"강의실</div>";
+			  html+="<div class='students'>"+item.students+"</div>";
+			  html+="</div>"
+			  $(".end-table-list").append(html);
+			})
+          }
+        })
+      }
+      $(".next-btn").click(eventt)
     </script>
   </body>
 </html>
