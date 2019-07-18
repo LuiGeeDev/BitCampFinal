@@ -1,16 +1,13 @@
 @charset "UTF-8";
 
-body {
-  font-family: 'Nanum Gothic';
-}
-
 .board-main-title {
-  margin: 10px 0 0 140px;
+  margin: 20px auto 20px;
   font-size: 18px;
   font-weight: bold;
   display: flex;
-  width: 83%;
-  margin-bottom: 20px;
+  width: 80%;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #c6c6c6;
 }
 
 .board-main-title h4 {
@@ -108,12 +105,11 @@ a {
   height: 30px;
   margin-top: 1;
   border-radius: 3px;
-  border:1px solid #c2c2c2;
+  border: 1px solid #c2c2c2;
 }
 
 .search-item {
   margin-left: auto;
-  margin-right: 35px;
 }
 
 .pointerImg, .pointerImg2 {
@@ -181,11 +177,12 @@ a {
 .btn {
   font-size: 14px;
   padding: 5.5px 12px;
-  
 }
-#btn-submit{
-  height:31px;
+
+#btn-submit {
+  height: 31px;
 }
+
 .btn.btn-primary.paging.active {
   background-color: #EA8A02;
   border: 2px #EA8A02 solid;
