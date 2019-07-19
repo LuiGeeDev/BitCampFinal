@@ -64,6 +64,7 @@ public class ManageController {
 	public @ResponseBody boolean checkIdDuplicates(String username) {
 		MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
 		Member member = memberDao.selectMemberByUsername(username);
+		System.out.println("check id 깐쮸롤러 : "+ member);
 		return (member != null);
 	}
 

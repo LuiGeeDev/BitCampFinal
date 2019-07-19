@@ -107,7 +107,7 @@ h4 {
   border-right: none;
   border-radius: 3px 0 0 3px;
   padding: 5px 10px;
-  font-size: 14px;  
+  font-size: 14px;
 }
 
 .new-board button {
@@ -132,6 +132,8 @@ h4 {
 
 .my-alert {
   display: block;
+  user-select: none;
+  cursor: default;
 }
 
 .my-alert * {
