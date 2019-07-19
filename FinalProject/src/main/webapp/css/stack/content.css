@@ -1,58 +1,60 @@
 @charset "UTF-8";
 
-body {
-  font-family: 'Nanum Gothic';
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  width: 80%;
+  margin: 20px auto;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #a6a6a6;
+}
+
+.title {
+  width: 80%;
+  margin: 20px auto;
+  font-size: 18px;
+  font-weight: bold;
+  padding-bottom: 19px;
+  border-bottom: 1px solid #EEEEEE;
+  margin-bottom: 16px;
 }
 
 .title-text {
   font-weight: bold;
 }
 
-.title {
-  margin: 10px 20px 20px 140px;
-}
-
-.title h3 {
-  font-weight: bold;
-  font-size: 18px;
-}
-
 table {
-  margin-left: 12%;
-  margin-right: 10%;
-  width: 75%;
+  margin: auto;
+  width: 80%;
   border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
   color: #2d3436;
   padding: 12px;
 }
 
 .tdtitle {
+  margin: 30px;
   color: black;
   font-size: 19px;
   font-weight: bold;
   border-bottom: 1.5px solid #eaebec;
-  margin-left: 30px;
-  margin-right: 30px;
-  margin-bottom: 30px;
   padding-bottom: 17px;
+  padding: 16px;
 }
 
 .tdcontent {
-  font-family: 'Nanum Gothic';
   font-size: 14px;
   padding-bottom: 8px;
   padding-top: 27px;
 }
 
-.tdcontent p {
-  font-family: 'Nanum Gothic' !important;
-}
-
 .tdcontent span {
-  font-family: 'Nanum Gothic' !important;
   font-size: 14px !important;
 }
 
@@ -124,6 +126,10 @@ th, td {
   padding: 2px 12px;
 }
 
+.td12 span {
+  margin-right: 1px;
+}
+
 #profileimg1 {
   width: 76px;
   height: 76px;
@@ -142,7 +148,7 @@ th, td {
   border-radius: 5px;
   color: white;
   padding: 5px;
-  line-height: 2.0em;
+  line-height: 2em;
   font-size: 14px;
 }
 
@@ -167,7 +173,7 @@ th, td {
 }
 
 #c6 {
-  background-color: #353b48 /* 어두운파란 */
+  background-color: #353b48; /* 어두운파란 */
 }
 
 .imgp {
@@ -188,7 +194,7 @@ th, td {
 }
 
 .pfont {
-  font-size: 14px;
+  font-size: 13px;
   color: gray;
   margin-bottom: 0px;
 }
@@ -328,8 +334,8 @@ th, td {
   color: #ea8a02;
 }
 
-.deleteBtn {
-  color: #007bff;
+.deleteBtn:active i {
+  transform: scale(0.95);
 }
 
 .btn {
@@ -357,6 +363,7 @@ th, td {
 .voteSpan {
   padding: 8px 21px;
 }
+
 .voteSpan:active {
   padding: 7px 20px;
 }
@@ -364,6 +371,7 @@ th, td {
 .votecount-font {
   color: gray;
 }
+
 .voteCompletion {
   background-color: #f7f7f7;
 }
@@ -377,7 +385,7 @@ th, td {
 
 .iconSize {
   font-size: 49px;
-  color: #F39D20;
+  color: #f39d20;
 }
 
 .bookmarkRow {
@@ -396,8 +404,13 @@ th, td {
   margin-left: 20px;
   font-weight: bold;
 }
+
 .stackIcon {
-  color:#F39B10;
+<<<<<<< HEAD
+  color: #F39B10;
+=======
+  color: #f39b10;
+>>>>>>> 09627893a8cb7e1876593a0da81caa6a03350363
 }
 
 .my-comment-name {
@@ -405,7 +418,7 @@ th, td {
 }
 
 .messageForm:focus {
-  outline-color: #F39B10;
+  outline-color: #f39b10;
 }
 
 .messageTitle {
@@ -442,26 +455,30 @@ th, td {
   cursor: pointer;
 }
 
+.stackWriterName {
+  font-size: 14px;
+}
+
 .writerReceiverId {
-  display:none;
+  display: none;
 }
 
-.scrapCompletion{
-    background-color: #ea8a02 !important;
-    color: white !important;
+.scrapCompletion {
+  background-color: #ea8a02 !important;
+  color: white !important;
+}
+
+.voted {
+  background-color: #ea8a02 !important;
+  color: white;
+}
+
+#thumbIcon {
+  width: 20px;
+  height: 20px;
 }
 
 
-.voted{
-  background-color:#ea8a02 !important;
-  color:white;
-}
-
-#thumbIcon{
-  width:20px;
-  height:20px;
-  
-}
-
-#voteButton{
+.content-size {
+  min-height: 150px;
 }

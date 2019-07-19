@@ -1,8 +1,8 @@
 @charset "UTF-8";
 
 body {
-  font-family: 'Nanum Gothic';
-  background-color: #F2F4F7;
+  font-family: "Nanum Gothic";
+  background-color: #f2f4f7;
 }
 
 .barTitle {
@@ -41,7 +41,7 @@ body {
   display: flex;
   margin: 0 0 10px auto;
   flex-direction: column;
-  border: 1px solid rgba(0, 0, 0, .125);
+  border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 8px;
   width: 500px;
   height: 206.8px;
@@ -54,13 +54,13 @@ body {
 }
 
 .recentHomework {
-  border: 1px solid rgba(0, 0, 0, .125);
+  border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 8px;
   height: 46.5%;
   margin-bottom: 2.7%;
   padding: 10 0 0 20;
   padding: 15px;
-  position:relative;
+  position: relative;
 }
 
 .recentHomeworkcontent {
@@ -78,7 +78,7 @@ body {
 }
 
 .recentProject {
-  border: 1px solid rgba(0, 0, 0, .125);
+  border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 8px;
   height: 46.5%;
   padding: 15px;
@@ -92,7 +92,7 @@ body {
 }
 
 .myclassBoard {
-  border: 1px solid rgba(0, 0, 0, .125);
+  border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 10px;
   margin: 0 auto 10px;
   width: 910px;
@@ -112,10 +112,10 @@ body {
 .progres {
   display: flex;
   flex-direction: row;
-  width: 80%
+  width: 80%;
 }
 
-.progres>span {
+.progres > span {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -151,9 +151,9 @@ body {
 }
 
 .CalendarCard {
-  border: 1px solid rgba(0, 0, 0, .125);
+  border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 10px;
-  margin: 0 auto 20px;
+  margin: 0 auto 50px;
   width: 910px;
   padding: 20px;
   background-color: white;
@@ -173,22 +173,22 @@ body {
   font-size: 14px;
 }
 
-.homework-title{
-  max-width:300px;
-  color:black;
+.homework-title {
+  max-width: 300px;
+  color: black;
 }
 
 .period {
   position: absolute;
   right: 15px;
-  font-size:11px;
-  font-weight:bold;
+  font-size: 11px;
+  font-weight: bold;
 }
 
-.article-info{
-  cursor:pointer;
+.article-info {
+  cursor: pointer;
 }
 
-.article-info:hover{
-  background-color:#f7f7f7;
+.article-info:hover {
+  background-color: #f7f7f7;
 }

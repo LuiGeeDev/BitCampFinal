@@ -34,7 +34,6 @@ public class ProjectController {
 
   @GetMapping("")
   public String projectPage(int group_id, Model model) {
-    System.out.println(group_id);
     GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
     ChecklistDao checklistDao = sqlSession.getMapper(ChecklistDao.class);
     TimelineDao timelineDao = sqlSession.getMapper(TimelineDao.class);

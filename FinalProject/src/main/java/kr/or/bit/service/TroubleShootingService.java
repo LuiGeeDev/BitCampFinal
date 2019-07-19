@@ -123,9 +123,7 @@ public class TroubleShootingService {
     
     article.setTags(tags);
     article.setUsername(Helper.userName());
-    System.out.println(article.getId());
     articleDao.insertTroubleShootingArticle(article, group_id);
-    System.out.println(article.getId());
     tagService.insertTag(tagList, article.getId());
     
     TroubleShooting troubleshooting = new TroubleShooting();

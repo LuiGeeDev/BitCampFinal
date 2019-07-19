@@ -86,6 +86,7 @@ public class StackController {
     model.addAttribute("stacklist", stackList);
     model.addAttribute("pager", pager);
     model.addAttribute("page", page);
+    model.addAttribute("criteria",criteria);
     return "stack/home";
   }
   /*

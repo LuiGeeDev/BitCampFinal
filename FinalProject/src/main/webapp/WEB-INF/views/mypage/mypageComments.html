@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
+<head>
+<!-- 이페이지에서만별도로사용하는CSS가있다면여기다link 태그로삽입-->
+<link rel="stylesheet" th:href="@{/css/mypage/mypage-home.css}" />
+<link rel="stylesheet"
+  href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+</head>
+<body>
+  <!-- 이페이지의내용은main 클래스div 태그안에작성-->
+  <div class="main" th:fragment="main">
+    <div class="Wrapper">
+      <div class="flexContainer">
+        <div class="profileWrapper">
+          <div class="profileTopWrapper">
+            <div class="profileimg">
+              <img th:unless="${user.profile_photo}!=null"
+                th:src="@{/css/stack/profile.jpg}" id="profileimg" /> <img
+                th:if="${user.profile_photo}!=null"
+                th:src="@{${user.profile_photo}}" id="profileimg"
+                alt="프로필 사진" />
+            </div>
+            <div class="profileContent">
+              <div class="profileName">
+                <input type="hidden" th:value="${user.username}"
+                  id="usernameBox" /> [[${user.name}]](<span>[[${user.username}]]</span>)
+              </div>
+              <div class="profileCourse">
+                <span>[[${course.course_name}]]</span>
+              </div>
+              <div class="profileClassroom">
+                <span>제 [[${course.classroom_name}]]</span>
+              </div>
+              <div class="profileDetail">
+                <span class="pdProject"></span> <span
+                  class="pdArticle">총게시물 <span
+                  class="pdArticleNum">[[${article1.size()}]]</span>회
+                  |&nbsp
+                </span> <span class="pdComment">총댓글 <span
+                  class="pdCommentNum">[[${comments.size()}]]</span>개
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="profileProgressBar">
+            <span class="progres"> <span> <span
+                class="progress-bar bg-warning progress-bar-striped"
+                id="progress" th:style="'width:' + ${completion} + '%;'">
+              </span> <span class="progresPercent"
+                th:text="${completion} + '% 진행 중'"> </span>
+            </span>
+            </span>
+          </div>
+        </div>
+        <div class="middle-border"></div>
+        <div class="articleWrapper">
+          <div class="tabsWrapper">
+            <div class="articleNavWrapper">
+              <button id="userArticles"
+                th:onclick="location.href='/mypage/home'"
+                class="btn btn-outline-primary btnwidth">
+                <span>등록한 게시글</span>
+              </button>
+              <button id="userComments"
+                class="btn btn-outline-primary btnwidth"
+                th:onclick="location.href='/mypage/home/comments'"
+                >
+                <span>등록한 댓글</span>
+              </button>
+            </div>
+            <div>
+              <div class="board" id="Commentsboard">
+                <div class="boardNav">
+                  <div class="boardId nav-style">글번호</div>
+                  <div class="boardTitleforComment nav-style"
+                    id="TitleorContent">댓글 내용</div>
+                  <div class="boardDate nav-style">작성일</div>
+                </div>
+                <div id="boardCommentWrapper">
+                  <!-- 요기부터 댓글테이블 -->
+                  <div class="boardContent iteration"
+                    th:each="comment : ${comments}">
+                    <div class="boardId cont-style" id="commentId">[[${comment.id}]]</div>
+                    <div class="boardTitleforComment cont-style"
+                      id="commentContent" th:utext="${comment.content}"></div>
+                    <div class="boardDate cont-style" id="commentDate"
+                      th:text="${#temporals.format(comment.timeLocal, 'yyyy-MM-dd HH:mm')}">[[${comment.updated_time}]]</div>
+                  </div>
+                  <!-- 끄읏 -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 이페이지에서사용하는자바스크립트는이script 태그안에작성-->
+  <script th:inline="javascript">
+      
+    </script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</body>
+</html>

@@ -7,15 +7,15 @@
   margin: auto;
   width: 50%;
   height: 366px;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 }
 
 .carousel-indicators li {
-  background-color: #F39B10 !important;
+  background-color: #f39b10 !important;
 }
 
 span[class^="carousel-control"] {
-  color: #F39B10;
+  color: #f39b10;
 }
 
 a[class^="carousel-control"] {
@@ -28,8 +28,8 @@ a[class^="carousel-control"] {
 
 .news h6 {
   font-weight: 700;
-  font-size: 18px; .3
-  margin-bottom: 10px;
+  font-size: 18px;
+  .3margin-bottom: 10px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -45,7 +45,7 @@ a[class^="carousel-control"] {
 }
 
 .news p:hover {
-  border-bottom: 2px solid #F39B10;
+  border-bottom: 2px solid #f39b10;
 }
 
 #calendar {
@@ -56,7 +56,7 @@ a[class^="carousel-control"] {
 
 .fc-day-header {
   padding: 10px 5px !important;
-  color: #2D3E50;
+  color: #2d3e50;
   font-size: 14px;
   font-weight: 600;
 }
@@ -106,13 +106,13 @@ a[class^="carousel-control"] {
 
 .recent-messages h5 {
   font-weight: 600;
-  color: #2D3E50;
+  color: #2d3e50;
   font-size: 17px;
 }
 
 .message-content {
   font-size: 15px;
-  color: #2D3E50;
+  color: #2d3e50;
 }
 
 .message-info {
@@ -126,16 +126,17 @@ a[class^="carousel-control"] {
   margin-top: 100px;
   font-size: 14px;
   font-weight: bold;
-  border: 2px solid #F39C20;
+  border: 2px solid #f39c20;
   border-radius: 3px;
   padding: 10px;
   text-align: center;
 }
 
-.my-project, .my-notification {
+.my-project,
+.my-notification {
   margin: auto;
   margin-left: 50px;
-  border: 1px solid #2D3E50;
+  border: 1px solid #2d3e50;
   border-radius: 5px;
   padding: 30px 20px 20px 25px;
   position: relative;
@@ -148,26 +149,29 @@ a[class^="carousel-control"] {
   top: 5px;
   right: 15px;
   font-size: 50px;
-  color: #F39B10;
+  color: #f39b10;
 }
 
-.my-project h4, .my-notification h4 {
+.my-project h4,
+.my-notification h4 {
   margin-bottom: 40px;
-  color: #2D3E50;
+  color: #2d3e50;
 }
 
-.project-new-content, .new-notification {
+.project-new-content,
+.new-notification {
   margin: 0;
   margin-top: 25px;
   font-size: 15px;
   position: relative;
   width: 100%;
-  color: #2D3E50;
+  color: #2d3e50;
   border-bottom: 2px solid transparent;
 }
 
-.project-new-content:hover, .new-notification:hover {
-  border-bottom: 2px solid #F39B10;
+.project-new-content:hover,
+.new-notification:hover {
+  border-bottom: 2px solid #f39b10;
 }
 
 .project-new-from {
@@ -187,7 +191,9 @@ a[class^="carousel-control"] {
 .video {
   display: flex;
   width: 350px;
-  margin-bottom: 60px;
+  margin-bottom: 10px;
+  height: 32.3%;
+  overflow: hidden;
 }
 
 .thumbnail {
@@ -197,7 +203,7 @@ a[class^="carousel-control"] {
 .video-title {
   font-weight: 700;
   font-size: 18px;
-  color: #2D3E50;
+  color: #2d3e50;
   line-height: 40px;
   margin: 0;
   max-width: 200px;
@@ -220,7 +226,7 @@ a[class^="carousel-control"] {
 .no-video {
   font-size: 14px;
   font-weight: bold;
-  border: 2px solid #F39C20;
+  border: 2px solid #f39c20;
   border-radius: 3px;
   margin-top: 50%;
   padding: 6px 10px;
@@ -233,8 +239,9 @@ a[class^="carousel-control"] {
   width: 325px;
 }
 
-.stack-recent, .stack-popular {
-  border: 1px solid #2D3E50;
+.stack-recent,
+.stack-popular {
+  border: 1px solid #2d3e50;
   border-radius: 7px;
   padding: 10px 30px;
   margin-bottom: 40px;
@@ -271,7 +278,8 @@ a[class^="carousel-control"] {
   color: #a6a6a6;
 }
 
-.no-recent-stack, .no-recently-commented {
+.no-recent-stack,
+.no-recently-commented {
   margin-top: 20%;
   font-size: 14px;
   font-weight: bold;

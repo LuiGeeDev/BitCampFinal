@@ -27,11 +27,7 @@ public class ArticleUpdateService{
   public void updateArticleOption(int articleid, ArticleOption option) {
     String optionname = option.getClass().getName().toLowerCase().trim().substring("kr.or.bit.model.".length());
     if (optionname.equals("homework")) {
-      System.out.println("피카");
-      System.out.println("아직 ㄴ");
     } else if (optionname.equals("general")) {
-      System.out.println("피카");
-      System.out.println("아직 ㄴ");
     } else if (optionname.equals("video")) {
       VideoDao videoDao = sqlSession.getMapper(VideoDao.class);
       Video video = (Video) option;

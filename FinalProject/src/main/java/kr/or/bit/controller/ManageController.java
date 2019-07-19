@@ -42,9 +42,6 @@ public class ManageController {
 	  ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
 	  CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
 	  Pager pager = new Pager(page, courseDao.countEndCourseList());
-	  System.out.println("현재 페이지 : "+ page);
-	  System.out.println("현재 페이지 : "+courseDao.countEndCourseList());
-	  System.out.println(pager.getStart()+" / "+pager.getArticlesOnPage());
 	  
 	  List<Member> teacherList = managerDao.selectTeacherList();
 	  List<Subject> subjectList = managerDao.selectSubjectList();
@@ -52,7 +49,6 @@ public class ManageController {
 	  List<Course> currentCourseList = courseDao.selectCurrentCourseList();
 	  List<Course> openingCourseList = courseDao.selectOpeningCourseList();
 	  List<Course> endCourseList = courseDao.selectEndCourseList(pager);
-	  System.out.println("탔나");
 	  model.addAttribute("currentCourseList", currentCourseList);
 	  model.addAttribute("endCourseList", endCourseList);
 	  model.addAttribute("openingCourseList", openingCourseList);
@@ -83,7 +79,6 @@ public class ManageController {
 	@PostMapping("/createClass")
 	public String createClass(Course course, @RequestParam(required = true) int people, @RequestParam int teacher_id,
 			Model model) {
-	  System.out.println("teacher_id : "+teacher_id);
 		classCreateService.createClass(course, people, teacher_id);
 
 		return "redirect:/manage/course";
@@ -108,16 +103,12 @@ public class ManageController {
 		List<Member> memberList = null;
 
 		if (enabled == 999 & course_id == 0 & stringValue.equals("null")) {
-			System.out.println("role?");
 			memberList = managerDao.selectMembersByRole(role);
 		} else if (enabled == 999 & course_id == 0) {
-			System.out.println("searchColumn 탐?");
 			memberList = managerDao.selectMembersByRoleAndOneStringColumn(role, stringColumn, stringValue);
 		} else if (enabled == 999 & stringValue.equals("null")) {
-			System.out.println("course_id");
 			memberList = managerDao.selectMembersByRoleAndOneIntColumn(role, "course_id", course_id);
 		} else if (course_id == 0 & stringValue.equals("null")) {
-			System.out.println("enabled");
 			memberList = managerDao.selectMembersByRoleAndOneIntColumn(role, "enabled", enabled);
 		} else if (stringValue.equals("null")) {
 			memberList = managerDao.selectMembersByRoleAndEnableAndCourseId(role, enabled, course_id);
@@ -147,7 +138,6 @@ public class ManageController {
     int courseCount = managerDao.countAllCourse();
     for(Course course : chartOne) {
       double result = (double)course.getCount()/(double)courseCount;
-      System.out.println("결과 : "+(Math.round(result*1000)/10.0)+"%");
       course.setDivisionResult(Math.round(result*1000)/10.0);
     }
     
