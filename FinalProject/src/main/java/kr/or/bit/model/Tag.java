@@ -23,5 +23,11 @@ public class Tag {
   public void setColor(String color) {
     this.color = color;
   }
+  @Override
+  public String toString() {
+    return "Tag [id=" + id + ", tag=" + tag + ", color=" + color + "]";
+  }
+  
+  
   
 }
