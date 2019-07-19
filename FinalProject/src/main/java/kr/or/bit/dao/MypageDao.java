@@ -19,8 +19,6 @@ public interface MypageDao {
 
   int countMyArticleByTitle(@Param("boardSearch") String boardSearch, @Param("username") String username);
 
-  int countMyArticleByWriter(@Param("boardSearch") String boardSearch, @Param("username") String username);
-
   int countAllMyArticle(String username);
   
   List<Article> selectMyArticleByTitleOrContent(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch, @Param("username") String username);

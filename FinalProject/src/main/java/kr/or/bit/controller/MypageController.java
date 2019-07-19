@@ -72,10 +72,8 @@ public class MypageController {
     if (boardSearch != null) {
       if (criteria.equals("titleOrContent")) {
         pager = new Pager(page, mypageDao.countMyArticleByTitleOrContent(boardSearch, username));
-      } else if (criteria.equals("title")) {
-        pager = new Pager(page, mypageDao.countMyArticleByTitle(boardSearch, username));
       } else {
-        pager = new Pager(page, mypageDao.countMyArticleByWriter(boardSearch, username));
+        pager = new Pager(page, mypageDao.countMyArticleByTitle(boardSearch, username));
       }
       article2 = mypageService.selectMyArticlesByboardSearch(pager, boardSearch, criteria, username);
       model.addAttribute("boardSearch", boardSearch);
@@ -96,6 +94,7 @@ public class MypageController {
     model.addAttribute("user", user);
     model.addAttribute("pager", pager);
     model.addAttribute("page", page);
+    model.addAttribute("criteria",criteria);
     return "mypage/mypage";
   }
   
