@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </update>
   <select id="selectMyClassBoard"
     resultType="kr.or.bit.model.Board">
-    SELECT id, board_name, boardtype, course_id
+    SELECT id, board_name, boardtype, course_id, category
     FROM BOARD
     WHERE course_id = #{course_id}
   </select>
@@ -44,8 +44,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     board_name = #{board_name}
   </select>
   <insert id="insertBoard">
-    INSERT INTO BOARD (BOARD_NAME, BOARDTYPE, COURSE_ID)
-    VALUES (#{board_name}, #{boardtype}, #{course_id})
+    INSERT INTO BOARD (BOARD_NAME, BOARDTYPE, COURSE_ID, CATEGORY)
+    VALUES (#{board_name}, #{boardtype}, #{course_id}, #{category})
   </insert>
   <delete id="deleteBoard">
     DELETE FROM BOARD

@@ -14,8 +14,15 @@
       <div class="user-info" th:object="${user}">
         <div class="user-profile">
           <a href="/mypage">
-            <img th:if="*{profile_photo}==null" class="user-photo" id="icon" th:src="@{/resources/images/default.png}" alt="프로필 사진"> 
-            <img th:if="${user.profile_photo}!=null"
+            <img
+              th:if="*{profile_photo}==null"
+              class="user-photo"
+              id="icon"
+              th:src="@{/resources/images/default.png}"
+              alt="프로필 사진"
+            />
+            <img
+              th:if="${user.profile_photo}!=null"
               class="user-photo"
               th:src="@{${user.profile_photo}}"
               alt="프로필 사진"
@@ -24,7 +31,11 @@
           <p class="user-name" th:text="*{name}">정성윤</p>
         </div>
         <div class="user-info-btn">
-          <a class="btn btn-primary btn-sm" th:href="@{/mypage/home}" role="button">
+          <a
+            class="btn btn-primary btn-sm"
+            th:href="@{/mypage/home}"
+            role="button"
+          >
             내 정보
           </a>
           <form method="post" th:action="@{/logout}">
@@ -74,9 +85,8 @@
               <i class="fas fa-tasks fa-2x"></i>
             </div>
             <span class="menu-name">학원 관리</span>
-          </a>   
+          </a>
         </div>
-     
       </div>
     </div>
   </body>

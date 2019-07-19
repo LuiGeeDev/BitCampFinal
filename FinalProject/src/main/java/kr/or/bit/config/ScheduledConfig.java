@@ -22,9 +22,7 @@ public class ScheduledConfig {
   @Scheduled(cron = "0 01 00 * * ?")
   public void scheduleCheckMember() {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-    
     List<Member> memberList = memberDao.selectStudent();
-    
     
     for(int i = 0 ; i < memberList.size() ; i ++) {
       if(new java.util.Date(memberList.get(i).getEnd_date().getTime()).compareTo(new java.util.Date()) == -1

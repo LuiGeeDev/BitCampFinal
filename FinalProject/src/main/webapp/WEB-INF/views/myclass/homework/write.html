@@ -1,76 +1,120 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
-<head>
-<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-<link rel="stylesheet" th:href="@{/css/myclass/homework/write.css}" />
-<link
-  href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css"
-  rel="stylesheet" />
-</head>
-<body>
-  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
-  <div class="main" th:fragment="main">
-    <div class="row">
-      <div id="title">과제 작성하기</div>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+    <link rel="stylesheet" th:href="@{/css/myclass/homework/write.css}" />
+    <link
+      href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" th:href="@{/css/myclass/myclass.css}" />
+  </head>
+  <body>
+    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+    <div class="main" th:fragment="main">
+      <div class="row">
+        <div id="title">과제 작성하기</div>
+      </div>
+      <div class="row">
+        <form method="post" class="form-edit">
+          <div class="homework-container">
+            <span class="hw-title">시작일</span>
+            <input type="date" class="hw-input" id="hw-input" readonly />
+            <span class="hw-title">종료일</span>
+            <input type="date" class="hw-input" name="end_date" />
+          </div>
+          <div class="homework-container">
+            <span class="hw-title">제목</span>
+            <input type="text" class="hw-input-title" name="title" />
+          </div>
+          <div class="homework-content">
+            <textarea name="content" id="summernote"></textarea>
+          </div>
+          <div id="buttons">
+            <a href="/myclass/homework" class="btn btn-primary btn-sm">취소</a>
+            <input type="submit" class="btn btn-primary btn-sm" value="제출" />
+          </div>
+        </form>
+      </div>
+      <div class="row">
+        <form method="post" class="form-edit">
+          <div class="homework-container">
+            <span class="hw-title">시작일</span>
+            <input type="date" class="hw-input" id="hw-input" readonly />
+            <span class="hw-title">종료일</span>
+            <input type="date" class="hw-input" name="end_date" id="end_date" />
+          </div>
+          <div class="homework-container">
+            <span class="hw-title">제목</span>
+            <input
+              type="text"
+              class="hw-input-title"
+              name="title"
+              id="input-title"
+            />
+          </div>
+          <div class="homework-content">
+            <textarea name="content" id="summernote"></textarea>
+          </div>
+          <div id="buttons">
+            <a href="/myclass/homework" class="btn btn-primary btn-sm">취소</a>
+            <input
+              type="submit"
+              class="btn btn-primary btn-sm"
+              id="submit-btn"
+              value="제출"
+              disabled
+            />
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="row">
-      <form method="post" class="form-edit">
-        <div class="homework-container">
-          <span class="hw-title">시작일</span> <input type="date"
-            class="hw-input" id="hw-input" readonly> <span
-            class="hw-title">종료일</span> <input type="date"
-            class="hw-input" name="end_date" id="end_date">
-        </div>
-        <div class="homework-container">
-          <span class="hw-title">제목</span> <input type="text"
-            class="hw-input-title" name="title" id="input-title">
-        </div>
-        <div class="homework-content">
-          <textarea name="content" id="summernote"></textarea>
-        </div>
-        <div id="buttons">
-          <a href="/myclass/homework" class="btn btn-primary btn-sm">취소</a>
-          <input type="submit" class="btn btn-primary btn-sm" id="submit-btn" value="제출" disabled>
-        </div>
-        
-      </form>
-    </div>
-  </div>
-  <!-- 필요하다면 이 아래에 외부 자바스크립트도 추가 가능 -->
-  <script
-    src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-    
-  <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-  <script>
+    <!-- 필요하다면 이 아래에 외부 자바스크립트도 추가 가능 -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+    <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
+    <script>
       $("#summernote").summernote({
-        height : 300,
-        disableResizeEditor : true
+        height: 300,
+        disableResizeEditor: true
       });
-      document.getElementById('hw-input').value = new Date().toISOString().substring(0,10);
-      
-      $('#end_date').change(function(){
-		
-        if($('#end_date').val() < $("#hw-input").val()){
-		  $('#end_date').val('')
-		  Swal.fire({
- 	  	    type: 'error',
- 	  	    text: '잘못된 날짜를 입력하셨습니다.',
- 	  	    confirmButtonText: '확인',
- 	  	    confirmButtonColor: '#F39C20'
- 	  	  })
+      document.getElementById(
+        "hw-input"
+      ).value = new Date().toISOString().substring(0, 10);
+
+      $("#end_date").change(function() {
+        if ($("#end_date").val() < $("#hw-input").val()) {
+          $("#end_date").val("");
+          Swal.fire({
+            type: "error",
+            text: "잘못된 날짜를 입력하셨습니다.",
+            confirmButtonText: "확인",
+            confirmButtonColor: "#F39C20"
+          });
         }
         isDisable();
       });
-      var isDisable = function(){
-    		if($('#input-title').val().trim() != '' && $('#end_date').val().trim() != ''){
-    		  $('#submit-btn').attr("disabled", false);
-    		}else{
-    		  $('#submit-btn').attr("disabled", true);
-    		}
-          }
-      $('#input-title').keyup(isDisable);
-  </script>
-</body>
+
+      const isDisable = function() {
+        if (
+          $("#input-title")
+            .val()
+            .trim() != "" &&
+          $("#end_date")
+            .val()
+            .trim() != ""
+        ) {
+          $("#submit-btn").attr("disabled", false);
+        } else {
+          $("#submit-btn").attr("disabled", true);
+        }
+      };
+
+      $("#input-title").keyup(isDisable);
+    </script>
+  </body>
 </html>

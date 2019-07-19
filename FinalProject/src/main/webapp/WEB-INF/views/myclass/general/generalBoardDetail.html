@@ -9,6 +9,7 @@
       rel="stylesheet"
       th:href="@{/css/myclass/general/generalDetail.css}"
     />
+    <link rel="stylesheet" th:href="@{/css/myclass/myclass.css}" />
   </head>
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
@@ -22,26 +23,26 @@
       </div>
       <div class="detail-container">
         <div class="detail-head">
-        <div class="detail-head-row">
-          <span class="detail-title" th:text="${article.title}"></span>      
-           <button class="btn btn-outline-primary btn-sm bookmarkSpan"
-            th:classappend="${scrapCount} == 1 ? 'scrapCompletion'"
-            id="bookmarkButton"
+          <div class="detail-head-row">
+            <span class="detail-title" th:text="${article.title}"></span>
+            <button
+              class="btn btn-outline-primary btn-sm bookmarkSpan"
+              th:classappend="${scrapCount} == 1 ? 'scrapCompletion'"
+              id="bookmarkButton"
             >
-            <span class="bookmarkLabel"
-            id="bookmarkLabel"
-            >북마크</span> <i
-              class="fas fa-book bookmarkIcon"
-              id="bookmarkIcon"
-              ></i>
-          </button>     
+              <span class="bookmarkLabel" id="bookmarkLabel">북마크</span>
+              <i class="fas fa-book bookmarkIcon" id="bookmarkIcon"></i>
+            </button>
           </div>
           <div class="detail-subtitle">
-          <span class="generalWriterForm">
-            <span class="generalWriter"
-            th:text="${article.writer.name}"
-            th:classappend="${article.writer.name == user.name} ? 'my-comment-name'">
-            </span></span>&nbsp;| &nbsp;
+            <span class="generalWriterForm">
+              <span
+                class="generalWriter"
+                th:text="${article.writer.name}"
+                th:classappend="${article.writer.name == user.name} ? 'my-comment-name'"
+              >
+              </span></span
+            >&nbsp;| &nbsp;
             <span
               th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd')}"
             ></span
@@ -63,7 +64,10 @@
               id="comment-boardID"
               th:text="${board.id}"
             ></span>
-            <span class="hidden writerReceiverId" th:text="${article.username}"></span>
+            <span
+              class="hidden writerReceiverId"
+              th:text="${article.username}"
+            ></span>
           </div>
         </div>
         <div class="detail-content-parent">
@@ -112,8 +116,14 @@
             class="btn btn-primary reply-board-btn"
             >답글</a
           >
-          <button class="btn btn-primary" id="assemble" sec:authorize="hasRole('TEACHER')">모여라</button>
-        </div>        
+          <button
+            class="btn btn-primary"
+            id="assemble"
+            sec:authorize="hasRole('TEACHER')"
+          >
+            모여라
+          </button>
+        </div>
       </div>
       <div class="detail-comment">
         <span class="userIcon">
@@ -171,7 +181,8 @@
             <a
               th:if="${comment.username}==${user.username}"
               th:href="@{/myclass/board/commentdelete(comment_id=${comment.id}, article_id=${article.id}, board_id=${board.id})}"
-              class="comment-delete">삭제</a
+              class="comment-delete"
+              >삭제</a
             >
             <span
               class="hidden messageReceiverId"
@@ -190,36 +201,49 @@
       </div>
       <!-- 모달이 시작 -->
       <div class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header messageHeader">
-        <h5 class="modal-title messageTitle">쪽지보내기</h5>
-        <span class="toForm">
-        <span class="messageTo">To</span>
-        <span class="messageReceiveName"></span>
-        </span>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header messageHeader">
+              <h5 class="modal-title messageTitle">쪽지 보내기</h5>
+              <span class="toForm">
+                <span class="messageTo">To</span>
+                <span class="messageReceiveName"></span>
+              </span>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <textarea class="messageForm" id="messageText"></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary submitMessage">
+                전송
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary messageCancle"
+                data-dismiss="modal"
+              >
+                취소
+              </button>
+            </div>
+
+            <!-- 모달이 끝 -->
+          </div>
+        </div>
       </div>
-      <div class="modal-body">
-        <textarea class="messageForm" id="messageText"></textarea>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary submitMessage">전송</button>
-        <button type="button" class="btn btn-secondary messageCancle" data-dismiss="modal">취소</button>
-      </div>
-    </div>
-    </div>
-    </div>
-    
-    <!-- 모달이 끝 -->
     </div>
     <!-- 필요하다면 이 아래에 외부 자바스크립트도 추가 가능 -->
 
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-    
+
     <script th:inline="javascript">
       $(document).ready(function() {
         $("#spinner").hide();
@@ -228,91 +252,131 @@
       }).ajaxStop(function() {
         $("#spinner").hide();
       });
-      
-      
-    	/* 메시지 보내는 함수 */
-      function replyMessage(messageText, receiverId) {
-         $.ajax({
-           url: "/ajax/message/reply",
-           type: "POST",
-           data: {
-             content: messageText,
-             receiver_username: receiverId
-           }
-         }).done(function() {
-           $(".modal").modal("hide");
-           Swal.fire({
-             type: 'success',
-             title: '전송되었습니다',
-             showConfirmButton: false,
-             timer: 1500
-           });
-           sendMessageNotice([[${user.name}]], receiverId);
-         });
-         };
-         
-         /* 메시지 보내는 함수 */
-      
-      
-   // 동기 메시지보내기 처리 시작
-	  $(".messageCancle").click(function() {
-	    $("#messageText").val("");
-	  });
 
-      
+
+      /* 메시지 보내는 함수 */
+
+      // 동기 메시지보내기 처리 시작
+      $(".messageCancle").click(function() {
+        $("#messageText").val("");
+      });
+
+
+
       $(".commentWriterName").unbind("click");
       $(".commentWriterName").click(function(event) {
         const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
         const messageReceiveName = $(event.currentTarget).text();
         $(".messageReceiveName").text(messageReceiveName);
-        if([[${user.username}]] != receiverId) {
+        if ([[${user.username}]] != receiverId) {
           $(".modal").modal("show");
         }
 
         $(".submitMessage").unbind("click");
         $(".submitMessage").click(function() {
           const messageText = $("#messageText").val();
-         	if (messageText.trim() === "" || messageText === null) {
-        	  Swal.fire({
-        	    type: 'error',
-        	    text: '다시 입력해주세요 !!',
-        	  })
-        	  return;
-        	}
+          if (messageText.trim() === "" || messageText === null) {
+            Swal.fire({
+              type: 'error',
+              text: '다시 입력해주세요 !!',
+            });
+            return;
+          }
           $("#messageText").val("");
           replyMessage(messageText, receiverId);
         });
       });
 
+
+      /* 메시지 보내는 함수 */
+      function replyMessage(messageText, receiverId) {
+        $.ajax({
+          url: "/ajax/message/reply",
+          type: "POST",
+          data: {
+            content: messageText,
+            receiver_username: receiverId
+          }
+        }).done(function() {
+          $(".modal").modal("hide");
+          Swal.fire({
+            type: 'success',
+            title: '전송되었습니다',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          sendMessageNotice([[${user.name}]], receiverId);
+        });
+      };
+
+
+      /* 메시지 보내는 함수 */
+
+      // 동기 메시지보내기 처리 시작
+
+      $(".messageCancle").click(function() {
+        $("#messageText").val("");
+      });
+
+      $(".commentWriterName").unbind("click");
+      $(".commentWriterName").click(function(event) {
+        const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
+        const messageReceiveName = $(event.currentTarget).text();
+        $(".messageReceiveName").text(messageReceiveName);
+        if ([[${user.username}]] != receiverId) {
+          $(".modal").modal("show");
+        }
+
+        $(".submitMessage").unbind("click");
+        $(".submitMessage").click(function() {
+          const messageText = $("#messageText").val();
+          if (messageText.trim() === "" || messageText === null) {
+            Swal.fire({
+              type: 'error',
+              text: '다시 입력해주세요 !!',
+            })
+            return;
+          }
+          $("#messageText").val("");
+          replyMessage(messageText, receiverId);
+        });
+      });
+
+
       // 동기 메시지보내기 처리 끝
 
-     // 글쓴이 동기 메시지보내기 처리 시작
-    $(".generalWriterForm").unbind("click");
-    $(".generalWriterForm").click(function(event) {
-	  const receiverId = $(event.currentTarget).siblings(".writerReceiverId").text();
-      const messageReceiveName = $(event.currentTarget).children(".generalWriter").text();
-      $(".messageReceiveName").text(messageReceiveName);
-      if([[${user.username}]] != receiverId) {
-        $(".modal").modal("show");
-      }
 
-      $(".submitMessage").unbind("click");
-      $(".submitMessage").click(function() {
-        const messageText = $("#messageText").val();
-       	if (messageText.trim() === "" || messageText === null) {
-      	  Swal.fire({
-      	    type: 'error',
-      	    text: '다시 입력해주세요 !!',
-      	  })
-      	  return;
-      	}
-        $("#messageText").val("");
-     	replyMessage(messageText, receiverId);
+
+      // 글쓴이 동기 메시지보내기 처리 시작
+
+      $(".generalWriterForm").unbind("click");
+      $(".generalWriterForm").click(function(event) {
+        const receiverId = $(event.currentTarget).siblings(".writerReceiverId").text();
+        const messageReceiveName = $(event.currentTarget).children(".generalWriter").text();
+        $(".messageReceiveName").text(messageReceiveName);
+        if ([[${user.username}]] != receiverId) {
+          $(".modal").modal("show");
+        }
+
+        $(".submitMessage").unbind("click");
+        $(".submitMessage").click(function() {
+          const messageText = $("#messageText").val();
+          if (messageText.trim() === "" || messageText === null) {
+            Swal.fire({
+              type: 'error',
+              text: '다시 입력해주세요 !!',
+            })
+            return;
+          }
+          $("#messageText").val("");
+          replyMessage(messageText, receiverId);
+        });
       });
-    });
 
-    // 글쓴이 동기 메시지보내기 처리 끝
-      
+
+
+      // 글쓴이 동기 메시지보내기 처리 끝
+
       $("#deletebtn").click(function(event) {
         let articleId = [[${article.id}]];
         event.preventDefault();
@@ -347,6 +411,7 @@
         })
       });
 
+
       $("#assemble").click(function() {
         sendAssembleNotice([[${user.name}]], [[${user.username}]], `/myclass/board/read?article_id=[[${article.id}]]&board_id=[[${article.board_id}]]`);
       });
@@ -356,21 +421,19 @@
         if (valueCheck.trim() === "" || valueCheck === null) {
           Swal.fire({
             type: 'error',
-      	    text: '다시 입력해주세요 !!',
-         	});
+            text: '다시 입력해주세요 !!',
+          });
           return;
         }
 
         const articleId = $("#comment-articleID").text();
-       	const commentContent = $("#content").val();
-       	const username = [[${user.username}]];
-
-       	const formData = new FormData();
+        const commentContent = $("#content").val();
+        const username = [[${user.username}]];
+        const formData = new FormData();
         formData.append("article_id", articleId);
-       	formData.append("content", commentContent);
-       	formData.append("username", username);
-
-       	$.ajax({
+        formData.append("content", commentContent);
+        formData.append("username", username);
+        $.ajax({
           url: "/myclass/board/commentwrite",
           type: "post",
           data: formData,
@@ -394,15 +457,12 @@
               minutes = (minutes < 10) ? "0" + minutes : minutes;
               let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
               hours = hours < 10 ? "0" +  hours : hours;
-              
               let newHours = date.getHours();
               newHours = (newHours < 10) ? "0" + newHours : newHours;
-              
               let getdate = date.getDate();
               getdate = (getdate < 10) ? "0" + getdate : getdate;
               let getmonth = date.getMonth() + 1;
               getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
-
               const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ newHours +`:` + minutes;
               let equalName = null;
               if (item.username == [[${user.username}]]) {
@@ -412,13 +472,11 @@
               }
 
               let userPhoto = null;
-
               if (item.writer.profile_photo == null) {
                 userPhoto = "/resources/images/default.png";
-               } else {
-
+              } else {
                 userPhoto = item.writer.profile_photo;
-               }
+              }
 
               let spanClass;
               if (username === [[${user.name}]]) {
@@ -429,49 +487,48 @@
 
               let html = "<div class='content-reply'>";
               html += "<div class='content-move'>" +
-                      "<span class='userIcon'><img src="+userPhoto+" id='icon'></span>" +
-                      spanClass + username + "</span>" +
-                      "<a href='/myclass/board/commentdelete?comment_id=" + commentId + "&article_id=" + articleId + "&board_id=" + [[${board.id}]] +"'" + ">" +equalName+"</a>" +
-                      "<span class='hidden messageReceiverId'>" + item.username + "</span>" +
-                      "<span class='write-date'>" + timedate + "</span></div>";
-              html += "<div class='content-comment'>" + content + "</div></div>";
-              $(".content-reply-form").append(html);
-            });
-
-         // 비동기 메시지보내기 처리 시작
-        	  $(".messageCancle").click(function() {
-        	    $("#messageText").val("");
-        	  });
-		
-            $(".commentWriterName").unbind("click");
-            $(".commentWriterName").click(function(event) {
-              const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
-              const messageReceiveName = $(event.currentTarget).text();
-              $(".messageReceiveName").text(messageReceiveName);
-              if([[${user.username}]] != receiverId) {
-                $(".modal").modal("show");
-              }
-
-              $(".submitMessage").unbind("click");
-              $(".submitMessage").click(function() {
-                const messageText = $("#messageText").val();
-                if (messageText.trim() === "" || messageText === null) {
-           	  	  Swal.fire({
-           	  	    type: 'error',
-           	  	    text: '다시 입력해주세요 !!',
-           	  	  })
-           	  	  return;
-                }
-                $("#messageText").val("");
-                replyMessage(messageText, receiverId);
+                "<span class='userIcon'><img src="+userPhoto+" id='icon'></span>" +
+                spanClass + username + "</span>" +
+                "<a href='/myclass/board/commentdelete?comment_id=" + commentId + "&article_id=" + articleId + "&board_id=" + [[${board.id}]] +"'" + ">" +equalName+"</a>" +
+                "<span class='hidden messageReceiverId'>" + item.username + "</span>" +
+                "<span class='write-date'>" + timedate + "</span></div>";
+                html += "<div class='content-comment'>" + content + "</div></div>";
+                $(".content-reply-form").append(html);
               });
-            });
-            
-            // 비동기 메시지보내기 처리 끝
+
+              // 비동기 메시지보내기 처리 시작
+              $(".messageCancle").click(function() {
+                $("#messageText").val("");
+              });
+
+              $(".commentWriterName").unbind("click");
+              $(".commentWriterName").click(function(event) {
+                const receiverId = $(event.currentTarget).siblings(".messageReceiverId").text();
+                const messageReceiveName = $(event.currentTarget).text();
+                $(".messageReceiveName").text(messageReceiveName);
+                if ([[${user.username}]] != receiverId) {
+                  $(".modal").modal("show");
+                }
+
+                $(".submitMessage").unbind("click");
+                $(".submitMessage").click(function() {
+                  const messageText = $("#messageText").val();
+                  if (messageText.trim() === "" || messageText === null) {
+                    Swal.fire({
+                      type: 'error',
+                      text: '다시 입력해주세요 !!',
+                    })
+                    return;
+                  }
+                  $("#messageText").val("");
+                  replyMessage(messageText, receiverId);
+                });
+              });
+              // 비동기 메시지보내기 처리 끝
           }
         });
       });
-      
+
       $('#bookmarkButton').click(function(data){
         $.ajax({
           url:"/ajax/bookmark",
@@ -480,18 +537,14 @@
           },
           method: "post",
           success: function(data) {
-            if(data.checkStatus == 1) {
+            if (data.checkStatus == 1) {
               $("#bookmarkButton").addClass("scrapCompletion");
             } else {
               $("#bookmarkButton").removeClass("scrapCompletion");
             }
           }
-          
         });
       });
-
-      
-      
     </script>
   </body>
 </html>

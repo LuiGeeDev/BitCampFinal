@@ -147,6 +147,7 @@ input[type="file"] {
 .relpy-article {
   display: flex;
   width: 100%;
+  margin-bottom: 6px;
 }
 
 .reply-group {
