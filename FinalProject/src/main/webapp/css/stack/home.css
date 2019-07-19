@@ -294,6 +294,11 @@ td[colspan="2"] {
   border: 1px solid #e0e0e0;
   padding: 7px 16px;
   margin: 9px;
+  height: 350px;
+}
+
+.ss-scroll {
+  right: -421px !important;
 }
 
 .tag-nav {
