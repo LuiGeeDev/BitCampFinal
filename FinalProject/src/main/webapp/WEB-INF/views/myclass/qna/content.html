@@ -30,27 +30,41 @@
         <td colspan="2" id="contenteditor"><span class="utilNav"><a
             th:href="@{/myclass/qna/edit(id=${qnacontent.id})}"
             th:if="${user.username == qnacontent.username}"
-            class="updateBtn"><i class="far fa-edit"></i></a> <span
+            class="updateBtn"><i class="far fa-edit qnaIcon"></i></a> <span
             th:if="${user.username == qnacontent.username or user.role == 'MANAGER'}"
             class="deleteBtn" id="deleteCheck"><i
-              class="fas fa-trash-alt"></i> </span></span></td>
+              class="fas fa-trash-alt qnaIcon"></i> </span></span></td>
       </tr>
       <tr>
-        <td colspan="4" class="tdtitle"><span
-          th:text="${qnacontent.title}"></span>
-          <i class="fas fa-book"></i>
+        <td colspan="3" class="tdtitle"><span
+          th:text="${qnacontent.title}"></span> <i class="fas fa-book"></i>
+        </td>
+        <td class="bookmarkRow">
+          <button class="btn btn-outline-primary btn-sm bookmarkSpan"
+            th:classappend="${scrapCount} == 1 ? 'scrapCompletion'"
+            id="bookmarkButton"
+            >
+            <span class="bookmarkLabel"
+            id="bookmarkLabel"
+            >북마크</span> <i
+              class="fas fa-book bookmarkIcon"
+              id="bookmarkIcon"
+              ></i>
+          </button>
           </td>
       </tr>
       <tr>
         <td colspan="4" class="tdcontent"><span
           th:utext="${qnacontent.content}"> </span>
           <div class="votecountalign">
-            <button type="button" id="voteButton">
-              <span class="voteSpan"> <span> 
-              <i class="far fa-thumbs-up votecount" id="thumbIcon" th:classappend="${voteStatus} == 1 ? 'voted'"></i>
-              </span> <span class="votecount-font" id="votecount-font">
-                  [[${qnacontent.vote_count}]] </span>
-            </span>
+            <button type="button" id="voteButton"
+              class="btn btn-outline-primary btn-sm voteSpan"
+              th:classappend="${voteStatus} == 1 ? 'voted'">
+              <span> <i class="far fa-thumbs-up votecount"
+                id="thumbIcon"
+                th:classappend="${voteStatus} == 1 ? 'voted'"></i>
+              </span> <span class="votecount-font" id="votecount-font"
+                th:classappend="${voteStatus} == 1 ? 'voted'">[[${qnacontent.vote_count}]]</span>
             </button>
           </div></td>
       </tr>
@@ -62,10 +76,10 @@
         <td colspan="3" class="td4">
           <p class="pwriter">
             <span class="qnaWriter"
-                  th:classappend="${qnacontent.writer.name == user.name} ? 'my-comment-name'" 
-                  th:text="${qnacontent.writer.name}">
-            </span>
-            <span class="hidden writerReceiverId" th:text="${qnacontent.username}"></span>
+              th:classappend="${qnacontent.writer.name == user.name} ? 'my-comment-name'"
+              th:text="${qnacontent.writer.name}"> </span> <span
+              class="hidden writerReceiverId"
+              th:text="${qnacontent.username}"></span>
           </p>
           <p class="pfont">
             게시일:<span
@@ -96,7 +110,8 @@
     <!-- 일반 답변 -->
     <div class="stack-wrapper">
       <table th:if="${qnacontent.commentlist.size()!=0}"
-        class="iteration commentWrapper" th:each="list : ${qnacontent.commentlist}">
+        class="iteration commentWrapper"
+        th:each="list : ${qnacontent.commentlist}">
         <tr>
           <td class="td8"><img
             th:unless="${qnacontent.writer.profile_photo}!=null"
@@ -105,21 +120,17 @@
             <img th:if="${qnacontent.writer.profile_photo}!=null"
             th:src="@{${list.writer.profile_photo}}" id="profileimg2" />
           </td>
-          <td class="comment-writer">
-          <span class="commentWriterNameForm">
-          <span class="commentWriterName"
-                th:classappend="${list.writer.name == user.name} ? 'my-comment-name'">
-                [[${list.writer.name}]]
-          </span> 
-          </span>
-          <a
+          <td class="comment-writer"><span
+            class="commentWriterNameForm"> <span
+              class="commentWriterName"
+              th:classappend="${list.writer.name == user.name} ? 'my-comment-name'">
+                [[${list.writer.name}]] </span>
+          </span> <a
             th:if="${list.username == user.username or user.role == 'MANAGER'}"
             th:href="@{/myclass/qna/commentdelete(id=${list.id})}"><i
-              class="fas fa-trash-alt"></i>
-              </a>
-             <span class="hidden messageReceiverId" th:text="${list.username}"></span> 
-              <br> <span
-            class="commentCalender"
+              class="fas fa-trash-alt qnaIcon"></i> </a> <span
+            class="hidden messageReceiverId" th:text="${list.username}"></span>
+            <br> <span class="commentCalender"
             th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
           </td>
           <td class="td7"></td>
@@ -132,35 +143,37 @@
         </tr>
       </table>
     </div>
-    
-      <!-- 모달이 시작 -->
-      <div class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header messageHeader">
-        <h5 class="modal-title messageTitle">쪽지보내기</h5>
-        <span class="toForm">
-        <span class="messageTo">To</span>
-        <span class="messageReceiveName"></span>
-        </span>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <textarea class="messageForm" id="messageText"></textarea>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary submitMessage">전송</button>
-        <button type="button" class="btn btn-secondary messageCancle" data-dismiss="modal">취소</button>
+
+    <!-- 모달이 시작 -->
+    <div class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header messageHeader">
+            <h5 class="modal-title messageTitle">쪽지보내기</h5>
+            <span class="toForm"> <span class="messageTo">To</span>
+              <span class="messageReceiveName"></span>
+            </span>
+            <button type="button" class="close" data-dismiss="modal"
+              aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <textarea class="messageForm" id="messageText"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary submitMessage">전송</button>
+            <button type="button"
+              class="btn btn-secondary messageCancle"
+              data-dismiss="modal">취소</button>
+          </div>
+        </div>
       </div>
     </div>
-    </div>
-    </div>
-    
+
     <!-- 모달이 끝 -->
-    
-    
+
+
   </div>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <script th:inline="javascript">
@@ -187,11 +200,15 @@
         $("#votecount-font").text(data.countVote);
         if (data.checkStatus == 1) {
           $('#thumbIcon').addClass("voted");
+          $('#votecount-font').addClass("voted");
+          $('#voteButton').addClass("voted");
           if ([[${user.username}]] !== [[${qnacontent.username}]]) {
-            sendVoteNotice([[${user.name}]], [[${qnacontent.username}]], "/video/detail?id="+[[${qnacontent.id}]]);
+            sendVoteNotice([[${user.name}]], [[${qnacontent.username}]], "/myclass/qna/content?id="+[[${qnacontent.id}]]);
           }
         } else {
           $('#thumbIcon').removeClass("voted");
+          $('#votecount-font').removeClass("voted");
+          $('#voteButton').removeClass("voted");
         }
       }
     });
@@ -410,6 +427,25 @@
           return false;
         } );
       } );
+      
+      
+      $('#bookmarkButton').click(function(data){
+        $.ajax({
+          url:"/ajax/bookmark",
+          data:{
+            article_id:[[${qnacontent.id}]],
+          },
+          method: "post",
+          success: function(data) {
+            if(data.checkStatus == 1) {
+              $("#bookmarkButton").addClass("scrapCompletion");
+            } else {
+              $("#bookmarkButton").removeClass("scrapCompletion");
+            }
+          }
+          
+        });
+      });
 
       </script>
 </body>

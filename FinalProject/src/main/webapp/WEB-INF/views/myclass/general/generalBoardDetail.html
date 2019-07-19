@@ -22,7 +22,20 @@
       </div>
       <div class="detail-container">
         <div class="detail-head">
-          <span class="detail-title" th:text="${article.title}"></span>
+        <div class="detail-head-row">
+          <span class="detail-title" th:text="${article.title}"></span>      
+           <button class="btn btn-outline-primary btn-sm bookmarkSpan"
+            th:classappend="${scrapCount} == 1 ? 'scrapCompletion'"
+            id="bookmarkButton"
+            >
+            <span class="bookmarkLabel"
+            id="bookmarkLabel"
+            >북마크</span> <i
+              class="fas fa-book bookmarkIcon"
+              id="bookmarkIcon"
+              ></i>
+          </button>     
+          </div>
           <div class="detail-subtitle">
           <span class="generalWriterForm">
             <span class="generalWriter"
@@ -100,7 +113,7 @@
             >답글</a
           >
           <button class="btn btn-primary" id="assemble" sec:authorize="hasRole('TEACHER')">모여라</button>
-        </div>
+        </div>        
       </div>
       <div class="detail-comment">
         <span class="userIcon">
@@ -461,6 +474,27 @@
           }
         });
       });
+      
+      $('#bookmarkButton').click(function(data){
+        $.ajax({
+          url:"/ajax/bookmark",
+          data:{
+            article_id:[[${article.id}]],
+          },
+          method: "post",
+          success: function(data) {
+            if(data.checkStatus == 1) {
+              $("#bookmarkButton").addClass("scrapCompletion");
+            } else {
+              $("#bookmarkButton").removeClass("scrapCompletion");
+            }
+          }
+          
+        });
+      });
+
+      
+      
     </script>
   </body>
 </html>

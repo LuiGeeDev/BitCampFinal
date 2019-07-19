@@ -384,10 +384,6 @@ th, td {
   text-align: right;
 }
 
-.bookmarkIcon {
-  font-size: 16px;
-}
-
 .commentWriterName {
   cursor: pointer;
 }
@@ -434,8 +430,6 @@ th, td {
 }
 
 .bookmarkSpan {
-  padding: 8px;
-  border: 4px solid white;
   cursor: pointer;
 }
 
@@ -457,9 +451,6 @@ th, td {
     color: white !important;
 }
 
-.voteCompletion{
-  
-}
 
 .voted{
   background-color:#ea8a02 !important;
