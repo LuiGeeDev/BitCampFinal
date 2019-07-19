@@ -16,50 +16,71 @@
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
       <form method="POST">
-      <div th:object="${article}">
-      <input id="contentId" type="hidden" th:value="*{content}">
-        <div id="write-form-wrapper">
-          <input type="text" id="input-title" placeholder="제목" name="title" th:value="*{title}"/>
-          <div class="url">
-            <input type="text" id="input-url" placeholder="Youtube 주소 (https://youtu.be로 시작)" name="url" th:value="${video_id}"/>
-            <i class="far fa-question-circle info" data-toggle="tooltip" data-placement="bottom" title data-original-title="공유 - 주소 복사"></i>
+        <div th:object="${article}">
+          <input id="contentId" type="hidden" th:value="*{content}" />
+          <div id="write-form-wrapper">
+            <input
+              type="text"
+              id="input-title"
+              placeholder="제목"
+              name="title"
+              th:value="*{title}"
+            />
+            <div class="url">
+              <input
+                type="text"
+                id="input-url"
+                placeholder="Youtube 주소 (https://youtu.be로 시작)"
+                name="url"
+                th:value="${video_id}"
+              />
+              <i
+                class="far fa-question-circle info"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title
+                data-original-title="공유 - 주소 복사"
+              ></i>
+            </div>
+            <textarea name="content" class="content"></textarea>
+            <button
+              type="submit"
+              class="btn btn-primary update-btn"
+              id="submit-button"
+            >
+              수정
+            </button>
           </div>
-          <textarea name="content" class="content"></textarea>
-          <button
-            type="submit"
-            class="btn btn-primary update-btn"
-            id="submit-button"
-          >
-            올리기
-          </button>
-        </div>
         </div>
       </form>
     </div>
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script>
-    $(".update-btn").click(function() {
-  	  Swal.fire({
-  	    type: 'success',
-  	    title: '수정되었습니다',
-  	    showConfirmButton: false,
-  	    timer: 1500
-  	  });
-  	});  
       $(document).ready(function() {
         const title = $("#input-title");
         const url = $("#input-url");
         const submitBtn = $("#submit-button");
         const summernoteValue = $("#contentId").val();
-        
-        $("#summernote").val(summernoteValue);
-        
-        $('[data-toggle="tooltip"]').tooltip();
-        
 
-        
-        if (title.val() == "") {
+        $("#summernote").val(summernoteValue);
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+        $(".update-btn").click(function(event) {
+          if (
+            title.val() == null ||
+            title.val().trim() == "" ||
+            !url.val().startsWith("https://youtu.be/")
+          ) {
+            event.preventDefault();
+            Swal.fire({
+              type: "error",
+              text: "다시 입력해주세요 !!"
+            });
+          }
+        });
+        /* if (title.val() == "") {
           submitBtn.attr("disabled", true);
         }
         
@@ -71,7 +92,7 @@
           } else {
             $("#submit-button").attr("disabled", false);
           }
-        });
+        }); */
       });
     </script>
   </body>

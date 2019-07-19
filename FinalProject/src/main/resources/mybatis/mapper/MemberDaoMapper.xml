@@ -115,6 +115,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       </when>
     </choose>
   </select>
+  
+  <select id="selectMemberSearchByAjax" resultType="kr.or.bit.model.Member">
+  	SELECT m.username, m.name, a.role, enabled,c.course_name,c.end_date,profile_photo
+  	FROM member m join authorities a on m.username=a.username join course c on m.course_id = c.id
+  	WHERE a.role=#{role} 
+  	<if test="enabled != 999">
+  	and enabled=#{enabled} 
+  	</if>
+  	<if test="course_id != 999">
+  	and course_id = #{course_id}
+  	</if>
+  </select>
+  <select id="countMemberSearchByAjax" resultType="Integer">
+   	SELECT count(*)
+  	FROM member m join authorities a on m.username=a.username
+  	WHERE a.role=#{role} 
+  	<if test="enabled != 999">
+  	and enabled=#{enabled} 
+  	</if>
+  	<if test="course_id != 999">
+  	and course_id = #{course_id}
+  	</if>
+  </select>
 </mapper>
 
 

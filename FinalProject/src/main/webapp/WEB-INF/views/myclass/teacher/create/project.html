@@ -7,6 +7,7 @@
     <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
     <link rel="stylesheet" th:href="@{/css/myclass/teacher/create/main.css}" />
     <link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
+    <link rel="stylesheet" th:href="@{/css/myclass/myclass.css}" />
   </head>
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
@@ -213,7 +214,9 @@
         const groupList = document.getElementById("class-group-list");
         Array.from(groupList.getElementsByClassName("class-member")).forEach(
           function(student) {
-            document.querySelector("#member-list .ss-content").appendChild(student);
+            document
+              .querySelector("#member-list .ss-content")
+              .appendChild(student);
           }
         );
       }
@@ -356,7 +359,7 @@
           $("#submit-button").attr("disabled", true);
         }
       });
-      
+
       $("#modal-submit-button").hover(function() {
         if (
           $('input[type="radio"]:checked').length == $("#member-count").val()
@@ -366,7 +369,7 @@
           $("#modal-submit-button").attr("disabled", true);
         }
       });
-      
+
       $("#end-date, #start-date").change(function() {
         if ($("#end-date").val() !== "") {
           if ($("#end-date").val() < $("#start-date").val()) {

@@ -10,242 +10,252 @@
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
-      <div class="title">
-        <h3>스택게시판</h3>
-        <div
-          class="spinner-border text-warning spin-where"
-          role="status"
-          id="spinner"
-        >
-          <span class="sr-only">Loading...</span>
-        </div>
-      </div>
-      <!-- 게시물컨텐트 -->
-      <hr />
-
-      <span class="top"
-        ><a href="#"><i class="fas fa-chevron-circle-up iconSize"></i></a
-      ></span>
-
-      <table>
-        <tr>
-          <td colspan="2" class="td12">
-            <span
-              class="tag-name iteration"
-              th:each="tag : ${stackcontent.tags}"
-            >
-              <span th:style="'background-color:'+@{${tag.color}}+';'"
-                >[[${tag.tag}]]</span
-              >
-            </span>
-          </td>
-          <td colspan="2" id="contenteditor">
-            <span class="utilNav">
-              <a
-                th:href="@{/stack/edit(id=${stackcontent.id})}"
-                th:if="${user.username == stackcontent.username}"
-                class="updateBtn"
-              >
-                <i class="far fa-edit stackIcon"></i>
-              </a>
-              <span
-                th:if="${user.username == stackcontent.username or user.role == 'MANAGER'}"
-                class="deleteBtn"
-                id="deleteCheck"
-              >
-                <i class="fas fa-trash-alt stackIcon"></i>
-              </span>
-            </span>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3" class="tdtitle">
-            <span th:text="${stackcontent.title}"></span>
-          </td>
-          <td class="bookmarkRow">
-          <button class="btn btn-outline-primary btn-sm bookmarkSpan"
-            th:classappend="${scrapCount} == 1 ? 'scrapCompletion'"
-            id="bookmarkButton"
-            >
-            <span class="bookmarkLabel"
-            id="bookmarkLabel"
-            >북마크</span> <i
-              class="fas fa-book bookmarkIcon"
-              id="bookmarkIcon"
-              ></i>
-          </button>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="4" class="tdcontent">
-            <span th:utext="${stackcontent.content}"> </span>
-          <div class="votecountalign">
-            <button type="button" id="voteButton"
-              class="btn btn-outline-primary btn-sm voteSpan"
-              th:classappend="${voteCount} == 1 ? 'voted'"
-              >
-              <span><i class="far fa-thumbs-up" id="thumbIcon"
-                th:classappend="${voteCount} == 1 ? 'voted'"></i></span><span
-                class="votecount-font" id="voteText"
-                th:classappend="${voteCount} == 1 ? 'voted'"
-                >
-                [[${stackcontent.vote_count}]]</span>
-            </button>
+      <div class="wrapper">
+        <div class="title">
+          <h3>스택게시판</h3>
+          <div
+            class="spinner-border text-warning spin-where"
+            role="status"
+            id="spinner"
+          >
+            <span class="sr-only">Loading...</span>
           </div>
-          </td>
-        </tr>
-        <tr>
-          <td class="td5">
-            <img
-              th:if="${stackcontent.writer.profile_photo}!=null"
-              th:src="@{${stackcontent.writer.profile_photo}}"
-              id="profileimg1"
-            />
-          </td>
-          <td colspan="3" class="td4">
-            <span class="stackWriterNameForm">
+        </div>
+        <!-- 게시물컨텐트 -->
+
+        <span class="top">
+          <a href="#"><i class="fas fa-chevron-circle-up iconSize"></i></a>
+        </span>
+
+        <table>
+          <tr>
+            <td colspan="2" class="td12">
               <span
-                class="stackWriterName"
-                th:text="${stackcontent.writer.name}"
-                th:classappend="${stackcontent.writer.name == user.name} ? 'my-comment-name'"
+                class="tag-name iteration"
+                th:each="tag : ${stackcontent.tags}"
+              >
+                <span th:style="'background-color:'+@{${tag.color}}+';'">
+                  [[${tag.tag}]]
+                </span>
+              </span>
+            </td>
+            <td colspan="2" id="contenteditor">
+              <span class="utilNav">
+                <a
+                  th:href="@{/stack/edit(id=${stackcontent.id})}"
+                  th:if="${user.username == stackcontent.username}"
+                  class="updateBtn"
+                >
+                  <i class="far fa-edit stackIcon"></i>
+                </a>
+                <span
+                  th:if="${user.username == stackcontent.username or user.role == 'MANAGER'}"
+                  class="deleteBtn"
+                  id="deleteCheck"
+                >
+                  <i class="fas fa-trash-alt stackIcon"></i>
+                </span>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" class="tdtitle">
+              <span th:text="${stackcontent.title}"></span>
+            </td>
+            <td class="bookmarkRow">
+              <button
+                class="btn btn-outline-primary btn-sm bookmarkSpan"
+                th:classappend="${scrapCount} == 1 ? 'scrapCompletion'"
+                id="bookmarkButton"
+              >
+                <span class="bookmarkLabel" id="bookmarkLabel">북마크</span>
+                <i class="fas fa-book bookmarkIcon" id="bookmarkIcon"></i>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4" class="tdcontent">
+              <div class="content-size">
+                <span th:utext="${stackcontent.content}"> </span>
+              </div>
+              <div class="votecountalign">
+                <button
+                  type="button"
+                  id="voteButton"
+                  class="btn btn-outline-primary btn-sm voteSpan"
+                  th:classappend="${voteCount} == 1 ? 'voted'"
+                >
+                  <span
+                    ><i
+                      class="far fa-thumbs-up"
+                      id="thumbIcon"
+                      th:classappend="${voteCount} == 1 ? 'voted'"
+                    ></i></span
+                  ><span
+                    class="votecount-font"
+                    id="voteText"
+                    th:classappend="${voteCount} == 1 ? 'voted'"
+                  >
+                    [[${stackcontent.vote_count}]]</span
+                  >
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="td5">
+              <img
+                th:if="${stackcontent.writer.profile_photo}!=null"
+                th:src="@{${stackcontent.writer.profile_photo}}"
+                id="profileimg1"
+              />
+            </td>
+            <td colspan="3" class="td4">
+              <span class="stackWriterNameForm">
+                <span
+                  class="stackWriterName"
+                  th:text="${stackcontent.writer.name}"
+                  th:classappend="${stackcontent.writer.name == user.name} ? 'my-comment-name'"
+                ></span>
+              </span>
+
+              <span
+                class="hidden writerReceiverId"
+                th:text="${stackcontent.username}"
               ></span>
-            </span>
 
-            <span
-              class="hidden writerReceiverId"
-              th:text="${stackcontent.username}"
-            ></span>
+              <p class="pfont">
+                게시일:<span
+                  th:text="${#temporals.format(stackcontent.timeLocal, 'yyyy-MM-dd HH:mm')}"
+                ></span>
+              </p>
+              <p class="pfont">
+                <span th:text="${stackcontent.view_count}"></span>view
+              </p>
+            </td>
+          </tr>
+        </table>
 
-            <p class="pfont">
-              게시일:<span
-                th:text="${#temporals.format(stackcontent.timeLocal, 'yyyy-MM-dd HH:mm')}"
-              ></span>
-            </p>
-            <p class="pfont">
-              <span th:text="${stackcontent.view_count}"></span>view
-            </p>
-          </td>
-        </tr>
-      </table>
+        <!-- 댓글insert -->
+        <table>
+          <tr>
+            <td class="comtitle" colspan="4">
+              총
+              <span
+                class="commentPlus"
+                th:text="${stackcontent.commentlist.size()}"
+              ></span
+              >개의 답변
+            </td>
+          </tr>
+          <tr>
+            <td class="ctd1" colspan="4">
+              <textarea name="content" class="comtext"></textarea> <br />
+              <input
+                type="submit"
+                class="btn btn-primary btnalign"
+                value="등록"
+              />
+            </td>
+          </tr>
+        </table>
 
-      <!-- 댓글insert -->
-      <table>
-        <tr>
-          <td class="comtitle" colspan="4">
-            총 <span
-              class="commentPlus"
-              th:text="${stackcontent.commentlist.size()}"
-            ></span
-            >개의 답변
-          </td>
-        </tr>
-        <tr>
-          <td class="ctd1" colspan="4">
-            <textarea name="content" class="comtext"></textarea> <br />
-            <input
-              type="submit"
-              class="btn btn-primary btnalign"
-              value="등록"
-            />
-          </td>
-        </tr>
-      </table>
-
-      <!-- 댓글목록 -->
-      <!-- 채택된 답변 -->
-      <table
-        th:unless="${stackcontent.option.adopted_answer==0}"
-        class="answerWrapper"
-      >
-        <tr>
-          <td class="td8">
-            <img
-              th:if="${adoptedanswer.writer.profile_photo}!=null"
-              th:src="@{${adoptedanswer.writer.profile_photo}}"
-              id="profileimg2"
-            />
-          </td>
-          <td class="td10" colspan="2">
-            <span class="answer-name">
-              <b>[[${adoptedanswer.writer.name}]] [채택된 답변] </b
-              ><i class="fas fa-crown answer-icon"></i>
-            </span>
-            <br />
-            <span
-              class="commentCalender"
-              id="answertime"
-              th:text="${#temporals.format(adoptedanswer.timeLocal, 'yyyy-MM-dd HH:mm')}"
-            ></span>
-            <!-- <span class="commentCalender"
-            th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span> -->
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3" class="td9">[[${adoptedanswer.content}]]</td>
-        </tr>
-      </table>
-
-      <!-- 일반 답변 -->
-      <div class="stack-wrapper">
+        <!-- 댓글목록 -->
+        <!-- 채택된 답변 -->
         <table
-          th:if="${stackcontent.commentlist.size()!=0}"
-          class="iteration"
-          th:each="list : ${stackcontent.commentlist}"
+          th:unless="${stackcontent.option.adopted_answer==0}"
+          class="answerWrapper"
         >
           <tr>
             <td class="td8">
               <img
-                th:if="${stackcontent.writer.profile_photo}!=null"
-                th:src="@{${list.writer.profile_photo}}"
+                th:if="${adoptedanswer.writer.profile_photo}!=null"
+                th:src="@{${adoptedanswer.writer.profile_photo}}"
                 id="profileimg2"
               />
             </td>
-            <td class="comment-writer">
-              <span
-                class="commentWriterName"
-                th:classappend="${list.writer.name == user.name} ? 'my-comment-name'"
-              >
-                [[${list.writer.name}]]
+            <td class="td10" colspan="2">
+              <span class="answer-name">
+                <b>[[${adoptedanswer.writer.name}]] [채택된 답변] </b
+                ><i class="fas fa-crown answer-icon"></i>
               </span>
-              <a
-                th:if="${list.id != stackcontent.option.adopted_answer and (list.username == user.username or user.role == 'MANAGER')}"
-                th:href="@{/stack/commentdelete(id=${list.id})}"
-                ><i class="fas fa-trash-alt stackIcon"></i>
-              </a>
-              <span
-                class="hidden messageReceiverId"
-                th:text="${list.username}"
-              ></span>
               <br />
               <span
                 class="commentCalender"
-                th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"
+                id="answertime"
+                th:text="${#temporals.format(adoptedanswer.timeLocal, 'yyyy-MM-dd HH:mm')}"
               ></span>
+              <!-- <span class="commentCalender"
+            th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span> -->
             </td>
-            <td class="td7"></td>
           </tr>
           <tr>
-            <td colspan="3" class="td11">[[${list.content}]]</td>
-          </tr>
-          <tr>
-            <td colspan="3" class="td6">
-              <span
-                th:if="${stackcontent.username}==${user.username} and ${stackcontent.option.adopted_answer==0}"
-                class="checkButton"
-                ><a
-                  th:href="@{/stack/chooseanswer(article_id=${stackcontent.id},comment_id=${list.id})}"
-                  style="color: black;"
-                >
-                  채택 <i class="far fa-check-circle"></i></a
-              ></span>
-            </td>
+            <td colspan="3" class="td9">[[${adoptedanswer.content}]]</td>
           </tr>
         </table>
+
+        <!-- 일반 답변 -->
+        <div class="stack-wrapper">
+          <table
+            th:if="${stackcontent.commentlist.size()!=0}"
+            class="iteration"
+            th:each="list : ${stackcontent.commentlist}"
+          >
+            <tr>
+              <td class="td8">
+                <img
+                  th:if="${stackcontent.writer.profile_photo}!=null"
+                  th:src="@{${list.writer.profile_photo}}"
+                  id="profileimg2"
+                />
+              </td>
+              <td class="comment-writer">
+                <span
+                  class="commentWriterName"
+                  th:classappend="${list.writer.name == user.name} ? 'my-comment-name'"
+                >
+                  [[${list.writer.name}]]
+                </span>
+                <a
+                  th:if="${list.id != stackcontent.option.adopted_answer and (list.username == user.username or user.role == 'MANAGER')}"
+                  th:href="@{/stack/commentdelete(id=${list.id})}"
+                  ><i class="fas fa-trash-alt stackIcon"></i>
+                </a>
+                <span
+                  class="hidden messageReceiverId"
+                  th:text="${list.username}"
+                ></span>
+                <br />
+                <span
+                  class="commentCalender"
+                  th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"
+                ></span>
+              </td>
+              <td class="td7"></td>
+            </tr>
+            <tr>
+              <td colspan="3" class="td11">[[${list.content}]]</td>
+            </tr>
+            <tr>
+              <td colspan="3" class="td6">
+                <span
+                  th:if="${stackcontent.username}==${user.username} and ${stackcontent.option.adopted_answer==0}"
+                  class="checkButton"
+                  ><a
+                    th:href="@{/stack/chooseanswer(article_id=${stackcontent.id},comment_id=${list.id})}"
+                    style="color: black;"
+                  >
+                    채택 <i class="far fa-check-circle"></i></a
+                ></span>
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
 
       <!-- 모달이 시작 -->
       <div class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header messageHeader">
               <h5 class="modal-title messageTitle">쪽지보내기</h5>
@@ -524,9 +534,9 @@
           return false;
         });
       });
-      
-      
-      
+
+
+
       $('#voteButton').click(function(data){
         $.ajax({
           url:"/ajax/vote",
@@ -551,10 +561,10 @@
           }
         });
       });
-      
-      
+
+
       //북마크!!
-      
+
       $('#bookmarkButton').click(function(data){
         $.ajax({
           url:"/ajax/bookmark",
@@ -569,7 +579,7 @@
               $("#bookmarkButton").removeClass("scrapCompletion");
             }
           }
-          
+
         });
       });
     </script>

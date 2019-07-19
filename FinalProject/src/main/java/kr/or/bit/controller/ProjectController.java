@@ -34,7 +34,9 @@ public class ProjectController {
 
   @GetMapping("")
   public String projectPage(int group_id, Model model) {
-    System.out.println(group_id);
+    if(group_id == 0 ) {
+      return "redirect:/myclass/setting";
+    }
     GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
     ChecklistDao checklistDao = sqlSession.getMapper(ChecklistDao.class);
     TimelineDao timelineDao = sqlSession.getMapper(TimelineDao.class);

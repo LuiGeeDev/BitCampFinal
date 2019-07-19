@@ -6,12 +6,13 @@
   <head>
     <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
     <link rel="stylesheet" th:href="@{/css/myclass/qna/home.css}" />
+    <link rel="stylesheet" th:href="@{/css/myclass/myclass.css}" />
   </head>
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
       <div class="wrapper">
-        <h3 class="title">Q&A게시판</h3>
+        <h3 class="title">질문 게시판</h3>
         <table>
           <tr>
             <td class="seath">
@@ -37,7 +38,7 @@
             </td>
             <td class="writeBtnAlign">
               <a th:href="@{/myclass/qna/write}">
-                <button class="btn btn-outline-primary">글쓰기</button>
+                <button class="btn btn-outline-primary btn-sm">글쓰기</button>
               </a>
             </td>
           </tr>

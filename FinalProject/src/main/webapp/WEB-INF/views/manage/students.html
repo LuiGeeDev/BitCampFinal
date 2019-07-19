@@ -22,7 +22,7 @@
                   </div>
                   <div class="searchContent">
                     <div>
-                      <select size="1" class="selectSize" name="role">
+                      <select size="1" class="selectSize" name="role" id="role">
                         <option value="STUDENT" selected>학생</option>
                         <option value="TEACHER">강사</option>
                         <option value="GRADUATE">졸업자</option>
@@ -36,7 +36,7 @@
                   </div>
                   <div class="searchContent">
                     <div>
-                      <select size="1" class="selectSize" name="enabled">
+                      <select size="1" class="selectSize" name="enabled" id="enabled">
                         <option value="999" selected>전체</option>
                         <option value="1">활성</option>
                         <option value="0">비활성</option>
@@ -50,8 +50,8 @@
                   </div>
                   <div class="searchContent">
                     <div>
-                      <select class="selectSize" name="course_id">
-                        <option value="0" selected>전체</option>
+                      <select class="selectSize" name="course_id" id="course">
+                        <option value="999" selected>전체</option>
                         <div th:each="courseList : ${courseList}">
                           <option th:value="${courseList.id}"
                             th:text="${courseList.course_name}"></option>
@@ -82,7 +82,7 @@
             </div>
             <div class="list cardShadow">
               <div th:each="memberList : ${memberList}"
-                class="member-list-container">
+                class="member-list-container" >
                 <div class="member-list">
                   <div class="hidden" id="member-list-course_name"
                     th:text=${memberList.course_name}></div>
@@ -153,7 +153,11 @@
   </div>
   <script src="/js/qna/content.js"></script>
   <script th:inline="javascript">
-  	$(".member-list").click(function(event){
+   
+    
+    var detail = function(){
+      
+  	  console.log(this)
   	  const course_name = $(this).children("#member-list-course_name").text();
   	  const end_date = $(this).children("#member-list-end_date").text();
   	  const profile_photo = $(this).children("#member-list-profile_photo").text();
@@ -180,11 +184,11 @@
   	  $("#switch-enabled-btn").empty();
   	  if(memberEnabled === "활성화") {
   	    $("#switch-enabled-btn").append("비활성");
-	  } else {
-	    $("#switch-enabled-btn").append("활성화");
-	  }
-  	});
-  	
+    } else {
+      $("#switch-enabled-btn").append("활성화");
+    }
+    }
+    $(".member-list").click(detail)
   	$("#switch-enabled-btn").click(function(event){
   	  const memberEnabled = $("#profile-enabled").text().trim();
   	  const memberUsername = $("#profile-username").text();
@@ -208,13 +212,51 @@
   	      $("#profile-enabled, #"+memberUsername).append("<i class='fas fa-circle on' th:case='1'> 활성화</i>");
   	      $("#switch-enabled-btn").append("비활성화");
   	    }
-  	    
-  	    
-  	    
-
-  	    
   	  });
-  	});
+  	})
+  	
+  	
+  	var role = 'student';
+  	var enabled = 999;
+  	var course = 999;
+  	
+  	$(".selectSize").change(function(){
+  	  if($(this).attr("id") == 'role'){
+  	    role = $(this).val();
+  	  }else if($(this).attr("id") == 'enabled'){
+  	    enabled = $(this).val();
+  	  }else if($(this).attr("id") == 'course'){
+  	    course= $(this).val();
+  	  }
+  	  
+  	  $.ajax({
+  	    url:"/ajax/manage/students/search",
+  	    type:"get",
+  	    data:{
+  	      role:role,
+  	      enabled:enabled,
+  	      course:course,
+  	    },
+  	    success:function(data){
+  	      $(".list.cardShadow").empty();
+  	      $(".select-list-count").text("검색결과 : "+data.memberCount+"명")
+  	      $.each(data.searchList , function(index, item){
+  	        var html = "<div class='member-list-container' ><div class='member-list'>"
+  	        html+="<div class='hidden' id='member-list-course_name'>"+item.course_name+"</div>"
+  	        html+="<div class='hidden' id='member-list-end_date'>"+item.end_date+"</div>"
+  	        html+="<div class='hidden' id='member-list-profile_photo'>"+item.profile_photo+"</div>"
+  	        html+="<div class='member-list-username'>" + item.username +"</div>"
+  	        html+="<div class='member-list-name'>" + (item.name == null ? "" : item.name) + "</div>"
+  	        html+="<div class='member-list-role'>" + item.role + "</div>"
+  	        html+="<div class='member-list-enabled'><i class='fas fa-circle " + (item.enabled == 1 ? "on'>" : "off'>") + (item.enabled==1 ? "활성</i></div>" :"비활성</i></div>")
+  	        html+="</div></div>"
+  	        $(".list.cardShadow").append(html);
+  	      })
+  	      $(".member-list").click(detail)
+  	    }
+  	  })
+  	  
+  	})
   </script>
 </body>
 </html>

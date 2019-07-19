@@ -1,117 +1,157 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
-<head>
-<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-<link rel="stylesheet"
-  th:href="@{/css/myclass/teacher/managing/main.css}" />
-<link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
-</head>
-<body>
-  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
-  <div class="main" th:fragment="main">
-    <div th:replace="myclass/teacher/nav :: teacher-nav(manage)"></div>
-    <div class="row">
-      <div class="card">
-        <div class="teacher-manage-left">
-          <p class="title">내 수업</p>
-          <h5 th:text="${course.course_name}">수업이 없습니다. 수업을 등록해주세요</h5>
-          <div class="course_info">
-            <h5 th:text="${course.start_date}+'~'+${course.end_date}">2019-01-01</h5>
-          </div>
-          <div class="progres">
-            <div>
-              <div class="progress-bar bg-warning progress-bar-striped"
-                th:style="'width:' + ${course_percent} + '%; height: 30px;'"></div>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+    <link
+      rel="stylesheet"
+      th:href="@{/css/myclass/teacher/managing/main.css}"
+    />
+    <link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
+    <link rel="stylesheet" th:href="@{/css/myclass/myclass.css}" />
+  </head>
+  <body>
+    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+    <div class="main" th:fragment="main">
+      <div th:replace="myclass/teacher/nav :: teacher-nav(manage)"></div>
+      <div class="row">
+        <div class="card">
+          <div class="teacher-manage-left">
+            <p class="title">내 수업</p>
+            <h5 th:text="${course.course_name}">
+              수업이 없습니다. 수업을 등록해주세요
+            </h5>
+            <div class="course_info">
+              <h5 th:text="${course.start_date}+'~'+${course.end_date}">
+                2019-01-01
+              </h5>
+            </div>
+            <div class="progres">
+              <div>
+                <div
+                  class="progress-bar bg-warning progress-bar-striped"
+                  th:style="'width:' + ${course_percent} + '%; height: 30px;'"
+                ></div>
+              </div>
+            </div>
+            <span th:text="${course_percent} + '% 진행중'"> 진행중</span>
+            <div class="class-info">
+              <h5
+                th:text="'총원 '+${all}+'명'+' / '+' 재적 '+${enable}+'명'+' / '+'중탈 '+${disable}+'명'"
+              >
+                총원 23명
+              </h5>
             </div>
           </div>
-          <span th:text="${course_percent} + '% 진행중'"> 진행중</span>
-          <div class="class-info">
+          <div class="teacher-manage-right">
+            <p class="title" th:text="${project.project_name}+'&nbsp진행중'">
+              ?차 프로젝트
+            </p>
+            <h5 th:text="${project.season} + '번째 프로젝트'">번째 프로젝트</h5>
             <h5
-              th:text="'총원 '+${all}+'명'+' / '+' 재적 '+${enable}+'명'+' / '+'중탈 '+${disable}+'명'">총원
-              23명</h5>
-          </div>
-        </div>
-        <div class="teacher-manage-right">
-          <p class="title" th:text="${project.project_name}+'&nbsp진행중'">?차
-            프로젝트</p>
-          <h5 th:text="${project.season} + '번째 프로젝트'">번째 프로젝트</h5>
-          <h5
-            th:text="${project.start_date} + '~' + ${project.end_date}"></h5>
-          <div class="progres">
-            <div>
-              <div class="progress-bar bg-warning progress-bar-striped"
-                th:style="'width:' + ${project_percent} + '%; height: 30px;'"></div>
+              th:text="${project.start_date} + '~' + ${project.end_date}"
+            ></h5>
+            <div class="progres">
+              <div>
+                <div
+                  class="progress-bar bg-warning progress-bar-striped"
+                  th:style="'width:' + ${project_percent} + '%; height: 30px;'"
+                ></div>
+              </div>
             </div>
-          </div>
-          <div th:text="${project_percent}+'%'+' 진행중'"></div>
+            <div th:text="${project_percent}+'%'+' 진행중'"></div>
 
-          <div class="btn-group-url">
-            <h5>프로젝트 둘러보기</h5>
-            <select class="btn-move-project-board"
-              onchange="if(this.value) location.href=(this.value);">
-              <option value=" " class="custom-select">이동하기</option>
-              <option th:each="group : ${groups}"
-                th:text="${group.group_no}+'조 프로젝트'"
-                th:value="@{/myclass/project(group_id=${group.id})}">
-              </option>
-            </select>
+            <div class="btn-group-url">
+              <h5>프로젝트 둘러보기</h5>
+              <select
+                class="btn-move-project-board"
+                onchange="if(this.value) location.href=(this.value);"
+              >
+                <option value=" ">이동하기</option>
+                <option
+                  th:each="group : ${groups}"
+                  th:text="${group.group_no}+'조 프로젝트'"
+                  th:value="@{/myclass/project(group_id=${group.id})}"
+                >
+                </option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="row-control">
-        <div class="row-control-left">
-          <div class="left-child1">
-            <div class="card">
-              <div class="card-content">
-                <p class="title">최근과제</p>
-                <div class="homework-content">
-                  <span class="homework-title"
-                    th:text="${homeworkarticle.title}"></span> <span>
-                    진행중 입니다.</span>
-                  <div
-                    th:text="'마감일: '+${homeworkarticle.option.end_date}"></div>
-                  <div
-                    th:each="homeworkarticlere,iter : ${homeworkarticlere}">
-                    <div th:text="${iter.count}+'개의 과제가 제출되었습니다.'"></div>
+      <div class="row">
+        <div class="row-control">
+          <div class="row-control-left">
+            <div class="left-child1">
+              <div class="card">
+                <div class="card-content">
+                  <p class="title">최근과제</p>
+                  <div class="homework-content">
+                    <span
+                      class="homework-title"
+                      th:text="${homeworkarticle.title}"
+                    ></span>
+                    <span> 진행중 입니다.</span>
+                    <div
+                      th:text="'마감일: '+${homeworkarticle.option.end_date}"
+                    ></div>
+                    <div
+                      th:each="homeworkarticlere,iter : ${homeworkarticlere}"
+                    >
+                      <div
+                        th:text="${iter.count}+'개의 과제가 제출되었습니다.'"
+                      ></div>
+                    </div>
+                    <button
+                      class="btn btn-primary"
+                      th:onclick="'window.location.href = \'' + @{/myclass/homework/detail(id=${homeworkarticle.id},page=1)} + '\''"
+                    >
+                      과제 확인하러 가기
+                    </button>
                   </div>
-                  <button class="btn btn-primary"
-                    th:onclick="'window.location.href = \'' + @{/myclass/homework/detail(id=${homeworkarticle.id},page=1)} + '\''">과제
-                    확인하러 가기</button>
+                </div>
+              </div>
+            </div>
+            <div class="left-child2">
+              <div class="card">
+                <div class="card-content">
+                  <p class="title">최근 이슈</p>
+                  <div class="issue-content">
+                    <span>??????????????</span> <span>?조 ???</span><br />
+                    <button class="btn btn-primary">이슈 확인하러 가기</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="left-child2">
+          <div class="row-control-right">
             <div class="card">
-              <div class="card-content">
-                <p class="title">최근 이슈</p>
-                <div class="issue-content">
-                  <span>??????????????</span> <span>?조 ???</span><br>
-                  <button class="btn btn-primary">이슈 확인하러 가기</button>
-                </div>
+              <div>
+                <p class="title">우리반 스택</p>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="row-control-right">
-          <div class="card">
-            <div>
-              <p class="title">우리반 스택</p>
-            </div>
-            <div class="stack-control">
-              <div class="class-stack"
-                th:each="starticle : ${stackarticle}">
-                <div class="stack-content" th:text="${starticle.title}"
-                  th:onclick="'window.location.href = \'' + @{/stack/content(id=${starticle.id})} + '\''">과제를
-                  모르겠수요</div>
-                <div class="stack-info">
-                  <span class="stack-writer"
-                    th:text="${starticle.writer.name}">권순조</span> <span
-                    class="stack-time"
-                    th:text="${#temporals.format(starticle.timeLocal, 'YYYY/MM/dd')}">2019-09-21</span>
+              <div class="stack-control">
+                <div class="class-stack" th:each="starticle : ${stackarticle}">
+                  <div
+                    class="stack-content"
+                    th:text="${starticle.title}"
+                    th:onclick="'window.location.href = \'' + @{/stack/content(id=${starticle.id})} + '\''"
+                  >
+                    과제를 모르겠수요
+                  </div>
+                  <div class="stack-info">
+                    <span
+                      class="stack-writer"
+                      th:text="${starticle.writer.name}"
+                      >권순조</span
+                    >
+                    <span
+                      class="stack-time"
+                      th:text="${#temporals.format(starticle.timeLocal, 'YYYY/MM/dd')}"
+                      >2019-09-21</span
+                    >
+                  </div>
                 </div>
               </div>
             </div>
@@ -119,9 +159,7 @@
         </div>
       </div>
     </div>
-  </div>
-  <script th:src="@{/js/timeline.js}"></script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-</body>
+    <script th:src="@{/js/timeline.js}"></script>
+    <script></script>
+  </body>
 </html>

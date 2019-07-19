@@ -47,8 +47,7 @@
                   <span>제 [[${course.classroom_name}]]</span>
                 </div>
                 <div class="profileDetail">
-                  <span class="pdArticleNum">[[${user.role}]]</span>&nbsp등급
-                  |&nbsp<span class="pdProject"></span>
+                  <span class="pdProject"></span>
                   <span class="pdArticle"
                     >총게시물
                     <span class="pdArticleNum">[[${article1.size()}]]</span>회
@@ -79,22 +78,94 @@
               </span>
             </div>
           </div>
-          <div class="middle-border"></div>
-          <div class="articleWrapper">
-            <div class="tabsWrapper">
-              <div class="articleNavWrapper">
+          <div class="profileProgressBar">
+            <span class="progres">
+              <span>
+                <span
+                  class="progress-bar bg-warning progress-bar-striped"
+                  id="progress"
+                  th:style="'width:' + ${completion} + '%;'"
+                >
+                </span>
+                <span
+                  class="progresPercent"
+                  th:text="${completion} + '% 진행 중'"
+                >
+                </span>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div class="middle-border"></div>
+        <div class="articleWrapper">
+          <div class="tabsWrapper">
+            <div class="articleNavWrapper">
+              <div class="Btns">
                 <button
                   id="userArticles"
-                  class="btn btn-outline-primary btnwidth"
+                  class="btn btn-outline-primary btnwidth Btnactive"
+                  th:onclick="location.href='/mypage/home'"
                 >
-                  <span>등록한 게시글</span>
+                  <span class="nav-font">등록한 게시글</span>
                 </button>
                 <button
                   id="userComments"
                   class="btn btn-outline-primary btnwidth"
+                  th:onclick="location.href='/mypage/home/comments'"
                 >
-                  <span>등록한 댓글</span>
+                  <span class="nav-font">등록한 댓글</span>
                 </button>
+              </div>
+              <form method="get" class="boardSearchalign">
+                <select size="1" class="selectBar" name="criteria">
+                  <option value="titleOrContent" selected>제목 + 내용</option>
+                  <option value="title">제목</option>
+                </select>
+                <input
+                  type="text"
+                  name="boardSearch"
+                  id="boardSearch"
+                  size="25"
+                  placeholder="검색내용을 적어주세요"
+                />
+                <input
+                  type="submit"
+                  class="btn btn-primary searchBtn"
+                  value="검색"
+                />
+              </form>
+            </div>
+            <div>
+              <div class="board">
+                <div class="boardNav">
+                  <div class="boardId nav-style">글번호</div>
+                  <div class="boardTitle nav-style" id="TitleorContent">
+                    제목
+                  </div>
+                  <div class="boardDate nav-style">작성일</div>
+                  <div class="boardView nav-style" id="boardVoteCount">
+                    조회
+                  </div>
+                </div>
+                <form method="get" class="boardSearchalign">
+                  <select size="1" class="selectBar" name="criteria">
+                    <option value="titleOrContent" selected>제목 + 내용</option>
+                    <option value="title">제목</option>
+                    <option value="name">글작성자</option>
+                  </select>
+                  <input
+                    type="text"
+                    name="boardSearch"
+                    id="boardSearch"
+                    size="25"
+                    placeholder="검색내용을 적어주세요"
+                  />
+                  <input
+                    type="submit"
+                    class="btn btn-primary searchBtn"
+                    value="검색"
+                  />
+                </form>
               </div>
               <div>
                 <div class="board">
@@ -117,7 +188,10 @@
                     id="boardArticletWrapper"
                   >
                     <div class="boardId cont-style">#[[${list.id}]]</div>
-                    <div class="boardTitle cont-style">[[${list.title}]]</div>
+                    <div class="boardTitle cont-style">
+                      <span th:utext="${list.title}"></span>
+                      [<span th:text="${list.commentlist.size()}"></span>]
+                    </div>
                     <div
                       class="boardDate cont-style"
                       th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"
@@ -127,32 +201,45 @@
                     </div>
                   </div>
                   <!-- 게시물테이블끝 -->
-
-                  <div class="board" id="Commentsboard">
-                    <div id="boardCommentWrapper">
-                      <!-- 요기부터 댓글테이블 -->
-                      <div
-                        class="boardContent iteration"
-                        th:each="comment : ${comments}"
+                </div>
+                <!-- 페이지 버튼 -->
+                <div class="row">
+                  <div class="page-btns">
+                    <span th:if="${pager.prev}">
+                      <a
+                        class="btn btn-outline-primary paging"
+                        th:href="@{/mypage/home(page=${pager.startPage}-1)}"
+                        >&laquo;</a
                       >
-                        <div class="boardId cont-style" id="commentId"></div>
-                        <div
-                          class="boardTitle cont-style"
-                          id="commentContent"
-                        ></div>
-                        <div
-                          class="boardDate cont-style"
-                          id="commentDate"
-                        ></div>
-                        <div
-                          class="boardView cont-style"
-                          id="commentView"
-                        ></div>
-                      </div>
-                      <!-- 끄읏 -->
-                    </div>
+                    </span>
+                    <span
+                      th:each="idx, iterStat : ${#numbers.sequence(pager.startPage,pager.endPage)}"
+                    >
+                      <a
+                        th:if="${boardSearch} != null"
+                        class="btn btn-outline-primary paging"
+                        th:href="@{/mypage/home(page=${idx},boardSearch=${boardSearch})}"
+                        th:classappend="${pager.currentPage} == ${idx} ? active"
+                        th:text="${idx}"
+                      ></a>
+                      <a
+                        th:if="${boardSearch} == null"
+                        class="btn btn-outline-primary paging"
+                        th:href="@{/mypage/home(page=${idx})}"
+                        th:classappend="${pager.currentPage} == ${idx} ? active"
+                        th:text="${idx}"
+                      ></a>
+                    </span>
+                    <span th:if="${pager.next} and ${pager.endPage > 0}">
+                      <a
+                        class="btn btn-outline-primary paging"
+                        th:href="@{/mypage/home(page=${pager.endPage}+1)}"
+                        >&raquo;</a
+                      >
+                    </span>
                   </div>
                 </div>
+                <!-- 끝 -->
               </div>
             </div>
           </div>
@@ -160,155 +247,7 @@
       </div>
     </div>
     <!-- 이페이지에서사용하는자바스크립트는이script 태그안에작성-->
-    <script th:inline="javascript">
-      $(document).ready(function() {
-        $("div").remove("#Commentsboard");
-      });
-      $("#userComments").click(function() {
-        const username = $("#usernameBox").val();
-        function getCommentList(username) {
-          $.ajax({
-            url: "/mypage/home/CommentList",
-            type: "POST",
-            data: {
-              user: username
-            },
-            success: function(data) {
-              $("div").remove("#Commentsboard");
-              $("div").remove("#boardArticletWrapper");
-              $("div").remove("#boardContentWrapper");
-              $(".boardNav").empty();
-              let html1 =
-                "<div class='boardId nav-style'>글번호" +
-                "</div><div class='boardTitle nav-style' id='TitleorContent'>댓글내용" +
-                "</div><div class='boardDate nav-style'>작성일</div>";
-              $(".boardNav").append(html1);
-              $.each(data, function(index, item) {
-                const id = item.id;
-                const article_id = item.article_id;
-                const content = item.content;
-                const time = Number(item.updated_time);
-                const date = new Date(time);
-                let minutes = date.getMinutes();
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                let hours =
-                  date.getHours() <= 12
-                    ? date.getHours()
-                    : date.getHours() - 12;
-                hours = hours < 10 ? "0" + hours : hours;
-                let getdate = date.getDate();
-                getdate = getdate < 10 ? "0" + getdate : getdate;
-                let getmonth = date.getMonth() + 1;
-                getmonth = getmonth < 10 ? "0" + getmonth : getmonth;
-                const timedate =
-                  `${date.getFullYear()}-` +
-                  getmonth +
-                  `-` +
-                  getdate +
-                  ` ` +
-                  hours +
-                  `:` +
-                  minutes;
-                console.log(item.index);
-                let html2 =
-                  "<div class='boardContent iteration' id='boardContentWrapper' onclick=" +
-                  '"' +
-                  "location.href='/mypage/home/content?article_id=" +
-                  article_id +
-                  "'" +
-                  '"' +
-                  ">" +
-                  "<div class='boardId cont-style' id='commentId'>" +
-                  "#" +
-                  id +
-                  "</div><div class='boardTitle cont-style' id='commentContent'>" +
-                  content +
-                  "</div><div class='boardDate cont-style' id='commentDate'>" +
-                  timedate +
-                  "</div></div>";
-                $(".board").append(html2);
-                $(".boardTitle").css("width", "70%");
-              });
-            }
-          });
-        }
-        getCommentList(username);
-      });
-      $("#userArticles").click(function() {
-        const username = $("#usernameBox").val();
-        function getArticleList(username) {
-          $.ajax({
-            url: "/mypage/home/ArticleList",
-            type: "POST",
-            data: {
-              user: username
-            },
-            success: function(data) {
-              $("div").remove("#boardArticletWrapper");
-              $("#boardArticletWrapper").empty();
-              $("div").remove("#Commentsboard");
-              $("div").remove("#boardContentWrapper");
-              $(".boardNav").empty();
-              let html1 =
-                "<div class='boardId nav-style'>글번호</div>" +
-                "<div class='boardTitle nav-style' id='TitleorContent'>제목</div>" +
-                "<div class='boardDate nav-style'>작성일</div>" +
-                "<div class='boardView nav-style' id='boardVoteCount'>조회</div>";
-              $(".boardNav").append(html1);
-              $.each(data, function(index, item) {
-                const id = item.id;
-                const title = item.title;
-                const viewCount = item.view_count;
-                const time = Number(item.updated_time);
-                const date = new Date(time);
-                let minutes = date.getMinutes();
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                let hours =
-                  date.getHours() <= 12
-                    ? date.getHours()
-                    : date.getHours() - 12;
-                hours = hours < 10 ? "0" + hours : hours;
-                let getdate = date.getDate();
-                getdate = getdate < 10 ? "0" + getdate : getdate;
-                let getmonth = date.getMonth() + 1;
-                getmonth = getmonth < 10 ? "0" + getmonth : getmonth;
-                const timedate =
-                  `${date.getFullYear()}-` +
-                  getmonth +
-                  `-` +
-                  getdate +
-                  ` ` +
-                  hours +
-                  `:` +
-                  minutes;
-                console.log(item.index);
-
-                let html2 =
-                  "<div class='boardContent iteration' id='boardArticletWrapper' onclick=" +
-                  '"' +
-                  "location.href='/mypage/home/content?article_id=" +
-                  id +
-                  "'" +
-                  '"' +
-                  ">" +
-                  "<div class='boardId cont-style'>" +
-                  "#" +
-                  id +
-                  "</div><div class='boardTitle cont-style'>" +
-                  title +
-                  "</div><div class='boardDate cont-style'>" +
-                  timedate +
-                  "</div><div class='boardView cont-style'>" +
-                  viewCount +
-                  "</div></div>";
-                $(".board").append(html2);
-              });
-            }
-          });
-        }
-        getArticleList(username);
-      });
-    </script>
+    <script th:inline="javascript"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   </body>
 </html>

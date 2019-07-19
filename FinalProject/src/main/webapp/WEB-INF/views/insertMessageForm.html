@@ -10,15 +10,13 @@
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
-       <div>
-      	<form th:action="@{/insertMessageForm}" method="get">
-      	
-      	
-      	<input type="text" id="mes" name="content">
-      	<input type="text" id="mes2" name="sender_username">
-      	<input type="text" id="mes3" name="receiver_username">
-      	<input type="submit" value="전송하기">
-      	</form>
+      <div>
+        <form th:action="@{/insertMessageForm}" method="get">
+          <input type="text" id="mes" name="content" />
+          <input type="text" id="mes2" name="sender_username" />
+          <input type="text" id="mes3" name="receiver_username" />
+          <input type="submit" value="전송하기" />
+        </form>
       </div>
     </div>
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->

@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="layout (main, script, links)">
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  th:fragment="layout (main, script, links)"
+>
   <head th:replace="fragments/head :: head(${links})"></head>
   <body>
     <div class="container-fluid">
-    <div th:replace="fragments/sidebar-main :: sidebar"></div>
-    <div th:replace="fragments/topnav :: topnav"></div>
+      <div th:replace="fragments/sidebar-main :: sidebar"></div>
+      <div th:replace="fragments/topnav :: topnav"></div>
       <div class="col-main">
-      <div class="row">
-        <div th:replace="${main}"></div>
-        <div th:replace="fragments/topnav :: toast"></div>
-      </div>
+        <div class="row">
+          <div th:replace="${main}"></div>
+          <div th:replace="fragments/topnav :: toast"></div>
+        </div>
       </div>
     </div>
     <script th:src="@{/js/common.js}"></script>

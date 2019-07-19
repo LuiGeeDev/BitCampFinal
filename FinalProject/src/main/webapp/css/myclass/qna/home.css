@@ -15,7 +15,7 @@
 }
 
 #boardSearch {
-  border-radius: 3px;
+  border-radius: 0 3px 3px 0;
   border: 1px #c2c2c2 solid;
   height: 27px;
   padding: 2px 4px;
@@ -30,7 +30,8 @@ table {
   font-size: 14px;
 }
 
-th, td {
+th,
+td {
   border: 1px solid white;
   padding: 10px;
 }
@@ -42,7 +43,7 @@ th, td {
 .tr2 {
   border-bottom: 1px solid lightgray;
   padding-bottom: 20px;
-  width: 8%
+  width: 8%;
 }
 
 .tr3 {
@@ -97,7 +98,7 @@ th, td {
 }
 
 .td5:hover {
-  color: #F39C20;
+  color: #f39c20;
 }
 
 .tag-name span {
@@ -129,7 +130,7 @@ th, td {
 }
 
 #c6 {
-  background-color: #353b48 /* 어두운파란 */
+  background-color: #353b48; /* 어두운파란 */
 }
 
 #c7 {
@@ -146,8 +147,8 @@ th, td {
 
 .btn.btn-primary.paging {
   background-color: white !important;
-  color: #EA8A02 !important;
-  border: 2px #EA8A02 solid !important;
+  color: #ea8a02 !important;
+  border: 2px #ea8a02 solid !important;
   font-weight: bold;
 }
 
@@ -158,9 +159,7 @@ th, td {
 }
 
 .align {
-  margin-left: 45%;
-  margin-top: 18px;
-  margin-bottom: 20px;
+  margin: 10px auto 0;
 }
 
 .writeBtnAlign {
@@ -169,7 +168,10 @@ th, td {
 
 .seath select {
   height: 27px;
-  margin: -1px 5px 0px 5px;
+  margin-right: -5px;
+  border: 1px solid #c2c2c2;
+  border-right: none;
+  border-radius: 3px 0 0 3px;
 }
 
 .answer-style {
@@ -179,15 +181,21 @@ th, td {
 
 .btn.btn-primary.paging.active {
   color: white !important;
-  background-color: #EA8A02 !important;
+  background-color: #ea8a02 !important;
   margin: 5px;
 }
 
-#boardSearch:focus, select:focus {
-  border: #F39C20 1px solid;
+#boardSearch:focus,
+select:focus {
+  border: #f39c20 1px solid;
 }
 
-#boardSEarch, select {
-  transition: .3s;
-  outlsine: none;
+#boardSearch,
+select {
+  transition: 0.3s;
+  outline: none;
+}
+
+.page-btns {
+  margin-bottom: 50px;
 }
