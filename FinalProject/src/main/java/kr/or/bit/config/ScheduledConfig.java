@@ -19,7 +19,7 @@ public class ScheduledConfig {
   @Autowired
   SqlSession sqlSession;
   
-  @Scheduled(cron = "0 01 00 * * ?")
+  @Scheduled(cron = "0 59 23 * * ?")
   public void scheduleCheckMember() {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     List<Member> memberList = memberDao.selectStudent();
