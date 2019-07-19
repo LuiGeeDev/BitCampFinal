@@ -97,7 +97,9 @@
                 <div id="boardCommentWrapper">
                   <!-- 요기부터 댓글테이블 -->
                   <div class="boardContent iteration"
-                    th:each="comment : ${comments}">
+                    th:each="comment : ${comments}"
+                    th:onclick="location.href='/mypage/home/content?article_id=[[${comment.article_id}]]'"
+                    >
                     <div class="boardId cont-style" id="commentId">#[[${comment.id}]]</div>
                     <div class="boardTitleforComment cont-style"
                       id="commentContent" th:utext="${comment.content}"></div>

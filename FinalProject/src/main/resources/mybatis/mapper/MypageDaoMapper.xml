@@ -61,4 +61,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY id DESC
 		LIMIT #{pager.start}, #{pager.articlesOnPage}
 	</select>
+	<select id="selectMyCommentByContent" resultType="kr.or.bit.model.Comment">
+		SELECT *
+		FROM Comment c
+		LEFT JOIN ARTICLE a 
+		ON c.article_id = a.id
+		LEFT JOIN BOARD b 
+		ON a.board_id = b.id 
+		WHERE a.ENABLE = 1 AND c.username=#{username} AND c.content LIKE '%${boardSearch}%' AND not b.boardtype in (4,6)
+		ORDER BY c.id DESC
+	</select>
 </mapper>

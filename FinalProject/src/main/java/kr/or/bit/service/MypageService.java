@@ -165,5 +165,20 @@ public class MypageService {
     }
     return articleList;
   }
+  
+  
+  
+  public List<Comment> selectMyCommentsByboardSearch(String boardSearch,String criteria,String username) {
+    MypageDao mypageDao = sqlSession.getMapper(MypageDao.class);
+    List<Comment> commentList = null;
+    if(criteria.equals("Commentcontent")) {
+      commentList = mypageDao.selectMyCommentByContent(boardSearch, username);
+    }
+    for (Comment comment : commentList) {
+      comment.setTimeLocal(comment.getTime().toLocalDateTime());
+    }
+    return commentList;
+  }
+  
 
 }
