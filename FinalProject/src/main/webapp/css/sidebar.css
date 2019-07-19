@@ -1,76 +1,199 @@
-.sidebar {
-  text-align: center;
-  display: flex;
-  justify-content: center;
+@charset "UTF-8";
+
+body {
+  font-family: "Nanum Gothic";
+  background-color: #f2f4f7;
 }
 
-.logo {
-  text-align: center;
-  width: 90%;
-  border-bottom: 1px solid white;
-  margin: 0 3px 0 3px;
-}
-
-.logo img {
-  width: 80%;
+.barTitle {
   margin-top: 10px;
 }
 
-.user-photo {
-  margin: 10px 0 10px 0;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
 }
 
-.user-profile {
-  border-bottom: 1px solid white;
-  margin: 0 3px 3px 3px;
+.barTitle h5 {
+  font-size: 14px;
+  font-weight: 600;
 }
 
-.side-nav {
+.title {
+  font-size: 14px;
+}
+
+.moreRow {
+  display: flex;
+}
+
+.moreLotation {
+  margin-left: auto;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.myclassWrapper {
+  margin-top: 2%;
+}
+
+.processBar {
+  display: flex;
+  margin: 0 0 10px auto;
+  flex-direction: column;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 8px;
+  width: 500px;
+  height: 206.8px;
+  padding: 20px;
+  padding-top: 30px;
+}
+
+.processBar h5 {
+  font-size: 14px;
+}
+
+.recentHomework {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 8px;
+  height: 46.5%;
+  margin-bottom: 2.7%;
+  padding: 10 0 0 20;
+  padding: 15px;
+  position: relative;
+}
+
+.recentHomeworkcontent {
+  display: inline-block;
+  font-size: 14px;
   width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
 }
 
-.nav-icon {
-  padding: 13px 0;
-  font-size: 16px;
+.recentProjectcontent {
+  font-size: 14px;
 }
 
-.nav-icon a {
-  color: white;
+.recentProject {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 8px;
+  height: 46.5%;
+  padding: 15px;
 }
 
-.nav-icon:active i {
-  transform: scale(0.97);
+.recentBoard {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin: 0 auto 10px 10px;
 }
 
-.active-menu {
-  background: white;
-  box-sizing: border-box;
-  border-left: 5px solid #f39c12;
+.myclassBoard {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 10px;
+  margin: 0 auto 10px;
+  width: 910px;
+  padding: 20px;
 }
 
-.active-menu a {
-  color: #2d3e50 !important;
+.cardshadow {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  background-color: white;
 }
 
-.side-nav-menu a {
-  text-decoration: none;
-  color: #2d3e50;
-  display: block;
-  padding: 10px 10px;
+.barDate {
+  color: gray;
+  font-size: 14px;
 }
 
-.side-nav-menu {
-  padding: 20px 0 80px;
+.progres {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+}
+
+.progres > span {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 5px;
+  border: 1px solid;
+  border-radius: 5px;
+}
+
+.progressview {
+  font-size: 14px;
+}
+
+#class-recent article tr:hover {
+  cursor: pointer;
+  background-color: gray;
+}
+
+#class-recent-article th {
+  padding: 5px;
+  width: 200px;
+  text-align: center;
+  font-size: 15px;
+}
+
+#class-recent-article td {
+  font-size: 14px;
+  padding: 5px 5px;
+  text-align: center;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.CalendarCard {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 10px;
+  margin: 0 auto 50px;
+  width: 910px;
+  padding: 20px;
+  background-color: white;
+}
+
+.fc-toolbar h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 3px;
+}
+
+.fc-day-header span {
+  font-size: 14px;
+}
+
+.fc-day-number {
+  font-size: 14px;
+}
+
+.homework-title {
+  max-width: 300px;
+  color: black;
+}
+
+.period {
+  position: absolute;
+  right: 15px;
+  font-size: 11px;
+  line-height: 21px;
+  font-weight: bold;
+}
+
+.article-info a {
+  color: #292929;
+}
+
+.article-info:hover {
+  background-color: #f7f7f7;
 }
 
 .side-nav-menu a {
   margin-right: 18px;
-}
-
-.side-nav-menu a:hover {
-  background: #f39c12;
-  color: white;
 }
