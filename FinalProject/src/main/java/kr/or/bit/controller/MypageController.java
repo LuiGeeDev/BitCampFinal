@@ -65,7 +65,7 @@ public class MypageController {
     String username = Helper.userName();
     List<Article> article1 = articleDao.selectAllArticleByUsername(username);
     // List<Article> article2 = mypageService.allArticleByUsername(username);
-    List<Comment> comments = commentDao.selectAllCommentByUsername(username);
+    List<Comment> comments = mypageDao.selectAllMyCommentByUsername(username);
     List<Article> article2 = null;
     Pager pager = null;
     if (boardSearch != null) {
@@ -80,6 +80,7 @@ public class MypageController {
       pager = new Pager(page, mypageDao.countAllMyArticle(username));
       article2 = mypageService.selectAllMyArticlesByUsername(pager, username);
     }
+    
     Member user = memberDao.selectMemberByUsername(username);
     Course course = courseDao.selectCourse(user.getCourse_id());
     int completion = mypageService.coursePeriod(username);
@@ -88,7 +89,6 @@ public class MypageController {
     model.addAttribute("comments", comments);
     model.addAttribute("article1", article1);
     model.addAttribute("article2", article2);
-    model.addAttribute("user", user);
     model.addAttribute("pager", pager);
     model.addAttribute("page", page);
     model.addAttribute("criteria", criteria);
@@ -104,7 +104,7 @@ public class MypageController {
     MypageDao mypageDao = sqlSession.getMapper(MypageDao.class);
     String username = Helper.userName();
     List<Article> article1 = articleDao.selectAllArticleByUsername(username);
-    List<Comment> comments = commentDao.selectAllCommentByUsername(username);
+    List<Comment> comments = mypageDao.selectAllMyCommentByUsername(username);
     if (boardSearch != null) {
       if (criteria.equals("Commentcontent")) {
         comments = mypageService.selectMyCommentsByboardSearch(boardSearch, criteria, username);
@@ -193,6 +193,6 @@ public class MypageController {
       member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
       service.updateMemberWithoutFile(member);
     }
-    return "redirect:/mypage";
+    return "redirect:/";
   }
 }

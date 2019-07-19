@@ -85,6 +85,11 @@ public class StackController {
       pager = new Pager(page, stackDao.countAllStackArticle());
       stackList = articleService.selectAllStackArticles(pager);
     }
+    List<Tag> tags = stackDao.showTagList();
+    
+    System.out.println(tags);
+    
+    model.addAttribute("tags",tags);
     model.addAttribute("stacklist", stackList);
     model.addAttribute("pager", pager);
     model.addAttribute("page", page);
@@ -126,6 +131,23 @@ public class StackController {
     model.addAttribute("stackcontent", article);
     articleUpdateService.viewCount(article);
     return "stack/content";
+  }
+  
+  @PostMapping("/plusTag")
+  public @ResponseBody List<Tag> plusTag(String tag, String color) {
+    StackDao stackDao = sqlsession.getMapper(StackDao.class);
+    stackDao.plusTag(tag, color);
+    List<Tag> taglist = stackDao.showTagList();
+    
+    return taglist;
+  }
+  
+  @GetMapping("/deleteTag")
+  public String deleteTag(String tag) {
+    StackDao stackDao = sqlsession.getMapper(StackDao.class);
+    stackDao.deleteTagName(tag);
+    
+    return "redirect:/stack";
   }
   
   @GetMapping("/insertScrap")

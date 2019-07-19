@@ -113,16 +113,15 @@
           <div class="issue-main">
             <div class="issue-title">
               <span class="writer">
-                <strong>
-                <span th:text="${comment.writer.name}">윤종석
-                </span>님
-                </strong>이
+                <strong
+                  ><span th:text="${comment.writer.name}">윤종석</span
+                  >님</strong
+                >이
                 <span
                   th:text="${#temporals.format(comment.timeLocal, 'yyyy년 M월 d일')}"
                   >2019년 7월 1일</span
                 >에 올림
               </span>
-              <span class="troubleCommentWriter" th:text="${comment.username}"></span>
               <span
                 th:if="${comment.username == article.username}"
                 class="author-badge"

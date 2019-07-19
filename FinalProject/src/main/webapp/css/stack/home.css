@@ -1,13 +1,9 @@
 @charset "UTF-8";
 
 .title {
-  width: 80%;
-  margin: 20px auto;
   font-size: 18px;
   font-weight: bold;
-  padding-bottom: 19px;
-  border-bottom: 1px solid #EEEEEE;
-  margin-bottom: 16px;
+  padding-right: 10px;
 }
 
 #boardSearch {
@@ -15,9 +11,17 @@
   padding: 5px 8px;
 }
 
-.title h3 {
-  font-size: 18px;
-  font-weight: bold;
+.TopNav {
+  display: flex;
+  width: 80%;
+  margin: 20px auto;
+  padding-bottom: 19px;
+  border-bottom: 1px solid #EEEEEE;
+  margin-bottom: 16px;
+}
+
+.plusTag {
+  padding: 4px 7px;
 }
 
 table {
@@ -260,4 +264,94 @@ td[colspan="2"] {
 .article-title {
   font-size: 16px;
   color: #292929;
+}
+
+.tag-text {
+  font-size: 14px;
+  margin-top: 4px;
+  color: gray;
+  height: 28px;
+  margin-right: 3px;
+  width: 141px;
+}
+
+.tag-plus-btn {
+  padding: 4px 4px;
+  margin-top: 3.2px;
+  height: 30px;
+}
+
+.tag-body {
+  display: flex;
+  font-size: 14px;
+  padding-left: 10px;
+}
+
+.tag-list {
+  font-size: 14px;
+  border: 1px solid #e0e0e0;
+  padding: 7px 16px;
+  margin: 9px;
+  :;
+}
+
+.tag-nav {
+  display: flex;
+}
+
+.tag-content {
+  display: flex;
+}
+
+.tagName {
+  width: 46%;
+  padding-top: 5px;
+}
+
+.tagColor {
+  display: flex;
+  width: 55%;
+}
+
+.color-style {
+  background-color: white;
+  padding: 0px;
+  width: 35px;
+  height: 37px;
+  padding-bottom: 1px;
+  border: 0px;
+  margin-right: 2px;
+}
+
+.color-style2 {
+  background-color: white;
+  padding: 0px;
+  width: 30px;
+  height: 34px;
+  padding-bottom: 1px;
+  border: 0px;
+}
+
+.modalSize {
+  
+}
+
+.tagcolorspan {
+  padding-left: 5px;
+  padding-top: 5px;
+}
+
+.tagColorNav {
+  display: flex;
+  width: 50%;
+  padding-top: 5px;
+  font-weight: bold;
+}
+
+.tagDelete{
+  
+}
+
+.NameStyle{
+  font-weight: bold;
 }

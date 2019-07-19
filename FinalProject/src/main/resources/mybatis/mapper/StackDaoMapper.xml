@@ -67,6 +67,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM tag
 		WHERE tag=#{tag};
 	</select>
+	<insert id="plusTag">
+		INSERT INTO tag (tag, color)
+		VALUES (#{tag}, #{color});
+	</insert>
+	<delete id="deleteTagName">
+		DELETE 
+		FROM tag
+		WHERE tag = #{tag}
+	</delete>
 	<insert id="insertTag">
 		INSERT INTO article_tag (tag_id, article_id)
 		VALUES (#{tag_id}, #{article_id});
