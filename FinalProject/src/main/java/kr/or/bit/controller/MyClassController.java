@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javassist.expr.NewArray;
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.BoardDao;
+import kr.or.bit.dao.CategoryDao;
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.FilesDao;
 import kr.or.bit.dao.GroupDao;
@@ -41,6 +42,7 @@ import kr.or.bit.dao.TimelineDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Board;
 import kr.or.bit.model.BoardAddRemove;
+import kr.or.bit.model.Category;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.Files;
@@ -88,11 +90,13 @@ public class MyClassController {
 
   @GetMapping("")
   public String mainPage(Model model) {
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-    CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    
     Course course = courseDao.selectCourse(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id());
     course.setEndDate(course.getEnd_date().toLocalDate());
     course.setStartDate(course.getStart_date().toLocalDate());
@@ -107,6 +111,7 @@ public class MyClassController {
     int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
     List<Article> recentArticles = articleDao.selectArticlesForClassMain(course.getId());
     for (Article article : recentArticles) {
+      article.setBoardtype(boardDao.selectBoardById(article.getBoard_id()).getBoardtype());
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
       article.setTimeLocal(article.getTime().toLocalDateTime());
     }
@@ -344,10 +349,16 @@ public class MyClassController {
   public String boardPage(Model model) {
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    CategoryDao categorydao = sqlSession.getMapper(CategoryDao.class);
+    
     String username = Helper.userName();
     Member user = memberDao.selectMemberByUsername(username);
     List<Board> boardlist = boardDao.selectMyClassBoard(user.getCourse_id());
+    
+    List<Category> categories = categorydao.selectCategoryByCourseid(user.getCourse_id());
+    
     model.addAttribute("boardlist", boardlist);
+    model.addAttribute("categories", categories);
     return "myclass/teacher/create/board";
   }
 

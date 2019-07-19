@@ -88,7 +88,12 @@
           </div>
           <div class="modal-footer">
             <input type="hidden" value="" id="article_id" />
-            <a id="copy" th:href="@{/test/copy?ids=}" class="btn btn-outline-primary btn-sm">옮기기</a>
+            <a
+              id="copy"
+              th:href="@{/test/copy?ids=}"
+              class="btn btn-outline-primary btn-sm"
+              >옮기기</a
+            >
           </div>
         </div>
       </div>
@@ -268,7 +273,10 @@
               id.slice(1)
             );
             list.scroll(function() {
-              if (list.height() + list.scrollTop() + 0.25 > list[0].scrollHeight) {
+              if (
+                list.height() + list.scrollTop() + 0.25 >
+                list[0].scrollHeight
+              ) {
                 callByScroll();
               }
             });
@@ -300,7 +308,13 @@
               $(".copy-article-preview-content").html(article.content);
               $("#article_id").val($("#article_id").val() + article.id + ",");
               const link = $("#copy").prop("href");
-              $("#copy").prop("href", link.slice(0, link.lastIndexOf("=") + 1) + $("#article_id").val().slice(0, -1));
+              $("#copy").prop(
+                "href",
+                link.slice(0, link.lastIndexOf("=") + 1) +
+                  $("#article_id")
+                    .val()
+                    .slice(0, -1)
+              );
               $(".article-id-list .ss-content").append(
                 `<div class="article-id-item"><span class="article-id-title">${
                   article.title
@@ -308,16 +322,23 @@
                   article.id
                 }"><i class="far fa-times-circle"></i></button></div>`
               );
-              
+
               $(".article-id-delete").off("click");
               $(".article-id-delete").click(function() {
-                $(this).parent().remove();
+                $(this)
+                  .parent()
+                  .remove();
                 const oldVal = $("#article_id").val();
                 const index = oldVal.indexOf(this.id);
-                const newVal = oldVal.slice(0, index) + oldVal.slice(index + this.id.toString().length + 1);
+                const newVal =
+                  oldVal.slice(0, index) +
+                  oldVal.slice(index + this.id.toString().length + 1);
                 $("#article_id").val(newVal);
                 const link = $("#copy").prop("href");
-                $("#copy").prop("href", link.slice(0, link.lastIndexOf("=") + 1) + newVal.slice(0, -1));
+                $("#copy").prop(
+                  "href",
+                  link.slice(0, link.lastIndexOf("=") + 1) + newVal.slice(0, -1)
+                );
               });
             }
           }).done(function() {
@@ -328,4 +349,3 @@
     </script>
   </body>
 </html>
-

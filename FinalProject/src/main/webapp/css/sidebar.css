@@ -66,10 +66,6 @@
   padding: 20px 0 80px;
 }
 
-.side-nav-menu a {
-  margin-right: 18px;
-}
-
 .side-nav-menu a:hover {
   background: #f39c12;
   color: white;

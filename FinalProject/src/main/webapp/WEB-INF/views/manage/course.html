@@ -261,11 +261,11 @@
               >
                 <div class="th">강사 이름</div>
                 <input type="text" name="name" id="teacher-name" />
-                <div class="th">계정명</div>
+                <div class="th">아이디</div>
                 <div class="input-username">
                   <input type="text" name="username" id="teacher-username" />
                   <span class="username-error username-message"
-                    >올바른 계정명이 아닙니다</span
+                    >올바른 아이디가 아닙니다</span
                   >
                   <span class="username-duplicate username-message"
                     >이미 존재하는 아이디입니다</span
@@ -274,7 +274,7 @@
                 <div class="th">이메일</div>
                 <input type="email" name="email" id="teacher-email" />
                 <div class="modal-footer">
-                  <button type="submit" class="btn btn-outline-primary">
+                  <button type="submit" class="btn btn-outline-primary" id="createTeacherBtn">
                     생성
                   </button>
                   <button
@@ -294,40 +294,20 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script>
-      /* $("#createClassBtn").click(function(event){
-        studentAmountcourse_Name
-        const start_date = $("#start_date").val();
-        const end_date = $("#end_date").val();
-        const now = new Date(Date.now());
-        const now_date = now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();
-		console.log("오늘날짜 : "+now_date);
-		console.log("시작날짜 : "+start_date)
-        console.log("start_date < now_date : "+(start_date < now_date));
-        
-        if((start_date > end_date) || (start_date < now_date) || ) {
-          event.preventDefault();
-          Swal.fire({
-  	  	    type: 'error',
-  	  	    text: '다시 입력해주세요 !!',
-  	  	  })
-        }
-        
-      }); */
       $("#start_date, #end_date").change(function() {
-        console.log("아우");
         const start_date = $("#start_date").val();
         const end_date = $("#end_date").val();
         const now = new Date(Date.now());
         const now_date = now.getFullYear()+"-"+((now.getMonth()+1) < 10 ? "0"+(now.getMonth()+1) : now.getMonth()+1 )+"-"+(now.getDate() < 10 ? "0"+now.getDate() : now.getDate());
         
 		if(start_date < now_date) {
+		  $("#start_date").val("");
           event.preventDefault();
           Swal.fire({
       	    type: 'error',
       	    text: '날짜를 확인하세요!',
       	  })
         }
-
 		
         $("#classRoomSelect").empty();
         $.ajax({
@@ -372,14 +352,19 @@
             });
           }
         });
-        
       });
 	
       $("#end_date").change(function() {
         const start_date = $("#start_date").val();
         const end_date = $("#end_date").val();
-    		if(start_date > end_date) {
-              event.preventDefault();
+    		if (start_date == ""){
+              $("#end_date").val("");
+              Swal.fire({
+          	    type: 'error',
+          	    text: '시작일 부터 입력하세요!',
+          	  })
+            } else if(start_date > end_date) {
+    		  $("#end_date").val("");
               Swal.fire({
           	    type: 'error',
           	    text: '종료일이 바르지 않습니다!',
@@ -387,6 +372,9 @@
             }
   		});
       
+      $("#start_date").change(function() {
+        $("#end_date").val("");
+      });
       $("#createClassBtn").click(function(event){
         const now = new Date(Date.now());
         const now_date = now.getFullYear()+"-"+((now.getMonth()+1) < 10 ? "0"+(now.getMonth()+1) : now.getMonth()+1 )+"-"+(now.getDate() < 10 ? "0"+now.getDate() : now.getDate());
@@ -417,7 +405,6 @@
       	    text: '모두 입력 하세요!',
       	  })
         }
-        
       });
       
       function checkIdDuplicates(username) {
@@ -464,8 +451,9 @@
           }
         });
       });
-
-      $("#teacher-form").submit(function() {
+   
+      $("#teacher-form").submit(function(event) {
+        event.preventDefault();
         const teacherName = $("#teacher-name").val();
         const teacherUsername = $("#teacher-username").val();
         const teacherEmail = $("#teacher-email").val();
@@ -475,14 +463,16 @@
 
         checkDuplicates.then(function(data) {
           duplicates = data;
+          console.log(data);
           if (
-              !teacherName ||
-              !teacherUsername ||
-              !teacherEmail ||
-              !isValid ||
-              duplicates
+              teacherName &&
+              teacherUsername &&
+              teacherEmail &&
+              isValid &&
+              !duplicates
             ) {
-              event.preventDefault();
+              $("#teacher-form").off("submit");
+              $("#teacher-form").trigger("submit");
             }
         });
       });

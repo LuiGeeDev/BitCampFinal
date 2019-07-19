@@ -271,13 +271,13 @@
   left: 0;
 }
 .timeline-nav-button--prev:before {
-  background-image: url(../images/arrow-left.svg);
+  background-image: url(/resources/images/arrow-left.svg);
 }
 .timeline-nav-button--next {
   right: 0;
 }
 .timeline-nav-button--next:before {
-  background-image: url(../images/arrow-right.svg);
+  background-image: url(/resources/images/arrow-right.svg);
 }
 .timeline--mobile {
   padding: 0;

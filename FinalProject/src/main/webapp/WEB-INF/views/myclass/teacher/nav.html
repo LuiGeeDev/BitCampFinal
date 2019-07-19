@@ -4,17 +4,26 @@
     <nav th:fragment="teacher-nav(active)">
       <ul class="project-nav-list">
         <a href="#" th:href="@{/myclass/setting}">
-          <li class="project-nav-link" th:classappend="${active} == 'manage' ? active-list">
+          <li
+            class="project-nav-link"
+            th:classappend="${active} == 'manage' ? active-list"
+          >
             우리 반 관리
           </li>
         </a>
         <a href="#" th:href="@{/myclass/create/project}">
-          <li class="project-nav-link" th:classappend="${active} == 'project' ? active-list">
+          <li
+            class="project-nav-link"
+            th:classappend="${active} == 'project' ? active-list"
+          >
             프로젝트 시작
           </li>
         </a>
         <a href="#" th:href="@{/myclass/create/board}">
-          <li class="project-nav-link" th:classappend="${active} == 'board' ? active-list">
+          <li
+            class="project-nav-link"
+            th:classappend="${active} == 'board' ? active-list"
+          >
             게시판 생성
           </li>
         </a>

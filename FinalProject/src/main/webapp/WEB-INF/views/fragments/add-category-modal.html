@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+  <div class="modal" tabindex="-1" role="dialog"
+    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true"
+    th:fragment="add-category-modal">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h5 class="title">카테고리를 선택하세요</h5>
+          
+            <div class="list-group"
+              th:each="category, iter : ${categories}">
+              <h6 class="list-group-item list-group-item-action"
+                th:id="${category.id}"
+                th:text="${category.category}" ></h6>
+            </div>
+        </div>
+        <div class="btn-group">
+          <button type="submit" id="submit-button" class="btn btn-primary btn-sm">선택</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
