@@ -32,8 +32,7 @@ table {
   border-collapse: collapse;
 }
 
-th,
-td {
+th, td {
   color: #2d3436;
   padding: 12px;
 }
@@ -311,7 +310,7 @@ td {
   border-radius: 30px;
   border-collapse: collapse;
   background-color: #f7f7f7;
-  width: 75%;
+  width: 80%;
   margin-bottom: 20px;
 }
 
@@ -405,12 +404,12 @@ td {
   font-weight: bold;
 }
 
-.stackIcon {
-<<<<<<< HEAD
-  color: #F39B10;
-=======
+.stackIcon { <<<<<<<
+  HEAD color: #F39B10; =======
   color: #f39b10;
->>>>>>> 09627893a8cb7e1876593a0da81caa6a03350363
+  >>>>>>>
+  09627893
+  a8cb7e1876593a0da81caa6a03350363
 }
 
 .my-comment-name {
@@ -477,7 +476,6 @@ td {
   width: 20px;
   height: 20px;
 }
-
 
 .content-size {
   min-height: 150px;
