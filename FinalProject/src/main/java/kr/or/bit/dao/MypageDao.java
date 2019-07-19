@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import kr.or.bit.model.Article;
+import kr.or.bit.model.Comment;
 import kr.or.bit.utils.Pager;
 
 /*
@@ -28,5 +29,10 @@ public interface MypageDao {
   List<Article> selectMyArticleByWriter(@Param("pager") Pager pager, @Param("boardSearch") String boardSearch, @Param("username") String username);
   
   List<Article> selectEnableArticleByUsername2(@Param("pager") Pager pager, @Param("username") String username);
+  
+  List<Comment> selectMyCommentByContent(@Param("boardSearch") String boardSearch, @Param("username") String username);
+  
+  List<Comment> selectAllMyCommentByUsername(String username);
+
   
 }

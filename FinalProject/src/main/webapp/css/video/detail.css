@@ -264,3 +264,9 @@
   margin-bottom:50px;
   padding: 4px 8px;
 }
+
+#commentWriterName {
+  font-weight: bold;
+  font-size: 14px;
+  cursor:default;
+}

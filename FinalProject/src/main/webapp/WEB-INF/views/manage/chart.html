@@ -10,75 +10,91 @@
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
-    <div class="page-top"><div class="page-title">회원통계페이지</div></div>
+      <div class="page-top"><div class="page-title">회원통계페이지</div></div>
 
-    <div class="chartPage">
-      <div class="chart-row">
-        <div class="chart-column-left">
-          <!-- 첫번째 차트 -->
-          <div class="chart-container">
-            <div class="chart-title">과목별 개강 클래스 비율</div>
-            <div class="chart-content">
-              <div id="chart-one"></div>
-            </div>
-          </div>
-          <!-- 두번째 차트 -->
-          <div class="chart-container">
-            <div class="chart-title">클래스별 중도 탈락자 </div>
-            <div class="chart-content">
-              <div id="chart-two"></div>
-            </div>
-          </div>
-        </div>
-        <!-- 클래스 리스트 -->
-        <div class="chart-column-right">
-          <div class="course-list-container">
-            <div class="course-title">학원 클래스 리스트</div>
-            <div class="course-list-table">
-              <div class="course-list-category">
-                <!-- <div class="start_date">시작일</div> -->
-                <!-- <div class="end_date">종료일</div> -->
-                <div class="course_name">과정명</div>
-                <div class="teacher">강사</div>
-                <div class="subject">과목</div>
-                <div class="classroom">강의실</div>
-                <div class="students">학생수</div>
+      <div class="chartPage">
+        <div class="chart-row">
+          <div class="chart-column-left">
+            <!-- 첫번째 차트 -->
+            <div class="chart-container">
+              <div class="chart-title">과목별 개강 클래스 비율</div>
+              <div class="chart-content">
+                <div id="chart-one"></div>
               </div>
-              <div class="course-list">
-                <div class="course-list-row" th:each="courseList : ${courseList}">
-                  <!-- <div class="start_date" th:text="${courseList.start_date}">시작일</div> -->
-                  <!-- <div class="end_date" th:text="${courseList.end_date}">종료일</div> -->
-                  <div class="course_name" th:text="${courseList.course_name}">과정명</div>
-                  <div class="teacher" th:text="${courseList.teacher}">강사</div>
-                  <div class="subject" th:text="${courseList.subject_name}">과목</div>
-                  <div class="classroom" th:text="${courseList.classroom_id}+'강의실'">강의실</div>
-                  <div class="students" th:text="${courseList.students}">학생수</div>
+            </div>
+            <!-- 두번째 차트 -->
+            <div class="chart-container">
+              <div class="chart-title">클래스별 중도 탈락자</div>
+              <div class="chart-content">
+                <div id="chart-two"></div>
+              </div>
+            </div>
+          </div>
+          <!-- 클래스 리스트 -->
+          <div class="chart-column-right">
+            <div class="course-list-container">
+              <div class="course-title">학원 클래스 리스트</div>
+              <div class="course-list-table">
+                <div class="course-list-category">
+                  <!-- <div class="start_date">시작일</div> -->
+                  <!-- <div class="end_date">종료일</div> -->
+                  <div class="course_name">과정명</div>
+                  <div class="teacher">강사</div>
+                  <div class="subject">과목</div>
+                  <div class="classroom">강의실</div>
+                  <div class="students">학생수</div>
+                </div>
+                <div class="course-list">
+                  <div
+                    class="course-list-row"
+                    th:each="courseList : ${courseList}"
+                  >
+                    <!-- <div class="start_date" th:text="${courseList.start_date}">시작일</div> -->
+                    <!-- <div class="end_date" th:text="${courseList.end_date}">종료일</div> -->
+                    <div
+                      class="course_name"
+                      th:text="${courseList.course_name}"
+                    >
+                      과정명
+                    </div>
+                    <div class="teacher" th:text="${courseList.teacher}">
+                      강사
+                    </div>
+                    <div class="subject" th:text="${courseList.subject_name}">
+                      과목
+                    </div>
+                    <div
+                      class="classroom"
+                      th:text="${courseList.classroom_id}+'강의실'"
+                    >
+                      강의실
+                    </div>
+                    <div class="students" th:text="${courseList.students}">
+                      학생수
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="chart-row">
-        <!-- 세번째 차트 -->
-        <div class="chart-container-row">
-          <div class="chart-title-left">회원 활동 통계 데이터</div>
-          <div class="chart-content-left">
-            <div id="chart-three"></div>
+        <div class="chart-row">
+          <!-- 세번째 차트 -->
+          <div class="chart-container-row">
+            <div class="chart-title-left">회원 활동 통계 데이터</div>
+            <div class="chart-content-left">
+              <div id="chart-three"></div>
+            </div>
+          </div>
+          <!-- 네번째 차트 -->
+          <div class="chart-container-row">
+            <div class="chart-title-right"></div>
+            <div class="chart-content-right">
+              <div id="chart-four"></div>
+            </div>
           </div>
         </div>
-        <!-- 네번째 차트 -->
-        <div class="chart-container-row">
-          <div class="chart-title-right"></div>
-          <div class="chart-content-right">
-            <div id="chart-four"></div>
-          </div>  
-        </div>
       </div>
-    </div>
-    
-    
-     
     </div>
 
     <!-- 필요하다면 이 아래에 외부 자바스크립트도 추가 가능 -->
@@ -90,201 +106,200 @@
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/data.js"></script>
     <script src="https://code.highcharts.com/modules/drilldown.js"></script>
-    
-    
+
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script th:inline="javascript">
-    
-      const chartOne = [[${chartOne}]];
-      const chartTwo = [[${chartTwo}]];
-      const chartThree = [[${chartThree}]];
-      const chartFour = [[${chartFour}]];
-      
-      //첫번째 차트
-	  const chartOneData = [];
-      chartOne.forEach(function(course) {
-        let courseArray = [];
-        courseArray.push(course.subject_name);
-        courseArray.push(course.divisionResult);
-        chartOneData.push(courseArray);
-      });
-      
-      //두번째 차트
-      const enabledNum = [];
-      const courseName = [];
-      chartTwo.forEach(function(enabled) {
-        enabledNum.push(enabled.count);
-        courseName.push(enabled.course_name);
-      });
 
-      //세번째 차트
-      const articleNum = [];
-      const nameThree = [];
-      chartThree.forEach(function(article) {
-        articleNum.push(article.count);
-        nameThree.push(article.name);
-      });
-      
-      //네번째 차트
-      const commentNum = [];
-      const nameFour = [];
-      chartFour.forEach(function(comment) {
-        commentNum.push(comment.count);
-        nameFour.push(comment.name);
-      });
-      
-      
-      //첫번째 차트
-      Highcharts.chart('chart-one', {
-        chart: {
-          type: 'pie',
-          options3d: {
-            enabled: true,
-            alpha: 45,
-            beta: 0
-          }
-        },
-        title: {
-          text: ''
-        },
-        tooltip: {
-          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            depth: 35,
-            dataLabels: {
-              enabled: true,
-              format: '{point.name}'
-            }
-          }
-        },
-        series: [{
-          type: 'pie',
-          name: '비율',
-          data: chartOneData
-        }]
-      });
-   
-      //두번째 차트
-      const chart = Highcharts.chart('chart-two', {
+          const chartOne = [[${chartOne}]];
+          const chartTwo = [[${chartTwo}]];
+          const chartThree = [[${chartThree}]];
+          const chartFour = [[${chartFour}]];
 
-        title: {
-          text: ''
-        },
+          //첫번째 차트
+       const chartOneData = [];
+          chartOne.forEach(function(course) {
+            let courseArray = [];
+            courseArray.push(course.subject_name);
+            courseArray.push(course.divisionResult);
+            chartOneData.push(courseArray);
+          });
 
-        subtitle: {
-          text: '내림차순'
-        },
-        
-        xAxis: {
-          categories: courseName
-        },
-        
-        chart: {
-          inverted: true,
-          polar: false
-        },
+          //두번째 차트
+          const enabledNum = [];
+          const courseName = [];
+          chartTwo.forEach(function(enabled) {
+            enabledNum.push(enabled.count);
+            courseName.push(enabled.course_name);
+          });
 
-        series: [{
-          type: 'column',
-          name: '인원',
-          colorByPoint: true,
-          data: enabledNum,
-          showInLegend: false
-        }]
+          //세번째 차트
+          const articleNum = [];
+          const nameThree = [];
+          chartThree.forEach(function(article) {
+            articleNum.push(article.count);
+            nameThree.push(article.name);
+          });
 
-      });
+          //네번째 차트
+          const commentNum = [];
+          const nameFour = [];
+          chartFour.forEach(function(comment) {
+            commentNum.push(comment.count);
+            nameFour.push(comment.name);
+          });
 
-      //세번째 차트
-      Highcharts.chart('chart-three', {
-      chart: {
-          type: 'column',
-          options3d: {
-              enabled: true,
-              alpha: 0,
-              beta: 0,
-              depth: 50
-          }
-      },
-      title: {
-          text: ''
-      },
-      
-      subtitle: {
-        text: '글가장 많이 쓴 학생'
-      },
-      
-      plotOptions: {
-          column: {
-              depth: 25
-          }
-      },
-      xAxis: {
-          categories: nameThree,
-          labels: {
-              skew3d: true,
-              style: {
-                  fontSize: '11px'
+
+          //첫번째 차트
+          Highcharts.chart('chart-one', {
+            chart: {
+              type: 'pie',
+              options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
               }
-          }
-      },
-      yAxis: {
-          title: {
-              text: null
-          }
-      },
-      series: [{
-          name: '개수',
-          data: articleNum
-      }]
-  });
-      
-      //네번째 차트
-      Highcharts.chart('chart-four', {
-      chart: {
-          type: 'column',
-          options3d: {
-              enabled: true,
-              alpha: 0,
-              beta: 0,
-              depth: 50
-          }
-      },
-      title: {
-          text: ''
-      },
-
-      subtitle: {
-        text: '댓글 가장 많이 쓴 학생'
-      },
-      
-      plotOptions: {
-          column: {
-              depth: 25
-          }
-      },
-      xAxis: {
-          categories: nameFour,
-          labels: {
-              skew3d: true,
-              style: {
-                  fontSize: '11px'
+            },
+            title: {
+              text: ''
+            },
+            tooltip: {
+              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+              pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 35,
+                dataLabels: {
+                  enabled: true,
+                  format: '{point.name}'
+                }
               }
-          }
-      },
-      yAxis: {
+            },
+            series: [{
+              type: 'pie',
+              name: '비율',
+              data: chartOneData
+            }]
+          });
+
+          //두번째 차트
+          const chart = Highcharts.chart('chart-two', {
+
+            title: {
+              text: ''
+            },
+
+            subtitle: {
+              text: '내림차순'
+            },
+
+            xAxis: {
+              categories: courseName
+            },
+
+            chart: {
+              inverted: true,
+              polar: false
+            },
+
+            series: [{
+              type: 'column',
+              name: '인원',
+              colorByPoint: true,
+              data: enabledNum,
+              showInLegend: false
+            }]
+
+          });
+
+          //세번째 차트
+          Highcharts.chart('chart-three', {
+          chart: {
+              type: 'column',
+              options3d: {
+                  enabled: true,
+                  alpha: 0,
+                  beta: 0,
+                  depth: 50
+              }
+          },
           title: {
-              text: null
-          }
-      },
-      series: [{
-          name: '개수',
-          data: commentNum
-      }]
-  });
+              text: ''
+          },
+
+          subtitle: {
+            text: '글가장 많이 쓴 학생'
+          },
+
+          plotOptions: {
+              column: {
+                  depth: 25
+              }
+          },
+          xAxis: {
+              categories: nameThree,
+              labels: {
+                  skew3d: true,
+                  style: {
+                      fontSize: '11px'
+                  }
+              }
+          },
+          yAxis: {
+              title: {
+                  text: null
+              }
+          },
+          series: [{
+              name: '개수',
+              data: articleNum
+          }]
+      });
+
+          //네번째 차트
+          Highcharts.chart('chart-four', {
+          chart: {
+              type: 'column',
+              options3d: {
+                  enabled: true,
+                  alpha: 0,
+                  beta: 0,
+                  depth: 50
+              }
+          },
+          title: {
+              text: ''
+          },
+
+          subtitle: {
+            text: '댓글 가장 많이 쓴 학생'
+          },
+
+          plotOptions: {
+              column: {
+                  depth: 25
+              }
+          },
+          xAxis: {
+              categories: nameFour,
+              labels: {
+                  skew3d: true,
+                  style: {
+                      fontSize: '11px'
+                  }
+              }
+          },
+          yAxis: {
+              title: {
+                  text: null
+              }
+          },
+          series: [{
+              name: '개수',
+              data: commentNum
+          }]
+      });
     </script>
   </body>
 </html>

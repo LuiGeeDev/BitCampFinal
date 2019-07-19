@@ -303,23 +303,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     resultType="kr.or.bit.model.Article">
     select a.id, a.title, time, board_name, a.username,
     a.board_id
-    from article
-    a
+    from article a
     left join board b
     on a.board_id = b.id
-    left
-    join member m
-    on
-    m.username = a.username
-    where b.course_id =
-    #{course_id}
-    and
-    b.boardtype not in (1, 2, 4, 6)
+    left join member m
+    on m.username = a.username
+    where b.course_id = #{course_id}
+    and b.boardtype not in (1, 2, 4, 6)
     and level = 1
-    order by
-    a.id desc
-    LIMIT
-    5
+    order by a.id desc
+    LIMIT 5
   </select>
   <select id="selectTagList" resultType="kr.or.bit.model.Tag">
     SELECT id, tag

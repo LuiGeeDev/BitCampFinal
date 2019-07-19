@@ -404,12 +404,8 @@ th, td {
   font-weight: bold;
 }
 
-.stackIcon { <<<<<<<
-  HEAD color: #F39B10; =======
+.stackIcon {
   color: #f39b10;
-  >>>>>>>
-  09627893
-  a8cb7e1876593a0da81caa6a03350363
 }
 
 .my-comment-name {

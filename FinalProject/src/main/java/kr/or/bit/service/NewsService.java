@@ -54,11 +54,8 @@ public class NewsService {
       }
       br.close();
     } catch (UnsupportedEncodingException e) {
-      System.out.println("뉴스: " + e.getMessage());
     } catch (MalformedURLException e) {
-      System.out.println("뉴스: " + e.getMessage());
     } catch (IOException e) {
-      System.out.println("뉴스: " + e.getMessage());
     }
     
     return resp.toString();

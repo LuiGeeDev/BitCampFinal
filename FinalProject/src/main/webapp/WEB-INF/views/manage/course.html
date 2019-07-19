@@ -294,7 +294,6 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script>
-    
       $("#start_date, #end_date").change(function() {
         const start_date = $("#start_date").val();
         const end_date = $("#end_date").val();
@@ -452,31 +451,32 @@
           }
         });
       });
-      
-   $("#teacher-form").submit(function() {
-     const teacherName = $("#teacher-name").val();
-     const teacherUsername = $("#teacher-username").val();
-     const teacherEmail = $("#teacher-email").val();
-     const checkDuplicates = checkIdDuplicates(teacherUsername);
-     let isValid = checkIdValid(teacherUsername);
-     let duplicates;
-
-     checkDuplicates.then(function(data) {
-       event.preventDefault();
-       duplicates = data;
-       console.log(duplicates);
-       if (
-           !teacherName ||
-           !teacherUsername ||
-           !teacherEmail ||
-           !isValid ||
-           duplicates
-         ) {
-           event.preventDefault();
-         }
-     });
-   });
    
+      $("#teacher-form").submit(function(event) {
+        event.preventDefault();
+        const teacherName = $("#teacher-name").val();
+        const teacherUsername = $("#teacher-username").val();
+        const teacherEmail = $("#teacher-email").val();
+        const checkDuplicates = checkIdDuplicates(teacherUsername);
+        let isValid = checkIdValid(teacherUsername);
+        let duplicates;
+
+        checkDuplicates.then(function(data) {
+          duplicates = data;
+          console.log(data);
+          if (
+              teacherName &&
+              teacherUsername &&
+              teacherEmail &&
+              isValid &&
+              !duplicates
+            ) {
+              $("#teacher-form").off("submit");
+              $("#teacher-form").trigger("submit");
+            }
+        });
+      });
+
       $(".delete").click(function(event){
         const id = $(this).attr("id");
         const row = $(this)

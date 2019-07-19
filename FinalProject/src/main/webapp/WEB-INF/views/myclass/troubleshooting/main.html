@@ -10,6 +10,7 @@
       th:href="@{/css/myclass/troubleshooting/troubleshooting.css}"
     />
     <link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
+    <link rel="stylesheet" th:href="@{/css/myclass/myclass.css}" />
   </head>
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
@@ -19,8 +20,8 @@
         <!-- 검색창, 글쓰기 버튼 -->
         <div class="search-bar">
           <form method="get">
-            <input type="hidden" name="group_id" th:value="${group.id}">
-            <input th:if="${closed}" type="hidden" name="q" value="closed">
+            <input type="hidden" name="group_id" th:value="${group.id}" />
+            <input th:if="${closed}" type="hidden" name="q" value="closed" />
             <select class="search-option" name="criteria">
               <option value="title">제목</option>
               <option value="content">내용</option>
@@ -41,9 +42,15 @@
         <!-- 게시판 글 -->
         <div class="board">
           <div class="board-title">
-            <a href="" th:href="@{/myclass/project/troubleshooting(group_id=${group.id})}" class="link-open">
+            <a
+              href=""
+              th:href="@{/myclass/project/troubleshooting(group_id=${group.id})}"
+              class="link-open"
+            >
               <i class="fas fa-exclamation-circle link-icon"></i>
-              <span class="open">미해결 문제 <span th:text="${articlesOpened}">0</span>개</span>
+              <span class="open"
+                >미해결 문제 <span th:text="${articlesOpened}">0</span>개</span
+              >
             </a>
             <a
               href=""
@@ -51,32 +58,58 @@
               class="link-closed"
             >
               <i class="fas fa-check-circle link-icon"></i>
-              <span class="closed">해결 문제 <span th:text="${articlesClosed}">0</span>개</span>
+              <span class="closed"
+                >해결 문제 <span th:text="${articlesClosed}">0</span>개</span
+              >
             </a>
           </div>
           <div class="board-articles">
             <div class="board-issue" th:if="${articleList.size() == 0}">
-              <span class="no-issue">아직 글이 없습니다. 첫 글을 남겨 조원들과 이야기해보세요.</span>
+              <span class="no-issue"
+                >아직 글이 없습니다. 첫 글을 남겨 조원들과 이야기해보세요.</span
+              >
             </div>
-            <a th:href="@{/myclass/project/troubleshooting/read(id=${article.id}, group_id=${group.id})}" th:each="article : ${articleList}">
-             <div class="board-issue">
-              <div class="closed">
-                <i th:if="${article.option.issue_closed == 0}" class="fas fa-exclamation-circle"></i>
-                <i th:if="${article.option.issue_closed == 1}" class="fas fa-check-circle"></i>
-              </div>
-              <div class="issue-title">
-                <h3 th:text="${article.title}">오늘 저녁은 배가 고프다</h3>
-                <p class="issue-writer-time">
-                  <span th:text="${article.writer.name}">윤종석</span> 
-                  <span th:text="${#temporals.format(article.timeLocal, 'MM-dd HH:mm')}">03-21 10:39</span>
-                </p>
-              </div>
-              <div class="issue-tags">
-                <span class="tag" th:each="tag : ${article.tags}" th:text="${tag.tag}">DB</span>
-              </div>
-              <div class="issue-comment">
-                <i class="far fa-comment-alt"></i><span class="comment-size" th:text="${article.commentlist.size()}">5</span>
-              </div>
+            <a
+              th:href="@{/myclass/project/troubleshooting/read(id=${article.id}, group_id=${group.id})}"
+              th:each="article : ${articleList}"
+            >
+              <div class="board-issue">
+                <div class="closed">
+                  <i
+                    th:if="${article.option.issue_closed == 0}"
+                    class="fas fa-exclamation-circle"
+                  ></i>
+                  <i
+                    th:if="${article.option.issue_closed == 1}"
+                    class="fas fa-check-circle"
+                  ></i>
+                </div>
+                <div class="issue-title">
+                  <h3 th:text="${article.title}">오늘 저녁은 배가 고프다</h3>
+                  <p class="issue-writer-time">
+                    <span th:text="${article.writer.name}">윤종석</span>
+                    <span
+                      th:text="${#temporals.format(article.timeLocal, 'MM-dd HH:mm')}"
+                      >03-21 10:39</span
+                    >
+                  </p>
+                </div>
+                <div class="issue-tags">
+                  <span
+                    class="tag"
+                    th:each="tag : ${article.tags}"
+                    th:text="${tag.tag}"
+                    >DB</span
+                  >
+                </div>
+                <div class="issue-comment">
+                  <i class="far fa-comment-alt"></i
+                  ><span
+                    class="comment-size"
+                    th:text="${article.commentlist.size()}"
+                    >5</span
+                  >
+                </div>
               </div>
             </a>
           </div>
@@ -85,20 +118,86 @@
       <div class="row">
         <!-- 페이지 버튼 -->
         <div class="page-btns">
-          <a th:href="@{/myclass/project/troubleshooting(page=${pager.prevPage}, group_id=${group.id})}" class="btn btn-outline-primary" th:if="${pager.prev and !closed and criteria == null}">이전</a>
-          <a th:href="@{/myclass/project/troubleshooting(page=${pager.prevPage}, group_id=${group.id}, q='closed')}" class="btn btn-outline-primary" th:if="${pager.prev and closed and criteria == null}">이전</a>
-          <a th:href="@{/myclass/project/troubleshooting(page=${pager.prevPage}, group_id=${group.id}, criteria=${criteria}, word=${word})}" class="btn btn-outline-primary" th:if="${pager.prev and !closed and criteria != null}">이전</a>
-          <a th:href="@{/myclass/project/troubleshooting(page=${pager.prevPage}, group_id=${group.id}, criteria=${criteria}, word=${word}, q='closed')}" class="btn btn-outline-primary" th:if="${pager.prev and closed and criteria != null}">이전</a>
-          <th:block th:each="i : ${#numbers.sequence(pager.startPage, pager.endPage)}">
-            <a th:href="@{/myclass/project/troubleshooting(group_id=${group.id}, page=${i})}" class="btn" th:text="${i}" th:if="${!closed and criteria == null}" th:classappend="${pager.currentPage == i} ? 'btn-primary' : 'btn-outline-primary'"></a>
-            <a th:href="@{/myclass/project/troubleshooting(group_id=${group.id}, page=${i}, q='closed')}" class="btn" th:text="${i}" th:if="${closed and criteria == null}" th:classappend="${pager.currentPage == i} ? 'btn-primary' : 'btn-outline-primary'"></a>
-            <a th:href="@{/myclass/project/troubleshooting(group_id=${group.id}, page=${i}, criteria=${criteria}, word=${word})}" class="btn" th:text="${i}" th:if="${!closed and criteria != null}" th:classappend="${pager.currentPage == i} ? 'btn-primary' : 'btn-outline-primary'"></a>
-            <a th:href="@{/myclass/project/troubleshooting(group_id=${group.id}, page=${i}, q='closed', criteria=${criteria}, word=${word})}" class="btn" th:text="${i}" th:if="${closed and criteria != null}" th:classappend="${pager.currentPage == i} ? 'btn-primary' : 'btn-outline-primary'"></a>
+          <a
+            th:href="@{/myclass/project/troubleshooting(page=${pager.prevPage}, group_id=${group.id})}"
+            class="btn btn-outline-primary"
+            th:if="${pager.prev and !closed and criteria == null}"
+            >이전</a
+          >
+          <a
+            th:href="@{/myclass/project/troubleshooting(page=${pager.prevPage}, group_id=${group.id}, q='closed')}"
+            class="btn btn-outline-primary"
+            th:if="${pager.prev and closed and criteria == null}"
+            >이전</a
+          >
+          <a
+            th:href="@{/myclass/project/troubleshooting(page=${pager.prevPage}, group_id=${group.id}, criteria=${criteria}, word=${word})}"
+            class="btn btn-outline-primary"
+            th:if="${pager.prev and !closed and criteria != null}"
+            >이전</a
+          >
+          <a
+            th:href="@{/myclass/project/troubleshooting(page=${pager.prevPage}, group_id=${group.id}, criteria=${criteria}, word=${word}, q='closed')}"
+            class="btn btn-outline-primary"
+            th:if="${pager.prev and closed and criteria != null}"
+            >이전</a
+          >
+          <th:block
+            th:each="i : ${#numbers.sequence(pager.startPage, pager.endPage)}"
+          >
+            <a
+              th:href="@{/myclass/project/troubleshooting(group_id=${group.id}, page=${i})}"
+              class="btn"
+              th:text="${i}"
+              th:if="${!closed and criteria == null}"
+              th:classappend="${pager.currentPage == i} ? 'btn-primary' : 'btn-outline-primary'"
+            ></a>
+            <a
+              th:href="@{/myclass/project/troubleshooting(group_id=${group.id}, page=${i}, q='closed')}"
+              class="btn"
+              th:text="${i}"
+              th:if="${closed and criteria == null}"
+              th:classappend="${pager.currentPage == i} ? 'btn-primary' : 'btn-outline-primary'"
+            ></a>
+            <a
+              th:href="@{/myclass/project/troubleshooting(group_id=${group.id}, page=${i}, criteria=${criteria}, word=${word})}"
+              class="btn"
+              th:text="${i}"
+              th:if="${!closed and criteria != null}"
+              th:classappend="${pager.currentPage == i} ? 'btn-primary' : 'btn-outline-primary'"
+            ></a>
+            <a
+              th:href="@{/myclass/project/troubleshooting(group_id=${group.id}, page=${i}, q='closed', criteria=${criteria}, word=${word})}"
+              class="btn"
+              th:text="${i}"
+              th:if="${closed and criteria != null}"
+              th:classappend="${pager.currentPage == i} ? 'btn-primary' : 'btn-outline-primary'"
+            ></a>
           </th:block>
-          <a th:href="@{/myclass/project/troubleshooting(page=${pager.nextPage}, group_id=${group.id})}" class="btn btn-outline-primary" th:if="${pager.next and !closed and criteria == null}">다음</a>
-          <a th:href="@{/myclass/project/troubleshooting(page=${pager.nextPage}, group_id=${group.id}, q='closed')}" class="btn btn-outline-primary" th:if="${pager.next and closed and criteria == null}">다음</a>
-          <a th:href="@{/myclass/project/troubleshooting(page=${pager.nextPage}, group_id=${group.id}, criteria=${criteria}, word=${word})}" class="btn btn-outline-primary" th:if="${pager.next and !closed and criteria != null}">다음</a>
-          <a th:href="@{/myclass/project/troubleshooting(page=${pager.nextPage}, group_id=${group.id}, criteria=${criteria}, word=${word}, q='closed')}" class="btn btn-outline-primary" th:if="${pager.next and closed and criteria != null}">다음</a>
+          <a
+            th:href="@{/myclass/project/troubleshooting(page=${pager.nextPage}, group_id=${group.id})}"
+            class="btn btn-outline-primary"
+            th:if="${pager.next and !closed and criteria == null}"
+            >다음</a
+          >
+          <a
+            th:href="@{/myclass/project/troubleshooting(page=${pager.nextPage}, group_id=${group.id}, q='closed')}"
+            class="btn btn-outline-primary"
+            th:if="${pager.next and closed and criteria == null}"
+            >다음</a
+          >
+          <a
+            th:href="@{/myclass/project/troubleshooting(page=${pager.nextPage}, group_id=${group.id}, criteria=${criteria}, word=${word})}"
+            class="btn btn-outline-primary"
+            th:if="${pager.next and !closed and criteria != null}"
+            >다음</a
+          >
+          <a
+            th:href="@{/myclass/project/troubleshooting(page=${pager.nextPage}, group_id=${group.id}, criteria=${criteria}, word=${word}, q='closed')}"
+            class="btn btn-outline-primary"
+            th:if="${pager.next and closed and criteria != null}"
+            >다음</a
+          >
         </div>
       </div>
     </div>

@@ -30,7 +30,11 @@
           <h6 class="notice-title">새 알림이 없습니다</h6>
           <p class="notice-content">잠시만 기다려보세요.</p>
         </div>
-        <a class="notice-link" th:href="@{${notice.link}}" th:each="notice : ${allNotices}">
+        <a
+          class="notice-link"
+          th:href="@{${notice.link}}"
+          th:each="notice : ${allNotices}"
+        >
           <div class="notice">
             <h6 class="notice-title" th:text="${notice.title}"></h6>
             <p class="notice-content" th:text="${notice.content}"></p>
@@ -38,11 +42,16 @@
         </a>
       </div>
     </div>
-    <div class="toast-wrapper" aria-live="polite" aria-atomic="true" th:fragment="toast">
+    <div
+      class="toast-wrapper"
+      aria-live="polite"
+      aria-atomic="true"
+      th:fragment="toast"
+    >
       <!-- Position it -->
-        <div class="toast-positioner">
-          <!-- Then put toasts within -->
-        </div>
+      <div class="toast-positioner">
+        <!-- Then put toasts within -->
       </div>
+    </div>
   </body>
 </html>

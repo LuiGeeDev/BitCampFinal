@@ -5,213 +5,228 @@
 >
   <head>
     <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-    <link rel="stylesheet" th:href="@{/css/copy-modal.css}">
+    <link rel="stylesheet" th:href="@{/css/copy-modal.css}" />
     <link rel="stylesheet" th:href="@{/css/myclass/general/general.css}" />
+    <link rel="stylesheet" th:href="@{/css/myclass/myclass.css}" />
   </head>
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
       <div class="wrapper">
-      <div class="board-main-title">
-        <h4 th:text="${board.board_name}"></h4>
-        <div class="search-item">
-          <form method="get">
-            <select class="board-search" name="criteria" >
-              <option value="titleOrContent" selected>제목 + 내용</option>
-              <option value="title">제목</option>
-              <option value="name">글작성자</option>
-            </select>
-            <input type="hidden" name="board_id" th:value="${board.id}" />
-            <input
-              type="text"
-              class="inputtext"
-              id="boardSearch"
-              name="boardSearch"
-              placeholder="검색어를 입력해주세요"
-            />
-            <input type="submit" class="btn btn-primary" value="검색" id="btn-submit" />
-          </form>
-        </div>
-      </div>
-      <div class="board">
-        <div class="board-topnav">
-          <span class="board-title">제목</span>
-          <span class="board-writer">작성자</span>
-          <div class="icon-wrapper">
-            <a th:href="@{/myclass/board/writeDesc(board_id=${board.id})}" class="board-write-time"><span>작성일</span></a>
-            <img
-              src="/css/myclass/general/imgs/pointer.png"
-              class="pointerImg"
-            />
-          </div>
-          <div class="icon-wrapper">
-            <a th:href="@{/myclass/board/viewDesc(board_id=${board.id})}" class="board-count" ><span>조회</span></a>
-            <img
-              src="/css/myclass/general/imgs/pointer.png"
-              class="pointerImg2"
-            />
+        <div class="board-main-title">
+          <h4 th:text="${board.board_name}"></h4>
+          <div class="search-item">
+            <form method="get">
+              <select class="board-search" name="criteria">
+                <option value="titleOrContent" selected>제목 + 내용</option>
+                <option value="title">제목</option>
+                <option value="name">글작성자</option>
+              </select>
+              <input type="hidden" name="board_id" th:value="${board.id}" />
+              <input
+                type="text"
+                class="inputtext"
+                id="boardSearch"
+                name="boardSearch"
+                placeholder="검색어를 입력해주세요"
+              />
+              <input
+                type="submit"
+                class="btn btn-primary"
+                value="검색"
+                id="btn-submit"
+              />
+            </form>
           </div>
         </div>
-        <a
-          th:href="@{/myclass/board/read(article_id=${article.id}, board_id=${board.id})}"
-          class="article"
-          th:each="article : ${articles}"
-        >
-          <div class="board-content">
-            <span class="file" th:if="${article.option.file1 != 0}">
-              <i class="far fa-save"></i>
-            </span>
-            <div class="article-title">
-              <span class="title" th:text="${article.title}"></span>
-              <span
-                class="comment-size"
-                th:if="${article.commentlist.size() > 0}"
-                th:text="'[' + ${article.commentlist.size()} + ']'"
-              ></span>
+        <div class="board">
+          <div class="board-topnav">
+            <span class="board-title">제목</span>
+            <span class="board-writer">작성자</span>
+            <div class="icon-wrapper">
+              <a
+                th:href="@{/myclass/board/writeDesc(board_id=${board.id})}"
+                class="board-write-time"
+                ><span>작성일</span></a
+              >
+              <img
+                src="/css/myclass/general/imgs/pointer.png"
+                class="pointerImg"
+              />
             </div>
-            <span class="writer" th:text="${article.writer.name}"></span>
-            <span
-              class="write-time"
-              th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd')}"
-            ></span>
-            <span class="write-count" th:text="${article.view_count}"></span>
+            <div class="icon-wrapper">
+              <a
+                th:href="@{/myclass/board/viewDesc(board_id=${board.id})}"
+                class="board-count"
+                ><span>조회</span></a
+              >
+              <img
+                src="/css/myclass/general/imgs/pointer.png"
+                class="pointerImg2"
+              />
+            </div>
           </div>
-        </a>
-      </div>
+          <a
+            th:href="@{/myclass/board/read(article_id=${article.id}, board_id=${board.id})}"
+            class="article"
+            th:each="article : ${articles}"
+          >
+            <div class="board-content">
+              <span class="file" th:if="${article.option.file1 != 0}">
+                <i class="far fa-save"></i>
+              </span>
+              <div class="article-title">
+                <span class="title" th:text="${article.title}"></span>
+                <span
+                  class="comment-size"
+                  th:if="${article.commentlist.size() > 0}"
+                  th:text="'[' + ${article.commentlist.size()} + ']'"
+                ></span>
+              </div>
+              <span class="writer" th:text="${article.writer.name}"></span>
+              <span
+                class="write-time"
+                th:text="${#temporals.format(article.timeLocal, 'yyyy-MM-dd')}"
+              ></span>
+              <span class="write-count" th:text="${article.view_count}"></span>
+            </div>
+          </a>
+        </div>
       </div>
       <!-- 일반 리스트 페이지 버튼 -->
-      
+
       <div class="row bottom-row">
-      
-      <div th:if="${#httpServletRequest.requestURI == '/myclass/board'}">
-      
-        <div class="page-btns">
-          <span th:if="${pager.prev}">
-            <a
-              class="btn btn-primary paging"
-              th:href="@{/myclass/board(page=${pager.prevPage},board_id=${board.id})}"
+        <div th:if="${#httpServletRequest.requestURI == '/myclass/board'}">
+          <div class="page-btns">
+            <span th:if="${pager.prev}">
+              <a
+                class="btn btn-primary paging"
+                th:href="@{/myclass/board(page=${pager.prevPage},board_id=${board.id})}"
+              >
+                &laquo;
+              </a>
+            </span>
+            <span
+              th:each="idx : ${#numbers.sequence(pager.startPage,pager.endPage)}"
             >
-              &laquo;
-            </a>
-          </span>
-          <span
-            th:each="idx : ${#numbers.sequence(pager.startPage,pager.endPage)}"
-          >
-         
-            <a
-              th:if="${boardSearch} != null"
-              class="btn btn-primary paging"
-              th:href="@{/myclass/board(page=${idx},boardSearch=${boardSearch},board_id=${board.id})}"
-              th:classappend="${pager.currentPage} == ${idx} ? active"
-              th:text="${idx}"
-            ></a>
-            <a
-              th:if="${boardSearch} == null"
-              class="btn btn-primary paging"
-              th:href="@{/myclass/board(page=${idx},board_id=${board.id})}"
-              th:classappend="${pager.currentPage} == ${idx} ? active"
-              th:text="${idx}"
-            ></a>
-          </span>
-          <span th:if="${pager.next}">
-            <a
-              class="btn btn-primary paging"
-              th:href="@{/myclass/board(page=${pager.nextPage},board_id=${board.id})}"
-            >
-              &raquo;
-            </a>
-          </span>
+              <a
+                th:if="${boardSearch} != null"
+                class="btn btn-primary paging"
+                th:href="@{/myclass/board(page=${idx},boardSearch=${boardSearch},board_id=${board.id})}"
+                th:classappend="${pager.currentPage} == ${idx} ? active"
+                th:text="${idx}"
+              ></a>
+              <a
+                th:if="${boardSearch} == null"
+                class="btn btn-primary paging"
+                th:href="@{/myclass/board(page=${idx},board_id=${board.id})}"
+                th:classappend="${pager.currentPage} == ${idx} ? active"
+                th:text="${idx}"
+              ></a>
+            </span>
+            <span th:if="${pager.next}">
+              <a
+                class="btn btn-primary paging"
+                th:href="@{/myclass/board(page=${pager.nextPage},board_id=${board.id})}"
+              >
+                &raquo;
+              </a>
+            </span>
+          </div>
         </div>
-  </div>
-  
-  <!-- 조회수 정렬 버튼 생성 -->
-    <div th:if="${#httpServletRequest.requestURI == '/myclass/board/viewDesc'}">
-      
-        <div class="page-btns">
-          <span th:if="${pager.prev}">
-            <a
-              class="btn btn-primary paging"
-              th:href="@{/myclass/board/viewDesc(page=${pager.prevPage},board_id=${board.id})}"
+
+        <!-- 조회수 정렬 버튼 생성 -->
+        <div
+          th:if="${#httpServletRequest.requestURI == '/myclass/board/viewDesc'}"
+        >
+          <div class="page-btns">
+            <span th:if="${pager.prev}">
+              <a
+                class="btn btn-primary paging"
+                th:href="@{/myclass/board/viewDesc(page=${pager.prevPage},board_id=${board.id})}"
+              >
+                &laquo;
+              </a>
+            </span>
+            <span
+              th:each="idx : ${#numbers.sequence(pager.startPage,pager.endPage)}"
             >
-              &laquo;
-            </a>
-          </span>
-          <span
-            th:each="idx : ${#numbers.sequence(pager.startPage,pager.endPage)}"
-          >
-         
-            <a
-              th:if="${boardSearch} != null"
-              class="btn btn-primary paging"
-              th:href="@{/myclass/board/viewDesc(page=${idx},boardSearch=${boardSearch},board_id=${board.id})}"
-              th:classappend="${pager.currentPage} == ${idx} ? active"
-              th:text="${idx}"
-            ></a>
-            <a
-              th:if="${boardSearch} == null"
-              class="btn btn-primary paging"
-              th:href="@{/myclass/board/viewDesc(page=${idx},board_id=${board.id})}"
-              th:classappend="${pager.currentPage} == ${idx} ? active"
-              th:text="${idx}"
-            ></a>
-          </span>
-          <span th:if="${pager.next}">
-            <a
-              class="btn btn-primary paging"
-              th:href="@{/myclass/board/viewDesc(page=${pager.nextPage},board_id=${board.id})}"
-            >
-              &raquo;
-            </a>
-          </span>
+              <a
+                th:if="${boardSearch} != null"
+                class="btn btn-primary paging"
+                th:href="@{/myclass/board/viewDesc(page=${idx},boardSearch=${boardSearch},board_id=${board.id})}"
+                th:classappend="${pager.currentPage} == ${idx} ? active"
+                th:text="${idx}"
+              ></a>
+              <a
+                th:if="${boardSearch} == null"
+                class="btn btn-primary paging"
+                th:href="@{/myclass/board/viewDesc(page=${idx},board_id=${board.id})}"
+                th:classappend="${pager.currentPage} == ${idx} ? active"
+                th:text="${idx}"
+              ></a>
+            </span>
+            <span th:if="${pager.next}">
+              <a
+                class="btn btn-primary paging"
+                th:href="@{/myclass/board/viewDesc(page=${pager.nextPage},board_id=${board.id})}"
+              >
+                &raquo;
+              </a>
+            </span>
+          </div>
         </div>
-  </div>
-  
-  
-  <div th:if="${#httpServletRequest.requestURI == '/myclass/board/writeDesc'}">
-      
-        <div class="page-btns">
-          <span th:if="${pager.prev}">
-            <a
-              class="btn btn-primary paging"
-              th:href="@{/myclass/board/writeDesc(page=${pager.prevPage},board_id=${board.id})}"
+
+        <div
+          th:if="${#httpServletRequest.requestURI == '/myclass/board/writeDesc'}"
+        >
+          <div class="page-btns">
+            <span th:if="${pager.prev}">
+              <a
+                class="btn btn-primary paging"
+                th:href="@{/myclass/board/writeDesc(page=${pager.prevPage},board_id=${board.id})}"
+              >
+                &laquo;
+              </a>
+            </span>
+            <span
+              th:each="idx : ${#numbers.sequence(pager.startPage,pager.endPage)}"
             >
-              &laquo;
-            </a>
-          </span>
-          <span
-            th:each="idx : ${#numbers.sequence(pager.startPage,pager.endPage)}"
-          >
-         
-            <a
-              th:if="${boardSearch} != null"
-              class="btn btn-primary paging"
-              th:href="@{/myclass/board/writeDesc(page=${idx},boardSearch=${boardSearch},board_id=${board.id})}"
-              th:classappend="${pager.currentPage} == ${idx} ? active"
-              th:text="${idx}"
-            ></a>
-            <a
-              th:if="${boardSearch} == null"
-              class="btn btn-primary paging"
-              th:href="@{/myclass/board/writeDesc(page=${idx},board_id=${board.id})}"
-              th:classappend="${pager.currentPage} == ${idx} ? active"
-              th:text="${idx}"
-            ></a>
-          </span>
-          <span th:if="${pager.next}">
-            <a
-              class="btn btn-primary paging"
-              th:href="@{/myclass/board/writeDesc(page=${pager.nextPage},board_id=${board.id})}"
-            >
-              &raquo;
-            </a>
-          </span>
+              <a
+                th:if="${boardSearch} != null"
+                class="btn btn-primary paging"
+                th:href="@{/myclass/board/writeDesc(page=${idx},boardSearch=${boardSearch},board_id=${board.id})}"
+                th:classappend="${pager.currentPage} == ${idx} ? active"
+                th:text="${idx}"
+              ></a>
+              <a
+                th:if="${boardSearch} == null"
+                class="btn btn-primary paging"
+                th:href="@{/myclass/board/writeDesc(page=${idx},board_id=${board.id})}"
+                th:classappend="${pager.currentPage} == ${idx} ? active"
+                th:text="${idx}"
+              ></a>
+            </span>
+            <span th:if="${pager.next}">
+              <a
+                class="btn btn-primary paging"
+                th:href="@{/myclass/board/writeDesc(page=${pager.nextPage},board_id=${board.id})}"
+              >
+                &raquo;
+              </a>
+            </span>
+          </div>
         </div>
-  </div>
-  
-  
-  
+
         <div class="write-btns">
-          <button type="button" id="copy-btn" class="btn btn-primary" sec:authorize="hasRole('TEACHER')">글 옮겨오기</button>
+          <button
+            type="button"
+            id="copy-btn"
+            class="btn btn-primary"
+            sec:authorize="hasRole('TEACHER')"
+          >
+            글 옮겨오기
+          </button>
           <a
             th:href="@{/myclass/board/write(board_id=${board.id})}"
             class="btn btn-primary"
