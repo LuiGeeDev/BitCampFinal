@@ -78,25 +78,74 @@
               </span>
             </div>
           </div>
-          <div class="middle-border"></div>
-          <div class="articleWrapper">
-            <div class="tabsWrapper">
-              <div class="articleNavWrapper">
-                <div class="Btns">
-                  <button
-                    id="userArticles"
-                    class="btn btn-outline-primary btnwidth Btnactive"
-                    th:onclick="location.href='/mypage/home'"
-                  >
-                    <span class="nav-font">등록한 게시글</span>
-                  </button>
-                  <button
-                    id="userComments"
-                    class="btn btn-outline-primary btnwidth"
-                    th:onclick="location.href='/mypage/home/comments'"
-                  >
-                    <span class="nav-font">등록한 댓글</span>
-                  </button>
+          <div class="profileProgressBar">
+            <span class="progres">
+              <span>
+                <span
+                  class="progress-bar bg-warning progress-bar-striped"
+                  id="progress"
+                  th:style="'width:' + ${completion} + '%;'"
+                >
+                </span>
+                <span
+                  class="progresPercent"
+                  th:text="${completion} + '% 진행 중'"
+                >
+                </span>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div class="middle-border"></div>
+        <div class="articleWrapper">
+          <div class="tabsWrapper">
+            <div class="articleNavWrapper">
+              <div class="Btns">
+                <button
+                  id="userArticles"
+                  class="btn btn-outline-primary btnwidth Btnactive"
+                  th:onclick="location.href='/mypage/home'"
+                >
+                  <span class="nav-font">등록한 게시글</span>
+                </button>
+                <button
+                  id="userComments"
+                  class="btn btn-outline-primary btnwidth"
+                  th:onclick="location.href='/mypage/home/comments'"
+                >
+                  <span class="nav-font">등록한 댓글</span>
+                </button>
+              </div>
+              <form method="get" class="boardSearchalign">
+                <select size="1" class="selectBar" name="criteria">
+                  <option value="titleOrContent" selected>제목 + 내용</option>
+                  <option value="title">제목</option>
+                </select>
+                <input
+                  type="text"
+                  name="boardSearch"
+                  id="boardSearch"
+                  size="25"
+                  placeholder="검색내용을 적어주세요"
+                />
+                <input
+                  type="submit"
+                  class="btn btn-primary searchBtn"
+                  value="검색"
+                />
+              </form>
+            </div>
+            <div>
+              <div class="board">
+                <div class="boardNav">
+                  <div class="boardId nav-style">글번호</div>
+                  <div class="boardTitle nav-style" id="TitleorContent">
+                    제목
+                  </div>
+                  <div class="boardDate nav-style">작성일</div>
+                  <div class="boardView nav-style" id="boardVoteCount">
+                    조회
+                  </div>
                 </div>
                 <form method="get" class="boardSearchalign">
                   <select size="1" class="selectBar" name="criteria">

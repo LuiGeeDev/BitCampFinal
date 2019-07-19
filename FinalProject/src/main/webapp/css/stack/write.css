@@ -141,10 +141,3 @@ body {
 #select-result {
   display: none
 }
-
-.textarea-size {
-  height: 470px;
-  width: 98%;
-  margin-left: 5px;
-  border-radius: 4px;
-}

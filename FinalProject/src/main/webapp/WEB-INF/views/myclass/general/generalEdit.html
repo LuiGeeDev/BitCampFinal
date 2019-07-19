@@ -113,47 +113,58 @@
         </form>
       </div>
     </div>
-    <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
+  </div>
+  <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script>
-      $(document).ready(function() {
-        const title = $("#input-title");
-        const submitBtn = $("#submit-button");
-        $("#summernote").summernote({
-          height: 485,
-          disableResizeEditor: true
-        });
-        $("#submit-button").click(function() {
-          Swal.fire({
-            type: "success",
-            title: "수정되었습니다",
-            showConfirmButton: false,
-            timer: 1500
-          });
-        });
-        $("#input-file-btn").change(function() {
-          $("#filename").text($("#input-file-btn")[0].files[0].name);
-        });
+      const title = $("#input-title");
+      const content= $(".contentForm");
+  
+      $("#submit-button").click(function() {        
+        const contentTrim=content.val().replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, "").replace(/&nbsp;/gi, "").trim();        
+        if (title.val() == null || title.val().trim() == "" || contentTrim == null || contentTrim == "") {        
+          event.preventDefault();        
+          Swal.fire({        
+            type: 'error',        
+            text: '다시 입력해주세요 !!',        
+          })        
+        }       
       });
-      function deletefile(event) {
-        console.log("이건된다");
-        const div = $(event.target)
-          .parent()
-          .parent();
-        div.empty();
-        if (div.prop("id") == "par1") {
-          $("#count1").submit();
-        } else if (div.prop("id") == "par2") {
-          $("#count2").submit();
-        }
+
+    
+   
+      $(document).ready(function() {                      
+        const title = $("#input-title");          
+        const submitBtn = $("#submit-button");          
+        $("#summernote").summernote({          
+          height: 485,          
+          disableResizeEditor: true          
+        });          
+            
+        $("#input-file-btn").change(function() {            
+          $("#filename").text($("#input-file-btn")[0].files[0].name);            
+        });              
+      });
+    
+  
+      function deletefile(event) {              
+        const div = $(event.target)        
+          .parent()        
+          .parent();        
+        div.empty();        
+        if (div.prop("id") == "par1") {        
+          $("#count1").submit();        
+        } else if (div.prop("id") == "par2") {        
+          $("#count2").submit();        
+        }    
       }
-      function updatefile(event) {
-        const i = $(event.target)
-          .parent()
-          .parent()
-          .children(".filename");
-        i.append("->야발");
+    
+      function updatefile(event) {          
+        const i = $(event.target)          
+        .parent()          
+        .parent()          
+        .children(".filename");
       }
     </script>
   </body>

@@ -78,6 +78,8 @@ public class StackController {
         pager = new Pager(page, stackDao.countStackArticleByWriter(boardSearch));
       }
       stackList = articleService.selectStackArticlesByboardSearch(pager, boardSearch, criteria);
+      
+      
       model.addAttribute("boardSearch", boardSearch);
     } else {
       pager = new Pager(page, stackDao.countAllStackArticle());
@@ -86,6 +88,7 @@ public class StackController {
     model.addAttribute("stacklist", stackList);
     model.addAttribute("pager", pager);
     model.addAttribute("page", page);
+    model.addAttribute("criteria",criteria);
     return "stack/home";
   }
   /*

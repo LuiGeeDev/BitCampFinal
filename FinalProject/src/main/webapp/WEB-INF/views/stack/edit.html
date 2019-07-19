@@ -64,13 +64,22 @@
         tabsize: 2,
         height: 500
       });
-      $(".updateBtn").click(function() {
-        Swal.fire({
-          type: "success",
-          title: "수정되었습니다",
-          showConfirmButton: false,
-          timer: 1500
-        });
+      const title = $("#input-title");
+      const content = $(".contentForm");
+
+      $(".updateBtn").click(function(event) {
+        if (
+          title.val() == null ||
+          title.val().trim() == "" ||
+          content.val() == null ||
+          content.val().trim() == ""
+        ) {
+          event.preventDefault();
+          Swal.fire({
+            type: "error",
+            text: "다시 입력해주세요 !!"
+          });
+        }
       });
     </script>
   </body>

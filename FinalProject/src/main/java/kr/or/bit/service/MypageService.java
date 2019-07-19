@@ -104,6 +104,8 @@ public class MypageService {
       returnURL = "http://localhost:8090/myclass/qna/content?id=" + article_id;
       break;
     }
+    System.out.println("returnURL:"+returnURL);
+    
     return "redirect:" + returnURL;
   }
 
@@ -151,10 +153,8 @@ public class MypageService {
     List<Article> articleList = null;
     if(criteria.equals("titleOrContent")) {
       articleList = mypageDao.selectMyArticleByTitleOrContent(pager,boardSearch, username);
-    }else if(criteria.equals("title")) {
-      articleList = mypageDao.selectMyArticleByTitle(pager,boardSearch, username);
     }else {
-      articleList = mypageDao.selectMyArticleByWriter(pager,boardSearch, username);
+      articleList = mypageDao.selectMyArticleByTitle(pager,boardSearch, username);
     }
     
     for (Article article : articleList) {
@@ -165,5 +165,20 @@ public class MypageService {
     }
     return articleList;
   }
+  
+  
+  
+  public List<Comment> selectMyCommentsByboardSearch(String boardSearch,String criteria,String username) {
+    MypageDao mypageDao = sqlSession.getMapper(MypageDao.class);
+    List<Comment> commentList = null;
+    if(criteria.equals("Commentcontent")) {
+      commentList = mypageDao.selectMyCommentByContent(boardSearch, username);
+    }
+    for (Comment comment : commentList) {
+      comment.setTimeLocal(comment.getTime().toLocalDateTime());
+    }
+    return commentList;
+  }
+  
 
 }

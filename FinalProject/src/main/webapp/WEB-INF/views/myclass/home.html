@@ -252,52 +252,61 @@
     </div>
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script th:inline="javascript">
-      function formatDate(date) {
-        const dateStr = `${date.getFullYear()}-${
-          date.getMonth() + 1 >= 10
-            ? date.getMonth() + 1
-            : "0" + (date.getMonth() + 1)
-        }-${date.getDate() >= 10 ? date.getDate() : "0" + date.getDate()}`;
-        return dateStr;
-      }
+         function formatDate(date) {
+           const dateStr = `${date.getFullYear()}-${
+             date.getMonth() + 1 >= 10
+               ? date.getMonth() + 1
+               : "0" + (date.getMonth() + 1)
+           }-${date.getDate() >= 10 ? date.getDate() : "0" + date.getDate()}`;
+           return dateStr;
+         }
 
-        const calendarEl = document.getElementById("calendar");
-        let calendar = new FullCalendar.Calendar(calendarEl, {
-          plugins: ["dayGrid", "interaction"],
-          defaultView: "dayGridMonth",
-          locale: "ko",
-          columnHeaderFormat: {
-            weekday: "short"
-          },
-          header: {
-            left: "title",
-            center: "",
-            right: "today prev,next"
-          },
-          displayEventTime: false,
-          eventTextColor: "white",
-          events:
-            {
-              url: "/myclass/schedule/get/class",
-              method: "POST",
-              extraParams: {
-                course_id: [[${user.course_id}]]
-              },
-              success: function(data) {
-                console.log(data);
-              },
-              eventDataTransform: function(data) {
-                const start = new Date(data.start);
-                const end = new Date(data.end);
-                const startStr = formatDate(start);
-                const endStr = formatDate(end);
-                data.start = startStr;
-                data.end = endStr;
-                return data;
-              }
-            }
-        });
-        calendar.render();
+           const calendarEl = document.getElementById("calendar");
+           let calendar = new FullCalendar.Calendar(calendarEl, {
+             plugins: ["dayGrid", "interaction"],
+             defaultView: "dayGridMonth",
+             locale: "ko",
+             columnHeaderFormat: {
+               weekday: "short"
+             },
+             header: {
+               left: "title",
+               center: "",
+               right: "today prev,next"
+             },
+             displayEventTime: false,
+             eventTextColor: "white",
+             events:
+               {
+                 url: "/myclass/schedule/get/class",
+                 method: "POST",
+                 extraParams: {
+                   course_id: [[${user.course_id}]]
+                 },
+                 success: function(data) {
+                   console.log(data);
+                 },
+                 eventDataTransform: function(data) {
+                   const start = new Date(data.start);
+                   const end = new Date(data.end);
+                   const startStr = formatDate(start);
+                   const endStr = formatDate(end);
+                   data.start = startStr;
+                   data.end = endStr;
+                   return data;
+                 }
+               }
+           });
+           calendar.render();
+
+           var boardUrl = function(event){
+             console.log(event)
+             if(event.board_name == '질문 게시판'){
+               location.href='/myclass/qna/content?id='+event.id;
+             }else{
+      location.href='/myclass/board/read?article_id='+event.id+"&board_id="+event.board_id;
+             }
+           }
     </script>
     <script
       th:src="@{/js/calendar-interaction.js}"

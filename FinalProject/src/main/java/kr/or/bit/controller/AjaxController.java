@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.ManagerDao;
+import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.MessageDao;
 import kr.or.bit.dao.NotificationDao;
 import kr.or.bit.model.Article;
@@ -174,6 +175,16 @@ public class AjaxController {
     Map<String, Object> returnMap = new HashMap<String, Object>();
     returnMap.put("courseList", courseList);
     returnMap.put("allCount", courseDao.countEndCourseList());
+    return returnMap;
+  }
+  
+  @GetMapping("/manage/students/search")
+  public Map<String, Object> search(@RequestParam String role, int course, int enabled){
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    Map<String, Object> returnMap  = new HashMap<String, Object>();
+    List<Member> searchList = memberDao.selectMemberSearchByAjax(course, role, enabled);
+    returnMap.put("searchList", searchList);
+    returnMap.put("memberCount", memberDao.countMemberSearchByAjax(course, role, enabled));
     return returnMap;
   }
 }

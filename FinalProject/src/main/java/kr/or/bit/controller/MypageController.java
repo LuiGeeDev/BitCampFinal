@@ -44,7 +44,6 @@ import kr.or.bit.utils.Pager;
 @Controller
 @RequestMapping("/mypage")
 public class MypageController {
-
   @Autowired
   private SqlSession sqlSession;
   @Autowired
@@ -65,17 +64,15 @@ public class MypageController {
     MypageDao mypageDao = sqlSession.getMapper(MypageDao.class);
     String username = Helper.userName();
     List<Article> article1 = articleDao.selectAllArticleByUsername(username);
-    //List<Article> article2 = mypageService.allArticleByUsername(username);
+    // List<Article> article2 = mypageService.allArticleByUsername(username);
     List<Comment> comments = commentDao.selectAllCommentByUsername(username);
     List<Article> article2 = null;
     Pager pager = null;
     if (boardSearch != null) {
       if (criteria.equals("titleOrContent")) {
         pager = new Pager(page, mypageDao.countMyArticleByTitleOrContent(boardSearch, username));
-      } else if (criteria.equals("title")) {
-        pager = new Pager(page, mypageDao.countMyArticleByTitle(boardSearch, username));
       } else {
-        pager = new Pager(page, mypageDao.countMyArticleByWriter(boardSearch, username));
+        pager = new Pager(page, mypageDao.countMyArticleByTitle(boardSearch, username));
       }
       article2 = mypageService.selectMyArticlesByboardSearch(pager, boardSearch, criteria, username);
       model.addAttribute("boardSearch", boardSearch);
@@ -83,11 +80,9 @@ public class MypageController {
       pager = new Pager(page, mypageDao.countAllMyArticle(username));
       article2 = mypageService.selectAllMyArticlesByUsername(pager, username);
     }
-
-    
     Member user = memberDao.selectMemberByUsername(username);
     Course course = courseDao.selectCourse(user.getCourse_id());
-    int completion = mypageService.coursePeriod(username);  
+    int completion = mypageService.coursePeriod(username);
     model.addAttribute("completion", completion);
     model.addAttribute("course", course);
     model.addAttribute("comments", comments);
@@ -96,24 +91,33 @@ public class MypageController {
     model.addAttribute("user", user);
     model.addAttribute("pager", pager);
     model.addAttribute("page", page);
+    model.addAttribute("criteria", criteria);
     return "mypage/mypage";
   }
-  
+
   @GetMapping("/home/comments")
-  public String commentsPage(Model model) {
+  public String commentsPage(Model model, String boardSearch, String criteria) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
+    MypageDao mypageDao = sqlSession.getMapper(MypageDao.class);
     String username = Helper.userName();
     List<Article> article1 = articleDao.selectAllArticleByUsername(username);
     List<Comment> comments = commentDao.selectAllCommentByUsername(username);
+    if (boardSearch != null) {
+      if (criteria.equals("Commentcontent")) {
+        comments = mypageService.selectMyCommentsByboardSearch(boardSearch, criteria, username);
+      }
+    } else {
+      comments = mypageDao.selectAllMyCommentByUsername(username);
+    }
     for (Comment comment : comments) {
       comment.setTimeLocal(comment.getTime().toLocalDateTime());
     }
     Member user = memberDao.selectMemberByUsername(username);
     Course course = courseDao.selectCourse(user.getCourse_id());
-    int completion = mypageService.coursePeriod(username); 
+    int completion = mypageService.coursePeriod(username);
     model.addAttribute("completion", completion);
     model.addAttribute("course", course);
     model.addAttribute("comments", comments);
@@ -121,8 +125,6 @@ public class MypageController {
     model.addAttribute("user", user);
     return "mypage/mypageComments";
   }
-  
-  
 
   @GetMapping("/home/content")
   public String getDetail(int article_id) {
@@ -142,31 +144,27 @@ public class MypageController {
     List<Article> articles = mypageService.allArticleByUsername(user);
     return articles;
   }
-  
+
   @GetMapping("/scrap")
   public String getScrapList(Model model) {
     ScrapDao scrapDao = sqlSession.getMapper(ScrapDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     List<Article> scraps = scrapDao.selectAllScrap(Helper.userName());
-    
     for (Article scrap : scraps) {
       scrap.setBoardtype(boardDao.selectBoardById(scrap.getBoard_id()).getBoardtype());
     }
-    
     model.addAttribute("scraps", scraps);
     return "mypage/scrap/scrap";
   }
-  
+
   @PostMapping("/scrap/search")
   public @ResponseBody List<Article> searchScraps(String word) {
     ScrapDao scrapDao = sqlSession.getMapper(ScrapDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     List<Article> scraps = scrapDao.selectScrapByWord(Helper.userName(), word);
-    
     for (Article scrap : scraps) {
       scrap.setBoardtype(boardDao.selectBoardById(scrap.getBoard_id()).getBoardtype());
     }
-    
     return scraps;
   }
 
@@ -183,8 +181,7 @@ public class MypageController {
   @PostMapping("")
   public String updateMember(Member member, Principal principal, MultipartFile files1, HttpServletRequest request)
       throws IllegalStateException, IOException {
-    if (member.getPassword()==null) {
-      
+    if (member.getPassword() == null) {
     }
     if (files1 != null) {
       FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
@@ -198,5 +195,4 @@ public class MypageController {
     }
     return "redirect:/mypage";
   }
-
 }

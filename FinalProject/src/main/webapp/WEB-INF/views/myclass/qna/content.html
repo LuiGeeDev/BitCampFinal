@@ -255,17 +255,16 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script th:inline="javascript">
-       $(document).ready(function() {
-
-         $("#imgp2").click(function(){
-           sendVoteNotice([[${user.name}]], [[${qnacontent.username}]], "/myclass/qna/content?id="+[[${qnacontent.id}]]);
-         })
-         $("#spinner").hide();
-       }).ajaxStart(function() {
-         $("#spinner").show();
-       }).ajaxStop(function() {
-         $("#spinner").hide();
-       });
+      $(document).ready(function() {
+        $("#imgp2").click(function(){
+          sendVoteNotice([[${user.name}]], [[${qnacontent.username}]], "/myclass/qna/content?id="+[[${qnacontent.id}]]);
+        })
+        $("#spinner").hide();
+      }).ajaxStart(function() {
+        $("#spinner").show();
+      }).ajaxStop(function() {
+        $("#spinner").hide();
+      });
 
        $('#voteButton').click(function(data){
          $.ajax({

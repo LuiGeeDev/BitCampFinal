@@ -38,7 +38,11 @@
               />
             </span>
           </div>
-          <textarea class="summernote-parent" name="content" id="summernote">
+          <textarea
+            class="summernote-parent contentForm"
+            name="content"
+            id="summernote"
+          >
           </textarea>
           <button type="submit" class="btn btn-primary" id="submit-button">
             올리기
@@ -51,13 +55,33 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script>
       $(document).ready(function() {
-        const title = $("#input-title");
-        const submitBtn = $("#submit-button");
-
         $("#summernote").summernote({
           height: 485,
           disableResizeEditor: true
         });
+      });
+
+      const title = $("#input-title");
+      const content = $(".contentForm");
+
+      $("#submit-button").click(function() {
+        const contentTrim = content
+          .val()
+          .replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, "")
+          .replace(/&nbsp;/gi, "")
+          .trim();
+        if (
+          title.val() == null ||
+          title.val().trim() == "" ||
+          contentTrim == null ||
+          contentTrim == ""
+        ) {
+          event.preventDefault();
+          Swal.fire({
+            type: "error",
+            text: "다시 입력해주세요 !!"
+          });
+        }
       });
     </script>
   </body>
