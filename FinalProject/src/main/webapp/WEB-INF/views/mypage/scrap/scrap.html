@@ -24,6 +24,9 @@
               <span class="sr-only">Loading...</span>
             </div>
             <div class="scrap-cards">
+              <div th:if="${scraps.isEmpty()}" class="no-result">
+                스크랩한 글이 없습니다. 글에서 북마크를 눌러보세요.
+              </div>
               <th:block th:each="scrap : ${scraps}">
                 <a
                   th:if="${scrap.boardtype == 1}"

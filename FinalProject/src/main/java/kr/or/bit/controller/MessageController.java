@@ -17,25 +17,25 @@ import kr.or.bit.utils.Helper;
 public class MessageController {
   @Autowired
   private SqlSession SqlSession;
-  
+
   @GetMapping("/message")
   public String messageIndex(Model model) {
-    /*String receiver_username = "teacher";*/
+    /* String receiver_username = "teacher"; */
     String username = Helper.userName();
     MessageDao messageDao = SqlSession.getMapper(MessageDao.class);
     List<Message> selectall = messageDao.selectAllMessage(username);
     List<Message> selectSenderMessage = messageDao.selectAllSenderMessage(username);
     int countmessage = messageDao.selectCountMessage(username);
-    for (Message message: selectall) {
+    for (Message message : selectall) {
       message.setTimeDate(new Date(message.getTime().getTime()));
       message.setTimeLocal(message.getTime().toLocalDateTime());
     }
-    
-    for(Message message : selectSenderMessage) {
+
+    for (Message message : selectSenderMessage) {
       message.setTimeDate(new Date(message.getTime().getTime()));
       message.setTimeLocal(message.getTime().toLocalDateTime());
     }
-    
+
     model.addAttribute("selectall", selectall);
     model.addAttribute("countmessage", countmessage);
     model.addAttribute("sendMessage", selectSenderMessage);

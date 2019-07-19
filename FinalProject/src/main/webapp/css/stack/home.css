@@ -26,7 +26,8 @@ table {
   font-size: 14px;
 }
 
-th, td {
+th,
+td {
   color: #2d3436;
   padding: 8px;
 }
@@ -36,7 +37,7 @@ td[colspan="2"] {
 }
 
 .tdtitle {
-  color: #0984E4;
+  color: #0984e4;
   font-size: 19px;
   font-weight: bold;
   cursor: pointer;
@@ -73,7 +74,7 @@ td[colspan="2"] {
 .tdcontent p {
   margin: 0px;
   display: inline;
-  font-family: 'Nanum Gothic' !important;
+  font-family: "Nanum Gothic" !important;
   font-size: 14x !important;
 }
 
@@ -118,7 +119,7 @@ td[colspan="2"] {
   border-radius: 5px;
   color: white;
   padding: 5px;
-  line-height: 2.0em;
+  line-height: 2em;
   cursor: pointer;
 }
 
@@ -147,7 +148,7 @@ td[colspan="2"] {
 }
 
 #c6 {
-  background-color: #353b48 /* 어두운파란 */
+  background-color: #353b48; /* 어두운파란 */
 }
 
 #c7 {
@@ -179,8 +180,8 @@ td[colspan="2"] {
 
 .btn.btn-primary.paging {
   background-color: white;
-  color: #EA8A02;
-  border: 2px #EA8A02 solid;
+  color: #ea8a02;
+  border: 2px #ea8a02 solid;
   font-weight: bold;
 }
 
@@ -189,8 +190,8 @@ td[colspan="2"] {
 }
 
 .btn.btn-primary.paging.active {
-  background-color: #EA8A02;
-  border: 2px #EA8A02 solid;
+  background-color: #ea8a02;
+  border: 2px #ea8a02 solid;
   font-weight: bold;
 }
 
@@ -228,13 +229,13 @@ td[colspan="2"] {
 
 .selectBar {
   height: 32px;
-  margin-right: -1px;
+  margin-right: -4px;
   border-right: none;
 }
 
 .selectBar:focus {
   outline: none;
-  border: 1px solid #F29C20;
+  border: 1px solid #f29c20;
 }
 
 .writer-name {

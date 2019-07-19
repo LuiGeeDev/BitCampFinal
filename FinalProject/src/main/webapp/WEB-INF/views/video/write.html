@@ -21,7 +21,7 @@
             <input type="text" id="input-url" placeholder="Youtube 주소 (https://youtu.be로 시작)" name="url"/>
             <i class="far fa-question-circle info" data-toggle="tooltip" data-placement="bottom" title data-original-title="공유 - 주소 복사"></i>
           </div>
-          <textarea name="content" class="content"></textarea>
+          <textarea name="content" class="content" id="input-content"></textarea>
           <button
             type="submit"
             class="btn btn-primary submit-btn"
@@ -39,12 +39,13 @@
       $(document).ready(function() {
         const title = $("#input-title");
         const url = $("#input-url");
+        const content= $("#input-content");
         const submitBtn = $("#submit-button");
         
         $('[data-toggle="tooltip"]').tooltip();
         
        $(".submit-btn").click(function(event) {
-         if(title.val() == null || title.val().trim() == "" || !url.val().startsWith("https://youtu.be/")) {
+         if(title.val() == null || title.val().trim() == "" || !url.val().startsWith("https://youtu.be/") || content.val() == null ||content.val().trim() == "") {
            event.preventDefault();
            Swal.fire({
    	  	    type: 'error',

@@ -1,244 +1,261 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
-<head>
-<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-<link rel="stylesheet" th:href="@{/css/home.css}" />
-<link rel="stylesheet" th:href="@{/css/message/message.css}" />
-<link rel="stylesheet" th:href="@{/css/modal.css}" />
-</head>
-<body>
-  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
-  <div class="main" th:fragment="main">
-    <div class="row">
-      <div class="message-box2" ss-container>
-        <h4 class="message-title2">
-          <div class="movemov">
-          
-            <i class="far fa-envelope fa-2x ricon"></i>
-          <a href="" class="rMessage">
-            <span class="receiveMessageForm">
-            <span class="text-move">받은쪽지함</span>
-            </span>
-          </a>
-          
-            <i class="far fa-envelope fa-2x sicon"></i> 
-          <a href="" class="sMessage">  
-            <span class="sendMessageForm">
-            <span class="text-moveForm">보낸쪽지함</span>
-            </span>
-          </a>
-          <div class="fitMessage"></div>
-          
-          </div>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout-main :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+    <link rel="stylesheet" th:href="@{/css/message/message.css}" />
+    <link rel="stylesheet" th:href="@{/css/modal.css}" />
+    <link
+      rel="stylesheet"
+      href="/css/common.css"
+      th:href="@{/css/sidebar-main.css}"
+    />
+  </head>
+  <body>
+    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+    <div class="main" th:fragment="main">
+      <div class="row">
+        <div class="message-box2" ss-container>
+          <h4 class="message-title2">
+            <div class="movemov">
+              <i class="far fa-envelope fa-2x ricon"></i>
+              <a href="" class="rMessage">
+                <span class="receiveMessageForm">
+                  <span class="text-move">받은 쪽지함</span>
+                </span>
+              </a>
+
+              <i class="far fa-envelope fa-2x sicon"></i>
+              <a href="" class="sMessage">
+                <span class="sendMessageForm">
+                  <span class="text-moveForm">보낸 쪽지함</span>
+                </span>
+              </a>
+              <div class="fitMessage"></div>
+            </div>
             <div class="message-title-count">
-              <span class="countM" th:text="${countmessage}"></span>개의쪽지가 왔습니다
+              <span class="countM" th:text="${countmessage}"></span>개의 쪽지가
+              왔습니다
             </div>
-        </h4>
-        
-       <div class="receiveMessageList">
-       
-        <div th:if="${selectall.size()} == 0" class="noMessage">
-          <div class="printNoMessage">받은 메시지가 없습니다</div>
-        </div>
-        <!-- 받은쪽지함 리스트 -->
-        <div th:each="all : ${selectall}">
-        
-          <div class="message2">
-            <span class="hidden" th:text="${all.id}"></span>
+          </h4>
 
-            <div class="message-sender2">
-              <span class="hidden" th:text="${all.receiver_username}"></span>
-              <span class="hidden" th:text="${all.sender_username}"></span>
-              <!-- <span class="readbtn"><i class="fas fa-circle"></i>&nbsp;</span> -->
-              <span class="unread" th:unless="${all.checked}"><span
-                class="badge badge-danger">N</span></span><span
-                class="hidden removenoti" th:text="${all.checked}"></span>
-              <span class="sender2" th:text="${all.senderName}"></span>
-              <!-- <span class="time2" th:text="${all.time}"></span> -->
-              <!-- <span class="time2" th:text="${#dates.format(${all.time}, 'dd/MMM/yyyy HH:mm')}"></span> -->
-              <span class="time2"
-                th:text="${#temporals.format(all.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
-              <!--"${#dates.format(all.timeDate, 'yyyy년 MMM dd일 HH:mm')}" 시간과 분까지 나타내려면 이렇게 써야함  -->
-
+          <div class="receiveMessageList">
+            <div th:if="${selectall.size()} == 0" class="noMessage">
+              <div class="printNoMessage">받은 메시지가 없습니다</div>
             </div>
-            <p class="message-preview2" th:text="${all.content}"></p>
+            <!-- 받은쪽지함 리스트 -->
+            <div th:each="all : ${selectall}">
+              <div class="message2">
+                <span class="hidden" th:text="${all.id}"></span>
+
+                <div class="message-sender2">
+                  <span
+                    class="hidden"
+                    th:text="${all.receiver_username}"
+                  ></span>
+                  <span class="hidden" th:text="${all.sender_username}"></span>
+                  <!-- <span class="readbtn"><i class="fas fa-circle"></i>&nbsp;</span> -->
+                  <span class="unread" th:unless="${all.checked}"
+                    ><span class="badge badge-danger">N</span></span
+                  ><span
+                    class="hidden removenoti"
+                    th:text="${all.checked}"
+                  ></span>
+                  <span class="sender2" th:text="${all.senderName}"></span>
+                  <!-- <span class="time2" th:text="${all.time}"></span> -->
+                  <!-- <span class="time2" th:text="${#dates.format(${all.time}, 'dd/MMM/yyyy HH:mm')}"></span> -->
+                  <span
+                    class="time2"
+                    th:text="${#temporals.format(all.timeLocal, 'yyyy-MM-dd HH:mm')}"
+                  ></span>
+                  <!--"${#dates.format(all.timeDate, 'yyyy년 MMM dd일 HH:mm')}" 시간과 분까지 나타내려면 이렇게 써야함  -->
+                </div>
+                <p class="message-preview2" th:text="${all.content}"></p>
+              </div>
+            </div>
           </div>
-        </div>
-        </div>
-        
-        
-        <!-- 내가 보낸 쪽지함 리스트 -->
-        <div class="senderMessageListForm">
-        <div class="senderMessageList">
-           <div th:if="${sendMessage.size()} == 0" class="noSendMessage">
-          <div class="printNoSendMessage">보낸 메시지가 없습니다</div>
-        </div>
-        
-         <div th:each="sendMessage : ${sendMessage}">
-          <div class="message3">
-            <span class="hidden" th:text="${sendMessage.id}"></span>
-            <div class="message-sender2">
-              <span class="hidden" th:text="${sendMessage.receiver_username}"></span>
-              <span class="hidden" th:text="${sendMessage.sender_username}"></span>
-              <!-- <span class="readbtn"><i class="fas fa-circle"></i>&nbsp;</span> -->
-              <!-- <span class="unread" th:unless="${sendMessage.checked}"><span
+
+          <!-- 내가 보낸 쪽지함 리스트 -->
+          <div class="senderMessageListForm">
+            <div class="senderMessageList">
+              <div th:if="${sendMessage.size()} == 0" class="noSendMessage">
+                <div class="printNoSendMessage">보낸 메시지가 없습니다</div>
+              </div>
+
+              <div th:each="sendMessage : ${sendMessage}">
+                <div class="message3">
+                  <span class="hidden" th:text="${sendMessage.id}"></span>
+                  <div class="message-sender2">
+                    <span
+                      class="hidden"
+                      th:text="${sendMessage.receiver_username}"
+                    ></span>
+                    <span
+                      class="hidden"
+                      th:text="${sendMessage.sender_username}"
+                    ></span>
+                    <!-- <span class="readbtn"><i class="fas fa-circle"></i>&nbsp;</span> -->
+                    <!-- <span class="unread" th:unless="${sendMessage.checked}"><span
                 class="badge badge-danger">N</span></span><span
                 class="hidden removenoti" th:text="${sendMessage.checked}"></span> -->
-              <span class="sender2" th:text="${sendMessage.senderName}"></span>
-              <span class="time2"
-                th:text="${#temporals.format(sendMessage.timeLocal, 'yyyy-MM-dd HH:mm')}"></span>
-
+                    <span
+                      class="sender2"
+                      th:text="${sendMessage.senderName}"
+                    ></span>
+                    <span
+                      class="time2"
+                      th:text="${#temporals.format(sendMessage.timeLocal, 'yyyy-MM-dd HH:mm')}"
+                    ></span>
+                  </div>
+                  <p
+                    class="message-preview2"
+                    th:text="${sendMessage.content}"
+                  ></p>
+                </div>
+              </div>
             </div>
-            <p class="message-preview2" th:text="${sendMessage.content}"></p>
           </div>
         </div>
+        <div class="message-paper2">
+          <div
+            class="spinner-border text-warning spin-where"
+            role="status"
+            id="spinner"
+          >
+            <span class="sr-only">Loading...</span>
+          </div>
+
+          <span class="hidden" id="message-sender-id"></span>
+          <!-- 메시지 보낸사람   -->
+          <div class="send-message-icon">
+            <div class="message-right">
+              <i class="far fa-paper-plane fa-2x replyicon" id="reply"></i>
+              <i class="fas fa-trash fa-2x deleteicon" id="delete"></i>
+            </div>
+          </div>
+          <div class="message-sender-name"></div>
+          <!-- 받은쪽지 이름그대로 출력    -->
+
+          <div class="message-timeform">
+            <div class="sender-message"></div>
+            <!-- 메시지 보낸시간 -->
+            <div class="hidden message-sender-time"></div>
+            <div class="message-realtime"></div>
+          </div>
+
+          <!-- 메시지 내용 -->
+
+          <div class="message-sender-content"></div>
         </div>
-        </div>
-        
-        
-        
-        
       </div>
-      <div class="message-paper2">
 
-        <div class="spinner-border text-warning spin-where"
-          role="status" id="spinner">
-          <span class="sr-only">Loading...</span>
-        </div>
-
-        <span class="hidden" id="message-sender-id"></span>
-        <!-- 메시지 보낸사람   -->
-        <div class="send-message-icon">
-          <div class="message-right">
-            <i class="far fa-paper-plane fa-2x replyicon" id="reply"></i> <i
-              class="fas fa-trash fa-2x deleteicon" id="delete"></i>
-          </div>
-        </div>
-        <div class="message-sender-name"></div>
-        <!-- 받은쪽지 이름그대로 출력    -->
-
-        <div class="message-timeform">
-          <div class="sender-message"></div>
-          <!-- 메시지 보낸시간 -->
-          <div class="hidden message-sender-time"></div>
-          <div class="message-realtime"></div>
-        </div>
-
-        <!-- 메시지 내용 -->
-
-        <div class="message-sender-content"></div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="exampleModal" tabindex="-1"
-      role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header messageHead">
-            <h5 class="modal-title" id="exampleModalLabel">쪽지 보내기</h5>
-            <button type="button" class="close" data-dismiss="modal"
-              aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body messageBody">
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header messageHead">
+              <h5 class="modal-title" id="exampleModalLabel">쪽지 보내기</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body messageBody">
               <textarea class="messageTextVal" id="message-text"></textarea>
-
-          </div>
-          <div class="modal-footer messageFooter">
-            <button type="button" class="btn btn-secondary"
-              data-dismiss="modal" id="modal-close-btn">닫기</button>
-            <button type="button" class="btn btn-primary message-submitBtn"
-              id="modal-submitbtn">전송</button>
+            </div>
+            <div class="modal-footer messageFooter">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+                id="modal-close-btn"
+              >
+                닫기
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary message-submitBtn"
+                id="modal-submitbtn"
+              >
+                전송
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- main fragment 끝 -->
+    <!-- main fragment 끝 -->
 
-  <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-  <script th:inline="javascript">
-    $(document).ready(function() {
-      $("#spinner").hide();
-    }).ajaxStart(function() {
-      $("#spinner").show();
-    }).ajaxStop(function() {
-      $("#spinner").hide();
-    });
-    
-    
-   	$(".rMessage").click(function(event) {
-   	 $(".fitMessage").empty();  
-   	$(".senderMessageList").css("display", "none");
-   	$(".receiveMessageList").css("display", "block");
-   	$(".message-title-count").css("display", "block");
-   	$(".sMessage").css("color", "black");
-   	$(".rMessage").css("color", "#F39B10");
-   	$(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime").empty();
-   	event.preventDefault();
-   	});
-   	
-   	$(".sMessage").click(function(event) {
-   	$(".fitMessage").html("<div class='fitMargin'>&nbsp;</div>");
-   	$(".senderMessageListForm").css("display", "block");
-   	$(".receiveMessageList").css("display", "none"); // 메시지 리스트 제거
-   	$(".senderMessageList").css("display", "block"); // 보낸사람 리스트 보여주기
-   	$(".message-title-count").css("display", "none"); // 카운트 안보여주기
-   	$(".rMessage").css("color", "black"); // 받은쪽지함 검은색으로 변경
-   	$(".sMessage").css("color", "#F39B10"); // 보낸쪽지함 주황색으로 변경
-   	$(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime").empty();
-   	$(".fa-paper-plane").css("display", "none");
-    $(".fa-trash").css("display", "none");
-    event.preventDefault();
-   	  
-   	});
-    
-
-   	$("sMessage").hover(function() {
-   	  $(this).css("color", "#F39B10");
-   	});
-    
-    
-    $("#modal-submitbtn").click(function() {
-      const messageText = $("#message-text").val();
-      const messageSenderId = $("#message-sender-id").text();
-      let valueCheck = messageText;         
-      
-	  	if(valueCheck.trim() === "" || valueCheck === null) {
-	  	  Swal.fire({
-	  	    type: 'error',
-	  	    text: '다시 입력해주세요 !!',
-	  	  })
-	  	  	return;
-	  	}
-      $.ajax({
-        url: "/ajax/message/reply",
-        type: "POST",
-        data: {
-          content: messageText,
-          receiver_username: messageSenderId
-        }
-      }).done(function() {
-        $(".modal").modal("hide");
-        Swal.fire({
-          type: 'success',
-          title: '전송되었습니다',
-          showConfirmButton: false,
-          timer: 1500
-        }).then(function() {
-          location.href="/message";
-        });
-        sendMessageNotice([[${user.name}]], messageSenderId);
+    <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script th:inline="javascript">
+      $(document).ready(function() {
+        $("#spinner").hide();
+      }).ajaxStart(function() {
+        $("#spinner").show();
+      }).ajaxStop(function() {
+        $("#spinner").hide();
       });
-    });
-    
-      function getMessage(messageId) {
+
+
+      $(".rMessage").click(function(event) {
+       $(".fitMessage").empty();
+      $(".senderMessageList").css("display", "none");
+      $(".receiveMessageList").css("display", "block");
+      $(".message-title-count").css("display", "block");
+      $(".sMessage").css("color", "black");
+      $(".rMessage").css("color", "#F39B10");
+      $(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime").empty();
+      event.preventDefault();
+      });
+
+      $(".sMessage").click(function(event) {
+      $(".fitMessage").html("<div class='fitMargin'>&nbsp;</div>");
+      $(".senderMessageListForm").css("display", "block");
+      $(".receiveMessageList").css("display", "none"); // 메시지 리스트 제거
+      $(".senderMessageList").css("display", "block"); // 보낸사람 리스트 보여주기
+      $(".message-title-count").css("display", "none"); // 카운트 안보여주기
+      $(".rMessage").css("color", "black"); // 받은쪽지함 검은색으로 변경
+      $(".sMessage").css("color", "#F39B10"); // 보낸쪽지함 주황색으로 변경
+      $(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime").empty();
+      $(".fa-paper-plane").css("display", "none");
+      $(".fa-trash").css("display", "none");
+      event.preventDefault();
+
+      });
+
+
+      $("sMessage").hover(function() {
+        $(this).css("color", "#F39B10");
+      });
+
+
+      $("#modal-submitbtn").click(function() {
+        const messageText = $("#message-text").val();
+        const messageSenderId = $("#message-sender-id").text();
+        let valueCheck = messageText;
+
+      if(valueCheck.trim() === "" || valueCheck === null) {
+        Swal.fire({
+          type: 'error',
+          text: '다시 입력해주세요 !!',
+        })
+        	return;
+      }
         $.ajax({
-          url: "/ajax/message",
+          url: "/ajax/message/reply",
           type: "POST",
           data: {
             id: messageId
@@ -275,51 +292,16 @@
             alert("쪽지를 불러오지 못했습니다.");
           }
         }).done(function() {
-          if ($("#reply")) {
-            $("#reply").click(function() {
-              $(".modal").modal("show");
-              $("#message-text").val("");
-            });
-          }
-          
-          $("#delete").unbind("click");
-          $("#delete").click(function(event) {
-            
-            Swal.fire({
-              title: '정말 삭제하시겠습니까?',
-              type: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#F39B10',
-              cancelButtonColor: '#A6A6A6',
-              confirmButtonText: '네',
-              cancelButtonText: '아니요'
-            }).then((result) => {
-              if (result.value) {
-               
-                $.ajax({
-                  url: "/ajax/message/delete",
-                  type: "POST",
-                  data: {
-                    id: messageId
-                  },
-                  success: function(data) {
-                    Swal.fire({
-                      	title: '삭제되었습니다',
-                      	type: 'success',
-                      	confirmButtonText: '확인',
-                      	confirmButtonColor: '#F39B10'
-                        
-                    }).then(function() {
-                        location.href = "/message";
-                      });
-                    
-                  }
-                });
-                
-              }
-            })
-      
+          $(".modal").modal("hide");
+          Swal.fire({
+            type: 'success',
+            title: '전송되었습니다',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(function() {
+            location.href="/message";
           });
+          sendMessageNotice([[${user.name}]], messageSenderId);
         });
       }
       
@@ -378,31 +360,87 @@
         const messageId = $(this).children(".hidden").text();
         getMessage(messageId);
 
-        $.ajax({
-          url: "/ajax/message/update",
-          type: "POST",
-          data: {
-            id: messageId
-          },
-          success: function(data) {
-            removeIcon
-              .children()
-              .siblings(".unread")
-              .remove();
-          }
-        });
-      });
-      
-      $(".message3").click(function(event) {
-        const messageId = $(this).children(".hidden").text();
-        getMessage2(messageId);
-      });
-      
-      $(".close-btn").click(function() {
-        $(".receiver").remove();
-        $(".modal").css("display", "none");
-      });
 
+        function getMessage2(messageId) {
+          $.ajax({
+            url: "/ajax/message",
+            type: "POST",
+            data: {
+              id: messageId
+            },
+            success: function(data) {
+             /*  console.log("new Date : " + new Date(${data.time})); */
+              $(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime").empty();
+              $("#message-sender-id").append(`${data.sender_username}`);
+              $(".message-sender-name")
+                .append(`${data.senderName}`)
+                .append(`(${data.sender_username})`);
+              $(".message-sender-time").append(`${data.time}`);
+              const time = Number($(".message-sender-time").text());
+              const date = new Date(time);
+              let minutes = date.getMinutes();
+              minutes = (minutes < 10) ? "0" + minutes : minutes;
+              let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
+              hours = hours < 10 ? "0" +  hours : hours;
+              let newHours = date.getHours();
+              newHours = (newHours < 10) ? "0" + newHours : newHours;
+
+              let getdate = date.getDate();
+              getdate = (getdate < 10) ? "0" + getdate : getdate;
+              let getmonth = date.getMonth() + 1;
+              getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
+
+              const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ newHours +`:` + minutes;
+              $(".message-realtime").append(timedate);
+              $(".message-sender-content").append(`${data.content}`);
+              $(".sender-message").append(`<h6 class="text-font">보낸쪽지</h6>`);
+            },
+            error: function(xhr) {
+              alert("쪽지를 불러오지 못했습니다.");
+            }
+          })
+        };
+
+        $(".message2").click(function(event) {
+          const removeIcon = $(event.currentTarget).children(".message-sender2");
+          const removeNotification = removeIcon.children().siblings(".removenoti");
+
+          const count = $(".message-count");
+          const count2 = $(".countM");
+          if (removeNotification.text() == 0) {
+            count.text(count.text() - 1);
+            count2.text(count2.text() - 1);
+            removeNotification.text(1);
+          }
+
+          const messageId = $(this).children(".hidden").text();
+          getMessage(messageId);
+          console.log("messageId : " + messageId);
+
+          $.ajax({
+            url: "/ajax/message/update",
+            type: "POST",
+            data: {
+              id: messageId
+            },
+            success: function(data) {
+              removeIcon
+                .children()
+                .siblings(".unread")
+                .remove();
+            }
+          });
+        });
+
+        $(".message3").click(function(event) {
+          const messageId = $(this).children(".hidden").text();
+          getMessage2(messageId);
+        });
+
+        $(".close-btn").click(function() {
+          $(".receiver").remove();
+          $(".modal").css("display", "none");
+        });
     </script>
-</body>
+  </body>
 </html>
