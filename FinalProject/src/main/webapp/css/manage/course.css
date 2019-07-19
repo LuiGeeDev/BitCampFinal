@@ -174,7 +174,14 @@ input {
   font-weight: bold;
   font-size: 14px;
 }
-
+.next-btn, .prev-btn{
+  margin:5px;
+}
+.btn.btn-primary.paging.next-btn:hover, .btn.btn-primary.paging.prev-btn:hover{
+  margin:5px;
+  background-color:#EA8A02 !important;
+  color:white !important;
+}
 th, td {
   text-align: center;
   padding: 0px;

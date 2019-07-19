@@ -38,4 +38,6 @@ public interface BoardDao {
   List<Article> selectViewCountByDesc(int board_id);
   
   List<Article> selectWriteDayByDesc(int board_id);
+  
+  List<Board> selectBoardByCategory(@Param("category") int category, @Param("courseid") int courseid);
 }
