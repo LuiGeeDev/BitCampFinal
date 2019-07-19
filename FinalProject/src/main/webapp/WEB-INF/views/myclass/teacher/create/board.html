@@ -22,9 +22,9 @@
                 th:each="board : ${boardlist}"
                 th:if="${board.boardtype == 3 and board.board_name != '공지사항'}"
               >
-                <span class="board-name" th:text="${board.board_name}"
-                  >자유게시판</span
-                >
+                <span class="board-name" th:text="${board.board_name}">
+                  자유게시판
+                </span>
                 <button class="remove-btn">
                   <i class="far fa-minus-square"></i>
                 </button>
@@ -47,7 +47,8 @@
                   id="new-board-input"
                   placeholder="추가할 게시판 이름 입력"
                 />
-                <button>추가하기</button>
+                <input type="hidden" id="new-category-input" value="1" />
+                <button id="add-btn">추가하기</button>
               </div>
               <i class="far fa-caret-square-left fa-3x"></i>
               <i class="far fa-caret-square-right fa-3x"></i>
@@ -61,10 +62,19 @@
           </div>
         </div>
       </div>
+      <div
+        th:replace="fragments/add-category-modal :: add-category-modal"
+      ></div>
     </div>
-    <script>
+    <script th:src="@{/js/add-category-modal.js}"></script>
+    <script th:inline="javascript">
       addBtnHandler();
       removeBtnHandler();
+
+      $(".list-group-item").click(function() {
+        const val = this.id;
+        const inputval = $("#new-category-input").val(val);
+      });
 
       $("#new-board-input").keypress(function(event) {
         if (event.keyCode === 13) {
@@ -73,19 +83,7 @@
       });
 
       $(".board-nav button").click(function() {
-        const newBoardName = $("#new-board-input");
-        $(".board-to-add .ss-content").append(
-          `<div class="board">
-                <span class="board-name">${newBoardName.val()}</span>
-                <button class="remove-btn"><i class="far fa-minus-square"></i></button>
-              </div>`
-        );
-        $(".my-alert.add").removeClass("hide");
-        newBoardName.val("");
-        setTimeout(function() {
-          $(".my-alert.add").addClass("hide");
-        }, 700);
-        removeBtnHandler();
+        $(".modal").modal("show");
       });
 
       function removeBtnHandler() {
@@ -101,6 +99,26 @@
           });
         }
       }
+
+      $("#submit-button").click(function() {
+        const newBoardName = $("#new-board-input");
+        const inputval = $("#new-category-input").val();
+
+        $(".board-to-add .ss-content").append(
+          `<div class="board">
+          <span class="board-name">${newBoardName.val()}</span>
+          <input type="hidden" class="board-category" value=${inputval}>
+          <button class="remove-btn"><i class="far fa-minus-square"></i></button>
+          </div>`
+        );
+        $(".my-alert.add").removeClass("hide");
+        newBoardName.val("");
+        setTimeout(function() {
+          $(".my-alert.add").addClass("hide");
+        }, 700);
+        removeBtnHandler();
+        $(".modal").modal("hide");
+      });
 
       function addBtnHandler() {
         if ($(".add-btn")) {
@@ -119,9 +137,12 @@
       $("#submit").click(function() {
         const boardToAdd = $(".board-to-add .board .board-name");
         const boardToRemove = $(".board-to-remove .board .board-name");
+        const boardCategoryToAdd = $(".board-to-add .board .board-category");
 
         const boardToAddList = [];
         const boardToRemoveList = [];
+        const boardCategoryToAddList = [];
+
         $(boardToAdd).each(function() {
           boardToAddList.push($(this).text());
         });
@@ -129,9 +150,14 @@
           boardToRemoveList.push($(this).text());
         });
 
+        $(boardCategoryToAdd).each(function() {
+          boardCategoryToAddList.push($(this).val());
+        });
+        console.log(boardCategoryToAddList);
         const boardAddRemove = {
           boardToAdd: boardToAddList,
-          boardToRemove: boardToRemoveList
+          boardToRemove: boardToRemoveList,
+          boardCategoryToAdd: boardCategoryToAddList
         };
 
         $.ajax({

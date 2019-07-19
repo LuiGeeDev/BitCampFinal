@@ -26,6 +26,10 @@ public interface StackDao {
   
   List<Tag> showTagList();
   
+  void plusTag(@Param("tag") String tag, @Param("color") String color);
+  
+  void deleteTagName (String tag);
+  
   Tag selectTagByName(String tag);
   
   void insertTag(@Param("tag_id") int tag_id,@Param("article_id") int article_id);
