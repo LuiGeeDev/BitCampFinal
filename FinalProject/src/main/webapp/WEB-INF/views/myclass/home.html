@@ -98,8 +98,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr th:each="article : ${recentArticles}" class="article-info"
-                      th:onclick="'window.location.href = \'' + @{/myclass/board/read(article_id=${article.id}, board_id=${article.board_id})} + '\''">
+                  <tr th:each="article : ${recentArticles}" class="article-info" th:onclick="boardUrl([[${article}]])">
+                      <!--  th:onclick="'window.location.href = \'' + @{/myclass/board/read(article_id=${article.id}, board_id=${article.board_id})} + '\''">-->
+                      
                     <td th:text="${article.board_name}"></td>
                     <td th:text="${article.title}"></td>
                     <td th:text="${article.writer.name}"></td>
@@ -270,6 +271,15 @@
             }
         });
         calendar.render();
+        
+        var boardUrl = function(event){
+          console.log(event)
+          if(event.board_name == '질문 게시판'){
+            location.href='/myclass/qna/content?id='+event.id;
+          }else{
+			location.href='/myclass/board/read?article_id='+event.id+"&board_id="+event.board_id;
+          }
+        }
     </script>
     <script
       th:src="@{/js/calendar-interaction.js}"
