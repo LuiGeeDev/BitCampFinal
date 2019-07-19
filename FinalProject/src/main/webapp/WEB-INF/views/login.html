@@ -104,20 +104,22 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+          <form id="newPassword">
           <div class="modal-body">
             <p>아이디와 이메일을 입력해주세요</p>
-            <label>
-              아이디
-              <input type="text" name="username" id="newPassword-username" />
-            </label>
-            <label>
-              이메일
-              <input type="email" name="email" id="newPassword-email" />
-            </label>
+            <p>첫 로그인이라면 학원에 비밀번호를 물어보세요</p>
+              <label>
+                아이디
+                <input type="text" name="username" id="newPassword-username" />
+              </label>
+              <label>
+                이메일
+                <input type="email" name="email" id="newPassword-email" />
+              </label>
           </div>
           <div class="modal-footer">
             <p id="email-error">아이디와 이메일이 일치하지 않습니다</p>
-            <button id="newPassword" type="button" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary">
               <span
                 id="spinner"
                 class="spinner-border spinner-border-sm"
@@ -127,13 +129,15 @@
               비밀번호 발급
             </button>
           </div>
+          </form>
         </div>
       </div>
     </div>
     <script th:fragment="script">
       $("#spinner").hide();
       $("#email-error").hide();
-      $("#newPassword").click(function() {
+      $("#newPassword").submit(function(event) {
+        event.preventDefault();
         const username = $("#newPassword-username").val();
         const email = $("#newPassword-email").val();
 

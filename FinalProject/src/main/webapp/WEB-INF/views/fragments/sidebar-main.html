@@ -70,15 +70,6 @@
             <span class="menu-name">동영상</span>
           </a>
         </div>
-        <div class="nav-menu" sec:authorize="hasRole('TEACHER')">
-          <a>
-            <div class="nav-icon">
-              <i class="fas fa-database fa-2x"></i>
-            </div>
-            <span class="menu-name">강의 자료</span>
-          </a>
-        </div>
-
         <div class="nav-menu" sec:authorize="hasRole('MANAGER')">
           <a href="/manage/course">
             <div class="nav-icon">
