@@ -441,7 +441,7 @@
               const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ hours +`:` + minutes;
               let equalName = null;
               if (item.username == [[${user.username}]] || [[${user.role}]] == 'MANAGER') {
-                equalName = "[삭제]";
+                equalName = "삭제";
               } else {
                 equalName = "";
               }
@@ -458,7 +458,7 @@
                 "<span id='writerIcon'><img src='"+item.writer.profile_photo+"' class='writerIcon'></span>&nbsp;" +
                 "<span id='writerName'>" + spanClass + username +"</span>"  +
                 "<span class='hidden messageReceiverId'>"+ item.username + "</span>" +
-                "<a href='/video/commentdelete?id= + " + commentId + "'" + ">&nbsp" + equalName + "</a></span>" +
+                "<a class='comment-delete-button' href='/video/commentdelete?id= + " + commentId + "'" + ">&nbsp" + equalName + "</a></span>" +
                 "<span id='writeDate'>" + timedate +"</span></div>" +
                 "<div id='commentDetail'>"+ content +"</div>" +
                 "</div></div>";
