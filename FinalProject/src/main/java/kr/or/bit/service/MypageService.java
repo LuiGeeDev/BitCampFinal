@@ -160,6 +160,8 @@ public class MypageService {
     }
     
     for (Article article : articleList) {
+      List<Comment> commentList = commentdao.selectAllComment(article.getId());
+      article.setCommentlist(commentList);
       article.setTimeLocal(article.getTime().toLocalDateTime());
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));   
     }

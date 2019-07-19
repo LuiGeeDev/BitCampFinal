@@ -163,9 +163,9 @@
   font-size: 14px;
 }
 
-.boardTitleforComment{
+.boardTitleforComment {
   width: 60%;
-  font-size: 14px;  
+  font-size: 14px;
 }
 
 .boardDate {
@@ -209,20 +209,22 @@
 
 .articleNavWrapper {
   padding: 0px 0px 15px 0px;
+  display: flex;
+  flex-direction: row;
 }
 
-.nav-font{
-  font-size:13px;
+.nav-font {
+  font-size: 13px;
 }
 
 .btnwidth {
-  width: 10%;
+  width: 93px;
   font-size: 14px;
   padding: 5px 6px;
 }
 
 .btn.btn-outline-primary.paging.active {
-  background-color: #EA8A02 ;
+  background-color: #EA8A02;
   border: 2px #EA8A02 solid;
   color: white !important;
 }
@@ -232,6 +234,7 @@
   color: #EA8A02 !important;
   border: 2px #EA8A02 solid;
 }
+
 .page-btns {
   margin: auto;
   margin-bottom: 200px;
@@ -240,4 +243,31 @@
 .Btnactive {
   background-color: #EA8A02 !important;
   color: white !important;
+}
+
+.boardSearchalign {
+  width: 60%;
+  text-align: right;
+}
+
+.selectBar {
+  font-size: 13px;
+  height: 27px;
+}
+
+#boardSearch {
+  font-size: 13px;
+  height: 27px;
+}
+
+.searchBtn {
+  height: 27px;
+  padding: 2px;
+  width: 59px;
+  margin-bottom: 1px;
+  font-size: 13px;
+}
+
+.Btns {
+  width: 40%;
 }

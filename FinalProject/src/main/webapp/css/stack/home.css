@@ -5,8 +5,9 @@
   margin: 20px auto;
   font-size: 18px;
   font-weight: bold;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #a6a6a6;
+  padding-bottom: 19px;
+  border-bottom: 1px solid #EEEEEE;
+  margin-bottom: 16px;
 }
 
 #boardSearch {
@@ -26,8 +27,7 @@ table {
   font-size: 14px;
 }
 
-th,
-td {
+th, td {
   color: #2d3436;
   padding: 8px;
 }
@@ -197,7 +197,7 @@ td[colspan="2"] {
 
 .titleanswer {
   color: red;
-  font-size: 12px;
+  font-size: 16px;
 }
 
 .tableWrapper {

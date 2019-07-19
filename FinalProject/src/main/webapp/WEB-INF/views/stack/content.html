@@ -10,8 +10,8 @@
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
-      <div class="title">
-        <h3>스택게시판</h3>
+      <div>
+        <h3 class="title">스택게시판</h3>
         <div
           class="spinner-border text-warning spin-where"
           role="status"
@@ -21,8 +21,6 @@
         </div>
       </div>
       <!-- 게시물컨텐트 -->
-      <hr />
-
       <span class="top"
         ><a href="#"><i class="fas fa-chevron-circle-up iconSize"></i></a
       ></span>
@@ -78,7 +76,9 @@
         </tr>
         <tr>
           <td colspan="4" class="tdcontent">
+          <div class="content-size">
             <span th:utext="${stackcontent.content}"> </span>
+            </div>
           <div class="votecountalign">
             <button type="button" id="voteButton"
               class="btn btn-outline-primary btn-sm voteSpan"

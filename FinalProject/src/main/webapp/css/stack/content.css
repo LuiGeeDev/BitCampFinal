@@ -9,12 +9,13 @@ body {
 }
 
 .title {
-  margin: 10px 20px 20px 140px;
-}
-
-.title h3 {
-  font-weight: bold;
+  width: 80%;
+  margin: 20px auto;
   font-size: 18px;
+  font-weight: bold;
+  padding-bottom: 19px;
+  border-bottom: 1px solid #EEEEEE;
+  margin-bottom: 16px;
 }
 
 table {
@@ -30,14 +31,13 @@ th, td {
 }
 
 .tdtitle {
+  margin: 30px;
   color: black;
   font-size: 19px;
   font-weight: bold;
   border-bottom: 1.5px solid #eaebec;
-  margin-left: 30px;
-  margin-right: 30px;
-  margin-bottom: 30px;
   padding-bottom: 17px;
+  padding: 16px;
 }
 
 .tdcontent {
@@ -357,6 +357,7 @@ th, td {
 .voteSpan {
   padding: 8px 21px;
 }
+
 .voteSpan:active {
   padding: 7px 20px;
 }
@@ -364,6 +365,7 @@ th, td {
 .votecount-font {
   color: gray;
 }
+
 .voteCompletion {
   background-color: #f7f7f7;
 }
@@ -396,8 +398,9 @@ th, td {
   margin-left: 20px;
   font-weight: bold;
 }
+
 .stackIcon {
-  color:#F39B10;
+  color: #F39B10;
 }
 
 .my-comment-name {
@@ -443,25 +446,28 @@ th, td {
 }
 
 .writerReceiverId {
-  display:none;
+  display: none;
 }
 
-.scrapCompletion{
-    background-color: #ea8a02 !important;
-    color: white !important;
+.scrapCompletion {
+  background-color: #ea8a02 !important;
+  color: white !important;
 }
 
-
-.voted{
-  background-color:#ea8a02 !important;
-  color:white;
+.voted {
+  background-color: #ea8a02 !important;
+  color: white;
 }
 
-#thumbIcon{
-  width:20px;
-  height:20px;
+#thumbIcon {
+  width: 20px;
+  height: 20px;
+}
+
+#voteButton {
   
 }
 
-#voteButton{
+.content-size {
+  min-height: 150px;
 }
