@@ -75,9 +75,13 @@
           id="profileimg1" /></td>
         <td colspan="3" class="td4">
           <p class="pwriter">
+          <span class="qnaCursor">
             <span class="qnaWriter"
               th:classappend="${qnacontent.writer.name == user.name} ? 'my-comment-name'"
-              th:text="${qnacontent.writer.name}"> </span> <span
+              th:text="${qnacontent.writer.name}"> 
+              </span> 
+              </span>
+              <span
               class="hidden writerReceiverId"
               th:text="${qnacontent.username}"></span>
           </p>
@@ -270,10 +274,10 @@
     
     
       // 글쓴이 동기 메시지보내기 처리 시작
-    $(".pwriter").unbind("click");
-    $(".pwriter").click(function(event) {
-	  const receiverId = $(event.currentTarget).children(".writerReceiverId").text();
-      const messageReceiveName = $(event.currentTarget).children(".qnaWriter").text();
+    $(".qnaCursor").unbind("click");
+    $(".qnaCursor").click(function(event) {
+	  const receiverId = $(event.currentTarget).siblings(".writerReceiverId").text();
+      const messageReceiveName = $(event.currentTarget).text();
       $(".messageReceiveName").text(messageReceiveName);
       if([[${user.username}]] != receiverId) {
         $(".modal").modal("show");
