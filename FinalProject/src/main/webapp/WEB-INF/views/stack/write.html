@@ -18,7 +18,7 @@
       <div id="write-form-wrapper">
         <input type="text" id="input-title" placeholder="제목"
           name="title" />
-        <textarea name="content" class="textarea-size"></textarea>
+        <textarea name="content" class="textarea-size contentForm"></textarea>
         <div id="input-tag">
           <textarea class="hidden" id="select-result" name="tag"></textarea>
           <span id="tagWrapper"><b>TAG </b></span>
@@ -47,6 +47,24 @@
           }
         });
       });
+      
+      
+      const title = $("#input-title");
+      const content= $(".contentForm");
+      
+      $(".submit-btn").click(function(event) {
+        if(title.val() == null || title.val().trim() == "" || content.val() == null || content.val().trim() == "") {
+          event.preventDefault();
+          Swal.fire({
+  	  	    type: 'error',
+  	  	    text: '다시 입력해주세요 !!',
+  	  	  })
+        } 
+      });
+      
+      
+      
+      
       
     </script>
 </body>

@@ -27,7 +27,7 @@
             name="username"> <input type="hidden"
             th:value="${article.id}" name="id">
         </div>
-        <textarea class="summernote-parent" name="content"
+        <textarea class="summernote-parent contentForm" name="content"
           id="summernote" th:text="*{content}">
          </textarea>
         <div class="downloadbox">
@@ -46,7 +46,7 @@
         </div>
         <div class="submitButton">
         <button type="submit" class="btn btn-primary" id="submit-button">
-          올리기</button>
+          수정</button>
           </div>
       </div>
     </form>
@@ -68,6 +68,17 @@
     src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <script>
+  const title = $("#input-title");
+  const content= $(".contentForm");
+  $("#submit-button").click(function() {
+    if(title.val() == null || title.val().trim() == "" || content.val() == null || content.val().trim() == "") {
+      event.preventDefault();
+      Swal.fire({
+  	    type: 'error',
+  	    text: '다시 입력해주세요 !!',
+  	  })
+    }
+  });
       $(document).ready(function() {
         const title = $("#input-title");
         const submitBtn = $("#submit-button");
@@ -75,14 +86,7 @@
           height : 485,
           disableResizeEditor : true
         });
-        $("#submit-button").click(function() {
-          Swal.fire({
-            type : 'success',
-            title : '수정되었습니다',
-            showConfirmButton : false,
-            timer : 1500
-          });
-        });
+     
         $("#input-file-btn").change(function() {
           $("#filename").text($("#input-file-btn")[0].files[0].name);
         })

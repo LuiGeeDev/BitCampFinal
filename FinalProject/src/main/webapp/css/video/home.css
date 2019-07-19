@@ -35,7 +35,7 @@ body {
 
 #board {
   border: 1px solid #eeeeee;
-  margin: 10px auto;
+  margin: 10px auto 50px;
   background-color: white;
   width: 90%;
 }
