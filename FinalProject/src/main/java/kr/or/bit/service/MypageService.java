@@ -104,7 +104,6 @@ public class MypageService {
       returnURL = "http://localhost:8090/myclass/qna/content?id=" + article_id;
       break;
     }
-    System.out.println("returnURL:"+returnURL);
     
     return "redirect:" + returnURL;
   }
