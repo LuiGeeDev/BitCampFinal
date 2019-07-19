@@ -48,16 +48,16 @@
 .active-menu {
   background: white;
   box-sizing: border-box;
-  border-left: 5px solid #F39C12;
+  border-left: 5px solid #f39c12;
 }
 
 .active-menu a {
-  color: #2D3E50 !important;
+  color: #2d3e50 !important;
 }
 
 .side-nav-menu a {
   text-decoration: none;
-  color: #2D3E50;
+  color: #2d3e50;
   display: block;
   padding: 10px 10px;
 }
@@ -66,7 +66,11 @@
   padding: 20px 0 80px;
 }
 
+.side-nav-menu a {
+  margin-right: 18px;
+}
+
 .side-nav-menu a:hover {
-  background: #F39C12;
+  background: #f39c12;
   color: white;
 }

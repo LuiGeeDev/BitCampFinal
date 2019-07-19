@@ -2,10 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <body>
     <div
-      class="modal fade bd-example-modal-xl"
+      class="modal fade"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="myExtraLargeModalLabel"
       aria-hidden="true"
       th:fragment="copy-modal"
     >
@@ -70,86 +69,12 @@
               id="copy"
               th:href="@{/copy/copy?board_id={id}&ids=(id=${board.id})}"
               class="btn btn-outline-primary btn-sm"
-              >옮기기</a
             >
+              옮기기
+            </a>
           </div>
         </div>
       </div>
     </div>
   </body>
 </html>
-
-<div
-  class="modal fade bd-example-modal-xl"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="myExtraLargeModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered modal-xl">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="tree">
-          <h5>강의 목록</h5>
-          <div class="lecture-list" ss-container>
-            <ul class="lecture-tree">
-              <li th:each="course : ${courses}">
-                <input type="checkbox" th:id="'c' + ${course.id}" checked />
-                <label
-                  class="icon label"
-                  th:for="'c' + ${course.id}"
-                  th:text="${course.course_name}"
-                ></label>
-                <ul class="copy-board-list">
-                  <li
-                    class="copy-board"
-                    th:each="board : ${course.boards}"
-                    th:text="${board.board_name}"
-                    th:id="'b' + ${board.id}"
-                  ></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="list">
-          <h5>글 목록</h5>
-          <input type="text" id="search" placeholder="제목으로 검색" />
-          <div class="copy-article-list" ss-container></div>
-          <div
-            class="spinner-border text-warning"
-            role="status"
-            id="spinner1"
-          ></div>
-        </div>
-        <div class="preview">
-          <h5>미리 보기</h5>
-          <div class="copy-article-preview" ss-container>
-            <div class="copy-article-preview-header">
-              <h6 class="copy-article-preview-title"></h6>
-              <p class="copy-article-preview-writer"></p>
-            </div>
-            <div class="copy-article-preview-content"></div>
-          </div>
-          <div
-            class="spinner-border text-warning"
-            role="status"
-            id="spinner2"
-          ></div>
-        </div>
-      </div>
-      <div class="modal-list">
-        <div class="article-id-list" ss-container></div>
-      </div>
-      <div class="modal-footer">
-        <input type="hidden" value="" id="article_id" />
-        <a
-          id="copy"
-          th:href="@{/test/copy?ids=}"
-          class="btn btn-outline-primary btn-sm"
-          >옮기기</a
-        >
-      </div>
-    </div>
-  </div>
-</div>
