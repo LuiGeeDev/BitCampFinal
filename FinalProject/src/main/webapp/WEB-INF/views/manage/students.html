@@ -22,7 +22,7 @@
                   </div>
                   <div class="searchContent">
                     <div>
-                      <select size="1" class="selectSize" name="role">
+                      <select size="1" class="selectSize" name="role" id="role">
                         <option value="STUDENT" selected>학생</option>
                         <option value="TEACHER">강사</option>
                         <option value="GRADUATE">졸업자</option>
@@ -36,7 +36,7 @@
                   </div>
                   <div class="searchContent">
                     <div>
-                      <select size="1" class="selectSize" name="enabled">
+                      <select size="1" class="selectSize" name="enabled" id="enabled">
                         <option value="999" selected>전체</option>
                         <option value="1">활성</option>
                         <option value="0">비활성</option>
@@ -50,7 +50,7 @@
                   </div>
                   <div class="searchContent">
                     <div>
-                      <select class="selectSize" name="course_id">
+                      <select class="selectSize" name="course_id" id="course">
                         <option value="0" selected>전체</option>
                         <div th:each="courseList : ${courseList}">
                           <option th:value="${courseList.id}"
@@ -208,13 +208,28 @@
   	      $("#profile-enabled, #"+memberUsername).append("<i class='fas fa-circle on' th:case='1'> 활성화</i>");
   	      $("#switch-enabled-btn").append("비활성화");
   	    }
-  	    
-  	    
-  	    
-
-  	    
   	  });
   	});
+  	
+  	var role = 'student';
+  	var enabled = 999;
+  	var course = 999;
+  	
+  	$(".selectSize").change(function(){
+  	  if($(this).attr("id") == 'role'){
+  	    role = $(this).val();
+  	  }else if($(this).attr("id") == 'enabled'){
+  	    enabled = $(this).val();
+  	  }else if($(this).attr("id") == 'course'){
+  	    course= $(this).val();
+  	  }
+  	  console.log(role + " / " + enabled + " / " + course);
+  	  
+  	  $.ajax({
+  	    
+  	  })
+  	  
+  	})
   </script>
 </body>
 </html>

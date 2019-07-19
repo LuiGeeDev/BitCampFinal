@@ -241,8 +241,8 @@
         }
       });
       $("#mypage-password").keyup(function() {
-       
         if($(".realPwd").val() == "") {
+          
           if($(".realPwd").val() == $(".realPwdCheck").val()) {
             $("#pwdCheck-check").html("<i class='far fa-times-circle'></i>비밀번호가 일치합니다");
             $("#pwdCheck-check").css("color", "blue");
@@ -261,7 +261,16 @@
           }
           
         } else {
+          // 빈값이 아닐경우에
+          if($(".realPwd").val() == $(".realPwdCheck").val()) {
+            $("#pwdCheck-check").html("<i class='far fa-times-circle'></i>비밀번호가 일치합니다");
+            $("#pwdCheck-check").css("color", "blue");
+          } else {
+            $("#pwdCheck-check").html("<i class='far fa-times-circle'></i>비밀번호가 일치하지않습니다");
+            $("#pwdCheck-check").css("color", "red");
+          }
           $("#pwdCheck").show();
+          
          
         }
         
