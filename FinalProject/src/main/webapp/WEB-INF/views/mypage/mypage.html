@@ -57,6 +57,7 @@
         <div class="articleWrapper">
           <div class="tabsWrapper">
             <div class="articleNavWrapper">
+            <div class="Btns">
               <button id="userArticles"
                 class="btn btn-outline-primary btnwidth Btnactive"
                 th:onclick="location.href='/mypage/home'">
@@ -66,7 +67,26 @@
                 class="btn btn-outline-primary btnwidth"
                 th:onclick="location.href='/mypage/home/comments'">
                 <span class="nav-font">등록한 댓글</span>
-              </button>
+              </button></div>
+               <form method="get" class="boardSearchalign">
+                <select size="1" class="selectBar" name="criteria">
+                  <option value="titleOrContent" selected>제목 + 내용</option>
+                  <option value="title">제목</option>
+                  <option value="name">글작성자</option>
+                </select>
+                <input
+                  type="text"
+                  name="boardSearch"
+                  id="boardSearch"
+                  size="25"
+                  placeholder="검색내용을 적어주세요"
+                />
+                <input
+                  type="submit"
+                  class="btn btn-primary searchBtn"
+                  value="검색"
+                />
+              </form>
             </div>
             <div>
               <div class="board">
