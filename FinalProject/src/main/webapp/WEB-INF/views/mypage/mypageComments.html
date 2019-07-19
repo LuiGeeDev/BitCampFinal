@@ -3,7 +3,7 @@
   th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
 <head>
 <!-- 이페이지에서만별도로사용하는CSS가있다면여기다link 태그로삽입-->
-<link rel="stylesheet" th:href="@{/css/mypage/mypage-home.css}" />
+<link rel="stylesheet" th:href="@{/css/mypage/mypage-comment.css}" />
 <link rel="stylesheet"
   href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
 </head>
@@ -57,17 +57,34 @@
         <div class="articleWrapper">
           <div class="tabsWrapper">
             <div class="articleNavWrapper">
+            <div class="Btns">
               <button id="userArticles"
-                th:onclick="location.href='/mypage/home'"
-                class="btn btn-outline-primary btnwidth">
-                <span>등록한 게시글</span>
+                class="btn btn-outline-primary btnwidth"
+                th:onclick="location.href='/mypage/home'">
+                <span class="nav-font">등록한 게시글</span>
               </button>
               <button id="userComments"
-                class="btn btn-outline-primary btnwidth"
-                th:onclick="location.href='/mypage/home/comments'"
-                >
-                <span>등록한 댓글</span>
-              </button>
+                class="btn btn-outline-primary btnwidth Btnactive"
+                th:onclick="location.href='/mypage/home/comments'">
+                <span class="nav-font">등록한 댓글</span>
+              </button></div>
+               <form method="get" class="boardSearchalign">
+                <select size="1" class="selectBar" name="criteria">
+                  <option value="Commentcontent" selected>댓글 내용</option>
+                </select>
+                <input
+                  type="text"
+                  name="boardSearch"
+                  id="boardSearch"
+                  size="25"
+                  placeholder="검색내용을 적어주세요"
+                />
+                <input
+                  type="submit"
+                  class="btn btn-primary searchBtn"
+                  value="검색"
+                />
+              </form>
             </div>
             <div>
               <div class="board" id="Commentsboard">
@@ -81,7 +98,7 @@
                   <!-- 요기부터 댓글테이블 -->
                   <div class="boardContent iteration"
                     th:each="comment : ${comments}">
-                    <div class="boardId cont-style" id="commentId">[[${comment.id}]]</div>
+                    <div class="boardId cont-style" id="commentId">#[[${comment.id}]]</div>
                     <div class="boardTitleforComment cont-style"
                       id="commentContent" th:utext="${comment.content}"></div>
                     <div class="boardDate cont-style" id="commentDate"

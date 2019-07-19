@@ -80,12 +80,15 @@ public class StackController {
       stackList = articleService.selectStackArticlesByboardSearch(pager, boardSearch, criteria);
       model.addAttribute("boardSearch", boardSearch);
     } else {
+      System.out.println("여기타겠지");
       pager = new Pager(page, stackDao.countAllStackArticle());
       stackList = articleService.selectAllStackArticles(pager);
+//      System.out.println("여기타겠지 "+ stackList);
     }
     model.addAttribute("stacklist", stackList);
     model.addAttribute("pager", pager);
     model.addAttribute("page", page);
+    model.addAttribute("criteria",criteria);
     return "stack/home";
   }
   /*
