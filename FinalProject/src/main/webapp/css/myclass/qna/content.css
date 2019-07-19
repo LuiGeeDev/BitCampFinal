@@ -443,9 +443,10 @@ table.commentWrapper {
   cursor: pointer;
 }
 
-.pwriter {
+.qnaCursor {
   cursor:pointer;
 }
+
 
 .writerReceiverId {
   display:none;
