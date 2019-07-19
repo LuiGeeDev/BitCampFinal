@@ -69,15 +69,24 @@
       <div th:if="${#strings.contains(#request.getRequestURI(),'myclass')}" class="side-nav-menu" ss-container>
         <!-- 프로젝트 게시판 -->
         <a th:href="@{/myclass}">메인 페이지</a>
+  
         <a href="#project" data-toggle="collapse" th:if="${projects.size() != 0}">프로젝트 게시판</a>
         <div id="project" class="collapse" th:if="${projects.size() != 0}">
           <a th:href="@{/myclass/project(group_id=${project.id})}" th:each="project : ${projects}" th:text="'- ' + ${project.project_name}"></a>
         </div>
         <th:block th:each="board : ${boardList}">
-          <a th:if="${board.boardtype == 3}" th:href="@{/myclass/board(board_id=${board.id})}" th:text="${board.board_name}"></a>
+          <a th:if="${board.board_name.equals('공지사항')}" th:href="@{/myclass/board(board_id=${board.id})}" th:text="${board.board_name}"></a>
           <a th:if="${board.boardtype == 4}" th:href="@{/myclass/homework}" th:text="${board.board_name}"></a>
           <a th:if="${board.boardtype == 5}" th:href="@{/myclass/qna}" th:text="${board.board_name}"></a>
         </th:block>
+        
+        <div th:each="boardmap : ${boardMap}">
+        <a th:href="'#' + ${boardmap.key}" data-toggle="collapse" th:text="${boardmap.key}">일반 게시판s</a>
+        <div th:id="${boardmap.key}" class="collapse">
+          <a th:href="@{/myclass/board(board_id=${board.id})}" th:each="board : ${boardmap.value}" th:text="'- ' + ${board.board_name}"></a>
+        </div>
+        </div>
+        
         <a th:href="@{/myclass/setting}" sec:authorize="hasRole('TEACHER')">우리 반 관리</a> 
       </div>
       <div th:if="${#strings.contains(#request.getRequestURI(),'stack')}" class="side-nav-menu">

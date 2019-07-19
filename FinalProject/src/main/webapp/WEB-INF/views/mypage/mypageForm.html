@@ -66,7 +66,7 @@
                 <div class="passwordParent">
                   <input
                     type="password"
-                    class="pwd"
+                    class="realPwd"
                     name="password"
                     placeholder="비밀번호는 8글자 이상의 영문자,숫자,특수문자 조합을 입력해야 합니다"
                     maxlength="16"
@@ -74,6 +74,20 @@
                   />
                   <span class="hidden" id="pwdCheck" name="pwdCheck"></span>
                 </div>
+                
+                <div class="mypagePwd">비밀번호 확인</div>
+                <div class="passwordParent">
+                  <input
+                    type="password"
+                    class="realPwdCheck"
+                    name="password"
+                    maxlength="16"
+                    id="mypage-password-check"
+                  />
+                  <span class="hidden" id="pwdCheck-check" name="pwdCheck-check"></span>
+                </div>
+                
+                
                 <div class="mypageName">이름</div>
                 <div>
                   <input
@@ -208,7 +222,9 @@
         if (
           name.trim() === "" ||
           name === null ||
-          email.match(regExp) === null
+          email.match(regExp) === null ||
+          password.length < 8 || !password.match(regex) || 
+          $(".realPwd").val() != $(".realPwdCheck").val()
         ) {
           event.preventDefault();
           Swal.fire({
@@ -221,10 +237,34 @@
             title: "수정되었습니다",
             showConfirmButton: false,
             timer: 1500
-          });
+          })
         }
       });
       $("#mypage-password").keyup(function() {
+       
+        if($(".realPwd").val() == "") {
+          if($(".realPwd").val() == $(".realPwdCheck").val()) {
+            $("#pwdCheck-check").html("<i class='far fa-times-circle'></i>비밀번호가 일치합니다");
+            $("#pwdCheck-check").css("color", "blue");
+          } else {
+            $("#pwdCheck-check").html("<i class='far fa-times-circle'></i>비밀번호가 일치하지않습니다");
+            $("#pwdCheck-check").css("color", "red");
+          }
+          if($(".readPwdCheck").val() != "") {
+            $("#pwdCheck").hide();
+           
+              
+          } else {
+            // 둘다 빈값이면 두개다 숨겨버림
+            $("#pwdCheck").hide();
+            $("#pwdCheck-check").hide();
+          }
+          
+        } else {
+          $("#pwdCheck").show();
+         
+        }
+        
         var userPassword = $("#mypage-password").val();
         var regex = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
         if (userPassword.length < 8 || !userPassword.match(regex)) {
@@ -238,22 +278,63 @@
           );
           $("#pwdCheck").css("color", "blue");
         }
+        
+        if(($(".realPwd").val() == "") && ($(".realPwdCheck").val() == "")) {
+          
+        }
+        
+        if($(".realPwd").val() == $(".realPwdCheck").val()) {
+          // 비밀번호와 비밀번호 확인이 같고
+          if($(".realPwd").val() != null) {
+            // 비밀번호 확인이 null이 아니면
+          $("#pwdCheck-check").html("<i class='far fa-times-circle'></i>비밀번호가 일치합니다");
+          $("#pwdCheck-check").css("color", "blue");
+        } else {
+          $("#pwdCheck-check").html("<i class='far fa-times-circle'></i>비밀번호가 일치하지않습니다");
+          $("#pwdCheck-check").css("color", "red");
+        }
+        }
+        
+        
+        
       });
       $("#mypage-email").keyup(function() {
         var regExp = /^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{1,5}$/;
         var emailVal = $("#mypage-email").val();
         if (emailVal.match(regExp) === null) {
-          $("#emailCheck").html(
-            "<i class='far fa-times-circle'></i>이메일 형식이 올바르지 않습니다"
-          );
+          $("#emailCheck").html("<i class='far fa-times-circle'></i>이메일 형식이 올바르지 않습니다");
           $("#emailCheck").css("color", "red");
         } else {
-          $("#emailCheck").html(
-            "<i class='far fa-check-circle'></i>이메일 형식이 맞습니다"
-          );
+          $("#emailCheck").html("<i class='far fa-check-circle'></i>이메일 형식이 맞습니다");
           $("#emailCheck").css("color", "blue");
         }
       });
+      
+      $("#mypage-password-check").keyup(function() {
+        if($(".realPwdCheck").val() == null) {
+          $("#pwdCheck-check").hide();
+        } else {
+          $("#pwdCheck-check").show();
+        }
+        
+        
+        if($(".realPwd").val() == $(".realPwdCheck").val()) {
+          $("#pwdCheck-check").html("<i class='far fa-times-circle'></i>비밀번호가 일치합니다");
+          $("#pwdCheck-check").css("color", "blue");
+        } else {
+          $("#pwdCheck-check").html("<i class='far fa-times-circle'></i>비밀번호가 일치하지않습니다");
+          $("#pwdCheck-check").css("color", "red");
+        }
+        
+        if($(".realPwdCheck").val() == "") {
+          $("#pwdCheck-check").hide();
+        }
+      });
+      
+      
+    
+      
+      
     </script>
   </body>
 </html>
