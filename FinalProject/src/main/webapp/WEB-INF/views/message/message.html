@@ -208,8 +208,6 @@
       }).ajaxStop(function() {
         $("#spinner").hide();
       });
-
-
       $(".rMessage").click(function(event) {
        $(".fitMessage").empty();
       $(".senderMessageList").css("display", "none");
@@ -220,7 +218,6 @@
       $(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime").empty();
       event.preventDefault();
       });
-
       $(".sMessage").click(function(event) {
       $(".fitMessage").html("<div class='fitMargin'>&nbsp;</div>");
       $(".senderMessageListForm").css("display", "block");
@@ -233,20 +230,14 @@
       $(".fa-paper-plane").css("display", "none");
       $(".fa-trash").css("display", "none");
       event.preventDefault();
-
       });
-
-
       $("sMessage").hover(function() {
         $(this).css("color", "#F39B10");
       });
-
-
       $("#modal-submitbtn").click(function() {
         const messageText = $("#message-text").val();
         const messageSenderId = $("#message-sender-id").text();
         let valueCheck = messageText;
-
       if(valueCheck.trim() === "" || valueCheck === null) {
         Swal.fire({
           type: 'error',
@@ -258,38 +249,8 @@
           url: "/ajax/message/reply",
           type: "POST",
           data: {
-            id: messageId
-          },
-          success: function(data) {
-            $(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime").empty();
-            $("#message-sender-id").append(`${data.sender_username}`);
-            $(".message-sender-name")
-              .append(`${data.senderName}`)
-              .append(`(${data.sender_username})`);
-            $(".message-sender-time").append(`${data.time}`);
-            const time = Number($(".message-sender-time").text());
-            const date = new Date(time);
-            let minutes = date.getMinutes();
-            minutes = (minutes < 10) ? "0" + minutes : minutes;
-            let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
-            hours = hours < 10 ? "0" +  hours : hours;
-            let newHours = date.getHours();
-            newHours = (newHours < 10) ? "0" + newHours : newHours;
-            
-            let getdate = date.getDate();
-            getdate = (getdate < 10) ? "0" + getdate : getdate;
-            let getmonth = date.getMonth() + 1;
-            getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
-
-            const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ newHours +`:` + minutes;
-            $(".message-realtime").append(timedate);
-            $(".message-sender-content").append(`${data.content}`);
-            $(".sender-message").append(`<h6 class="text-font">받은쪽지</h6>`);
-            $(".fa-paper-plane").css("display", "block");
-            $(".fa-trash").css("display", "block");
-          },
-          error: function(xhr) {
-            alert("쪽지를 불러오지 못했습니다.");
+            content: messageText,
+            receiver_username: messageSenderId
           }
         }).done(function() {
           $(".modal").modal("hide");
@@ -303,64 +264,86 @@
           });
           sendMessageNotice([[${user.name}]], messageSenderId);
         });
-      }
-      
-      
-      function getMessage2(messageId) {
-        $.ajax({
-          url: "/ajax/message",
-          type: "POST",
-          data: {
-            id: messageId
-          },
-          success: function(data) {
-            $(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime").empty();
-            $("#message-sender-id").append(`${data.sender_username}`);
-            $(".message-sender-name")
-              .append(`${data.senderName}`)
-              .append(`(${data.sender_username})`);
-            $(".message-sender-time").append(`${data.time}`);
-            const time = Number($(".message-sender-time").text());
-            const date = new Date(time);
-            let minutes = date.getMinutes();
-            minutes = (minutes < 10) ? "0" + minutes : minutes;
-            let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
-            hours = hours < 10 ? "0" +  hours : hours;
-            let newHours = date.getHours();
-            newHours = (newHours < 10) ? "0" + newHours : newHours;
-            
-            let getdate = date.getDate();
-            getdate = (getdate < 10) ? "0" + getdate : getdate;
-            let getmonth = date.getMonth() + 1;
-            getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
-
-            const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ newHours +`:` + minutes;
-            $(".message-realtime").append(timedate);
-            $(".message-sender-content").append(`${data.content}`);
-            $(".sender-message").append(`<h6 class="text-font">보낸쪽지</h6>`);
-          },
-          error: function(xhr) {
-            alert("쪽지를 불러오지 못했습니다.");
-          }
-        })
-      };
-
-      $(".message2").click(function(event) {
-        const removeIcon = $(event.currentTarget).children(".message-sender2");
-        const removeNotification = removeIcon.children().siblings(".removenoti");
-
-        const count = $(".message-count");
-        const count2 = $(".countM");
-        if (removeNotification.text() == 0) {
-          count.text(count.text() - 1);
-          count2.text(count2.text() - 1);
-          removeNotification.text(1);
+      });
+        function getMessage(messageId) {
+          $.ajax({
+            url: "/ajax/message",
+            type: "POST",
+            data: {
+              id: messageId
+            },
+            success: function(data) {
+             /*  console.log("new Date : " + new Date(${data.time})); */
+             console.log(data);
+              $(".message-sender-name, .message-sender-content, .message-sender-time, .sender-message, #message-sender-id, .message-realtime").empty();
+              $("#message-sender-id").append(`${data.sender_username}`);
+              $(".message-sender-name")
+                .append(`${data.senderName}`)
+                .append(`(${data.sender_username})`);
+              $(".message-sender-time").append(`${data.time}`);
+              const time = Number($(".message-sender-time").text());
+              const date = new Date(time);
+              let minutes = date.getMinutes();
+              minutes = (minutes < 10) ? "0" + minutes : minutes;
+              let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
+              hours = hours < 10 ? "0" +  hours : hours;
+              let newHours = date.getHours();
+              newHours = (newHours < 10) ? "0" + newHours : newHours;
+              let getdate = date.getDate();
+              getdate = (getdate < 10) ? "0" + getdate : getdate;
+              let getmonth = date.getMonth() + 1;
+              getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
+              const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ newHours +`:` + minutes;
+              $(".message-realtime").append(timedate);
+              $(".message-sender-content").append(`${data.content}`);
+              $(".sender-message").append(`<h6 class="text-font">받은쪽지</h6>`);
+              $(".fa-paper-plane").css("display", "block");
+              $(".fa-trash").css("display", "block");
+            },
+            error: function(xhr) {
+              alert("쪽지를 불러오지 못했습니다.");
+            }
+          }).done(function() {
+            if ($("#reply")) {
+              $("#reply").click(function() {
+                $(".modal").modal("show");
+                $("#message-text").val("");
+              });
+            }
+            $("#delete").unbind("click");
+            $("#delete").click(function(event) {
+              Swal.fire({
+                title: '정말 삭제하시겠습니까?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#F39B10',
+                cancelButtonColor: '#A6A6A6',
+                confirmButtonText: '네',
+                cancelButtonText: '아니요'
+              }).then((result) => {
+                if (result.value) {
+                  $.ajax({
+                    url: "/ajax/message/delete",
+                    type: "POST",
+                    data: {
+                      id: messageId
+                    },
+                    success: function(data) {
+                      Swal.fire({
+                        	title: '삭제되었습니다',
+                        	type: 'success',
+                        	confirmButtonText: '확인',
+                        	confirmButtonColor: '#F39B10'
+                      }).then(function() {
+                          location.href = "/message";
+                        });
+                    }
+                  });
+                }
+              })
+            });
+          });
         }
-        
-        const messageId = $(this).children(".hidden").text();
-        getMessage(messageId);
-
-
         function getMessage2(messageId) {
           $.ajax({
             url: "/ajax/message",
@@ -384,12 +367,10 @@
               hours = hours < 10 ? "0" +  hours : hours;
               let newHours = date.getHours();
               newHours = (newHours < 10) ? "0" + newHours : newHours;
-
               let getdate = date.getDate();
               getdate = (getdate < 10) ? "0" + getdate : getdate;
               let getmonth = date.getMonth() + 1;
               getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
-
               const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ newHours +`:` + minutes;
               $(".message-realtime").append(timedate);
               $(".message-sender-content").append(`${data.content}`);
@@ -400,11 +381,9 @@
             }
           })
         };
-
         $(".message2").click(function(event) {
           const removeIcon = $(event.currentTarget).children(".message-sender2");
           const removeNotification = removeIcon.children().siblings(".removenoti");
-
           const count = $(".message-count");
           const count2 = $(".countM");
           if (removeNotification.text() == 0) {
@@ -412,11 +391,9 @@
             count2.text(count2.text() - 1);
             removeNotification.text(1);
           }
-
           const messageId = $(this).children(".hidden").text();
           getMessage(messageId);
           console.log("messageId : " + messageId);
-
           $.ajax({
             url: "/ajax/message/update",
             type: "POST",
@@ -431,12 +408,10 @@
             }
           });
         });
-
         $(".message3").click(function(event) {
           const messageId = $(this).children(".hidden").text();
           getMessage2(messageId);
         });
-
         $(".close-btn").click(function() {
           $(".receiver").remove();
           $(".modal").css("display", "none");
