@@ -41,7 +41,6 @@ public class MypageService {
     int board_type = board.getBoardtype();
     int board_id = article.getBoard_id();
     String returnURL = "";
-    System.out.println("board_type:" + board_type);
     switch (board_type) {
     case 1: // 스택 게시판
       returnURL = "http://localhost:8090/stack/content?id=" + article_id;
@@ -56,7 +55,6 @@ public class MypageService {
       returnURL = "http://localhost:8090/myclass/qna/content?id=" + article_id;
       break;
     }
-    System.out.println("returnURL:" + returnURL);
     return "redirect:" + returnURL;
   }
 

@@ -40,7 +40,6 @@ public class MyClassInterceptor extends HandlerInterceptorAdapter {
     
     CategoryDao categoryDao = sqlSession.getMapper(CategoryDao.class);
     List<Category> categories = categoryDao.selectCategoryByCourseid(user.getCourse_id());
-    System.out.println(categories);
     
     HashMap<String, List<Board>> boardMap = new HashMap<>(); 
     
@@ -49,7 +48,6 @@ public class MyClassInterceptor extends HandlerInterceptorAdapter {
       boardMap.put(category.getCategory(), boardlist);
     }
     
-    System.out.println(boardMap);
     
 //    --------------게시판 끝---------------------------
     request.setAttribute("boardMap", boardMap);

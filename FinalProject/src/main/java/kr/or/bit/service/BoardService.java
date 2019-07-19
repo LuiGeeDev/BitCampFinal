@@ -156,7 +156,6 @@ public class BoardService {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     Article article = articleDao.selectOneArticle(article_id);
     General general = generalDao.selectGeneralByArticleId(article_id);
-    System.out.println(article);
     articleUpdateService.viewCount(article);
     List<Files> files = new ArrayList<>();
     files.add(filesDao.selectFilesById(general.getFile1()));
@@ -171,7 +170,6 @@ public class BoardService {
     }
     article.setCommentlist(commentList);
     article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
-    System.out.println("article : " +article.getCommentlist().toString());
     return article;
   }
 
@@ -179,7 +177,6 @@ public class BoardService {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
     GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
-    System.out.println("writeArticle: " + article);
     try {
       article.setUsername(Helper.userName());
       articleDao.insertArticle(article);
@@ -211,7 +208,6 @@ public class BoardService {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
     GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
-    System.out.println("writeArticle: " + article);
     try {
       article.setUsername(Helper.userName());
       articleDao.insertReplyArticle(article);

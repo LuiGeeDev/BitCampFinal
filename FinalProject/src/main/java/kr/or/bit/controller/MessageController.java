@@ -36,7 +36,6 @@ public class MessageController {
       message.setTimeLocal(message.getTime().toLocalDateTime());
     }
     
-    System.out.println(selectSenderMessage.toString());
     model.addAttribute("selectall", selectall);
     model.addAttribute("countmessage", countmessage);
     model.addAttribute("sendMessage", selectSenderMessage);

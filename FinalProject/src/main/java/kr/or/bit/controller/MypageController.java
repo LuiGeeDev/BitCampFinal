@@ -83,7 +83,6 @@ public class MypageController {
   @GetMapping("/home/content")
   public String getDetail(int article_id) {
     String URL = mypageService.selectOneArticleforMypage(article_id);
-    System.out.println("URL" + URL);
     return URL;
   }
 
