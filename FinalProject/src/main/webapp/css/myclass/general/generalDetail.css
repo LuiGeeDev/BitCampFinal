@@ -108,6 +108,10 @@ body {
   margin-left: 5px;
   font-size: 11px;
   line-height: 23px;
+  font-size: 12px;
+  color: #808080;
+  font-weight: 100;
+  margin-left: 20px;
 }
 
 .noComment {
@@ -240,4 +244,9 @@ body {
 .scrapCompletion{
     background-color: #ea8a02 !important;
     color: white !important;
+}
+
+.comment-delete:hover {
+  text-decoration: underline;
+  color: #808080;
 }
