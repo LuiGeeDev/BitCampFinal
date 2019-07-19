@@ -20,18 +20,18 @@
           <span class="hw-title">시작일</span> <input type="date"
             class="hw-input" id="hw-input" readonly> <span
             class="hw-title">종료일</span> <input type="date"
-            class="hw-input" name="end_date">
+            class="hw-input" name="end_date" id="end_date">
         </div>
         <div class="homework-container">
           <span class="hw-title">제목</span> <input type="text"
-            class="hw-input-title" name="title">
+            class="hw-input-title" name="title" id="input-title">
         </div>
         <div class="homework-content">
           <textarea name="content" id="summernote"></textarea>
         </div>
         <div id="buttons">
           <a href="/myclass/homework" class="btn btn-primary btn-sm">취소</a>
-          <input type="submit" class="btn btn-primary btn-sm" value="제출">
+          <input type="submit" class="btn btn-primary btn-sm" id="submit-btn" value="제출" disabled>
         </div>
         
       </form>
@@ -40,6 +40,8 @@
   <!-- 필요하다면 이 아래에 외부 자바스크립트도 추가 가능 -->
   <script
     src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    
   <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
   <script>
       $("#summernote").summernote({
@@ -47,6 +49,28 @@
         disableResizeEditor : true
       });
       document.getElementById('hw-input').value = new Date().toISOString().substring(0,10);
-    </script>
+      
+      $('#end_date').change(function(){
+		
+        if($('#end_date').val() < $("#hw-input").val()){
+		  $('#end_date').val('')
+		  Swal.fire({
+ 	  	    type: 'error',
+ 	  	    text: '잘못된 날짜를 입력하셨습니다.',
+ 	  	    confirmButtonText: '확인',
+ 	  	    confirmButtonColor: '#F39C20'
+ 	  	  })
+        }
+        isDisable();
+      });
+      var isDisable = function(){
+    		if($('#input-title').val().trim() != '' && $('#end_date').val().trim() != ''){
+    		  $('#submit-btn').attr("disabled", false);
+    		}else{
+    		  $('#submit-btn').attr("disabled", true);
+    		}
+          }
+      $('#input-title').keyup(isDisable);
+  </script>
 </body>
 </html>
