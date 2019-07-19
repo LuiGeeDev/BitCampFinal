@@ -28,7 +28,7 @@
           <input type="file" id="input-file-btn2" name="file2" class="file-btn2">
           </span>
           </div>
-          <textarea class="summernote-parent" name="content" id="summernote">
+          <textarea class="summernote-parent contentForm" name="content" id="summernote">
           </textarea>
           <button
             type="submit"
@@ -45,15 +45,26 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script>
       $(document).ready(function() {
-        const title = $("#input-title");
-        const submitBtn = $("#submit-button");
-        
         $("#summernote").summernote({
           height: 485,
           disableResizeEditor: true
         });
         
        });
+      
+      const title = $("#input-title");
+      const content= $(".contentForm");
+      
+      $("#submit-button").click(function() {
+          event.preventDefault();
+        console.log(content.val().replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, "").replace(/&nbsp;/gi, "").trim());
+        if(title.val() == null || title.val().trim() == "" || content.val() == null || content.val().trim() == "") {
+          Swal.fire({
+  	  	    type: 'error',
+  	  	    text: '다시 입력해주세요 !!',
+  	  	  })
+        }
+      });
        
         
     

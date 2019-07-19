@@ -195,7 +195,6 @@ public class MyClassController {
     }
    
     
-    System.out.println("scrapCount:"+scrapCount);
     
     model.addAttribute("scrapCount",scrapCount);
     model.addAttribute("voteCount", voteCount);

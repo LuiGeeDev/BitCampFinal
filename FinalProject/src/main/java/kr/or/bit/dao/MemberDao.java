@@ -45,4 +45,7 @@ public interface MemberDao {
   
   int getCountCourseMember(@Param("courseid") int courseid, @Param("status") String status);
   
+  List<Member> selectMemberSearchByAjax(@Param("course_id") int course_id, @Param("role") String role, @Param("enabled") int enabled);
+  
+  int countMemberSearchByAjax(@Param("course_id") int course_id, @Param("role") String role, @Param("enabled") int enabled);
 }

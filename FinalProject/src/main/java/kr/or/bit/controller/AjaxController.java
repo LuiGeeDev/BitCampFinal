@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.ManagerDao;
+import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.MessageDao;
 import kr.or.bit.dao.NotificationDao;
 import kr.or.bit.model.Article;
@@ -140,13 +141,10 @@ public class AjaxController {
   
   @PostMapping("/manage/enabledUpdate")
   public String updateMemberEnabled(String username, String enabled) {
-    System.out.println("username : "+username);
-    System.out.println("enabled : "+enabled);
     ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
     int enabledInt = 0;
     if(enabled.equals("활성화")) {
       enabledInt=0;
-      System.out.println("여기타야됨");
     } else {
       enabledInt=1;
     }
@@ -169,7 +167,6 @@ public class AjaxController {
   public Map<String,Object> paging(int page){
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     Pager pager = new Pager(page, courseDao.countEndCourseList());
-    System.out.println(courseDao.selectEndCourseList(pager).get(0).getStart_date());
     List<Course> courseList = courseDao.selectEndCourseList(pager);
     for(Course course : courseList) {
       course.setStartDateLocal(course.getStart_date().toLocalDate());
@@ -178,6 +175,16 @@ public class AjaxController {
     Map<String, Object> returnMap = new HashMap<String, Object>();
     returnMap.put("courseList", courseList);
     returnMap.put("allCount", courseDao.countEndCourseList());
+    return returnMap;
+  }
+  
+  @GetMapping("/manage/students/search")
+  public Map<String, Object> search(@RequestParam String role, int course, int enabled){
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    Map<String, Object> returnMap  = new HashMap<String, Object>();
+    List<Member> searchList = memberDao.selectMemberSearchByAjax(course, role, enabled);
+    returnMap.put("searchList", searchList);
+    returnMap.put("memberCount", memberDao.countMemberSearchByAjax(course, role, enabled));
     return returnMap;
   }
 }

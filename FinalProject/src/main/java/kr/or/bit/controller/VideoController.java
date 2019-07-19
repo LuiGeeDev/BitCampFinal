@@ -114,14 +114,6 @@ public class VideoController {
     return "redirect:/video";
   }
 
- /* @PostMapping("/commentwrite")
-  public String writeCommentVideo(int id, Comment comment) {
-    comment.setUsername(Helper.userName());
-    comment.setArticle_id(id);
-    commentService.insertComment(comment);
-    return "redirect:/video/detail?id=" + id;
-  }*/
-
   @PostMapping("/commentwrite")
   public @ResponseBody List<Comment> commentWrite(int article_id, Comment comment) {
     boardService.writeComment(article_id, comment);
