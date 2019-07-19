@@ -196,3 +196,26 @@ button:hover:after {
   margin: 0 50px 3px;
   color: #FF3B30;
 }
+
+@-webkit-keyframes mymove {
+  from{
+    padding-left:0px;
+  }
+  to{
+    padding-left:100px;
+  }  
+  
+}
+
+@keyframes mymove {
+  from{
+    padding-top:0px;
+  }
+  to{
+    padding-top:210px;
+  }  
+}
+.main{
+  -webkit-animation: mymove .8s ;
+  animation: mymove .8s ;
+}
