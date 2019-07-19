@@ -44,13 +44,12 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <script>
       $(document).ready(function() {
-        const title = $("#input-title");
-        const submitBtn = $("#submit-button");
         $("#summernote").summernote({
           height : 485,
           disableResizeEditor : true
         });
-        $("#submit-button").click(function() {
+      });
+        $("#submit-button").click(function(event) {
           if ([[${user.username}]] !== [[${article.username}]]) {
             sendReplyNotice(`[[${user.name}]]`, `[[${article.username}]]`, "/myclass/board/read?article_id="+[[${article.id}]]+"&board_id="+[[${board.id}]]);
           }
@@ -58,17 +57,16 @@
           const title = $("#input-title");
           const content= $(".contentForm");
           
-          if(title.val() == null || title.val().trim() == "" || content.val() == null || content.val().trim() == "") {
+          const contentTrim=content.val().replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, "").replace(/&nbsp;/gi, "").trim();
+          if(title.val() == null || title.val().trim() == "" || contentTrim == null || contentTrim == "") {
             event.preventDefault();
             Swal.fire({
     	  	    type: 'error',
     	  	    text: '다시 입력해주세요 !!',
     	  	  })
-          }
-      
-          
+          } 
         });
-      });
+      
     </script>
 </body>
 </html>
