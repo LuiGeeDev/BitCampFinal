@@ -80,6 +80,7 @@ public class MypageController {
       pager = new Pager(page, mypageDao.countAllMyArticle(username));
       article2 = mypageService.selectAllMyArticlesByUsername(pager, username);
     }
+    
     Member user = memberDao.selectMemberByUsername(username);
     Course course = courseDao.selectCourse(user.getCourse_id());
     int completion = mypageService.coursePeriod(username);
@@ -88,7 +89,6 @@ public class MypageController {
     model.addAttribute("comments", comments);
     model.addAttribute("article1", article1);
     model.addAttribute("article2", article2);
-    model.addAttribute("user", user);
     model.addAttribute("pager", pager);
     model.addAttribute("page", page);
     model.addAttribute("criteria", criteria);
