@@ -1,106 +1,160 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
-<head>
-<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-<link rel="stylesheet"
-  th:href="@{/css/myclass/general/generalWrite.css}" />
-<link
-  href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css"
-  rel="stylesheet" />
-</head>
-<body>
-  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
-  <div class="main" th:fragment="main">
-    <form method="POST" enctype="multipart/form-data">
-      <div id="write-form-wrapper" th:object="${article}">
-        <input type="text" id="input-title" placeholder="제목"
-          name="title" th:value="*{title}" />
-        <div class="input-file">
-          <span> <i class="fas fa-paperclip"></i> <input
-            type="file" id="input-file-btn" name="file1"
-            class="file-btn">
-          </span> <span> <i class="fas fa-paperclip"></i> <input
-            type="file" id="input-file-btn2" name="file2"
-            class="file-btn2">
-          </span> <input type="hidden" th:value="${article.username}"
-            name="username"> <input type="hidden"
-            th:value="${article.id}" name="id">
-        </div>
-        <textarea class="summernote-parent" name="content"
-          id="summernote" th:text="*{content}">
-         </textarea>
-        <div class="downloadbox">
-          <div th:each="fi,iter : ${article.option.files}">
-            
-            <div class="download-content" th:if="${fi!=null}" th:id="'par'+${iter.count}">
-            <div><i class="fas fa-paperclip"></i></div>
-              <div class="filename" th:id="'count'+${iter.count}"
-                th:text="${fi.original_filename}"
-                th:name="${iter.count}">오리지날파일네임</div>
-              <div class="filebutton">
-                <button class="btn btn-primary btnSize" type="button" onclick="deletefile(event)">삭제</button>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+    <link rel="stylesheet" th:href="@{/css/myclass/general/generalWrite.css}" />
+    <link
+      href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+    <div class="main" th:fragment="main">
+      <form method="POST" enctype="multipart/form-data">
+        <div id="write-form-wrapper" th:object="${article}">
+          <input
+            type="text"
+            id="input-title"
+            placeholder="제목"
+            name="title"
+            th:value="*{title}"
+          />
+          <div class="input-file">
+            <span>
+              <i class="fas fa-paperclip"></i>
+              <input
+                type="file"
+                id="input-file-btn"
+                name="file1"
+                class="file-btn"
+              />
+            </span>
+            <span>
+              <i class="fas fa-paperclip"></i>
+              <input
+                type="file"
+                id="input-file-btn2"
+                name="file2"
+                class="file-btn2"
+              />
+            </span>
+            <input
+              type="hidden"
+              th:value="${article.username}"
+              name="username"
+            />
+            <input type="hidden" th:value="${article.id}" name="id" />
+          </div>
+          <textarea
+            class="summernote-parent"
+            name="content"
+            id="summernote"
+            th:text="*{content}"
+          >
+          </textarea>
+          <div class="downloadbox">
+            <div th:each="fi,iter : ${article.option.files}">
+              <div
+                class="download-content"
+                th:if="${fi!=null}"
+                th:id="'par'+${iter.count}"
+              >
+                <div><i class="fas fa-paperclip"></i></div>
+                <div
+                  class="filename"
+                  th:id="'count'+${iter.count}"
+                  th:text="${fi.original_filename}"
+                  th:name="${iter.count}"
+                >
+                  오리지날파일네임
+                </div>
+                <div class="filebutton">
+                  <button
+                    class="btn btn-primary btnSize"
+                    type="button"
+                    onclick="deletefile(event)"
+                  >
+                    삭제
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="submitButton">
-        <button type="submit" class="btn btn-primary" id="submit-button">
-          올리기</button>
+          <div class="submitButton">
+            <button type="submit" class="btn btn-primary" id="submit-button">
+              올리기
+            </button>
           </div>
-      </div>
-    </form>
-    <div th:each="fi, iter : ${article.option.files}">
-      <form th:method="POST"
-        th:action="@{/myclass/board/deletefile{K}(K=${iter.count})}"
-        th:id="'count'+${iter.count}">
-        <div class="download-content" th:if="${fi!=null}">
-          <input type="hidden" th:value="${fi.id}"
-            th:name="'count'+${iter.count}" />
-          <input type="hidden" th:value="${article.id}" name="id">
-          <input type="hidden" th:value="${article.board_id}" name="board_id">
         </div>
       </form>
+      <div th:each="fi, iter : ${article.option.files}">
+        <form
+          th:method="POST"
+          th:action="@{/myclass/board/deletefile{K}(K=${iter.count})}"
+          th:id="'count'+${iter.count}"
+        >
+          <div class="download-content" th:if="${fi!=null}">
+            <input
+              type="hidden"
+              th:value="${fi.id}"
+              th:name="'count'+${iter.count}"
+            />
+            <input type="hidden" th:value="${article.id}" name="id" />
+            <input
+              type="hidden"
+              th:value="${article.board_id}"
+              name="board_id"
+            />
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
-  <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-  <script
-    src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-  <script>
+    <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script>
       $(document).ready(function() {
         const title = $("#input-title");
         const submitBtn = $("#submit-button");
         $("#summernote").summernote({
-          height : 485,
-          disableResizeEditor : true
+          height: 485,
+          disableResizeEditor: true
         });
         $("#submit-button").click(function() {
           Swal.fire({
-            type : 'success',
-            title : '수정되었습니다',
-            showConfirmButton : false,
-            timer : 1500
+            type: "success",
+            title: "수정되었습니다",
+            showConfirmButton: false,
+            timer: 1500
           });
         });
         $("#input-file-btn").change(function() {
           $("#filename").text($("#input-file-btn")[0].files[0].name);
-        })
+        });
       });
       function deletefile(event) {
-        console.log('이건된다');
-        const div = $(event.target).parent().parent();
+        console.log("이건된다");
+        const div = $(event.target)
+          .parent()
+          .parent();
         div.empty();
-        if (div.prop('id') == 'par1') {
-          $('#count1').submit();
-        } else if (div.prop('id') == 'par2') {
-          $('#count2').submit();
+        if (div.prop("id") == "par1") {
+          $("#count1").submit();
+        } else if (div.prop("id") == "par2") {
+          $("#count2").submit();
         }
       }
       function updatefile(event) {
-        const i = $(event.target).parent().parent().children('.filename');
-        i.append('->야발')
+        const i = $(event.target)
+          .parent()
+          .parent()
+          .children(".filename");
+        i.append("->야발");
       }
     </script>
-</body>
+  </body>
 </html>

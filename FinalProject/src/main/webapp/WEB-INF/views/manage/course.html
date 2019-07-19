@@ -388,7 +388,8 @@
         });
       });
 
-      $("#teacher-form").submit(function() {
+      $("#teacher-form").submit(function(event) {
+        event.preventDefault();
         const teacherName = $("#teacher-name").val();
         const teacherUsername = $("#teacher-username").val();
         const teacherEmail = $("#teacher-email").val();
@@ -398,14 +399,16 @@
 
         checkDuplicates.then(function(data) {
           duplicates = data;
+          console.log(data);
           if (
-              !teacherName ||
-              !teacherUsername ||
-              !teacherEmail ||
-              !isValid ||
-              duplicates
+              teacherName &&
+              teacherUsername &&
+              teacherEmail &&
+              isValid &&
+              !duplicates
             ) {
-              event.preventDefault();
+              $("#teacher-form").off("submit");
+              $("#teacher-form").trigger("submit");
             }
         });
       });

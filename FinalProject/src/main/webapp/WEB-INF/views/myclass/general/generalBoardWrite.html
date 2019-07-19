@@ -9,32 +9,38 @@
     <link
       href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css"
       rel="stylesheet"
-    />    
+    />
   </head>
   <body>
     <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
     <div class="main" th:fragment="main">
       <form method="POST" enctype="multipart/form-data">
         <div id="write-form-wrapper">
-          <input type="hidden" name="board_id" th:value="${board.id}">
-          <input type="text" id="input-title" placeholder="제목" name="title"/>
+          <input type="hidden" name="board_id" th:value="${board.id}" />
+          <input type="text" id="input-title" placeholder="제목" name="title" />
           <div class="input-file">
-          <span>
-          <i class="fas fa-paperclip"></i>
-          <input type="file" id="input-file-btn" name="file1" class="file-btn">
-          </span>
-          <span>
-          <i class="fas fa-paperclip"></i>
-          <input type="file" id="input-file-btn2" name="file2" class="file-btn2">
-          </span>
+            <span>
+              <i class="fas fa-paperclip"></i>
+              <input
+                type="file"
+                id="input-file-btn"
+                name="file1"
+                class="file-btn"
+              />
+            </span>
+            <span>
+              <i class="fas fa-paperclip"></i>
+              <input
+                type="file"
+                id="input-file-btn2"
+                name="file2"
+                class="file-btn2"
+              />
+            </span>
           </div>
           <textarea class="summernote-parent" name="content" id="summernote">
           </textarea>
-          <button
-            type="submit"
-            class="btn btn-primary"
-            id="submit-button"
-          >
+          <button type="submit" class="btn btn-primary" id="submit-button">
             올리기
           </button>
         </div>
@@ -47,16 +53,12 @@
       $(document).ready(function() {
         const title = $("#input-title");
         const submitBtn = $("#submit-button");
-        
+
         $("#summernote").summernote({
           height: 485,
           disableResizeEditor: true
         });
-        
-       });
-       
-        
-    
+      });
     </script>
   </body>
 </html>

@@ -88,11 +88,13 @@ public class MyClassController {
 
   @GetMapping("")
   public String mainPage(Model model) {
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-    CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+    CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    
     Course course = courseDao.selectCourse(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id());
     course.setEndDate(course.getEnd_date().toLocalDate());
     course.setStartDate(course.getStart_date().toLocalDate());
@@ -107,6 +109,7 @@ public class MyClassController {
     int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
     List<Article> recentArticles = articleDao.selectArticlesForClassMain(course.getId());
     for (Article article : recentArticles) {
+      article.setBoardtype(boardDao.selectBoardById(article.getBoard_id()).getBoardtype());
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
       article.setTimeLocal(article.getTime().toLocalDateTime());
     }

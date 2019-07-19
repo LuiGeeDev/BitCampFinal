@@ -1,156 +1,215 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout-main :: layout(~{:: main}, ~{:: script}, ~{:: link})">
-<head>
-<link rel="stylesheet" th:href="@{/css/main.css}" />
-<link rel="stylesheet" href="/css/common.css"
-  th:href="@{/css/sidebar-main.css}" />
-</head>
-<body>
-  <div class="main" th:fragment="main">
-    <div class="row">
-      <div class="recent-messages">
-        <h5>최근 쪽지</h5>
-        <div class="recent-message" th:each="message : ${mainMessage}">
-          <div class="message-sender-photo">
-            <img th:src="${message.sender.profile_photo}" alt="" class="message-photo" />
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout-main :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link
+      rel="stylesheet"
+      href="/css/common.css"
+      th:href="@{/css/sidebar-main.css}"
+    />
+  </head>
+  <body>
+    <div class="main" th:fragment="main">
+      <div class="row">
+        <div class="recent-messages">
+          <h5>최근 쪽지</h5>
+          <div class="recent-message" th:each="message : ${mainMessage}">
+            <div class="message-sender-photo">
+              <img
+                th:src="${message.sender.profile_photo}"
+                alt=""
+                class="message-photo"
+              />
+            </div>
+            <div class="message-main">
+              <p class="message-content" th:text="${message.content}"></p>
+              <p class="message-info">
+                <span class="message-sender" th:text="${message.senderName}"
+                  >강기훈</span
+                >
+                <span
+                  class="message-time"
+                  th:text="${#temporals.format(message.timeLocal, 'yyyy-MM-dd HH:mm')}"
+                  >05/12 10:50pm</span
+                >
+              </p>
+            </div>
           </div>
-          <div class="message-main">
-            <p class="message-content" th:text="${message.content}"></p>
-            <p class="message-info">
-              <span class="message-sender"
-                th:text="${message.senderName}">강기훈</span>
-              <span class="message-time"
-                th:text="${#temporals.format(message.timeLocal, 'yyyy-MM-dd HH:mm')}">05/12
-                10:50pm</span>
+          <div th:if="${mainMessage.isEmpty()}" class="no-message">
+            아직 쪽지가 없습니다<br />먼저 쪽지를 보내보세요
+          </div>
+        </div>
+        <div class="my-project" th:if="${user.role == 'STUDENT'}">
+          <div class="d-day">
+            <span th:if="${dDay > 0}" th:text="${'D-' + dDay}"></span>
+            <span th:if="${dDay == 0}">D-DAY</span>
+            <span th:if="${dDay < 0}">종료</span>
+          </div>
+          <h4>내 프로젝트</h4>
+          <div class="troublelist">
+            <div class="no-timeline" th:if="${recentTimeline.isEmpty()}">
+              프로젝트 활동이 없습니다
+            </div>
+            <p
+              class="project-new-content"
+              th:if="${iter.index < 4}"
+              th:each="timeline, iter : ${recentTimeline}"
+            >
+              [[${timeline.content}]]
+              <span class="project-new-from" th:text="${timeline.title}"
+                >트러블 슈팅</span
+              >
             </p>
           </div>
         </div>
-        <div th:if="${mainMessage.isEmpty()}" class="no-message">아직 쪽지가 없습니다<br>먼저 쪽지를 보내보세요</div>
-      </div>
-      <div class="my-project" th:if="${user.role == 'STUDENT'}">
-        <div class="d-day">
-          <span th:if="${dDay > 0}" th:text="${'D-' + dDay}"></span> <span
-            th:if="${dDay == 0}">D-DAY</span> <span th:if="${dDay < 0}">종료</span>
-        </div>
-        <h4>내 프로젝트</h4>
-        <div class="troublelist">
-          <div class="no-timeline" th:if="${recentTimeline.isEmpty()}">프로젝트 활동이 없습니다</div>
-            <p class="project-new-content" th:if="${iter.index < 4}" th:each="timeline, iter : ${recentTimeline}">
-              [[${timeline.content}]] <span class="project-new-from" th:text="${timeline.title}">트러블
-                슈팅</span>
-            </p>
-        </div>
-      </div>
-      <div class="my-notification" th:unless="${user.role == 'STUDENT'}">
-        <h4>최근 알림</h4>
-        <div class="new-notifications">
-          <a th:href="${notice.link}" th:each="notice, iter : ${allNotices}">
-            <p class="new-notification" th:text="${notice.content}" th:if="${iter.index < 4}">
-              아니
-            </p>
-          </a>
+        <div class="my-notification" th:unless="${user.role == 'STUDENT'}">
+          <h4>최근 알림</h4>
+          <div class="new-notifications">
+            <a th:href="${notice.link}" th:each="notice, iter : ${allNotices}">
+              <p
+                class="new-notification"
+                th:text="${notice.content}"
+                th:if="${iter.index < 4}"
+              >
+                아니
+              </p>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- 캘린더 -->
-    <div class="row">
-      <div id="calendar"></div>
-    </div>
-
-    <!-- 동영상 게시판과 스택 게시판 -->
-    <div class="row">
-      <div class="videos">
-        <a th:href="@{/video/detail(id=${video.id})}"
-          th:if="${iter.index < 3}" class="video"
-          th:each="video,iter : ${recentVideos}">
-          <div class="thumbnail">
-            <img
-              th:src="'https://img.youtube.com/vi/' + ${video.option.video_id} + '/default.jpg'"
-              alt="썸네일" />
-          </div>
-          <div class="video-info">
-            <h5 class="video-title" th:text="${video.title}"></h5>
-            <div class="video-description" th:utext="${video.content}"></div>
-          </div>
-        </a>
-        <div th:if="${recentVideos.isEmpty()}" class="no-video">아직 영상이 없어요<br>좋은 영상을 공유해보세요</div>
+      <!-- 캘린더 -->
+      <div class="row">
+        <div id="calendar"></div>
       </div>
-      <!-- 스택 -->
-      <div class="stack">
-        <div class="stack-recent">
-          <div class="stack-header">
-            <p>방금 올라온 질문</p>
-          </div>
-          <a th:href="@{/stack/content(id=${stack.id})}"
-            class="stack-article" th:each="stack,iter : ${recentStacks}"
-            th:if="${iter.index < 3}">
-            <div class="stack-article-title" th:text="${stack.title}"></div>
-            <div class="stack-article-info">
-              <div class="stack-article-writer"
-                th:text="${stack.writer.name}">권예지</div>
-              <div class="stack-article-time"
-                th:text="${#temporals.format(stack.timeLocal, 'MM/dd HH:mm')}">5분
-                전</div>
+
+      <!-- 동영상 게시판과 스택 게시판 -->
+      <div class="row">
+        <div class="videos">
+          <a
+            th:href="@{/video/detail(id=${video.id})}"
+            th:if="${iter.index < 3}"
+            class="video"
+            th:each="video,iter : ${recentVideos}"
+          >
+            <div class="thumbnail">
+              <img
+                th:src="'https://img.youtube.com/vi/' + ${video.option.video_id} + '/default.jpg'"
+                alt="썸네일"
+              />
+            </div>
+            <div class="video-info">
+              <h5 class="video-title" th:text="${video.title}"></h5>
+              <div class="video-description" th:utext="${video.content}"></div>
             </div>
           </a>
-          <div th:if="${recentStacks.isEmpty()}" class="no-recent-stack">아직 질문이 없습니다</div>
-        </div>
-        <div class="stack-popular">
-          <div class="stack-header">
-            <p>최근 답변된 질문</p>
+          <div th:if="${recentVideos.isEmpty()}" class="no-video">
+            아직 영상이 없어요<br />좋은 영상을 공유해보세요
           </div>
-          <a th:href="@{/stack/content(id=${stack.id})}"
-            class="stack-article" th:each="stack : ${recentlyCommented}">
-            <div class="stack-article-title" th:text="${stack.title}"></div>
-            <div class="stack-article-info">
-              <div class="stack-article-writer"
-                th:text="${stack.writer.name}">권예지</div>
-              <div class="stack-article-time"
-                th:text="${#temporals.format(stack.timeLocal, 'MM/dd HH:mm')}">5분
-                전</div>
+        </div>
+        <!-- 스택 -->
+        <div class="stack">
+          <div class="stack-recent">
+            <div class="stack-header">
+              <p>방금 올라온 질문</p>
             </div>
+            <a
+              th:href="@{/stack/content(id=${stack.id})}"
+              class="stack-article"
+              th:each="stack,iter : ${recentStacks}"
+              th:if="${iter.index < 3}"
+            >
+              <div class="stack-article-title" th:text="${stack.title}"></div>
+              <div class="stack-article-info">
+                <div
+                  class="stack-article-writer"
+                  th:text="${stack.writer.name}"
+                >
+                  권예지
+                </div>
+                <div
+                  class="stack-article-time"
+                  th:text="${#temporals.format(stack.timeLocal, 'MM/dd HH:mm')}"
+                >
+                  5분 전
+                </div>
+              </div>
+            </a>
+            <div th:if="${recentStacks.isEmpty()}" class="no-recent-stack">
+              아직 질문이 없습니다
+            </div>
+          </div>
+          <div class="stack-popular">
+            <div class="stack-header">
+              <p>최근 답변된 질문</p>
+            </div>
+            <a
+              th:href="@{/stack/content(id=${stack.id})}"
+              class="stack-article"
+              th:each="stack : ${recentlyCommented}"
+            >
+              <div class="stack-article-title" th:text="${stack.title}"></div>
+              <div class="stack-article-info">
+                <div
+                  class="stack-article-writer"
+                  th:text="${stack.writer.name}"
+                >
+                  권예지
+                </div>
+                <div
+                  class="stack-article-time"
+                  th:text="${#temporals.format(stack.timeLocal, 'MM/dd HH:mm')}"
+                >
+                  5분 전
+                </div>
+              </div>
+            </a>
+            <div
+              th:if="${recentlyCommented.isEmpty()}"
+              class="no-recently-commented"
+            >
+              답변된 질문이 없습니다
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 하단 carousel -->
+      <div class="row">
+        <div id="carousel" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ul class="carousel-indicators">
+            <li data-target="#carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel" data-slide-to="1"></li>
+            <li data-target="#carousel" data-slide-to="2"></li>
+          </ul>
+
+          <!-- The slideshow -->
+          <div class="carousel-inner">
+            <div class="news news1 carousel-item active"></div>
+            <div class="news news2 carousel-item"></div>
+            <div class="news news3 carousel-item"></div>
+          </div>
+
+          <!-- Left and right controls -->
+          <a class="carousel-control-prev" href="#carousel" data-slide="prev">
+            <span class="carousel-control-prev-icon">
+              <i class="fas fa-chevron-left fa-lg"></i>
+            </span>
           </a>
-          <div th:if="${recentlyCommented.isEmpty()}" class="no-recently-commented">답변된 질문이 없습니다</div>
+          <a class="carousel-control-next" href="#carousel" data-slide="next">
+            <span class="carousel-control-next-icon">
+              <i class="fas fa-chevron-right fa-lg"></i>
+            </span>
+          </a>
         </div>
       </div>
     </div>
 
-    <!-- 하단 carousel -->
-    <div class="row">
-      <div id="carousel" class="carousel slide" data-ride="carousel">
-        <!-- Indicators -->
-        <ul class="carousel-indicators">
-          <li data-target="#carousel" data-slide-to="0" class="active"></li>
-          <li data-target="#carousel" data-slide-to="1"></li>
-          <li data-target="#carousel" data-slide-to="2"></li>
-        </ul>
-
-        <!-- The slideshow -->
-        <div class="carousel-inner">
-          <div class="news news1 carousel-item active"></div>
-          <div class="news news2 carousel-item"></div>
-          <div class="news news3 carousel-item"></div>
-        </div>
-
-        <!-- Left and right controls -->
-        <a class="carousel-control-prev" href="#carousel"
-          data-slide="prev"> <span
-          class="carousel-control-prev-icon"> <i
-            class="fas fa-chevron-left fa-lg"></i>
-        </span>
-        </a> <a class="carousel-control-next" href="#carousel"
-          data-slide="next"> <span
-          class="carousel-control-next-icon"> <i
-            class="fas fa-chevron-right fa-lg"></i>
-        </span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <script>
+    <script>
       $.ajax({
         method: "post",
         url: "/ajax/news",
@@ -162,7 +221,7 @@
               .attr("target", "_blank")
               .append(`<h6>${item.title}</h6>`)
               .append(`<p>${item.description}</p>`);
-            
+
             if (index < 3) {
               $(".news1").append(newsLink);
             } else if (index < 6) {
@@ -170,7 +229,7 @@
             } else {
               $(".news3").append(newsLink);
             }
-            
+
           });
         }
       });
@@ -200,12 +259,12 @@
         eventSources: [
           {
             url: "/myclass/schedule/get/group",
-            method: "POST",            
+            method: "POST",
             extraParams: {
               course_id: [[${user.course_id}]],
               group_id: [[${user.group_id}]]
             },
-            eventDataTransform: function(data) {              
+            eventDataTransform: function(data) {
               const start = new Date(data.start);
               const end = new Date(data.end);
               const startStr = formatDate(start);
@@ -217,12 +276,12 @@
           },
           {
             url: "/myclass/schedule/get/class",
-            method: "POST",            
+            method: "POST",
             extraParams: {
               course_id: [[${user.course_id}]],
               group_id: [[${user.group_id}]]
             },
-            eventDataTransform: function(data) {              
+            eventDataTransform: function(data) {
               const start = new Date(data.start);
               const end = new Date(data.end);
               const startStr = formatDate(start);
@@ -231,13 +290,13 @@
               data.end = endStr;
               return data;
             },
-            classNames: "disabled", 
+            classNames: "disabled",
           }
         ]
       });
 
       calendar.render();
-      
+
       function formatDate(date) {
         const dateStr = `${date.getFullYear()}-${
           date.getMonth() + 1 >= 10
@@ -246,7 +305,6 @@
         }-${date.getDate() >= 10 ? date.getDate() : "0" + date.getDate()}`;
         return dateStr;
       }
-      
     </script>
-</body>
+  </body>
 </html>

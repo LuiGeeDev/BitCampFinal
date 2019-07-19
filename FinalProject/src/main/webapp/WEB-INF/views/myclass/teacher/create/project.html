@@ -213,7 +213,9 @@
         const groupList = document.getElementById("class-group-list");
         Array.from(groupList.getElementsByClassName("class-member")).forEach(
           function(student) {
-            document.querySelector("#member-list .ss-content").appendChild(student);
+            document
+              .querySelector("#member-list .ss-content")
+              .appendChild(student);
           }
         );
       }
@@ -356,7 +358,7 @@
           $("#submit-button").attr("disabled", true);
         }
       });
-      
+
       $("#modal-submit-button").hover(function() {
         if (
           $('input[type="radio"]:checked').length == $("#member-count").val()
@@ -366,7 +368,7 @@
           $("#modal-submit-button").attr("disabled", true);
         }
       });
-      
+
       $("#end-date, #start-date").change(function() {
         if ($("#end-date").val() !== "") {
           if ($("#end-date").val() < $("#start-date").val()) {

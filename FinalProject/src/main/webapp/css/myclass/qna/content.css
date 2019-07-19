@@ -1,7 +1,8 @@
 @charset "UTF-8";
 
-body {
-  font-family: 'Nanum Gothic';
+.wrapper {
+  display: flex;
+  flex-direction: column;
 }
 
 .title-text {
@@ -9,7 +10,10 @@ body {
 }
 
 .title {
-  margin: 10px 20px 20px 140px;
+  margin: 20px auto;
+  width: 80%;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #a6a6a6;
 }
 
 .title h3 {
@@ -18,9 +22,8 @@ body {
 }
 
 table {
-  margin-left: 12%;
-  margin-right: 10%;
-  width: 75%;
+  width: 80%;
+  margin: auto;
   border-collapse: collapse;
 }
 
@@ -236,15 +239,19 @@ th, td {
 }
 
 .comtitle {
-  font-size: 18px;
-  margin: 30px;
+  font-size: 16px;
   font-weight: bold;
+  padding-left: 0;
 }
 
 .comment-writer {
   font-size: 14px;
   font-weight: bold;
   padding-left: 3px;
+}
+
+.comment-writer i {
+  color: black;
 }
 
 .commentCalender {
@@ -257,6 +264,7 @@ th, td {
   margin-bottom: 0px;
   height: 110px;
   width: 100%;
+  border-radius: 3px;
   resize: none;
 }
 
@@ -266,11 +274,8 @@ th, td {
 }
 
 .ctd1 {
-  width: 87%;
-}
-
-.ctd2 {
-  width: 13%;
+  width: 100%;
+  padding: 12px 0;
 }
 
 .commentCalender {
@@ -337,6 +342,8 @@ th, td {
 
 .stack-wrapper {
   font-size: 14px;
+  width: 80%;
+  margin: 0 auto 50px;
 }
 
 .utilNav {
@@ -378,13 +385,15 @@ th, td {
 
 table.tableWrapper {
   margin-bottom: 21px;
+  width: 80%;
 }
 
 table.commentWrapper {
   border: 2px solid #eaebec;
-  border-radius: 13px;
+  border-radius: 3px;
   border-collapse: inherit;
   margin-bottom: 6px;
+  width: 100%;
 }
 
 .messageReceiverId {
@@ -396,10 +405,14 @@ table.commentWrapper {
   font-weight:bold;
 }
 
-.my-comment-name{
+.my-comment-name {
   cursor: default;
 }
 
+.qnaWriter {
+  font-size: 14px;
+  font-weight: bold;
+}
 
 .messageForm:focus {
   outline-color: #F39B10;

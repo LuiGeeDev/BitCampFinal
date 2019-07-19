@@ -160,7 +160,7 @@ body {
 }
 
 .fc-toolbar h2 {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   margin-left: 3px;
 }
@@ -182,11 +182,12 @@ body {
   position: absolute;
   right: 15px;
   font-size: 11px;
+  line-height: 21px;
   font-weight: bold;
 }
 
-.article-info {
-  cursor: pointer;
+.article-info a {
+  color: #292929;
 }
 
 .article-info:hover {

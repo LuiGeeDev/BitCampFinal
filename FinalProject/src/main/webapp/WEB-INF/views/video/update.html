@@ -17,17 +17,24 @@
     <div class="main" th:fragment="main">
       <form method="POST">
         <div id="write-form-wrapper">
-          <input type="text" id="input-title" placeholder="제목" name="title"/>
+          <input type="text" id="input-title" placeholder="제목" name="title" />
           <div class="url">
-            <input type="text" id="input-url" placeholder="Youtube 주소 (https://youtu.be로 시작)" name="url"/>
-            <i class="far fa-question-circle info" data-toggle="tooltip" data-placement="bottom" title data-original-title="공유 - 주소 복사"></i>
+            <input
+              type="text"
+              id="input-url"
+              placeholder="Youtube 주소 (https://youtu.be로 시작)"
+              name="url"
+            />
+            <i
+              class="far fa-question-circle info"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title
+              data-original-title="공유 - 주소 복사"
+            ></i>
           </div>
           <textarea name="content" id="summernote"></textarea>
-          <button
-            type="submit"
-            class="btn btn-primary"
-            id="submit-button"
-          >
+          <button type="submit" class="btn btn-primary" id="submit-button">
             올리기
           </button>
         </div>
@@ -35,28 +42,28 @@
     </div>
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script>
-
-      
       $(document).ready(function() {
         const title = $("#input-title");
         const url = $("#input-url");
         const submitBtn = $("#submit-button");
-        
+
         $('[data-toggle="tooltip"]').tooltip();
-        
+
         $("#summernote").summernote({
           height: 485,
           disableResizeEditor: true
         });
-        
+
         if (title.val() == "") {
           submitBtn.attr("disabled", true);
         }
-        
+
         url.keyup(function() {
-          if (title.val() == ""
-              || url.val() == ""
-              || !url.val().startsWith("https://youtu.be/")) {
+          if (
+            title.val() == "" ||
+            url.val() == "" ||
+            !url.val().startsWith("https://youtu.be/")
+          ) {
             console.log("아무것도없쪼?");
             $("#submit-button").attr("disabled", true);
           } else {
