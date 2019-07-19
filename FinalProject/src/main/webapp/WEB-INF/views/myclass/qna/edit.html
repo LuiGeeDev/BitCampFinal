@@ -1,74 +1,89 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
-<head>
-<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-<link rel="stylesheet" th:href="@{/css/stack/edit.css}" />
-<link rel="stylesheet"
-  href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-<link
-  href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css"
-  rel="stylesheet" />
-</head>
-<body>
-  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
-  <div class="main" th:fragment="main">
-    <form method="POST">
-      <div id="write-form-wrapper">
-        <input type="text" id="input-title" placeholder="제목"
-          name="title" th:value="${article.title}" />
-        <textarea class="contentForm" name="content" id="summernote" 
-        th:utext="${article.content}"
-        ></textarea>
-        <div id="input-tag">
-          <span id="tagWrapper"><b>TAG </b></span>
-          <ol id="selectable">
-            <li class="ui-widget-content" th:each="tag : ${tags}">#[[${tag.tag}]]</li>
-          </ol>
-          <div class="submit-btn">
-            <button type="submit" id="submitbtn" class="btn btn-primary updateBtn">수정</button>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
+>
+  <head>
+    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+    <link rel="stylesheet" th:href="@{/css/stack/edit.css}" />
+    <link
+      rel="stylesheet"
+      href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
+    <link rel="stylesheet" href="/resources/demos/style.css" />
+    <link
+      href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+    <div class="main" th:fragment="main">
+      <form method="POST">
+        <div id="write-form-wrapper">
+          <input
+            type="text"
+            id="input-title"
+            placeholder="제목"
+            name="title"
+            th:value="${article.title}"
+          />
+          <textarea
+            name="content"
+            id="summernote"
+            th:utext="${article.content}"
+          ></textarea>
+          <div id="input-tag">
+            <span id="tagWrapper"><b>TAG </b></span>
+            <ol id="selectable">
+              <li class="ui-widget-content" th:each="tag : ${tags}">
+                #[[${tag.tag}]]
+              </li>
+            </ol>
+            <div class="submit-btn">
+              <button
+                type="submit"
+                id="submitbtn"
+                class="btn btn-primary updateBtn"
+              >
+                올리기
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </form>
-  </div>
-  <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-  <script
-  src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
-<script src="/js/stack/write.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+      </form>
+    </div>
+    <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+    <script src="/js/stack/write.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
-<script th:inline="javascript">
-     $('#summernote').summernote({
-        placeholder : '질문할 내용을 적어주세요',
-        tabsize : 2,
-        height : 500
+    <script th:inline="javascript">
+      $("#summernote").summernote({
+        placeholder: "질문할 내용을 적어주세요",
+        tabsize: 2,
+        height: 500
       });
 
-	
-     const title = $("#input-title");
-     const content= $(".contentForm");
-     
-     $(".updateBtn").click(function(event) {
-       if(title.val() == null || title.val().trim() == "" || content.val() == null || content.val().trim() == "") {
-         event.preventDefault();
-         Swal.fire({
- 	  	    type: 'error',
- 	  	    text: '다시 입력해주세요 !!',
- 	  	    confirmButtonText: '확인',
- 	  	    confirmButtonColor: '#F39C20'
- 	  	  })
-       } 
-     });
-</script>
-</body>
+      const title = $("#input-title");
+      const content = $(".contentForm");
+
+      $(".updateBtn").click(function(event) {
+        if (
+          title.val() == null ||
+          title.val().trim() == "" ||
+          content.val() == null ||
+          content.val().trim() == ""
+        ) {
+          event.preventDefault();
+          Swal.fire({
+            type: "error",
+            text: "다시 입력해주세요 !!",
+            confirmButtonText: "확인",
+            confirmButtonColor: "#F39C20"
+          });
+        }
+      });
+    </script>
+  </body>
 </html>
-
-
-
-
-
-
-
-
