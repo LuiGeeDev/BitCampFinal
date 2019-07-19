@@ -24,8 +24,7 @@ body {
   padding: 210px 0px 0px 100px;
   background: no-repeat;
   background-size: cover;
-  background-image:
-    url("/resources/images/background.jpg");
+  background-image: url("/resources/images/background.jpg");
 }
 
 #login-wrapper {
@@ -193,7 +192,7 @@ button:hover:after {
 }
 
 #email-error {
-  margin: 0 50px 3px;
+  margin: 0 50px 3px 5px;
   color: #FF3B30;
 }
 

@@ -1,104 +1,74 @@
+    
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
->
-  <head>
-    <!-- 이페이지에서만별도로사용하는CSS가있다면여기다link 태그로삽입-->
-    <link rel="stylesheet" th:href="@{/css/mypage/mypage-home.css}" />
-    <link
-      rel="stylesheet"
-      href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
-    />
-  </head>
-  <body>
-    <!-- 이페이지의내용은main 클래스div 태그안에작성-->
-    <div class="main" th:fragment="main">
-      <div class="Wrapper">
-        <div class="flexContainer">
-          <div class="profileWrapper">
-            <div class="profileTopWrapper">
-              <div class="profileimg">
-                <img
-                  th:unless="${user.profile_photo}!=null"
-                  th:src="@{/css/stack/profile.jpg}"
-                  id="profileimg"
-                />
-                <img
-                  th:if="${user.profile_photo}!=null"
-                  th:src="@{${user.profile_photo}}"
-                  id="profileimg"
-                  alt="프로필 사진"
-                />
-              </div>
-              <div class="profileContent">
-                <div class="profileName">
-                  <input
-                    type="hidden"
-                    th:value="${user.username}"
-                    id="usernameBox"
-                  />
-                  [[${user.name}]](<span>[[${user.username}]]</span>)
-                </div>
-                <div class="profileCourse">
-                  <span>[[${course.course_name}]]</span>
-                </div>
-                <div class="profileClassroom">
-                  <span>제 [[${course.classroom_name}]]</span>
-                </div>
-                <div class="profileDetail">
-                  <span class="pdProject"></span>
-                  <span class="pdArticle"
-                    >총게시물
-                    <span class="pdArticleNum">[[${article1.size()}]]</span>회
-                    |&nbsp
-                  </span>
-                  <span class="pdComment"
-                    >총댓글
-                    <span class="pdCommentNum">[[${comments.size()}]]</span>개
-                  </span>
-                </div>
-              </div>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
+<head>
+<!-- 이페이지에서만별도로사용하는CSS가있다면여기다link 태그로삽입-->
+<link rel="stylesheet" th:href="@{/css/mypage/mypage-home.css}" />
+<link rel="stylesheet"
+  href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+</head>
+<body>
+  <!-- 이페이지의내용은main 클래스div 태그안에작성-->
+  <div class="main" th:fragment="main">
+    <div class="Wrapper">
+      <div class="flexContainer">
+        <div class="profileWrapper">
+          <div class="profileTopWrapper">
+            <div class="profileimg">
+              <img th:unless="${user.profile_photo}!=null"
+                th:src="@{/css/stack/profile.jpg}" id="profileimg" /> <img
+                th:if="${user.profile_photo}!=null"
+                th:src="@{${user.profile_photo}}" id="profileimg"
+                alt="프로필 사진" />
             </div>
-            <div class="profileProgressBar">
-              <span class="progres">
-                <span>
-                  <span
-                    class="progress-bar bg-warning progress-bar-striped"
-                    id="progress"
-                    th:style="'width:' + ${completion} + '%;'"
-                  >
-                  </span>
-                  <span
-                    class="progresPercent"
-                    th:text="${completion} + '% 진행 중'"
-                  >
-                  </span>
+            <div class="profileContent">
+              <div class="profileName">
+                <input type="hidden" th:value="${user.username}"
+                  id="usernameBox" /> [[${user.name}]](<span>[[${user.username}]]</span>)
+              </div>
+              <div class="profileCourse">
+                <span>[[${course.course_name}]]</span>
+              </div>
+              <div class="profileClassroom">
+                <span>제 [[${course.classroom_name}]]</span>
+              </div>
+              <div class="profileDetail">
+                <span class="pdProject"></span> <span
+                  class="pdArticle">총게시물 <span
+                  class="pdArticleNum">[[${article1.size()}]]</span>회
+                  |&nbsp
+                </span> <span class="pdComment">총댓글 <span
+                  class="pdCommentNum">[[${comments.size()}]]</span>개
                 </span>
-              </span>
+              </div>
             </div>
+          </div>
+          <div class="profileProgressBar">
+            <span class="progres"> <span> <span
+                class="progress-bar bg-warning progress-bar-striped"
+                id="progress" th:style="'width:' + ${completion} + '%;'">
+              </span> <span class="progresPercent"
+                th:text="${completion} + '% 진행 중'"> </span>
+            </span>
+            </span>
           </div>
         </div>
         <div class="articleWrapper">
           <div class="tabsWrapper">
             <div class="articleNavWrapper">
-              <div class="Btns">
-                <button
-                  id="userArticles"
-                  class="btn btn-outline-primary btnwidth Btnactive"
-                  th:onclick="location.href='/mypage/home'"
-                >
-                  <span class="nav-font">등록한 게시글</span>
-                </button>
-                <button
-                  id="userComments"
-                  class="btn btn-outline-primary btnwidth"
-                  th:onclick="location.href='/mypage/home/comments'"
-                >
-                  <span class="nav-font">등록한 댓글</span>
-                </button>
-              </div>
-              <form method="get" class="boardSearchalign">
+            <div class="Btns">
+              <button id="userArticles"
+                class="btn btn-outline-primary btnwidth Btnactive"
+                th:onclick="location.href='/mypage/home'">
+                <span class="nav-font">등록한 게시글</span>
+              </button>
+              <button id="userComments"
+                class="btn btn-outline-primary btnwidth"
+                th:onclick="location.href='/mypage/home/comments'">
+                <span class="nav-font">등록한 댓글</span>
+              </button></div>
+               <form method="get" class="boardSearchalign">
                 <select size="1" class="selectBar" name="criteria">
                   <option value="titleOrContent" selected>제목 + 내용</option>
                   <option value="title">제목</option>
@@ -118,37 +88,6 @@
               </form>
             </div>
             <div>
-              <div class="board">
-                <div class="boardNav">
-                  <div class="boardId nav-style">글번호</div>
-                  <div class="boardTitle nav-style" id="TitleorContent">
-                    제목
-                  </div>
-                  <div class="boardDate nav-style">작성일</div>
-                  <div class="boardView nav-style" id="boardVoteCount">
-                    조회
-                  </div>
-                </div>
-                <form method="get" class="boardSearchalign">
-                  <select size="1" class="selectBar" name="criteria">
-                    <option value="titleOrContent" selected>제목 + 내용</option>
-                    <option value="title">제목</option>
-                    <option value="name">글작성자</option>
-                  </select>
-                  <input
-                    type="text"
-                    name="boardSearch"
-                    class="boardSearch"
-                    size="25"
-                    placeholder="검색내용을 적어주세요"
-                  />
-                  <input
-                    type="submit"
-                    class="btn btn-primary searchBtn"
-                    value="검색"
-                  />
-                </form>
-              </div>
               <div>
                 <div class="board">
                   <div class="boardNav">
@@ -162,74 +101,57 @@
                     </div>
                   </div>
 
-                  <!-- 게시물 테이블 -->
-                  <div
-                    class="boardContent iteration"
-                    th:onclick="location.href='/mypage/home/content?article_id=[[${list.id}]]'"
-                    th:each="list : ${article2}"
-                    id="boardArticletWrapper"
-                  >
-                    <div class="boardId cont-style">#[[${list.id}]]</div>
-                    <div class="boardTitle cont-style">
-                      <span th:utext="${list.title}"></span>
-                      [<span th:text="${list.commentlist.size()}"></span>]
-                    </div>
-                    <div
-                      class="boardDate cont-style"
-                      th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"
-                    ></div>
-                    <div class="boardView cont-style">
-                      [[${list.view_count}]]
-                    </div>
+                <!-- 게시물 테이블 -->
+                <div class="boardContent iteration"
+                  th:onclick="location.href='/mypage/home/content?article_id=[[${list.id}]]'"
+                  th:each="list : ${article2}" id="boardArticletWrapper">
+                  <div class="boardId cont-style">#[[${list.id}]]</div>
+                  <div class="boardTitle cont-style">
+                  <span th:utext="${list.title}"></span>
+                  [<span th:text="${list.commentlist.size()}"></span>]
                   </div>
-                  <!-- 게시물테이블끝 -->
+                  <div class="boardDate cont-style"
+                    th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></div>
+                  <div class="boardView cont-style">
+                    [[${list.view_count}]]</div>
                 </div>
-                <!-- 페이지 버튼 -->
-                <div class="row">
-                  <div class="page-btns">
-                    <span th:if="${pager.prev}">
-                      <a
-                        class="btn btn-outline-primary paging"
-                        th:href="@{/mypage/home(page=${pager.startPage}-1)}"
-                        >&laquo;</a
-                      >
-                    </span>
-                    <span
-                      th:each="idx, iterStat : ${#numbers.sequence(pager.startPage,pager.endPage)}"
-                    >
-                      <a
-                        th:if="${boardSearch} != null"
-                        class="btn btn-outline-primary paging"
-                        th:href="@{/mypage/home(page=${idx},boardSearch=${boardSearch})}"
-                        th:classappend="${pager.currentPage} == ${idx} ? active"
-                        th:text="${idx}"
-                      ></a>
-                      <a
-                        th:if="${boardSearch} == null"
-                        class="btn btn-outline-primary paging"
-                        th:href="@{/mypage/home(page=${idx})}"
-                        th:classappend="${pager.currentPage} == ${idx} ? active"
-                        th:text="${idx}"
-                      ></a>
-                    </span>
-                    <span th:if="${pager.next} and ${pager.endPage > 0}">
-                      <a
-                        class="btn btn-outline-primary paging"
-                        th:href="@{/mypage/home(page=${pager.endPage}+1)}"
-                        >&raquo;</a
-                      >
-                    </span>
-                  </div>
-                </div>
-                <!-- 끝 -->
+                <!-- 게시물테이블끝 -->
               </div>
+              <!-- 페이지 버튼 -->
+              <div class="row">
+                <div class="page-btns">
+                  <span th:if="${pager.prev}"> <a
+                    class="btn btn-outline-primary paging"
+                    th:href="@{/mypage/home(page=${pager.startPage}-1)}">&laquo;</a>
+                  </span> <span
+                    th:each="idx, iterStat : ${#numbers.sequence(pager.startPage,pager.endPage)}">
+                    <a th:if="${boardSearch} != null"
+                    class="btn btn-outline-primary paging"
+                    th:href="@{/mypage/home(page=${idx},boardSearch=${boardSearch})}"
+                    th:classappend="${pager.currentPage} == ${idx} ? active"
+                    th:text="${idx}"></a> <a
+                    th:if="${boardSearch} == null"
+                    class="btn btn-outline-primary paging"
+                    th:href="@{/mypage/home(page=${idx})}"
+                    th:classappend="${pager.currentPage} == ${idx} ? active"
+                    th:text="${idx}"></a>
+                  </span> <span th:if="${pager.next} and ${pager.endPage > 0}">
+                    <a class="btn btn-outline-primary paging"
+                    th:href="@{/mypage/home(page=${pager.endPage}+1)}">&raquo;</a>
+                  </span>
+                </div>
+              </div>
+              <!-- 끝 -->
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- 이페이지에서사용하는자바스크립트는이script 태그안에작성-->
-    <script th:inline="javascript"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  </body>
+  </div>
+  <!-- 이페이지에서사용하는자바스크립트는이script 태그안에작성-->
+  <script th:inline="javascript">
+      
+    </script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</body>
 </html>

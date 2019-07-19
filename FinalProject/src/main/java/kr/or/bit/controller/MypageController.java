@@ -65,7 +65,7 @@ public class MypageController {
     String username = Helper.userName();
     List<Article> article1 = articleDao.selectAllArticleByUsername(username);
     // List<Article> article2 = mypageService.allArticleByUsername(username);
-    List<Comment> comments = commentDao.selectAllCommentByUsername(username);
+    List<Comment> comments = mypageDao.selectAllMyCommentByUsername(username);
     List<Article> article2 = null;
     Pager pager = null;
     if (boardSearch != null) {
@@ -104,7 +104,7 @@ public class MypageController {
     MypageDao mypageDao = sqlSession.getMapper(MypageDao.class);
     String username = Helper.userName();
     List<Article> article1 = articleDao.selectAllArticleByUsername(username);
-    List<Comment> comments = commentDao.selectAllCommentByUsername(username);
+    List<Comment> comments = mypageDao.selectAllMyCommentByUsername(username);
     if (boardSearch != null) {
       if (criteria.equals("Commentcontent")) {
         comments = mypageService.selectMyCommentsByboardSearch(boardSearch, criteria, username);
