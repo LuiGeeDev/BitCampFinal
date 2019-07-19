@@ -1,12 +1,14 @@
 @charset "UTF-8";
 
-body {
-  font-family: 'Nanum Gothic' ;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
-#article-buttons {
-  text-align: right;
-  margin-bottom: 60px;
+.wrapper>div {
+  margin: auto;
+  width: 100%;
 }
 
 #submit-buttons {
@@ -14,48 +16,49 @@ body {
 }
 
 #title {
-  margin: 10px 20px 20px 140px;
+  margin: 20px auto;
+  width: 80%;
   font-size: 18px;
   font-weight: bold;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #c6c6c6;
 }
 
 .homework-container {
   display: flex;
-  width: 70%;
-  margin: 8px 150px;
+  width: 80%;
+  margin: 8px auto;
   font-size: 14px;
-}
-
-.homework-submit-container {
-  width: 70%;
 }
 
 .homework-submit-container, .contents {
   display: flex;
 }
 
+.homework-submit-container {
+  width: 80%;
+  margin: auto;
+}
+
+.homework-submit-container form {
+  width: 100%;
+}
+
 .homework-content {
-  width: 70%;
+  width: 80%;
   height: 100px;
-  margin: 13px 150px;
+  margin: 13px auto;
   border: 1px solid #a3a3a3;
   border-radius: 3px;
   padding: 15px 30px;
   font-size: 14px;
 }
 
-.homework-submit {
-  width: 70%;
-  height: 100%;
-  margin: 10px 150px;
-}
-
 .hw-title {
-  flex-basis: 15%;
-  border: 1px solid #ebeced;
+  width: 100px;
+  border: 1px solid #F29C20;
   border-radius: 3px;
-  margin: 0 7px;
-  background-color: #ebeced;
+  margin: 0 7px 0 0;
   padding: 5px 10px;
   text-align: center;
 }
@@ -71,82 +74,40 @@ body {
 }
 
 .homework-title {
-  flex-basis: 85%;
+  flex: 1;
   border: 1px solid;
   border-radius: 3px;
   padding: 5px 20px;
 }
 
 .homework-startDate {
-  flex-basis: 35%;
+  flex: 1;
   border: 1px solid;
   border-radius: 3px;
   padding: 5px 20px;
+  margin-right: 5px;
 }
 
 .homework-endDate {
-  flex-basis: 35%;
+  flex: 1;
   border: 1px solid;
   border-radius: 3px;
   padding: 5px 20px;
 }
 
-.submit-container {
-  display: flex;
-  width: 70%;
-  margin: 8px 150px;
-}
-
-.submit-name {
-  flex-basis: 35%;
-  border: 1px solid;
-  border-radius: 3px;
-  padding: 5px 20px;
-}
-
-.submit-writeDate {
-  flex-basis: 35%;
-  border: 1px solid;
-  border-radius: 3px;
-  padding: 5px 20px;
-}
-
-.submit-group {
-  flex-basis: 35%;
-  border: 1px solid;
-  border-radius: 3px;
-  padding: 5px 20px;
-}
-
-.submit-file {
-  flex-basis: 35%;
-  border: 1px solid;
-  border-radius: 3px;
-  padding: 5px 20px;
-}
-
-.ppt-upload-text {
-  margin-left: 50px;
+.ppt-upload-text, .source-upload-text {
   width: 100px;
-  padding-top: 10px
+  font-size: 15px;
+  line-height: 35px;
 }
 
 .ppt-upload-input {
-  margin-right: 25px
+  margin-right: 25px;
 }
 
-.source-upload-text {
-  width: 100px;
-  padding-top: 10px
-}
-
-.source-upload-input {
-  margin-right: 100px;
-}
-
-.ppt-upload-input label {
+.ppt-upload-input label, .source-upload-input label {
   display: inline-block;
-  padding: .5em .75em;
+  padding: 6px 10px;
   color: #fff;
   font-size: inherit;
   line-height: normal;
@@ -159,82 +120,42 @@ body {
   transition: background-color 0.2s;
 }
 
-.ppt-upload-input label:hover {
+.ppt-upload-input label:hover, .source-upload-input label:hover {
   background-color: #6ed36e;
 }
 
-.ppt-upload-input label:active {
+.ppt-upload-input label:active, .source-upload-input label:active {
   background-color: #367c36;
 }
 
-.ppt-upload-input input[type="file"] {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+input[type="file"] {
+  display: none;
 }
 
-.source-upload-input label {
-  display: inline-block;
-  padding: .5em .75em;
-  color: #fff;
-  font-size: inherit;
-  line-height: normal;
-  vertical-align: middle;
-  background-color: #5cb85c;
-  cursor: pointer;
-  border: 1px solid #4cae4c;
-  border-radius: .25em;
-  -webkit-transition: background-color 0.2s;
-  transition: background-color 0.2s;
-}
-
-.source-upload-input label:hover {
-  background-color: #6ed36e;
-}
-
-.source-upload-input label:active {
-  background-color: #367c36;
-}
-
-.source-upload-input input[type="file"] {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-}
-
-.reply-container {
-  padding-top: 50px;
-  margin-bottom: 100px;
+.reply-container {  
+  width: 80%;
+  margin: auto;
 }
 
 .reply-title {
-  margin-left: 140px;
+  width: 80%;
+  margin: 0 auto 20px;
   font-size: 18px;
   font-weight: bold;
 }
 
 .relpy-article {
   display: flex;
-  width: 70%;
-  margin: 30px 150px;
+  width: 100%;
 }
 
 .reply-group {
   border: 1px solid #bdbdbd;
-  border-radius: 4px;
+  border-radius: 3px;
+  font-size: 14px;
   margin-right: 15px;
   text-align: center;
-  width: 7%;
+  padding: 5px 10px;
 }
 
 .reply-files {
@@ -252,6 +173,19 @@ body {
 
 .reply-files, .pptFile, .link {
   margin-left: 3px;
+  color: #292929;
+}
+
+.link {
+  line-height: 33px;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.pptFile i {
+  color: #F29C20;
 }
 
 .reply-files, .sourceFile {
@@ -259,16 +193,16 @@ body {
   flex: 1;
 }
 
-.reply-files, .sourceFile, .link {
-  margin-left: 3px;
-}
-
 .relpy-name {
+  font-size: 15px;
+  line-height: 30px;
   text-align: center;
   width: 15%;
 }
 
 .relpy-writeDate {
+  font-size: 15px;
+  line-height: 30px;
   text-align: center;
   width: 13%;
 }
@@ -283,9 +217,11 @@ body {
 }
 
 .button-wrapper {
-  margin: 10px 150px;
-  width: 70%;
+  margin: 10px auto 20px;
+  width: 80%;
   text-align: right;
+  border-bottom: 1px solid #c6c6c6;
+  padding-bottom: 20px;
 }
 
 .none-reply-container {
@@ -297,6 +233,7 @@ body {
   margin: none !important;
   background-color: #2D3E50;
   border: 1px #2D3E50 solid;
+  font-size: 14px;
 }
 
 .btn {
@@ -309,19 +246,22 @@ body {
 }
 
 #homework-submit-button {
-  padding: .5em .75em !important;
-  font-size: 16px !important;
+  padding: 5px 10px;
+  line-height: 14px;
+  height: 30px !important;
+  margin-left: auto;
 }
 
 .contents {
-  margin-left: 120px;
+  margin: 0 auto 20px;
   width: 100%;
-  padding-left: 110px
+  padding-bottom: 20px;
+  border-bottom: 1px solid #c6c6c6;
 }
 
 .homework-submit-title {
-  font-size: 25px;
+  width: 80%;
+  margin: 0 auto 20px;
+  font-size: 18px;
   font-weight: bold;
-  margin-left: 170px;
-  margin-bottom: 20px;
 }

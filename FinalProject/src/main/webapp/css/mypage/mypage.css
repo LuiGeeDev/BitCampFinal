@@ -39,7 +39,7 @@
 
 input[type=text], input[type=email] {
   margin: 0 0 30px 10px;
-  padding: 15px;
+  padding: 8px;
   width: 80%;
   border-radius: 5px;
   border: 1px solid #c2c2c2;
@@ -47,7 +47,7 @@ input[type=text], input[type=email] {
 
 input[type=password] {
   margin: 0 0 30px 10px;
-  padding: 15px;
+  padding: 8px;
   width: 80%;
   border-radius: 5px;
   border: 1px solid #c2c2c2;
@@ -115,14 +115,21 @@ input[type=password]:focus {
   left: 45px;
   position: absolute;
   font-size: 12px;
-  bottom: 86px;
+  bottom: 74px;
 }
 
-#pwdCheck, #emailCheck {
-  bottom: 86px;
+#pwdCheck, #emailCheck{
+  bottom: 74px;
   position: absolute;
   left: 60px;
-  font-size: 12px
+  font-size: 12px;
+}
+
+#pwdCheck-check {
+  bottom: 74px;
+  position: absolute;
+  left: 93px;
+  font-size: 12px;
 }
 
 .user-icon {

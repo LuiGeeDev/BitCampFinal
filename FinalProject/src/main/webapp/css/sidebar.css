@@ -39,13 +39,10 @@
 
 .nav-icon a {
   color: white;
-<<<<<<< HEAD
-=======
 }
 
 .nav-icon:active i {
   transform: scale(0.97);
->>>>>>> 39cfce7085c394dc0da0aa76fb5dfc890ed4c5ff
 }
 
 .active-menu {
@@ -66,7 +63,7 @@
 }
 
 .side-nav-menu {
-  padding-top: 60px;
+  padding: 20px 0 80px;
 }
 
 .side-nav-menu a:hover {

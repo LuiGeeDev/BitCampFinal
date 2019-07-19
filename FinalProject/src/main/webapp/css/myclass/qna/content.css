@@ -349,30 +349,19 @@ th, td {
 }
 
 .votecount {
-  font-size: 22px;
-  color: #808080;
-}
-
-#voteButton{
-  display: contents;
+  font-size: 18px;
+  color: #e89013;
 }
 
 .voted{
-  color:#f39D20
+  background-color:#ea8a02 !important;
+  color:white !important;
 }
-
 .voteSpan {
-  padding: 16px;
-  border: 5px solid #EEEEEE;
-  border-radius: 14px;
+  padding: 8px 21px;
 }
-
 .voteSpan:active {
-  padding:15px;
-}
-
-.votecount-font {
-  color: gray;
+  padding: 7px 20px;
 }
 
 .top {
@@ -392,9 +381,10 @@ table.tableWrapper {
 }
 
 table.commentWrapper {
-  border: 6px solid #eaebec;
-  border-radius: 17px;
+  border: 2px solid #eaebec;
+  border-radius: 13px;
   border-collapse: inherit;
+  margin-bottom: 6px;
 }
 
 .messageReceiverId {
@@ -446,4 +436,39 @@ table.commentWrapper {
 
 .writerReceiverId {
   display:none;
+}
+
+#thumbIcon{
+  width:20px;
+  height:20px;
+  
+}
+
+.scrapCompletion{
+    background-color: #ea8a02 !important;
+    color: white !important;
+}
+
+
+.qnaIcon {
+  color:#F39B10;
+}
+
+.bookmarkRow {
+  text-align: right;
+}
+
+.bookmarkSpan {
+  padding: 8px;
+  border: 4px solid white;
+  cursor: pointer;
+}
+
+.bookmarkLabel {
+  font-size: 14px;
+  margin-right: 3px;
+}
+
+.bookmarkIcon {
+  font-size: 16px;
 }

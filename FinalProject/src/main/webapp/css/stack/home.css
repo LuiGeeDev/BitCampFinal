@@ -1,11 +1,17 @@
 @charset "UTF-8";
 
-body {
-  font-family: 'Nanum Gothic';
+.title {
+  width: 80%;
+  margin: 20px auto;
+  font-size: 18px;
+  font-weight: bold;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #a6a6a6;
 }
 
-.title {
-  margin: 10px 20px 20px 140px;
+#boardSearch {
+  height: 32px;
+  padding: 5px 8px;
 }
 
 .title h3 {
@@ -14,8 +20,9 @@ body {
 }
 
 table {
-  width: 100%;
+  width: 80%;
   border-collapse: collapse;
+  margin: auto;
   font-size: 14px;
 }
 
@@ -83,7 +90,7 @@ td[colspan="2"] {
 }
 
 .td2 {
-  font-size: 80%;
+  font-size: 12px;
   text-align: center;
 }
 
@@ -92,13 +99,17 @@ td[colspan="2"] {
   padding: 5px 5px;
 }
 
+.td3 span {
+  margin-left: 1px;
+}
+
 .td4 {
   width: 20%;
   padding-left: 7px;
 }
 
 .td5 {
-  font-size: 80%;
+  font-size: 12px;
   text-align: center;
   padding: 5px 0px;
 }
@@ -112,9 +123,8 @@ td[colspan="2"] {
 }
 
 .tag-name span:active {
-  padding:4px;
+  padding: 4px;
 }
-
 
 #c1 {
   background-color: green;
@@ -150,11 +160,6 @@ td[colspan="2"] {
   margin-left: 1%;
 }
 
-.seath {
-  float: right;
-  text-align: right;
-}
-
 .btnalign {
   text-align: right;
 }
@@ -183,16 +188,6 @@ td[colspan="2"] {
   font-size: 14px;
 }
 
-.seath input#boardSearch {
-  height: 30px;
-  margin: 5px;
-}
-
-.seath input.btn {
-  padding: 5px 12px;
-  margin-top: -3px;
-}
-
 .btn.btn-primary.paging.active {
   background-color: #EA8A02;
   border: 2px #EA8A02 solid;
@@ -205,8 +200,9 @@ td[colspan="2"] {
 }
 
 .tableWrapper {
-  margin-left: 13%;
-  margin-right: 14%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 #profileimg {
@@ -220,40 +216,47 @@ td[colspan="2"] {
   height: 44px;
 }
 
-.writeBtn {
-  
+.writeBtn a {
+  height: 32px;
 }
 
 .searchBtn {
-  padding: 4px 12px;
+  height: 32px;
+  margin-bottom: 3px;
+  line-height: 16px;
 }
 
 .selectBar {
-  height: 27px;
-  margin-right: 4px;
-  
+  height: 32px;
+  margin-right: -1px;
+  border-right: none;
 }
 
-.writer-name{
-  
-font-weight: 600;
+.selectBar:focus {
+  outline: none;
+  border: 1px solid #F29C20;
 }
 
-.write-date{
-  
-color: gray;
-  
-font-size: 13px;
-  
-margin-left: 5px;
+.writer-name {
+  font-weight: 600;
+  font-size: 13px;
 }
 
-.writerWrapper{
-  
-height: auto;
+.write-date {
+  color: gray;
+  font-size: 13px;
+  margin-left: 5px;
 }
 
-.tableBorder{
-  
-padding: 1px;
+.writerWrapper {
+  height: auto;
+}
+
+.tableBorder {
+  padding: 1px;
+}
+
+.article-title {
+  font-size: 16px;
+  color: #292929;
 }

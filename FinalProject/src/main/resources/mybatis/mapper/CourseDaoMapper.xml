@@ -115,6 +115,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM course c JOIN subject s ON c.subject = s.id
     WHERE curdate() &gt; c.end_date
     ORDER BY c.end_date DESC
+    LIMIT #{pager.start}, #{pager.articlesOnPage}
+  </select>
+  <select id="countEndCourseList" resultType="Integer">
+    SELECT count(*) 
+    FROM course 
+    WHERE curdate() &gt; end_date
   </select>
   <select id="selectOpeningCourseList" resultType="kr.or.bit.model.Course">
     SELECT c.id, c.course_name, c.start_date, c.end_date, s.subject AS subject_name, c.classroom_id,
