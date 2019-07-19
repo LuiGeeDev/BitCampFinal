@@ -9,7 +9,9 @@
   padding-bottom: 20px;
   border-bottom: 1px solid #c6c6c6;
 }
-
+.board-main-title .btn{
+  margin-top:-2px;
+}
 .board-topnav {
   margin: 0 auto;
   padding: 10px 0;
@@ -135,4 +137,5 @@ a {
   font-size:14px;
   height:33px;
   padding : 0 3px;
+  border-radius:5px;
 }
