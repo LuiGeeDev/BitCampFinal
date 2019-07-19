@@ -22,7 +22,6 @@ public class TestController {
   public String showChecklist(Model model) {
     ChecklistDao checklistdao = sqlSession.getMapper(ChecklistDao.class);
     List<Checklist> checklist = checklistdao.selectAllChecklist(1);
-    System.out.println(checklist);
     model.addAttribute("checklist", checklist);
     return "checklist";
   }
@@ -30,7 +29,6 @@ public class TestController {
   @PostMapping("/checklistinput")
   public String insertChecklist(Model model, @RequestParam("content") String content,
       @RequestParam("writer_username") String writer_username) {
-    System.out.println(content);
     ChecklistDao checklistdao = sqlSession.getMapper(ChecklistDao.class);
     Checklist checklist = new Checklist();
     checklist.setId(1);
@@ -38,7 +36,6 @@ public class TestController {
     checklist.setGroup_id(1);
     checklist.setWriter_username(writer_username);
     checklistdao.insertChecklist(checklist);
-    System.out.println(checklist.toString());
     return "checklist";
   }
 

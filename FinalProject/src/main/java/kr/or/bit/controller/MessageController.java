@@ -20,7 +20,6 @@ public class MessageController {
 
   @GetMapping("/message")
   public String messageIndex(Model model) {
-    /* String receiver_username = "teacher"; */
     String username = Helper.userName();
     MessageDao messageDao = SqlSession.getMapper(MessageDao.class);
     List<Message> selectall = messageDao.selectAllMessage(username);

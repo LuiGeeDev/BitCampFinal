@@ -135,7 +135,7 @@ $(".copy-board").click(function() {
     success: function(data) {
       const list = $(".copy-article-list .ss-content");
       if (data.length === 0) {
-        list.append(`<div class="copy-article">글이 없습니다</div>`);
+        list.append(`<div class="copy-no-article">글이 없습니다</div>`);
         return;
       }
 

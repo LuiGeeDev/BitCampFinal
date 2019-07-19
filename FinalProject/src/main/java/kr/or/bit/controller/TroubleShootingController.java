@@ -119,7 +119,6 @@ public class TroubleShootingController {
     Group group = groupDao.selectGroupById(group_id);
     Article targetArticle = articleDao.selectOneArticle(article.getId());
     targetArticle.setTags(stackDao.selectTagList(targetArticle.getId()));
-    System.out.println(targetArticle);
 
     List<String> articleTags = new ArrayList<String>();
     for(Tag tagName : targetArticle.getTags()) {

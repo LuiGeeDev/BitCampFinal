@@ -161,8 +161,6 @@ public class BoardController {
 
   @PostMapping("/deletefile1")
   public String fileDelete1(int count1, Article article) {
-    System.out.println(count1);
-    System.out.println(article);
     GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
     General general = new General();
     general.setArticle_id(article.getId());
@@ -183,13 +181,11 @@ public class BoardController {
   public String replyWrite(Model model, int board_id, int article_id) {
     model.addAttribute("article", articleService.selectOneArticle("general", article_id));
     model.addAttribute("board", boardService.getBoardInfo(board_id));
-    System.out.println(articleService.selectOneArticle("general", article_id));
     return "myclass/general/generalBoardrWriteReply";
   }
 
   @PostMapping("/replyWrite")
   public String replyWrite(Article article, MultipartFile file1, MultipartFile file2, HttpServletRequest request) {
-    System.out.println("reply start" + article);
     ArticleDao arti = sqlSession.getMapper(ArticleDao.class);
     article.setLevel(article.getLevel() + 1);
     article.setLayer(article.getLayer() + 1);
@@ -197,7 +193,6 @@ public class BoardController {
     
     if (article.getLayer() == 1) {
       int maxlevel = arti.selectMaxLevel(article);
-      System.out.println(maxlevel);
       article.setLevel(maxlevel + 1);
     } else if (article.getLayer() > 1) {
       int maxlevelbysibling = 0;
@@ -206,7 +201,6 @@ public class BoardController {
       } else {
         maxlevelbysibling = arti.selectMaxLevelBySibling(article);
       }
-      System.out.println("maxlevel" +maxlevelbysibling );
       arti.updateArticleLevel(article);
       article.setLevel(maxlevelbysibling);
       
