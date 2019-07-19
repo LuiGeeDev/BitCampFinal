@@ -71,13 +71,14 @@
   const title = $("#input-title");
   const content= $(".contentForm");
   $("#submit-button").click(function() {
-    if(title.val() == null || title.val().trim() == "" || content.val() == null || content.val().trim() == "") {
+    const contentTrim=content.val().replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, "").replace(/&nbsp;/gi, "").trim();
+    if(title.val() == null || title.val().trim() == "" || contentTrim == null || contentTrim == "") {
       event.preventDefault();
       Swal.fire({
   	    type: 'error',
   	    text: '다시 입력해주세요 !!',
   	  })
-    }
+    } 
   });
       $(document).ready(function() {
         const title = $("#input-title");
