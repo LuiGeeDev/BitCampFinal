@@ -140,13 +140,10 @@ public class AjaxController {
   
   @PostMapping("/manage/enabledUpdate")
   public String updateMemberEnabled(String username, String enabled) {
-    System.out.println("username : "+username);
-    System.out.println("enabled : "+enabled);
     ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
     int enabledInt = 0;
     if(enabled.equals("활성화")) {
       enabledInt=0;
-      System.out.println("여기타야됨");
     } else {
       enabledInt=1;
     }
@@ -169,7 +166,6 @@ public class AjaxController {
   public Map<String,Object> paging(int page){
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     Pager pager = new Pager(page, courseDao.countEndCourseList());
-    System.out.println(courseDao.selectEndCourseList(pager).get(0).getStart_date());
     List<Course> courseList = courseDao.selectEndCourseList(pager);
     for(Course course : courseList) {
       course.setStartDateLocal(course.getStart_date().toLocalDate());

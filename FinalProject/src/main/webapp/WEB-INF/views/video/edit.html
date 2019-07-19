@@ -39,14 +39,6 @@
     <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script>
-    $(".update-btn").click(function() {
-  	  Swal.fire({
-  	    type: 'success',
-  	    title: '수정되었습니다',
-  	    showConfirmButton: false,
-  	    timer: 1500
-  	  });
-  	});  
       $(document).ready(function() {
         const title = $("#input-title");
         const url = $("#input-url");
@@ -56,10 +48,17 @@
         $("#summernote").val(summernoteValue);
         
         $('[data-toggle="tooltip"]').tooltip();
-        
 
-        
-        if (title.val() == "") {
+        $(".update-btn").click(function(event) {
+          if(title.val() == null || title.val().trim() == "" || !url.val().startsWith("https://youtu.be/")) {
+            event.preventDefault();
+            Swal.fire({
+    	  	    type: 'error',
+    	  	    text: '다시 입력해주세요 !!',
+    	  	  })
+          } 
+        });        
+        /* if (title.val() == "") {
           submitBtn.attr("disabled", true);
         }
         
@@ -71,7 +70,7 @@
           } else {
             $("#submit-button").attr("disabled", false);
           }
-        });
+        }); */
       });
     </script>
   </body>

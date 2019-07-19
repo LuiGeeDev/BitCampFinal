@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- /* * * @date: 2019. 06. 28. * * @author: 권예지 * * @description: ArticleDaMapper로 
+	DAO의 parameter에 들어갈 값을 매핑해서 쿼리문을 보낸다 * */ -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.bit.dao.MypageDao">
+	<select id="countMyArticleByTitleOrContent" resultType="Integer">
+		SELECT
+		COUNT(*)
+		FROM article
+		WHERE enable = 1 AND username=#{username} AND title LIKE '%${boardSearch}%' OR content LIKE
+		'%${boardSearch}%'
+	</select>
+	<select id="countMyArticleByTitle" resultType="Integer">
+		SELECT COUNT(*)
+		FROM article
+		WHERE enable = 1 AND username=#{username} AND title LIKE '%${boardSearch}%'
+	</select>
+	<select id="countMyArticleByWriter" resultType="Integer">
+		SELECT COUNT(*)
+		FROM article a JOIN member m ON a.username = m.username
+		WHERE enable = 1 AND a.username=#{username} AND m.name LIKE '%${boardSearch}%'
+	</select>
+	<select id="countAllMyArticle" resultType="Integer">
+		SELECT count(*)
+		FROM article
+		WHERE ENABLE=1 AND username=#{username}
+	</select>
+	<select id="selectMyArticleByTitleOrContent" resultType="kr.or.bit.model.Article">
+		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
+		FROM ARTICLE a JOIN BOARD b ON a.board_id = b.id 
+		WHERE ENABLE = 1 AND a.username=#{username} AND a.title LIKE '%${boardSearch}%' OR a.content LIKE '%${boardSearch}%'
+		ORDER BY a.ID DESC
+		LIMIT #{pager.start}, #{pager.articlesOnPage}
+	</select>
+	<select id="selectMyArticleByTitle" resultType="kr.or.bit.model.Article">
+		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
+		FROM ARTICLE a JOIN BOARD b ON a.board_id = b.id 
+		WHERE ENABLE = 1 AND a.username=#{username} AND a.title LIKE '%${boardSearch}%'
+		ORDER BY a.ID DESC
+		LIMIT #{pager.start}, #{pager.articlesOnPage}
+	</select>
+	<select id="selectMyArticleByWriter" resultType="kr.or.bit.model.Article">
+		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
+		FROM ARTICLE a 
+		JOIN BOARD b ON a.board_id = b.id
+		JOIN MEMBER m ON a.username = m.username
+		WHERE ENABLE = 1 AND m.name= #{boardSearch} AND a.username=#{username}
+		ORDER BY a.ID DESC
+		LIMIT #{pager.start}, #{pager.articlesOnPage}
+	</select>
+		<select id="selectEnableArticleByUsername2" resultType="kr.or.bit.model.Article">
+		SELECT id, title, content, time, updated_time, view_count, original_id,
+		enable,
+		level, username, board_id,
+		(SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum
+		FROM ARTICLE as a
+		WHERE a.username=#{username} AND ENABLE=1
+		ORDER BY id DESC
+		LIMIT #{pager.start}, #{pager.articlesOnPage}
+	</select>
+</mapper>

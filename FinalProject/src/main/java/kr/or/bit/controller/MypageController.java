@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +27,7 @@ import kr.or.bit.dao.CommentDao;
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.FilesDao;
 import kr.or.bit.dao.MemberDao;
+import kr.or.bit.dao.MypageDao;
 import kr.or.bit.dao.ScrapDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
@@ -37,6 +39,7 @@ import kr.or.bit.service.MailService;
 import kr.or.bit.service.MemberService;
 import kr.or.bit.service.MypageService;
 import kr.or.bit.utils.Helper;
+import kr.or.bit.utils.Pager;
 
 @Controller
 @RequestMapping("/mypage")
@@ -54,36 +57,76 @@ public class MypageController {
   private MypageService mypageService;
 
   @GetMapping("/home")
-  public String mainPage(Model model) {
+  public String mainPage(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
+    MypageDao mypageDao = sqlSession.getMapper(MypageDao.class);
     String username = Helper.userName();
     List<Article> article1 = articleDao.selectAllArticleByUsername(username);
-    List<Article> article2 = mypageService.allArticleByUsername(username);
+    //List<Article> article2 = mypageService.allArticleByUsername(username);
     List<Comment> comments = commentDao.selectAllCommentByUsername(username);
+    List<Article> article2 = null;
+    Pager pager = null;
+    if (boardSearch != null) {
+      if (criteria.equals("titleOrContent")) {
+        pager = new Pager(page, mypageDao.countMyArticleByTitleOrContent(boardSearch, username));
+      } else if (criteria.equals("title")) {
+        pager = new Pager(page, mypageDao.countMyArticleByTitle(boardSearch, username));
+      } else {
+        pager = new Pager(page, mypageDao.countMyArticleByWriter(boardSearch, username));
+      }
+      article2 = mypageService.selectMyArticlesByboardSearch(pager, boardSearch, criteria, username);
+      model.addAttribute("boardSearch", boardSearch);
+    } else {
+      pager = new Pager(page, mypageDao.countAllMyArticle(username));
+      article2 = mypageService.selectAllMyArticlesByUsername(pager, username);
+    }
 
+    
     Member user = memberDao.selectMemberByUsername(username);
     Course course = courseDao.selectCourse(user.getCourse_id());
-    course.setEndDate(course.getEnd_date().toLocalDate());
-    course.setStartDate(course.getStart_date().toLocalDate());
-    Period diff = Period.between(course.getStartDate(), course.getEndDate());
-    Period diff2 = Period.between(course.getStartDate(), LocalDate.now());
-    int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
+    int completion = mypageService.coursePeriod(username);  
     model.addAttribute("completion", completion);
     model.addAttribute("course", course);
     model.addAttribute("comments", comments);
     model.addAttribute("article1", article1);
     model.addAttribute("article2", article2);
     model.addAttribute("user", user);
+    model.addAttribute("pager", pager);
+    model.addAttribute("page", page);
     return "mypage/mypage";
   }
+  
+  @GetMapping("/home/comments")
+  public String commentsPage(Model model) {
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
+    CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
+    CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
+    String username = Helper.userName();
+    List<Article> article1 = articleDao.selectAllArticleByUsername(username);
+    List<Comment> comments = commentDao.selectAllCommentByUsername(username);
+    for (Comment comment : comments) {
+      comment.setTimeLocal(comment.getTime().toLocalDateTime());
+    }
+    Member user = memberDao.selectMemberByUsername(username);
+    Course course = courseDao.selectCourse(user.getCourse_id());
+    int completion = mypageService.coursePeriod(username); 
+    model.addAttribute("completion", completion);
+    model.addAttribute("course", course);
+    model.addAttribute("comments", comments);
+    model.addAttribute("article1", article1);
+    model.addAttribute("user", user);
+    return "mypage/mypageComments";
+  }
+  
+  
 
   @GetMapping("/home/content")
   public String getDetail(int article_id) {
     String URL = mypageService.selectOneArticleforMypage(article_id);
-    System.out.println("URL" + URL);
     return URL;
   }
 
