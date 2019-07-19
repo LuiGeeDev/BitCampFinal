@@ -248,7 +248,7 @@
   	        html+="<div class='member-list-username'>" + item.username +"</div>"
   	        html+="<div class='member-list-name'>" + (item.name == null ? "" : item.name) + "</div>"
   	        html+="<div class='member-list-role'>" + item.role + "</div>"
-  	        html+="<div class='member-list-enabled'><i class='fas fa-circle " + (item.enabled == 1 ? "on'>" : "off'>") + (item.enabled==1 ? "활성</i></div>" :"비활성</i></div>")
+  	        html+="<div class='member-list-enabled'><i class='fas fa-circle " + (item.enabled == 1 ? "on'>" : "off'>") + (item.enabled==1 ? " 활성화</i></div>" :" 비활성</i></div>")
   	        html+="</div></div>"
   	        $(".list.cardShadow").append(html);
   	      })
