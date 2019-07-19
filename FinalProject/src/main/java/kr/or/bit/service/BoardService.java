@@ -197,9 +197,7 @@ public class BoardService {
       general.setArticle_id(article.getId());
       generalDao.insertGeneral(general);
     } catch (IllegalStateException e) {
-      System.out.println("WriteArticle: " + e.getMessage());
     } catch (IOException e) {
-      System.out.println("WriteArticle: " + e.getMessage());
     }
     return article.getId();
   }
@@ -228,9 +226,7 @@ public class BoardService {
       general.setArticle_id(article.getId());
       generalDao.insertGeneral(general);
     } catch (IllegalStateException e) {
-      System.out.println("WriteArticle: " + e.getMessage());
     } catch (IOException e) {
-      System.out.println("WriteArticle: " + e.getMessage());
     }
     return article.getId();
   }
