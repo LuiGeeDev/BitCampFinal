@@ -32,4 +32,7 @@ public interface MypageDao {
   
   List<Comment> selectMyCommentByContent(@Param("boardSearch") String boardSearch, @Param("username") String username);
   
+  List<Comment> selectAllMyCommentByUsername(String username);
+
+  
 }

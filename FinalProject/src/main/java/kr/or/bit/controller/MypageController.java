@@ -101,6 +101,7 @@ public class MypageController {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
+    MypageDao mypageDao = sqlSession.getMapper(MypageDao.class);
     String username = Helper.userName();
     List<Article> article1 = articleDao.selectAllArticleByUsername(username);
     List<Comment> comments = commentDao.selectAllCommentByUsername(username);
@@ -109,7 +110,7 @@ public class MypageController {
         comments = mypageService.selectMyCommentsByboardSearch(boardSearch, criteria, username);
       }
     } else {
-      comments = commentDao.selectAllCommentByUsername(username);
+      comments = mypageDao.selectAllMyCommentByUsername(username);
     }
     for (Comment comment : comments) {
       comment.setTimeLocal(comment.getTime().toLocalDateTime());
