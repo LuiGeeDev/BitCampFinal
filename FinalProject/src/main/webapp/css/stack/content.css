@@ -12,13 +12,18 @@
   border-bottom: 1px solid #a6a6a6;
 }
 
-.title-text {
+.title {
+  width: 80%;
+  margin: 20px auto;
+  font-size: 18px;
   font-weight: bold;
+  padding-bottom: 19px;
+  border-bottom: 1px solid #EEEEEE;
+  margin-bottom: 16px;
 }
 
-.title h3 {
+.title-text {
   font-weight: bold;
-  font-size: 16px;
 }
 
 table {
@@ -34,14 +39,13 @@ td {
 }
 
 .tdtitle {
+  margin: 30px;
   color: black;
   font-size: 19px;
   font-weight: bold;
   border-bottom: 1.5px solid #eaebec;
-  margin-left: 30px;
-  margin-right: 30px;
-  margin-bottom: 30px;
   padding-bottom: 17px;
+  padding: 16px;
 }
 
 .tdcontent {
@@ -359,6 +363,7 @@ td {
 .voteSpan {
   padding: 8px 21px;
 }
+
 .voteSpan:active {
   padding: 7px 20px;
 }
@@ -366,6 +371,7 @@ td {
 .votecount-font {
   color: gray;
 }
+
 .voteCompletion {
   background-color: #f7f7f7;
 }
@@ -398,8 +404,13 @@ td {
   margin-left: 20px;
   font-weight: bold;
 }
+
 .stackIcon {
+<<<<<<< HEAD
+  color: #F39B10;
+=======
   color: #f39b10;
+>>>>>>> 09627893a8cb7e1876593a0da81caa6a03350363
 }
 
 .my-comment-name {
@@ -465,4 +476,9 @@ td {
 #thumbIcon {
   width: 20px;
   height: 20px;
+}
+
+
+.content-size {
+  min-height: 150px;
 }
