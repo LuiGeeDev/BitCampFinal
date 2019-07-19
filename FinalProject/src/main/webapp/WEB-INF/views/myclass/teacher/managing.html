@@ -50,7 +50,7 @@
             <h5>프로젝트 둘러보기</h5>
             <select class="btn-move-project-board"
               onchange="if(this.value) location.href=(this.value);">
-              <option value=" ">이동하기</option>
+              <option value=" " class="custom-select">이동하기</option>
               <option th:each="group : ${groups}"
                 th:text="${group.group_no}+'조 프로젝트'"
                 th:value="@{/myclass/project(group_id=${group.id})}">
@@ -71,12 +71,15 @@
                   <span class="homework-title"
                     th:text="${homeworkarticle.title}"></span> <span>
                     진행중 입니다.</span>
-                  <div th:text="'마감일: '+${homeworkarticle.option.end_date}"></div>
+                  <div
+                    th:text="'마감일: '+${homeworkarticle.option.end_date}"></div>
                   <div
                     th:each="homeworkarticlere,iter : ${homeworkarticlere}">
                     <div th:text="${iter.count}+'개의 과제가 제출되었습니다.'"></div>
                   </div>
-                  <button class="btn btn-primary" th:onclick="'window.location.href = \'' + @{/myclass/homework/detail(id=${homeworkarticle.id},page=1)} + '\''">과제 확인하러 가기</button>
+                  <button class="btn btn-primary"
+                    th:onclick="'window.location.href = \'' + @{/myclass/homework/detail(id=${homeworkarticle.id},page=1)} + '\''">과제
+                    확인하러 가기</button>
                 </div>
               </div>
             </div>
@@ -95,26 +98,30 @@
         </div>
         <div class="row-control-right">
           <div class="card">
-          <div>
-            <p class="title">우리반 스택</p>
-          </div>
-          <div class="stack-control">
-            <div class="class-stack" th:each="starticle : ${stackarticle}">
-              <div class="stack-content" th:text="${starticle.title}" th:onclick="'window.location.href = \'' + @{/stack/content(id=${starticle.id})} + '\''">과제를 모르겠수요</div>
-              <div class="stack-info">
-                <span class="stack-writer" th:text="${starticle.writer.name}">권순조</span> <span
-                  class="stack-time" th:text="${#temporals.format(starticle.timeLocal, 'YYYY/MM/dd')}" >2019-09-21</span>
+            <div>
+              <p class="title">우리반 스택</p>
+            </div>
+            <div class="stack-control">
+              <div class="class-stack"
+                th:each="starticle : ${stackarticle}">
+                <div class="stack-content" th:text="${starticle.title}"
+                  th:onclick="'window.location.href = \'' + @{/stack/content(id=${starticle.id})} + '\''">과제를
+                  모르겠수요</div>
+                <div class="stack-info">
+                  <span class="stack-writer"
+                    th:text="${starticle.writer.name}">권순조</span> <span
+                    class="stack-time"
+                    th:text="${#temporals.format(starticle.timeLocal, 'YYYY/MM/dd')}">2019-09-21</span>
+                </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
       </div>
     </div>
   </div>
   <script th:src="@{/js/timeline.js}"></script>
-  <script>
-      
-    </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 </body>
 </html>
