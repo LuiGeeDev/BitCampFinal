@@ -4,78 +4,93 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.bit.dao.BoardDao">
-	<!-- <insert id="write"> INSERT INTO BOARD (title, content, writer) VALUES 
-		(#{title}, #{content}, #{writer}) </insert> <select id="getList" resultType="kr.or.bit.model.Board"> 
-		SELECT id, title, content, writer FROM BOARD </select> <select id="getBoard" 
-		resultType="kr.or.bit.model.Board"> SELECT id, title, content, writer FROM 
-		BOARD WHERE id = #{id} </select> -->
-	<update id="updateBoard" parameterType="kr.or.bit.model.Board">
-		update board
-		set board_name=#{board_name},
-		boardtype=#{boardtype},
-		course_id=#{course_id}
-		where id=#{id}
-	</update>
-	<select id="selectMyClassBoard"
-		resultType="kr.or.bit.model.Board">
-		SELECT id, board_name, boardtype, course_id
-		FROM BOARD
-		WHERE course_id = #{course_id}
-	</select>
-	<select id="selectBoardByCourseId"
-		resultType="kr.or.bit.model.Board">
-		SELECT ID, BOARD_NAME, BOARDTYPE, COURSE_ID
-		FROM BOARD
-		WHERE COURSE_ID=#{course_id} AND BOARDTYPE=#{boardtype};
-	</select>
-	<select id="selectBoardById" resultType="kr.or.bit.model.Board">
-		SELECT id, board_name, boardtype, course_id
-		FROM BOARD
-		WHERE id = #{board_id}
-	</select>
-	<select id="isBoardExists" resultType="kr.or.bit.model.Board">
-		SELECT id, board_name, boardtype, course_id
-		FROM BOARD
-		WHERE course_id = #{course_id}
-		AND board_name = #{board_name}
-	</select>
-	<insert id="insertBoard">
-		INSERT INTO BOARD (BOARD_NAME, BOARDTYPE, COURSE_ID)
-		VALUES (#{board_name}, #{boardtype}, #{course_id})
-	</insert>
-	<delete id="deleteBoard">
-		DELETE FROM BOARD
-		WHERE ID = #{board_id}
-	</delete>
-	<select id="selectTroubleShootingBoard"
-		resultType="kr.or.bit.model.Board">
-		select id, board_name, boardtype, course_id
-		FROM board
-		WHERE course_id = #{course_id}
-		AND board_name = '트러블슈팅${season}${group_no}'
-	</select>
-	<select id="selectBoardInCourse"
-		resultType="kr.or.bit.model.Board">
-		SELECT id, board_name, boardtype, course_id
-		FROM board
-		WHERE course_id = #{course_id}
-		AND boardtype = #{boardtype}
-	</select>
+  <!-- <insert id="write"> INSERT INTO BOARD (title, content, writer) VALUES 
+    (#{title}, #{content}, #{writer}) </insert> <select id="getList" resultType="kr.or.bit.model.Board"> 
+    SELECT id, title, content, writer FROM BOARD </select> <select id="getBoard" 
+    resultType="kr.or.bit.model.Board"> SELECT id, title, content, writer FROM 
+    BOARD WHERE id = #{id} </select> -->
+  <update id="updateBoard" parameterType="kr.or.bit.model.Board">
+    update board
+    set
+    board_name=#{board_name},
+    boardtype=#{boardtype},
+    course_id=#{course_id}
+    where id=#{id}
+  </update>
+  <select id="selectMyClassBoard"
+    resultType="kr.or.bit.model.Board">
+    SELECT id, board_name, boardtype, course_id
+    FROM BOARD
+    WHERE course_id = #{course_id}
+  </select>
+  <select id="selectBoardByCourseId"
+    resultType="kr.or.bit.model.Board">
+    SELECT ID, BOARD_NAME, BOARDTYPE, COURSE_ID
+    FROM BOARD
+    WHERE COURSE_ID=#{course_id} AND BOARDTYPE=#{boardtype};
+  </select>
+  <select id="selectBoardById" resultType="kr.or.bit.model.Board">
+    SELECT id, board_name,
+    boardtype, course_id
+    FROM BOARD
+    WHERE id = #{board_id}
+  </select>
+  <select id="isBoardExists" resultType="kr.or.bit.model.Board">
+    SELECT id, board_name,
+    boardtype, course_id
+    FROM BOARD
+    WHERE course_id = #{course_id}
+    AND
+    board_name = #{board_name}
+  </select>
+  <insert id="insertBoard">
+    INSERT INTO BOARD (BOARD_NAME, BOARDTYPE, COURSE_ID)
+    VALUES (#{board_name}, #{boardtype}, #{course_id})
+  </insert>
+  <delete id="deleteBoard">
+    DELETE FROM BOARD
+    WHERE ID = #{board_id}
+  </delete>
+  <select id="selectTroubleShootingBoard"
+    resultType="kr.or.bit.model.Board">
+    select id, board_name, boardtype, course_id
+    FROM board
+    WHERE course_id = #{course_id}
+    AND board_name =
+    '트러블슈팅${season}${group_no}'
+  </select>
+  <select id="selectBoardInCourse"
+    resultType="kr.or.bit.model.Board">
+    SELECT id, board_name, boardtype, course_id
+    FROM board
+    WHERE course_id = #{course_id}
+    AND boardtype = #{boardtype}
+  </select>
 
-	<select id="selectViewCountByDesc" resultType="kr.or.bit.model.Article">
-		SELECT *
-		FROM article
-		WHERE board_id= #{board_id}
-		ORDER BY view_count DESC
-	</select>
-	
-	<select id="selectWriteDayByDesc" resultType="kr.or.bit.model.Article">
-		SELECT *
-		FROM article
-		WHERE board_id= #{board_id}
-		ORDER BY time DESC
-	</select>
+  <select id="selectViewCountByDesc"
+    resultType="kr.or.bit.model.Article">
+    SELECT *
+    FROM article
+    WHERE board_id= #{board_id}
+    ORDER BY
+    view_count DESC
+  </select>
 
+  <select id="selectWriteDayByDesc"
+    resultType="kr.or.bit.model.Article">
+    SELECT *
+    FROM article
+    WHERE board_id= #{board_id}
+    ORDER BY
+    time DESC
+  </select>
+
+  <select id="selectBoardByCategory"
+    resultType="kr.or.bit.model.Board">
+    select id, board_name
+    from board
+    where category = #{category} and course_id = #{courseid}
+  </select>
 </mapper>  
 
 

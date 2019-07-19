@@ -1,5 +1,6 @@
 package kr.or.bit.interceptor;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,9 +12,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import kr.or.bit.dao.BoardDao;
+import kr.or.bit.dao.CategoryDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.ProjectDao;
 import kr.or.bit.model.Board;
+import kr.or.bit.model.Category;
 import kr.or.bit.model.Group;
 import kr.or.bit.model.Member;
 import kr.or.bit.utils.Helper;
@@ -33,6 +36,23 @@ public class MyClassInterceptor extends HandlerInterceptorAdapter {
     List<Board> board = boardDao.selectMyClassBoard(user.getCourse_id());
     List<Group> projects = projectDao.selectMyProject(username);
     
+//    ---------------게시판 시작----------------------   
+    
+    CategoryDao categoryDao = sqlSession.getMapper(CategoryDao.class);
+    List<Category> categories = categoryDao.selectCategoryByCourseid(user.getCourse_id());
+    System.out.println(categories);
+    
+    HashMap<String, List<Board>> boardMap = new HashMap<>(); 
+    
+    for(Category category : categories) {
+      List<Board> boardlist = boardDao.selectBoardByCategory(category.getId(), user.getCourse_id());
+      boardMap.put(category.getCategory(), boardlist);
+    }
+    
+    System.out.println(boardMap);
+    
+//    --------------게시판 끝---------------------------
+    request.setAttribute("boardMap", boardMap);
     request.setAttribute("boardList", board);
     request.setAttribute("projects", projects);
   }
