@@ -260,3 +260,7 @@
   padding: 6px 12px;
   margin-bottom: 50px;
 }
+#buttonWrapper .btn{
+  margin-bottom:50px;
+  padding: 4px 8px;
+}
