@@ -6,13 +6,11 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.transform.impl.AddDelegateTransformer;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javassist.expr.NewArray;
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.BoardDao;
 import kr.or.bit.dao.CategoryDao;
@@ -533,10 +530,11 @@ public class MyClassController {
     List<Group> groups = groupdao.selectAllGroupByProject(project.getId());
     project.setStartDateLocal(project.getStart_date().toLocalDate());
     project.setEndDateLocal(project.getEnd_date().toLocalDate());
-    course.setStartDateLocal(course.getStart_date().toLocalDate());
-    course.setEndDateLocal(course.getEnd_date().toLocalDate());
-    Period ccDay = Period.between(course.getStartDateLocal(), course.getEndDateLocal());
-    Period cDay = Period.between(course.getEndDateLocal(), LocalDate.now());
+    course.setStartDate(course.getStart_date().toLocalDate());
+    course.setEndDate(course.getEnd_date().toLocalDate());
+    Period ccDay = Period.between(course.getStartDate(), course.getEndDate());
+    Period cDay = Period.between(course.getEndDate(), LocalDate.now());
+    
     Period ddDay = Period.between(project.getStartDateLocal(), project.getEndDateLocal());
     Period dDay = Period.between(project.getStartDateLocal(), LocalDate.now());
     Article homeworkarticle = articledao.selectRecentHomework(username);

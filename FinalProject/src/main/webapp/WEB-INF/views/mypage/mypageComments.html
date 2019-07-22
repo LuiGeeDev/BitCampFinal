@@ -43,7 +43,7 @@
               </div>
             </div>
           </div>
-          <div class="profileProgressBar" sec:authorize="hasRole('STUDENT')">
+          <div class="profileProgressBar">
             <span class="progres"> <span> <span
                 class="progress-bar bg-warning progress-bar-striped"
                 id="progress" th:style="'width:' + ${completion} + '%;'">
@@ -53,6 +53,7 @@
             </span>
           </div>
         </div>
+        <div class="middle-border"></div>
         <div class="articleWrapper">
           <div class="tabsWrapper">
             <div class="articleNavWrapper">

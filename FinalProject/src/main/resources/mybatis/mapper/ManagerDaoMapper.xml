@@ -119,7 +119,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE a.role = "teacher"
  	</select>
  	<select id="selectSubjectList" resultType="kr.or.bit.model.Subject">
- 		SELECT id,subject FROM subject
+ 		SELECT id,subject FROM subject WHERE id != 0
  	</select>
  	<select id="selectClassroomList" resultType="kr.or.bit.model.Classroom">
  		SELECT id,classroom_name FROM classroom

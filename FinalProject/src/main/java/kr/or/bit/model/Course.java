@@ -22,24 +22,6 @@ public class Course {
   private String name;
   private String teacher;
   private int students;
-  private LocalDate startDateLocal;
-  private LocalDate endDateLocal;
-
-  public LocalDate getStartDateLocal() {
-    return startDateLocal;
-  }
-
-  public void setStartDateLocal(LocalDate startDateLocal) {
-    this.startDateLocal = startDateLocal;
-  }
-
-  public LocalDate getEndDateLocal() {
-    return endDateLocal;
-  }
-
-  public void setEndDateLocal(LocalDate endDateLocal) {
-    this.endDateLocal = endDateLocal;
-  }
 
   public String getTeacher() {
     return teacher;
@@ -183,7 +165,6 @@ public class Course {
         + ", subject=" + subject + ", classroom_id=" + classroom_id + ", people=" + people + ", classroom_name="
         + classroom_name + ", subject_name=" + subject_name + ", startDate=" + startDate + ", endDate=" + endDate
         + ", boards=" + boards + ", count=" + count + ", divisionResult=" + divisionResult + ", name=" + name
-        + ", teacher=" + teacher + ", students=" + students + ", startDateLocal=" + startDateLocal + ", endDateLocal="
-        + endDateLocal + "]";
+        + ", teacher=" + teacher + ", students=" + students + ", startDateLocal=" + "]";
   }
 }

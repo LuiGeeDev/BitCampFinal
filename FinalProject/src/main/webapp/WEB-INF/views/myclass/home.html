@@ -285,7 +285,6 @@
                    course_id: [[${user.course_id}]]
                  },
                  success: function(data) {
-                   console.log(data);
                  },
                  eventDataTransform: function(data) {
                    const start = new Date(data.start);
@@ -301,7 +300,6 @@
            calendar.render();
 
            var boardUrl = function(event){
-             console.log(event)
              if(event.board_name == '질문 게시판'){
                location.href='/myclass/qna/content?id='+event.id;
              }else{

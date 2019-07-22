@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
-import org.attoparser.config.ParseConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -258,9 +257,7 @@ public class BoardService {
     List<String> boardToAdd = boardAddRemove.getBoardToAdd();
     List<String> boardToRemove = boardAddRemove.getBoardToRemove();
     List<String> boardToCategory = boardAddRemove.getBoardCategoryToAdd();
-    System.out.println(boardToAdd);
-    System.out.println(boardToRemove);
-    System.out.println(boardToCategory);
+    
     int course_id = memberDao.selectMemberByUsername(Helper.userName()).getCourse_id();
     int index = 0;
     for (String boardname : boardToAdd) {
