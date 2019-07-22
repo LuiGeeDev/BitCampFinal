@@ -82,7 +82,6 @@
         client.send("/app/chat", {}, JSON.stringify(chatMessage));
 
         if (!client.connected) {
-          console.log("접속 끊김");
         }
       }
 

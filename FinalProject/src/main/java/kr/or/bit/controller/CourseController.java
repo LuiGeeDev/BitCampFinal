@@ -55,14 +55,4 @@ public class CourseController {
     return "courseedit";
   }
 
-  /*
-   * //update 페이지로 이동
-   * 
-   * @PostMapping("/courseupdate") public String selectTest4(HttpServletRequest
-   * request, Course course) { int id =
-   * Integer.parseInt(request.getParameter("id")); CourseDao coursedao =
-   * sqlsession.getMapper(CourseDao.class); Course editcourse =
-   * coursedao.selectCourse(id); return "courseedit?id=id"; }
-   */
-
 }

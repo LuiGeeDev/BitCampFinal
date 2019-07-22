@@ -157,7 +157,6 @@
     
     var detail = function(){
       
-  	  console.log(this)
   	  const course_name = $(this).children("#member-list-course_name").text();
   	  const end_date = $(this).children("#member-list-end_date").text();
   	  const profile_photo = $(this).children("#member-list-profile_photo").text();
@@ -193,8 +192,6 @@
   	  const memberEnabled = $("#profile-enabled").text().trim();
   	  const memberUsername = $("#profile-username").text();
   	 
-  	  console.log("enabled : "+memberEnabled);
-  	  console.log("username : " +memberUsername);
   	  
   	  $.ajax({
   	   	url:"/ajax/manage/enabledUpdate",

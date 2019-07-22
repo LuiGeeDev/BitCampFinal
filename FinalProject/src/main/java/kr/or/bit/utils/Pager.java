@@ -11,7 +11,6 @@ public class Pager {
   private boolean next;
   private int prevPage;
   private int nextPage;
-  // private int totalArticles;
   private int start;
   private int end;
 

@@ -47,6 +47,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script type="text/javascript">
       $(function() {
+        $(".textarea-size").summernote({
+          placeholder: "질문할 내용을 적어주세요",
+          tabsize: 2,
+          height: 500
+        });
         $("#selectable").selectable({
           stop: function() {
             var result = $("#select-result").empty();

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.CommentDao;
@@ -17,7 +16,6 @@ import kr.or.bit.dao.StackDao;
 import kr.or.bit.dao.TroubleShootingDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.Comment;
-import kr.or.bit.model.Member;
 import kr.or.bit.model.Tag;
 import kr.or.bit.model.TroubleShooting;
 import kr.or.bit.utils.Helper;

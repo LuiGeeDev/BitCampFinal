@@ -463,7 +463,6 @@
         event.preventDefault();
         const teacherName = $("#teacher-name").val();
         const teacherUsername = $("#teacher-username").val();
-        console.log("teahcerusername : "+ teacherUsername);
         
         const teacherEmail = $("#teacher-email").val();
         const checkDuplicates = checkIdDuplicates(teacherUsername);
@@ -570,11 +569,9 @@
             if(page != 1 ){
               $("#button-wrapper").append(prevBtn)
             }  	
-            console.log(Math.floor(data.allCount/10));
             if(Math.floor(data.allCount/10) >= page){
               $("#button-wrapper").append(nextBtn)
             }
-            console.log(data);
 			
 			$.each(data.courseList, function(index, item){
 			  if(item.course_name != '해당없음'){
