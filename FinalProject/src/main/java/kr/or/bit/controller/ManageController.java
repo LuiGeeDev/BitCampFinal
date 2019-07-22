@@ -6,6 +6,7 @@ import javax.mail.MessagingException;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,7 +65,6 @@ public class ManageController {
 	public @ResponseBody boolean checkIdDuplicates(String username) {
 		MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
 		Member member = memberDao.selectMemberByUsername(username);
-		System.out.println("check id 깐쮸롤러 : "+ member);
 		return (member != null);
 	}
 
