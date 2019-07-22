@@ -12,7 +12,7 @@
       <div class="TopNav">
         <div class="title">스택게시판</div>
         <div class="TagBtn">
-          <button class="btn btn-outline-primary plusTag">태그 추가</button>
+          <button class="btn btn-outline-primary plusTag">태그 관리</button>
         </div>
       </div>
       <!-- 검색창 -->
@@ -137,18 +137,19 @@
                  id="Plus-Tag"
                   class="btn btn-outline-primary tag-plus-btn">추가</button>
             </div>
-            <div class="tag-list">
+            <div class="tag-list" ss-container>
               <div class="tag-nav">
                 <div class="tagName NameStyle">태그 이름</div>
                 <div class="tagColorNav">태그 색상</div>
               </div>
+              
               <div class="tag-content" th:each="tags : ${tags}">
                 <div class="tagName">[[${tags.tag}]]</div>
                 <div class="tagColor">
                   <input type="color" class="color-style2"
                     th:value="${tags.color}" disabled>
                   <div class="tagcolorspan">[[${tags.color}]]</div>
-                </div>
+                </div> 
               </div>
             </div>
           </div>
@@ -180,6 +181,7 @@
         const formData = new FormData();
         formData.append("tag",TagName);
         formData.append("color",TagColor);
+
     		$.ajax({
     		  
     		  url: "/stack/plusTag",
@@ -188,16 +190,28 @@
     		  contentType: false,
     		  processData: false,
     		  success: function(data) {
+    		    $("#Tag-Name").empty();
+    		    $(".tag-content").remove();
     		    
-    		    
-    		    
+    		    $.each(data, function(index, item) {
+    		      const colorv = item.color;
+    		      const tagv = item.tag;
+    		      
+    		      let html = "<div class='tag-content'><div class='tagName'>"+tagv+"</div>" +
+    		      "<div class='tagColor'><input type='color' class='color-style2'"+
+    		      "value='"+colorv+"' disabled>"+
+    		      "<div class='tagcolorspan'>"+colorv+"</div></div> </div>"
+    		      
+    		      $(".tag-list").append(html);
+    		      
+    		    })
     		    
     		    
     		  }
 
     		});
-
         
+
       });
 
    

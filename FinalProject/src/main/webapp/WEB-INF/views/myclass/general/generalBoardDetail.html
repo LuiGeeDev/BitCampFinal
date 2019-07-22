@@ -466,7 +466,7 @@
               const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate + ` `+ newHours +`:` + minutes;
               let equalName = null;
               if (item.username == [[${user.username}]]) {
-                equalName = "[삭제]";
+                equalName = "삭제";
               } else {
                 equalName = "";
               }
@@ -489,7 +489,7 @@
               html += "<div class='content-move'>" +
                 "<span class='userIcon'><img src="+userPhoto+" id='icon'></span>" +
                 spanClass + username + "</span>" +
-                "<a href='/myclass/board/commentdelete?comment_id=" + commentId + "&article_id=" + articleId + "&board_id=" + [[${board.id}]] +"'" + ">" +equalName+"</a>" +
+                "<a class='comment-delete' href='/myclass/board/commentdelete?comment_id=" + commentId + "&article_id=" + articleId + "&board_id=" + [[${board.id}]] +"'" + ">" +equalName+"</a>" +
                 "<span class='hidden messageReceiverId'>" + item.username + "</span>" +
                 "<span class='write-date'>" + timedate + "</span></div>";
                 html += "<div class='content-comment'>" + content + "</div></div>";

@@ -90,7 +90,9 @@ svg:active {
 }
 
 .notice-title {
+  font-size: 14px;
   font-weight: bold;
+  margin-top: 5px;
 }
 
 .popover-body *:last-child {
@@ -99,6 +101,7 @@ svg:active {
 
 .notice-content {
   margin-bottom: 3px;
+  font-size: 13px;
 }
 
 #notices {
@@ -124,4 +127,9 @@ svg:active {
 
 .message-color, .mypage-color {
   color:black;
+}
+
+.popover-header {
+  font-size: 14px;
+  font-weight: bold;
 }
