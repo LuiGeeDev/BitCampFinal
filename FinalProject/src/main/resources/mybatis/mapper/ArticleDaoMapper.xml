@@ -188,7 +188,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT a.id, a.title, a.content,
     a.time, a.view_count,
     a.enable,
-    a.original_id, a.level, a.username, a.layer, a.sibling,
+    a.original_id, a.level, a.username, a.layer,
     a.board_id,
     (SELECT COUNT(*) FROM ARTICLE_VOTE WHERE
     article_id=#{id}) as
@@ -244,12 +244,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     INSERT INTO article(time, updated_time, title,
     content,
     username, board_id,
-    level, original_id, layer, sibling)
+    level, original_id, layer)
     VALUES (now(),
     now(), #{title}, #{content}, #{username},
     #{board_id},
     #{level},
-    #{original_id}, #{layer}, #{sibling})
+    #{original_id}, #{layer})
   </insert>
   <update id="deleteArticle" parameterType="Integer">
     UPDATE article
@@ -488,8 +488,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     UPDATE ARTICLE
     SET LEVEL = LEVEL + 1
     WHERE LEVEL &gt;
-    #{level} AND ORIGINAL_ID = #{original_id} and sibling &gt;
-    #{sibling}
+    #{level} AND ORIGINAL_ID = #{original_id}
   </update>
 
   <select id="selectMaxLevel" resultType="Integer">
@@ -499,14 +498,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     where original_id = #{original_id}
   </select>
 
-  <select id="selectMaxLevelBySibling" resultType="Integer">
-    select
-    max(level)
-    from article
-    where original_id = #{original_id} and sibling
-    =
-    #{sibling}+1
-  </select>
   <select id="selectAllArticleByUsername"
     resultType="kr.or.bit.model.Article">
     SELECT *
@@ -514,7 +505,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE username = #{username}
   </select>
   <select id="selectEnableArticleByUsername" resultType="kr.or.bit.model.Article">	
-	SELECT a.id, title, content, time, view_count, original_id, level, updated_time, enable, a.board_id, layer, sibling, boardtype
+	SELECT a.id, title, content, time, view_count, original_id, level, updated_time, enable, a.board_id, layer, boardtype
 	FROM article a
 	JOIN board b
 	ON a.board_id = b.id
