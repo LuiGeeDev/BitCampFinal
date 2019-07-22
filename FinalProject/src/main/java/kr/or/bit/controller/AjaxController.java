@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import kr.or.bit.dao.ManagerDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.MessageDao;
 import kr.or.bit.dao.NotificationDao;
+import kr.or.bit.dao.TeacherCourseDao;
 import kr.or.bit.model.Article;
 import kr.or.bit.model.ChatMessage;
 import kr.or.bit.model.Classroom;
@@ -158,9 +160,24 @@ public class AjaxController {
   }
   
   @PostMapping("/manage/course/delete")
+  @Transactional
   public void deleteCourse(int id) {
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    TeacherCourseDao teacherCourse = sqlSession.getMapper(TeacherCourseDao.class);
+    
+    for (Member student : memberDao.selectAllMembersByMycourse(id)) {
+      memberDao.deleteMember(student.getUsername());
+    }
+    System.out.println(teacherCourse.selectTeacherCourse(id).getTeacher_username());
+    Member teacher =memberDao.selectMemberByUsername(teacherCourse.selectTeacherCourse(id).getTeacher_username());
+    
+    teacher.setCourse_id(0);
+    memberDao.updateTeacherCourseId(teacher);
+    
     courseDao.deleteCourse(id);
+
+    
   }
   
   @GetMapping("/manage/course/paging")
@@ -169,8 +186,8 @@ public class AjaxController {
     Pager pager = new Pager(page, courseDao.countEndCourseList());
     List<Course> courseList = courseDao.selectEndCourseList(pager);
     for(Course course : courseList) {
-      course.setStartDateLocal(course.getStart_date().toLocalDate());
-      course.setEndDateLocal(course.getEnd_date().toLocalDate());
+      course.setStartDate(course.getStart_date().toLocalDate());
+      course.setEndDate(course.getEnd_date().toLocalDate());
     }
     Map<String, Object> returnMap = new HashMap<String, Object>();
     returnMap.put("courseList", courseList);
