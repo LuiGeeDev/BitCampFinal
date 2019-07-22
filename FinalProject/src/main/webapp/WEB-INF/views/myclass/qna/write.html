@@ -23,7 +23,7 @@
       <form method="POST">
         <div id="write-form-wrapper">
           <input type="text" id="input-title" placeholder="제목" name="title" />
-          <textarea name="content" class="textarea-size"></textarea>
+          <textarea name="content" id="summernote"></textarea>
           <div id="input-tag">
             <textarea class="hidden" id="select-result" name="tag"></textarea>
             <span id="tagWrapper"><b>TAG </b></span>
@@ -46,15 +46,31 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script type="text/javascript">
-      $(function() {
-        $("#selectable").selectable({
-          stop: function() {
-            var result = $("#select-result").empty();
-            var index = $("#selectable li").index(this);
-            result.append($(".ui-selected").text());
-          }
-        });
+    $(function() {
+      $("#selectable").selectable({
+        stop : function() {
+          var result=$("#select-result").empty();
+          var index=$("#selectable li").index(this);
+          result.append($(".ui-selected").text());
+        }
       });
+    });
+    $('#summernote').summernote({
+      placeholder : '질문할 내용을 적어주세요',
+      tabsize : 2,
+      height : 500
+    });
+    
+    $("#submitbtn").click(function() {
+        Swal.fire({
+          type: 'success',
+          title: '작성되었습니다',
+          showConfirmButton: false,
+          timer: 1500
+        });
+       
+    });
+    
     </script>
   </body>
 </html>

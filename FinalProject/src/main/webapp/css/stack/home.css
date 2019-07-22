@@ -353,3 +353,6 @@ td[colspan="2"] {
 .NameStyle {
   font-weight: bold;
 }
+.tag-content:hover {
+    background-color:#f6f6f6
+}
