@@ -93,8 +93,14 @@
               <span
                 class="recentProjectcontent"
                 th:text="${project.project_name} + ' 진행중'"
-                >파이널 프로젝트 진행중</span
+                th:if="${project != null}"
+                >파이널 프로젝트 진행중</span>
+              <span 
+                class="recentProjectcontent"
+                th:if="${project == null}"
               >
+              현재 프로젝트가 없습니다
+              </span>
             </span>
           </div>
         </div>

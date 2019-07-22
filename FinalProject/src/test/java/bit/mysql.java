@@ -11,8 +11,6 @@ public class mysql {
     private static final String USER = "springuser";
     private static final String PASSWORD = "10041004";
 
-    
-    
     @Test
     public void testConnection() throws Exception {
         Class.forName(DRIVER);

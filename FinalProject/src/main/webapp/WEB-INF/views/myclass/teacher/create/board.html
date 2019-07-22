@@ -143,6 +143,7 @@
         $(boardCategoryToAdd).each(function() {
           boardCategoryToAddList.push($(this).val());
         });
+        console.log(boardCategoryToAddList);
         const boardAddRemove = {
           boardToAdd: boardToAddList,
           boardToRemove: boardToRemoveList,
@@ -174,8 +175,6 @@
           </div>
           `
           );
-        } else {
-          console.log('hi');
         }
       });
       
