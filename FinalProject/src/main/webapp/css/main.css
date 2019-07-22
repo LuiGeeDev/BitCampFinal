@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .carousel {
-  border: 1px solid black;
+  border: 1px solid gray;
   border-radius: 7px;
   padding: 25px 50px;
   margin: auto;
@@ -49,9 +49,9 @@ a[class^="carousel-control"] {
 }
 
 #calendar {
-  width: 771px;
+  width: 801px;
   margin: auto;
-  margin-bottom: 20px;
+  margin-bottom: 27px;
 }
 
 .fc-day-header {
@@ -134,14 +134,14 @@ a[class^="carousel-control"] {
 
 .my-project,
 .my-notification {
-  margin: auto;
+  margin: 27px auto 8px;
   margin-left: 50px;
-  border: 1px solid #2d3e50;
+  border: 1px solid gray;
   border-radius: 5px;
-  padding: 30px 20px 20px 25px;
+  padding: 17px 20px 10px 25px;
   position: relative;
   width: 350px;
-  min-height: 303px;
+  max-height: 261px;
 }
 
 .d-day {
@@ -154,14 +154,14 @@ a[class^="carousel-control"] {
 
 .my-project h4,
 .my-notification h4 {
-  margin-bottom: 40px;
+  margin-bottom: 18px;
   color: #2d3e50;
 }
 
 .project-new-content,
 .new-notification {
   margin: 0;
-  margin-top: 25px;
+  margin-top: 23px;
   font-size: 15px;
   position: relative;
   width: 100%;
@@ -183,7 +183,7 @@ a[class^="carousel-control"] {
 }
 
 .videos {
-  margin: auto 50px 40px auto;
+  margin: auto 50px 30px auto;
   width: 325px;
   height: 432px;
 }
@@ -214,9 +214,10 @@ a[class^="carousel-control"] {
 
 .video-description {
   overflow: hidden;
-  margin-top: 20px;
+  margin-top: 5px;
   font-size: 14px;
   color: gray;
+  max-height: 39px;
 }
 
 .video-description * {
@@ -241,10 +242,10 @@ a[class^="carousel-control"] {
 
 .stack-recent,
 .stack-popular {
-  border: 1px solid #2d3e50;
+  border: 1px solid gray;
   border-radius: 7px;
   padding: 10px 30px;
-  margin-bottom: 40px;
+  margin-bottom: 35px;
   min-height: 196px;
 }
 
@@ -299,4 +300,9 @@ a[class^="carousel-control"] {
   width: 80%;
   text-align: center;
   font-weight: bold;
+}
+
+
+.fc-day-grid-container {
+  height: 111px !important;
 }
