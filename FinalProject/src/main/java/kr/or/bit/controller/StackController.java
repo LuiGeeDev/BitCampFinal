@@ -246,8 +246,17 @@ public class StackController {
   
   @GetMapping("/error")
   public String errortest() {
-
-    
-    return "/errorPage";
+    return "/error/errorPage404";
   }
+  
+  @GetMapping("/error2")
+  public String errortest2() {   
+    return "/error/errorPage500";
+  }
+  
+  @GetMapping("/error3")
+  public String errortest3() {   
+    return "/error/errorPage403";
+  }
+  
 }
