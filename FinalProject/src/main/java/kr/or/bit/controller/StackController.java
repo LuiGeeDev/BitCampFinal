@@ -7,7 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.GetMapping;  
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,13 +19,11 @@ import kr.or.bit.dao.QnaDao;
 import kr.or.bit.dao.ScrapDao;
 import kr.or.bit.dao.StackDao;
 import kr.or.bit.model.Article;
-import kr.or.bit.model.ArticleOption;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.General;
-import kr.or.bit.model.Tag;
-import kr.or.bit.model.Member;
 import kr.or.bit.model.Qna;
 import kr.or.bit.model.Scrap;
+import kr.or.bit.model.Tag;
 import kr.or.bit.service.ArticleInsertService;
 import kr.or.bit.service.ArticleService;
 import kr.or.bit.service.ArticleUpdateService;
@@ -64,9 +62,6 @@ public class StackController {
   public String listPage(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model)
       throws Exception {
     StackDao stackDao = sqlsession.getMapper(StackDao.class);
-    MemberDao memberDao = sqlsession.getMapper(MemberDao.class);
-    String username = Helper.userName();
-    Member member = memberDao.selectMemberByUsername(username);
     List<Article> stackList = null;
     Pager pager = null;
     if (boardSearch != null) {
@@ -86,8 +81,6 @@ public class StackController {
       stackList = articleService.selectAllStackArticles(pager);
     }
     List<Tag> tags = stackDao.showTagList();
-    
-    System.out.println(tags);
     
     model.addAttribute("tags",tags);
     model.addAttribute("stacklist", stackList);

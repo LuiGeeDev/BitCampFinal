@@ -132,7 +132,6 @@
       $("#end_date").change(function() {
         const end_date = new Date($("#hw-input").text());
         if ($("#end_date").val() < $("#hw-input").text()) {
-          console.log("오긴옴?");
           $("#end_date").val("");
           Swal.fire({
             type: "error",

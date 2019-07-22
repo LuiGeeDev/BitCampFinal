@@ -301,3 +301,7 @@ a[class^="carousel-control"] {
   text-align: center;
   font-weight: bold;
 }
+
+.my-notification h4{
+  font-weight:bold;
+}

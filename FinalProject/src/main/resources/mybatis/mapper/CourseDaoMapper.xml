@@ -94,6 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE t.course_id = c.id AND t.course_id != 0) AS teacher,
     (SELECT count(*) FROM member WHERE course_id = c.id) AS students
     FROM course c JOIN subject s ON c.subject = s.id
+    WHERE c.id != 0
     ORDER BY c.id DESC
   </select>
   <select id="selectCurrentCourseList" resultType="kr.or.bit.model.Course">

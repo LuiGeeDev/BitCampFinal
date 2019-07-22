@@ -14,7 +14,6 @@ import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.MessageDao;
 import kr.or.bit.dao.NotificationDao;
 import kr.or.bit.model.Member;
-import kr.or.bit.model.Message;
 import kr.or.bit.model.Notification;
 import kr.or.bit.utils.Helper;
 

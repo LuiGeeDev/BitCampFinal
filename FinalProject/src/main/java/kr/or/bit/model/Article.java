@@ -1,6 +1,5 @@
 package kr.or.bit.model;
 
-import java.io.File;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
