@@ -261,9 +261,6 @@
               >
                 <div class="th">강사 이름</div>
                 <input type="text" name="name" id="teacher-name" />
-                <span class="username-duplicate username-message"
-                    >이미 존재하는 아이디입니다</span
-                  >
                 <div class="th">아이디</div>
                 <div class="input-username">
                   <input type="text" name="username" id="teacher-username" />
@@ -437,7 +434,7 @@
       }
 
       $("input[name='username']").keyup(function() {
-        const username = $("input[name='username']").val();
+        const username = $("#teacher-username").val();
         const checkDuplicates = checkIdDuplicates(username);
         $(".username-message").hide();
 
@@ -459,6 +456,8 @@
         event.preventDefault();
         const teacherName = $("#teacher-name").val();
         const teacherUsername = $("#teacher-username").val();
+        console.log("teahcerusername : "+ teacherUsername);
+        
         const teacherEmail = $("#teacher-email").val();
         const checkDuplicates = checkIdDuplicates(teacherUsername);
         let isValid = checkIdValid(teacherUsername);

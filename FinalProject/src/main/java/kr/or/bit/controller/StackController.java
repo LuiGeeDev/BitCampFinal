@@ -243,4 +243,20 @@ public class StackController {
     qnaDao.chooseAnswer(comment_id, article_id);
     return "redirect:/stack/content?id=" + article_id;
   }
+  
+  @GetMapping("/error")
+  public String errortest() {
+    return "/error/errorPage404";
+  }
+  
+  @GetMapping("/error2")
+  public String errortest2() {   
+    return "/error/errorPage500";
+  }
+  
+  @GetMapping("/error3")
+  public String errortest3() {   
+    return "/error/errorPage403";
+  }
+  
 }
