@@ -107,11 +107,13 @@
             </td>
             <td colspan="3" class="td4">
               <p class="pwriter">
+              <span class="qnaWriterForm">
                 <span
                   class="qnaWriter"
                   th:classappend="${qnacontent.writer.name == user.name} ? 'my-comment-name'"
                   th:text="${qnacontent.writer.name}"
                 >
+                </span>
                 </span>
                 <span
                   class="hidden writerReceiverId"
@@ -456,7 +458,7 @@
         $(".pwriter").unbind("click");
         $(".pwriter").click(function(event) {
           const receiverId = $(event.currentTarget).children(".writerReceiverId").text();
-          const messageReceiveName = $(event.currentTarget).children(".qnaWriter").text();
+          const messageReceiveName = $(event.currentTarget).children(".qnaWriterForm").text();
           $(".messageReceiveName").text(messageReceiveName);
           if ([[${user.username}]] != receiverId) {
             $(".modal").modal("show");

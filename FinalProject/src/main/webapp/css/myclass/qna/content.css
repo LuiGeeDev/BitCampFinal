@@ -406,12 +406,14 @@ table.commentWrapper {
 }
 
 .my-comment-name {
+  /* cursor: default; */
   cursor: default;
 }
 
 .qnaWriter {
   font-size: 14px;
   font-weight: bold;
+  /* cursor: pointer; */
 }
 
 .messageForm:focus {
@@ -485,4 +487,9 @@ table.commentWrapper {
 
 .bookmarkIcon {
   font-size: 16px;
+}
+
+.qnaWriterForm {
+  /* cursor:default; */
+  cursor: pointer;
 }
