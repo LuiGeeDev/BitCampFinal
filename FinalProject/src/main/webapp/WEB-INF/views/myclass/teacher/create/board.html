@@ -1,73 +1,63 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
->
-  <head>
-    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-    <link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
-    <link rel="stylesheet" th:href="@{/css/myclass/teacher/create/board.css}" />
-    <link rel="stylesheet" th:href="@{/css/myclass/myclass.css}" />
-  </head>
-  <body>
-    <div class="main" th:fragment="main">
-      <div th:replace="myclass/teacher/nav :: teacher-nav(board)"></div>
-      <div class="row">
-        <div class="board-management">
-          <h4>게시판 관리</h4>
-          <div class="board-add-remove">
-            <div class="board-to-add" ss-container>
-              <div
-                class="board"
-                th:each="board : ${boardlist}"
-                th:if="${board.boardtype == 3 and board.board_name != '공지사항'}"
-              >
-                <span class="board-name" th:text="${board.board_name}">
-                  자유게시판
-                </span>
-                <button class="remove-btn">
-                  <i class="far fa-minus-square"></i>
-                </button>
-              </div>
-            </div>
-            <div class="board-nav">
-              <div class="board-alert">
-                <span class="my-alert add hide">
-                  <i class="fas fa-exclamation-circle"></i>
-                  <span>게시판 추가</span>
-                </span>
-                <span class="my-alert remove hide">
-                  <i class="fas fa-exclamation-circle"></i>
-                  <span>게시판 제외</span>
-                </span>
-              </div>
-              <div class="new-board">
-                <input
-                  type="text"
-                  id="new-board-input"
-                  placeholder="추가할 게시판 이름 입력"
-                />
-                <input type="hidden" id="new-category-input" value="1" />
-                <button id="add-btn">추가하기</button>
-              </div>
-              <i class="far fa-caret-square-left fa-3x"></i>
-              <i class="far fa-caret-square-right fa-3x"></i>
-            </div>
-            <div class="board-to-remove" ss-container></div>
-            <div class="buttons">
-              <button id="submit" class="btn btn-outline-primary btn-sm">
-                수정하기
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
+<head>
+<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+<link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
+<link rel="stylesheet"
+  th:href="@{/css/myclass/teacher/create/board.css}" />
+<link rel="stylesheet" th:href="@{/css/myclass/myclass.css}" />
+</head>
+<body>
+  <div class="main" th:fragment="main">
+    <div th:replace="myclass/teacher/nav :: teacher-nav(board)"></div>
+    <div class="row">
+      <div class="board-management">
+        <h4>게시판 관리</h4>
+        <div class="board-add-remove">
+          <div class="board-to-add" ss-container>
+            <div class="board" th:each="board : ${boardlist}"
+              th:if="${board.boardtype == 3 and board.board_name != '공지사항'}">
+              <span class="board-name" th:text="${board.board_name}">
+                자유게시판 </span> 
+                <input type="hidden" class="board-category"
+                th:value="${board.category}">
+              <button class="remove-btn">
+                <i class="far fa-minus-square"></i>
               </button>
             </div>
           </div>
+          <div class="board-nav">
+            <div class="board-alert">
+              <span class="my-alert add hide"> <i
+                class="fas fa-exclamation-circle"></i> <span>게시판
+                  추가</span>
+              </span> <span class="my-alert remove hide"> <i
+                class="fas fa-exclamation-circle"></i> <span>게시판
+                  제외</span>
+              </span>
+            </div>
+            <div class="new-board">
+              <input type="text" id="new-board-input"
+                placeholder="추가할 게시판 이름 입력" /> <input type="hidden"
+                id="new-category-input" value="1" />
+              <button id="add-btn">추가하기</button>
+            </div>
+            <i class="far fa-caret-square-left fa-3x"></i> <i
+              class="far fa-caret-square-right fa-3x"></i>
+          </div>
+          <div class="board-to-remove" ss-container></div>
+          <div class="buttons">
+            <button id="submit" class="btn btn-outline-primary btn-sm">
+              수정하기</button>
+          </div>
         </div>
       </div>
-      <div
-        th:replace="fragments/add-category-modal :: add-category-modal"
-      ></div>
     </div>
-    <script th:src="@{/js/add-category-modal.js}"></script>
-    <script th:inline="javascript">
+    <div th:replace="fragments/add-category-modal :: add-category-modal"></div>
+  </div>
+  <script th:src="@{/js/add-category-modal.js}"></script>
+  <script th:inline="javascript">
       addBtnHandler();
       removeBtnHandler();
 
@@ -170,6 +160,56 @@
           location.href = "/myclass/setting";
         });
       });
+      
+      $(".add-category-btn").click(function(){
+          const listgroup = $(".list-group:last-child");
+          const catebtn = $(".add-category-btn");
+          console.log(listgroup[0], listgroup[0].innerText);
+          catebtn.css("display", "none");
+          
+        if (listgroup[0].innerText){
+          listgroup.after(
+          `
+          <div class="list-group">
+          <input type="text" class="list-group-item list-group-item-action" id="catetext"/>    
+          </div>
+          `
+          );
+        } else {
+          console.log('hi');
+        }
+      });
+      
+      $(".modal-body").keypress(function(event) {
+        if(event.keyCode === 13) {
+          const category = $("#catetext").val();
+          
+          $.ajax({
+            url: "/myclass/create/category",
+            method: "post",
+            data: { category },
+            
+           success: function(data) {
+            	console.log(data);
+            	$(".list-group:last-child").remove();
+            	const listgroup = $(".list-group:last-child");
+            	listgroup.after(
+                  `
+              		<h6 class="list-group-item list-group-item-action"
+               		 id="${data.id}">${data.category}</h6>
+               		 <input type="hidden" value=${data.id}>
+                  `
+                  );
+              const catebtn = $(".add-category-btn");
+              catebtn.show();
+          }
+          
+          })
+        }
+      });
+      
+      
+
     </script>
-  </body>
+</body>
 </html>

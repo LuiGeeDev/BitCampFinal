@@ -39,5 +39,5 @@ public interface BoardDao {
   
   List<Article> selectWriteDayByDesc(int board_id);
   
-  List<Board> selectBoardByCategory(@Param("category") int category, @Param("courseid") int courseid);
+  List<Board> selectBoardByCategory(@Param("category") int category, @Param("course_id") int course_id);
 }

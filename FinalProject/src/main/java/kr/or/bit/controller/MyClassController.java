@@ -96,7 +96,6 @@ public class MyClassController {
     HomeworkDao homeworkDao = sqlSession.getMapper(HomeworkDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-    
     Course course = courseDao.selectCourse(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id());
     course.setEndDate(course.getEnd_date().toLocalDate());
     course.setStartDate(course.getStart_date().toLocalDate());
@@ -119,9 +118,9 @@ public class MyClassController {
     model.addAttribute("course", course);
     model.addAttribute("recentArticles", recentArticles);
     model.addAttribute("completion", completion);
-    model.addAttribute("project", projectDao.selectRecentProjectByCourseId(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id()));
+    model.addAttribute("project",
+        projectDao.selectRecentProjectByCourseId(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id()));
     model.addAttribute("group_id", memberDao.selectMemberByUsername(Helper.userName()).getGroup_id());
-    
     return "myclass/home";
   }
 
@@ -152,7 +151,7 @@ public class MyClassController {
     model.addAttribute("qnaList", qnaList);
     model.addAttribute("pager", pager);
     model.addAttribute("page", page);
-    model.addAttribute("criteria",criteria);
+    model.addAttribute("criteria", criteria);
     return "myclass/qna/home";
   }
 
@@ -176,7 +175,8 @@ public class MyClassController {
     List<Tag> tags = tagService.selectTagByName(tagList);
     article.setTags(tags);
     article.setUsername(Helper.userName());
-    article.setBoard_id(boardDao.selectBoardByCourseId(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id(), 5).getId());
+    article.setBoard_id(
+        boardDao.selectBoardByCourseId(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id(), 5).getId());
     articleInsertService.writeQnaArticle(article, tagList);
     return "redirect:/myclass/qna";
   }
@@ -198,14 +198,10 @@ public class MyClassController {
       comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
       model.addAttribute("adoptedanswer", comment);
     }
-   
-    
-    
-    model.addAttribute("scrapCount",scrapCount);
+    model.addAttribute("scrapCount", scrapCount);
     model.addAttribute("voteCount", voteCount);
     model.addAttribute("qnacontent", article);
     model.addAttribute("voteStatus", articleVoteService.selectVote(article.getId(), Helper.userName()));
-    
     articleUpdateService.viewCount(article);
     return "myclass/qna/content";
   }
@@ -225,7 +221,8 @@ public class MyClassController {
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     article.setUsername(Helper.userName());
-    article.setBoard_id(boardDao.selectBoardByCourseId(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id(), 5).getId());
+    article.setBoard_id(
+        boardDao.selectBoardByCourseId(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id(), 5).getId());
     articleUpdateService.updateArticle(article);
     return "redirect:/myclass/qna";
   }
@@ -273,7 +270,6 @@ public class MyClassController {
     Member teacher = memberDao.selectMemberByUsername(teacherName); // 강사 저장
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     Course course = courseDao.selectCourse(teacher.getCourse_id()); // 코스 저장
-    
     List<Member> memberList = memberDao.selectAllMembersByMycourse(teacher.getCourse_id()); // 코스에 속한 학생리스트 저장
     model.addAttribute("memberList", memberList);
     model.addAttribute("course", course);
@@ -350,13 +346,11 @@ public class MyClassController {
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     CategoryDao categorydao = sqlSession.getMapper(CategoryDao.class);
-    
     String username = Helper.userName();
     Member user = memberDao.selectMemberByUsername(username);
     List<Board> boardlist = boardDao.selectMyClassBoard(user.getCourse_id());
-    
     List<Category> categories = categorydao.selectCategoryByCourseid(user.getCourse_id());
-    
+    System.out.println(categories);
     model.addAttribute("boardlist", boardlist);
     model.addAttribute("categories", categories);
     return "myclass/teacher/create/board";
@@ -431,8 +425,10 @@ public class MyClassController {
   }
 
   @PostMapping("/homework/detail")
-  public String submitHomeworkDetail(@RequestParam("original_id") int original_id, @RequestParam("end_date") Date end_date, @RequestParam("page") int page,
-      @RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2, HttpServletRequest request, Model model) {
+  public String submitHomeworkDetail(@RequestParam("original_id") int original_id,
+      @RequestParam("end_date") Date end_date, @RequestParam("page") int page,
+      @RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2,
+      HttpServletRequest request, Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     Member member = memberDao.selectMemberByUsername(Helper.userName());
@@ -530,49 +526,55 @@ public class MyClassController {
     GroupDao groupdao = sqlSession.getMapper(GroupDao.class);
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
     HomeworkDao homeworkdao = sqlSession.getMapper(HomeworkDao.class);
-    
     String username = Helper.userName();
     Member member = memberdao.selectMemberByUsername(username);
     Course course = coursedao.selectCourse(member.getCourse_id());
     Project project = projectdao.selectRecentProjectByCourseId(member.getCourse_id());
-    
     List<Group> groups = groupdao.selectAllGroupByProject(project.getId());
-    
     project.setStartDateLocal(project.getStart_date().toLocalDate());
     project.setEndDateLocal(project.getEnd_date().toLocalDate());
     course.setStartDateLocal(course.getStart_date().toLocalDate());
     course.setEndDateLocal(course.getEnd_date().toLocalDate());
     Period ccDay = Period.between(course.getStartDateLocal(), course.getEndDateLocal());
     Period cDay = Period.between(course.getEndDateLocal(), LocalDate.now());
-    
     Period ddDay = Period.between(project.getStartDateLocal(), project.getEndDateLocal());
     Period dDay = Period.between(project.getStartDateLocal(), LocalDate.now());
-    
     Article homeworkarticle = articledao.selectRecentHomework(username);
     Homework homework = homeworkdao.selectHomeworkByArticleId(homeworkarticle.getId());
     homeworkarticle.setOption(homework);
-    
     List<Article> recentStackArticle = articledao.selectRecentStackbyCourse(course.getId());
-    
     List<Article> homeworkarticlere = articledao.selectHomeworkReplies(homeworkarticle.getId());
-
-    for(Article a : recentStackArticle) {
+    for (Article a : recentStackArticle) {
       a.setWriter(memberdao.selectMemberByUsername(a.getUsername()));
       a.setTimeLocal(a.getTime().toLocalDateTime());
     }
-    
     model.addAttribute("course", course);
     model.addAttribute("project", project);
-    model.addAttribute("project_percent", (int)((float)(dDay.getDays() / (float)(ddDay.getDays()))*100));
+    model.addAttribute("project_percent", (int) ((float) (dDay.getDays() / (float) (ddDay.getDays())) * 100));
     model.addAttribute("enable", memberdao.getCountCourseMember(course.getId(), "enable"));
     model.addAttribute("disable", memberdao.getCountCourseMember(course.getId(), "disable"));
-    model.addAttribute("all", memberdao.getCountCourseMember(course.getId(), "enable") + memberdao.getCountCourseMember(course.getId(), "disable"));
-    model.addAttribute("course_percent", (int)((float)(cDay.getDays() / (float)(ccDay.getDays()))*100));
+    model.addAttribute("all", memberdao.getCountCourseMember(course.getId(), "enable")
+        + memberdao.getCountCourseMember(course.getId(), "disable"));
+    model.addAttribute("course_percent", (int) ((float) (cDay.getDays() / (float) (ccDay.getDays())) * 100));
     model.addAttribute("groups", groups);
-    model.addAttribute("homeworkarticle",homeworkarticle);
-    model.addAttribute("homeworkarticlere",homeworkarticlere);
-    model.addAttribute("stackarticle",recentStackArticle);
-    
+    model.addAttribute("homeworkarticle", homeworkarticle);
+    model.addAttribute("homeworkarticlere", homeworkarticlere);
+    model.addAttribute("stackarticle", recentStackArticle);
     return "myclass/teacher/managing";
+  }
+
+  @PostMapping("/create/category")
+  public @ResponseBody Category createBoardCategory(Category category) {
+    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+    CategoryDao categoryDao = sqlSession.getMapper(CategoryDao.class);
+    
+    
+    Member member = memberDao.selectMemberByUsername(Helper.userName());
+    int courseId = member.getCourse_id();
+    category.setCourse_id(courseId);
+    
+    categoryDao.insertCategory(category);
+    
+    return category;
   }
 }

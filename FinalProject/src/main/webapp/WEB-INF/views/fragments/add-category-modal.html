@@ -7,19 +7,24 @@
     <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
         <div class="modal-body">
-          <h5 class="title">카테고리를 선택하세요</h5>
-          
+          <div class="top">
+            <h5 class="title">카테고리를 선택하세요</h5>
+            <div class="add-category-btn">
+              <i class="fas fa-plus-circle"></i>
+            </div>
+          </div>
+          <div class="list-party">
             <div class="list-group"
               th:each="category, iter : ${categories}">
               <h6 class="list-group-item list-group-item-action"
-                th:id="${category.id}"
-                th:text="${category.category}" ></h6>
+                th:id="${category.id}" th:text="${category.category}"></h6>
             </div>
+          </div>
         </div>
         <div class="btn-group">
-          <button type="submit" id="submit-button" class="btn btn-primary btn-sm">선택</button>
+          <button type="submit" id="submit-button"
+            class="btn btn-primary btn-sm">선택</button>
         </div>
-        </form>
       </div>
     </div>
   </div>

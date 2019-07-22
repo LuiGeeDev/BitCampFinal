@@ -12,7 +12,8 @@
       <div class="TopNav">
         <div class="title">스택게시판</div>
         <div class="TagBtn">
-          <button class="btn btn-outline-primary plusTag">태그 관리</button>
+          <button sec:authorize!="hasRole('teacher')"
+           class="btn btn-outline-primary plusTag">태그 관리</button>
         </div>
       </div>
       <!-- 검색창 -->

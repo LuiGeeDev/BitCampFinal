@@ -89,7 +89,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     resultType="kr.or.bit.model.Board">
     select id, board_name
     from board
-    where category = #{category} and course_id = #{courseid}
+    where category = #{category} and course_id = #{course_id}
   </select>
 </mapper>  
 
