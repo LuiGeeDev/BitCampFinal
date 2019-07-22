@@ -272,11 +272,13 @@ td[colspan="2"] {
   color: gray;
   height: 28px;
   margin-right: 3px;
-  width: 141px;
+  width: 180px;
+  padding: 5px 10px;
+  border-radius: 3px;
 }
 
 .tag-plus-btn {
-  padding: 4px 4px;
+  padding: 4px 10px;
   margin-top: 3.2px;
   height: 30px;
 }
@@ -292,7 +294,11 @@ td[colspan="2"] {
   border: 1px solid #e0e0e0;
   padding: 7px 16px;
   margin: 9px;
-  :;
+  height: 350px;
+}
+
+.ss-scroll {
+  right: -421px !important;
 }
 
 .tag-nav {
@@ -332,10 +338,6 @@ td[colspan="2"] {
   border: 0px;
 }
 
-.modalSize {
-  
-}
-
 .tagcolorspan {
   padding-left: 5px;
   padding-top: 5px;
@@ -348,10 +350,6 @@ td[colspan="2"] {
   font-weight: bold;
 }
 
-.tagDelete{
-  
-}
-
-.NameStyle{
+.NameStyle {
   font-weight: bold;
 }

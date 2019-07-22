@@ -30,6 +30,7 @@
 .profileTopWrapper {
   display: flex;
   flex-direction: row;
+  margin-bottom: 10px;
 }
 
 .profileimg {
@@ -279,6 +280,6 @@
 }
 
 .articleWrapper {
-  width: 80%;
+  width: 100%;
   margin: auto;
 }
