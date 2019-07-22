@@ -54,4 +54,6 @@ public interface MemberDao {
   List<Member> selectAllStudent();
   
   void updateTeacherCourseId(Member member);
+  
+  List<Member> selectAllMembersByCourseId(int course_id);
 }

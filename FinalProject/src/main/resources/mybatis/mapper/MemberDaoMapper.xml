@@ -82,6 +82,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	LEFT JOIN authorities a ON m.username=a.username
 	WHERE m.course_id=#{course_id} AND m.enabled=1 AND a.role='STUDENT';
   </select>
+  <select id="selectAllMembersByCourseId" resultType="kr.or.bit.model.Member">
+  	SELECT m.username, name, email, profile_photo, course_id, role
+	FROM member m
+	LEFT JOIN authorities a ON m.username=a.username
+	WHERE m.course_id=#{course_id} AND a.role='STUDENT';
+  </select>
   <select id="selectStudent" resultType="kr.or.bit.model.Member">
   	SELECT a.USERNAME, NAME, COURSE_ID, END_DATE, role
 	FROM MEMBER b JOIN COURSE c ON b.course_id = c.id JOIN AUTHORITIES a ON b.username = a.username

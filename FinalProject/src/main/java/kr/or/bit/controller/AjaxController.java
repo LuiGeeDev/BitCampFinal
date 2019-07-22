@@ -165,12 +165,14 @@ public class AjaxController {
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     TeacherCourseDao teacherCourse = sqlSession.getMapper(TeacherCourseDao.class);
+    System.out.println(id);
     
-    for (Member student : memberDao.selectAllMembersByMycourse(id)) {
+    for (Member student : memberDao.selectAllMembersByCourseId(id)) {
       memberDao.deleteMember(student.getUsername());
+      System.out.println(student.getUsername());
     }
     Member teacher =memberDao.selectMemberByUsername(teacherCourse.selectTeacherCourse(id).getTeacher_username());
-    
+    System.out.println(teacher);
     teacher.setCourse_id(0);
     memberDao.updateTeacherCourseId(teacher);
     
