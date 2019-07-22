@@ -16,17 +16,12 @@ import kr.or.bit.dao.CommentDao;
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dao.MypageDao;
-import kr.or.bit.dao.QnaDao;
 import kr.or.bit.dao.ScrapDao;
-import kr.or.bit.dao.StackDao;
 import kr.or.bit.model.Article;
-import kr.or.bit.model.ArticleOption;
 import kr.or.bit.model.Board;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.Member;
-import kr.or.bit.model.Tag;
-import kr.or.bit.utils.Helper;
 import kr.or.bit.utils.Pager;
 
 @Service
@@ -39,34 +34,11 @@ public class MypageService {
     List<Article> articleList = articleDao.selectEnableArticleByUsername(username);
     for (Article article : articleList) {
       article.setTimeLocal(article.getTime().toLocalDateTime());
-      // article.setUpdatedTimeLocal(article.getUpdated_time().toLocalDateTime());
     }
     return articleList;
   }
   
   public List<Article> selectAllMyArticlesByUsername(Pager pager,String username) {
-/*    StackDao stackdao = sqlSession.getMapper(StackDao.class);
-    CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-    QnaDao qnaDao = sqlSession.getMapper(QnaDao.class);
-    List<Article> articlelist = stackdao.selectAllStackArticle(pager);
-    
-    for (Article article : articlelist) {
-      ArticleOption option = null;
-      option = qnaDao.selectQnaByArticleId(article.getId());
-      List<Comment> commentList = commentdao.selectAllComment(article.getId());
-      List<Tag> taglist = stackdao.selectTagList(article.getId()); 
-      for (Comment comment : commentList) {
-        comment.setWriter(memberDao.selectMemberByUsername(comment.getUsername()));
-      }
-      article.setOption(option);
-      article.setTags(taglist);
-      article.setCommentlist(commentList);
-      article.setTimeLocal(article.getTime().toLocalDateTime());
-      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));   
-    }
-    return articlelist;*/
-    
     
     MypageDao mypageDao = sqlSession.getMapper(MypageDao.class);
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
@@ -83,10 +55,8 @@ public class MypageService {
   public String selectOneArticleforMypage(int article_id) {
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-    MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     Article article = articledao.selectOneArticle(article_id);
     Board board = boardDao.selectBoardById(article.getBoard_id());
-    Member member = memberDao.selectMemberByUsername(article.getUsername());
     int board_type = board.getBoardtype();
     int board_id = article.getBoard_id();
     String returnURL = "";

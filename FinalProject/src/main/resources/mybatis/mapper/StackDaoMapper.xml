@@ -7,60 +7,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="kr.or.bit.dao.StackDao">
 	<select id="selectStackArticles"
 		resultType="kr.or.bit.model.Article">
-		SELECT id, title, content, time, updated_time, view_count, original_id,
+		SELECT id, title, content, time, updated_time, view_count,
+		original_id,
 		enable,
 		level, username, board_id,
-		(SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum
+		(SELECT count(*) FROM
+		article_vote WHERE article_id=a.id) as votenum
 		FROM ARTICLE as a
-		WHERE BOARD_ID=1 AND ENABLE=1
+		WHERE
+		BOARD_ID=1 AND ENABLE=1
 		ORDER BY id DESC
-		LIMIT #{pager.start}, #{pager.articlesOnPage}
+		LIMIT #{pager.start},
+		#{pager.articlesOnPage}
 	</select>
-<!-- 	<select id="searchByWord"
-		resultType="kr.or.bit.model.Article">
-		SELECT id, title, content, time, updated_time, view_count,
-		original_id, enable, level, a.username, board_id
-		FROM ARTICLE a
-		LEFT JOIN MEMBER m
-		ON a.username = m.username
-		WHERE board_id = '1' and enable=1
-		<choose>
-			<when test="criteria != 'titlecontent'">
-				AND ${criteria} LIKE '%${search}%'
-			</when>
-			<otherwise>
-				AND (title LIKE '%${search}%' OR content LIKE '%${search}%')
-			</otherwise>
-		</choose>
-		ORDER BY id DESC;
-	</select>
-	<select id="searchByComment"
-		resultType="kr.or.bit.model.Article">
-		SELECT DISTINCT a.*
-		FROM ARTICLE A
-		JOIN COMMENT C
-		ON a.id = c.article_id
-		LEFT JOIN MEMBER M
-		ON c.username = m.username
-		WHERE BOARD_ID = #{board_id} and enable=1
-		<if test="criteria == 'comment_name'">
-			and c.username like '%${search}%'
-		</if>
-		<if test="criteria =='comment_content'">
-			and c.content like '%${search}%'
-		</if>
-		ORDER BY id desc;
-	</select> -->
+	<!-- <select id="searchByWord" resultType="kr.or.bit.model.Article"> SELECT 
+		id, title, content, time, updated_time, view_count, original_id, enable, 
+		level, a.username, board_id FROM ARTICLE a LEFT JOIN MEMBER m ON a.username 
+		= m.username WHERE board_id = '1' and enable=1 <choose> <when test="criteria 
+		!= 'titlecontent'"> AND ${criteria} LIKE '%${search}%' </when> <otherwise> 
+		AND (title LIKE '%${search}%' OR content LIKE '%${search}%') </otherwise> 
+		</choose> ORDER BY id DESC; </select> <select id="searchByComment" resultType="kr.or.bit.model.Article"> 
+		SELECT DISTINCT a.* FROM ARTICLE A JOIN COMMENT C ON a.id = c.article_id 
+		LEFT JOIN MEMBER M ON c.username = m.username WHERE BOARD_ID = #{board_id} 
+		and enable=1 <if test="criteria == 'comment_name'"> and c.username like '%${search}%' 
+		</if> <if test="criteria =='comment_content'"> and c.content like '%${search}%' 
+		</if> ORDER BY id desc; </select> -->
 	<select id="selectTagList" resultType="kr.or.bit.model.Tag">
-		SELECT id, tag, a.color as color
+		SELECT id, tag, a.color as
+		color
 		FROM article_tag at
 		LEFT JOIN tag a
 		ON a.id = at.tag_id
-		WHERE article_id=#{article_id};
+		WHERE
+		article_id=#{article_id};
 	</select>
 	<select id="showTagList" resultType="kr.or.bit.model.Tag">
 		SELECT id, tag, color
-		FROM tag;
+		FROM
+		tag;
 	</select>
 	<select id="selectTagByName" resultType="kr.or.bit.model.Tag">
 		SELECT id, tag, color
@@ -69,90 +53,122 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<insert id="plusTag">
 		INSERT INTO tag (tag, color)
-		VALUES (#{tag}, #{color});
+		VALUES (#{tag},
+		#{color});
 	</insert>
-	<delete id="deleteTagName">
-		DELETE 
-		FROM tag
-		WHERE tag = #{tag}
-	</delete>
 	<insert id="insertTag">
 		INSERT INTO article_tag (tag_id, article_id)
-		VALUES (#{tag_id}, #{article_id});
+		VALUES
+		(#{tag_id}, #{article_id});
 	</insert>
 	<select id="countAllStackArticle" resultType="Integer">
 		SELECT count(*)
 		FROM article
 		WHERE BOARD_ID=1 AND ENABLE=1
 	</select>
-	<select id="countStackArticleByTitleOrContent" resultType="Integer">
+	<select id="countStackArticleByTitleOrContent"
+		resultType="Integer">
 		SELECT COUNT(*)
-  		FROM article
-  		WHERE board_id = 1 AND enable =  1 AND (title LIKE '%${boardSearch}%' OR content LIKE '%${boardSearch}%')
+		FROM article
+		WHERE board_id = 1 AND enable = 1 AND (title LIKE '%${boardSearch}%' OR
+		content LIKE '%${boardSearch}%')
 	</select>
 	<select id="countStackArticleByTitle" resultType="Integer">
 		SELECT COUNT(*)
-  		FROM article
-  		WHERE board_id = 1 AND enable =  1 AND title LIKE '%${boardSearch}%'
+		FROM article
+		WHERE board_id = 1 AND enable = 1 AND title LIKE '%${boardSearch}%'
 	</select>
 	<select id="countStackArticleByWriter" resultType="Integer">
-		SELECT COUNT(*)
-  		FROM article a JOIN member m ON a.username = m.username
-  		WHERE board_id = 1 AND enable =  1 AND m.name LIKE '%${boardSearch}%'
+		SELECT
+		COUNT(*)
+		FROM article a JOIN member m ON a.username = m.username
+		WHERE board_id = 1 AND enable = 1 AND m.name LIKE '%${boardSearch}%'
 	</select>
-	<select id="selectAllStackArticle" resultType="kr.or.bit.model.Article">
-		SELECT id, title, content, time, updated_time, view_count, original_id,
+	<select id="selectAllStackArticle"
+		resultType="kr.or.bit.model.Article">
+		SELECT id, title, content, time, updated_time, view_count,
+		original_id,
 		enable,
 		level, username, board_id,
-		(SELECT count(*) FROM article_vote WHERE article_id=a.id) as votenum
+		(SELECT count(*) FROM
+		article_vote WHERE article_id=a.id) as votenum
 		FROM ARTICLE as a
-		WHERE BOARD_ID=1 AND ENABLE=1
+		WHERE
+		BOARD_ID=1 AND ENABLE=1
 		ORDER BY id DESC
-		LIMIT #{start}, #{articlesOnPage}
+		LIMIT #{start},
+		#{articlesOnPage}
 	</select>
-	<select id="selectStackArticleByTitleOrContent" resultType="kr.or.bit.model.Article">
-		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
-		FROM ARTICLE a 
-        LEFT JOIN BOARD b 
-        ON a.board_id = b.id 
-		WHERE BOARD_ID=1 AND ENABLE = 1 AND (a.title LIKE '%${boardSearch}%' OR a.content LIKE '%${boardSearch}%')
+	<select id="selectStackArticleByTitleOrContent"
+		resultType="kr.or.bit.model.Article">
+		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT,
+		a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
+		FROM ARTICLE a
+		LEFT JOIN BOARD b
+		ON a.board_id = b.id
+		WHERE BOARD_ID=1 AND ENABLE = 1 AND (a.title LIKE '%${boardSearch}%' OR
+		a.content LIKE '%${boardSearch}%')
 		ORDER BY a.ID DESC
-		LIMIT #{pager.start}, #{pager.articlesOnPage}
+		LIMIT
+		#{pager.start}, #{pager.articlesOnPage}
 	</select>
-	<select id="selectStackArticleByTitle" resultType="kr.or.bit.model.Article">
-		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
-		FROM ARTICLE a JOIN BOARD b ON a.board_id = b.id 
+	<select id="selectStackArticleByTitle"
+		resultType="kr.or.bit.model.Article">
+		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT,
+		a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
+		FROM ARTICLE a JOIN BOARD b ON a.board_id = b.id
 		WHERE BOARD_ID=1 AND ENABLE = 1 AND a.title LIKE '%${boardSearch}%'
-		ORDER BY a.ID DESC
+		ORDER BY
+		a.ID DESC
 		LIMIT #{pager.start}, #{pager.articlesOnPage}
 	</select>
-	<select id="selectStackArticleByWriter" resultType="kr.or.bit.model.Article">
-		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
-		FROM ARTICLE a 
+	<select id="selectStackArticleByWriter"
+		resultType="kr.or.bit.model.Article">
+		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT,
+		a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
+		FROM ARTICLE a
 		JOIN BOARD b ON a.board_id = b.id
 		JOIN MEMBER m ON a.username = m.username
 		WHERE BOARD_ID=1 AND ENABLE = 1 AND m.name= #{boardSearch}
-		ORDER BY a.ID DESC
+		ORDER BY
+		a.ID DESC
 		LIMIT #{pager.start}, #{pager.articlesOnPage}
 	</select>
-	<select id="selectStackArticleByTag" resultType="kr.or.bit.model.Article">
-		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
-		FROM ARTICLE a 
+	<select id="selectStackArticleByTag"
+		resultType="kr.or.bit.model.Article">
+		SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT,
+		a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
+		FROM ARTICLE a
 		JOIN BOARD b ON a.board_id = b.id
-		JOIN ARTICLE_TAG at ON a.id = at.article_id
+		JOIN ARTICLE_TAG at ON a.id =
+		at.article_id
 		JOIN TAG t ON t.id = at.tag_id
-		WHERE BOARD_ID=1 AND ENABLE = 1 AND t.tag=#{boardSearch}
+		WHERE BOARD_ID=1 AND ENABLE
+		= 1 AND t.tag=#{boardSearch}
 		ORDER BY a.ID DESC
-		LIMIT #{pager.start}, #{pager.articlesOnPage}
+		LIMIT #{pager.start},
+		#{pager.articlesOnPage}
 	</select>
-	<select id="selectAdoptedAnswer" resultType="kr.or.bit.model.Comment">
-		SELECT id, content, time, updated_time, article_id, username
+	<select id="selectAdoptedAnswer"
+		resultType="kr.or.bit.model.Comment">
+		SELECT id, content, time, updated_time, article_id,
+		username
 		FROM comment
 		WHERE id=#{id};
 	</select>
 	<delete id="deleteTag">
-		DELETE 
+		DELETE
 		FROM ARTICLE_TAG
 		WHERE article_id = #{article_id}
+	</delete>
+	<delete id="deleteTagName">
+		DELETE
+		FROM tag
+		WHERE tag = #{tag}
+	</delete>
+	<delete id="deleteArticlebyTag">
+		DELETE
+		FROM tag
+		WHERE tag = #{tag}
 	</delete>
 </mapper>

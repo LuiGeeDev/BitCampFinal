@@ -28,6 +28,11 @@ public interface StackDao {
   
   void plusTag(@Param("tag") String tag, @Param("color") String color);
   
+  void deleteTag(String tag);
+  
+  //tag 삭제시 밑에 두개 사용;
+  void deleteArticlebyTag(String tag);
+  
   void deleteTagName (String tag);
   
   Tag selectTagByName(String tag);

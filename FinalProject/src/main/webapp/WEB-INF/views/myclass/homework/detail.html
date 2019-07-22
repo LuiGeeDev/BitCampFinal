@@ -332,7 +332,6 @@
           cancelButtonText: '아니요'
         }).then((result) => {
           if (result.value) {
-           console.log("이건?",result,"//",result.value,"//",id)
             $.ajax({
               url: "/myclass/homework/delete",
               type: "POST",

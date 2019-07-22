@@ -169,7 +169,6 @@ public class AjaxController {
     for (Member student : memberDao.selectAllMembersByMycourse(id)) {
       memberDao.deleteMember(student.getUsername());
     }
-    System.out.println(teacherCourse.selectTeacherCourse(id).getTeacher_username());
     Member teacher =memberDao.selectMemberByUsername(teacherCourse.selectTeacherCourse(id).getTeacher_username());
     
     teacher.setCourse_id(0);
