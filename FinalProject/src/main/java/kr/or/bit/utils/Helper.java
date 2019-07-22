@@ -12,7 +12,7 @@ public class Helper {
    }
    
    public static String defaultPassword() {
-     String defaultPassword = "$2a$10$L1pWhHeMtfEafgAFLR9iUO/gbTZFFoqFMMAWQ7RRDaKVd88kO92Ve"; // bitcamp
+     String defaultPassword = "$2a$10$.1WleZNGINmwLNjsbhWuouqWlfiXB6uJZyIgGEhQQTn/K//bB5mYm"; // bitcamp
      return defaultPassword;
    }
    

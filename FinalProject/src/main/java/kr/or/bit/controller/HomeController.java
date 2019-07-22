@@ -78,19 +78,24 @@ public class HomeController {
       m.setSender(memberDao.selectMemberByUsername(m.getSender_username()));
     }
     
-    project.setStartDateLocal(project.getStart_date().toLocalDate());
-    project.setEndDateLocal(project.getEnd_date().toLocalDate());
-    
-    Period dDay = Period.between(LocalDate.now(), project.getEndDateLocal());
+    Period dDay = null;
+    if (project != null) {
+      project.setStartDateLocal(project.getStart_date().toLocalDate());
+      project.setEndDateLocal(project.getEnd_date().toLocalDate());
+      dDay = Period.between(LocalDate.now(), project.getEndDateLocal());
+    } 
 
-    model.addAttribute("user", user);
     model.addAttribute("mainMessage", mainMessage);
     model.addAttribute("recentVideos", recentVideos);
     model.addAttribute("recentStacks", recentStacks);
     model.addAttribute("recentTimeline", recentTimeline);
     model.addAttribute("recentlyCommented", recentlyCommentedStacks);
     model.addAttribute("project", project);
-    model.addAttribute("dDay", dDay.getDays());
+    
+    if (dDay != null) {
+      model.addAttribute("dDay", dDay.getDays());
+    }
+    
     return "main";
   }
 }
