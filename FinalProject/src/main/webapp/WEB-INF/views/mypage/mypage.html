@@ -1,4 +1,3 @@
-    
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
   th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
@@ -44,7 +43,7 @@
               </div>
             </div>
           </div>
-          <div class="profileProgressBar" sec:authorize="hasRole('STUDENT')">
+          <div class="profileProgressBar">
             <span class="progres"> <span> <span
                 class="progress-bar bg-warning progress-bar-striped"
                 id="progress" th:style="'width:' + ${completion} + '%;'">
@@ -54,6 +53,7 @@
             </span>
           </div>
         </div>
+        <div class="middle-border"></div>
         <div class="articleWrapper">
           <div class="tabsWrapper">
             <div class="articleNavWrapper">
@@ -76,7 +76,7 @@
                 <input
                   type="text"
                   name="boardSearch"
-                  class="boardSearch"
+                  id="boardSearch"
                   size="25"
                   placeholder="검색내용을 적어주세요"
                 />
@@ -88,18 +88,15 @@
               </form>
             </div>
             <div>
-              <div>
-                <div class="board">
-                  <div class="boardNav">
-                    <div class="boardId nav-style">글번호</div>
-                    <div class="boardTitle nav-style" id="TitleorContent">
-                      제목
-                    </div>
-                    <div class="boardDate nav-style">작성일</div>
-                    <div class="boardView nav-style" id="boardVoteCount">
-                      조회
-                    </div>
-                  </div>
+              <div class="board">
+                <div class="boardNav">
+                  <div class="boardId nav-style">글번호</div>
+                  <div class="boardTitle nav-style" id="TitleorContent">
+                    제목</div>
+                  <div class="boardDate nav-style">작성일</div>
+                  <div class="boardView nav-style" id="boardVoteCount">
+                    조회</div>
+                </div>
 
                 <!-- 게시물 테이블 -->
                 <div class="boardContent iteration"
