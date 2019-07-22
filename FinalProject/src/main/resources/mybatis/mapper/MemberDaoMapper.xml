@@ -28,6 +28,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     UPDATE member
     SET password=#{password}, name=#{name}, email=#{email},
     profile_photo=#{profile_photo}
+    <if test="course_id != 0">
+    	, course_id = #{course_id}
+    </if>
     WHERE username=#{username}
   </update>
   <insert id="insertTeacher">
@@ -138,6 +141,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	and course_id = #{course_id}
   	</if>
   </select>
+  <update id="updateEnabled">
+  	update member 
+  	set enabled = 1
+  	where username = #{username};
+
+  </update>
+  <select id="selectAllStudent" resultType = "kr.or.bit.model.Member">
+  	SELECT username, name, email, enabled, profile_photo, course_id
+  	FROM MEMBER
+  </select>
+  <update id="updateTeacherCourseId">
+  	UPDATE MEMBER
+  	SET COURSE_ID = #{course_id}
+  	WHERE USERNAME = #{username} 
+  </update>
 </mapper>
 
 

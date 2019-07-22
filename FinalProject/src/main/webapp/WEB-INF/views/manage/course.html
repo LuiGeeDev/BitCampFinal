@@ -128,7 +128,7 @@
           
           <div class="page-btns">
             <span id="button-wrapper">
-              <button type="button" class="btn btn-primary paging next-btn" id=""> <i class="fas fa-angle-right"></i></button>          
+              <button th:if="${pager.totalPages}!=1" type="button" class="btn btn-primary paging next-btn" id=""> <i class="fas fa-angle-right"></i></button>          
             </span>
           </div>
         </div>
@@ -404,6 +404,13 @@
       	    type: 'error',
       	    text: '모두 입력 하세요!',
       	  })
+        } else {
+          Swal.fire({
+            type: 'success',
+            title: '클래스 생성이 완료 되었습니다',
+            showConfirmButton: false,
+            timer: 2000
+          })
         }
       });
       
@@ -474,6 +481,13 @@
             ) {
               $("#teacher-form").off("submit");
               $("#teacher-form").trigger("submit");
+              
+              Swal.fire({
+                type: 'success',
+                title: '강사 개정이 생성 되었습니다',
+                showConfirmButton: false,
+                timer: 10000
+              })
             }
         });
       });
@@ -509,7 +523,7 @@
               data: {
                 id : id
               },
-              success: function(data) {
+              success: function() {
                 row.parent().remove();
                 Swal.fire({
                   title: '삭제되었습니다',
@@ -563,9 +577,10 @@
             console.log(data);
 			
 			$.each(data.courseList, function(index, item){
+			  if(item.course_name != '해당없음'){
               var html = "<div class='course-list-row'>"
-			  html+="<div class='start_date'>"+item.startDateLocal.year+"-"+(item.startDateLocal.monthValue < 10 ? "0"+item.startDateLocal.monthValue:item.startDateLocal.monthValue)+"-"+(item.startDateLocal.dayOfMonth < 10 ?"0"+item.startDateLocal.dayOfMonth:item.startDateLocal.dayOfMonth)+"</div>";
-			  html+="<div class='end_date'>"+item.endDateLocal.year+"-"+(item.endDateLocal.monthValue < 10 ? "0"+item.endDateLocal.monthValue:item.endDateLocal.monthValue)+"-"+(item.endDateLocal.dayOfMonth < 10 ?"0"+item.endDateLocal.dayOfMonth:item.endDateLocal.dayOfMonth)+"</div>";
+			  html+="<div class='start_date'>"+item.startDate.year+"-"+(item.startDate.monthValue < 10 ? "0"+item.startDate.monthValue:item.startDate.monthValue)+"-"+(item.startDate.dayOfMonth < 10 ?"0"+item.startDate.dayOfMonth:item.startDate.dayOfMonth)+"</div>";
+			  html+="<div class='end_date'>"+item.endDate.year+"-"+(item.endDate.monthValue < 10 ? "0"+item.endDate.monthValue:item.endDate.monthValue)+"-"+(item.endDate.dayOfMonth < 10 ?"0"+item.endDate.dayOfMonth:item.endDate.dayOfMonth)+"</div>";
 			  html+="<div class='course_name'>"+item.course_name+"</div>";
 			  html+="<div class='teacher'>"+(item.teacher == null ? "" :item.teacher)+"</div>";
 			  html+="<div class='subject'>"+item.subject_name+"</div>";
@@ -573,6 +588,7 @@
 			  html+="<div class='students'>"+item.students+"</div>";
 			  html+="</div>"
 			  $(".end-table-list").append(html);
+			  }
 			})
           }
         })

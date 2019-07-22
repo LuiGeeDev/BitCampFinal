@@ -540,10 +540,10 @@ public class MyClassController {
     
     project.setStartDateLocal(project.getStart_date().toLocalDate());
     project.setEndDateLocal(project.getEnd_date().toLocalDate());
-    course.setStartDateLocal(course.getStart_date().toLocalDate());
-    course.setEndDateLocal(course.getEnd_date().toLocalDate());
-    Period ccDay = Period.between(course.getStartDateLocal(), course.getEndDateLocal());
-    Period cDay = Period.between(course.getEndDateLocal(), LocalDate.now());
+    course.setStartDate(course.getStart_date().toLocalDate());
+    course.setEndDate(course.getEnd_date().toLocalDate());
+    Period ccDay = Period.between(course.getStartDate(), course.getEndDate());
+    Period cDay = Period.between(course.getEndDate(), LocalDate.now());
     
     Period ddDay = Period.between(project.getStartDateLocal(), project.getEndDateLocal());
     Period dDay = Period.between(project.getStartDateLocal(), LocalDate.now());
