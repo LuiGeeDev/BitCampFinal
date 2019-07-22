@@ -301,8 +301,3 @@ a[class^="carousel-control"] {
   text-align: center;
   font-weight: bold;
 }
-
-
-.fc-day-grid-container {
-  height: 111px !important;
-}
