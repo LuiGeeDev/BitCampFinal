@@ -44,7 +44,7 @@
               </div>
             </div>
           </div>
-          <div class="profileProgressBar">
+          <div class="profileProgressBar" sec:authorize="hasRole('STUDENT')">
             <span class="progres"> <span> <span
                 class="progress-bar bg-warning progress-bar-striped"
                 id="progress" th:style="'width:' + ${completion} + '%;'">

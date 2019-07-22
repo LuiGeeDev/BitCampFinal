@@ -137,25 +137,20 @@
                  id="Plus-Tag"
                   class="btn btn-outline-primary tag-plus-btn">추가</button>
             </div>
-            <div class="tag-list">
+            <div class="tag-list" ss-container>
               <div class="tag-nav">
                 <div class="tagName NameStyle">태그 이름</div>
                 <div class="tagColorNav">태그 색상</div>
               </div>
               
               <div class="tag-content" th:each="tags : ${tags}">
-
-              
                 <div class="tagName">[[${tags.tag}]]</div>
                 <div class="tagColor">
                   <input type="color" class="color-style2"
                     th:value="${tags.color}" disabled>
                   <div class="tagcolorspan">[[${tags.color}]]</div>
                 </div> 
-                
-                
               </div>
-
             </div>
           </div>
           <div class="modal-footer">
