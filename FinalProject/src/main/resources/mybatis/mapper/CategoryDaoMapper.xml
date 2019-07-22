@@ -5,12 +5,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="kr.or.bit.dao.CategoryDao">
   <select id="selectCategoryByCourseid" 
     resultType="kr.or.bit.model.Category">
-    select c.category , c.id 
-    from board as b join category as c
-    on b.category=c.id
-    where c.course_id=#{courseid} group by c.category
-    order by b.id asc
+    select * 
+    from category
+    where course_id= #{course_id};
   </select>
+  
+  <!--   void insertCategory(Category category); -->
+  
+  <insert id="insertCategory" useGeneratedKeys="true" keyProperty="id">
+    insert into category(category, course_id)
+    values(#{category},#{course_id});
+  </insert>
+  
 </mapper>  
 
 

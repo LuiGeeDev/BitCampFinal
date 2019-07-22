@@ -151,7 +151,7 @@ body {
   margin-bottom: 25px;
   border-bottom: 2px ridge;
   padding-bottom: 5px;
-  cursor : pointer;
+  cursor: pointer;
 }
 
 .class-stack:hover {
@@ -210,4 +210,3 @@ body {
   justify-content: space-around;
   flex: 1;
 }
-

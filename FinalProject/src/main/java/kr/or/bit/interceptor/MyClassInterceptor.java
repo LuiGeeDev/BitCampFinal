@@ -42,12 +42,13 @@ public class MyClassInterceptor extends HandlerInterceptorAdapter {
     List<Category> categories = categoryDao.selectCategoryByCourseid(user.getCourse_id());
 
     HashMap<String, List<Board>> boardMap = new HashMap<>();
-
+    System.out.println(user.getCourse_id());
+    
     for (Category category : categories) {
       List<Board> boardlist = boardDao.selectBoardByCategory(category.getId(), user.getCourse_id());
       boardMap.put(category.getCategory(), boardlist);
     }
-
+    System.out.println(boardMap);
     // --------------게시판 끝---------------------------
     request.setAttribute("boardMap", boardMap);
     request.setAttribute("boardList", board);
