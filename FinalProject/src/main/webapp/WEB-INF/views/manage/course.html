@@ -128,7 +128,7 @@
           
           <div class="page-btns">
             <span id="button-wrapper">
-              <button type="button" class="btn btn-primary paging next-btn" id=""> <i class="fas fa-angle-right"></i></button>          
+              <button th:if="${pager.totalPages}!=1" type="button" class="btn btn-primary paging next-btn" id=""> <i class="fas fa-angle-right"></i></button>          
             </span>
           </div>
         </div>
