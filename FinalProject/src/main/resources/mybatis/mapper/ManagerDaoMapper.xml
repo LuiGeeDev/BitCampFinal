@@ -79,6 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<select id="countCourseBySubject" resultType="kr.or.bit.model.Course">
 		SELECT count(*) count, s.subject subject_name
 		FROM course c JOIN subject s ON c.subject = s.id
+        WHERE s.id != 0
 		GROUP BY c.subject
 		ORDER BY count
  	</select>
@@ -89,9 +90,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<select id="countEnableMember" resultType="kr.or.bit.model.Course">
  		SELECT count(*) AS count, c.course_name, c.start_date, c.end_date, c.subject AS subject_name
 		FROM member m JOIN course c ON m.course_id = c.id
-		WHERE m.enabled=0
+		WHERE m.enabled=0 AND start_date &lt; now()
 		GROUP BY c.course_name
-		ORDER BY count DESC;
+		ORDER BY count DESC
  	</select>
  	<select id="articleWriteRank" resultType="kr.or.bit.model.Course">
  		SELECT count(*) AS count, a.username, m.name, m.course_id, c.course_name, c.start_date, c.end_date, c.subject
