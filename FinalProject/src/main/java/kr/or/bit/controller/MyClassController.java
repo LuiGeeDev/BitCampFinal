@@ -563,7 +563,7 @@ public class MyClassController {
     model.addAttribute("all", memberdao.getCountCourseMember(course.getId(), "enable")
         + memberdao.getCountCourseMember(course.getId(), "disable"));
     model.addAttribute("course_percent", (int) ((float) (cDay.getDays() / (float) (ccDay.getDays())) * 100));
-    model.addAttribute("groups", groups);
+/*    model.addAttribute("groups", groups);*/
     model.addAttribute("homeworkarticle", homeworkarticle);
     model.addAttribute("homeworkarticlere", homeworkarticlere);
     model.addAttribute("stackarticle", recentStackArticle);
