@@ -51,9 +51,10 @@
                   th:style="'width:' + ${project_percent} + '%; height: 30px;'"></div>
               </div>
             </div>
+            <div ></div>
             <div th:text="${project_percent}+'%'+' 진행중'"></div>
           </div>
-          <div th:unless="${project.project_name}== null" >생성된
+          <div th:if="${project.project_name}== null" >생성된
             프로젝트가 없습니다.</div>
           <div class="btn-group-url">
             <h5>프로젝트 둘러보기</h5>
