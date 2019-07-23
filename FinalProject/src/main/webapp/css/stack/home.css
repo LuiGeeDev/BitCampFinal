@@ -53,17 +53,24 @@ td[colspan="2"] {
 
 .tdcontent {
   cursor: pointer;
-  max-height: 44px;
+  max-height: 42px;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 715px;
+  font-size: 14px;
 }
 
 .tdcontent * {
+  font-family: "Nanum Gothic" !important;
   font-size: 14px !important;
   line-height: 20px !important;
 }
 
+.tdcontent * br {
+  display: none;
+}
+
+}
 .tdcontent br {
   display: none;
 }
