@@ -94,11 +94,21 @@
       <!-- 페이지 버튼 -->
       <div class="row">
         <div class="page-btns">
-          <span th:if="${pager.prev}"> <a
-            class="btn btn-primary paging"
-            th:href="@{/myclass/homework(page=${pager.startPage}-1)}">
-              &laquo; </a>
-          </span> <span
+          <span th:if="${pager.prev} and ${boardSearch}"> 
+            <a
+              class="btn btn-outline-primary"
+              th:href="@{/stack(page=${pager.startPage}-1, boardSearch=${boardSearch}, criteria=${criteria})}">
+                &lt; 
+            </a>
+          </span>
+          <span th:if="${pager.prev} and !${boardSearch}"> 
+            <a
+              class="btn btn-outline-primary"
+              th:href="@{/stack(page=${pager.startPage}-1)}">
+                &lt; 
+            </a>
+          </span> 
+          <span
             th:each="idx, iterStat : ${#numbers.sequence(pager.startPage,pager.endPage)}">
             <a th:if="${boardSearch} != null"
             class="btn"
@@ -110,10 +120,18 @@
             th:href="@{/stack(page=${idx})}"
             th:classappend="${pager.currentPage} == ${idx} ? 'btn-primary':'btn-outline-primary'"
             th:text="${idx}"></a>
-          </span> <span th:if="${pager.next} and ${pager.endPage > 0}">
-            <a class="btn btn-primary paging"
-            th:href="@{/myclass/homework(page=${pager.endPage}+1)}">
-              &raquo; </a>
+          </span> 
+          <span th:if="${pager.next} and ${pager.endPage > 0} and !${boardSearch}">
+            <a class="btn btn-outline-primary"
+            th:href="@{/stack(page=${pager.endPage}+1)}">
+              &gt; 
+            </a>
+          </span>
+          <span th:if="${pager.next} and ${pager.endPage > 0} and ${boardSearch}">
+            <a class="btn btn-outline-primary"
+            th:href="@{/stack(page=${pager.endPage}+1, boardSearch=${boardSearch}, criteria=${criteria})}">
+              &gt; 
+            </a>
           </span>
         </div>
       </div>
