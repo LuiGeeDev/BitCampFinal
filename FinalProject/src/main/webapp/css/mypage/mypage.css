@@ -90,7 +90,8 @@ input[type=password]:focus {
 
 .updateBtn {
   position: absolute;
-  right: 430px;
+  right: 0;
+  margin-bottom: 50px;
 }
 
 .mypage-name:hover {
@@ -118,7 +119,7 @@ input[type=password]:focus {
   bottom: 74px;
 }
 
-#pwdCheck, #emailCheck{
+#pwdCheck, #emailCheck {
   bottom: 74px;
   position: absolute;
   left: 60px;
@@ -162,6 +163,7 @@ label {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 .modal-body {

@@ -13,7 +13,7 @@
         <div class="title">스택게시판</div>
         <div class="TagBtn">
           <button
-           th:if="${user.role == 'TEACHER' and user.role == 'MANAGER'}"
+           th:if="${user.role == 'TEACHER' or user.role == 'MANAGER'}"
            class="btn btn-outline-primary plusTag">태그 관리</button>
         </div>
       </div>
@@ -96,22 +96,23 @@
         <div class="page-btns">
           <span th:if="${pager.prev}"> <a
             class="btn btn-primary paging"
-            th:href="@{/myclass/homework(page=${pager.startPage}-1)}">
+            th:href="@{/stack(page=${pager.startPage}-1)}">
               &laquo; </a>
           </span> <span
             th:each="idx, iterStat : ${#numbers.sequence(pager.startPage,pager.endPage)}">
             <a th:if="${boardSearch} != null"
-            class="btn btn-primary paging"
+            class="btn"
             th:href="@{/stack(page=${idx},boardSearch=${boardSearch})}"
-            th:classappend="${pager.currentPage} == ${idx} ? active"
-            th:text="${idx}"></a> <a th:if="${boardSearch} == null"
-            class="btn btn-primary paging"
+            th:classappend="${pager.currentPage} == ${idx} ? 'btn-primary':'btn-outline-primary'"
+            th:text="${idx}"></a> 
+            <a th:if="${boardSearch} == null"
+            class="btn"
             th:href="@{/stack(page=${idx})}"
-            th:classappend="${pager.currentPage} == ${idx} ? active"
+            th:classappend="${pager.currentPage} == ${idx} ? 'btn-primary':'btn-outline-primary'"
             th:text="${idx}"></a>
           </span> <span th:if="${pager.next} and ${pager.endPage > 0}">
             <a class="btn btn-primary paging"
-            th:href="@{/myclass/homework(page=${pager.endPage}+1)}">
+            th:href="@{/stack(page=${pager.endPage}+1)}">
               &raquo; </a>
           </span>
         </div>
@@ -177,7 +178,6 @@
       
       $("#Plus-Tag").click(function(){
         
-        console.log("왜안돼");
         const TagName = $("#Tag-Name").val();
         const TagColor = $("#Tag-Color").val();
         const formData = new FormData();
@@ -207,6 +207,7 @@
     		      $(".ss-content").append(html);
     		      
     		    })
+    		    $("#Tag-Name").val("");
     		    
     		    
     		  }
