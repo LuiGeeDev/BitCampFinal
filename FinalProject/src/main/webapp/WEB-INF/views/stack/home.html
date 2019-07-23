@@ -12,7 +12,8 @@
       <div class="TopNav">
         <div class="title">스택게시판</div>
         <div class="TagBtn">
-          <button sec:authorize!="hasRole('teacher')"
+          <button
+           th:if="${user.role == 'TEACHER' and user.role == 'MANAGER'}"
            class="btn btn-outline-primary plusTag">태그 관리</button>
         </div>
       </div>
@@ -118,7 +119,8 @@
     </div>
 
     <!-- 모달이 시작 -->
-    <div class="modal" tabindex="-1" role="dialog">
+    <div class="modal" tabindex="-1" role="dialog" 
+         >
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content modalSize">
           <div class="modal-body">
