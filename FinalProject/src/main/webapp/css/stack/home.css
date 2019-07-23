@@ -59,15 +59,9 @@ td[colspan="2"] {
   max-width: 715px;
 }
 
-.tdcontent div {
-  margin: 0px;
-  display: inline;
-  font-family: "Nanum Gothic" !important;
+.tdcontent * {
   font-size: 14px !important;
-}
-
-.tdcontent div div br{
-  display: none;
+  line-height: 20px !important;
 }
 
 .tdcontent br {
@@ -365,9 +359,11 @@ td[colspan="2"] {
 .NameStyle {
   font-weight: bold;
 }
+
 .tag-content:hover {
-    background-color:#f6f6f6
+  background-color: #f6f6f6
 }
-.btn-outline-primary{
-  border:1px solid !important;
+
+.btn-outline-primary {
+  border: 1px solid !important;
 }
