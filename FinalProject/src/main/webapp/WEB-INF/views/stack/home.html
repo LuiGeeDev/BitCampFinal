@@ -96,7 +96,7 @@
         <div class="page-btns">
           <span th:if="${pager.prev}"> <a
             class="btn btn-primary paging"
-            th:href="@{/myclass/homework(page=${pager.startPage}-1)}">
+            th:href="@{/stack(page=${pager.startPage}-1)}">
               &laquo; </a>
           </span> <span
             th:each="idx, iterStat : ${#numbers.sequence(pager.startPage,pager.endPage)}">
@@ -112,7 +112,7 @@
             th:text="${idx}"></a>
           </span> <span th:if="${pager.next} and ${pager.endPage > 0}">
             <a class="btn btn-primary paging"
-            th:href="@{/myclass/homework(page=${pager.endPage}+1)}">
+            th:href="@{/stack(page=${pager.endPage}+1)}">
               &raquo; </a>
           </span>
         </div>
