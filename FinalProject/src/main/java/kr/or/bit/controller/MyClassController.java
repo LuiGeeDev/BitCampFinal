@@ -547,6 +547,7 @@ public class MyClassController {
     Period cDay = Period.between(course.getStartDate(), LocalDate.now());
     Period ddDay = null;
     Period dDay = null;
+    
     if (project != null) {
       ddDay = Period.between(project.getStartDateLocal(), project.getEndDateLocal());
       dDay = Period.between(project.getStartDateLocal(), LocalDate.now());

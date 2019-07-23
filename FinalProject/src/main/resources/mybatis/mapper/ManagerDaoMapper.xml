@@ -98,7 +98,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM  member m JOIN article a ON m.username = a.username
 		JOIN course c ON m.course_id = c.id
 		JOIN authorities au ON m.username = au.username
-        WHERE au.role != "teacher"
+        WHERE au.role = "student" AND m.enabled != 0
 		GROUP BY a.username 
 		ORDER BY count DESC
 		LIMIT 1, 10
@@ -107,7 +107,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		SELECT count(*) AS count, m.name
 		FROM comment c JOIN member m ON c.username = m.username
 		JOIN authorities au ON m.username = au.username
-        WHERE au.role != "teacher"
+        WHERE au.role = "student" AND m.enabled != 0
 		GROUP BY c.username
 		ORDER BY count DESC
 		LIMIT 1, 10

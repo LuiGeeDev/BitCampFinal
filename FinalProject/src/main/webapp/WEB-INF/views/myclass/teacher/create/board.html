@@ -58,156 +58,79 @@
   </div>
   <script th:src="@{/js/add-category-modal.js}"></script>
   <script th:inline="javascript">
-      addBtnHandler();
-      removeBtnHandler();
-
-      $(".list-group-item").click(function() {
-        const val = this.id;
-        const inputval = $("#new-category-input").val(val);
-      });
-
-      $("#new-board-input").keypress(function(event) {
-        if (event.keyCode === 13) {
-          $(".board-nav button").click();
-        }
-      });
-
-      $(".board-nav button").click(function() {
-        $(".modal").modal("show");
-      });
-
-      function removeBtnHandler() {
-        if ($(".remove-btn")) {
-          $(".remove-btn").click(function() {
-            const board = $(this).parent();
-            board.children("button").remove();
-            board.append(
-              `<button class="add-btn"><i class="far fa-plus-square"></i></button>`
-            );
-            $(".board-to-remove .ss-content").append(board);
-            addBtnHandler();
-          });
-        }
-      }
-
-      $("#submit-button").click(function() {
-        const newBoardName = $("#new-board-input");
-        const inputval = $("#new-category-input").val();
-
-        $(".board-to-add .ss-content").append(
-          `<div class="board">
-          <span class="board-name">${newBoardName.val()}</span>
-          <input type="hidden" class="board-category" value=${inputval}>
-          <button class="remove-btn"><i class="far fa-minus-square"></i></button>
+  addBtnHandler();
+  removeBtnHandler();
+  $("#new-board-input").keypress(function(event) {
+    if (event.keyCode === 13) {
+      $(".board-nav button").click();
+    }
+  });
+  $(".board-nav button").click(function() {
+    const newBoardName = $("#new-board-input");
+    $(".board-to-add .ss-content").append(
+      `<div class="board">
+            <span class="board-name">${newBoardName.val()}</span>
+            <button class="remove-btn"><i class="far fa-minus-square"></i></button>
           </div>`
+    );
+    $(".my-alert.add").removeClass("hide");
+    newBoardName.val("");
+    setTimeout(function() {
+      $(".my-alert.add").addClass("hide");
+    }, 700);
+    removeBtnHandler();
+  });
+  function removeBtnHandler() {
+    if ($(".remove-btn")) {
+      $(".remove-btn").click(function() {
+        const board = $(this).parent();
+        board.children("button").remove();
+        board.append(
+          <button class="add-btn"><i class="far fa-plus-square"></i></button>
         );
-        $(".my-alert.add").removeClass("hide");
-        newBoardName.val("");
-        setTimeout(function() {
-          $(".my-alert.add").addClass("hide");
-        }, 700);
+        $(".board-to-remove .ss-content").append(board);
+        addBtnHandler();
+      });
+    }
+  }
+  function addBtnHandler() {
+    if ($(".add-btn")) {
+      $(".add-btn").click(function() {
+        const board = $(this).parent();
+        board.children("button").remove();
+        board.append(
+          <button class="remove-btn"><i class="far fa-minus-square"></i></button>
+        );
+        $(".board-to-add .ss-content").append(board);
         removeBtnHandler();
-        $(".modal").modal("hide");
       });
-
-      function addBtnHandler() {
-        if ($(".add-btn")) {
-          $(".add-btn").click(function() {
-            const board = $(this).parent();
-            board.children("button").remove();
-            board.append(
-              `<button class="remove-btn"><i class="far fa-minus-square"></i></button>`
-            );
-            $(".board-to-add .ss-content").append(board);
-            removeBtnHandler();
-          });
-        }
-      }
-
-      $("#submit").click(function() {
-        const boardToAdd = $(".board-to-add .board .board-name");
-        const boardToRemove = $(".board-to-remove .board .board-name");
-        const boardCategoryToAdd = $(".board-to-add .board .board-category");
-
-        const boardToAddList = [];
-        const boardToRemoveList = [];
-        const boardCategoryToAddList = [];
-
-        $(boardToAdd).each(function() {
-          boardToAddList.push($(this).text());
-        });
-        $(boardToRemove).each(function() {
-          boardToRemoveList.push($(this).text());
-        });
-
-        $(boardCategoryToAdd).each(function() {
-          boardCategoryToAddList.push($(this).val());
-        });
-        console.log(boardCategoryToAddList);
-        const boardAddRemove = {
-          boardToAdd: boardToAddList,
-          boardToRemove: boardToRemoveList,
-          boardCategoryToAdd: boardCategoryToAddList
-        };
-
-        $.ajax({
-          url: "/myclass/create/board",
-          method: "post",
-          data: JSON.stringify(boardAddRemove),
-          dataType: "json",
-          contentType: "application/json"
-        }).catch(function() {
-          location.href = "/myclass/setting";
-        });
-      });
-      
-      $(".add-category-btn").click(function(){
-          const listgroup = $(".list-group:last-child");
-          const catebtn = $(".add-category-btn");
-          console.log(listgroup[0], listgroup[0].innerText);
-          catebtn.css("display", "none");
-          
-        if (listgroup[0].innerText){
-          listgroup.after(
-          `
-          <div class="list-group">
-          <input type="text" class="list-group-item list-group-item-action" id="catetext"/>    
-          </div>
-          `
-          );
-        }
-      });
-      
-      $(".modal-body").keypress(function(event) {
-        if(event.keyCode === 13) {
-          const category = $("#catetext").val();
-          
-          $.ajax({
-            url: "/myclass/create/category",
-            method: "post",
-            data: { category },
-            
-           success: function(data) {
-            	console.log(data);
-            	$(".list-group:last-child").remove();
-            	const listgroup = $(".list-group:last-child");
-            	listgroup.after(
-                  `
-              		<h6 class="list-group-item list-group-item-action"
-               		 id="${data.id}">${data.category}</h6>
-               		 <input type="hidden" value=${data.id}>
-                  `
-                  );
-              const catebtn = $(".add-category-btn");
-              catebtn.show();
-          }
-          
-          })
-        }
-      });
-      
-      
-
-    </script>
+    }
+  }
+  $("#submit").click(function() {
+    const boardToAdd = $(".board-to-add .board .board-name");
+    const boardToRemove = $(".board-to-remove .board .board-name");
+    const boardToAddList = [];
+    const boardToRemoveList = [];
+    $(boardToAdd).each(function() {
+      boardToAddList.push($(this).text());
+    });
+    $(boardToRemove).each(function() {
+      boardToRemoveList.push($(this).text());
+    });
+    const boardAddRemove = {
+      boardToAdd: boardToAddList,
+      boardToRemove: boardToRemoveList
+    };
+    $.ajax({
+      url: "/myclass/create/board",
+      method: "post",
+      data: JSON.stringify(boardAddRemove),
+      dataType: "json",
+      contentType: "application/json"
+    }).catch(function() {
+      location.href = "/myclass/setting";
+    });
+  });
+</script>
 </body>
 </html>
