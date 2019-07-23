@@ -237,6 +237,10 @@
         }
       });
       $("#mypage-password").keyup(function() {
+        if($(".realPwd").val() == "") {
+          $("#pwdCheck-check").hide();
+        }
+        
         if ($(".realPwd").val() == "") {
           if ($(".realPwd").val() == $(".realPwdCheck").val()) {
             $("#pwdCheck-check").html(

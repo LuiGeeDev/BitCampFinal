@@ -370,7 +370,7 @@ public class MyClassController {
     List<Article> homeworkList = null;
     Pager pager = null;
     if (boardSearch != null) {
-      pager = new Pager(page, homeworkDao.countHomeworkArticleBySearchWorkd(member.getCourse_id(), boardSearch));
+      pager = new Pager(page, homeworkDao.countHomeworkArticleBySearchWord(member.getCourse_id(), boardSearch));
       homeworkList = homeworkDao.selectHomeworkArticleBySearchWord(pager, member.getCourse_id(), boardSearch);
       model.addAttribute("boardSearch", boardSearch);
     } else {
@@ -573,7 +573,7 @@ public class MyClassController {
     model.addAttribute("all", memberdao.getCountCourseMember(course.getId(), "enable")
         + memberdao.getCountCourseMember(course.getId(), "disable"));
     model.addAttribute("course_percent", (int) ((float) (cDay.getDays() / (float) (ccDay.getDays())) * 100));
-/*    model.addAttribute("groups", groups);*/
+    model.addAttribute("groups", groups);
     model.addAttribute("homeworkarticle", homeworkarticle);
     model.addAttribute("homeworkarticlere", homeworkarticlere);
     model.addAttribute("stackarticle", recentStackArticle);
