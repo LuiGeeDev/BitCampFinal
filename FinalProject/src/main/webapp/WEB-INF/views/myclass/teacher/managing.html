@@ -55,7 +55,7 @@
           </div>
           <div th:unless="${project.project_name}== null" >생성된
             프로젝트가 없습니다.</div>
-<!--           <div class="btn-group-url">
+          <div class="btn-group-url">
             <h5>프로젝트 둘러보기</h5>
             <div th:if="${groups} != null">
               <select class="btn-move-project-board"
@@ -98,7 +98,7 @@
                       과제 확인하러 가기</button>
                   </div>
                 </div>
-                <div th:unless="${homeworkarticle.title == null">
+                <div th:if="${homeworkarticle.title == null}">
                   <div>등록된 과제가 없습니다</div>
                 </div>
               </div>
