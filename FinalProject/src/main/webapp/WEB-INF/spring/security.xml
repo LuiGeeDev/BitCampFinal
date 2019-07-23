@@ -22,7 +22,7 @@
     <intercept-url pattern="/resources/**" access="permitAll" />
     <intercept-url pattern="/manage**"
       access="hasRole('MANAGER')" />
-    <intercept-url pattern="/video/realdelete" access="hasRole('MANAGER')"
+    <intercept-url pattern="/video/realdelete" access="hasRole('MANAGER')"/>
     <intercept-url pattern="/myclass/setting" access="hasRole('TEACHER')" />
     <intercept-url pattern="/myclass/create**" access="hasRole('TEACHER')" />
     <intercept-url pattern="/**"
