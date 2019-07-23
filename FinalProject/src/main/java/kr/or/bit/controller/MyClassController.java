@@ -370,7 +370,7 @@ public class MyClassController {
     List<Article> homeworkList = null;
     Pager pager = null;
     if (boardSearch != null) {
-      pager = new Pager(page, homeworkDao.countHomeworkArticleBySearchWorkd(member.getCourse_id(), boardSearch));
+      pager = new Pager(page, homeworkDao.countHomeworkArticleBySearchWord(member.getCourse_id(), boardSearch));
       homeworkList = homeworkDao.selectHomeworkArticleBySearchWord(pager, member.getCourse_id(), boardSearch);
       model.addAttribute("boardSearch", boardSearch);
     } else {

@@ -475,4 +475,5 @@ th, td {
 
 .content-size {
   min-height: 150px;
+  max-width: 1070px;
 }

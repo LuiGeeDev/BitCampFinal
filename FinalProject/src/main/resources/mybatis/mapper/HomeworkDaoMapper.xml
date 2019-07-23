@@ -47,13 +47,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	WHERE LEVEL = 1 AND ENABLE = 1 AND b.board_name = "과제 제출" AND b.course_id = #{course_id}
   </select>
   <select id="selectHomeworkArticleBySearchWord" resultType="kr.or.bit.model.Article">
-  	SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype
+  	SELECT a.ID, a.TITLE, a.CONTENT, a.TIME, a.VIEW_COUNT, a.UPDATED_TIME, a.USERNAME, b.board_name, b.course_id, b.boardtype,		
+  		(
+		  SELECT count(*)
+		  FROM article
+		  WHERE original_id=a.id AND enable=1 AND level=2 
+		) AS commentSize 
 	FROM ARTICLE a JOIN BOARD b ON a.board_id = b.id 
 	WHERE LEVEL = 1 AND ENABLE = 1 AND b.board_name = '과제 제출' AND b.course_id = #{course_id} AND a.title LIKE '%${word}%'
 	ORDER BY a.ID DESC
 	LIMIT #{pager.start}, #{pager.articlesOnPage}
   </select>
-  <select id="countHomeworkArticleBySearchWorkd" resultType="Integer">
+  <select id="countHomeworkArticleBySearchWord" resultType="Integer">
   	SELECT COUNT(*)
   	FROM ARTICLE a JOIN BOARD b on a.board_id=b.id
   	WHERE LEVEL = 1 AND ENABLE = 1 AND b.board_name = '과제 제출' AND b.course_id = #{course_id} AND a.title LIKE '%${word}%'
