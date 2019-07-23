@@ -527,16 +527,25 @@ public class MyClassController {
     Member member = memberdao.selectMemberByUsername(username);
     Course course = coursedao.selectCourse(member.getCourse_id());
     Project project = projectdao.selectRecentProjectByCourseId(member.getCourse_id());
-/*    List<Group> groups = groupdao.selectAllGroupByProject(project.getId());*/
-/*    project.setStartDateLocal(project.getStart_date().toLocalDate());
-    project.setEndDateLocal(project.getEnd_date().toLocalDate());*/
+    List<Group> groups = null;
+    if(project != null) {
+      groups = groupdao.selectAllGroupByProject(project.getId());
+      project.setStartDateLocal(project.getStart_date().toLocalDate());
+      project.setEndDateLocal(project.getEnd_date().toLocalDate());
+    }
     course.setStartDate(course.getStart_date().toLocalDate());
     course.setEndDate(course.getEnd_date().toLocalDate());
     Period ccDay = Period.between(course.getStartDate(), course.getEndDate());
-    Period cDay = Period.between(course.getEndDate(), LocalDate.now());
+    Period cDay = Period.between(course.getStartDate(), LocalDate.now());
     
-/*    Period ddDay = Period.between(project.getStartDateLocal(), project.getEndDateLocal());
-    Period dDay = Period.between(project.getStartDateLocal(), LocalDate.now());*/
+    
+    Period ddDay = null;
+    Period dDay = null;
+    if(project != null) {
+      ddDay = Period.between(project.getStartDateLocal(), project.getEndDateLocal());
+      dDay = Period.between(project.getStartDateLocal(), LocalDate.now());
+      model.addAttribute("project_percent", (int) ((float) (dDay.getDays() / (float) (ddDay.getDays())) * 100));
+    }
     Article homeworkarticle = articledao.selectRecentHomework(username);
     Homework homework = homeworkdao.selectHomeworkByArticleId(homeworkarticle.getId());
     homeworkarticle.setOption(homework);
@@ -547,8 +556,8 @@ public class MyClassController {
       a.setTimeLocal(a.getTime().toLocalDateTime());
     }
     model.addAttribute("course", course);
+    
     model.addAttribute("project", project);
-/*    model.addAttribute("project_percent", (int) ((float) (dDay.getDays() / (float) (ddDay.getDays())) * 100));*/
     model.addAttribute("enable", memberdao.getCountCourseMember(course.getId(), "enable"));
     model.addAttribute("disable", memberdao.getCountCourseMember(course.getId(), "disable"));
     model.addAttribute("all", memberdao.getCountCourseMember(course.getId(), "enable")

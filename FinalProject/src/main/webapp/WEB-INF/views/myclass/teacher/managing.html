@@ -35,20 +35,12 @@
               <div th:if="${course_percent} == null">등록된 수업이 없습니다.</div>
             </div>
           </div>
-          <span th:if="${course_percent} != null"
-            th:text="${course_percent} + '% 진행중'"> 진행중</span> <span
-            th:if="${course_percent} == null"> 등록된 수업이 없습니다. </span>
-
-          <div class="class-info">
-            <h5
-              th:text="'총원 '+${all}+'명'+' / '+' 재적 '+${enable}+'명'+' / '+'중탈 '+${disable}+'명'">
-              총원 23명</h5>
-          </div>
-        </div>
-        <div class="teacher-manage-right">
-          <div th:if="${project.project_name}" !=null>
-            <p class="title"
-              th:text="${project.project_name}+'&nbsp진행중'">?차 프로젝트</p>
+          <div class="teacher-manage-right">
+          <th:block th:if = "${project}!=null">
+            <p class="title" th:text="${project.project_name}+'&nbsp진행중'">
+              ?차 프로젝트
+            </p>
+            
             <h5 th:text="${project.season} + '번째 프로젝트'">번째 프로젝트</h5>
             <h5
               th:text="${project.start_date} + '~' + ${project.end_date}"></h5>
@@ -75,8 +67,11 @@
                 </option>
               </select>
             </div>
-            <div th:unless="${groups} == null">생성된 프로젝트가 없습니다</div>
-          </div> -->
+            </th:block>
+            <p th:if="${project} == null">
+              프로젝트가 없습니다. 프로젝트를 생성하세요.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -137,6 +132,9 @@
                     th:text="${starticle.writer.name}">권순조</span> <span
                     class="stack-time"
                     th:text="${#temporals.format(starticle.timeLocal, 'YYYY/MM/dd')}">2019-09-21</span>
+                </div>
+                <div th:if="${stackarticle.isEmpty()}">
+                  등록된 글이 없습니다.
                 </div>
               </div>
             </div>
