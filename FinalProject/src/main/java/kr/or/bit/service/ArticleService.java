@@ -22,9 +22,7 @@ import kr.or.bit.model.ArticleOption;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Files;
 import kr.or.bit.model.General;
-import kr.or.bit.model.Member;
 import kr.or.bit.model.Tag;
-import kr.or.bit.utils.Helper;
 import kr.or.bit.utils.Pager;
 
 @Service

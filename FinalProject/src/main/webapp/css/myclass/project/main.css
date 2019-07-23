@@ -308,7 +308,7 @@ label .fab, label .fas {
 
 .non-link-address {
   line-height: 30px;
-  font-size: 14px;
+  font-size: 12px;
   -webkit-user-drag: none;
   user-select: none;
 }

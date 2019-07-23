@@ -1,175 +1,136 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})"
->
-  <head>
-    <!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-    <link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
-    <link rel="stylesheet" th:href="@{/css/myclass/teacher/create/board.css}" />
-    <link rel="stylesheet" th:href="@{/css/myclass/myclass.css}" />
-  </head>
-  <body>
-    <div class="main" th:fragment="main">
-      <div th:replace="myclass/teacher/nav :: teacher-nav(board)"></div>
-      <div class="row">
-        <div class="board-management">
-          <h4>게시판 관리</h4>
-          <div class="board-add-remove">
-            <div class="board-to-add" ss-container>
-              <div
-                class="board"
-                th:each="board : ${boardlist}"
-                th:if="${board.boardtype == 3 and board.board_name != '공지사항'}"
-              >
-                <span class="board-name" th:text="${board.board_name}">
-                  자유게시판
-                </span>
-                <button class="remove-btn">
-                  <i class="far fa-minus-square"></i>
-                </button>
-              </div>
-            </div>
-            <div class="board-nav">
-              <div class="board-alert">
-                <span class="my-alert add hide">
-                  <i class="fas fa-exclamation-circle"></i>
-                  <span>게시판 추가</span>
-                </span>
-                <span class="my-alert remove hide">
-                  <i class="fas fa-exclamation-circle"></i>
-                  <span>게시판 제외</span>
-                </span>
-              </div>
-              <div class="new-board">
-                <input
-                  type="text"
-                  id="new-board-input"
-                  placeholder="추가할 게시판 이름 입력"
-                />
-                <input type="hidden" id="new-category-input" value="1" />
-                <button id="add-btn">추가하기</button>
-              </div>
-              <i class="far fa-caret-square-left fa-3x"></i>
-              <i class="far fa-caret-square-right fa-3x"></i>
-            </div>
-            <div class="board-to-remove" ss-container></div>
-            <div class="buttons">
-              <button id="submit" class="btn btn-outline-primary btn-sm">
-                수정하기
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
+<head>
+<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
+<link rel="stylesheet" th:href="@{/css/myclass/nav.css}" />
+<link rel="stylesheet"
+  th:href="@{/css/myclass/teacher/create/board.css}" />
+<link rel="stylesheet" th:href="@{/css/myclass/myclass.css}" />
+</head>
+<body>
+  <div class="main" th:fragment="main">
+    <div th:replace="myclass/teacher/nav :: teacher-nav(board)"></div>
+    <div class="row">
+      <div class="board-management">
+        <h4>게시판 관리</h4>
+        <div class="board-add-remove">
+          <div class="board-to-add" ss-container>
+            <div class="board" th:each="board : ${boardlist}"
+              th:if="${board.boardtype == 3 and board.board_name != '공지사항'}">
+              <span class="board-name" th:text="${board.board_name}">
+                자유게시판 </span> 
+                <input type="hidden" class="board-category"
+                th:value="${board.category}">
+              <button class="remove-btn">
+                <i class="far fa-minus-square"></i>
               </button>
             </div>
           </div>
+          <div class="board-nav">
+            <div class="board-alert">
+              <span class="my-alert add hide"> <i
+                class="fas fa-exclamation-circle"></i> <span>게시판
+                  추가</span>
+              </span> <span class="my-alert remove hide"> <i
+                class="fas fa-exclamation-circle"></i> <span>게시판
+                  제외</span>
+              </span>
+            </div>
+            <div class="new-board">
+              <input type="text" id="new-board-input"
+                placeholder="추가할 게시판 이름 입력" /> <input type="hidden"
+                id="new-category-input" value="1" />
+              <button id="add-btn">추가하기</button>
+            </div>
+            <i class="far fa-caret-square-left fa-3x"></i> <i
+              class="far fa-caret-square-right fa-3x"></i>
+          </div>
+          <div class="board-to-remove" ss-container></div>
+          <div class="buttons">
+            <button id="submit" class="btn btn-outline-primary btn-sm">
+              수정하기</button>
+          </div>
         </div>
       </div>
-      <div
-        th:replace="fragments/add-category-modal :: add-category-modal"
-      ></div>
     </div>
-    <script th:src="@{/js/add-category-modal.js}"></script>
-    <script th:inline="javascript">
-      addBtnHandler();
-      removeBtnHandler();
-
-      $(".list-group-item").click(function() {
-        const val = this.id;
-        const inputval = $("#new-category-input").val(val);
-      });
-
-      $("#new-board-input").keypress(function(event) {
-        if (event.keyCode === 13) {
-          $(".board-nav button").click();
-        }
-      });
-
-      $(".board-nav button").click(function() {
-        $(".modal").modal("show");
-      });
-
-      function removeBtnHandler() {
-        if ($(".remove-btn")) {
-          $(".remove-btn").click(function() {
-            const board = $(this).parent();
-            board.children("button").remove();
-            board.append(
-              `<button class="add-btn"><i class="far fa-plus-square"></i></button>`
-            );
-            $(".board-to-remove .ss-content").append(board);
-            addBtnHandler();
-          });
-        }
-      }
-
-      $("#submit-button").click(function() {
-        const newBoardName = $("#new-board-input");
-        const inputval = $("#new-category-input").val();
-
-        $(".board-to-add .ss-content").append(
-          `<div class="board">
-          <span class="board-name">${newBoardName.val()}</span>
-          <input type="hidden" class="board-category" value=${inputval}>
-          <button class="remove-btn"><i class="far fa-minus-square"></i></button>
+    <div th:replace="fragments/add-category-modal :: add-category-modal"></div>
+  </div>
+  <script th:src="@{/js/add-category-modal.js}"></script>
+  <script th:inline="javascript">
+  addBtnHandler();
+  removeBtnHandler();
+  $("#new-board-input").keypress(function(event) {
+    if (event.keyCode === 13) {
+      $(".board-nav button").click();
+    }
+  });
+  $(".board-nav button").click(function() {
+    const newBoardName = $("#new-board-input");
+    $(".board-to-add .ss-content").append(
+      `<div class="board">
+            <span class="board-name">${newBoardName.val()}</span>
+            <button class="remove-btn"><i class="far fa-minus-square"></i></button>
           </div>`
+    );
+    $(".my-alert.add").removeClass("hide");
+    newBoardName.val("");
+    setTimeout(function() {
+      $(".my-alert.add").addClass("hide");
+    }, 700);
+    removeBtnHandler();
+  });
+  function removeBtnHandler() {
+    if ($(".remove-btn")) {
+      $(".remove-btn").click(function() {
+        const board = $(this).parent();
+        board.children("button").remove();
+        board.append(
+          <button class="add-btn"><i class="far fa-plus-square"></i></button>
         );
-        $(".my-alert.add").removeClass("hide");
-        newBoardName.val("");
-        setTimeout(function() {
-          $(".my-alert.add").addClass("hide");
-        }, 700);
+        $(".board-to-remove .ss-content").append(board);
+        addBtnHandler();
+      });
+    }
+  }
+  function addBtnHandler() {
+    if ($(".add-btn")) {
+      $(".add-btn").click(function() {
+        const board = $(this).parent();
+        board.children("button").remove();
+        board.append(
+          <button class="remove-btn"><i class="far fa-minus-square"></i></button>
+        );
+        $(".board-to-add .ss-content").append(board);
         removeBtnHandler();
-        $(".modal").modal("hide");
       });
-
-      function addBtnHandler() {
-        if ($(".add-btn")) {
-          $(".add-btn").click(function() {
-            const board = $(this).parent();
-            board.children("button").remove();
-            board.append(
-              `<button class="remove-btn"><i class="far fa-minus-square"></i></button>`
-            );
-            $(".board-to-add .ss-content").append(board);
-            removeBtnHandler();
-          });
-        }
-      }
-
-      $("#submit").click(function() {
-        const boardToAdd = $(".board-to-add .board .board-name");
-        const boardToRemove = $(".board-to-remove .board .board-name");
-        const boardCategoryToAdd = $(".board-to-add .board .board-category");
-
-        const boardToAddList = [];
-        const boardToRemoveList = [];
-        const boardCategoryToAddList = [];
-
-        $(boardToAdd).each(function() {
-          boardToAddList.push($(this).text());
-        });
-        $(boardToRemove).each(function() {
-          boardToRemoveList.push($(this).text());
-        });
-
-        $(boardCategoryToAdd).each(function() {
-          boardCategoryToAddList.push($(this).val());
-        });
-        console.log(boardCategoryToAddList);
-        const boardAddRemove = {
-          boardToAdd: boardToAddList,
-          boardToRemove: boardToRemoveList,
-          boardCategoryToAdd: boardCategoryToAddList
-        };
-
-        $.ajax({
-          url: "/myclass/create/board",
-          method: "post",
-          data: JSON.stringify(boardAddRemove),
-          dataType: "json",
-          contentType: "application/json"
-        }).catch(function() {
-          location.href = "/myclass/setting";
-        });
-      });
-    </script>
-  </body>
+    }
+  }
+  $("#submit").click(function() {
+    const boardToAdd = $(".board-to-add .board .board-name");
+    const boardToRemove = $(".board-to-remove .board .board-name");
+    const boardToAddList = [];
+    const boardToRemoveList = [];
+    $(boardToAdd).each(function() {
+      boardToAddList.push($(this).text());
+    });
+    $(boardToRemove).each(function() {
+      boardToRemoveList.push($(this).text());
+    });
+    const boardAddRemove = {
+      boardToAdd: boardToAddList,
+      boardToRemove: boardToRemoveList
+    };
+    $.ajax({
+      url: "/myclass/create/board",
+      method: "post",
+      data: JSON.stringify(boardAddRemove),
+      dataType: "json",
+      contentType: "application/json"
+    }).catch(function() {
+      location.href = "/myclass/setting";
+    });
+  });
+</script>
+</body>
 </html>

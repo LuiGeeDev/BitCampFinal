@@ -17,8 +17,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		SELECT classroom_id
   		from course
   		where start_date between #{start_date} and #{end_date}
-  		AND end_date between #{start_date} and #{end_date}
-  		or id = 0)
+  		OR end_date between #{start_date} and #{end_date}
+        OR (start_date &lt; #{start_date} AND end_date &gt; #{end_date})
+  		OR id = 0)
   </select>
   <select id="selectAvailableTeacher" resultType="kr.or.bit.model.Member">
   	SELECT t.id AS teacher_id, m.name 
@@ -30,7 +31,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		JOIN member m ON m.username = tc.teacher_username
 		JOIN teacher t ON t.username = m.username
 		WHERE c.start_date between #{start_date} and #{end_date}
-		AND c.end_date between #{start_date} and #{end_date}
+		OR c.end_date between #{start_date} and #{end_date}
+        OR (start_date &lt; #{start_date} AND end_date &gt; #{end_date})
 		OR c.id = 0)
   </select>
   <select id="selectAllCourse" resultType="kr.or.bit.model.Course">     
@@ -92,6 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE t.course_id = c.id AND t.course_id != 0) AS teacher,
     (SELECT count(*) FROM member WHERE course_id = c.id) AS students
     FROM course c JOIN subject s ON c.subject = s.id
+    WHERE c.id != 0
     ORDER BY c.id DESC
   </select>
   <select id="selectCurrentCourseList" resultType="kr.or.bit.model.Course">

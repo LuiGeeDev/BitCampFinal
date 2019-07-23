@@ -22,7 +22,7 @@
       <form method="POST">
         <div id="write-form-wrapper">
           <input type="text" id="input-title" placeholder="제목" name="title" />
-          <textarea name="content" class="textarea-size"></textarea>
+          <textarea name="content" class="textarea-size" id="summernote"></textarea>
           <div id="input-tag">
             <textarea class="hidden" id="select-result" name="tag"></textarea>
             <span id="tagWrapper"><b>TAG </b></span>
@@ -54,7 +54,7 @@
           }
         });
       });
-      $("#summernote").summernote({
+      $(".textarea-size").summernote({
         placeholder: "질문할 내용을 적어주세요",
         tabsize: 2,
         height: 500

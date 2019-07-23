@@ -188,7 +188,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT a.id, a.title, a.content,
     a.time, a.view_count,
     a.enable,
-    a.original_id, a.level, a.username, a.layer, a.sibling,
+    a.original_id, a.level, a.username, a.layer,
     a.board_id,
     (SELECT COUNT(*) FROM ARTICLE_VOTE WHERE
     article_id=#{id}) as
@@ -244,12 +244,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     INSERT INTO article(time, updated_time, title,
     content,
     username, board_id,
-    level, original_id, layer, sibling)
+    level, original_id, layer)
     VALUES (now(),
-    now(), #{title}, #{content}, #{username},
+    now(),
+    #{title}, #{content}, #{username},
     #{board_id},
     #{level},
-    #{original_id}, #{layer}, #{sibling})
+    #{original_id}, #{layer})
   </insert>
   <update id="deleteArticle" parameterType="Integer">
     UPDATE article
@@ -306,12 +307,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     from article a
     left join board b
     on a.board_id = b.id
-    left join member m
+    left
+    join member m
     on m.username = a.username
-    where b.course_id = #{course_id}
+    where b.course_id =
+    #{course_id}
     and b.boardtype not in (1, 2, 4, 6)
     and level = 1
-    order by a.id desc
+    order by
+    a.id desc
     LIMIT 5
   </select>
   <select id="selectTagList" resultType="kr.or.bit.model.Tag">
@@ -488,8 +492,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     UPDATE ARTICLE
     SET LEVEL = LEVEL + 1
     WHERE LEVEL &gt;
-    #{level} AND ORIGINAL_ID = #{original_id} and sibling &gt;
-    #{sibling}
+    #{level} AND ORIGINAL_ID = #{original_id}
   </update>
 
   <select id="selectMaxLevel" resultType="Integer">
@@ -499,27 +502,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     where original_id = #{original_id}
   </select>
 
-  <select id="selectMaxLevelBySibling" resultType="Integer">
-    select
-    max(level)
-    from article
-    where original_id = #{original_id} and sibling
-    =
-    #{sibling}+1
-  </select>
   <select id="selectAllArticleByUsername"
     resultType="kr.or.bit.model.Article">
     SELECT *
     FROM article
     WHERE username = #{username}
   </select>
-  <select id="selectEnableArticleByUsername" resultType="kr.or.bit.model.Article">	
-	SELECT a.id, title, content, time, view_count, original_id, level, updated_time, enable, a.board_id, layer, sibling, boardtype
-	FROM article a
-	JOIN board b
-	ON a.board_id = b.id
-	WHERE enable=1 and not boardtype in (4,6) and username = #{username}
-	order by a.id desc;
+  <select id="selectEnableArticleByUsername"
+    resultType="kr.or.bit.model.Article">
+    SELECT a.id, title, content, time, view_count,
+    original_id, level,
+    updated_time, enable, a.board_id, layer,
+    boardtype
+    FROM article a
+    JOIN board b
+    ON a.board_id = b.id
+    WHERE
+    enable=1 and not boardtype in (4,6) and username = #{username}
+    order
+    by a.id desc;
   </select>
   <select id="selectAllPagingArticlesByViewCount"
     resultType="kr.or.bit.model.Article">
@@ -594,7 +595,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     from
     article as a
     join homework as h on a.id=h.article_id and a.enable = 1
-    where a.id = a.original_id and a.username = #{username}
+    where a.id =
+    a.original_id and a.username = #{username}
     order by id
     desc
     limit 1
@@ -605,11 +607,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     select a.id, a.title, a.time, a.username
     from article as a
     join member as m on a.username = m.username
-    where course_id = #{courseid} and board_id = 1
+    where course_id =
+    #{courseid} and board_id = 1
     order by id desc
     limit 5
   </select>
 
+  <select id="selectRecentQnabyBoardId" resultType="kr.or.bit.model.Article">
+    select title, time from article
+    where board_id = #{board_id}
+    order by updated_time desc
+    limit 1;
+  </select>
 
 </mapper>
  

@@ -20,8 +20,11 @@
     <intercept-url pattern="/css/**" access="permitAll" />
     <intercept-url pattern="/js/**" access="permitAll" />
     <intercept-url pattern="/resources/**" access="permitAll" />
-    <intercept-url pattern="/menu"
+    <intercept-url pattern="/manage**"
       access="hasRole('MANAGER')" />
+    <intercept-url pattern="/video/realdelete" access="hasRole('MANAGER')"/>
+    <intercept-url pattern="/myclass/setting" access="hasRole('TEACHER')" />
+    <intercept-url pattern="/myclass/create**" access="hasRole('TEACHER')" />
     <intercept-url pattern="/**"
       access="isAuthenticated()" />
     <form-login 

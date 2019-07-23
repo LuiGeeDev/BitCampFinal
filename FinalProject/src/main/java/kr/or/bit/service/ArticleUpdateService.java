@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import kr.or.bit.dao.ArticleDao;
 import kr.or.bit.dao.QnaDao;
-import kr.or.bit.dao.TroubleShootingDao;
 import kr.or.bit.dao.VideoDao;
 import kr.or.bit.dao.ViewCountDao;
 import kr.or.bit.model.Article;
@@ -39,8 +38,6 @@ public class ArticleUpdateService{
   public void updateChangeStatus(String optionname, int id) {
     switch (optionname.toLowerCase()) {
     case "troubleshooting":
-      TroubleShootingDao troubleshootingdao = sqlSession.getMapper(TroubleShootingDao.class);
-      //troubleshootingdao.updateTroubleShootingByIssueClosed(id);
       break;
     case "qna":
       QnaDao qnadao = sqlSession.getMapper(QnaDao.class);

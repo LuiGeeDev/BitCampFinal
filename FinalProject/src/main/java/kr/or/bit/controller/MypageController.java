@@ -2,11 +2,8 @@ package kr.or.bit.controller;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
@@ -35,7 +32,6 @@ import kr.or.bit.model.Course;
 import kr.or.bit.model.Files;
 import kr.or.bit.model.Member;
 import kr.or.bit.service.FileUploadService;
-import kr.or.bit.service.MailService;
 import kr.or.bit.service.MemberService;
 import kr.or.bit.service.MypageService;
 import kr.or.bit.utils.Helper;
@@ -59,7 +55,6 @@ public class MypageController {
   public String mainPage(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
-    CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     MypageDao mypageDao = sqlSession.getMapper(MypageDao.class);
     String username = Helper.userName();
@@ -99,7 +94,6 @@ public class MypageController {
   public String commentsPage(Model model, String boardSearch, String criteria) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
-    CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     MypageDao mypageDao = sqlSession.getMapper(MypageDao.class);
     String username = Helper.userName();
@@ -179,10 +173,9 @@ public class MypageController {
   }
 
   @PostMapping("")
-  public String updateMember(Member member, Principal principal, MultipartFile files1, HttpServletRequest request)
+  public String updateMember(Member member, MultipartFile files1, HttpServletRequest request)
       throws IllegalStateException, IOException {
-    if (member.getPassword() == null) {
-    }
+    System.out.println(member.getPassword());
     if (files1 != null) {
       FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
       Files file = fileUploadService.uploadFile(files1, request);
@@ -193,6 +186,6 @@ public class MypageController {
       member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
       service.updateMemberWithoutFile(member);
     }
-    return "redirect:/";
+    return "redirect:/mypage";
   }
 }

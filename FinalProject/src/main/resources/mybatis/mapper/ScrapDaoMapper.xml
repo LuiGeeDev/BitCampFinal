@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT a.id as id, title, content,
     time, view_count, original_id, level,
     updated_time, enable, a.username
-    as username, board_id, layer, sibling
+    as username, board_id, layer
     FROM article a
     JOIN scrap s
     ON a.id
@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT a.id as id, title, content,
     time, view_count, original_id, level,
     updated_time, enable, a.username
-    as username, board_id, layer, sibling
+    as username, board_id, layer
     FROM article a
     JOIN scrap s
     ON a.id = s.article_id

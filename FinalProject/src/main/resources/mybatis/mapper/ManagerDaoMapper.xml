@@ -79,6 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<select id="countCourseBySubject" resultType="kr.or.bit.model.Course">
 		SELECT count(*) count, s.subject subject_name
 		FROM course c JOIN subject s ON c.subject = s.id
+        WHERE s.id != 0
 		GROUP BY c.subject
 		ORDER BY count
  	</select>
@@ -89,16 +90,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<select id="countEnableMember" resultType="kr.or.bit.model.Course">
  		SELECT count(*) AS count, c.course_name, c.start_date, c.end_date, c.subject AS subject_name
 		FROM member m JOIN course c ON m.course_id = c.id
-		WHERE m.enabled=0
+		WHERE m.enabled=0 AND start_date &lt; now()
 		GROUP BY c.course_name
-		ORDER BY count DESC;
+		ORDER BY count DESC
  	</select>
  	<select id="articleWriteRank" resultType="kr.or.bit.model.Course">
  		SELECT count(*) AS count, a.username, m.name, m.course_id, c.course_name, c.start_date, c.end_date, c.subject
 		FROM  member m JOIN article a ON m.username = a.username
 		JOIN course c ON m.course_id = c.id
 		JOIN authorities au ON m.username = au.username
-        WHERE au.role != "teacher"
+        WHERE au.role = "student" AND m.enabled != 0
 		GROUP BY a.username 
 		ORDER BY count DESC
 		LIMIT 1, 10
@@ -107,7 +108,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		SELECT count(*) AS count, m.name
 		FROM comment c JOIN member m ON c.username = m.username
 		JOIN authorities au ON m.username = au.username
-        WHERE au.role != "teacher"
+        WHERE au.role = "student" AND m.enabled != 0
 		GROUP BY c.username
 		ORDER BY count DESC
 		LIMIT 1, 10
@@ -119,7 +120,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE a.role = "teacher"
  	</select>
  	<select id="selectSubjectList" resultType="kr.or.bit.model.Subject">
- 		SELECT id,subject FROM subject
+ 		SELECT id,subject FROM subject WHERE id != 0
  	</select>
  	<select id="selectClassroomList" resultType="kr.or.bit.model.Classroom">
  		SELECT id,classroom_name FROM classroom

@@ -48,4 +48,12 @@ public interface MemberDao {
   List<Member> selectMemberSearchByAjax(@Param("course_id") int course_id, @Param("role") String role, @Param("enabled") int enabled);
   
   int countMemberSearchByAjax(@Param("course_id") int course_id, @Param("role") String role, @Param("enabled") int enabled);
+  
+  void updateEnabled(Member member);
+  
+  List<Member> selectAllStudent();
+  
+  void updateTeacherCourseId(Member member);
+  
+  List<Member> selectAllMembersByCourseId(int course_id);
 }

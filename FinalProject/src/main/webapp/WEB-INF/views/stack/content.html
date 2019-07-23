@@ -185,8 +185,6 @@
                 id="answertime"
                 th:text="${#temporals.format(adoptedanswer.timeLocal, 'yyyy-MM-dd HH:mm')}"
               ></span>
-              <!-- <span class="commentCalender"
-            th:text="${#temporals.format(list.timeLocal, 'yyyy-MM-dd HH:mm')}"></span> -->
             </td>
           </tr>
           <tr>
@@ -490,7 +488,7 @@
               });
             });
             // 비동기 메시지보내기 처리 끝
-            if ([[${user.username}]] === [[${stackcontent.username}]]) {
+            if ([[${user.username}]] !== [[${stackcontent.username}]]) {
               sendCommentNotice([[${user.name}]], [[${stackcontent.username}]], "/stack/content?id="+[[${stackcontent.id}]]);
             }
             const count = $(".commentPlus");

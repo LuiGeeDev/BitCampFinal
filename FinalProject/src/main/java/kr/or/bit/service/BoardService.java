@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
-import org.attoparser.config.ParseConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -257,12 +256,9 @@ public class BoardService {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     List<String> boardToAdd = boardAddRemove.getBoardToAdd();
     List<String> boardToRemove = boardAddRemove.getBoardToRemove();
-    List<String> boardToCategory = boardAddRemove.getBoardCategoryToAdd();
-    System.out.println(boardToAdd);
-    System.out.println(boardToRemove);
-    System.out.println(boardToCategory);
+
+    
     int course_id = memberDao.selectMemberByUsername(Helper.userName()).getCourse_id();
-    int index = 0;
     for (String boardname : boardToAdd) {
       Board exists = boardDao.isBoardExists(course_id, boardname);
       if (exists == null) {
@@ -270,10 +266,9 @@ public class BoardService {
         board.setBoard_name(boardname);
         board.setBoardtype(3);
         board.setCourse_id(course_id);
-        board.setCategory(Integer.parseInt(boardToCategory.get(index)));
+        board.setCategory(0);
         boardDao.insertBoard(board);
       }
-      index++;
     }
     for (String boardname : boardToRemove) {
       Board exists = boardDao.isBoardExists(course_id, boardname);

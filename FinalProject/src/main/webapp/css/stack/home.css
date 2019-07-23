@@ -53,11 +53,24 @@ td[colspan="2"] {
 
 .tdcontent {
   cursor: pointer;
-  max-height: 45px;
+  max-height: 42px;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 1094px;
+  font-size: 14px;
 }
 
+.tdcontent * {
+  font-family: "Nanum Gothic" !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+}
+
+.tdcontent * br {
+  display: none;
+}
+
+}
 .tdcontent br {
   display: none;
 }
@@ -79,7 +92,7 @@ td[colspan="2"] {
   margin: 0px;
   display: inline;
   font-family: "Nanum Gothic" !important;
-  font-size: 14x !important;
+  font-size: 14px !important;
 }
 
 .tdst {
@@ -175,7 +188,7 @@ td[colspan="2"] {
 
 .page-btns {
   margin: auto;
-  margin-bottom: 200px;
+  margin-bottom: 50px;
 }
 
 .write-btns {
@@ -262,7 +275,7 @@ td[colspan="2"] {
 }
 
 .article-title {
-  font-size: 16px;
+  font-size: 18px;
   color: #292929;
 }
 
@@ -352,4 +365,12 @@ td[colspan="2"] {
 
 .NameStyle {
   font-weight: bold;
+}
+
+.tag-content:hover {
+  background-color: #f6f6f6
+}
+
+.btn-outline-primary {
+  border: 1px solid !important;
 }
