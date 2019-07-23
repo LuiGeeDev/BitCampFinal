@@ -2,6 +2,7 @@ package kr.or.bit.controller;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -70,11 +71,11 @@ public class HomeController {
       m.setSender(memberDao.selectMemberByUsername(m.getSender_username()));
     }
     
-    Period dDay = null;
+    long dDay = 0;
     if (project != null) {
       project.setStartDateLocal(project.getStart_date().toLocalDate());
       project.setEndDateLocal(project.getEnd_date().toLocalDate());
-      dDay = Period.between(LocalDate.now(), project.getEndDateLocal());
+      dDay = ChronoUnit.DAYS.between(LocalDate.now(), project.getEndDateLocal());
     } 
 
     model.addAttribute("mainMessage", mainMessage);
@@ -84,8 +85,8 @@ public class HomeController {
     model.addAttribute("recentlyCommented", recentlyCommentedStacks);
     model.addAttribute("project", project);
     
-    if (dDay != null) {
-      model.addAttribute("dDay", dDay.getDays());
+    if (dDay != 0) {
+      model.addAttribute("dDay", dDay);
     }
     
     return "main";

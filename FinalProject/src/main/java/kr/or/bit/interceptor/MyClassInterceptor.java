@@ -36,21 +36,8 @@ public class MyClassInterceptor extends HandlerInterceptorAdapter {
     List<Board> board = boardDao.selectMyClassBoard(user.getCourse_id());
     List<Group> projects = projectDao.selectMyProject(username);
 
-    // ---------------게시판 시작----------------------
-
-    CategoryDao categoryDao = sqlSession.getMapper(CategoryDao.class);
-    List<Category> categories = categoryDao.selectCategoryByCourseid(user.getCourse_id());
-
-    HashMap<String, List<Board>> boardMap = new HashMap<>();
-    System.out.println(user.getCourse_id());
+    System.out.println(board);
     
-    for (Category category : categories) {
-      List<Board> boardlist = boardDao.selectBoardByCategory(category.getId(), user.getCourse_id());
-      boardMap.put(category.getCategory(), boardlist);
-    }
-    System.out.println(boardMap);
-    // --------------게시판 끝---------------------------
-    request.setAttribute("boardMap", boardMap);
     request.setAttribute("boardList", board);
     request.setAttribute("projects", projects);
   }

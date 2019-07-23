@@ -45,6 +45,7 @@ public class SocketController {
     List<Member> students = memberDao.selectAllMembersByMycourse(teacher.getCourse_id());
     
     for (Member student : students) {
+      System.out.println(student.getUsername());
       template.convertAndSendToUser(student.getUsername(), "/queue/notice", notification);
       notification.setUsername(student.getUsername());
       notificationDao.insertNotification(notification);

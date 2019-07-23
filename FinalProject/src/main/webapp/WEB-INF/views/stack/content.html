@@ -488,7 +488,7 @@
               });
             });
             // 비동기 메시지보내기 처리 끝
-            if ([[${user.username}]] === [[${stackcontent.username}]]) {
+            if ([[${user.username}]] !== [[${stackcontent.username}]]) {
               sendCommentNotice([[${user.name}]], [[${stackcontent.username}]], "/stack/content?id="+[[${stackcontent.id}]]);
             }
             const count = $(".commentPlus");
