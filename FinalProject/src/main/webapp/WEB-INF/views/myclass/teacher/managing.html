@@ -46,9 +46,11 @@
             </div>
           </div>
           <div class="teacher-manage-right">
+          <th:block th:if = "${project}!=null">
             <p class="title" th:text="${project.project_name}+'&nbsp진행중'">
               ?차 프로젝트
             </p>
+            
             <h5 th:text="${project.season} + '번째 프로젝트'">번째 프로젝트</h5>
             <h5
               th:text="${project.start_date} + '~' + ${project.end_date}"
@@ -78,6 +80,10 @@
                 </option>
               </select>
             </div>
+            </th:block>
+            <p th:if="${project} == null">
+              프로젝트가 없습니다. 프로젝트를 생성하세요.
+            </p>
           </div>
         </div>
       </div>
@@ -152,6 +158,9 @@
                       >2019-09-21</span
                     >
                   </div>
+                </div>
+                <div th:if="${stackarticle.isEmpty()}">
+                  등록된 글이 없습니다.
                 </div>
               </div>
             </div>
