@@ -51,10 +51,12 @@
                   th:style="'width:' + ${project_percent} + '%; height: 30px;'"></div>
               </div>
             </div>
+            <div ></div>
             <div th:text="${project_percent}+'%'+' 진행중'"></div>
           </div>
-          <div th:unless="${project.project_name}== null" >생성된
+          <div th:if="${project.project_name}== null" >생성된
             프로젝트가 없습니다.</div>
+            
            <div class="btn-group-url">
             <h5>프로젝트 둘러보기</h5>
             <div th:if="${groups} != null">
@@ -97,6 +99,9 @@
                       th:onclick="'window.location.href = \'' + @{/myclass/homework/detail(id=${homeworkarticle.id},page=1)} + '\''">
                       과제 확인하러 가기</button>
                   </div>
+                </div>
+                <div th:unless="${homeworkarticle.title == null">
+                  <div>등록된 과제가 없습니다</div>
                 </div>
               </div>
             </div>
