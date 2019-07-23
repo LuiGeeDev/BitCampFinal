@@ -13,8 +13,9 @@
         <div class="title">스택게시판</div>
         <div class="TagBtn">
           <button
-           th:if="${user.role == 'TEACHER' and user.role == 'MANAGER'}"
-           class="btn btn-outline-primary plusTag">태그 관리</button>
+           class="btn btn-outline-primary plusTag"
+           th:if="${user.role == 'TEACHER' or user.role == 'MANAGER'}"
+           >태그 관리</button>
         </div>
       </div>
       <!-- 검색창 -->
