@@ -175,7 +175,7 @@ td[colspan="2"] {
 
 .page-btns {
   margin: auto;
-  margin-bottom: 200px;
+  margin-bottom: 50px;
 }
 
 .write-btns {
@@ -355,4 +355,7 @@ td[colspan="2"] {
 }
 .tag-content:hover {
     background-color:#f6f6f6
+}
+.btn-outline-primary{
+  border:1px solid !important;
 }
