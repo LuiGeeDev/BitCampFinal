@@ -75,7 +75,7 @@ public class MypageController {
       pager = new Pager(page, mypageDao.countAllMyArticle(username));
       article2 = mypageService.selectAllMyArticlesByUsername(pager, username);
     }
-    
+
     Member user = memberDao.selectMemberByUsername(username);
     Course course = courseDao.selectCourse(user.getCourse_id());
     int completion = mypageService.coursePeriod(username);
@@ -175,7 +175,6 @@ public class MypageController {
   @PostMapping("")
   public String updateMember(Member member, MultipartFile files1, HttpServletRequest request)
       throws IllegalStateException, IOException {
-    System.out.println(member.getPassword());
     if (files1 != null) {
       FilesDao filesDao = sqlSession.getMapper(FilesDao.class);
       Files file = fileUploadService.uploadFile(files1, request);

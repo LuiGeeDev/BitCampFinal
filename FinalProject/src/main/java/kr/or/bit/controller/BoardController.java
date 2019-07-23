@@ -26,7 +26,6 @@ import kr.or.bit.model.Comment;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.General;
 import kr.or.bit.service.ArticleService;
-import kr.or.bit.service.ArticleUpdateService;
 import kr.or.bit.service.BoardService;
 import kr.or.bit.service.MypageService;
 import kr.or.bit.utils.Helper;
@@ -37,33 +36,20 @@ import kr.or.bit.utils.Pager;
 public class BoardController {
   @Autowired
   private BoardService boardService;
+
   @Autowired
   private ArticleService articleService;
+
   @Autowired
   private SqlSession sqlSession;
+
   @Autowired
   private MypageService mypageService;
 
-  /*
-   * @GetMapping("") public String listPage(int
-   * board_id, @RequestParam(defaultValue = "1") int page,
-   * 
-   * @RequestParam(required = false) String sort, @RequestParam(required = false)
-   * String search,
-   * 
-   * @RequestParam(required = false) String criteria, Model model) { List<Article>
-   * articles = null; if (sort == null && search == null) { articles =
-   * boardService.getArticlesByPage(board_id, page); } else if (sort != null) {
-   * articles = boardService.getArticlesSorted(board_id, page, sort); } else if
-   * (search != null) { articles = boardService.getArticlesBySearchWord(board_id,
-   * page, search, criteria); } model.addAttribute("board",
-   * boardService.getBoardInfo(board_id)); model.addAttribute("articles",
-   * articles); return "myclass/general/generalBoard"; }
-   */
   @GetMapping("")
   public String listPage(int board_id, @RequestParam(defaultValue = "1") int page,
-      @RequestParam(required = false) String boardSearch, @RequestParam(required = false) String criteria,
-      Model model, @RequestParam(defaultValue = "article") String separator ) {
+      @RequestParam(required = false) String boardSearch, @RequestParam(required = false) String criteria, Model model,
+      @RequestParam(defaultValue = "article") String separator) {
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     GeneralDao generalDao = sqlSession.getMapper(GeneralDao.class);
@@ -79,21 +65,20 @@ public class BoardController {
       }
       articles = articleService.selectAllArticlesByBoardSearch(board_id, pager, boardSearch, criteria);
       model.addAttribute("boardSearch", boardSearch);
-    } else if(separator.equals("view")) {
+    } else if (separator.equals("view")) {
       pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardId(board_id));
       articles = articleService.selectAllArticleViewCountByDesc("general", board_id, pager);
-    } else if(separator.equals("article")){
+    } else if (separator.equals("article")) {
       pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardId(board_id));
       articles = articleService.selectAllArticle("general", board_id, pager);
     }
 
-    
     List<Course> courses = courseDao.selectAllTeacherCourse(Helper.userName());
     for (Course course : courses) {
       List<Board> boards = boardDao.selectBoardInCourse(course.getId(), 3);
       course.setBoards(boards);
     }
-    
+
     model.addAttribute("articles", articles);
     model.addAttribute("pager", pager);
     model.addAttribute("page", page);
@@ -118,7 +103,7 @@ public class BoardController {
   public String readArticle(int article_id, int board_id, Model model) {
     Article article = boardService.readArticle(article_id);
     int scrapCount = mypageService.scrapCount(article_id, Helper.userName());
-    model.addAttribute("scrapCount",scrapCount);
+    model.addAttribute("scrapCount", scrapCount);
     model.addAttribute("article", article);
     model.addAttribute("board", boardService.getBoardInfo(board_id));
     return "myclass/general/generalBoardDetail";
@@ -190,25 +175,25 @@ public class BoardController {
     article.setLevel(article.getLevel() + 1);
     article.setLayer(article.getLayer() + 1);
     article.setSibling(article.getSibling() + 1);
-    
+
     if (article.getLayer() == 1) {
       int maxlevel = arti.selectMaxLevel(article);
       article.setLevel(maxlevel + 1);
     } else if (article.getLayer() > 1) {
       int maxlevelbysibling = 0;
-      if( arti.selectMaxLevelBySibling(article) == null) {
+      if (arti.selectMaxLevelBySibling(article) == null) {
         maxlevelbysibling = article.getLevel();
       } else {
         maxlevelbysibling = arti.selectMaxLevelBySibling(article);
       }
       arti.updateArticleLevel(article);
       article.setLevel(maxlevelbysibling);
-      
+
     }
     return "redirect:/myclass/board/read?article_id=" + boardService.writeReplyArticle(article, file1, file2, request)
         + "&board_id=" + article.getBoard_id();
   }
-  
+
   @GetMapping("viewDesc")
   public String selectViewCountByDesc(int board_id, @RequestParam(defaultValue = "1") int page,
       @RequestParam(required = false) String boardSearch, @RequestParam(required = false) String criteria,
@@ -232,13 +217,13 @@ public class BoardController {
       pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardId(board_id));
       articles = articleService.selectAllArticleViewCountByDesc("general", board_id, pager);
     }
-    
+
     List<Course> courses = courseDao.selectAllTeacherCourse(Helper.userName());
     for (Course course : courses) {
       List<Board> boards = boardDao.selectBoardInCourse(course.getId(), 3);
       course.setBoards(boards);
     }
-    
+
     model.addAttribute("articles", articles);
     model.addAttribute("pager", pager);
     model.addAttribute("page", page);
@@ -246,7 +231,7 @@ public class BoardController {
     model.addAttribute("courses", courses);
     return "myclass/general/generalBoard";
   }
-  
+
   @GetMapping("writeDesc")
   public String selectWriteByDesc(int board_id, @RequestParam(defaultValue = "1") int page,
       @RequestParam(required = false) String boardSearch, @RequestParam(required = false) String criteria,
@@ -270,13 +255,13 @@ public class BoardController {
       pager = new Pager(page, generalDao.countAllGeneralArticlesByBoardId(board_id));
       articles = articleService.selectAllArticleWriteByDesc("general", board_id, pager);
     }
-    
+
     List<Course> courses = courseDao.selectAllTeacherCourse(Helper.userName());
     for (Course course : courses) {
       List<Board> boards = boardDao.selectBoardInCourse(course.getId(), 3);
       course.setBoards(boards);
     }
-    
+
     model.addAttribute("articles", articles);
     model.addAttribute("pager", pager);
     model.addAttribute("page", page);
@@ -284,5 +269,5 @@ public class BoardController {
     model.addAttribute("courses", courses);
     return "myclass/general/generalBoard";
   }
-  
+
 }

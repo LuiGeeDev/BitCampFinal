@@ -43,7 +43,6 @@ import kr.or.bit.utils.Pager;
 @RestController
 @RequestMapping(path = "/ajax")
 public class AjaxController {
-
   @Autowired
   private SqlSession sqlSession;
 
@@ -52,7 +51,7 @@ public class AjaxController {
 
   @Autowired
   private ArticleVoteService articleVoteService;
-  
+
   @Autowired
   private MypageService mypageService;
 
@@ -115,9 +114,9 @@ public class AjaxController {
     List<Classroom> classroomList = courseDao.selectAvailableClassroom(start_date, end_date);
     return classroomList;
   }
-  
+
   @PostMapping("/classroom/teacher")
-  public List<Member> getTeacher(Date start_date,  @RequestParam(defaultValue = "1970-01-01") Date end_date) {
+  public List<Member> getTeacher(Date start_date, @RequestParam(defaultValue = "1970-01-01") Date end_date) {
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     List<Member> teacherList = courseDao.selectAvailableTeacher(start_date, end_date);
     return teacherList;
@@ -140,72 +139,73 @@ public class AjaxController {
     String username = Helper.userName();
     notificationDao.checkAllNotification(username);
   }
-  
+
   @PostMapping("/manage/enabledUpdate")
   public String updateMemberEnabled(String username, String enabled) {
     ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
     int enabledInt = 0;
-    if(enabled.equals("활성화")) {
-      enabledInt=0;
+    if (enabled.equals("활성화")) {
+      enabledInt = 0;
     } else {
-      enabledInt=1;
+      enabledInt = 1;
     }
     managerDao.updateMemberEnabled(enabledInt, username);
     return "redirect:/manage/students";
   }
-  
+
   @PostMapping("/bookmark")
   public Map<String, Object> bookmarkStackArticle(int article_id) {
     return mypageService.insertBookmark(article_id, Helper.userName());
   }
-  
+
+  /**
+   * 수업 삭제
+   * 
+   * FK 제약을 피하기 위해 우선 수강생을 모두 삭제, 강사 수업을 0번으로 교체 후 수업을 삭제
+   */
   @PostMapping("/manage/course/delete")
   @Transactional
   public void deleteCourse(int id) {
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     TeacherCourseDao teacherCourse = sqlSession.getMapper(TeacherCourseDao.class);
-    System.out.println(id);
-    
+
     for (Member student : memberDao.selectAllMembersByCourseId(id)) {
       memberDao.deleteMember(student.getUsername());
-      System.out.println(student.getUsername());
     }
-    Member teacher =memberDao.selectMemberByUsername(teacherCourse.selectTeacherCourse(id).getTeacher_username());
-    System.out.println(teacher);
+
+    Member teacher = memberDao.selectMemberByUsername(teacherCourse.selectTeacherCourse(id).getTeacher_username());
     teacher.setCourse_id(0);
     memberDao.updateTeacherCourseId(teacher);
-    
+
     courseDao.deleteCourse(id);
 
-    
   }
-  
+
   @GetMapping("/manage/course/paging")
-  public Map<String,Object> paging(int page){
+  public Map<String, Object> paging(int page) {
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     Pager pager = new Pager(page, courseDao.countEndCourseList());
     List<Course> courseList = courseDao.selectEndCourseList(pager);
-    for(Course course : courseList) {
+
+    for (Course course : courseList) {
       course.setStartDate(course.getStart_date().toLocalDate());
       course.setEndDate(course.getEnd_date().toLocalDate());
     }
+
     Map<String, Object> returnMap = new HashMap<String, Object>();
     returnMap.put("courseList", courseList);
     returnMap.put("allCount", courseDao.countEndCourseList());
     return returnMap;
   }
-  
+
   @GetMapping("/manage/students/search")
-  public Map<String, Object> search(@RequestParam String role, int course, int enabled){
+  public Map<String, Object> search(@RequestParam String role, int course, int enabled) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-    Map<String, Object> returnMap  = new HashMap<String, Object>();
+    Map<String, Object> returnMap = new HashMap<String, Object>();
     List<Member> searchList = memberDao.selectMemberSearchByAjax(course, role, enabled);
     returnMap.put("searchList", searchList);
     returnMap.put("memberCount", memberDao.countMemberSearchByAjax(course, role, enabled));
     return returnMap;
   }
 }
-
-
-
