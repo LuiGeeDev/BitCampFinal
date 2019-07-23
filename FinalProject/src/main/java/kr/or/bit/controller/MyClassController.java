@@ -469,11 +469,8 @@ public class MyClassController {
     homework.setEnd_date(end_date);
     articleInsertService.writeArticle(article, homework, null, request);
     Schedule schedule = new Schedule();
-    
     article = articleDao.selectOneArticle(article.getId());
-    
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
-
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Calendar cal = Calendar.getInstance();
     cal.setTime(homework.getEnd_date());
     cal.add(Calendar.DATE, 1);
@@ -533,12 +530,13 @@ public class MyClassController {
     GroupDao groupdao = sqlSession.getMapper(GroupDao.class);
     ArticleDao articledao = sqlSession.getMapper(ArticleDao.class);
     HomeworkDao homeworkdao = sqlSession.getMapper(HomeworkDao.class);
+    BoardDao boarddao = sqlSession.getMapper(BoardDao.class);
     String username = Helper.userName();
     Member member = memberdao.selectMemberByUsername(username);
     Course course = coursedao.selectCourse(member.getCourse_id());
     Project project = projectdao.selectRecentProjectByCourseId(member.getCourse_id());
     List<Group> groups = null;
-    if(project != null) {
+    if (project != null) {
       groups = groupdao.selectAllGroupByProject(project.getId());
       project.setStartDateLocal(project.getStart_date().toLocalDate());
       project.setEndDateLocal(project.getEnd_date().toLocalDate());
@@ -547,26 +545,34 @@ public class MyClassController {
     course.setEndDate(course.getEnd_date().toLocalDate());
     Period ccDay = Period.between(course.getStartDate(), course.getEndDate());
     Period cDay = Period.between(course.getStartDate(), LocalDate.now());
-    
-    
     Period ddDay = null;
     Period dDay = null;
-    if(project != null) {
+    if (project != null) {
       ddDay = Period.between(project.getStartDateLocal(), project.getEndDateLocal());
       dDay = Period.between(project.getStartDateLocal(), LocalDate.now());
       model.addAttribute("project_percent", (int) ((float) (dDay.getDays() / (float) (ddDay.getDays())) * 100));
     }
+    
+    int boardid = boarddao.selectBoardIdByCourseId(member.getCourse_id());
+    System.out.println(boardid);
+    
+    Article recentQanArticle = null;
+    recentQanArticle = articledao.selectRecentQnabyBoardId(boardid);
+    if (recentQanArticle != null) {
+      model.addAttribute("recentQanArticle", recentQanArticle);
+    }
+    
     Article homeworkarticle = articledao.selectRecentHomework(username);
     Homework homework = homeworkdao.selectHomeworkByArticleId(homeworkarticle.getId());
     homeworkarticle.setOption(homework);
     List<Article> recentStackArticle = articledao.selectRecentStackbyCourse(course.getId());
     List<Article> homeworkarticlere = articledao.selectHomeworkReplies(homeworkarticle.getId());
+    
     for (Article a : recentStackArticle) {
       a.setWriter(memberdao.selectMemberByUsername(a.getUsername()));
       a.setTimeLocal(a.getTime().toLocalDateTime());
     }
     model.addAttribute("course", course);
-    
     model.addAttribute("project", project);
     model.addAttribute("enable", memberdao.getCountCourseMember(course.getId(), "enable"));
     model.addAttribute("disable", memberdao.getCountCourseMember(course.getId(), "disable"));
@@ -584,14 +590,10 @@ public class MyClassController {
   public @ResponseBody Category createBoardCategory(Category category) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     CategoryDao categoryDao = sqlSession.getMapper(CategoryDao.class);
-    
-    
     Member member = memberDao.selectMemberByUsername(Helper.userName());
     int courseId = member.getCourse_id();
     category.setCourse_id(courseId);
-    
     categoryDao.insertCategory(category);
-    
     return category;
   }
 }

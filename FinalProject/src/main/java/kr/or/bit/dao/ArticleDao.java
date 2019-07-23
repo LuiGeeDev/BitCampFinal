@@ -113,5 +113,5 @@ public interface ArticleDao {
   
   List<Article> selectRecentStackbyCourse(int courseid);
   
-  
+  Article selectRecentQnabyBoardId(int Board_id);
 }

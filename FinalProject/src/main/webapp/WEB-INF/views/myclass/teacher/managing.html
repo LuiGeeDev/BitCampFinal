@@ -36,8 +36,9 @@
             </div>
           </div>
           <div class="class-info">
-          <h5  th:text="'총원 '+${all}+'명'+' / '+' 재적 '+${enable}+'명'+' / '+'중탈 '+${disable}+'명'">
-          </h5>
+            <h5
+              th:text="'총원 '+${all}+'명'+' / '+' 재적 '+${enable}+'명'+' / '+'중탈 '+${disable}+'명'">
+            </h5>
           </div>
         </div>
         <div class="teacher-manage-right">
@@ -109,7 +110,7 @@
               <div class="card-content">
                 <p class="title">최근 이슈</p>
                 <div class="issue-content">
-                  <span>??????????????</span> <span>?조 ???</span><br />
+                  <span th:text="${recentQanArticle.title}">??????????????</span> <span >3조 권지예</span><br />
                   <button class="btn btn-primary">이슈 확인하러 가기</button>
                 </div>
               </div>
