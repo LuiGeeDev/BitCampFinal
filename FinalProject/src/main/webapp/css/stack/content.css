@@ -48,11 +48,9 @@ th, td {
 }
 
 .tdcontent {
-  font-family: 'Nanum Gothic';
   font-size: 14px;
   padding-bottom: 8px;
   padding-top: 27px;
-  max-width: 800px;
 }
 
 .tdcontent span {
@@ -477,4 +475,5 @@ th, td {
 
 .content-size {
   min-height: 150px;
+  max-width: 1070px;
 }
