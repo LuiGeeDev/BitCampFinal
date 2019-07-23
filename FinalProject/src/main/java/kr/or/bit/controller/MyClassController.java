@@ -2,9 +2,12 @@ package kr.or.bit.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -347,7 +350,6 @@ public class MyClassController {
     Member user = memberDao.selectMemberByUsername(username);
     List<Board> boardlist = boardDao.selectMyClassBoard(user.getCourse_id());
     List<Category> categories = categorydao.selectCategoryByCourseid(user.getCourse_id());
-    System.out.println(categories);
     model.addAttribute("boardlist", boardlist);
     model.addAttribute("categories", categories);
     return "myclass/teacher/create/board";
@@ -454,7 +456,7 @@ public class MyClassController {
 
   @PostMapping("/homework/write")
   @Transactional
-  public String writeHomeworkArticle(Article article, Date end_date, HttpServletRequest request) {
+  public String writeHomeworkArticle(Article article, Date end_date, HttpServletRequest request) throws ParseException {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
@@ -467,12 +469,20 @@ public class MyClassController {
     homework.setEnd_date(end_date);
     articleInsertService.writeArticle(article, homework, null, request);
     Schedule schedule = new Schedule();
+    
     article = articleDao.selectOneArticle(article.getId());
+    
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
+
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(homework.getEnd_date());
+    cal.add(Calendar.DATE, 1);
+    Date endDate = Date.valueOf(dateFormat.format(cal.getTime()));
+    schedule.setEnd(endDate);
     schedule.setArticle_id(article.getId());
     schedule.setCourse_id(member.getCourse_id());
     schedule.setTitle(article.getTitle());
     schedule.setStart(Date.valueOf(article.getTime().toLocalDateTime().toLocalDate()));
-    schedule.setEnd(homework.getEnd_date());
     schedule.setColor("green");
     schedule.setGroup_id(0);
     scheduleDao.insertScheduleByBoard(schedule);
