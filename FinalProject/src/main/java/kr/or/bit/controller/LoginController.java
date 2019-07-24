@@ -39,24 +39,25 @@ public class LoginController {
   }
 
   @PostMapping("/forgot-password")
-  public @ResponseBody boolean sendNewPassword(@RequestParam("username") String username, @RequestParam("email") String email) throws MessagingException {
-    
+  public @ResponseBody boolean sendNewPassword(@RequestParam("username") String username,
+      @RequestParam("email") String email) throws MessagingException {
+
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     boolean result = false;
     int tempPassword = (int) (Math.random() * 9000) + 1000;
-    
+
     Member member = memberDao.selectMemberByUsername(username);
     if (member == null || member.getEmail() == null) {
       return result;
     }
-    
+
     if (member.getEmail().equals(email)) {
       member.setPassword(bCryptPasswordEncoder.encode(String.valueOf(tempPassword)));
       memberDao.updateMember(member);
       mailService.sendNewPasswordEmail(tempPassword, member);
       result = true;
     }
-    
+
     return result;
   }
 }

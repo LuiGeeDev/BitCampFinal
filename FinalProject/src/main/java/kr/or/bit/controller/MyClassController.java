@@ -547,28 +547,27 @@ public class MyClassController {
     Period cDay = Period.between(course.getStartDate(), LocalDate.now());
     Period ddDay = null;
     Period dDay = null;
-    
+
     if (project != null) {
       ddDay = Period.between(project.getStartDateLocal(), project.getEndDateLocal());
       dDay = Period.between(project.getStartDateLocal(), LocalDate.now());
       model.addAttribute("project_percent", (int) ((float) (dDay.getDays() / (float) (ddDay.getDays())) * 100));
     }
-    
+
     int boardid = boarddao.selectBoardIdByCourseId(member.getCourse_id());
-    System.out.println(boardid);
-    
+
     Article recentQanArticle = null;
     recentQanArticle = articledao.selectRecentQnabyBoardId(boardid);
     if (recentQanArticle != null) {
       model.addAttribute("recentQanArticle", recentQanArticle);
     }
-    
+
     Article homeworkarticle = articledao.selectRecentHomework(username);
     Homework homework = homeworkdao.selectHomeworkByArticleId(homeworkarticle.getId());
     homeworkarticle.setOption(homework);
     List<Article> recentStackArticle = articledao.selectRecentStackbyCourse(course.getId());
     List<Article> homeworkarticlere = articledao.selectHomeworkReplies(homeworkarticle.getId());
-    
+
     for (Article a : recentStackArticle) {
       a.setWriter(memberdao.selectMemberByUsername(a.getUsername()));
       a.setTimeLocal(a.getTime().toLocalDateTime());

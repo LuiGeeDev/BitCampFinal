@@ -33,20 +33,24 @@ public interface CourseDao {
   Course selectRecentCourse();
 
   List<Classroom> selectAvailableClassroom(@Param("start_date") Date start_date, @Param("end_date") Date end_date);
-  
+
   List<Member> selectAvailableTeacher(@Param("start_date") Date start_date, @Param("end_date") Date end_date);
-  
+
   List<Course> selectAllTeacherCourse(String username);
+
   //전체 클래스 리스트
   List<Course> selectAllCourseList();
+
   //진행중인 클래스 리스트
   List<Course> selectCurrentCourseList();
+
   //종료된 클래스 리스트
   List<Course> selectEndCourseList(@Param("pager") Pager pager);
+
   //종료된 클래스 개수
   int countEndCourseList();
+
   //개강예정 클래스 리스트
   List<Course> selectOpeningCourseList();
-  
-  
+
 }
