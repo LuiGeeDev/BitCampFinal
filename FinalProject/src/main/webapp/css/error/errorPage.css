@@ -1,14 +1,18 @@
 @charset "UTF-8";
 
 body {
-  font-family: "Nanum Gothic";
+  font-family: 'Nanum Gothic';
+}
+
+.Wrapper {
+  
 }
 
 .errorContainer {
   display: flex;
   flex-direction: column;
-  width: 800px;
-  margin: 50px auto;
+  width: 700px;
+  margin: 90px auto;
 }
 
 .logoSubContainer {
@@ -21,7 +25,7 @@ body {
 
 .errorMessage {
   flex-direction: row;
-  width: 61%;
+  width: 65%;
   padding-left: 11px;
 }
 
@@ -30,7 +34,7 @@ body {
 }
 
 .error-img {
-  width: 270px;
+  width: 240px;
 }
 
 .errorNum h1 {
@@ -38,8 +42,17 @@ body {
   margin: 0px;
 }
 
+.errerDetail h3 {
+  font-size: 23px;
+}
+
 .errerDetail div {
-  font-size: 15px;
+  font-size: 17px;
+  padding: 10px 10px 11px 10px;
+}
+
+.nthfirst {
+  margin-left: 10px
 }
 
 .logotext {
@@ -49,11 +62,20 @@ body {
 
 .main-btn {
   font-size: 15px;
-  margin-right: 3px;
-  margin-top: 5px;
 }
 
-h3 {
-  font-size: 18px !important;
-  font-weight: bold !important;
+.img403 {
+  width: 260px !important;
+  padding-top: 10px;
+}
+
+.logo500 {
+  margin: 0px;
+  padding-left: 9px;
+  padding-top: 8px;
+}
+
+.Img500 {
+  width: 255px;
+  margin-right: 11px;
 }

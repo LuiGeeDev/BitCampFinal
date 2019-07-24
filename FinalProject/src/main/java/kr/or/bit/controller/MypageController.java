@@ -51,6 +51,15 @@ public class MypageController {
   @Autowired
   private MypageService mypageService;
 
+  
+  /*
+   * 마이페이지에 관련된 모든 CRUD를 포함한 Controller
+   * 내 스크랩함, 내가 쓴 게시물과 댓글, 정보 수정
+   * 
+   */
+  
+  
+  //메인 페이지 -> 내가 쓴 게시물
   @GetMapping("/home")
   public String mainPage(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
@@ -89,7 +98,9 @@ public class MypageController {
     model.addAttribute("criteria", criteria);
     return "mypage/mypage";
   }
-
+  
+  
+  //메인 페이지 -> 내가 쓴 댓글
   @GetMapping("/home/comments")
   public String commentsPage(Model model, String boardSearch, String criteria) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
@@ -119,26 +130,15 @@ public class MypageController {
     model.addAttribute("user", user);
     return "mypage/mypageComments";
   }
-
+  
+  //내가 쓴 게시물의 상세페이지
   @GetMapping("/home/content")
   public String getDetail(int article_id) {
     String URL = mypageService.selectOneArticleforMypage(article_id);
     return URL;
   }
-
-  @PostMapping("/home/CommentList")
-  public @ResponseBody List<Comment> getCommentList(String user) {
-    CommentDao commentDao = sqlSession.getMapper(CommentDao.class);
-    List<Comment> comments = commentDao.selectAllCommentByUsername(user);
-    return comments;
-  }
-
-  @PostMapping("/home/ArticleList")
-  public @ResponseBody List<Article> getArticleList(String user) {
-    List<Article> articles = mypageService.allArticleByUsername(user);
-    return articles;
-  }
-
+  
+  //스크랩의 메인 페이지
   @GetMapping("/scrap")
   public String getScrapList(Model model) {
     ScrapDao scrapDao = sqlSession.getMapper(ScrapDao.class);
@@ -150,7 +150,8 @@ public class MypageController {
     model.addAttribute("scraps", scraps);
     return "mypage/scrap/scrap";
   }
-
+   
+  //스크랩의 검색 기능
   @PostMapping("/scrap/search")
   public @ResponseBody List<Article> searchScraps(String word) {
     ScrapDao scrapDao = sqlSession.getMapper(ScrapDao.class);
@@ -161,7 +162,8 @@ public class MypageController {
     }
     return scraps;
   }
-
+  
+  //정보수정 메인페이지
   @GetMapping("")
   public String updateMember(Model model, Principal principal) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
@@ -171,7 +173,8 @@ public class MypageController {
     model.addAttribute("user", user);
     return "mypage/mypageForm";
   }
-
+  
+  //정보수정의 수정완료
   @PostMapping("")
   public String updateMember(Member member, MultipartFile files1, HttpServletRequest request)
       throws IllegalStateException, IOException {

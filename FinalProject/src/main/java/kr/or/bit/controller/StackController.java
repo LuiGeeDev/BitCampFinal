@@ -59,14 +59,12 @@ public class StackController {
   private MypageService mypageService;
   
   /*
-   * StackController
-   * 페이징 처리: Pager 클래스
-   * 검색 처리 : 해당 파라메터로 boardSearch, criteria를 받음 
-   * 태그 기능 :
-   * 비동기 처리 : @Responsebody 
-   * 
+   * 스택 게시판의 CRUD를 제공하는 StackController
+   * 페이징 처리,검색 처리,태그 기능,비동기 처리,채택 기능 
    */
-
+  
+  
+  //스택 게시판의 메인 페이지 
   @GetMapping("")
   public String listPage(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model)
       throws Exception {
@@ -98,17 +96,8 @@ public class StackController {
     model.addAttribute("criteria",criteria);
     return "stack/home";
   }
-  /*
-   * //stack 메인으로 이동
-   * 
-   * @GetMapping("/home") public String getStackList(Model model) { List<Article>
-   * article = articleService.selectAllArticle("qna",STACK_BOARD_ID);
-   * model.addAttribute("stacklist",article);
-   * 
-   * return "stack/home"; }
-   */
 
-  // stack 게시물 상세보기 버튼
+  //게시물 상세보기
   @GetMapping("/content")
   public String GetStackContent(int id, Model model) {
     MemberDao memberDao = sqlsession.getMapper(MemberDao.class);
@@ -135,6 +124,7 @@ public class StackController {
     return "stack/content";
   }
   
+  //태그 추가 기능
   @PostMapping("/plusTag")
   public @ResponseBody List<Tag> plusTag(String tag, String color) {
     StackDao stackDao = sqlsession.getMapper(StackDao.class);
@@ -144,6 +134,7 @@ public class StackController {
     return taglist;
   }
   
+  //태그 삭제 기능
   @GetMapping("/deleteTag")
   public String deleteTag(String tag) {
     StackDao stackDao = sqlsession.getMapper(StackDao.class);
@@ -152,6 +143,7 @@ public class StackController {
     return "redirect:/stack";
   }
   
+  //게시물 스크랩 기능
   @GetMapping("/insertScrap")
   public String insertScrap(int article_id) {
     ScrapDao scrapDao = sqlsession.getMapper(ScrapDao.class);
@@ -164,8 +156,8 @@ public class StackController {
  
     return "redirect:/stack/content?id=" + article_id;
   }
-
-  // 글쓰기 폼 화면으로..
+  
+  //게시물 작성폼으로 이동
   @GetMapping("/write")
   public String writeStack(Model model) {
     StackDao stackdao = sqlsession.getMapper(StackDao.class);
@@ -173,8 +165,8 @@ public class StackController {
     model.addAttribute("tags", tags);
     return "stack/write";
   }
-
-  // 글쓰기 버튼 누르기..
+  
+  //게시물 작성
   @PostMapping("/write")
   public String writeOkStack(Article article, String tag) {
     List<String> tagList = new ArrayList<>();
@@ -189,7 +181,8 @@ public class StackController {
     articleInsertService.writeStackArticle(article, tagList);
     return "redirect:/stack";
   }
-
+  
+  //게시물 수정 폼으로 이동
   @GetMapping("/edit")
   public String editStack(int id, Model model) {
     StackDao stackdao = sqlsession.getMapper(StackDao.class);
@@ -199,7 +192,8 @@ public class StackController {
     model.addAttribute("article", article);
     return "stack/edit";
   }
-
+  
+  //게시물 수정
   @PostMapping("/edit")
   public String editStackArticle(Article article) {
     article.setUsername(Helper.userName());
@@ -209,14 +203,16 @@ public class StackController {
     articleUpdateService.updateArticleOption(article.getId(), general);
     return "redirect:/stack";
   }
-
+  
+  //게시물 삭제
   @GetMapping("/delete")
   public String deleteStack(int id) {
     ArticleDao articleDao = sqlsession.getMapper(ArticleDao.class);
     articleDao.deleteArticle(id);
     return "redirect:/stack";
   }
-
+  
+  //댓글 작성
   @PostMapping("/commentwrite")
   public @ResponseBody List<Comment> stackCommentWrite(int article_id, Comment comment) {
     comment.setUsername(Helper.userName());
@@ -224,7 +220,8 @@ public class StackController {
     List<Comment> commentList = boardService.getCommentList(article_id);
     return commentList;
   }
-
+  
+  //댓글 수정
   @GetMapping("/commentdelete")
   public String stackCommentDelete(int id) {
     Comment comment = commentService.selectOnecomment(id);
@@ -232,18 +229,20 @@ public class StackController {
     commentService.deleteComment(id);
     return "redirect:/stack/content?id=" + article_id;
   }
-
+  
+  //게시물 추천 기능
   @GetMapping("/plusvote")
   public String stackplustVote(int id) {
     articleVoteService.insertVote(id, Helper.userName());
     return "redirect:/stack/content?id=" + id;
   }
-
+  
+  //채택 기능
   @GetMapping("/chooseanswer")
   public String stackChooseAnswer(int comment_id, int article_id) {
     QnaDao qnaDao = sqlsession.getMapper(QnaDao.class);
     qnaDao.chooseAnswer(comment_id, article_id);
     return "redirect:/stack/content?id=" + article_id;
   }
-
+  
 }
