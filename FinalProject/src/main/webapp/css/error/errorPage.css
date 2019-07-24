@@ -1,17 +1,13 @@
 @charset "UTF-8";
 
 body {
-  font-family: 'Nanum Gothic';
-}
-
-.Wrapper {
-  
+  font-family: "Nanum Gothic";
 }
 
 .errorContainer {
   display: flex;
   flex-direction: column;
-  width: 700px;
+  width: 800px;
   margin: 50px auto;
 }
 
@@ -25,7 +21,7 @@ body {
 
 .errorMessage {
   flex-direction: row;
-  width: 65%;
+  width: 61%;
   padding-left: 11px;
 }
 
@@ -34,7 +30,7 @@ body {
 }
 
 .error-img {
-  width: 240px;
+  width: 270px;
 }
 
 .errorNum h1 {
@@ -42,23 +38,22 @@ body {
   margin: 0px;
 }
 
-.errerDetail h3 {
-  font-size: 23px;
-  font-weight: 100;
-}
-
 .errerDetail div {
-  padding-bottom: 15px;
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .logotext {
   height: 55px;
-  margin-left:5px;
+  margin-left: 5px;
 }
 
 .main-btn {
   font-size: 15px;
-  width: 97px;
   margin-right: 3px;
+  margin-top: 5px;
+}
+
+h3 {
+  font-size: 18px !important;
+  font-weight: bold !important;
 }

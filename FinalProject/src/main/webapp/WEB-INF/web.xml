@@ -57,14 +57,14 @@
   </filter-mapping>
   <error-page>
     <error-code>403</error-code>
-    <location>/error/errorPage403</location>
+    <location>/error/403</location>
   </error-page>
   <error-page>
     <error-code>404</error-code>
-    <location>/error/errorPage404</location>
+    <location>/error/404</location>
   </error-page>
   <error-page>
     <error-code>500</error-code>
-    <location>/error/errorPage500</location>
+    <location>/error/500</location>
   </error-page>
 </web-app>

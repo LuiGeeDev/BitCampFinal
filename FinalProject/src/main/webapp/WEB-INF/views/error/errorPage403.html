@@ -1,46 +1,60 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="fragments/layout :: layout(~{:: main}, ~{:: script}, ~{:: link})">
-<head>
-<!-- 이 페이지에서만 별도로 사용하는 CSS가 있다면 여기다 link 태그로 삽입 -->
-<link rel="stylesheet" th:href="@{/css/error/errorPage403.css}" />
-</head>
-<body>
-  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
-  <div class="main" th:fragment="main">
-
-    <div class="Wrapper">
-      <div class="errorContainer">
-        <div class="logoSubContainer">
-<img th:src="@{/css/error/teaming3.png}" alt="로고" class="logotext">
-        </div>
-        <div class="errorSubContainer">
-          <div class="errorMessage">
-            <div class="errerDetail">
-              <h3>웹 사이트에서 페이지 표시를 거부했습니다[403]</h3>
-              <div class="errortitle">가능성이 높은 원인</div>
-              <div class="errorlist">
-                <ul>
-                  <li>이 웹사이트를 보려면 로그인 해야합니다</li>
-                </ul>
-              </div>
-              <button class="btn btn-outline-primary main-btn"
-                th:onclick="'window.location.href = \'' + @{/} + '\''">티밍
-                메인</button>
-              <button class="btn btn-outline-primary main-btn"
-                th:onclick="'window.location.href = \'' + @{/mypage/home} + '\''">마이페이지</button>
-            </div>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <title>Teaming</title>
+    <link rel="stylesheet" th:href="@{/css/error/errorPage.css}" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="/css/common.css"
+      th:href="@{/css/bs-customization.css}"
+    />
+  </head>
+  <body>
+    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+    <div class="main">
+      <div class="Wrapper">
+        <div class="errorContainer">
+          <div class="logoSubContainer">
+            <img
+              th:src="@{/css/error/teaming3.png}"
+              alt="로고"
+              class="logotext"
+            />
           </div>
-          <div class="errorImg">
-            <img th:src="@{/css/error/errorImg403.png}" class="error-img">
+          <div class="errorSubContainer">
+            <div class="errorMessage">
+              <div class="errerDetail">
+                <h3>웹 사이트에서 페이지 표시를 거부했습니다[403]</h3>
+                <div class="errortitle">가능성이 높은 원인</div>
+                <div class="errorlist">
+                  <ul>
+                    <li>이 웹사이트를 보려면 로그인 해야합니다</li>
+                  </ul>
+                </div>
+                <a class="btn btn-outline-primary main-btn" th:href="@{/}">
+                  티밍 메인
+                </a>
+                <a
+                  class="btn btn-outline-primary main-btn"
+                  th:href="@{/mypage/home}"
+                >
+                  마이페이지
+                </a>
+              </div>
+            </div>
+            <div class="errorImg">
+              <img th:src="@{/css/error/errorImg403.png}" class="error-img" />
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- 이 페이지에서 사용하는 자바스크립트는 이 script 태그 안에 작성 -->
-  <script th:inline="javascript">  
-  </script>
-
-</body>
+  </body>
 </html>
