@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import kr.or.bit.model.Article;
-import kr.or.bit.model.Tag;
 import kr.or.bit.utils.Pager;
 
 /*
