@@ -350,8 +350,14 @@ public class MyClassController {
     }
     
     Schedule schedule = new Schedule();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(newProject.getEnd_date());
+    cal.add(Calendar.DATE, 1);
+    Date endDate = Date.valueOf(dateFormat.format(cal.getTime()));
+    schedule.setEnd(endDate);
     schedule.setStart(newProject.getStart_date());
-    schedule.setEnd(newProject.getEnd_date());
+    schedule.setEnd(endDate);
     schedule.setTitle(newProject.getProject_name());
     schedule.setColor("tomato");
     schedule.setGroup_id(0);
