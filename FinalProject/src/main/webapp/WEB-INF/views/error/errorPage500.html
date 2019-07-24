@@ -1,61 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <title>Teaming</title>
-    <link rel="stylesheet" th:href="@{/css/error/errorPage.css}" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="/css/common.css"
-      th:href="@{/css/bs-customization.css}"
-    />
-  </head>
-  <body>
-    <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
-    <div class="main">
-      <div class="Wrapper">
-        <div class="errorContainer">
-          <div class="logoSubContainer">
-            <img
-              th:src="@{/css/error/teaming3.png}"
-              alt="로고"
-              class="logotext"
-            />
-          </div>
-          <div class="errorSubContainer">
-            <div class="errorMessage">
-              <div class="errerDetail">
-                <h3>페이지를 표시할 수 없습니다 [500]</h3>
-                <div class="errortitle">예측 가능한 원인</div>
-                <div class="errorlist">
-                  <ul>
-                    <li>웹 사이트는 유지 관리중입니다.</li>
-                    <li>웹 사이트에 프로그래밍적인 문제가 발생했습니다</li>
-                  </ul>
-                </div>
-                <a class="btn btn-outline-primary main-btn" th:href="@{/}">
-                  티밍 메인
-                </a>
-                <a
-                  class="btn btn-outline-primary main-btn"
-                  th:href="@{/mypage/home}"
-                >
-                  마이페이지
-                </a>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title>Teaming</title>
+<link rel="stylesheet" th:href="@{/css/error/errorPage.css}" />
+<link rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+  crossorigin="anonymous" />
+<link rel="stylesheet" href="/css/common.css"
+  th:href="@{/css/bs-customization.css}" />
+</head>
+<body>
+  <!-- 이 페이지의 내용은 main 클래스 div 태그 안에 작성 -->
+  <div class="main">
+    <div class="Wrapper">
+      <div class="errorContainer">
+        <div class="errorSubContainer">
+          <div class="errorMessage">
+            <img th:src="@{/css/error/teaming3.png}" alt="로고"
+              class="logotext" />
+            <div class="errerDetail">
+              <h3 class="logo500">페이지를 표시할 수 없습니다</h3>
+              <div>
+                웹 사이트를 유지 관리중이거나<br>웹 사이트에 오류가 발생했습니다.
               </div>
             </div>
-            <div class="errorImg">
-              <img th:src="@{/css/error/errorImg500.png}" class="error-img" />
-            </div>
+            <a class="btn btn-outline-primary main-btn nthfirst"
+              th:href="@{/}"> 티밍 메인 </a> <a
+              class="btn btn-outline-primary main-btn"
+              th:href="@{/mypage/home}"> 마이페이지 </a>
+          </div>
+          <div class="errorImg">
+            <img th:src="@{/css/error/errorImg500.png}"
+              class="error-img Img500" />
           </div>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
 </html>
