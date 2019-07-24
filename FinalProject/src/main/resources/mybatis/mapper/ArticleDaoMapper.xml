@@ -333,23 +333,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT a.id, title, content, time, updated_time, view_count,
     original_id, enable, level, username, board_id
     FROM ARTICLE a
-    LEFT
-    JOIN troubleshooting ts
+    LEFT JOIN troubleshooting ts
     ON a.id = ts.article_id
-    WHERE board_id =
-    (SELECT id
-    FROM board
-    WHERE board_name = (SELECT CONCAT('트러블슈팅',
-    p.season, g.group_no)
-    FROM groups g
-    LEFT JOIN project p
-    ON g.project_id
-    = p.id
-    WHERE g.id = #{group_id})
-    )
+    WHERE board_id = (SELECT id
+                      FROM board
+                      WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, #{group_id})
+                                          FROM groups g
+                                          LEFT JOIN project p
+                                          ON g.project_id = p.id)
     AND ts.issue_closed = 0
-    AND a.enable
-    = 1
+    AND a.enable = 1
     <if test="criteria == 'title'">
       AND title like '%${word}%'
     </if>
@@ -366,23 +359,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT a.id, title, content, time, updated_time, view_count,
     original_id, enable, level, username, board_id
     FROM ARTICLE a
-    LEFT
-    JOIN troubleshooting ts
+    LEFT JOIN troubleshooting ts
     ON a.id = ts.article_id
-    WHERE board_id =
-    (SELECT id
-    FROM board
-    WHERE board_name = (SELECT CONCAT('트러블슈팅',
-    p.season, g.group_no)
-    FROM groups g
-    LEFT JOIN project p
-    ON g.project_id
-    = p.id
-    WHERE g.id = #{group_id})
-    )
+    WHERE board_id = (SELECT id
+                      FROM board
+                      WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, #{group_id})
+                                          FROM groups g
+                                          LEFT JOIN project p
+                                          ON g.project_id = p.id)
     AND ts.issue_closed = 1
-    AND a.enable
-    = 1
+    AND a.enable = 1
     <if test="criteria == 'title'">
       AND title like '%${word}%'
     </if>
@@ -399,23 +385,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT a.id, title, content, time, updated_time, view_count,
     original_id, enable, level, username, board_id
     FROM ARTICLE a
-    LEFT
-    JOIN troubleshooting ts
+    LEFT JOIN troubleshooting ts
     ON a.id = ts.article_id
-    WHERE board_id =
-    (SELECT id
-    FROM board
-    WHERE board_name = (SELECT CONCAT('트러블슈팅',
-    p.season, g.group_no)
-    FROM groups g
-    LEFT JOIN project p
-    ON g.project_id
-    = p.id
-    WHERE g.id = #{group_id})
-    )
+    WHERE board_id = (SELECT id
+                      FROM board
+                      WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, #{group_id})
+                                          FROM groups g
+                                          LEFT JOIN project p
+                                          ON g.project_id = p.id
+                                          WHERE g.id = #{group_id}))
     AND ts.issue_closed = 0
-    AND a.enable
-    = 1
+    AND a.enable = 1
     <if test="criteria == 'title'">
       AND title like '%${word}%'
     </if>
@@ -433,23 +413,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT a.id, title, content, time, updated_time, view_count,
     original_id, enable, level, username, board_id
     FROM ARTICLE a
-    LEFT
-    JOIN troubleshooting ts
+    LEFT JOIN troubleshooting ts
     ON a.id = ts.article_id
-    WHERE board_id =
-    (SELECT id
-    FROM board
-    WHERE board_name = (SELECT CONCAT('트러블슈팅',
-    p.season, g.group_no)
-    FROM groups g
-    LEFT JOIN project p
-    ON g.project_id
-    = p.id
-    WHERE g.id = #{group_id})
-    )
-    AND ts.issue_closed = 1
-    AND a.enable
-    = 1
+    WHERE board_id = (SELECT id
+                      FROM board
+                      WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, #{group_id})
+                                          FROM groups g
+                                          LEFT JOIN project p
+                                          ON g.project_id = p.id
+                                          WHERE g.id = #{group_id}))
+    AND ts.issue_closed = 0
+    AND a.enable = 1
     <if test="criteria == 'title'">
       AND title like '%${word}%'
     </if>
