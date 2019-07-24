@@ -312,6 +312,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     on m.username = a.username
     where b.course_id =
     #{course_id}
+    and a.enable != 0
     and b.boardtype not in (1, 2, 4, 6)
     and level = 1
     order by
