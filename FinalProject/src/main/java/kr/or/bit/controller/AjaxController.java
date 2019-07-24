@@ -57,13 +57,19 @@ public class AjaxController {
 
   //내 클래스  채팅
   @PostMapping("/chat/file")
-  public ChatMessage uploadFile(HttpServletRequest request, ChatMessage message, MultipartFile file)
+  public ChatMessage uploadFile(HttpServletRequest request, int group_id, long time, String name, MultipartFile file, String profile_photo)
       throws IllegalStateException, IOException {
     FileUploadService service = new FileUploadService();
     Files filepath = service.uploadFile(file, request);
 
+    ChatMessage message = new ChatMessage();
     message.setUsername("fileServer");
+    message.setName(name);
+    message.setContent(file.getOriginalFilename());
+    message.setTime(time);
+    message.setGroup_id(group_id);
     message.setFilepath(filepath.getFilename());
+    message.setProfile_photo(profile_photo);
 
     return message;
   }
