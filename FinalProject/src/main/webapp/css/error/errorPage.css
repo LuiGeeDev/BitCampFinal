@@ -53,7 +53,8 @@ body {
 }
 
 .logotext {
-  height: 63px;
+  height: 55px;
+  margin-left:5px;
 }
 
 .main-btn {

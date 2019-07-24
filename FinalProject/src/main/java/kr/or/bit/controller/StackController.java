@@ -57,6 +57,15 @@ public class StackController {
   private BoardService boardService;
   @Autowired
   private MypageService mypageService;
+  
+  /*
+   * StackController
+   * 페이징 처리: Pager 클래스
+   * 검색 처리 : 해당 파라메터로 boardSearch, criteria를 받음 
+   * 태그 기능 :
+   * 비동기 처리 : @Responsebody 
+   * 
+   */
 
   @GetMapping("")
   public String listPage(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model)
@@ -236,20 +245,5 @@ public class StackController {
     qnaDao.chooseAnswer(comment_id, article_id);
     return "redirect:/stack/content?id=" + article_id;
   }
-  
-  @GetMapping("/error")
-  public String errortest() {
-    return "/error/errorPage404";
-  }
-  
-  @GetMapping("/error2")
-  public String errortest2() {   
-    return "/error/errorPage500";
-  }
-  
-  @GetMapping("/error3")
-  public String errortest3() {   
-    return "/error/errorPage403";
-  }
-  
+
 }
