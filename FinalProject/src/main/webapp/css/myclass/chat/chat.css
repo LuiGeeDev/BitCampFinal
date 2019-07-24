@@ -1,5 +1,5 @@
-body{
-  font-family:'Nanum Gothic';
+body {
+  font-family: "Nanum Gothic";
 }
 
 .chat-room {
@@ -61,7 +61,7 @@ body{
   display: none;
 }
 
-#file+label {
+#file + label {
   vertical-align: top;
   position: absolute;
   font-size: 42px;
@@ -75,12 +75,12 @@ body{
   cursor: pointer;
 }
 
-#file+label:hover {
+#file + label:hover {
   font-size: 45px;
   padding-right: 0;
 }
 
-#file+label:active {
+#file + label:active {
   font-size: 42px;
   padding-right: 2px;
 }
@@ -116,14 +116,19 @@ body{
 }
 
 .chat-content-file svg {
-  color: #F39C20;
+  color: #f39c20;
 }
 
 .chat-content-file:hover svg {
   transform: scale(1.1);
-  transition: .2s;
+  transition: 0.2s;
 }
 
 .chat-content-file:active svg {
   transform: scale(0.9);
+}
+
+.chat-message img {
+  width: 40px;
+  height: 40px;
 }
