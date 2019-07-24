@@ -316,18 +316,27 @@ public class MyClassController {
     Project newProject = projectDao.selectRecentProject(course_id);
     List<ProjectMember> leaderList = new ArrayList<>();
     List<ProjectMember> students = project.getStudents();
+    
     for (ProjectMember pm : students) {
       if (pm.isLeader()) {
         leaderList.add(pm);
       }
     }
+    
     for (ProjectMember leader : leaderList) {
       Group group = new Group();
       group.setGroup_no(leader.getGroup());
       group.setLeader_name(leader.getUsername());
       group.setProject_id(newProject.getId());
       groupDao.insertGroup(group);
+      
+      Board board = new Board();
+      board.setBoard_name("트러블슈팅" + newProject.getSeason() + group.getId());
+      board.setBoardtype(6);
+      board.setCourse_id(course_id);
+      boardDao.insertBoard(board);
     }
+    
     for (ProjectMember member : students) {
       int group_no = member.getGroup();
       String username = member.getUsername();
@@ -337,13 +346,7 @@ public class MyClassController {
       newMember.setUsername(username);
       groupMemberDao.insertGroupMember(newMember);
     }
-    for (int i = 1; i <= leaderList.size(); i++) {
-      Board board = new Board();
-      board.setBoard_name("트러블슈팅" + newProject.getSeason() + i);
-      board.setBoardtype(6);
-      board.setCourse_id(course_id);
-      boardDao.insertBoard(board);
-    }
+    
     Schedule schedule = new Schedule();
     schedule.setStart(newProject.getStart_date());
     schedule.setEnd(newProject.getEnd_date());

@@ -48,13 +48,14 @@ public class ProjectController {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     TroubleShootingDao troubleShootingDao = sqlSession.getMapper(TroubleShootingDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-    List<Timeline> timelineList = timelineDao.selectTimelineByGroupId(group_id);
     ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     StackDao stackDao = sqlSession.getMapper(StackDao.class);
+    
+    List<Timeline> timelineList = timelineDao.selectTimelineByGroupId(group_id);
     Group group = groupDao.selectGroupById(group_id);
     List<Article> troubleShootingList = articleDao.selectAllArticleByBoardId(
         boardDao.selectTroubleShootingBoard(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id(),
-            projectDao.selectProject(group.getProject_id()).getSeason(), group.getGroup_no()).getId());
+            projectDao.selectProject(group.getProject_id()).getSeason(), group.getId()).getId());
     for (Article article : troubleShootingList) {
       article.setOption(troubleShootingDao.selectTroubleShootingByArticleId(article.getId()));
       article.setTags(stackDao.selectTagList(article.getId()));
