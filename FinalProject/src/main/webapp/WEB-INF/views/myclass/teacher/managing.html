@@ -84,7 +84,8 @@
             <div class="card">
               <div class="card-content">
                 <p class="title">최근과제</p>
-                <div th:if="${homeworkarticle.title != null}">
+                <!-- <div th:if="${homeworkarticle.title != null}"> -->
+                <div th:if="${homeworkarticle != null}">
                   <div class="homework-content">
                     <span class="homework-title"
                       th:text="${homeworkarticle.title}"></span> <span>
@@ -99,8 +100,9 @@
                       과제 확인하러 가기</button>
                   </div>
                 </div>
-                <div th:if="${homeworkarticle.title == null}">
-                  <div>등록된 과제가 없습니다</div>
+                <!-- <div th:if="${homeworkarticle.title == null}"> -->
+                <div th:if="${homeworkarticle == null}">
+                  <div class="homework-content">등록된 과제가 없습니다</div>
                 </div>
               </div>
             </div>
@@ -110,8 +112,13 @@
               <div class="card-content">
                 <p class="title">최근 이슈</p>
                 <div class="issue-content">
-                  <span th:text="${recentQanArticle.title}">??????????????</span> <span >3조 권지예</span><br />
-                  <button class="btn btn-primary">이슈 확인하러 가기</button>
+                  <div th:if="${recentQanArticle != null}">
+                    <span th:text="${recentQanArticle.title}">??????????????</span> <span >3조 권지예</span><br />
+                    <button class="btn btn-primary">이슈 확인하러 가기</button>
+                  </div>
+                  <div th:if="${recentQanArticle == null}">
+                    최근 이슈가 없습니다!
+                  </div>
                 </div>
               </div>
             </div>
