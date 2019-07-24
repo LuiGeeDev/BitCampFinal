@@ -26,6 +26,10 @@ import kr.or.bit.model.Group;
 import kr.or.bit.model.Timeline;
 import kr.or.bit.utils.Helper;
 
+/*
+ * 내 클래스 -> 내 프로젝트에 관련된 메서드를 포함한 컨트롤러 
+ * */
+
 @Controller
 @RequestMapping("myclass/project")
 public class ProjectController {

@@ -27,6 +27,10 @@ import kr.or.bit.service.MailService;
 import kr.or.bit.utils.Helper;
 import kr.or.bit.utils.Pager;
 
+/*
+ * 학원관리 탭에 관련된 CRUD를 제공하는 컨트롤러
+ * */
+
 @Controller
 @RequestMapping("/manage")
 public class ManageController {
@@ -60,6 +64,7 @@ public class ManageController {
 		return "manage/course";
 	}
 
+	//강사생성 -> 중복 ID 체크
 	@PostMapping("/check/id")
 	public @ResponseBody boolean checkIdDuplicates(String username) {
 		MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
@@ -67,6 +72,7 @@ public class ManageController {
 		return (member != null);
 	}
 
+	//강사생성 + 가입이메일 전송
 	@PostMapping("/create/teacher")
 	public String createNewTeacher(Member member) throws MessagingException {
 		MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
@@ -76,6 +82,7 @@ public class ManageController {
 		return "redirect:/manage/course";
 	}
 
+	//강의 생성
 	@PostMapping("/createClass")
 	public String createClass(Course course, @RequestParam(required = true) int people, @RequestParam int teacher_id,
 			Model model) {
@@ -95,6 +102,7 @@ public class ManageController {
 		return "manage/students";
 	}
 
+	//조건에 맞는 학생 검색
 	@PostMapping("/students")
 	public String manageStudentSearch(String role, int enabled, int course_id, String stringColumn,
 			@RequestParam(defaultValue = "null") String stringValue, Model model) {
@@ -129,6 +137,7 @@ public class ManageController {
 		return "manage/students";
 	}
 
+	//통계
 	@GetMapping("/chart")
 	public String memberChartPage(Model model) {
 	  ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);

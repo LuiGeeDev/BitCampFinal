@@ -23,6 +23,9 @@ import kr.or.bit.model.Project;
 import kr.or.bit.model.Timeline;
 import kr.or.bit.utils.Helper;
 
+/*
+ * 메인페이지 관련 메서드를 제공하는 컨트롤러 
+ * */
 @Controller
 public class HomeController {
   private final int STACK_BOARD_ID = 1;

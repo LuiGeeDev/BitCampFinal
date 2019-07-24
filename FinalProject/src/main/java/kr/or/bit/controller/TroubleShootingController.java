@@ -21,7 +21,9 @@ import kr.or.bit.model.Comment;
 import kr.or.bit.model.Group;
 import kr.or.bit.model.Tag;
 import kr.or.bit.service.TroubleShootingService;
-
+/*
+ * 내 클래스 -> 트러블슈팅 게시판에 관련된 메서드를 포함한 컨트롤러 
+ * */
 @Controller
 @RequestMapping("/myclass/project/troubleshooting")
 public class TroubleShootingController {
