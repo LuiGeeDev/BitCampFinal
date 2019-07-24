@@ -66,6 +66,10 @@ import kr.or.bit.service.TagService;
 import kr.or.bit.utils.Helper;
 import kr.or.bit.utils.Pager;
 
+/*
+ * 내 클래스 탭에 관련된 모든 메서드를 포함한 컨트롤러 
+ * */
+
 @Controller
 @RequestMapping("/myclass")
 public class MyClassController {
@@ -88,6 +92,7 @@ public class MyClassController {
   @Autowired
   private MypageService mypageService;
 
+  //내 클래스 메인
   @GetMapping("")
   public String mainPage(Model model) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
@@ -124,6 +129,7 @@ public class MyClassController {
     return "myclass/home";
   }
 
+  //내 클래스 -> 질문게시판
   @GetMapping("/qna")
   public String qnaPage(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model)
       throws Exception {
@@ -155,6 +161,7 @@ public class MyClassController {
     return "myclass/qna/home";
   }
 
+  //내 클래스 -> 질문게시판 글쓰기 페이지 
   @GetMapping("/qna/write")
   public String writeQna(Model model) {
     StackDao stackdao = sqlSession.getMapper(StackDao.class);
@@ -181,6 +188,7 @@ public class MyClassController {
     return "redirect:/myclass/qna";
   }
 
+  //내 클래스 -> 질문게시판 글 내용 
   @GetMapping("/qna/content")
   public String GetQnaContent(int id, Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
@@ -206,6 +214,7 @@ public class MyClassController {
     return "myclass/qna/content";
   }
 
+  //내 클래스 -> 질문게시판 글 수정 
   @GetMapping("/qna/edit")
   public String editQna(int id, Model model) {
     StackDao stackdao = sqlSession.getMapper(StackDao.class);
@@ -227,6 +236,7 @@ public class MyClassController {
     return "redirect:/myclass/qna";
   }
 
+  //내 클래스 -> 질문게시판 글 삭제
   @GetMapping("/qna/delete")
   public String deleteQna(int id) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
@@ -263,6 +273,7 @@ public class MyClassController {
     return "redirect:/myclass/qna/content?id=" + article_id;
   }
 
+  //내 클래스 -> 우리반 관리 -> 프로젝트 생성 페이지
   @GetMapping("/create/project")
   public String projectPage(Model model) {
     String teacherName = Helper.userName();
@@ -276,6 +287,17 @@ public class MyClassController {
     return "myclass/teacher/create/project";
   }
 
+  
+  /**
+   * 프로젝트 생성
+   * 
+   *  1. 각 조에 조장 지정
+   *  2. 각 조에 조원 추가
+   *  3. 각 조에 프로젝트 시작을 알리는 일정 추가
+   *  4. 각 조에 프로젝트 시작을 알리는 타임라인 추가
+   *  
+   *  Transaction으로 작업 하나라도 오류가 생기면 rollback 
+   */
   @PostMapping("/create/project")
   @Transactional
   public String createProject(@RequestBody Project project) {
@@ -341,6 +363,7 @@ public class MyClassController {
     return "redirect:/myclass/setting";
   }
 
+  //내 클래스 -> 우리반 관리 -> 게시판생성
   @GetMapping("/create/board")
   public String boardPage(Model model) {
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
@@ -360,6 +383,7 @@ public class MyClassController {
     boardService.decideBoardAddOrRemove(boardAddRemove);
   }
 
+  //내 클래스 -> 과제제출 게시판
   @GetMapping("/homework")
   public String homework(@RequestParam(defaultValue = "1") int page, String boardSearch, Model model,
       HttpServletRequest request) {

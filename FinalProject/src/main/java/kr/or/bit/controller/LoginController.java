@@ -16,6 +16,9 @@ import kr.or.bit.dao.MemberDao;
 import kr.or.bit.model.Member;
 import kr.or.bit.service.MailService;
 
+/*
+ * 로그인 페이지에 관련된 메서드를 포함한 컨트롤러
+ * */
 @Controller
 public class LoginController {
   @Autowired

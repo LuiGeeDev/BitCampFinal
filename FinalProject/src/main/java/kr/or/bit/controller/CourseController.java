@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.or.bit.dao.CourseDao;
 import kr.or.bit.model.Course;
 
+/**
+ * 강의에 대한 CRUD를 제공하는 컨트롤러
+ *
+ */
+
 @Controller
 public class CourseController {
 

@@ -21,6 +21,12 @@ import kr.or.bit.model.Member;
 import kr.or.bit.model.Timeline;
 import kr.or.bit.utils.Helper;
 
+/*
+ * Vue.js - Axios에서 받는 요청을 처리하는 컨트롤러 
+ * 
+ * 내 클래스 -> 프로젝트 게시판 -> 각 조에 대한 체크리스트 CRUD 정보
+ * 
+ * */
 @RestController
 @RequestMapping(path = "/axios")
 public class AxiosContoller {

@@ -30,6 +30,11 @@ import kr.or.bit.service.BoardService;
 import kr.or.bit.service.MypageService;
 import kr.or.bit.utils.Helper;
 import kr.or.bit.utils.Pager;
+/*
+ * 일반게시판에 대한 CRUD 제공하는 컨트롤러
+ * */
+
+
 
 @Controller
 @RequestMapping("/myclass/board")

@@ -13,6 +13,10 @@ import kr.or.bit.dao.MessageDao;
 import kr.or.bit.model.Message;
 import kr.or.bit.utils.Helper;
 
+/*
+ * 쪽지 페이지에 관련된  메서드를 포함한 컨트롤러
+ * */
+
 @Controller
 public class MessageController {
   @Autowired

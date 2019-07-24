@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import kr.or.bit.model.Schedule;
 import kr.or.bit.service.ScheduleService;
+/*
+ * 풀캘린더 일정에 관련된 CRUD함수를 포함한 컨트롤러 
+ * */
 
 @Controller
 @RequestMapping("/myclass/schedule")

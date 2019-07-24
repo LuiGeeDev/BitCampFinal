@@ -55,6 +55,7 @@ public class AjaxController {
   @Autowired
   private MypageService mypageService;
 
+  //내 클래스  채팅
   @PostMapping("/chat/file")
   public ChatMessage uploadFile(HttpServletRequest request, int group_id, long time, String name, MultipartFile file)
       throws IllegalStateException, IOException {
@@ -72,6 +73,7 @@ public class AjaxController {
     return message;
   }
 
+  //메인페이지 뉴스 불러오기
   @PostMapping("/news")
   public String getNews() {
     NewsService service = new NewsService();
@@ -79,6 +81,7 @@ public class AjaxController {
     return news;
   }
 
+  //마이페이지 쪽지
   @PostMapping("/message")
   public Message getMessage(int id) {
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
@@ -108,6 +111,7 @@ public class AjaxController {
     return "redirect:/message";
   }
 
+  //클래스 생성에서 날짜 기간동안 빈 강의실을 검색
   @PostMapping("/classroom")
   public List<Classroom> getClassroom(Date start_date, @RequestParam(defaultValue = "1970-01-01") Date end_date) {
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
@@ -115,6 +119,7 @@ public class AjaxController {
     return classroomList;
   }
 
+  //클래스 생성에서 날짜 기간동안 강의가 없는 강사를 검색
   @PostMapping("/classroom/teacher")
   public List<Member> getTeacher(Date start_date, @RequestParam(defaultValue = "1970-01-01") Date end_date) {
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
@@ -122,17 +127,20 @@ public class AjaxController {
     return teacherList;
   }
 
+  //게시글의 추천기능
   @PostMapping("/vote")
   public Map<String, Object> voteVideoArticle(int articleId) {
     return articleVoteService.insertVote(articleId, Helper.userName());
   }
 
+  //비디오게시판 비동기 스크롤
   @PostMapping("/video/scroll")
   public List<Article> getNextVideoArticles(int article_id) {
     List<Article> list = articleService.selectArticlesOnNextPage(2, article_id);
     return list;
   }
 
+  //알림 읽음 표시
   @GetMapping("/notification/checked")
   public void notificationChecked() {
     NotificationDao notificationDao = sqlSession.getMapper(NotificationDao.class);
@@ -140,6 +148,7 @@ public class AjaxController {
     notificationDao.checkAllNotification(username);
   }
 
+  //회원관리에서 회원 활성화/비활성화 관리
   @PostMapping("/manage/enabledUpdate")
   public String updateMemberEnabled(String username, String enabled) {
     ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
@@ -153,6 +162,7 @@ public class AjaxController {
     return "redirect:/manage/students";
   }
 
+  //게시글 북마크
   @PostMapping("/bookmark")
   public Map<String, Object> bookmarkStackArticle(int article_id) {
     return mypageService.insertBookmark(article_id, Helper.userName());
@@ -182,6 +192,7 @@ public class AjaxController {
 
   }
 
+  //강의관리 비동기 페이징
   @GetMapping("/manage/course/paging")
   public Map<String, Object> paging(int page) {
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
@@ -199,6 +210,7 @@ public class AjaxController {
     return returnMap;
   }
 
+  //회원관리 - 회원검색
   @GetMapping("/manage/students/search")
   public Map<String, Object> search(@RequestParam String role, int course, int enabled) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
