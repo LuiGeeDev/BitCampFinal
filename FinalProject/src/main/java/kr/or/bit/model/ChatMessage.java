@@ -8,6 +8,16 @@ public class ChatMessage {
   private int group_id;
   private String filepath;
 
+  private String profile_photo;
+
+  public String getProfile_photo() {
+    return profile_photo;
+  }
+
+  public void setProfile_photo(String profile_photo) {
+    this.profile_photo = profile_photo;
+  }
+
   public String getFilepath() {
     return filepath;
   }
