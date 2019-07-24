@@ -22,6 +22,7 @@ import kr.or.bit.model.Board;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.Member;
+import kr.or.bit.utils.Helper;
 import kr.or.bit.utils.Pager;
 
 @Service
@@ -39,7 +40,7 @@ public class MypageService {
   }
   
   public List<Article> selectAllMyArticlesByUsername(Pager pager,String username) {
-    
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     MypageDao mypageDao = sqlSession.getMapper(MypageDao.class);
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
     List<Article> articleList = mypageDao.selectEnableArticleByUsername2(pager,username);
@@ -47,6 +48,7 @@ public class MypageService {
       article.setTimeLocal(article.getTime().toLocalDateTime());
       List<Comment> commentList = commentdao.selectAllComment(article.getId());
       article.setCommentlist(commentList);
+      article.setBoardtype(boardDao.selectBoardById(article.getBoard_id()).getBoardtype());
     }
     
     return articleList;
