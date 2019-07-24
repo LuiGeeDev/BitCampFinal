@@ -587,11 +587,15 @@ public class MyClassController {
     }
 
     Article homeworkarticle = articledao.selectRecentHomework(username);
-    Homework homework = homeworkdao.selectHomeworkByArticleId(homeworkarticle.getId());
-    homeworkarticle.setOption(homework);
+    System.out.println("homeworkArticle : "+articledao.selectRecentHomework(username));
+    System.out.println("homeworkArticle : "+homeworkarticle);
+    if(homeworkarticle != null) {
+      Homework homework = homeworkdao.selectHomeworkByArticleId(homeworkarticle.getId());
+      homeworkarticle.setOption(homework);
+      List<Article> homeworkarticlere = articledao.selectHomeworkReplies(homeworkarticle.getId());
+      model.addAttribute("homeworkarticlere", homeworkarticlere);
+    }
     List<Article> recentStackArticle = articledao.selectRecentStackbyCourse(course.getId());
-    List<Article> homeworkarticlere = articledao.selectHomeworkReplies(homeworkarticle.getId());
-
     for (Article a : recentStackArticle) {
       a.setWriter(memberdao.selectMemberByUsername(a.getUsername()));
       a.setTimeLocal(a.getTime().toLocalDateTime());
@@ -605,7 +609,6 @@ public class MyClassController {
     model.addAttribute("course_percent", (int) ((float) (cDay.getDays() / (float) (ccDay.getDays())) * 100));
     model.addAttribute("groups", groups);
     model.addAttribute("homeworkarticle", homeworkarticle);
-    model.addAttribute("homeworkarticlere", homeworkarticlere);
     model.addAttribute("stackarticle", recentStackArticle);
     return "myclass/teacher/managing";
   }
