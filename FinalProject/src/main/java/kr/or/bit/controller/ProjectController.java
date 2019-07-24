@@ -21,8 +21,10 @@ import kr.or.bit.dao.StackDao;
 import kr.or.bit.dao.TimelineDao;
 import kr.or.bit.dao.TroubleShootingDao;
 import kr.or.bit.model.Article;
+import kr.or.bit.model.Board;
 import kr.or.bit.model.Checklist;
 import kr.or.bit.model.Group;
+import kr.or.bit.model.Project;
 import kr.or.bit.model.Timeline;
 import kr.or.bit.utils.Helper;
 
@@ -48,13 +50,14 @@ public class ProjectController {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
     TroubleShootingDao troubleShootingDao = sqlSession.getMapper(TroubleShootingDao.class);
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-    List<Timeline> timelineList = timelineDao.selectTimelineByGroupId(group_id);
     ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     StackDao stackDao = sqlSession.getMapper(StackDao.class);
+    
+    List<Timeline> timelineList = timelineDao.selectTimelineByGroupId(group_id);
     Group group = groupDao.selectGroupById(group_id);
-    List<Article> troubleShootingList = articleDao.selectAllArticleByBoardId(
-        boardDao.selectTroubleShootingBoard(memberDao.selectMemberByUsername(Helper.userName()).getCourse_id(),
-            projectDao.selectProject(group.getProject_id()).getSeason(), group.getGroup_no()).getId());
+    Project project = projectDao.selectProject(group.getProject_id());
+    Board tsBoard = boardDao.selectTroubleShootingBoard(project.getCourse_id(), project.getSeason(), group.getId());
+    List<Article> troubleShootingList = articleDao.selectAllArticleByBoardId(tsBoard.getId());
     for (Article article : troubleShootingList) {
       article.setOption(troubleShootingDao.selectTroubleShootingByArticleId(article.getId()));
       article.setTags(stackDao.selectTagList(article.getId()));

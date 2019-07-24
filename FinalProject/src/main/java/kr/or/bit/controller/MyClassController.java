@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.ArticleDao;
@@ -316,18 +318,27 @@ public class MyClassController {
     Project newProject = projectDao.selectRecentProject(course_id);
     List<ProjectMember> leaderList = new ArrayList<>();
     List<ProjectMember> students = project.getStudents();
+    
     for (ProjectMember pm : students) {
       if (pm.isLeader()) {
         leaderList.add(pm);
       }
     }
+    
     for (ProjectMember leader : leaderList) {
       Group group = new Group();
       group.setGroup_no(leader.getGroup());
       group.setLeader_name(leader.getUsername());
       group.setProject_id(newProject.getId());
       groupDao.insertGroup(group);
+      
+      Board board = new Board();
+      board.setBoard_name("트러블슈팅" + newProject.getSeason() + group.getId());
+      board.setBoardtype(6);
+      board.setCourse_id(course_id);
+      boardDao.insertBoard(board);
     }
+    
     for (ProjectMember member : students) {
       int group_no = member.getGroup();
       String username = member.getUsername();
@@ -337,13 +348,7 @@ public class MyClassController {
       newMember.setUsername(username);
       groupMemberDao.insertGroupMember(newMember);
     }
-    for (int i = 1; i <= leaderList.size(); i++) {
-      Board board = new Board();
-      board.setBoard_name("트러블슈팅" + newProject.getSeason() + i);
-      board.setBoardtype(6);
-      board.setCourse_id(course_id);
-      boardDao.insertBoard(board);
-    }
+    
     Schedule schedule = new Schedule();
     schedule.setStart(newProject.getStart_date());
     schedule.setEnd(newProject.getEnd_date());
@@ -379,6 +384,7 @@ public class MyClassController {
   }
 
   @PostMapping("/create/board")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   public void createBoard(@RequestBody BoardAddRemove boardAddRemove) {
     boardService.decideBoardAddOrRemove(boardAddRemove);
   }
@@ -587,11 +593,13 @@ public class MyClassController {
     }
 
     Article homeworkarticle = articledao.selectRecentHomework(username);
-    Homework homework = homeworkdao.selectHomeworkByArticleId(homeworkarticle.getId());
-    homeworkarticle.setOption(homework);
+    if(homeworkarticle != null) {
+      Homework homework = homeworkdao.selectHomeworkByArticleId(homeworkarticle.getId());
+      homeworkarticle.setOption(homework);
+      List<Article> homeworkarticlere = articledao.selectHomeworkReplies(homeworkarticle.getId());
+      model.addAttribute("homeworkarticlere", homeworkarticlere);
+    }
     List<Article> recentStackArticle = articledao.selectRecentStackbyCourse(course.getId());
-    List<Article> homeworkarticlere = articledao.selectHomeworkReplies(homeworkarticle.getId());
-
     for (Article a : recentStackArticle) {
       a.setWriter(memberdao.selectMemberByUsername(a.getUsername()));
       a.setTimeLocal(a.getTime().toLocalDateTime());
@@ -605,7 +613,6 @@ public class MyClassController {
     model.addAttribute("course_percent", (int) ((float) (cDay.getDays() / (float) (ccDay.getDays())) * 100));
     model.addAttribute("groups", groups);
     model.addAttribute("homeworkarticle", homeworkarticle);
-    model.addAttribute("homeworkarticlere", homeworkarticlere);
     model.addAttribute("stackarticle", recentStackArticle);
     return "myclass/teacher/managing";
   }

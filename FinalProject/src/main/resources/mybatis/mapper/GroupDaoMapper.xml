@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   group); void deleteGroup(); void updateGroup(); void selectAllLinkByGroup(); 
   List<Group> selectAllGroupByProject(); */ -->
 <mapper namespace="kr.or.bit.dao.GroupDao">
-  <insert id="insertGroup" parameterType="kr.or.bit.model.Group">
+  <insert id="insertGroup" parameterType="kr.or.bit.model.Group" useGeneratedKeys="true" keyProperty="id">
     insert into groups(group_no, leader_name, project_id)
     values(#{group_no}, #{leader_name}, #{project_id})
   </insert>
