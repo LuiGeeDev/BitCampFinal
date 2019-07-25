@@ -2,6 +2,7 @@ package kr.or.bit.service;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,9 +111,9 @@ public class MypageService {
     Course course = courseDao.selectCourse(user.getCourse_id());
     course.setEndDate(course.getEnd_date().toLocalDate());
     course.setStartDate(course.getStart_date().toLocalDate());
-    Period diff = Period.between(course.getStartDate(), course.getEndDate());
-    Period diff2 = Period.between(course.getStartDate(), LocalDate.now());
-    int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
+    long classPeriod = ChronoUnit.DAYS.between(course.getStartDate(), course.getEndDate());
+    long daysFromStart = ChronoUnit.DAYS.between(course.getStartDate(), LocalDate.now());
+    int completion = (int) Math.floor((float) daysFromStart / classPeriod * 100);
     
     return completion;
   }

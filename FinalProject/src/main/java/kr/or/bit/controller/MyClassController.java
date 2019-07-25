@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -107,20 +108,26 @@ public class MyClassController {
     course.setEndDate(course.getEnd_date().toLocalDate());
     course.setStartDate(course.getStart_date().toLocalDate());
     List<Article> recentHomework = homeworkDao.selectRecentHomeworkArticle(course.getId());
-    Period diff = Period.between(course.getStartDate(), course.getEndDate());
-    Period diff2 = Period.between(course.getStartDate(), LocalDate.now());
+    long classPeriod = ChronoUnit.DAYS.between(course.getStartDate(), course.getEndDate());
+    long daysFromStart = ChronoUnit.DAYS.between(course.getStartDate(), LocalDate.now());
     for (Article article : recentHomework) {
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
       article.setTimeLocal(article.getTime().toLocalDateTime());
       article.setOption(homeworkDao.selectHomeworkByArticleId(article.getId()));
+    }    
+    
+    int completion = (int) Math.floor((double) daysFromStart / classPeriod * 100);
+    if (completion > 100) {
+      completion = 100;
     }
-    int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
+    
     List<Article> recentArticles = articleDao.selectArticlesForClassMain(course.getId());
     for (Article article : recentArticles) {
       article.setBoardtype(boardDao.selectBoardById(article.getBoard_id()).getBoardtype());
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
       article.setTimeLocal(article.getTime().toLocalDateTime());
     }
+    
     model.addAttribute("recentHomework", recentHomework);
     model.addAttribute("course", course);
     model.addAttribute("recentArticles", recentArticles);
@@ -579,15 +586,13 @@ public class MyClassController {
     }
     course.setStartDate(course.getStart_date().toLocalDate());
     course.setEndDate(course.getEnd_date().toLocalDate());
-    Period ccDay = Period.between(course.getStartDate(), course.getEndDate());
-    Period cDay = Period.between(course.getStartDate(), LocalDate.now());
-    Period ddDay = null;
-    Period dDay = null;
+    long classPeriod = ChronoUnit.DAYS.between(course.getStartDate(), course.getEndDate());
+    long daysFromStart = ChronoUnit.DAYS.between(course.getStartDate(), LocalDate.now());
 
     if (project != null) {
-      ddDay = Period.between(project.getStartDateLocal(), project.getEndDateLocal());
-      dDay = Period.between(project.getStartDateLocal(), LocalDate.now());
-      model.addAttribute("project_percent", (int) ((float) (dDay.getDays() / (float) (ddDay.getDays())) * 100));
+      long projectPeriod = ChronoUnit.DAYS.between(project.getStartDateLocal(), project.getEndDateLocal());
+      long daysFromProjectStart = ChronoUnit.DAYS.between(project.getStartDateLocal(), LocalDate.now());
+      model.addAttribute("project_percent", (int) ((float) (daysFromProjectStart / projectPeriod)) * 100);
     }
 
     int boardid = boarddao.selectBoardIdByCourseId(member.getCourse_id());
@@ -616,7 +621,8 @@ public class MyClassController {
     model.addAttribute("disable", memberdao.getCountCourseMember(course.getId(), "disable"));
     model.addAttribute("all", memberdao.getCountCourseMember(course.getId(), "enable")
         + memberdao.getCountCourseMember(course.getId(), "disable"));
-    model.addAttribute("course_percent", (int) ((float) (cDay.getDays() / (float) (ccDay.getDays())) * 100));
+    model.addAttribute("course_percent", (int) ((float) daysFromStart / classPeriod) * 100);
+    System.out.println((int) ((float) daysFromStart / classPeriod) * 100);
     model.addAttribute("groups", groups);
     model.addAttribute("homeworkarticle", homeworkarticle);
     model.addAttribute("stackarticle", recentStackArticle);
