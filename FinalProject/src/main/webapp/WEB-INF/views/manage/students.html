@@ -365,7 +365,7 @@
                 "</div>";
               html += "<div class='member-list-role'>" + item.role + "</div>";
               html +=
-                "<div class='member-list-enabled'><i class='fas fa-circle " +
+                "<div class='member-list-enabled' id='" + item.username + "'><i class='fas fa-circle " +
                 (item.enabled == 1 ? "on'>" : "off'>") +
                 (item.enabled == 1 ? " 활성화</i></div>" : " 비활성</i></div>");
               html += "</div></div>";
