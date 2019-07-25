@@ -132,12 +132,6 @@ public class ManageController {
 		}
 
 		List<Course> courseList = courseDao.selectAllCourseList();
-		System.out.println("role:" + role);
-		System.out.println("enabled:" + enabled);
-		System.out.println("course_id: " + course_id);
-		System.out.println("stringColumn: " + stringColumn);
-		System.out.println("stringValue: " + stringValue);
-		System.out.println(memberList);
 		model.addAttribute("courseList", courseList);
 		model.addAttribute("memberList", memberList);
 		return "manage/students";
