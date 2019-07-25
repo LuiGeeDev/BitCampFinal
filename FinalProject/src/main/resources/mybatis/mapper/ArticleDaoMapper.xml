@@ -224,7 +224,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM board
     WHERE board_name = (SELECT
     CONCAT('트러블슈팅', p.season,
-    g.group_no)
+    #{group_id})
     FROM groups g
     LEFT JOIN project p
     ON g.project_id = p.id
@@ -340,7 +340,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                       WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, #{group_id})
                                           FROM groups g
                                           LEFT JOIN project p
-                                          ON g.project_id = p.id))
+                                          ON g.project_id = p.id
+                                          WHERE g.id = #{group_id}))
     AND ts.issue_closed = 0
     AND a.enable = 1
     <if test="criteria == 'title'">
@@ -423,7 +424,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                                           LEFT JOIN project p
                                           ON g.project_id = p.id
                                           WHERE g.id = #{group_id}))
-    AND ts.issue_closed = 0
+    AND ts.issue_closed = 1
     AND a.enable = 1
     <if test="criteria == 'title'">
       AND title like '%${word}%'
