@@ -14,8 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  */ 
  -->
 <mapper namespace="kr.or.bit.dao.MemberDao">
-  <insert id="insertMember"
-    parameterType="kr.or.bit.model.Member">
+  <insert id="insertMember" parameterType="kr.or.bit.model.Member">
     INSERT INTO member(username, password, enabled, course_id)
     VALUES(#{username}, #{password}, #{enabled}, #{course_id})
   </insert>
@@ -23,11 +22,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     { call MakeCourse(#{people}, #{teacher_id}, #{course_id},
     #{start_date}, #{password}) }
   </insert>
-  <update id="updateMember"
-    parameterType="kr.or.bit.model.Member">
+  <update id="updateMember" parameterType="kr.or.bit.model.Member">
     UPDATE member
-    SET password=#{password}, name=#{name}, email=#{email},
-    profile_photo=#{profile_photo}
+    SET password=#{password}, name=#{name}, email=#{email}, profile_photo=#{profile_photo}
     <if test="course_id != 0">
     	, course_id = #{course_id}
     </if>
@@ -48,15 +45,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     DELETE FROM member
     WHERE username=#{username}
   </delete>
-  <select id="selectAllMembers"
-    resultType="kr.or.bit.model.Member">
+  <select id="selectAllMembers" resultType="kr.or.bit.model.Member">
     SELECT username, password, name, email, profile_photo, course_id, group_id
     FROM MEMBER m
     LEFT JOIN GROUP_MEMBER g
     ON m.username = g.member_name
   </select>
-  <select id="selectStudentsList"
-    resultType="kr.or.bit.model.Member">
+  <select id="selectStudentsList" resultType="kr.or.bit.model.Member">
     SELECT m.username, m.password, m.name, m.email, m.profile_photo, course_id, group_id
     FROM member m
     LEFT JOIN authorities a
@@ -65,8 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ON m.username = g.member_name
     WHERE m.course_id = #{course_id} AND a.role = 'student'
   </select>
-  <select id="selectMemberByUsername"
-    resultType="kr.or.bit.model.Member">
+  <select id="selectMemberByUsername" resultType="kr.or.bit.model.Member">
     SELECT m.username, m.password, name, email, profile_photo, course_id, group_id, a.role
     FROM MEMBER m
     LEFT JOIN GROUP_MEMBER g
@@ -98,20 +92,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	SET role = "GRADUATE"
   	WHERE username=#{username} 
   </update>
-  <update id="updateMemberWithoutFile"
-    parameterType="kr.or.bit.model.Member">
+  <update id="updateMemberWithoutFile" parameterType="kr.or.bit.model.Member">
     UPDATE member
     SET password=#{password}, name=#{name}, email=#{email}
     WHERE username=#{username}
   </update>
-  <update id="updateMemberOnlyFile"
-  	parameterType="kr.or.bit.model.Member">
+  <update id="updateMemberOnlyFile" parameterType="kr.or.bit.model.Member">
   	UPDATE MEMBER
   	SET PROFILE_PHOTO =#{profile_photo}
   	WHERE USERNAME=#{username}
   </update>
-  
-  <select id="getCountCourseMember" resultType="int" >
+
+  <select id="getCountCourseMember" resultType="int">
     select count(enabled)
     from member
     where course_id=#{courseid}
@@ -124,34 +116,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       </when>
     </choose>
   </select>
-  
   <select id="selectMemberSearchByAjax" resultType="kr.or.bit.model.Member">
-  	SELECT m.username, m.name, a.role, enabled,c.course_name,c.end_date,profile_photo
+  	SELECT m.username, m.name, a.role, enabled, c.course_name, c.end_date, profile_photo
   	FROM member m join authorities a on m.username=a.username join course c on m.course_id = c.id
   	WHERE a.role=#{role} 
-  	<if test="enabled != 999">
+    <if test="enabled != 999">
   	and enabled=#{enabled} 
-  	</if>
-  	<if test="course_id != 999">
+    </if>
+    <if test="course_id != 999">
   	and course_id = #{course_id}
-  	</if>
+    </if>
   </select>
   <select id="countMemberSearchByAjax" resultType="Integer">
    	SELECT count(*)
   	FROM member m join authorities a on m.username=a.username
   	WHERE a.role=#{role} 
-  	<if test="enabled != 999">
+    <if test="enabled != 999">
   	and enabled=#{enabled} 
-  	</if>
-  	<if test="course_id != 999">
+    </if>
+    <if test="course_id != 999">
   	and course_id = #{course_id}
-  	</if>
+    </if>
   </select>
   <update id="updateEnabled">
   	update member 
   	set enabled = 1
   	where username = #{username};
-
   </update>
   <select id="selectAllStudent" resultType = "kr.or.bit.model.Member">
   	SELECT username, name, email, enabled, profile_photo, course_id

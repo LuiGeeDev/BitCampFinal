@@ -43,24 +43,24 @@ public class ManageController {
 
 	@GetMapping("/course")
 	public String manageHome(Model model, @RequestParam(defaultValue = "1") int page) {
-	  ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
-	  CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
-	  Pager pager = new Pager(page, courseDao.countEndCourseList());
-	  
-	  List<Member> teacherList = managerDao.selectTeacherList();
-	  List<Subject> subjectList = managerDao.selectSubjectList();
-	  List<Classroom> classroomList = managerDao.selectClassroomList();
-	  List<Course> currentCourseList = courseDao.selectCurrentCourseList();
-	  List<Course> openingCourseList = courseDao.selectOpeningCourseList();
-	  List<Course> endCourseList = courseDao.selectEndCourseList(pager);
-	  model.addAttribute("currentCourseList", currentCourseList);
-	  model.addAttribute("endCourseList", endCourseList);
-	  model.addAttribute("openingCourseList", openingCourseList);
-	  model.addAttribute("teacherList", teacherList);
-	  model.addAttribute("subjectList", subjectList);
-	  model.addAttribute("classroomList", classroomList);
-	  model.addAttribute("pager", pager);
-	  model.addAttribute("page", page);
+		ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
+		CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
+		Pager pager = new Pager(page, courseDao.countEndCourseList());
+
+		List<Member> teacherList = managerDao.selectTeacherList();
+		List<Subject> subjectList = managerDao.selectSubjectList();
+		List<Classroom> classroomList = managerDao.selectClassroomList();
+		List<Course> currentCourseList = courseDao.selectCurrentCourseList();
+		List<Course> openingCourseList = courseDao.selectOpeningCourseList();
+		List<Course> endCourseList = courseDao.selectEndCourseList(pager);
+		model.addAttribute("currentCourseList", currentCourseList);
+		model.addAttribute("endCourseList", endCourseList);
+		model.addAttribute("openingCourseList", openingCourseList);
+		model.addAttribute("teacherList", teacherList);
+		model.addAttribute("subjectList", subjectList);
+		model.addAttribute("classroomList", classroomList);
+		model.addAttribute("pager", pager);
+		model.addAttribute("page", page);
 		return "manage/course";
 	}
 
@@ -110,20 +110,20 @@ public class ManageController {
 		CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
 		List<Member> memberList = null;
 
-		if (enabled == 999 & course_id == 0 & stringValue.equals("null")) {
+		if (enabled == 999 & course_id == 999 & stringValue.equals("null")) {
 			memberList = managerDao.selectMembersByRole(role);
-		} else if (enabled == 999 & course_id == 0) {
+		} else if (enabled == 999 & course_id == 999) {
 			memberList = managerDao.selectMembersByRoleAndOneStringColumn(role, stringColumn, stringValue);
 		} else if (enabled == 999 & stringValue.equals("null")) {
 			memberList = managerDao.selectMembersByRoleAndOneIntColumn(role, "course_id", course_id);
-		} else if (course_id == 0 & stringValue.equals("null")) {
+		} else if (course_id == 999 & stringValue.equals("null")) {
 			memberList = managerDao.selectMembersByRoleAndOneIntColumn(role, "enabled", enabled);
 		} else if (stringValue.equals("null")) {
 			memberList = managerDao.selectMembersByRoleAndEnableAndCourseId(role, enabled, course_id);
 		} else if (enabled == 999) {
 			memberList = managerDao.selectMembersByRoleAndStringColumnAndIntColumn(role, stringColumn, stringValue,
 					"course_id", course_id);
-		} else if (course_id == 0) {
+		} else if (course_id == 999) {
 			memberList = managerDao.selectMembersByRoleAndStringColumnAndIntColumn(role, stringColumn, stringValue, "enabled",
 					enabled);
 		} else {
@@ -132,6 +132,12 @@ public class ManageController {
 		}
 
 		List<Course> courseList = courseDao.selectAllCourseList();
+		System.out.println("role:" + role);
+		System.out.println("enabled:" + enabled);
+		System.out.println("course_id: " + course_id);
+		System.out.println("stringColumn: " + stringColumn);
+		System.out.println("stringValue: " + stringValue);
+		System.out.println(memberList);
 		model.addAttribute("courseList", courseList);
 		model.addAttribute("memberList", memberList);
 		return "manage/students";
@@ -140,27 +146,27 @@ public class ManageController {
 	//통계
 	@GetMapping("/chart")
 	public String memberChartPage(Model model) {
-	  ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
-	  CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
-	  
-	  List<Course> chartOne = managerDao.countCourseBySubject();
-    int courseCount = managerDao.countAllCourse();
-    for(Course course : chartOne) {
-      double result = (double)course.getCount()/(double)courseCount;
-      course.setDivisionResult(Math.round(result*1000)/10.0);
-    }
-    
-    List<Course> chartTwo = managerDao.countEnableMember();
-    List<Course> chartThree = managerDao.articleWriteRank();
-    List<Comment> chartFour = managerDao.commentWriteRank();
-    List<Course> courseList = courseDao.selectAllCourseList();
-    
-    model.addAttribute("chartTwo", chartTwo);
-    model.addAttribute("chartOne", chartOne);
-    model.addAttribute("chartThree", chartThree);
-    model.addAttribute("chartFour", chartFour);
-    model.addAttribute("courseList", courseList);
-	  return "manage/chart";
+		ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
+		CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
+
+		List<Course> chartOne = managerDao.countCourseBySubject();
+		int courseCount = managerDao.countAllCourse();
+		for (Course course : chartOne) {
+			double result = (double) course.getCount() / (double) courseCount;
+			course.setDivisionResult(Math.round(result * 1000) / 10.0);
+		}
+
+		List<Course> chartTwo = managerDao.countEnableMember();
+		List<Course> chartThree = managerDao.articleWriteRank();
+		List<Comment> chartFour = managerDao.commentWriteRank();
+		List<Course> courseList = courseDao.selectAllCourseList();
+
+		model.addAttribute("chartTwo", chartTwo);
+		model.addAttribute("chartOne", chartOne);
+		model.addAttribute("chartThree", chartThree);
+		model.addAttribute("chartFour", chartFour);
+		model.addAttribute("courseList", courseList);
+		return "manage/chart";
 	}
 
 }
