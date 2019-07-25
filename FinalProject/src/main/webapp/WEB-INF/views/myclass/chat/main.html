@@ -119,8 +119,9 @@
           } else {
             makeNewMessage(message);
           }
+
+          $(".chat-room .ss-content")[0].scrollTop = $(".chat-room .ss-content")[0].scrollHeight;
         });
-        $(".chat-room .ss-content")[0].scrollTop = $(".chat-room .ss-content")[0].scrollHeight;
       }
 
       function showOldMessages(messageList) {
