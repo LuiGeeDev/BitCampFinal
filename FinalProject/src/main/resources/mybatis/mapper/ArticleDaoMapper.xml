@@ -330,8 +330,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   <select id="selectAllIssuesOpened"
     resultType="kr.or.bit.model.Article">
-    SELECT a.id, title, content, time, updated_time, view_count,
-    original_id, enable, level, username, board_id
+    SELECT a.id, a.title, a.content, a.time, a.updated_time, a.view_count,
+    a.original_id, a.enable, a.level, a.username, a.board_id
     FROM ARTICLE a
     LEFT JOIN troubleshooting ts
     ON a.id = ts.article_id
@@ -340,7 +340,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                       WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, #{group_id})
                                           FROM groups g
                                           LEFT JOIN project p
-                                          ON g.project_id = p.id)
+                                          ON g.project_id = p.id))
     AND ts.issue_closed = 0
     AND a.enable = 1
     <if test="criteria == 'title'">
@@ -366,7 +366,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                       WHERE board_name = (SELECT CONCAT('트러블슈팅', p.season, #{group_id})
                                           FROM groups g
                                           LEFT JOIN project p
-                                          ON g.project_id = p.id)
+                                          ON g.project_id = p.id
+                                          WHERE g.id = #{group_id}))
     AND ts.issue_closed = 1
     AND a.enable = 1
     <if test="criteria == 'title'">
