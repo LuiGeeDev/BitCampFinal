@@ -103,6 +103,7 @@
 
             if (message.username === "fileServer") {
               makeFileMessage(message);
+              $(".chat-room .ss-content")[0].scrollTop = $(".chat-room .ss-content")[0].scrollHeight;
               return;
             }
 
