@@ -164,8 +164,9 @@
   	  const name = $(this).children(".member-list-name").text();
   	  const role = $(this).children(".member-list-role").text();
   	  const enabled = $(this).children(".member-list-enabled").html();
-  	  
   	  const defaultImg = "/resources/images/default.png";
+  	  
+  	  
   	  if(profile_photo.trim() == "default.png" || profile_photo == "") {
   	    $("#profile_photo").attr("src",defaultImg);
   	  } else {
@@ -238,9 +239,25 @@
   	      $(".list.cardShadow").empty();
   	      $(".select-list-count").text("검색결과 : "+data.memberCount+"명")
   	      $.each(data.searchList , function(index, item){
+            const date = new Date(item.end_date);
+            let minutes = date.getMinutes();
+            minutes = (minutes < 10) ? "0" + minutes : minutes;
+            let hours = date.getHours() <= 12 ? date.getHours() : date.getHours() -12;
+            hours = hours < 10 ? "0" +  hours : hours;
+            let newHours = date.getHours();
+            newHours = (newHours < 10) ? "0" + newHours : newHours;
+            let getdate = date.getDate();
+            getdate = (getdate < 10) ? "0" + getdate : getdate;
+            let getmonth = date.getMonth() + 1;
+            getmonth = (getmonth < 10) ? "0" + getmonth : getmonth;
+            const timedate = `${date.getFullYear()}-` + getmonth +`-` + getdate;
+  	        
+  	        
+  	        
+  	        
   	        var html = "<div class='member-list-container' ><div class='member-list'>"
   	        html+="<div class='hidden' id='member-list-course_name'>"+item.course_name+"</div>"
-  	        html+="<div class='hidden' id='member-list-end_date'>"+item.end_date+"</div>"
+  	        html+="<div class='hidden' id='member-list-end_date'>"+ timedate +"</div>"
   	        html+="<div class='hidden' id='member-list-profile_photo'>"+item.profile_photo+"</div>"
   	        html+="<div class='member-list-username'>" + item.username +"</div>"
   	        html+="<div class='member-list-name'>" + (item.name == null ? "" : item.name) + "</div>"
