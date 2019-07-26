@@ -23,7 +23,9 @@ import kr.or.bit.service.BoardService;
 import kr.or.bit.service.CommentService;
 import kr.or.bit.service.MypageService;
 import kr.or.bit.utils.Helper;
-
+/*
+ * 인터넷 강의 게시판에 관련된 메서드를 포함한 컨트롤러 
+ * */
 @Controller
 @RequestMapping("/video")
 public class VideoController {

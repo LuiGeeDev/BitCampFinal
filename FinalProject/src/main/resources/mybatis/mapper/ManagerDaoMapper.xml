@@ -13,25 +13,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  * 
  */ 
  -->
- <mapper namespace="kr.or.bit.dao.ManagerDao">
- 	<select id="selectMembersByRole" resultType="kr.or.bit.model.Member">
+<mapper namespace="kr.or.bit.dao.ManagerDao">
+	<select id="selectMembersByRole" resultType="kr.or.bit.model.Member">
  		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role, c.course_name, c.end_date
 		FROM member m JOIN authorities a 
 		ON m.username = a.username
 		JOIN course c
 		ON m.course_id=c.id
 		WHERE a.role = #{role}
- 	</select>
- 	<select id="selectMembersByRoleAndOneIntColumn" resultType="kr.or.bit.model.Member">
+	</select>
+	<select id="selectMembersByRoleAndOneIntColumn" resultType="kr.or.bit.model.Member">
  		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role, c.course_name, c.end_date
 		FROM member m JOIN authorities a 
 		ON m.username = a.username
 		JOIN course c
 		ON m.course_id=c.id
 		WHERE a.role = #{role} 
-		AND   m.${intColumn} = #{intValue}
- 	</select>
- 	<select id="selectMembersByRoleAndOneStringColumn" resultType="kr.or.bit.model.Member">
+		AND m.${intColumn} = #{intValue}
+	</select>
+	<select id="selectMembersByRoleAndOneStringColumn" resultType="kr.or.bit.model.Member">
  		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role, c.course_name, c.end_date
 		FROM member m JOIN authorities a 
 		ON m.username = a.username
@@ -39,8 +39,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON m.course_id=c.id
 		WHERE a.role = #{role} 
 		AND   m.${stringColumn} LIKE '%${stringValue}%'
- 	</select>
- 	<select id="selectMembersByRoleAndEnableAndCourseId" resultType="kr.or.bit.model.Member">
+	</select>
+	<select id="selectMembersByRoleAndEnableAndCourseId" resultType="kr.or.bit.model.Member">
  		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role, c.course_name, c.end_date
 		FROM member m JOIN authorities a 
 		ON m.username = a.username
@@ -49,80 +49,80 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE a.role = #{role} 
 		AND   m.enabled = #{enabled}
 		AND   m.course_id = #{course_id}
- 	</select>
- 	<select id="selectMembersByRoleAndStringColumnAndIntColumn" resultType="kr.or.bit.model.Member">
+	</select>
+	<select id="selectMembersByRoleAndStringColumnAndIntColumn" resultType="kr.or.bit.model.Member">
  		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role, c.course_name, c.end_date
 		FROM member m JOIN authorities a 
 		ON m.username = a.username
 		JOIN course c
 		ON m.course_id=c.id
 		WHERE a.role = #{role} 
-		AND   m.${stringColumn} LIKE '%${stringValue}%'
-		AND   m.${intColumn} = #{intValue}
- 	</select>
- 	<select id="selectMemberByRoleAndEnableAndCourseIdAndSearch" resultType="kr.or.bit.model.Member">
+		AND m.${stringColumn} LIKE '%${stringValue}%'
+	</select>
+	<select id="selectMemberByRoleAndEnableAndCourseIdAndSearch" resultType="kr.or.bit.model.Member">
  		SELECT m.username, m.password, m.name, m.email, m.enabled, m.profile_photo, m.course_id, a.role, c.course_name, c.end_date
 		FROM member m JOIN authorities a 
 		ON m.username = a.username
 		JOIN course c
 		ON m.course_id=c.id
 		WHERE a.role = #{role} 
-		AND   m.enabled = #{enabled}
-		AND   m.course_id = #{course_id}
-		AND   m.${stringColumn} LIKE '%${stringValue}%'
- 	</select>
- 	<update id="updateMemberEnabled">
+		AND m.enabled = #{enabled}
+		AND m.course_id = #{course_id}
+		AND m.${stringColumn} LIKE '%${stringValue}%'
+	</select>
+	<update id="updateMemberEnabled">
  		UPDATE member
 		SET enabled=#{enabled}
 		WHERE username=#{username}
- 	</update>
- 	<select id="countCourseBySubject" resultType="kr.or.bit.model.Course">
+	</update>
+	<select id="countCourseBySubject" resultType="kr.or.bit.model.Course">
 		SELECT count(*) count, s.subject subject_name
 		FROM course c JOIN subject s ON c.subject = s.id
+        WHERE s.id != 0
 		GROUP BY c.subject
 		ORDER BY count
- 	</select>
- 	<select id="countAllCourse" resultType="Integer">
+	</select>
+	<select id="countAllCourse" resultType="Integer">
  		SELECT count(*) count
  		FROM course
- 	</select>
- 	<select id="countEnableMember" resultType="kr.or.bit.model.Course">
+	</select>
+	<select id="countEnableMember" resultType="kr.or.bit.model.Course">
  		SELECT count(*) AS count, c.course_name, c.start_date, c.end_date, c.subject AS subject_name
 		FROM member m JOIN course c ON m.course_id = c.id
-		WHERE m.enabled=0
+		WHERE m.enabled=0 AND start_date &lt; now()
 		GROUP BY c.course_name
-		ORDER BY count DESC;
- 	</select>
- 	<select id="articleWriteRank" resultType="kr.or.bit.model.Course">
+		ORDER BY count DESC
+	</select>
+	<select id="articleWriteRank" resultType="kr.or.bit.model.Course">
  		SELECT count(*) AS count, a.username, m.name, m.course_id, c.course_name, c.start_date, c.end_date, c.subject
 		FROM  member m JOIN article a ON m.username = a.username
 		JOIN course c ON m.course_id = c.id
 		JOIN authorities au ON m.username = au.username
-        WHERE au.role != "teacher"
+        WHERE au.role = "student" AND m.enabled != 0
 		GROUP BY a.username 
 		ORDER BY count DESC
 		LIMIT 1, 10
- 	</select>
- 	<select id="commentWriteRank" resultType="kr.or.bit.model.Comment">
+	</select>
+	<select id="commentWriteRank" resultType="kr.or.bit.model.Comment">
  		SELECT count(*) AS count, m.name
 		FROM comment c JOIN member m ON c.username = m.username
 		JOIN authorities au ON m.username = au.username
-        WHERE au.role != "teacher"
+        WHERE au.role = "student" AND m.enabled != 0
 		GROUP BY c.username
 		ORDER BY count DESC
 		LIMIT 1, 10
- 	</select>
- 	<select id="selectTeacherList" resultType="kr.or.bit.model.Member">
+	</select>
+	<select id="selectTeacherList" resultType="kr.or.bit.model.Member">
  		SELECT m.username, t.id AS teacher_id, m.name, m.email, m.enabled, m.profile_photo, m.course_id
 		FROM member m JOIN authorities a ON m.username = a.username
 		JOIN teacher t ON m.username = t.username
 		WHERE a.role = "teacher"
- 	</select>
- 	<select id="selectSubjectList" resultType="kr.or.bit.model.Subject">
+	</select>
+	<select id="selectSubjectList" resultType="kr.or.bit.model.Subject">
  		SELECT id,subject FROM subject WHERE id != 0
- 	</select>
- 	<select id="selectClassroomList" resultType="kr.or.bit.model.Classroom">
+	</select>
+	<select id="selectClassroomList" resultType="kr.or.bit.model.Classroom">
  		SELECT id,classroom_name FROM classroom
- 	</select>
- </mapper>
+	</select>
+</mapper>
  

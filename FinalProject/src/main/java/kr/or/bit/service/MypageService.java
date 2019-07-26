@@ -2,6 +2,7 @@ package kr.or.bit.service;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import kr.or.bit.model.Board;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.Member;
+import kr.or.bit.utils.Helper;
 import kr.or.bit.utils.Pager;
 
 @Service
@@ -39,7 +41,7 @@ public class MypageService {
   }
   
   public List<Article> selectAllMyArticlesByUsername(Pager pager,String username) {
-    
+    BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     MypageDao mypageDao = sqlSession.getMapper(MypageDao.class);
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
     List<Article> articleList = mypageDao.selectEnableArticleByUsername2(pager,username);
@@ -47,6 +49,7 @@ public class MypageService {
       article.setTimeLocal(article.getTime().toLocalDateTime());
       List<Comment> commentList = commentdao.selectAllComment(article.getId());
       article.setCommentlist(commentList);
+      article.setBoardtype(boardDao.selectBoardById(article.getBoard_id()).getBoardtype());
     }
     
     return articleList;
@@ -108,9 +111,9 @@ public class MypageService {
     Course course = courseDao.selectCourse(user.getCourse_id());
     course.setEndDate(course.getEnd_date().toLocalDate());
     course.setStartDate(course.getStart_date().toLocalDate());
-    Period diff = Period.between(course.getStartDate(), course.getEndDate());
-    Period diff2 = Period.between(course.getStartDate(), LocalDate.now());
-    int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
+    long classPeriod = ChronoUnit.DAYS.between(course.getStartDate(), course.getEndDate());
+    long daysFromStart = ChronoUnit.DAYS.between(course.getStartDate(), LocalDate.now());
+    int completion = (int) Math.floor((float) daysFromStart / classPeriod * 100);
     
     return completion;
   }

@@ -59,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM board
     WHERE course_id = #{course_id}
     AND board_name =
-    '트러블슈팅${season}${group_no}'
+    '트러블슈팅${season}${group_id}'
   </select>
   <select id="selectBoardInCourse"
     resultType="kr.or.bit.model.Board">

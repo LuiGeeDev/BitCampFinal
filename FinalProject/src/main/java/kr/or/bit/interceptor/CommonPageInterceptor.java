@@ -16,7 +16,9 @@ import kr.or.bit.dao.NotificationDao;
 import kr.or.bit.model.Member;
 import kr.or.bit.model.Notification;
 import kr.or.bit.utils.Helper;
-
+/*
+ * 현재 접속한 사용자의 알림을 처리하는 Interceptor
+ * */
 public class CommonPageInterceptor extends HandlerInterceptorAdapter {
   @Autowired
   private SqlSession sqlSession;

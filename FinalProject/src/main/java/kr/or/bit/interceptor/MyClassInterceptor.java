@@ -18,6 +18,10 @@ import kr.or.bit.model.Group;
 import kr.or.bit.model.Member;
 import kr.or.bit.utils.Helper;
 
+/*
+ * 현재 접속한 사용자의 프로젝트를 찾아주는 Interceptor
+ * */
+
 public class MyClassInterceptor extends HandlerInterceptorAdapter {
   @Autowired
   private SqlSession sqlSession;

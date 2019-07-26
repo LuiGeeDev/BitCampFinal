@@ -100,7 +100,7 @@
           <div class="page-btns">
             <span th:if="${pager.prev}">
               <a
-                class="btn btn-primary paging"
+                class="btn btn-outline-primary"
                 th:href="@{/myclass/board(page=${pager.prevPage},board_id=${board.id})}"
               >
                 &laquo;
@@ -111,22 +111,22 @@
             >
               <a
                 th:if="${boardSearch} != null"
-                class="btn btn-primary paging"
+                class="btn"
                 th:href="@{/myclass/board(page=${idx},boardSearch=${boardSearch},board_id=${board.id})}"
-                th:classappend="${pager.currentPage} == ${idx} ? active"
+                th:classappend="${pager.currentPage} == ${idx} ? 'btn-primary' : 'btn-outline-primary'"
                 th:text="${idx}"
               ></a>
               <a
                 th:if="${boardSearch} == null"
-                class="btn btn-primary paging"
+                class="btn"
                 th:href="@{/myclass/board(page=${idx},board_id=${board.id})}"
-                th:classappend="${pager.currentPage} == ${idx} ? active"
+                th:classappend="${pager.currentPage} == ${idx} ? 'btn-primary' : 'btn-outline-primary'"
                 th:text="${idx}"
               ></a>
             </span>
             <span th:if="${pager.next}">
               <a
-                class="btn btn-primary paging"
+                class="btn btn-outline-primary"
                 th:href="@{/myclass/board(page=${pager.nextPage},board_id=${board.id})}"
               >
                 &raquo;
@@ -142,7 +142,7 @@
           <div class="page-btns">
             <span th:if="${pager.prev}">
               <a
-                class="btn btn-primary paging"
+                class="btn btn-outline-primary"
                 th:href="@{/myclass/board/viewDesc(page=${pager.prevPage},board_id=${board.id})}"
               >
                 &laquo;
@@ -153,22 +153,22 @@
             >
               <a
                 th:if="${boardSearch} != null"
-                class="btn btn-primary paging"
+                class="btn"
                 th:href="@{/myclass/board/viewDesc(page=${idx},boardSearch=${boardSearch},board_id=${board.id})}"
-                th:classappend="${pager.currentPage} == ${idx} ? active"
+                th:classappend="${pager.currentPage} == ${idx} ? 'btn-primary' : 'btn-outline-primary'"
                 th:text="${idx}"
               ></a>
               <a
                 th:if="${boardSearch} == null"
-                class="btn btn-primary paging"
+                class="btn"
                 th:href="@{/myclass/board/viewDesc(page=${idx},board_id=${board.id})}"
-                th:classappend="${pager.currentPage} == ${idx} ? active"
+                th:classappend="${pager.currentPage} == ${idx} ? 'btn-primary' : 'btn-outline-primary'"
                 th:text="${idx}"
               ></a>
             </span>
             <span th:if="${pager.next}">
               <a
-                class="btn btn-primary paging"
+                class="btn btn-outline-primary"
                 th:href="@{/myclass/board/viewDesc(page=${pager.nextPage},board_id=${board.id})}"
               >
                 &raquo;
@@ -183,7 +183,7 @@
           <div class="page-btns">
             <span th:if="${pager.prev}">
               <a
-                class="btn btn-primary paging"
+                class="btn btn-outline-primary"
                 th:href="@{/myclass/board/writeDesc(page=${pager.prevPage},board_id=${board.id})}"
               >
                 &laquo;
@@ -194,22 +194,22 @@
             >
               <a
                 th:if="${boardSearch} != null"
-                class="btn btn-primary paging"
+                class="btn"
                 th:href="@{/myclass/board/writeDesc(page=${idx},boardSearch=${boardSearch},board_id=${board.id})}"
-                th:classappend="${pager.currentPage} == ${idx} ? active"
+                th:classappend="${pager.currentPage} == ${idx} ? 'btn-primary' : 'btn-outline-primary'"
                 th:text="${idx}"
               ></a>
               <a
                 th:if="${boardSearch} == null"
-                class="btn btn-primary paging"
+                class="btn"
                 th:href="@{/myclass/board/writeDesc(page=${idx},board_id=${board.id})}"
-                th:classappend="${pager.currentPage} == ${idx} ? active"
+                th:classappend="${pager.currentPage} == ${idx} ? 'btn-primary' : 'btn-outline-primary'"
                 th:text="${idx}"
               ></a>
             </span>
             <span th:if="${pager.next}">
               <a
-                class="btn btn-primary paging"
+                class="btn btn-outline-primary"
                 th:href="@{/myclass/board/writeDesc(page=${pager.nextPage},board_id=${board.id})}"
               >
                 &raquo;

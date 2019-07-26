@@ -1,7 +1,6 @@
 package kr.or.bit.controller;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -24,11 +23,14 @@ import kr.or.bit.model.Project;
 import kr.or.bit.model.Timeline;
 import kr.or.bit.utils.Helper;
 
+/*
+ * 메인페이지 관련 메서드를 제공하는 컨트롤러 
+ * */
 @Controller
 public class HomeController {
   private final int STACK_BOARD_ID = 1;
   private final int VIDEO_BOARD_ID = 2;
-  
+
   @Autowired
   private SqlSession sqlSession;
 
@@ -50,33 +52,33 @@ public class HomeController {
     List<Article> recentlyCommentedStacks = articleDao.selectRecentlyCommentedArticle();
     List<Timeline> recentTimeline = timelineDao.selectTimelineByGroupId(user.getGroup_id());
     Project project = projectDao.selectRecentProject(user.getCourse_id());
-    
+
     for (Article video : recentVideos) {
       video.setOption(videoDao.selectVideoByArticleId(video.getId()));
     }
-    
+
     for (Article stack : recentStacks) {
       stack.setTimeLocal(stack.getTime().toLocalDateTime());
       stack.setWriter(memberDao.selectMemberByUsername(stack.getUsername()));
     }
-    
+
     for (Article rcs : recentlyCommentedStacks) {
       rcs.setTimeLocal(rcs.getTime().toLocalDateTime());
       rcs.setWriter(memberDao.selectMemberByUsername(rcs.getUsername()));
     }
-    
+
     for (Message m : mainMessage) {
       m.setTimeLocal(m.getTime().toLocalDateTime());
       m.setSenderName(memberDao.selectMemberByUsername(m.getSender_username()).getName());
       m.setSender(memberDao.selectMemberByUsername(m.getSender_username()));
     }
-    
+
     long dDay = 0;
     if (project != null) {
       project.setStartDateLocal(project.getStart_date().toLocalDate());
       project.setEndDateLocal(project.getEnd_date().toLocalDate());
       dDay = ChronoUnit.DAYS.between(LocalDate.now(), project.getEndDateLocal());
-    } 
+    }
 
     model.addAttribute("mainMessage", mainMessage);
     model.addAttribute("recentVideos", recentVideos);
@@ -84,13 +86,11 @@ public class HomeController {
     model.addAttribute("recentTimeline", recentTimeline);
     model.addAttribute("recentlyCommented", recentlyCommentedStacks);
     model.addAttribute("project", project);
-    
+
     if (dDay != 0) {
       model.addAttribute("dDay", dDay);
     }
-    
+
     return "main";
   }
 }
-
-

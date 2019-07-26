@@ -14,8 +14,8 @@ public interface ChecklistDao {
   void deleteChecklist(int id);
 
   List<Checklist> selectAllChecklist(int group_id);
-  
+
   void checkUpdate(@Param("id") int id, @Param("username") String username);
-  
+
   Checklist selectOneChecklist(int id);
 }

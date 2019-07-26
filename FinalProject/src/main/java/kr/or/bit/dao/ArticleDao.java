@@ -5,8 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import kr.or.bit.model.Article;
-import kr.or.bit.model.Comment;
-import kr.or.bit.model.Tag;
 import kr.or.bit.utils.Pager;
 
 /*
@@ -30,23 +28,21 @@ public interface ArticleDao {
   void updateArticle(Article article);
 
   void deleteArticle(int id);
-  
+
   List<Article> selectAllArticleByBoardId(@Param("board_id") int board_id);
 
   List<Article> selectFirstArticlesByBoardId(@Param("board_id") int board_id);
-  
+
   List<Article> selectFirstArticlesToCopyByBoardId(int board_id);
-  
+
   List<Article> selectNextArticlesToCopyByBoardId(@Param("board_id") int board_id, @Param("id") int id);
 
   List<Article> selectAllPagingArticlesByBoardId(@Param("board_id") int board_id, @Param("pager") Pager pager);
-  
+
   List<Article> selectAllPagingArticlesByViewCount(@Param("board_id") int board_id, @Param("pager") Pager pager);
-  
+
   List<Article> selectAllPagingArticlesByWrite(@Param("board_id") int board_id, @Param("pager") Pager pager);
-  
-  List<Article> selectFirstArticlesByViewCount(@Param("board_id") int board_id);
-  
+
   Article selectOneArticle(@Param("id") int id);
 
   void insertVote(@Param("id") int id, @Param("username") String username);
@@ -54,8 +50,6 @@ public interface ArticleDao {
   void deleteVote(@Param("id") int id, @Param("username") String username);
 
   int countVote(@Param("id") int id);
-
-  int getMostRecentArticleId();
 
   List<Article> selectArticlesOnNextPage(@Param("board_id") int board_id, @Param("article_id") int article_id);
 
@@ -77,8 +71,6 @@ public interface ArticleDao {
 
   List<Article> selectArticlesForClassMain(int course_id);
 
-  List<Tag> selectTagList(int article_id);
-
   List<Article> selectAllIssuesOpened(@Param("group_id") int group_id, @Param("criteria") String criteria,
       @Param("word") String word);
 
@@ -94,24 +86,22 @@ public interface ArticleDao {
   void updateArticleViewCount(Article article);
 
   void updateArticleLevel(Article article);
-  
-  int selectMostRecentArticleId(Article article);
 
   List<Article> selectRecentlyCommentedArticle();
 
   Integer selectMaxLevel(Article article);
 
   Integer selectMaxLevelBySibling(Article article);
-  
+
   List<Article> selectAllArticleByUsername(String username);
-  
-  List<Article> selectSearchTitleByBoardId(@Param("board_id")int board_id,@Param("title") String title);
+
+  List<Article> selectSearchTitleByBoardId(@Param("board_id") int board_id, @Param("title") String title);
 
   List<Article> selectEnableArticleByUsername(String username);
-  
+
   Article selectRecentHomework(String username);
-  
+
   List<Article> selectRecentStackbyCourse(int courseid);
-  
+
   Article selectRecentQnabyBoardId(int Board_id);
 }

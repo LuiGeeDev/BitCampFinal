@@ -177,16 +177,17 @@ a {
 .btn {
   font-size: 14px;
   padding: 5.5px 12px;
+  margin-right: 3px;
 }
 
 #btn-submit {
   height: 31px;
 }
 
-.btn.btn-primary.paging.active {
+.btn.btn-primary {
   background-color: #EA8A02;
   border: 2px #EA8A02 solid;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 .bottom-row {

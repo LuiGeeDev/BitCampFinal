@@ -12,7 +12,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 700px;
-  margin: 50px auto;
+  margin: 90px auto;
 }
 
 .logoSubContainer {
@@ -44,20 +44,38 @@ body {
 
 .errerDetail h3 {
   font-size: 23px;
-  font-weight: 100;
 }
 
 .errerDetail div {
-  padding-bottom: 15px;
   font-size: 17px;
+  padding: 10px 10px 11px 10px;
+}
+
+.nthfirst {
+  margin-left: 10px
 }
 
 .logotext {
-  height: 63px;
+  height: 55px;
+  margin-left: 5px;
 }
 
 .main-btn {
   font-size: 15px;
-  width: 97px;
-  margin-right: 3px;
+}
+
+.img403 {
+  width: 260px !important;
+  padding-top: 10px;
+}
+
+.logo500 {
+  margin: 0px;
+  padding-left: 9px;
+  padding-top: 8px;
+}
+
+.Img500 {
+  width: 255px;
+  margin-right: 11px;
 }

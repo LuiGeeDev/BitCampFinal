@@ -12,6 +12,12 @@ import kr.or.bit.dao.MemberDao;
 import kr.or.bit.model.Member;
 import kr.or.bit.utils.Helper;
 
+/*
+ * 사용자 최초 로그인 시 발생하는 Interceptor
+ * 
+ * 최초 지정된 비밀번호 ('bitcamp') 에서 비밀번호를 변경하지 않았다면 다른 페이지를 이용할 수 없게함.
+ * */
+
 public class PasswordChangedInterceptor extends HandlerInterceptorAdapter {
   @Autowired
   private SqlSession sqlSession;

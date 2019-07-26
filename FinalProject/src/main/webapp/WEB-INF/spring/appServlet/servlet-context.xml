@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:mvc="http://www.springframework.org/schema/mvc"
-  xmlns:context="http://www.springframework.org/schema/context"
-  xmlns:security="http://www.springframework.org/schema/security"
-  xmlns:tx="http://www.springframework.org/schema/tx"
-  xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns:mvc="http://www.springframework.org/schema/mvc" 
+  xmlns:context="http://www.springframework.org/schema/context" 
+  xmlns:security="http://www.springframework.org/schema/security" 
+  xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-  <security:global-method-security
-    pre-post-annotations="enabled" />
 
-  <!-- Use spring servlet for all requests, including static resources -->
+  <!-- @PreAuthorize, @PostAuthorize, @Secured 사용하기 위해 필요한 설정 -->
+  <security:global-method-security pre-post-annotations="enabled" />
+
   <mvc:default-servlet-handler />
 
-  <!-- Handles HTTP GET requests for /resources/** by efficiently serving 
-    up static resources in the ${webappRoot}/resources directory -->
+  <!-- kr.or.bit 아래 모든 Component 애노테이션을 감지, bean 객체 생성 -->
+  <context:component-scan base-package="kr.or.bit" />
 
-  <context:component-scan
-    base-package="kr.or.bit" />
-  <mvc:resources mapping="/resources/**"
-    location="/resources/" />
+  <!-- resources 아래 파일 인식 -->
+  <mvc:resources mapping="/resources/**" location="/resources/" />
 
-  <tx:annotation-driven
-    transaction-manager="transactionManager" />
+  <!-- root-context에서 설정한 트랜잭션 관련 bean객체 활성화 -->
+  <tx:annotation-driven transaction-manager="transactionManager" />
 
+  <!-- 
+    인터셉터 설정
+    mvc:mapping: 인터셉터를 어느 주소에 적용시킬 것인지
+    mvc:exclude-mapping: 인터셉터 적용을 제외할 주소
+    
+    주의: favicon, css 등 정적 자원도 인터셉트 시도하므로 해당 자원들은 모두 제외해줘야 한다.
+    **: 모든 하위 디렉토리의 하위 파일까지
+    *: 뒤에 붙는 모든 글자 포함(하위 디렉토리는 미포함)
+    ex) /login* 은 /login-error는 포함하지만 /login/ex는 미포함
+  -->
   <mvc:interceptors>
     <mvc:interceptor>
       <mvc:mapping path="/**" />
@@ -37,9 +44,9 @@
       <mvc:exclude-mapping path="/js/**" />
       <mvc:exclude-mapping path="/socket/**" />
       <mvc:exclude-mapping path="/login*" />
+      <mvc:exclude-mapping path="/error/**" />
       <mvc:exclude-mapping path="/forgot-password" />
-      <bean id="commonPageInterceptor"
-        class="kr.or.bit.interceptor.CommonPageInterceptor"></bean>
+      <bean id="commonPageInterceptor" class="kr.or.bit.interceptor.CommonPageInterceptor"></bean>
     </mvc:interceptor>
     <mvc:interceptor>
       <mvc:mapping path="/**" />
@@ -49,15 +56,14 @@
       <mvc:exclude-mapping path="/mypage" />
       <mvc:exclude-mapping path="/socket/**" />
       <mvc:exclude-mapping path="/login*" />
+      <mvc:exclude-mapping path="/error/**" />
       <mvc:exclude-mapping path="/forgot-password" />
       <mvc:exclude-mapping path="/resources/**" />
-      <bean id="passwordChangedInterceptor"
-        class="kr.or.bit.interceptor.PasswordChangedInterceptor"></bean>
+      <bean id="passwordChangedInterceptor" class="kr.or.bit.interceptor.PasswordChangedInterceptor"></bean>
     </mvc:interceptor>
     <mvc:interceptor>
       <mvc:mapping path="/myclass/**" />
-      <bean id="myClassInterceptor"
-        class="kr.or.bit.interceptor.MyClassInterceptor"></bean>
+      <bean id="myClassInterceptor" class="kr.or.bit.interceptor.MyClassInterceptor"></bean>
     </mvc:interceptor>
   </mvc:interceptors>
 
@@ -65,8 +71,7 @@
   <mvc:annotation-driven>
     <mvc:message-converters>
       <!-- String으로 Ajax 전송 시 UTF-8로 인코딩 -->
-      <bean
-        class="org.springframework.http.converter.StringHttpMessageConverter">
+      <bean class="org.springframework.http.converter.StringHttpMessageConverter">
         <property name="supportedMediaTypes">
           <list>
             <value>text/html;charset=UTF-8</value>
@@ -75,17 +80,23 @@
       </bean>
     </mvc:message-converters>
   </mvc:annotation-driven>
-  <!-- Thymeleaf View Resolver - implementation of Spring's ViewResolver 
-    interface -->
-  <bean id="viewResolver"
-    class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+
+  <!-- 
+    Thymeleaf의 뷰 리졸버
+    아래에서 정의한 템플릿 엔진 사용
+  -->
+  <bean id="viewResolver" class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
     <property name="templateEngine" ref="templateEngine" />
     <property name="characterEncoding" value="UTF-8" />
   </bean>
 
-  <!-- Thymeleaf Template Resolver -->
-  <bean id="templateResolver"
-    class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+  <!-- 
+    Thymeleaf의 템플릿 리졸버
+
+    접두사와 접미사를 사용해 파일 지정 가능
+    컨트롤러에서는 파일명(+디렉토리)만 지정해주면 접두사와 접미사를 붙여서 해당 페이지로 이동
+   -->
+  <bean id="templateResolver" class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
     <property name="prefix" value="/WEB-INF/views/" />
     <property name="suffix" value=".html" />
     <property name="templateMode" value="HTML" />
@@ -93,8 +104,13 @@
     <property name="cacheable" value="false" />
   </bean>
 
-  <bean id="emailTemplateResolver"
-    class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+  <!-- 
+    이메일용 템플릿 리졸버
+
+    작성은 위와 같음.
+    해당 템플릿 리졸버는 메일을 보낼 때만 사용함
+   -->
+  <bean id="emailTemplateResolver" class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
     <property name="prefix" value="/WEB-INF/mail/" />
     <property name="suffix" value=".html" />
     <property name="templateMode" value="HTML" />
@@ -102,9 +118,17 @@
     <property name="cacheable" value="false" />
   </bean>
 
-  <!-- Thymeleaf Template Engine (Spring4-specific version) -->
-  <bean id="templateEngine"
-    class="org.thymeleaf.spring4.SpringTemplateEngine">
+  <!-- 
+    템플릿 엔진
+
+    스프링 4버전에 맞게 4버전 템플릿 엔진 사용
+    additionalDialects에서 추가로 사용할 Dialect를 추가
+    여기서는 Spring Security와 같이 사용 가능한 Dialect와
+    Java 8에서 추가된 LocalDate, LocalDateTime을 사용할 수 있는 Dialect 추가
+
+    pom.xml에서 dependency 추가하고 여기서 지정해줘야 사용 가능
+   -->
+  <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
     <property name="templateResolver">
       <ref bean="templateResolver" />
     </property>
@@ -112,26 +136,25 @@
       <set>
         <!-- Note the package would change to 'springsecurity[3|4]' if you 
           are using that version -->
-        <bean
-          class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect" />
-        <bean
-          class="org.thymeleaf.extras.java8time.dialect.Java8TimeDialect" />
+        <bean class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect" />
+        <bean class="org.thymeleaf.extras.java8time.dialect.Java8TimeDialect" />
       </set>
     </property>
   </bean>
-  
-  <bean id="emailTemplateEngine"
-    class="org.thymeleaf.spring4.SpringTemplateEngine">
+
+  <!-- 
+    이메일용 템플릿 엔진
+
+    여기서 bean 객체 생성 후 이메일 템플릿이 필요한 곳에서 이 bean을 사용
+   -->
+  <bean id="emailTemplateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
     <property name="templateResolver" ref="emailTemplateResolver" />
   </bean>
 
-  <bean name="jsonView"
-    class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+  <bean name="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
 
-
-  <!-- 멀티파트 리졸버 -->
-  <bean id="multipartResolver"
-    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+  <!-- 멀티파트 리졸버, 파일 업로드를 위해 설정 -->
+  <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
     <!-- 최대업로드 가능한 바이트크기 -->
     <property name="maxUploadSize" value="52428800" />
     <!-- 디스크에 임시 파일을 생성하기 전에 메모리에 보관할수있는 최대 바이트 크기 -->
@@ -140,8 +163,13 @@
     <property name="defaultEncoding" value="utf-8" />
   </bean>
 
-  <bean id="mailSender"
-    class="org.springframework.mail.javamail.JavaMailSenderImpl">
+  <!-- 
+    메일 보내기용 객체
+
+    G메일 계정 사용
+    G메일 계정 사용 시 G메일에서 보안 설정 별도로 필요
+   -->
+  <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     <property name="host" value="smtp.gmail.com" />
     <property name="port" value="587" />
     <property name="username" value="bitcampfinal2team@gmail.com" />

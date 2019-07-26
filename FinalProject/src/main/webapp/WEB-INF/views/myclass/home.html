@@ -48,9 +48,10 @@
                   ></span>
                 </span>
               </span>
-              <span class="progressview" th:text="${completion} + '% 진행 중'">
+              <span th:if="${completion < 100}" class="progressview" th:text="${completion} + '% 진행 중'">
                 70% 진행중
               </span>
+              <span th:if="${completion == 100}" class="progressview">수업 완료</span>
             </span>
           </div>
           <div class="recentBoard">

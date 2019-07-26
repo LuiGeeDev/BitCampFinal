@@ -43,7 +43,6 @@ import kr.or.bit.utils.Pager;
 @RestController
 @RequestMapping(path = "/ajax")
 public class AjaxController {
-
   @Autowired
   private SqlSession sqlSession;
 
@@ -52,12 +51,13 @@ public class AjaxController {
 
   @Autowired
   private ArticleVoteService articleVoteService;
-  
+
   @Autowired
   private MypageService mypageService;
 
+  //내 클래스  채팅
   @PostMapping("/chat/file")
-  public ChatMessage uploadFile(HttpServletRequest request, int group_id, long time, String name, MultipartFile file)
+  public ChatMessage uploadFile(HttpServletRequest request, int group_id, long time, String name, MultipartFile file, String profile_photo)
       throws IllegalStateException, IOException {
     FileUploadService service = new FileUploadService();
     Files filepath = service.uploadFile(file, request);
@@ -69,10 +69,12 @@ public class AjaxController {
     message.setTime(time);
     message.setGroup_id(group_id);
     message.setFilepath(filepath.getFilename());
+    message.setProfile_photo(profile_photo);
 
     return message;
   }
 
+  //메인페이지 뉴스 불러오기
   @PostMapping("/news")
   public String getNews() {
     NewsService service = new NewsService();
@@ -80,6 +82,7 @@ public class AjaxController {
     return news;
   }
 
+  //마이페이지 쪽지
   @PostMapping("/message")
   public Message getMessage(int id) {
     MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
@@ -109,103 +112,113 @@ public class AjaxController {
     return "redirect:/message";
   }
 
+  //클래스 생성에서 날짜 기간동안 빈 강의실을 검색
   @PostMapping("/classroom")
   public List<Classroom> getClassroom(Date start_date, @RequestParam(defaultValue = "1970-01-01") Date end_date) {
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     List<Classroom> classroomList = courseDao.selectAvailableClassroom(start_date, end_date);
     return classroomList;
   }
-  
+
+  //클래스 생성에서 날짜 기간동안 강의가 없는 강사를 검색
   @PostMapping("/classroom/teacher")
-  public List<Member> getTeacher(Date start_date,  @RequestParam(defaultValue = "1970-01-01") Date end_date) {
+  public List<Member> getTeacher(Date start_date, @RequestParam(defaultValue = "1970-01-01") Date end_date) {
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     List<Member> teacherList = courseDao.selectAvailableTeacher(start_date, end_date);
     return teacherList;
   }
 
+  //게시글의 추천기능
   @PostMapping("/vote")
   public Map<String, Object> voteVideoArticle(int articleId) {
     return articleVoteService.insertVote(articleId, Helper.userName());
   }
 
+  //비디오게시판 비동기 스크롤
   @PostMapping("/video/scroll")
   public List<Article> getNextVideoArticles(int article_id) {
     List<Article> list = articleService.selectArticlesOnNextPage(2, article_id);
     return list;
   }
 
+  //알림 읽음 표시
   @GetMapping("/notification/checked")
   public void notificationChecked() {
     NotificationDao notificationDao = sqlSession.getMapper(NotificationDao.class);
     String username = Helper.userName();
     notificationDao.checkAllNotification(username);
   }
-  
+
+  //회원관리에서 회원 활성화/비활성화 관리
   @PostMapping("/manage/enabledUpdate")
   public String updateMemberEnabled(String username, String enabled) {
     ManagerDao managerDao = sqlSession.getMapper(ManagerDao.class);
     int enabledInt = 0;
-    if(enabled.equals("활성화")) {
-      enabledInt=0;
+    if (enabled.equals("활성화")) {
+      enabledInt = 0;
     } else {
-      enabledInt=1;
+      enabledInt = 1;
     }
     managerDao.updateMemberEnabled(enabledInt, username);
     return "redirect:/manage/students";
   }
-  
+
+  //게시글 북마크
   @PostMapping("/bookmark")
   public Map<String, Object> bookmarkStackArticle(int article_id) {
     return mypageService.insertBookmark(article_id, Helper.userName());
   }
-  
+
+  /**
+   * 수업 삭제
+   * 
+   * FK 제약을 피하기 위해 우선 수강생을 모두 삭제, 강사 수업을 0번으로 교체 후 수업을 삭제
+   */
   @PostMapping("/manage/course/delete")
   @Transactional
   public void deleteCourse(int id) {
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     TeacherCourseDao teacherCourse = sqlSession.getMapper(TeacherCourseDao.class);
-    System.out.println(id);
-    
+
     for (Member student : memberDao.selectAllMembersByCourseId(id)) {
       memberDao.deleteMember(student.getUsername());
-      System.out.println(student.getUsername());
     }
-    Member teacher =memberDao.selectMemberByUsername(teacherCourse.selectTeacherCourse(id).getTeacher_username());
-    System.out.println(teacher);
+
+    Member teacher = memberDao.selectMemberByUsername(teacherCourse.selectTeacherCourse(id).getTeacher_username());
     teacher.setCourse_id(0);
     memberDao.updateTeacherCourseId(teacher);
-    
+
     courseDao.deleteCourse(id);
 
-    
   }
-  
+
+  //강의관리 비동기 페이징
   @GetMapping("/manage/course/paging")
-  public Map<String,Object> paging(int page){
+  public Map<String, Object> paging(int page) {
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     Pager pager = new Pager(page, courseDao.countEndCourseList());
     List<Course> courseList = courseDao.selectEndCourseList(pager);
-    for(Course course : courseList) {
+
+    for (Course course : courseList) {
       course.setStartDate(course.getStart_date().toLocalDate());
       course.setEndDate(course.getEnd_date().toLocalDate());
     }
+
     Map<String, Object> returnMap = new HashMap<String, Object>();
     returnMap.put("courseList", courseList);
     returnMap.put("allCount", courseDao.countEndCourseList());
     return returnMap;
   }
-  
+
+  //회원관리 - 회원검색
   @GetMapping("/manage/students/search")
-  public Map<String, Object> search(@RequestParam String role, int course, int enabled){
+  public Map<String, Object> search(@RequestParam String role, int course, int enabled) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-    Map<String, Object> returnMap  = new HashMap<String, Object>();
+    Map<String, Object> returnMap = new HashMap<String, Object>();
     List<Member> searchList = memberDao.selectMemberSearchByAjax(course, role, enabled);
     returnMap.put("searchList", searchList);
     returnMap.put("memberCount", memberDao.countMemberSearchByAjax(course, role, enabled));
     return returnMap;
   }
 }
-
-
-

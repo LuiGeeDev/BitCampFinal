@@ -1,3 +1,4 @@
+// 웹 소켓 접속
 const sock = new SockJS("/socket");
 const client = Stomp.over(sock);
 client.connect({}, function() {
@@ -15,6 +16,9 @@ client.connect({}, function() {
   });
 });
 
+/**
+ * 알림이 오면 해당 알림을 상단 알림 popover 창에 추가
+ */
 function addNotice(notification) {
   const link = $(`<a class="notice-link" href="${notification.link}">`);
   const notice = $("<div class='notice'>");
@@ -38,6 +42,9 @@ function addNotice(notification) {
   $(".noti-count").text(Number($(".noti-count").text()) + 1);
 }
 
+/**
+ * 알림이 오면 Bootstrap의 Toast 알림을 화면에 표시
+ */
 function showToast(notification) {
   const toastPositioner = $(".toast-positioner");
   const link = $(`<a href="${notification.link}">`);
@@ -87,7 +94,7 @@ function sendCommentNotice(senderName, receiverUsername, link) {
   client.send("/app/notice/comment", {}, JSON.stringify(notification));
 }
 
-//
+// 답글 알림
 function sendReplyNotice(senderName, receiverUsername, link) {
   const notification = {
     title: "답글",
@@ -99,6 +106,7 @@ function sendReplyNotice(senderName, receiverUsername, link) {
   client.send("/app/notice/reply", {}, JSON.stringify(notification));
 }
 
+// 모여라 알림
 function sendAssembleNotice(senderName, username, link) {
   const notification = {
     title: "모여라",
@@ -110,6 +118,7 @@ function sendAssembleNotice(senderName, username, link) {
   client.send("/app/notice/assemble", {}, JSON.stringify(notification));
 }
 
+// 쪽지 알림
 function sendMessageNotice(senderName, receiverUsername) {
   const notification = {
     title: "쪽지",

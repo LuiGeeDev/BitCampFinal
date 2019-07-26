@@ -1,60 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans
-  xmlns="http://www.springframework.org/schema/security"
-  xmlns:beans="http://www.springframework.org/schema/beans"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans
+<beans:beans xmlns="http://www.springframework.org/schema/security" 
+  xmlns:beans="http://www.springframework.org/schema/beans" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans
 		https://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/security
 		https://www.springframework.org/schema/security/spring-security.xsd">
 
-  <beans:bean name="bCryptPasswordEncoder"
-    class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-    
+
+  <!-- 비밀번호 암호화를 위해 사용 -->
+  <beans:bean name="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+  <!-- use-expressions='true'로 permitAll, hasRole() 등 표현 사용 가능 -->
   <http use-expressions="true">
-    <!-- intercept-url은 위에서부터 검색하기 때문에 특정 페이지에 권한을 걸고 싶으면 가장 아래 /** 보다 위에 
-      작성할 것 -->
-    <intercept-url pattern="/forgot-password" access="permitAll" />    
+    <!-- intercept-url은 위에서부터 검색하기 때문에 특정 페이지에 권한을 걸고 싶으면 가장 아래 /** 보다 위에 작성할 것 -->
+    <!-- 인터셉터처럼 정적 자원들을 제외해주는 것이 필요 -->
+    <!-- 
+      permitAll: 모두에게 허용
+      isAutenticated(): 로그인한 사람에게만 허용
+      hasRole('ROLE'): 권한이 ROLE인 사람에게만 허용
+      hasAnyRole("ROLE1", "ROLE2"): 권한이 ROLE1 또는 ROLE2인 사람에게 허용
+     -->
+    <intercept-url pattern="/forgot-password" access="permitAll" />
     <intercept-url pattern="/login*" access="permitAll" />
     <intercept-url pattern="/favicon.ico" access="permitAll" />
     <intercept-url pattern="/css/**" access="permitAll" />
     <intercept-url pattern="/js/**" access="permitAll" />
     <intercept-url pattern="/resources/**" access="permitAll" />
-    <intercept-url pattern="/manage**"
-      access="hasRole('MANAGER')" />
+    <intercept-url pattern="/manage**" access="hasRole('MANAGER')" />
     <intercept-url pattern="/video/realdelete" access="hasRole('MANAGER')"/>
     <intercept-url pattern="/myclass/setting" access="hasRole('TEACHER')" />
     <intercept-url pattern="/myclass/create**" access="hasRole('TEACHER')" />
-    <intercept-url pattern="/**"
-      access="isAuthenticated()" />
-    <form-login 
-      login-page="/login"
-      login-processing-url="/login" 
-      default-target-url="/"
-      authentication-failure-url="/login-error" />
-    <logout 
-      logout-url="/logout" 
-      logout-success-url="/login"
-      delete-cookies="remember_cookie" 
-      invalidate-session="true" />
-    <remember-me key="autoLoginKey" 
-      token-validity-seconds="604800"
-      remember-me-parameter="remember-me"
-      remember-me-cookie="remember_cookie"
-    />
+    <intercept-url pattern="/**" access="isAuthenticated()" />
+
+    <!--
+      Spring Security를 사용한 로그인 설정
+
+      login-page: 로그인에 사용할 페이지 주소
+      login-processing-url: 로그인을 처리할 URL
+      default-target-url: 로그인 성공 시 기본으로 이동할 URL
+      authentication-failure-url: 로그인 실패 시 이동할 URL
+     -->
+    <form-login login-page="/login" login-processing-url="/login" default-target-url="/" authentication-failure-url="/login-error" />
+
+    <!-- 
+      Spring Security를 사용한 로그아웃 설정
+
+      logout-url: 로그아웃을 처리할 URL
+      logout-success-url: 로그아웃 시 이동할 URL
+      delete-cookies: 로그아웃 시 브라우저에서 삭제할 쿠키의 이름
+      invalidate-session: session을 없앨지 결정
+      
+      주의: logout은 post 방식으로만 작동함. GET 방식으로 접근 시 다르게 설정 필요
+     -->
+    <logout logout-url="/logout" logout-success-url="/login" delete-cookies="remember_cookie" invalidate-session="true" />
+
+    <!-- 
+      Remember-me 기능을 이용한 자동 로그인 기능
+
+      key: 키의 이름
+      token-validity-seconds: 쿠키의 유효 시간(초 단위)
+      remember-me-parameter: 자동 로그인을 선택할 input 태그의 name 값 ex) input type='checkbox' name="remember-me"
+      remember-me-cookie: 자동 로그인 쿠키의 이름
+     -->
+    <remember-me key="autoLoginKey" token-validity-seconds="604800" remember-me-parameter="remember-me" remember-me-cookie="remember_cookie" />
     <csrf disabled="true" />
+
+    <!-- 
+      세션 관리
+
+      invalid-session-url: 올바른 세션이 아닐 경우 이동시킬 url
+      max-sessions: 동시에 같은 아이디로 접속 가능한 세션의 숫자
+      expired-url: 동시 접속 초과로 세션 만료 시 이동할 URL
+     -->
     <session-management invalid-session-url="/login">
-      <concurrency-control max-sessions="1"
-        expired-url="/login" />
+      <concurrency-control max-sessions="1" expired-url="/login" />
     </session-management>
   </http>
 
+  <!-- 
+    인증 관리
+
+    data-source-ref: 인증에 사용할 데이터베이스
+    role-prefix: DB에서 불러온 ROLE 앞에 붙일 접두어
+    users-by-username-query: 로그인 시 확인할 쿼리
+    authorities-by-username-query: 권한 확인 시 사용할 쿼리
+    password-encoder: 비밀번호 암호화, 해독에 사용할 인코더
+   -->
   <authentication-manager>
     <authentication-provider>
-      <jdbc-user-service data-source-ref="dataSource"
-        role-prefix="ROLE_"
-        users-by-username-query="select username, password, enabled from member where username = ?"
-        authorities-by-username-query="select username, role from authorities where username = ?" />
+      <jdbc-user-service data-source-ref="dataSource" role-prefix="ROLE_" users-by-username-query="select username, password, enabled from member where username = ?" authorities-by-username-query="select username, role from authorities where username = ?" />
       <password-encoder ref="bCryptPasswordEncoder" />
     </authentication-provider>
   </authentication-manager>

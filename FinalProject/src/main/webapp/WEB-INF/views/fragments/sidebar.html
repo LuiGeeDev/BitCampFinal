@@ -122,9 +122,11 @@
           ></a>
         </div>
         <th:block th:each="board : ${boardList}">
-           <a th:if="${board.boardtype == 3}" 
-              th:href="@{/myclass/board(board_id=${board.id})}" 
-              th:text="${board.board_name}"></a>
+          <a
+            th:if="${board.boardtype == 3}"
+            th:href="@{/myclass/board(board_id=${board.id})}"
+            th:text="${board.board_name}"
+          ></a>
           <a
             th:if="${board.boardtype == 4}"
             th:href="@{/myclass/homework}"
@@ -159,7 +161,7 @@
         class="side-nav-menu"
       >
         <a th:href="@{/mypage/home}">마이 페이지</a>
-        <a th:href="@{/mypage/scrap}">내 스크랩함 </a>
+        <a th:href="@{/mypage/scrap}">북마크한 글</a>
         <a th:href="@{/mypage}">정보 수정</a>
       </div>
 
@@ -168,7 +170,7 @@
         class="side-nav-menu"
       >
         <a th:href="@{/manage/course}">수업 관리</a>
-        <a th:href="@{/manage/students}">학생 관리</a>
+        <a th:href="@{/manage/students}">회원 관리</a>
         <a th:href="@{/manage/chart}">회원 통계</a>
       </div>
     </div>

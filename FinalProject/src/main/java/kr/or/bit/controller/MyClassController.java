@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bit.dao.ArticleDao;
@@ -66,6 +69,10 @@ import kr.or.bit.service.TagService;
 import kr.or.bit.utils.Helper;
 import kr.or.bit.utils.Pager;
 
+/*
+ * 내 클래스 탭에 관련된 모든 메서드를 포함한 컨트롤러 
+ * */
+
 @Controller
 @RequestMapping("/myclass")
 public class MyClassController {
@@ -88,6 +95,7 @@ public class MyClassController {
   @Autowired
   private MypageService mypageService;
 
+  //내 클래스 메인
   @GetMapping("")
   public String mainPage(Model model) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
@@ -100,20 +108,26 @@ public class MyClassController {
     course.setEndDate(course.getEnd_date().toLocalDate());
     course.setStartDate(course.getStart_date().toLocalDate());
     List<Article> recentHomework = homeworkDao.selectRecentHomeworkArticle(course.getId());
-    Period diff = Period.between(course.getStartDate(), course.getEndDate());
-    Period diff2 = Period.between(course.getStartDate(), LocalDate.now());
+    long classPeriod = ChronoUnit.DAYS.between(course.getStartDate(), course.getEndDate());
+    long daysFromStart = ChronoUnit.DAYS.between(course.getStartDate(), LocalDate.now());
     for (Article article : recentHomework) {
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
       article.setTimeLocal(article.getTime().toLocalDateTime());
       article.setOption(homeworkDao.selectHomeworkByArticleId(article.getId()));
+    }    
+    
+    int completion = (int) Math.floor((double) daysFromStart / classPeriod * 100);
+    if (completion > 100) {
+      completion = 100;
     }
-    int completion = Math.round((float) diff2.getDays() / diff.getDays() * 100);
+    
     List<Article> recentArticles = articleDao.selectArticlesForClassMain(course.getId());
     for (Article article : recentArticles) {
       article.setBoardtype(boardDao.selectBoardById(article.getBoard_id()).getBoardtype());
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
       article.setTimeLocal(article.getTime().toLocalDateTime());
     }
+    
     model.addAttribute("recentHomework", recentHomework);
     model.addAttribute("course", course);
     model.addAttribute("recentArticles", recentArticles);
@@ -124,6 +138,7 @@ public class MyClassController {
     return "myclass/home";
   }
 
+  //내 클래스 -> 질문게시판
   @GetMapping("/qna")
   public String qnaPage(@RequestParam(defaultValue = "1") int page, String boardSearch, String criteria, Model model)
       throws Exception {
@@ -155,6 +170,7 @@ public class MyClassController {
     return "myclass/qna/home";
   }
 
+  //내 클래스 -> 질문게시판 글쓰기 페이지 
   @GetMapping("/qna/write")
   public String writeQna(Model model) {
     StackDao stackdao = sqlSession.getMapper(StackDao.class);
@@ -181,6 +197,7 @@ public class MyClassController {
     return "redirect:/myclass/qna";
   }
 
+  //내 클래스 -> 질문게시판 글 내용 
   @GetMapping("/qna/content")
   public String GetQnaContent(int id, Model model) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
@@ -206,6 +223,7 @@ public class MyClassController {
     return "myclass/qna/content";
   }
 
+  //내 클래스 -> 질문게시판 글 수정 
   @GetMapping("/qna/edit")
   public String editQna(int id, Model model) {
     StackDao stackdao = sqlSession.getMapper(StackDao.class);
@@ -227,6 +245,7 @@ public class MyClassController {
     return "redirect:/myclass/qna";
   }
 
+  //내 클래스 -> 질문게시판 글 삭제
   @GetMapping("/qna/delete")
   public String deleteQna(int id) {
     ArticleDao articleDao = sqlSession.getMapper(ArticleDao.class);
@@ -263,6 +282,7 @@ public class MyClassController {
     return "redirect:/myclass/qna/content?id=" + article_id;
   }
 
+  //내 클래스 -> 우리반 관리 -> 프로젝트 생성 페이지
   @GetMapping("/create/project")
   public String projectPage(Model model) {
     String teacherName = Helper.userName();
@@ -276,6 +296,17 @@ public class MyClassController {
     return "myclass/teacher/create/project";
   }
 
+  
+  /**
+   * 프로젝트 생성
+   * 
+   *  1. 각 조에 조장 지정
+   *  2. 각 조에 조원 추가
+   *  3. 각 조에 프로젝트 시작을 알리는 일정 추가
+   *  4. 각 조에 프로젝트 시작을 알리는 타임라인 추가
+   *  
+   *  Transaction으로 작업 하나라도 오류가 생기면 rollback 
+   */
   @PostMapping("/create/project")
   @Transactional
   public String createProject(@RequestBody Project project) {
@@ -294,18 +325,27 @@ public class MyClassController {
     Project newProject = projectDao.selectRecentProject(course_id);
     List<ProjectMember> leaderList = new ArrayList<>();
     List<ProjectMember> students = project.getStudents();
+    
     for (ProjectMember pm : students) {
       if (pm.isLeader()) {
         leaderList.add(pm);
       }
     }
+    
     for (ProjectMember leader : leaderList) {
       Group group = new Group();
       group.setGroup_no(leader.getGroup());
       group.setLeader_name(leader.getUsername());
       group.setProject_id(newProject.getId());
       groupDao.insertGroup(group);
+      
+      Board board = new Board();
+      board.setBoard_name("트러블슈팅" + newProject.getSeason() + group.getId());
+      board.setBoardtype(6);
+      board.setCourse_id(course_id);
+      boardDao.insertBoard(board);
     }
+    
     for (ProjectMember member : students) {
       int group_no = member.getGroup();
       String username = member.getUsername();
@@ -315,16 +355,16 @@ public class MyClassController {
       newMember.setUsername(username);
       groupMemberDao.insertGroupMember(newMember);
     }
-    for (int i = 1; i <= leaderList.size(); i++) {
-      Board board = new Board();
-      board.setBoard_name("트러블슈팅" + newProject.getSeason() + i);
-      board.setBoardtype(6);
-      board.setCourse_id(course_id);
-      boardDao.insertBoard(board);
-    }
+    
     Schedule schedule = new Schedule();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(newProject.getEnd_date());
+    cal.add(Calendar.DATE, 1);
+    Date endDate = Date.valueOf(dateFormat.format(cal.getTime()));
+    schedule.setEnd(endDate);
     schedule.setStart(newProject.getStart_date());
-    schedule.setEnd(newProject.getEnd_date());
+    schedule.setEnd(endDate);
     schedule.setTitle(newProject.getProject_name());
     schedule.setColor("tomato");
     schedule.setGroup_id(0);
@@ -341,6 +381,7 @@ public class MyClassController {
     return "redirect:/myclass/setting";
   }
 
+  //내 클래스 -> 우리반 관리 -> 게시판생성
   @GetMapping("/create/board")
   public String boardPage(Model model) {
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
@@ -356,10 +397,12 @@ public class MyClassController {
   }
 
   @PostMapping("/create/board")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   public void createBoard(@RequestBody BoardAddRemove boardAddRemove) {
     boardService.decideBoardAddOrRemove(boardAddRemove);
   }
 
+  //내 클래스 -> 과제제출 게시판
   @GetMapping("/homework")
   public String homework(@RequestParam(defaultValue = "1") int page, String boardSearch, Model model,
       HttpServletRequest request) {
@@ -543,31 +586,31 @@ public class MyClassController {
     }
     course.setStartDate(course.getStart_date().toLocalDate());
     course.setEndDate(course.getEnd_date().toLocalDate());
-    Period ccDay = Period.between(course.getStartDate(), course.getEndDate());
-    Period cDay = Period.between(course.getStartDate(), LocalDate.now());
-    Period ddDay = null;
-    Period dDay = null;
+    long classPeriod = ChronoUnit.DAYS.between(course.getStartDate(), course.getEndDate());
+    long daysFromStart = ChronoUnit.DAYS.between(course.getStartDate(), LocalDate.now());
+
     if (project != null) {
-      ddDay = Period.between(project.getStartDateLocal(), project.getEndDateLocal());
-      dDay = Period.between(project.getStartDateLocal(), LocalDate.now());
-      model.addAttribute("project_percent", (int) ((float) (dDay.getDays() / (float) (ddDay.getDays())) * 100));
+      long projectPeriod = ChronoUnit.DAYS.between(project.getStartDateLocal(), project.getEndDateLocal());
+      long daysFromProjectStart = ChronoUnit.DAYS.between(project.getStartDateLocal(), LocalDate.now());
+      model.addAttribute("project_percent", (int) ((float) (daysFromProjectStart / projectPeriod)) * 100);
     }
-    
+
     int boardid = boarddao.selectBoardIdByCourseId(member.getCourse_id());
-    System.out.println(boardid);
-    
+
     Article recentQanArticle = null;
     recentQanArticle = articledao.selectRecentQnabyBoardId(boardid);
     if (recentQanArticle != null) {
       model.addAttribute("recentQanArticle", recentQanArticle);
     }
-    
+
     Article homeworkarticle = articledao.selectRecentHomework(username);
-    Homework homework = homeworkdao.selectHomeworkByArticleId(homeworkarticle.getId());
-    homeworkarticle.setOption(homework);
+    if(homeworkarticle != null) {
+      Homework homework = homeworkdao.selectHomeworkByArticleId(homeworkarticle.getId());
+      homeworkarticle.setOption(homework);
+      List<Article> homeworkarticlere = articledao.selectHomeworkReplies(homeworkarticle.getId());
+      model.addAttribute("homeworkarticlere", homeworkarticlere);
+    }
     List<Article> recentStackArticle = articledao.selectRecentStackbyCourse(course.getId());
-    List<Article> homeworkarticlere = articledao.selectHomeworkReplies(homeworkarticle.getId());
-    
     for (Article a : recentStackArticle) {
       a.setWriter(memberdao.selectMemberByUsername(a.getUsername()));
       a.setTimeLocal(a.getTime().toLocalDateTime());
@@ -578,10 +621,10 @@ public class MyClassController {
     model.addAttribute("disable", memberdao.getCountCourseMember(course.getId(), "disable"));
     model.addAttribute("all", memberdao.getCountCourseMember(course.getId(), "enable")
         + memberdao.getCountCourseMember(course.getId(), "disable"));
-    model.addAttribute("course_percent", (int) ((float) (cDay.getDays() / (float) (ccDay.getDays())) * 100));
+    model.addAttribute("course_percent", (int) ((float) daysFromStart / classPeriod) * 100);
+    System.out.println((int) ((float) daysFromStart / classPeriod) * 100);
     model.addAttribute("groups", groups);
     model.addAttribute("homeworkarticle", homeworkarticle);
-    model.addAttribute("homeworkarticlere", homeworkarticlere);
     model.addAttribute("stackarticle", recentStackArticle);
     return "myclass/teacher/managing";
   }

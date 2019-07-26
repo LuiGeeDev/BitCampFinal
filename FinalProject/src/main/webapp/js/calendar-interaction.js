@@ -15,7 +15,7 @@ calendar.on("eventClick", function(info) {
   if (info.el.classList.contains("disabled")) {
     return;
   }
-  
+
   const event = info.event;
 
   $("#title").val(event.title);

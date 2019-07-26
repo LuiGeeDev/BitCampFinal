@@ -1,39 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:context="http://www.springframework.org/schema/context"
-  xmlns:tx="http://www.springframework.org/schema/tx"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns:context="http://www.springframework.org/schema/context" 
+  xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-  <context:property-placeholder
-    location="classpath*:config/*.properties" file-encoding="UTF-8" />
-  
-    
-  
-  <bean id="dataSource"
-    class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+  <!-- Properties 파일 위치 설정, resources 아래 config 폴더 아래 모든 properties 확장자 파일 -->
+  <context:property-placeholder location="classpath*:config/*.properties" file-encoding="UTF-8" />
+
+  <!-- 참고할 DB 설정, 값은 properties 파일에서 가져와서 사용 -->
+  <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
     <property name="driverClassName" value="${db.driverClass}" />
     <property name="url" value="${db.url}" />
     <property name="username" value="${db.username}" />
     <property name="password" value="${db.password}" />
   </bean>
-  
-  <bean id="transactionManager"
-   class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-   <property name="dataSource" ref="dataSource" />
-  </bean>
-  
-  <bean id="sqlSessionFactory"
-    class="org.mybatis.spring.SqlSessionFactoryBean">
+
+  <!-- @Transactional 사용을 위해 설정하는 bean 객체 -->
+  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     <property name="dataSource" ref="dataSource" />
-    <property name="mapperLocations"
-      value="${mybatis.classpath}" />
   </bean>
 
-  <bean id="sqlSession"
-    class="org.mybatis.spring.SqlSessionTemplate">
+  <!-- MyBatis 사용을 위해 설정하는 bean 객체들. 두 개 모두 설정 후 sqlSession 객체 활용 -->
+  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+    <property name="mapperLocations" value="${mybatis.classpath}" />
+  </bean>
+
+  <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
     <constructor-arg index="0" ref="sqlSessionFactory" />
   </bean>
 </beans>
