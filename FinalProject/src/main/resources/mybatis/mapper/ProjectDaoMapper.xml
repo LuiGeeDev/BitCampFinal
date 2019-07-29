@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM project
     WHERE id = #{id}
   </select>
-  <insert id="insertProject">
+  <insert id="insertProject" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO PROJECT(PROJECT_NAME, START_DATE, END_DATE, SEASON, COURSE_ID)
     VALUES (#{project_name},
     #{start_date},
@@ -32,15 +32,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE COURSE_ID=#{course_id}),
     #{course_id})
   </insert>
-  <select id="selectRecentProject"
-    resultType="kr.or.bit.model.Project">
+  <select id="selectRecentProject" resultType="kr.or.bit.model.Project">
     SELECT ID, PROJECT_NAME, START_DATE, END_DATE, SEASON, COURSE_ID
     FROM PROJECT
     WHERE ID=(SELECT MAX(ID) FROM PROJECT WHERE COURSE_ID=#{course_id})
   </select>
 
-  <select id="selectRecentProjectByUsername"
-    resultType="kr.or.bit.model.Project">
+  <select id="selectRecentProjectByUsername" resultType="kr.or.bit.model.Project">
     select *
     from project
     where id in
@@ -48,7 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     from groups
     where id in (select max(group_id) from group_member where member_name = ${username});
   </select>
-  
+
   <!--  Project selectRecentProjectByCourseId(int courseid);  -->
   <select id="selectRecentProjectByCourseId" resultType="kr.or.bit.model.Project">
     select id,project_name, start_date, end_date, season, course_id

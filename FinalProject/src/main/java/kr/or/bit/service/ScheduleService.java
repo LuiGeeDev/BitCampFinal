@@ -28,7 +28,7 @@ public class ScheduleService {
   }
 
   public void updateSchedule(Schedule schedule) {
-    ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);    
+    ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
     scheduleDao.updateSchedule(schedule);
   }
 
@@ -61,5 +61,4 @@ public class ScheduleService {
     }
     return schedules;
   }
-
 }

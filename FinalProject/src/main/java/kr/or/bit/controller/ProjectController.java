@@ -26,7 +26,6 @@ import kr.or.bit.model.Checklist;
 import kr.or.bit.model.Group;
 import kr.or.bit.model.Project;
 import kr.or.bit.model.Timeline;
-import kr.or.bit.utils.Helper;
 
 /*
  * 내 클래스 -> 내 프로젝트에 관련된 메서드를 포함한 컨트롤러 
@@ -40,7 +39,7 @@ public class ProjectController {
 
   @GetMapping("")
   public String projectPage(int group_id, Model model) {
-    if(group_id == 0 ) {
+    if (group_id == 0) {
       return "redirect:/myclass/setting";
     }
     GroupDao groupDao = sqlSession.getMapper(GroupDao.class);
@@ -52,7 +51,7 @@ public class ProjectController {
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     StackDao stackDao = sqlSession.getMapper(StackDao.class);
-    
+
     List<Timeline> timelineList = timelineDao.selectTimelineByGroupId(group_id);
     Group group = groupDao.selectGroupById(group_id);
     Project project = projectDao.selectProject(group.getProject_id());

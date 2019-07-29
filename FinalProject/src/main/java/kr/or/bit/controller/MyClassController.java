@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -114,20 +113,20 @@ public class MyClassController {
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
       article.setTimeLocal(article.getTime().toLocalDateTime());
       article.setOption(homeworkDao.selectHomeworkByArticleId(article.getId()));
-    }    
-    
+    }
+
     int completion = (int) Math.floor((double) daysFromStart / classPeriod * 100);
     if (completion > 100) {
       completion = 100;
     }
-    
+
     List<Article> recentArticles = articleDao.selectArticlesForClassMain(course.getId());
     for (Article article : recentArticles) {
       article.setBoardtype(boardDao.selectBoardById(article.getBoard_id()).getBoardtype());
       article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
       article.setTimeLocal(article.getTime().toLocalDateTime());
     }
-    
+
     model.addAttribute("recentHomework", recentHomework);
     model.addAttribute("course", course);
     model.addAttribute("recentArticles", recentArticles);
@@ -296,7 +295,6 @@ public class MyClassController {
     return "myclass/teacher/create/project";
   }
 
-  
   /**
    * 프로젝트 생성
    * 
@@ -325,27 +323,27 @@ public class MyClassController {
     Project newProject = projectDao.selectRecentProject(course_id);
     List<ProjectMember> leaderList = new ArrayList<>();
     List<ProjectMember> students = project.getStudents();
-    
+
     for (ProjectMember pm : students) {
       if (pm.isLeader()) {
         leaderList.add(pm);
       }
     }
-    
+
     for (ProjectMember leader : leaderList) {
       Group group = new Group();
       group.setGroup_no(leader.getGroup());
       group.setLeader_name(leader.getUsername());
       group.setProject_id(newProject.getId());
       groupDao.insertGroup(group);
-      
+
       Board board = new Board();
       board.setBoard_name("트러블슈팅" + newProject.getSeason() + group.getId());
       board.setBoardtype(6);
       board.setCourse_id(course_id);
       boardDao.insertBoard(board);
     }
-    
+
     for (ProjectMember member : students) {
       int group_no = member.getGroup();
       String username = member.getUsername();
@@ -355,7 +353,7 @@ public class MyClassController {
       newMember.setUsername(username);
       groupMemberDao.insertGroupMember(newMember);
     }
-    
+
     Schedule schedule = new Schedule();
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Calendar cal = Calendar.getInstance();
@@ -604,7 +602,7 @@ public class MyClassController {
     }
 
     Article homeworkarticle = articledao.selectRecentHomework(username);
-    if(homeworkarticle != null) {
+    if (homeworkarticle != null) {
       Homework homework = homeworkdao.selectHomeworkByArticleId(homeworkarticle.getId());
       homeworkarticle.setOption(homework);
       List<Article> homeworkarticlere = articledao.selectHomeworkReplies(homeworkarticle.getId());

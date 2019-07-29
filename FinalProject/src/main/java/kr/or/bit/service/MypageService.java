@@ -1,7 +1,6 @@
 package kr.or.bit.service;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +22,6 @@ import kr.or.bit.model.Board;
 import kr.or.bit.model.Comment;
 import kr.or.bit.model.Course;
 import kr.or.bit.model.Member;
-import kr.or.bit.utils.Helper;
 import kr.or.bit.utils.Pager;
 
 @Service
@@ -39,19 +37,19 @@ public class MypageService {
     }
     return articleList;
   }
-  
-  public List<Article> selectAllMyArticlesByUsername(Pager pager,String username) {
+
+  public List<Article> selectAllMyArticlesByUsername(Pager pager, String username) {
     BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
     MypageDao mypageDao = sqlSession.getMapper(MypageDao.class);
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
-    List<Article> articleList = mypageDao.selectEnableArticleByUsername2(pager,username);
+    List<Article> articleList = mypageDao.selectEnableArticleByUsername2(pager, username);
     for (Article article : articleList) {
       article.setTimeLocal(article.getTime().toLocalDateTime());
       List<Comment> commentList = commentdao.selectAllComment(article.getId());
       article.setCommentlist(commentList);
       article.setBoardtype(boardDao.selectBoardById(article.getBoard_id()).getBoardtype());
     }
-    
+
     return articleList;
   }
 
@@ -77,7 +75,7 @@ public class MypageService {
       returnURL = "http://localhost:8090/myclass/qna/content?id=" + article_id;
       break;
     }
-    
+
     return "redirect:" + returnURL;
   }
 
@@ -85,26 +83,24 @@ public class MypageService {
     ScrapDao scrapDao = sqlSession.getMapper(ScrapDao.class);
     return scrapDao.selectOneScrapCount(articleId, username);
   }
-  
-  
-  
-  public Map<String,Object> insertBookmark (int article_id, String username) {
+
+  public Map<String, Object> insertBookmark(int article_id, String username) {
     Map<String, Object> Scrap = new HashMap<String, Object>();
     ScrapDao scrapDao = sqlSession.getMapper(ScrapDao.class);
     int result = scrapDao.selectOneScrapCount(article_id, username);
-    if(result > 0) {
+    if (result > 0) {
       scrapDao.deleteScrap(article_id, username);
       Scrap.put("checkStatus", 0);//체크 했는지 안했는지
-    }else {
+    } else {
       scrapDao.insertScrap(article_id, username);
       Scrap.put("checkStatus", 1);
     }
-    
-    Scrap.put("countScrap",scrapDao.selectOneScrapTotalCount(article_id));
+
+    Scrap.put("countScrap", scrapDao.selectOneScrapTotalCount(article_id));
     return Scrap;
   }
-  
-  public int coursePeriod (String username) {
+
+  public int coursePeriod(String username) {
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     CourseDao courseDao = sqlSession.getMapper(CourseDao.class);
     Member user = memberDao.selectMemberByUsername(username);
@@ -114,36 +110,35 @@ public class MypageService {
     long classPeriod = ChronoUnit.DAYS.between(course.getStartDate(), course.getEndDate());
     long daysFromStart = ChronoUnit.DAYS.between(course.getStartDate(), LocalDate.now());
     int completion = (int) Math.floor((float) daysFromStart / classPeriod * 100);
-    
+
     return completion;
   }
-  
-  public List<Article> selectMyArticlesByboardSearch(Pager pager,String boardSearch,String criteria,String username) {
+
+  public List<Article> selectMyArticlesByboardSearch(Pager pager, String boardSearch, String criteria,
+      String username) {
     MypageDao mypageDao = sqlSession.getMapper(MypageDao.class);
     CommentDao commentdao = sqlSession.getMapper(CommentDao.class);
     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
     List<Article> articleList = null;
-    if(criteria.equals("titleOrContent")) {
-      articleList = mypageDao.selectMyArticleByTitleOrContent(pager,boardSearch, username);
-    }else {
-      articleList = mypageDao.selectMyArticleByTitle(pager,boardSearch, username);
+    if (criteria.equals("titleOrContent")) {
+      articleList = mypageDao.selectMyArticleByTitleOrContent(pager, boardSearch, username);
+    } else {
+      articleList = mypageDao.selectMyArticleByTitle(pager, boardSearch, username);
     }
-    
+
     for (Article article : articleList) {
       List<Comment> commentList = commentdao.selectAllComment(article.getId());
       article.setCommentlist(commentList);
       article.setTimeLocal(article.getTime().toLocalDateTime());
-      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));   
+      article.setWriter(memberDao.selectMemberByUsername(article.getUsername()));
     }
     return articleList;
   }
-  
-  
-  
-  public List<Comment> selectMyCommentsByboardSearch(String boardSearch,String criteria,String username) {
+
+  public List<Comment> selectMyCommentsByboardSearch(String boardSearch, String criteria, String username) {
     MypageDao mypageDao = sqlSession.getMapper(MypageDao.class);
     List<Comment> commentList = null;
-    if(criteria.equals("Commentcontent")) {
+    if (criteria.equals("Commentcontent")) {
       commentList = mypageDao.selectMyCommentByContent(boardSearch, username);
     }
     for (Comment comment : commentList) {
@@ -151,6 +146,5 @@ public class MypageService {
     }
     return commentList;
   }
-  
 
 }

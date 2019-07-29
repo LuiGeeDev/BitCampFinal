@@ -1,4 +1,4 @@
 package kr.or.bit.model;
 
-public interface ArticleOption {  
+public interface ArticleOption {
 }
