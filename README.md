@@ -20,6 +20,7 @@ HTML, CSS, JavaScript, jQuery, jQuery UI, Vue.js, Axios, Font Awesome, Bootstrap
 * 프레젠테이션: [링크 참조](https://drive.google.com/file/d/1dQ5_SJGzSQZhYqzbiHwNhC17-pFsG7Cy/view?usp=sharing)
 * 시연 영상: [영상 링크](https://drive.google.com/file/d/1rEahNxR-vdAq5-x2nZbSlfbpK4pJeZNP/view?usp=sharing)
 * 웹 사이트 전체 사진: [링크](https://drive.google.com/drive/folders/1mSTl4YM9cj43TpxMiRSCiuO8z2K07L5i?usp=sharing)
+* 발표 영상: [영상 링크](https://www.youtube.com/watch?v=eILwMg6Yu3A)
 
 ## 프로젝트 스크린샷
 #### FullCalendar를 이용한 일정 추가, 변경
